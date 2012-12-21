@@ -4,13 +4,16 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>{% block pagetitle %}Rocket Listings{% endblock %}</title>
 		<link rel="shortcut icon" type="image/x-icon" href="/static/img/favicon.ico">
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 		<link href="/static/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" type="text/css" href="/static/css/style.css">
-		{% block css %}{% endblock%}
+		<link rel="stylesheet" type="text/css" href="/static/css/global.css">
+		{% block css %}
+		<link rel="stylesheet" type="text/css" href="/static/css/rocketlistings.css">
+		{% endblock%}
 		<script src="http://code.jquery.com/jquery-latest.js"></script>
 	    <script src="/static/js/bootstrap.min.js"></script>
 		{% block js %}
-			<script src="/static/js/rocketlistings.js"></script>
+		<script src="/static/js/rocketlistings.js"></script>
 		{% endblock %}
 	</head>
 	<body>
