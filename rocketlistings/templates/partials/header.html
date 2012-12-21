@@ -1,0 +1,82 @@
+<div class="header">
+	<div class="upper">
+		<a href="{% url home %}"><img class="logo" src="/static/img/logo-beta.png" width="180" height="67" alt="Rocket Listing"></a>
+		<ul class="site-menu">
+			<li class="inverse-corners-outer">
+				<div class="inverse-corners-left-inner"></div>
+			</li>
+			<li>
+				<a href="{% url listings.views.create %}" class="">Post Something</a>
+			</li>
+			<li class="inverse-corners-outer">
+				<div class="inverse-corners-right-inner"></div>
+			</li>
+			<li class="inverse-corners-outer">
+				<div class="inverse-corners-left-inner"></div>
+			</li>
+			<li class="inverseCornersOuter">
+				<div class="inverseCornersRightInner"></div>
+			</li>
+		</ul>
+
+		<ul class="contact-menu">
+			<li class="inverse-corners-outer">
+				<div class="inverse-corners-left-inner"></div>
+			</li>
+			<li class="left">
+				<a href="mailto:help@rocketlistings.com">Contact Us</a>
+			</li>
+			<li>
+				<a href="/help#how-it-works">Learn More</a>
+			</li>
+			<li class="social">
+				<a href="https://www.facebook.com/RocketListings" class="social" target="_blank"><img src="/static/img/facebook-icon.png" alt="facebook"></a>
+			</li>
+			{% comment %} <li style="list-style: none; display: inline">
+				<script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+			</li>{% endcomment %}
+			<li class="social right">
+				<a href="https://twitter.com/intent/follow?user_id=604017970"><img src="/static/img/twitter-icon.png" alt="Folow Rocket Listings"></a>
+			</li>
+			<li class="inverse-corners-outer">
+				<div class="inverse-corners-right-inner"></div>
+			</li>
+		</ul>
+		<ul class="action-menu">
+			<li class="inverse-corners-outer">
+				<div class="inverse-corners-left-inner"></div>
+			</li>
+			<li style="list-style: none">{% comment %}{% if user %}
+			</li>
+			<li class="left">
+				<a href="/my/listings"><img src="/images/listingIcon.png" class="icon" alt=" "> <span>My Listings</span></a>
+			</li>
+			<li class="userLink right" id="userDropdownMenu">
+				<a href="/my/personal_info"></a>
+				<div class="UserInfo my_listings_link user-avatar-upload" action="">
+					{#{{user.email}}#}{# <img src="/images/headerDwn.png" alt="down arrow" width="12" height="6">
+				</div>
+				<ul>
+					<li>
+						<a href="/auth/logout"><img src="/images/logoutIcon.png" class="icon" alt=" "> <span>Log Out</span></a>
+					</li>
+					<li style="list-style: none; display: inline">
+						<div class="clear"></div>
+					</li>
+				</ul>
+			</li>
+			<li style="list-style: none">{% else %} {#SHOW THIS WHEN NOT LOGGED IN#} {% endcomment %}
+			</li>
+			<li class="sign-in right left">
+				<a href="{% url login %}">sign-in / join</a>
+			</li>
+			<li style="list-style: none">{# {% endif %} #}
+			</li>
+			<li class="inverse-corners-outer">
+				<div class="inverse-corners-right-inner"></div>
+			</li>
+		</ul>
+	</div>
+{#	<div class="lower"></div> #}
+	<div class="hrline1"></div>
+</div>

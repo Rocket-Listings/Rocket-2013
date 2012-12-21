@@ -1,0 +1,18 @@
+{% extends 'layouts/standard.html' %}
+
+{% block content %}
+<table class="listings-table">
+	<tr>
+		<th>Title</th>
+		<th>Date Listed</th>
+	</tr>
+{% for listing in listings %}
+	<tr>
+		<td>{{listing.title}}<br/>
+			<small class="muted">{{listing.price}}</small>
+		</td>
+		<td>{{listing.pub_date}}</td>
+	</tr>
+{% endfor %}
+</table>
+{% endblock %}

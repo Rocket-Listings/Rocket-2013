@@ -1,19 +1,24 @@
 # Django settings for rocketlistings project.
+import os
+#APP_ROOT = os.path.abspath(os.path.dirname(__file__))
+SITE_ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+AUTH_PROFILE_MODULE = 'accounts.UserProfile'
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+     ('Teddy', 'teddyknox@gmail.com'),
 )
-
+LOGIN_URL = 'login' # references accounts/urls.py name
+LOGOUT_URL = 'logout' #references accounts/urls.py name
 MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'teddyknox',                      # Or path to database file if using sqlite3.
+        'USER': 'teddyknox',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
@@ -24,7 +29,7 @@ DATABASES = {
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'America/New_York'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -56,8 +61,8 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ''
-
+#STATIC_ROOT = os.path.join(SITE_ROOT, 'static/')
+STATIC_ROOT = '/Users/teddyknox/Workspace/Python/rocketlistings/static/'
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
@@ -87,6 +92,15 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
+)
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -103,7 +117,8 @@ ROOT_URLCONF = 'rocketlistings.urls'
 WSGI_APPLICATION = 'rocketlistings.wsgi.application'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    #'/templates/',
+    #os.path.join(SITE_ROOT, 'templates'),
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
@@ -119,6 +134,10 @@ INSTALLED_APPS = (
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    'rocketlistings',
+    'listings',
+    'accounts',
+    'south',
 )
 
 # A sample logging configuration. The only tangible logging
