@@ -12,6 +12,7 @@ ADMINS = (
 )
 LOGIN_URL = 'login' # references accounts/urls.py name
 LOGOUT_URL = 'logout' #references accounts/urls.py name
+LOGIN_REDIRECT_URL = 'account-home' # 'account' rather than 'accounts' because of uniqueness of page to user.
 MANAGERS = ADMINS
 
 DATABASES = {
@@ -131,9 +132,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+    'django.contrib.admindocs',
     'rocketlistings',
     'listings',
     'accounts',

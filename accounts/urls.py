@@ -1,8 +1,11 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, url
 
-urlpatterns = patterns('',
-	url(r'^login', 'accounts.views.login', name='login'),	
-	url(r'^login-submit$', 'django.contrib.auth.views.login', name='login-submit'),
-    url(r'^logout', 'accounts.views.logout', name='logout'),
+urlpatterns = patterns('accounts.views',
+	url(r'^login', 'login', name='login'),	
+    url(r'^$', 'home', name='account-home'),
+)
 
+urlpatterns += patterns('django.contrib.auth.views',
+	url(r'^login-action$', 'login', name='login-action'),
+    url(r'^logout', 'logout', name='logout'),
 )
