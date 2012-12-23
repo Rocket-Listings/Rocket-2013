@@ -136,6 +136,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
     'rocketlistings',
+    'static_pages',
     'listings',
     'accounts',
     'south',
