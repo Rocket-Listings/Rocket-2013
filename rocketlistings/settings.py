@@ -12,7 +12,7 @@ ADMINS = (
 )
 LOGIN_URL = 'login' # references accounts/urls.py name
 LOGOUT_URL = 'logout' #references accounts/urls.py name
-LOGIN_REDIRECT_URL = 'account-home' # 'account' rather than 'accounts' because of uniqueness of page to user.
+LOGIN_REDIRECT_URL = '/accounts/' # 'account' rather than 'accounts' because of uniqueness of page to user.
 MANAGERS = ADMINS
 
 DATABASES = {
@@ -139,7 +139,10 @@ INSTALLED_APPS = (
     'listings',
     'accounts',
     'south',
+    'registration'
 )
+
+ACCOUNT_ACTIVATION_DAYS = 7
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

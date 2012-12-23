@@ -29,9 +29,9 @@ After restarting your terminal, the output of `python -V` should be `2.7.3`.
 
 Run this:
 
-	pip install Django South
+	pip install -r requirements.txt
 
-`pip` is a Python package manager. It definitely comes packaged with the homebrew version of python, but idk whether it comes with the Mountain Lion version. If you find you don't have `pip` then your should probably switch over to a homebrew python installation.
+`pip` is one of Python's package managers. It definitely comes packaged with the homebrew version of python, but idk whether it comes with the Mountain Lion version. If you find you don't have `pip` then your should probably switch over to a homebrew python installation.
 
 ### Postgres installation
 

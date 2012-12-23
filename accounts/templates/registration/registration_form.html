@@ -1,0 +1,11 @@
+{% extends 'layouts/standard.html' %}
+{% block title %}Registration{% endblock %}
+{% block content %}
+<form action="{% url registration_register %}" method="POST">
+	<fieldset>
+	{% csrf_token %} 
+		{{ form.as_p }}
+		<p><input class="btn" type="submit" value="Create Account"/></p>
+	</fieldset>
+</form>
+{% endblock %}
