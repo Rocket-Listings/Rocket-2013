@@ -94,7 +94,7 @@ We want the URLs to look like that no matter what application the resources are 
 
 #### Sublime text Project Settings
 
-If you haven't already, go ahead and create a sublime text project around the root project folder. Save the project as whatever and place the project file inside that root project folder. Our `.gitignore` file knows to ignore those types of files. This makes it so that you can have this nifty sidebar which shows you all of the project files. All of the project files show up: `.py`, `.html`, the `.png`, and even the `\_\_init\_\_.py` files. But we kinda don't want that, since you're never going to want to edit an image in the text editor, and you want to ignore `\_\_init\_\_.py` files. To make Sublime text ignore these types of files, open up your `.sublime-project` file and make it look like this (with the exception of the `path` field):
+If you haven't already, go ahead and create a sublime text project around the root project folder. Save the project as whatever and place the project file inside that root project folder. Our `.gitignore` file knows to ignore those types of files. This makes it so that you can have this nifty sidebar which shows you all of the project files. All of the project files show up: `.py`, `.html`, the `.png`, and even the `__init__.py` files. But we kinda don't want that, since you're never going to want to edit an image in the text editor, and you want to ignore `__init__.py` files. To make Sublime text ignore these types of files, open up your `.sublime-project` file and make it look like this (with the exception of the `path` field):
 
 	{
 		"folders":
