@@ -12,7 +12,7 @@ ADMINS = (
 )
 LOGIN_URL = 'login' # references accounts/urls.py name
 LOGOUT_URL = 'logout' #references accounts/urls.py name
-LOGIN_REDIRECT_URL = '/accounts/' # 'account' rather than 'accounts' because of uniqueness of page to user.
+LOGIN_REDIRECT_URL = '/accounts' # 'account' rather than 'accounts' because of uniqueness of page to user.
 MANAGERS = ADMINS
 
 DATABASES = {

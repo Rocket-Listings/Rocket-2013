@@ -1,5 +1,7 @@
 from django.db import models
 from datetime import datetime
+from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 
 class ListingCategory(models.Model):
 	name = models.CharField(max_length = 60)
@@ -38,6 +40,7 @@ class Listing(models.Model):
 	listing_type = models.ForeignKey(ListingType)
 	specs = models.ForeignKey(ListingSpec, blank=True, default=0, null=True)
 	highlights = models.ForeignKey(ListingHighlight, blank=True, default=0, null=True)
+	user = models.ForeignKey(User)
 
 	def __unicode__(self):
 		return "%d - %s | %s - %s" % (self.price, self.location, self.title, self.description)
@@ -47,3 +50,5 @@ class Listing(models.Model):
 			self.pub_date = datetime.now()
 			super(Listing, self).save()
 
+	def get_absolute_url(self):
+		return reverse('listings.views.read', args=[str(self.id)])

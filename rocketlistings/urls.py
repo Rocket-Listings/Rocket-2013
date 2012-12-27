@@ -3,7 +3,6 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', 'rocketlistings.views.home', name='home'),
     url(r'^listings/', include('listings.urls')),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
    	url(r'^accounts/', include('accounts.urls')),

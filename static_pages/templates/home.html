@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block css %}<link type="text/css" rel="stylesheet" href="/static/css/static_pages.css"/>{% endblock %}
+{% block js %}<script type="text/javascript" src="/static/js/static_pages.js"></script>{% endblock %}
+
+{% block content %}
+	<div class="homepage-row homepage-message">
+		<div class="homepage-listing">{#<img src="images/homepage-rocket-listing.png" rel="homepage listing"/>#}</div>
+		<div class="homepage-type">
+			<div class="homepage-heading">Better Tools<br/>For Classifieds</div>
+			<div class="homepage-subheading">Sell your stuff faster on Craigslist.</div>
+			<div class="drag-and-drop modal2 fancybox.ajax" href="/my/listings/create"><!-- XHTML here -->
+				<div class="center">
+					{#	<p>Click to get started!</p> #}
+					<p class="InlineHoverNone">Drag and Drop Product Photos<br/> Anywhere to Get Started.<br/></p>
+					<p class="noneHoverInline">Or Click to Upload Normally!</p>
+					
+				</div>
+			</div>
+			<div class="homepage-feature-list" >
+				<ul>
+					<li>Quickly create awesome looking listings.</li>
+					<li>We give you HTML, you post it anywhere.</li>
+					<li>Show off all your listings in an online catalog.</li>
+					<li>Rocket Scientists are a phone call away! (Seriously, you can reach us at 240-479-4445)</li>
+				</ul>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="homepage-row homepage-catalog">
+		<div class="catalog-container"></div>
+		<div class="homepage-type">
+			<div class="homepage-heading">Automatically Generated Online Catalog</div>
+			<div class="homepage-feature-list">
+				<ul>
+					<li>We automatically add your listings to your very own branded online catalog.</li>
+					<li>Customize the experience with multiple gallery views.</li>
+					<li>Customers can subscribe to your catalog and get notified whenever you publish a listing.</li>
+				</ul>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="homepage-row homepage-video">
+			<iframe src="https://player.vimeo.com/video/47618108?title=0&byline=0&color=D96303&portrait=0" width="868" height="488" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen title="0" byline="0" portrait="0" color="E96A57"></iframe>
+	</div>
+	<div class="homepage-row homepage-pricing">
+		<div class="homepage-heading">How Pricing Works</div>
+		<ul class="pricing-list">
+			<li>
+				<img src="/static/img/freeBanner.png" width="661" height="102" alt="Free" />
+				<h4 class="tooLong">Create 3 listings <br/> every month for free!</h4>
+			</li>
+			<li class="then">
+				<img src="/static/img/rocket-then.png" alt="then" />
+			</li>
+			<li>
+				<img src="/static/img/oneDollarBanner.png" width="661" height="102" />
+				<h4>Pay as you go - $1 per listing</h4>
+			</li>
+			<li class="or">
+				<img src="/static/img/rocket-or.png" alt="or" />
+			</li>
+			<li>
+				<img src="/static/img/subscription-banner.png" width="661" height="102" />
+				<h4>List all you want - $10 per month</h4>
+			</li>
+		</ul>
+		<span class="homepage-why-pay" data-trigger="hover" data-html="true" data-title="So we can make Rocket better." data-placement="right" data-content="<p>Rocket Listings cost a dollar so that the RL team up in Burlington, VT can continue making the Craigslist experience just a bit awesomer.</p><p>And since RL templates tend to add more than a dollar to your product's final sale price, we figure it's a win-win. :)</p>">
+			<img src="/static/img/help.png" rel="question mark"/>
+			Why isn't Rocket free?
+		</span>
+		<div class="clear"></div>    
+	</div>
+{% endblock %}

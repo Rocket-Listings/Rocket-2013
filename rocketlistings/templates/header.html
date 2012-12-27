@@ -24,7 +24,7 @@
 				<div class="inverse-corners-left-inner"></div>
 			</li>
 			<li class="left">
-				<a href="mailto:help@rocketlistings.com">Contact Us</a>
+				<a href="{% url contact %}">Contact Us</a>
 			</li>
 			<li>
 				<a href="/help">Learn More</a>
@@ -46,32 +46,19 @@
 			<li class="inverse-corners-outer">
 				<div class="inverse-corners-left-inner"></div>
 			</li>
-			<li style="list-style: none">{% comment %}{% if user %}
-			</li>
+			{% if user.is_authenticated %}
 			<li class="left">
-				<a href="/my/listings"><img src="/images/listingIcon.png" class="icon" alt=" "> <span>My Listings</span></a>
+				<a href="{% url account_listings user.username %}">Listings <i class="icon-th-list icon-white"></i></a>
 			</li>
-			<li class="userLink right" id="userDropdownMenu">
-				<a href="/my/personal_info"></a>
-				<div class="UserInfo my_listings_link user-avatar-upload" action="">
-					{#{{user.email}}#}{# <img src="/images/headerDwn.png" alt="down arrow" width="12" height="6">
-				</div>
-				<ul>
-					<li>
-						<a href="/auth/logout"><img src="/images/logoutIcon.png" class="icon" alt=" "> <span>Log Out</span></a>
-					</li>
-					<li style="list-style: none; display: inline">
-						<div class="clear"></div>
-					</li>
-				</ul>
+			<li class="user-link">
+				<a href="{% url account_overview user.username %}">Account <i class="icon-user icon-white"></i></a>
 			</li>
-			<li style="list-style: none">{% else %} {#SHOW THIS WHEN NOT LOGGED IN#} {% endcomment %}
+			<li class="right"><a href="{% url auth_logout %}">Logout <i class="icon-off icon-white"></i></a></li>
+			{% else %}
+			<li class="sign-in left right">
+				<a href="{% url auth_login %}">sign-in</a>
 			</li>
-			<li class="sign-in right left">
-				<a href="{% url auth_login %}">sign-in / join</a>
-			</li>
-			<li style="list-style: none">{# {% endif %} #}
-			</li>
+			{% endif %}
 			<li class="inverse-corners-outer">
 				<div class="inverse-corners-right-inner"></div>
 			</li>

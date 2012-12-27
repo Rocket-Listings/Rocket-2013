@@ -4,7 +4,7 @@ from listings.models import Listing, ListingCategory, ListingType
 class ListingForm(ModelForm):
 	class Meta:
 		model = Listing
-		exclude = ('pub_date',)
+		exclude = ('pub_date','user')
 		widgets = {'description': Textarea,}
 
 #	category = ChoiceField(map(lambda x: (x.name, x.name), ListingCategory.objects.all()))
