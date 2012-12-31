@@ -1,28 +1,35 @@
-$(document).ready(function() {
-	$(".fancybox").fancybox();
-});
-
 $(function(){
-	var uploader = new qq.FileUploader({
-		action: "{% url ajax_photo_upload %}",
-		element: $('#file-uploader')[0],
-		multiple: true,
-		onComplete: function(id, fileName, responseJSON) {
-			if(responseJSON.success) {
-				//alert("success!");
-			} else {
-				//alert("upload failed!");
+	// Setup fancybox
+	$(".fancybox").fancybox();
+
+	// Setup uploader
+	var uploader = $('#file-uploader').fineUploader({
+		debug: true,
+		request: {
+			endpoint: '/listings/ajax-photo-upload/',
+			customHeaders: {
+				'X-CSRFToken': $.cookie('csrftoken'),
 			}
 		},
-		onAllComplete: function(uploads) {
-			// uploads is an array of maps
-			// the maps look like this: {file: FileObject, response: JSONServerResponse}
-			alert("All complete!");
+		validation: {
+			allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+			sizeLimit: 10485760,
+			acceptFiles: 'image/*'
 		},
-		params: {
-			'csrf_token': '{{ csrf_token }}',
-			'csrf_name': 'csrfmiddlewaretoken',
-			'csrf_xname': 'X-CSRFToken',
+		callbacks: {
+			onComplete: function(id, fileName, responseJSON) { // not working
+				if(responseJSON.success) {
+					alert("success!");
+				} else {
+					alert('fail!');
+				}
+			},
+			onAllComplete: function(uploads) {
+				// uploads is an array of maps
+				// the maps look like this: {file: FileObject, response: JSONServerResponse}
+				alert("All complete!");
+			}
 		},
+		multiple: true
 	});
 });

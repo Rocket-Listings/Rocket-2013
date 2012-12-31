@@ -1,6 +1,6 @@
 from listings.models import Listing
 from listings.forms import ListingForm
-from django.shortcuts import render, render_to_response, redirect
+from django.shortcuts import render, redirect
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.middleware.csrf import get_token
@@ -59,9 +59,5 @@ def delete(request, listing_id):
 	if request.user == listing.user:
 		listing.delete()
 		return redirect('account_overview')
-
-def photo_upload(request):
-    csrf_token = get_token(request)
-    return render_to_response('listings_ajax_upload_test.html', {'csrf_token': csrf_token}, context_instance = RequestContext(request))
 
 import_uploader = AjaxFileUploader(backend=ListingsLocalUploadBackend)
