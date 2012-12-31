@@ -5,14 +5,16 @@ SITE_ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+THUMBNAIL_DEBUG = DEBUG
 
 AUTH_PROFILE_MODULE = 'accounts.UserProfile'
 ADMINS = (
      ('Teddy', 'teddyknox@gmail.com'),
 )
-LOGIN_URL = 'login' # references accounts/urls.py name
-LOGOUT_URL = 'logout' #references accounts/urls.py name
-LOGIN_REDIRECT_URL = '/accounts' # 'account' rather than 'accounts' because of uniqueness of page to user.
+LOGIN_URL = '/accounts/login/' # hardcoding is bad
+LOGOUT_URL = '/accounts/logout/'
+LOGIN_REDIRECT_URL = '/accounts/'
+LOGOUT_REDIRECT_URL = '/'
 MANAGERS = ADMINS
 
 DATABASES = {
@@ -51,19 +53,19 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = '/Users/teddyknox/Workspace/Python/rocketlistings/media/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_URL = '/media/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
 #STATIC_ROOT = os.path.join(SITE_ROOT, 'static/')
-STATIC_ROOT = '/Users/teddyknox/Workspace/Python/rocketlistings/static/'
+STATIC_ROOT = '/Users/teddyknox/Workspace/Python/rocketlistings/static_collected/'
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
@@ -140,7 +142,8 @@ INSTALLED_APPS = (
     'listings',
     'accounts',
     'south',
-    'registration'
+    'registration',
+    'ajaxuploader',
 )
 
 ACCOUNT_ACTIVATION_DAYS = 7

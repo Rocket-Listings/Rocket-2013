@@ -47,3 +47,19 @@ textarea{position:relative;padding:5px 9px;height:13px;border:solid #ccc 1px;-we
 .fileDragOverlay.in{position:fixed;display:block;width:100%;height:100%;z-index:1000;}.fileDragOverlay.in span{display:none;}
 .fileDragOverlay.hover{display:block;position:fixed;height:100%;width:100%;z-index:1000;text-align:center;background:-moz-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.55) 100%);background:-webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(0, 0, 0, 0.2)), color-stop(100%, rgba(0, 0, 0, 0.55)));background:-webkit-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.55) 100%);background:-o-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.55) 100%);background:-ms-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.55) 100%);background:radial-gradient(ellipse at center, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.55) 100%);}.fileDragOverlay.hover span{display:block;margin:200px auto 0 auto;font-style:bold;font-size:90px;font-family:"semi-bold";line-height:100%;color:#FFF;-webkit-text-stroke:2px black;text-shadow:-1px -1px 5px #000000,1px -1px 5px #000000,-1px 1px 5px #000000,1px 1px 5px #000000;}
 .fileDragOverlay.fade{-webkit-transition:all 0.3s ease-out;-moz-transition:all 0.3s ease-out;-ms-transition:all 0.3s ease-out;-o-transition:all 0.3s ease-out;transition:all 0.3s ease-out;opacity:1;}
+.qq-uploader{position:relative;width:100%;}
+.qq-upload-button{display:block;width:105px;padding:7px 0;text-align:center;background:#880000;border-bottom:1px solid #ddd;color:#fff;}
+.qq-upload-button-hover{background:#cc0000;}
+.qq-upload-button-focus{outline:1px dotted black;}
+.qq-upload-drop-area{position:absolute;top:0;left:0;width:100%;height:100%;min-height:70px;z-index:2;background:#FF9797;text-align:center;}
+.qq-upload-drop-area span{display:block;position:absolute;top:50%;width:100%;margin-top:-8px;font-size:16px;}
+.qq-upload-drop-area-active{background:#FF7171;}
+.qq-upload-list{margin:15px 35px;padding:0;list-style:disc;}.qq-upload-list li{margin:0;padding:0;line-height:15px;font-size:12px;}
+.qq-upload-file,.qq-upload-spinner,.qq-upload-size,.qq-upload-cancel,.qq-upload-failed-text{margin-right:7px;}
+.qq-upload-spinner{display:inline-block;background:url("loading.gif");width:15px;height:15px;vertical-align:text-bottom;}
+.qq-upload-size,.qq-upload-cancel{font-size:11px;}
+.qq-upload-failed-text{display:none;}
+.qq-upload-fail .qq-upload-failed-text{display:inline;}
+li.alert-success{background-color:#DFF0D8;}
+li.alert-error{background-color:#F2DEDE;}
+.alert-error .qq-upload-failed-text{display:inline;}

@@ -9,12 +9,19 @@
 		<div class="homepage-type">
 			<div class="homepage-heading">Better Tools<br/>For Classifieds</div>
 			<div class="homepage-subheading">Sell your stuff faster on Craigslist.</div>
-			<div class="drag-and-drop modal2 fancybox.ajax" href="/my/listings/create"><!-- XHTML here -->
+			<div class="drag-and-drop fancybox" href="#photo-upload-fancybox"><!-- XHTML here -->
 				<div class="center">
 					{#	<p>Click to get started!</p> #}
-					<p class="InlineHoverNone">Drag and Drop Product Photos<br/> Anywhere to Get Started.<br/></p>
-					<p class="noneHoverInline">Or Click to Upload Normally!</p>
-					
+					<p class="InlineHoverNone">Drag and drop product photos<br/> anywhere to get started<br/></p>
+					<p class="noneHoverInline">Or click to upload normally</p>
+					<div id="photo-upload-fancybox" style="display:none;">
+						<h2>Hello world!</h2>
+						<div id="file-uploader">       
+							<noscript>          
+								<p>Please enable JavaScript to use file uploader.</p>
+							</noscript>         
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="homepage-feature-list" >

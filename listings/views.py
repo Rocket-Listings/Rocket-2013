@@ -1,13 +1,15 @@
 from listings.models import Listing
 from listings.forms import ListingForm
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render, render_to_response, redirect
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
-#from django.contrib.auth.models import User
+from django.middleware.csrf import get_token
+from ajaxuploader.views import AjaxFileUploader
+from ListingsLocalUploadBackend import ListingsLocalUploadBackend
 
 def latest(request):
 	listings = Listing.objects.all().order_by('-pub_date')[:10]
-	return render_to_response('latest.html', {'listings': listings,})
+	return render(request, 'listings_latest.html', {'listings': listings,})
 
 
 @login_required
@@ -24,14 +26,14 @@ def create(request):
 			listing.save()
 			return redirect(listing)
 		else:
-			return render_to_response('listing_create.html', {'form': ListingForm(request.POST),})
+			return render(request, 'listing_create.html', {'form': ListingForm(request.POST),})
 	else:
-		return render_to_response('listing_create.html', {'form':ListingForm(),}, context_instance=RequestContext(request))
+		return render(request, 'listing_create.html', {'form':ListingForm(),}, context_instance=RequestContext(request))
 
 
-def read(request, listing_id):
+def detail(request, listing_id):
 	listing = Listing.objects.get(id__exact = listing_id)
-	return render_to_response('listing_read.html', {'listing':listing,})
+	return render(request, 'listing_detail.html', {'listing':listing,})
 
 
 @login_required
@@ -44,11 +46,11 @@ def update(request, listing_id):
 				listing = listing_form.save()
 				return redirect(listing)
 			else:
-				return render_to_response('listing_update.html', {'form': listing_form})
+				return render(request, 'listing_update.html', {'form': listing_form})
 		else:
-			return render_to_response('listing_update.html', {'form':ListingForm(instance = listing),}, context_instance = RequestContext(request))
+			return render(request, 'listing_update.html', {'form':ListingForm(instance = listing),}, context_instance = RequestContext(request))
 	else:
-		return render_to_response('403.html')
+		return render(request, '403.html')
 
 
 @login_required
@@ -57,3 +59,9 @@ def delete(request, listing_id):
 	if request.user == listing.user:
 		listing.delete()
 		return redirect('account_overview')
+
+def photo_upload(request):
+    csrf_token = get_token(request)
+    return render_to_response('listings_ajax_upload_test.html', {'csrf_token': csrf_token}, context_instance = RequestContext(request))
+
+import_uploader = AjaxFileUploader(backend=ListingsLocalUploadBackend)

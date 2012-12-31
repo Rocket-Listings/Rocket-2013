@@ -1,1 +1,0 @@
-# nothing here, since using direct_to_template in urls.py

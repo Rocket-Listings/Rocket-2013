@@ -1,0 +1,25 @@
+{% comment %}
+Requires the context variable listings
+{% endcomment %}
+<table class="table table-hover table-listings">
+	<thead>
+		<tr>
+			<th>Title</th>
+			<th>Price</th>
+			<th>Location</th>
+			<th>Category</th>
+			<th>Date Listed</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for listing in listings %}
+		<tr>
+			<td>{{ listing.title }}</td>
+			<td>{{ listing.price }}</td>
+			<td>{{ listing.location }}</td>
+			<td>{{ listing.category.name }}</td>
+			<td>{{ listing.pub_date }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>

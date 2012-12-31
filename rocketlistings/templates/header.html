@@ -55,8 +55,11 @@
 			</li>
 			<li class="right"><a href="{% url auth_logout %}">Logout <i class="icon-off icon-white"></i></a></li>
 			{% else %}
-			<li class="sign-in left right">
-				<a href="{% url auth_login %}">sign-in</a>
+			<li class="sign-in left">
+				<a href="{% url auth_login %}">Sign-in</a>
+			</li>
+			<li class="sign-in right">
+				<a href="{% url registration_register %}">Register</a>
 			</li>
 			{% endif %}
 			<li class="inverse-corners-outer">

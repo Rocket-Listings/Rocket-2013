@@ -3,15 +3,21 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>{% block pagetitle %}Rocket Listings{% endblock %}</title>
-		<link rel="shortcut icon" type="image/x-icon" href="/static/img/favicon.ico">
-		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
-		<link href="/static/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" type="text/css" href="/static/css/global.css">
+		
+		<link rel="shortcut icon" type="image/x-icon" href="{{ STATIC_URL }}/img/favicon.ico">
+		<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700">
+		<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery.fancybox.css" media="screen" />
+		<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/global.css">
 		{% block css %}{% endblock%}
+
 		<script src="http://code.jquery.com/jquery-latest.js"></script>
-	    <script src="/static/js/bootstrap.min.js"></script>
-	    <script src="/static/js/global.js"></script>
+	    <script src="{{ STATIC_URL }}js/bootstrap/bootstrap.min.js"></script>
+        <script src="{{ STATIC_URL }}ajaxuploader/js/fileuploader.js" ></script>
+        <script src="{{ STATIC_URL }}js/fancybox/jquery.fancybox.js"></script>
+	    <script src="{{ STATIC_URL }}js/global.js"></script>
 		{% block js %}{% endblock %}
+
 	</head>
 	<body>
 		<div class="container">

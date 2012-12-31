@@ -17,19 +17,6 @@ class ListingType(models.Model):
 	def __unicode__(self):
 		return self.name
 
-class ListingSpec(models.Model):
-	key = models.CharField(max_length = 60)
-	value = models.CharField(max_length = 60)
-
-	def __unicode__(self):
-		return self.key + ", " + self.value
-
-class ListingHighlight(models.Model):
-	value = models.CharField(max_length = 60)
-
-	def __unicode__(self):
-		return self.value
-
 class Listing(models.Model):
 	title = models.CharField(max_length=200)
 	description = models.CharField(max_length=200)
@@ -38,8 +25,6 @@ class Listing(models.Model):
 	location = models.CharField(max_length=200)
 	category = models.ForeignKey(ListingCategory)
 	listing_type = models.ForeignKey(ListingType)
-	specs = models.ForeignKey(ListingSpec, blank=True, default=0, null=True)
-	highlights = models.ForeignKey(ListingHighlight, blank=True, default=0, null=True)
 	user = models.ForeignKey(User)
 
 	def __unicode__(self):
@@ -52,3 +37,18 @@ class Listing(models.Model):
 
 	def get_absolute_url(self):
 		return reverse('listings.views.read', args=[str(self.id)])
+
+class ListingSpec(models.Model):
+	key = models.CharField(max_length = 60)
+	value = models.CharField(max_length = 60)
+	listing = models.ForeignKey(Listing, default = Listing.objects.all()[0])
+
+	def __unicode__(self):
+		return self.key + ", " + self.value
+
+class ListingHighlight(models.Model):
+	value = models.CharField(max_length = 60)
+	listing = models.ForeignKey(Listing, default = Listing.objects.all()[0])
+
+	def __unicode__(self):
+		return self.value
