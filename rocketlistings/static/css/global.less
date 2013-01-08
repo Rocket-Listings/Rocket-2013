@@ -4,6 +4,7 @@
 
 body {
 	color: #435056;
+	background-color: #F5F5F5;
 	font-style: normal;
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif;
@@ -73,12 +74,13 @@ textarea {
 .header {
 	position: relative;
 	z-index: 3;
+	background-color: white;
 	/*background: #E8EDEF; /*url(images/header.png) 0 0 repeat-x;*/ 
 
 
 	.upper {
-		border-bottom: 5px solid #E26A59;
 		height: 80px;
+		position:relative;
 
 		.logo {
 			position: absolute;
@@ -383,17 +385,20 @@ textarea {
 		}
 	}
 
-	.lower {
+	/*.lower {
 		position: relative;
 		z-index: 2;
 		background: #e8edef;
 		border-right: 1px solid #A4B0B7;
 		border-left: 1px solid #A4B0B7;
 		height: 20px;
-	}
+	}*/
 
-	.hrline1 {
-		border-top: solid #b2bec3 1px;
+	.separator-1 {
+		.separator-2 { 
+			border-top: 5px solid #E26A59; 
+			border-bottom: solid #b2bec3 1px;
+		}		
 		border-bottom: solid #fff 1px;
 		border-right: 1px solid #A4B0B7;
 		border-left: 1px solid #A4B0B7;
@@ -457,11 +462,10 @@ textarea {
 .pattern1 { background: url(/static/img/pattern1.png) 50% 0 !important }
 
 .page-content {
-	background-color: #F5F5F5;
 	margin: 0 auto;
 	padding: 30px 40px 40px 30px;
-	border-right: 1px solid @border-color;
-	border-left: 1px solid @border-color;
+/*	border-right: 1px solid @border-color;
+	border-left: 1px solid @border-color;*/
 }
 
 .fileDragOverlay {

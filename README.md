@@ -35,12 +35,13 @@ Run this:
 
 ### Postgres installation
 
-Run this to make sure that you don't have multiple versions of Postgres installed:
+First remove any broken postgres installations you may have.
 
-	brew rm --force postgres
+Now we install Postgres:
 
-Now download and run the [Postgres App](http://postgresapp.com/).
+	brew install postgres
 
+Homebrew will print out some instructions on registering the DB with OSX to start up on boot, but if you mind having Postgres running all the time, you can just start postgres on an as-needed basis in a new terminal tab by running `postgres`.
 Name your postgres user `teddyknox` and keep the password blank. Later on I'll be changing this username to something like `rocketlistings`, but for now I want to focus on development and not postgres administration. 
 
 ### Rocket Listings installation

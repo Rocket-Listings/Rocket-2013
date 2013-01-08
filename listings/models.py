@@ -2,6 +2,7 @@ from django.db import models
 from datetime import datetime
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+import rocketlistings.settings as settings
 
 class ListingCategory(models.Model):
 	name = models.CharField(max_length = 60)
@@ -20,7 +21,7 @@ class ListingType(models.Model):
 class Listing(models.Model):
 	title = models.CharField(max_length=200)
 	description = models.CharField(max_length=200)
-	pub_date = models.DateTimeField('date published')
+	pub_date = models.DateTimeField('date published', auto_now_add=False)
 	price = models.IntegerField()
 	location = models.CharField(max_length=200)
 	category = models.ForeignKey(ListingCategory)
@@ -30,25 +31,28 @@ class Listing(models.Model):
 	def __unicode__(self):
 		return "%d - %s | %s - %s" % (self.price, self.location, self.title, self.description)
 
-	def save(self):
-		if self.pub_date == None:
-			self.pub_date = datetime.now()
-			super(Listing, self).save()
-
 	def get_absolute_url(self):
 		return reverse('listings.views.read', args=[str(self.id)])
 
 class ListingSpec(models.Model):
 	key = models.CharField(max_length = 60)
 	value = models.CharField(max_length = 60)
-	listing = models.ForeignKey(Listing, default = Listing.objects.all()[0])
+	listing = models.ForeignKey(Listing)
 
 	def __unicode__(self):
 		return self.key + ", " + self.value
 
 class ListingHighlight(models.Model):
 	value = models.CharField(max_length = 60)
-	listing = models.ForeignKey(Listing, default = Listing.objects.all()[0])
+	listing = models.ForeignKey(Listing)
 
 	def __unicode__(self):
 		return self.value
+
+class ListingPhoto(models.Model):
+	path = models.FilePathField(path=settings.MEDIA_ROOT+'uploads', max_length=255)
+	url = models.CharField(max_length=255)
+	upload_date = models.DateTimeField('date uploaded', auto_now_add=False)
+	upload_ip = models.IPAddressField()
+	order = models.IntegerField(null = True, blank=True)
+	listing = models.ForeignKey(Listing, null = True, blank=True)

@@ -60,6 +60,9 @@ MEDIA_ROOT = '/Users/teddyknox/Workspace/Python/rocketlistings/media/'
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
 MEDIA_URL = '/media/'
 
+# Minimum time that uploaded photos will stay on server if not assigned to a listing.
+ROCKET_UNUSED_PHOTO_MINS = 10
+
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
@@ -133,9 +136,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
     'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
     'rocketlistings',
     'static_pages',
@@ -144,6 +145,7 @@ INSTALLED_APPS = (
     'south',
     'registration',
     'ajaxuploader',
+    'sorl.thumbnail'
 )
 
 ACCOUNT_ACTIVATION_DAYS = 7

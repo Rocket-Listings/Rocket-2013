@@ -3,3 +3,6 @@ South
 django-registration
 ajaxuploader
 sorl-thumbnail
+PIL
+python-memcached
+psycopg2

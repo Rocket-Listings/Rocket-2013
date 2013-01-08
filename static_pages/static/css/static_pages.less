@@ -90,6 +90,7 @@
 		margin: 0 0 0 0;
 
 		.drag-and-drop {
+			display: block;
 			position: relative;
 			height: 120px;
 			width: 330px;
@@ -100,6 +101,15 @@
 			border: 5px dashed #9C9C9C;
 			text-align: center;
 			font-size: 30px;
+			text-decoration: none;
+			color: inherit;
+
+			&:hover { 
+				border: 5px dashed #E26A59;
+				p.InlineHoverNone { display: none }
+				p.noneHoverInline { display: inline }
+			}
+			
 			.center {
 				margin-top: 20px;
 			}
@@ -113,12 +123,6 @@
 				&.InlineHoverNone { display: inline }
 				&.noneHoverInline { display: none }
 			}
-		}
-
-		.drag-and-drop:hover { 
-			border: 5px dashed #E26A59;
-			p.InlineHoverNone { display: none }
-			p.noneHoverInline { display: inline }
 		}
 	}
 }
