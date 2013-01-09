@@ -10,9 +10,10 @@ downloads
 eggs
 log
 parts
-media/uploads
+media/*
+
 static_collected/*
 tmp
 .DS_Store
 *.sublime-*
-media
+dev_settings.py
