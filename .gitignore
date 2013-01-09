@@ -16,4 +16,4 @@ static_collected/*
 tmp
 .DS_Store
 *.sublime-*
-dev_settings.py
+settings_dev.py
