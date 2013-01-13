@@ -20,6 +20,7 @@ LOGIN_URL = '/accounts/login/' # references accounts/urls.py name
 LOGOUT_URL = '/accounts/logout/' #references accounts/urls.py name
 LOGIN_REDIRECT_URL = '/accounts/'
 LOGOUT_REDIRECT_URL = '/'
+
 MANAGERS = ADMINS
 
 DATABASES = {
@@ -67,6 +68,11 @@ MEDIA_URL = '/media/'
 
 # Minimum time that uploaded photos will stay on server if not assigned to a listing.
 ROCKET_UNUSED_PHOTO_MINS = 10
+
+# need this so that accounts is used instead of user
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user': lambda u: "/accounts/%s" % u.username,
+}
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files

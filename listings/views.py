@@ -2,7 +2,6 @@ from listings.models import Listing, ListingPhoto
 from django.conf import settings
 from datetime import datetime, timedelta
 from listings.forms import ListingForm
-from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
