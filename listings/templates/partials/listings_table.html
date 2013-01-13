@@ -14,7 +14,7 @@ Requires the context variable listings
 	<tbody>
 		{% for listing in listings %}
 		<tr>
-			<td>{{ listing.title }}</td>
+			<td><a href="{{ listing.get_absolute_url }}">{{ listing.title }}</a></td>
 			<td>{{ listing.price }}</td>
 			<td>{{ listing.location }}</td>
 			<td>{{ listing.category.name }}</td>

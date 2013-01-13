@@ -13,6 +13,8 @@ DB_PORT = '' # Keep empty string for default.
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
 
+PREPEND_WWW = True
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

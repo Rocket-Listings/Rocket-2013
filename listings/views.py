@@ -2,6 +2,7 @@ from listings.models import Listing, ListingPhoto
 from django.conf import settings
 from datetime import datetime, timedelta
 from listings.forms import ListingForm
+from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
@@ -36,7 +37,8 @@ def create(request):
 def detail(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
 	photos = ListingPhoto.objects.filter(listing=listing)
-	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos) 
+	# provide `url` and `thumbnail_url` for convenience.
+	photos = map(lambda photo: {'url':settings.MEDIA_URL+photo.url, 'thumbnail_url':photo.url, 'order':photo.order}, photos) 
 	return render(request, 'listing_detail.html', {'listing':listing, 'photos':photos})
 
 @login_required

@@ -19,7 +19,7 @@ class ListingsLocalUploadBackend(ThumbnailUploadBackend):
 		order = int(request.GET['order'])
 		ip = request.META['REMOTE_ADDR']
 		listing = None
-		url = settings.MEDIA_URL+ self.UPLOAD_DIR + '/' + filename		
+		url = self.UPLOAD_DIR + '/' + filename		
 		if listing_id != 0:
 			listing = Listing.objects.get(id=listing_id)
 
