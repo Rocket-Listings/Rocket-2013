@@ -10,10 +10,6 @@ $(function(){
 			endpoint: '/listings/ajax-photo-upload/',
 			customHeaders: {
 				'X-CSRFToken': $.cookie('csrftoken'),
-			},  
-			params: {
-				listingid:listingid,
-				order:fileNum
 			}
 		},
 		validation: {
@@ -22,17 +18,25 @@ $(function(){
 			acceptFiles: 'image/*'
 		},
 		multiple: true
-	}).on('complete', function(id, fileName, responseJSON) { // not working
+	}).on('complete', function(event, id, filename, responseJSON){
+		//response = $.parseJSON(responseJSON);
 		if(responseJSON.success) {
-			alert("success!");
+			fileNum--;
+			if(fileNum === 0) {
+				$('.finish-upload-button').removeClass('disabled');
+			} else {
+				// error
+			}	
 		} else {
-			alert('fail!');
+			// TODO: indicate failure to user
 		}
-	});
-	console.log(uploader);
-	uploader.on('submit', function(event, id, filename) {
-		$(this).fineuploader('setParams', {order:fileNum++, listingid:listingid}, id);
-	});
+	}).on('submit', function(event, id, filename) {
+		$('.finish-upload-button').addClass('disabled');
+	    $(this).fineUploader('setParams', {'order':fileNum++, 'listingid':listingid});
+  });
+	// function(event, id, filename) {
+//		$(this).fineuploader('setParams', {order:fileNum++, listingid:listingid}, id);
+//	});
 });
 
 /*$(function(){
