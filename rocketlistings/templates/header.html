@@ -49,15 +49,15 @@
 				</li>
 				{% if user.is_authenticated %}
 				<li class="left">
-					<a href="{% url account_listings user.username %}">Listings <i class="icon-th-list icon-white"></i></a>
+					<a href="{% url accounts.views.listings user.username %}">Listings <i class="icon-th-list icon-white"></i></a>
 				</li>
 				<li class="user-link">
-					<a href="{% url account_overview user.username %}">Account <i class="icon-user icon-white"></i></a>
+					<a href="{% url accounts.views.overview user.username %}">Account <i class="icon-user icon-white"></i></a>
 				</li>
 				<li class="right"><a href="{% url auth_logout %}">Logout <i class="icon-off icon-white"></i></a></li>
 				{% else %}
 				<li class="sign-in left">
-					<a href="{% url auth_login %}">Sign-in</a>
+					<a href="{% url auth_login %}">Login</a>
 				</li>
 				<li class="sign-in right">
 					<a href="{% url registration_register %}">Register</a>

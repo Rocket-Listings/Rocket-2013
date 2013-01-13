@@ -16,8 +16,9 @@ ADMINS = (
      ('Teddy', 'teddyknox@gmail.com'),
 )
 
-LOGIN_URL = '/accounts/login/' # hardcoding is bad
-LOGOUT_URL = '/accounts/logout/'
+
+LOGIN_URL = '' # references accounts/urls.py name
+LOGOUT_URL = 'logout' #references accounts/urls.py name
 LOGIN_REDIRECT_URL = '/accounts/'
 LOGOUT_REDIRECT_URL = '/'
 MANAGERS = ADMINS
@@ -88,7 +89,7 @@ STATICFILES_DIRS = (
 # List of finder classes that know how to find static files in
 # various locations.
 STATICFILES_FINDERS = (
-#    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
@@ -100,7 +101,6 @@ SECRET_KEY = '59%5@qdw12&amp;d)47=3=$ar4bv4vcgk)*-_f2=qr9(n9jy%z%1j!'
 TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
     'django.template.loaders.filesystem.Loader',
-
 #     'django.template.loaders.eggs.Loader',
 )
 
@@ -151,7 +151,7 @@ INSTALLED_APPS = (
     'south',
     'registration',
     'ajaxuploader',
-    'sorl.thumbnail'
+    'sorl.thumbnail',
 )
 
 ACCOUNT_ACTIVATION_DAYS = 7

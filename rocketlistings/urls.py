@@ -6,9 +6,9 @@ from django.conf.urls.static import static
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^listings/', include('listings.urls')),
-    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-   	url(r'^accounts/', include('accounts.urls')),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'', include('static_pages.urls')),
+	url(r'^listings/', include('listings.urls')),
+	url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+	url(r'^accounts/', include('accounts.urls')),
+	url(r'^admin/', include(admin.site.urls)),
+	url(r'', include('static_pages.urls'))
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
