@@ -16,9 +16,8 @@ ADMINS = (
      ('Teddy', 'teddyknox@gmail.com'),
 )
 
-
 LOGIN_URL = '' # references accounts/urls.py name
-LOGOUT_URL = 'logout' #references accounts/urls.py name
+LOGOUT_URL = '/accounts/logout' #references accounts/urls.py name
 LOGIN_REDIRECT_URL = '/accounts/'
 LOGOUT_REDIRECT_URL = '/'
 MANAGERS = ADMINS
