@@ -1,9 +1,0 @@
-{% extends 'layouts/standard.html' %}
-
-{% block content %}
-<form method="POST" action="">
-{% csrf_token %}
-{{ form.as_p }}
-<p><input class="btn" type="submit" value="Create your listing!"/></p>
-</form>
-{% endblock %}

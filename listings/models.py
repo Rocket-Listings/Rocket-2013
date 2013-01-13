@@ -21,7 +21,7 @@ class ListingType(models.Model):
 class Listing(models.Model):
 	title = models.CharField(max_length=200)
 	description = models.CharField(max_length=200)
-	pub_date = models.DateTimeField('date published', auto_now_add=False)
+	pub_date = models.DateTimeField('date published', auto_now_add=True)
 	price = models.IntegerField()
 	location = models.CharField(max_length=200)
 	category = models.ForeignKey(ListingCategory)
@@ -32,7 +32,7 @@ class Listing(models.Model):
 		return "%d - %s | %s - %s" % (self.price, self.location, self.title, self.description)
 
 	def get_absolute_url(self):
-		return reverse('listings.views.read', args=[str(self.id)])
+		return reverse('listings.views.detail', args=[str(self.id)])
 
 class ListingSpec(models.Model):
 	key = models.CharField(max_length = 60)

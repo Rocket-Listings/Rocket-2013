@@ -1,9 +1,0 @@
-{% extends 'layouts/standard.html' %}
-
-{% block content %}
-<form action="{% url login-action %}" method="POST">
-{% csrf_token %} 
-	{{ form.as_p }}
-	<p><input class="btn" type="submit" value="Login"/></p>
-</form>
-{% endblock %}

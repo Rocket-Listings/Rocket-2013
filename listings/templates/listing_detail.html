@@ -1,5 +1,12 @@
 {% extends 'listings_base.html' %}
 
 {% block content %}
+{{listing.title}}
+{{listing.description}}
+{{listing.price}}
 
+{% for photo in photos %}
+	<img src="{{photo.url}}"/>
+	{{photo.order}}
+{% endfor %}
 {% endblock %}
