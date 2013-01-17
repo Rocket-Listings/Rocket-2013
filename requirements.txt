@@ -1,6 +1,5 @@
 Django
 South
-django-registration
 ajaxuploader
 sorl-thumbnail
 PIL
