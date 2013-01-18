@@ -1,9 +1,9 @@
 """
-A management command which deletes expired accounts (e.g.,
-accounts which signed up but never activated) from the database.
+A management command which deletes expired users (e.g.,
+users which signed up but never activated) from the database.
 
 Calls ``RegistrationProfile.objects.delete_expired_users()``, which
-contains the actual logic for determining which accounts are deleted.
+contains the actual logic for determining which users are deleted.
 
 """
 

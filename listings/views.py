@@ -3,11 +3,12 @@ from django.conf import settings
 from datetime import datetime, timedelta
 from listings.forms import ListingForm
 from django.shortcuts import render, redirect, get_object_or_404
-from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from ajaxuploader.views import AjaxFileUploader
 from ListingsLocalUploadBackend import ListingsLocalUploadBackend
-
+from django.utils import simplejson
+from django.http import HttpResponse
+from django.core.exceptions import ObjectDoesNotExist
 def latest(request):
 	listings = Listing.objects.all().order_by('-pub_date')[:10]
 	return render(request, 'listings_latest.html', {'listings': listings,})
@@ -52,7 +53,7 @@ def update(request, listing_id):
 			else:
 				return render(request, 'listing_update.html', {'form': listing_form})
 		else:
-			return render(request, 'listing_update.html', {'form':ListingForm(instance = listing),}, context_instance = RequestContext(request))
+			return render(request, 'listing_update.html', {'form':ListingForm(instance = listing),})
 	else:
 		return render(request, '403.html')
 
@@ -61,7 +62,23 @@ def update(request, listing_id):
 def delete(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
 	if request.user == listing.user:
-	#	listing.delete()
-		return redirect('account_overview')
+		listing.delete()
+		return redirect('users.views.overview')
+
+def delete_ajax(request, listing_id):
+	response = {}
+	try:
+		listing = Listing.objects.get(id=listing_id)
+	except ObjectDoesNotExist:
+		response['success'] = False
+		response['reason'] = 'Cannot find listing.'
+
+	if request.user == listing.user:
+		listing.delete()
+		response['success']= True
+	else:
+		response['success'] = False
+		response['reason'] = 'Cannot delete someone else\'s listings!'
+	return HttpResponse(simplejson.dumps(response), content_type = 'application/javascript; charset=utf8')
 
 import_uploader = AjaxFileUploader(backend=ListingsLocalUploadBackend)

@@ -11,14 +11,14 @@ SITE_ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 TEMPLATE_DEBUG = DEBUG
 THUMBNAIL_DEBUG = DEBUG
 
-AUTH_PROFILE_MODULE = 'accounts.UserProfile'
+AUTH_PROFILE_MODULE = 'users.UserProfile'
 ADMINS = (
      ('Teddy', 'teddyknox@gmail.com'),
 )
 
-LOGIN_URL = '/accounts/login/' # references accounts/urls.py name
-LOGOUT_URL = '/accounts/logout/' #references accounts/urls.py name
-LOGIN_REDIRECT_URL = '/accounts/'
+LOGIN_URL = '/users/login/' # references users/urls.py name
+LOGOUT_URL = '/users/logout/' #references users/urls.py name
+LOGIN_REDIRECT_URL = '/users/'
 LOGOUT_REDIRECT_URL = '/'
 
 MANAGERS = ADMINS
@@ -68,11 +68,11 @@ MEDIA_URL = '/media/'
 
 # Minimum time that uploaded photos will stay on server if not assigned to a listing.
 ROCKET_UNUSED_PHOTO_MINS = 10
-
-# need this so that accounts is used instead of user
-ABSOLUTE_URL_OVERRIDES = {
-    'auth.user': lambda u: "/accounts/%s" % u.username,
-}
+SOUTH_AUTO_FREEZE_APP = True
+# need this so that users is used instead of user
+#ABSOLUTE_URL_OVERRIDES = {
+#    'auth.user': lambda u: "/users/%s" % u.username,
+#}
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -152,7 +152,7 @@ INSTALLED_APPS = (
     'rocketlistings',
     'static_pages',
     'listings',
-    'accounts',
+    'users',
     'south',
     'registration',
     'ajaxuploader',

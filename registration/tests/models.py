@@ -208,7 +208,7 @@ class RegistrationModelTests(TestCase):
     def test_management_command(self):
         """
         The ``cleanupregistration`` management command properly
-        deletes expired accounts.
+        deletes expired users.
         
         """
         new_user = RegistrationProfile.objects.create_inactive_user(site=Site.objects.get_current(),

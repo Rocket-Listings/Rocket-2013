@@ -2,7 +2,7 @@ from django.db import models
 from datetime import datetime
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-import rocketlistings.settings as settings
+from django.conf import settings
 
 class ListingCategory(models.Model):
 	name = models.CharField(max_length = 60)
@@ -20,7 +20,7 @@ class ListingType(models.Model):
 
 class Listing(models.Model):
 	title = models.CharField(max_length=200)
-	description = models.CharField(max_length=200)
+	description = models.TextField()
 	pub_date = models.DateTimeField('date published', auto_now_add=True)
 	price = models.IntegerField()
 	location = models.CharField(max_length=200)

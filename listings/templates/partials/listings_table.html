@@ -9,6 +9,8 @@ Requires the context variable listings
 			<th>Location</th>
 			<th>Category</th>
 			<th>Date Listed</th>
+			<th>Edit</th>
+			<th>Delete</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -19,6 +21,8 @@ Requires the context variable listings
 			<td>{{ listing.location }}</td>
 			<td>{{ listing.category.name }}</td>
 			<td>{{ listing.pub_date }}</td>
+			<td><a href="{% url 'listings.views.update' listing.id %}"><i class="icon-edit"></i></a></td>
+			<td><a href="{% url 'listings.views.delete' listing.id %}"><i class="icon-trash"></i></a></td>
 		</tr>
 		{% endfor %}
 	</tbody>

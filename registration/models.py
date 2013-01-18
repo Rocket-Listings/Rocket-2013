@@ -25,7 +25,7 @@ class RegistrationManager(models.Manager):
     
     The methods defined here provide shortcuts for account creation
     and activation (including generation and emailing of activation
-    keys), and for cleaning out expired inactive accounts.
+    keys), and for cleaning out expired inactive users.
     
     """
     def activate_user(self, activation_key):
@@ -111,7 +111,7 @@ class RegistrationManager(models.Manager):
         Remove expired instances of ``RegistrationProfile`` and their
         associated ``User``s.
         
-        Accounts to be deleted are identified by searching for
+        users to be deleted are identified by searching for
         instances of ``RegistrationProfile`` with expired activation
         keys, and then checking to see if their associated ``User``
         instances have the field ``is_active`` set to ``False``; any
@@ -123,7 +123,7 @@ class RegistrationManager(models.Manager):
         provides a custom management command which will call this
         method, accessible as ``manage.py cleanupregistration``.
         
-        Regularly clearing out accounts which have never been
+        Regularly clearing out users which have never been
         activated serves two useful purposes:
         
         1. It alleviates the ocasional need to reset a
@@ -134,9 +134,9 @@ class RegistrationManager(models.Manager):
            receive a new activation key.
         
         2. It prevents the possibility of a malicious user registering
-           one or more accounts and never activating them (thus
+           one or more users and never activating them (thus
            denying the use of those usernames to anyone else); since
-           those accounts will be deleted, the usernames will become
+           those users will be deleted, the usernames will become
            available for use again.
         
         If you have a troublesome ``User`` and wish to disable their
@@ -163,8 +163,8 @@ class RegistrationProfile(models.Model):
     
     Generally, you will not want to interact directly with instances
     of this model; the provided manager includes methods
-    for creating and activating new accounts, as well as for cleaning
-    out accounts which have never been activated.
+    for creating and activating new users, as well as for cleaning
+    out users which have never been activated.
     
     While it is possible to use this model as the value of the
     ``AUTH_PROFILE_MODULE`` setting, it's not recommended that you do

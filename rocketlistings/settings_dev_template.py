@@ -1,8 +1,8 @@
 DEBUG = True
 
 DB_ENGINE = 'django.db.backends.postgresql_psycopg2' 
-DB_NAME = 'postgres' 
-DB_USER = '<your OS username>' 
+DB_NAME = 'teddyknox' 
+DB_USER = 'teddyknox' 
 DB_PASSWORD = '' # blank by default
 DB_HOST = '' # Keep empty string for localhost. 
 DB_PORT = '' # Keep empty string for default. 
