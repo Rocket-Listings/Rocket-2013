@@ -1,6 +1,10 @@
 /* First copy over used styles, then clean them. */
 
 @border-color: #E3E3E3;
+@theme-accent-color: #E26A59;
+html, body { /* sticky footer */
+	height: 100%;
+} 
 
 body {
 	color: #435056;
@@ -9,6 +13,18 @@ body {
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif;
 /*	counter-reset: imgupload;*/
+}
+
+
+.wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -1*@footer-height;
+}
+
+.push {
+    height: @footer-height;
 }
 
 blockquote,
@@ -38,7 +54,7 @@ table {
 .center { margin: 0 auto }
 
 body a {
-	color: #e76a56;
+	color: @theme-accent-color;
 	text-decoration: none;
 }
 
@@ -171,7 +187,7 @@ textarea {
 					font-weight: 600;
 					font-size: 10px;
 					display: block;
-					background: rgba(226,106,89,1);
+					background: @theme-accent-color;
 					[class^="icon-"], 
 					[class*=" icon-"] {
 						vertical-align: middle;
@@ -203,7 +219,7 @@ textarea {
 					width: 6px;
 					padding: 0;
 					height: 22px;
-					background: rgba(226,106,89,1);
+					background: @theme-accent-color;
 					&:hover { border-bottom: none; }
 				}
 
@@ -236,7 +252,7 @@ textarea {
 				}
 
 				&.user-dropdown-menu > a {
-					background: #E26A59;
+					background: @theme-accent-color;
 					padding: 6px 6px 11px 6px;
 					&:hover {
 						padding: 6px 6px 6px 6px;
@@ -247,7 +263,7 @@ textarea {
 				&.user-dropdown-menu ul {
 					display: block;
 					float: right;
-					background: #E26A59;
+					background: @theme-accent-color;
 					position: relative;
 					-moz-border-radius: 0 0 3px 3px;
 					border-radius: 0 0 3px 3px;
@@ -396,7 +412,7 @@ textarea {
 
 	.separator-1 {
 		.separator-2 { 
-			border-top: 5px solid #E26A59; 
+			border-top: 5px solid @theme-accent-color; 
 			border-bottom: solid #b2bec3 1px;
 		}		
 		border-bottom: solid #fff 1px;
@@ -413,7 +429,9 @@ textarea {
 	height: 0;
 }
 
+@footer-height: 66px;
 .footer { 
+	height: @footer-height;
 	border-right: 1px solid @border-color;
 	border-left: 1px solid @border-color;
 	border-bottom: 1px solid @border-color;

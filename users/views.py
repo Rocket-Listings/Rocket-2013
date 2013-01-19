@@ -24,7 +24,7 @@ def overview(request, username=None):
 # 	else:
 # 		return render(request, '403.html')
 	
-	return render(request, 'account_overview.html', {'listings': listings})
+	return render(request, 'user_overview.html', {'listings': listings})
 
 @login_required
 def listings(request, username):
@@ -32,7 +32,7 @@ def listings(request, username):
 	if username:
 		user = get_object_or_404(User, username=username)
 	listings = Listing.objects.filter(user=user).order_by('-pub_date')[:10]
-	return render(request, 'account_overview.html', {'listings': listings})
+	return render(request, 'user_overview.html', {'listings': listings})
 
 @login_required
 def info(request, username):
