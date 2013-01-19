@@ -5,3 +5,4 @@ sorl-thumbnail
 PIL
 python-memcached
 psycopg2
+django-registration
