@@ -18,14 +18,13 @@
 			<div class="l-thumbnails">
 				{% for photo in photos %}
 					{% thumbnail photo.thumbnail_url "100x100" as im %}
-    				<img src="{{ im.url }}">
+    				<img src="{{ im.url }}" data-full="{{ photo.url }}" data-id="{{ photo.order }}"/>
 					{% endthumbnail %}
 				{% endfor %}
 			</div>
 		</div>
 		{% endif %}
 		<div class="l-info l-entry">
-			<h2 class="l-entry-title">Description</h2>
 			<p class="l-entry-content">{{listing.description}}</div>
 			<div class="clearfix"></div>
 		</div>		
@@ -65,12 +64,11 @@
 		{# </div> #}
 
 		<div class="l-entry">
-			<h2 class="l-entry-title">Seller Info</h2>
+			<h3 class="l-entry-title">Seller Info</h3>
 			{# {% if listing.user.anonymize == 0 %} #}
 			<div class="l-entry-content l-sellerinfo">
 				<img class="l-seller-profpic" width="60" height="60" src="" />
 				<div class="l-seller-info">
-					<h4>seller detail</h4>
 					{# {% if listing.user.email %} #}
 					<cite>
 						e: <a href="mailto:{{listing.user.email}}" class="mailLink">mailto:teddyknox@gmail.com</a>
@@ -102,7 +100,7 @@
 	</div>		{% endcomment %}
 	<div class="l-footnot">
 		<a href="http://www.rocketlistings.com" class="icon">Rocket Lisiting</a>
-		<p>Created with Rocket Listings. Blast off.</p>
+		<span>Created with Rocket Listings. Blast off.</span>
 	</div>
 </div>
 {% endblock %}

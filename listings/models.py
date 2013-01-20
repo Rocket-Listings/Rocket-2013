@@ -29,7 +29,7 @@ class Listing(models.Model):
 	user = models.ForeignKey(User)
 
 	def __unicode__(self):
-		return "%d - %s | %s - %s" % (self.price, self.location, self.title, self.description)
+		return self.title
 
 	def get_absolute_url(self):
 		return reverse('listings.views.detail', args=[str(self.id)])

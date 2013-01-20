@@ -7,3 +7,5 @@ python-memcached
 psycopg2
 django-registration
 pyyaml
+django-haystack
+whoosh

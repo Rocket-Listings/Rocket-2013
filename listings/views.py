@@ -36,7 +36,8 @@ def create(request):
 
 def detail(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
-	photos = ListingPhoto.objects.filter(listing=listing)
+	photos = ListingPhoto.objects.filter(listing=listing).order_by('order')
+
 	# provide `url` and `thumbnail_url` for convenience.
 	photos = map(lambda photo: {'url':settings.MEDIA_URL+photo.url, 'thumbnail_url':photo.url, 'order':photo.order}, photos) 
 	return render(request, 'listing_detail.html', {'listing':listing, 'photos':photos})

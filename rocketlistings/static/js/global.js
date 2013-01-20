@@ -1,8 +1,8 @@
 $(function(){
-	// Setup fancybox
+// 	Setup fancybox
 //  $(".fancybox").fancybox();
 	
-	var listingid = (location.pathname.match(/listings\/\d+/) || "").substring(9) || 0;
+//	var listingid = (location.pathname.match(/listings\/\d+/) || "").substring(9) || 0;
 	fileNum = 0;
 	var uploader = $('#file-uploader').fineUploader({
 		debug: true,
