@@ -1,29 +1,28 @@
 $(function() {
 	ZeroClipboard.setDefaults({moviePath: '/static/js/ZeroClipboard.swf'});
 	var clip = new ZeroClipboard( $(".clipboard") );
-	console.log('hello world');
-	var currentImageID = window.location.hash;
-	var stageFilled = false;
-	if(currentImageID) {
-		$('.l-gallery .l-thumbnails').each(function(index, element) {
-			if($(element).attr('data-id') == currentImageID){
-				fillStage(element);
-				stageFilled = true;
-				return false;
-			}
-		});
-	} 
 
-	if(!stageFilled) { 
-		fillStage($('.l-gallery .l-thumbnails img').first());
+	var photoId = parseInt((window.location.hash || "").substring(1));
+	if(photoId) {
+		if($($('.l-thumbnails img')[photoId]).attr('data-id') == photoId) {
+			fillStage($($('.l-thumbnails img')[photoId]));
+		} else {
+			$('.l-thumbnails img').each(function(index, element) {
+				if($(element).attr('data-id') == photoId){
+					fillStage($(element));
+					return false; // break iteration
+				}
+			});
+		}
 	}
-	console.log('hello');
-	$('.l-gallery .l-thumbnails img').click(function(event){
-		fillStage($(event.target));
 
+	$('.l-thumbnails img').click(function(event){
+		fillStage($(event.target));
 	});
 
 	function fillStage(image) {
-		$(".l-gallery .l-stage img").attr('src', image.attr('data-full'));
+		$(".l-stage img").attr('src', image.attr('data-full'));
+		id = image.attr('data-id');
+		window.location.hash = image.attr('data-id');
 	}
 });

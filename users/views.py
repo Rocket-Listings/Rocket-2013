@@ -36,4 +36,4 @@ def listings(request, username):
 
 @login_required
 def info(request, username):
-	return None
+	return request.user.userprofile
