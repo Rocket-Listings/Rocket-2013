@@ -1,9 +1,12 @@
 $(function(){
-// 	Setup fancybox
 //  $(".fancybox").fancybox();
-	
-//	var listingid = (location.pathname.match(/listings\/\d+/) || "").substring(9) || 0;
-	fileNum = 0;
+	var exp = /listings\/\d+/gi;
+	var listingid = 0;
+	var listingMatch = location.pathname.match(exp);
+	if (listingMatch) {
+		listingMatch[0].substring(9);
+	}
+	var fileNum = 0;
 	var uploader = $('#file-uploader').fineUploader({
 		debug: true,
 		request: {
@@ -17,7 +20,11 @@ $(function(){
 			sizeLimit: 10485760,
 			acceptFiles: 'image/*'
 		},
-		multiple: true
+		multiple: true,
+		dragAndDrop: {
+			disableDefaultDropzone: true,
+	//		extraDropzones: [$('.wrap')]
+		}
 	}).on('complete', function(event, id, filename, responseJSON){
 		//response = $.parseJSON(responseJSON);
 		if(responseJSON.success) {

@@ -14,13 +14,13 @@
 			<div class="l-thumbnails">
 			{% for photo in photos %}
 				{% thumbnail photo.url "100x100" as im %}
-	   			<img src="{{ im.url }}" data-full="{{MEDIA_URL}}{{ photo.url }}" data-id="{{ photo.order }}"/>
+	   			<img src="{{ im.url }}" data-full="{{ MEDIA_URL }}{{ photo.url }}" data-id="{{ photo.order }}"/>
 				{% endthumbnail %}
 			{% endfor %}					
 			</div>
 			<div class="l-stage">
 				{% with photos|first as first_photo %}
-				<img src"{{ MEDIA_URL }}{{ first_photo.url}}"/>
+				<img src="{{MEDIA_URL}}{{ first_photo.url}}"/>
 				{% endwith %}
 			</div>
 

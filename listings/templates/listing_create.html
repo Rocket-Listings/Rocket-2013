@@ -3,7 +3,9 @@
 {% block content %}
 <form method="POST" action="">
 {% csrf_token %}
+<ul class="form">
 {{ form.as_ul }}
-<p><input class="btn" type="submit" value="Create your listing!"/></p>
+<li><input class="btn" type="submit" value="Create your listing!"/></li>
+</ul>
 </form>
 {% endblock %}

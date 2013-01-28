@@ -1,0 +1,41 @@
+{% extends 'users_base.html' %}
+{% block title %}Account Info{% endblock %}
+
+{% block content %}
+<h3>{{user.username}}</h3>
+<table class="table user-profile-table">
+	<tbody>
+		<tr>
+			<td>Name:</td>
+			<td>{{ profile.name }}</td>
+		</tr>
+		<tr>
+			<td>Email:</td>
+			<td>{{ profile.email }}</td>
+		</tr>
+		<tr>
+			<td>Seller Blurb:</td>
+			<td>{{ profile.bio }}</td>
+		</tr>
+		<tr>
+			<td>Location:</td>
+			<td>{{ profile.location }}</td>
+		</tr>
+		<tr>
+			<td>Default Category:</td>
+			<td>{{ profile.default_category.name }}</td>
+		</tr>
+		<tr>
+			<td>Default Listing Type:</td>
+			<td>{{ profile.default_listing_type.name }}</td>
+		</tr>
+	</tbody>
+</table>
+
+<div class="user-info-buttons">
+	<a class="btn btn-info" href="{% url users.views.edit user.username %}">Edit your account info.</a>
+	<a class="btn btn-warning" href="{% url auth_password_change %}">Change your password.</a>
+	<div class="clearfix"></div>
+</div>
+
+{% endblock %}

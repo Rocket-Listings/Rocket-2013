@@ -16,7 +16,10 @@ def latest(request):
 @login_required
 def create(request):
 	if request.method == 'GET':
-		return render(request, 'listing_create.html', {'form':ListingForm(),})
+		profile = request.user.profile
+		defaults = {'location':profile.location, 'category':profile.default_category, 'listing_type':profile.default_listing_type}
+		form = ListingForm(initial=defaults)
+		return render(request, 'listing_create.html', {'form':form})
 	elif request.method == 'POST':
 		listing_form = ListingForm(request.POST)
 		if listing_form.is_valid():

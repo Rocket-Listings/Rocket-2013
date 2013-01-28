@@ -8,25 +8,22 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'UserProfile'
-        db.create_table('accounts_userprofile', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True)),
-        ))
-        db.send_create_signal('accounts', ['UserProfile'])
 
+        # Changing field 'UserProfile.default_category'
+        db.alter_column('users_userprofile', 'default_category_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingCategory'], null=True))
+
+        # Changing field 'UserProfile.default_listing_type'
+        db.alter_column('users_userprofile', 'default_listing_type_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingType'], null=True))
 
     def backwards(self, orm):
-        # Deleting model 'UserProfile'
-        db.delete_table('accounts_userprofile')
 
+        # Changing field 'UserProfile.default_category'
+        db.alter_column('users_userprofile', 'default_category_id', self.gf('django.db.models.fields.related.ForeignKey')(default=0, to=orm['listings.ListingCategory']))
+
+        # Changing field 'UserProfile.default_listing_type'
+        db.alter_column('users_userprofile', 'default_listing_type_id', self.gf('django.db.models.fields.related.ForeignKey')(default=0, to=orm['listings.ListingType']))
 
     models = {
-        'accounts.userprofile': {
-            'Meta': {'object_name': 'UserProfile'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True'})
-        },
         'auth.group': {
             'Meta': {'object_name': 'Group'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -62,7 +59,30 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
+        },
+        'listings.listingcategory': {
+            'Meta': {'object_name': 'ListingCategory'},
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '60'})
+        },
+        'listings.listingtype': {
+            'Meta': {'object_name': 'ListingType'},
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '60'})
+        },
+        'users.userprofile': {
+            'Meta': {'object_name': 'UserProfile'},
+            'bio': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
+            'default_category': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['listings.ListingCategory']", 'null': 'True', 'blank': 'True'}),
+            'default_listing_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['listings.ListingType']", 'null': 'True', 'blank': 'True'}),
+            'email': ('django.db.models.fields.EmailField', [], {'max_length': '255', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'location': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
+            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True'})
         }
     }
 
-    complete_apps = ['accounts']
+    complete_apps = ['users']

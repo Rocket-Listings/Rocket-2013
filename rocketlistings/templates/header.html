@@ -52,7 +52,7 @@
 					<a href="{% url users.views.listings user.username %}">Listings <i class="icon-th-list icon-white"></i></a>
 				</li>
 				<li class="user-link">
-					<a href="{% url users.views.overview user.username %}">Account <i class="icon-user icon-white"></i></a>
+					<a href="{% url users.views.info user.username %}">Account <i class="icon-user icon-white"></i></a>
 				</li>
 				<li class="right"><a href="{% url auth_logout %}">Logout <i class="icon-off icon-white"></i></a></li>
 				{% else %}

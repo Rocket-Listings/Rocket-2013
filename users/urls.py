@@ -5,5 +5,6 @@ urlpatterns = patterns('',
     url(r'^(?P<username>\w+)$', 'users.views.overview', name='registration_activation_complete'),
     url(r'^(?P<username>\w+)/listings$', 'users.views.listings'),
     url(r'^(?P<username>\w+)/info$', 'users.views.info'),
+    url(r'^(?P<username>\w+)/edit$', 'users.views.edit'),
 	(r'', include('registration.backends.simple.urls')),
 )

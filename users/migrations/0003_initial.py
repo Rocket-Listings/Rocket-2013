@@ -9,24 +9,25 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Adding model 'UserProfile'
-        db.create_table('accounts_userprofile', (
+        db.create_table('users_userprofile', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('user', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('location', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('default_category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingCategory'])),
+            ('default_listing_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingType'])),
+            ('email', self.gf('django.db.models.fields.EmailField')(max_length=255)),
+            ('bio', self.gf('django.db.models.fields.TextField')()),
         ))
-        db.send_create_signal('accounts', ['UserProfile'])
+        db.send_create_signal('users', ['UserProfile'])
 
 
     def backwards(self, orm):
         # Deleting model 'UserProfile'
-        db.delete_table('accounts_userprofile')
+        db.delete_table('users_userprofile')
 
 
     models = {
-        'accounts.userprofile': {
-            'Meta': {'object_name': 'UserProfile'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True'})
-        },
         'auth.group': {
             'Meta': {'object_name': 'Group'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -62,7 +63,30 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
+        },
+        'listings.listingcategory': {
+            'Meta': {'object_name': 'ListingCategory'},
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '60'})
+        },
+        'listings.listingtype': {
+            'Meta': {'object_name': 'ListingType'},
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '60'})
+        },
+        'users.userprofile': {
+            'Meta': {'object_name': 'UserProfile'},
+            'bio': ('django.db.models.fields.TextField', [], {}),
+            'default_category': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['listings.ListingCategory']"}),
+            'default_listing_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['listings.ListingType']"}),
+            'email': ('django.db.models.fields.EmailField', [], {'max_length': '255'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'location': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True'})
         }
     }
 
-    complete_apps = ['accounts']
+    complete_apps = ['users']
