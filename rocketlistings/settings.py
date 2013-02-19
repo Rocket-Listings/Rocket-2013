@@ -156,6 +156,7 @@ INSTALLED_APPS = (
     'registration',
     'ajaxuploader',
     'sorl.thumbnail',
+    'django_extensions', #added for some extra tools like reset_db
 )
 
 HAYSTACK_SITECONF = 'rocketlistings.search_sites'

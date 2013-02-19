@@ -39,14 +39,14 @@ def listings(request, username):
 
 @login_required
 def info(request, username):
-	profile = request.user.profile
+	profile = request.user.get_profile()
 	return render(request, 'user_info.html', {'profile':profile,})
 
 @login_required
 def edit(request, username):
 	if request.user.username == username:
 		user = request.user
-		profile = user.profile
+		profile = user.get_profile()
 		if request.method == 'POST':
 			user_profile_form = UserProfileForm(request.POST, instance = profile)
 			if user_profile_form.is_valid():
