@@ -9,6 +9,7 @@ from ListingsLocalUploadBackend import ListingsLocalUploadBackend
 from django.utils import simplejson
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
+
 def latest(request):
 	listings = Listing.objects.all().order_by('-pub_date')[:10]
 	return render(request, 'listings_latest.html', {'listings': listings,})
@@ -27,7 +28,7 @@ def create(request):
 			listing.user = request.user
 			listing.save()
 			expire_time = datetime.now() - timedelta(minutes=settings.ROCKET_UNUSED_PHOTO_MINS)
-			ListingPhoto.objects.filter(upload_ip=request.META['REMOTE_ADDR'], upload_date__gt=expire_time).update(listing=listing)
+			ListingPhoto.objects.filter(upload_ip=request.META['REMOTE_ADDR'], upload_date__gt=expire_time, listing=None).update(listing=listing)
 			if request.user.is_authenticated():
 				return redirect(listing)
 			else:
@@ -44,6 +45,14 @@ def detail(request, listing_id):
 	# provide `url` and `thumbnail_url` for convenience.
 	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos) 
 	return render(request, 'listing_detail.html', {'listing':listing, 'photos':photos})
+
+def embed(request, listing_id):
+	listing = get_object_or_404(Listing, id=listing_id)
+	photos = ListingPhoto.objects.filter(listing=listing).order_by('order')
+
+	# provide `url` and `thumbnail_url` for convenience.
+	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos) 
+	return render(request, 'listing_cl_embed.html', {'listing':listing, 'photos':photos})
 
 @login_required
 def update(request, listing_id):

@@ -12,7 +12,8 @@
 		<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/global.css">
 		{% block css %}{% endblock%}
 
-		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		{# <script src="http://code.jquery.com/jquery-latest.js"></script> #}
+	    <script src="{{ STATIC_URL }}js/jquery-1.9.0.js"></script>
 	    <script src="{{ STATIC_URL }}js/bootstrap/bootstrap.min.js"></script>
         <script src="{{ STATIC_URL }}js/fineuploader/jquery.fineuploader-3.1.1.js" ></script>
         {#<script src="{{ STATIC_URL }}js/fancybox/jquery.fancybox.js"></script>#}
