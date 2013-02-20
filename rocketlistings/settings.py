@@ -1,6 +1,6 @@
 # Django settings for rocketlistings project.
 import os
-if os.environ.get('PRODUCTION', None):
+if os.environ.get('ROCKET_PRODUCTION', None):
     from settings_prod import *
 else:
     from settings_dev import *
@@ -13,7 +13,9 @@ THUMBNAIL_DEBUG = DEBUG
 
 AUTH_PROFILE_MODULE = 'users.UserProfile'
 ADMINS = (
-     ('Teddy', 'teddyknox@gmail.com'),
+     ('Teddy Knox', 'teddy@rocketlistings.com'),
+     ('Brian Sirkia', 'brian@rocketlistings.com'),
+     ('Nat Kelner', 'nat@rocketlistings.com'),
 )
 
 LOGIN_URL = '/users/login/' # references users/urls.py name

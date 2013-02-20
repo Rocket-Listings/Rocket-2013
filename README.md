@@ -1,5 +1,7 @@
 # Rocket Listings - Django
 
+_Last updated: 2/20/12_
+
 ## Setup
 
 ### Python installation
@@ -33,20 +35,15 @@ This next line installs all of our project's dependencies.
 
 	pip install -r requirements.txt
 
+### Postgres/MySQL installation
 
-### Postgres installation
+First remove any broken postgres installations you may have. 
 
-First remove any broken postgres installations you may have.
+    brew remove postgres
 
-Now we install Postgres:
+    brew cleanup
 
-	brew install postgres
-
-Homebrew will print out some instructions on registering the DB with OSX to start up on boot, but if you mind having Postgres running all the time, you can just start postgres on an as-needed basis in a new terminal tab by running the command homebrew gives you.
-
-If you want to see all the info about the `postgres` installation again later, you can go `brew info postgres`.
-
-Your postgres database name is `postgres` by default. Your postgres username is your `OS` username by default, and the default password is blank.
+Download and install the (postgres app)[http://postgresapp.com/].
 
 ### Rocket Listings installation
 
@@ -58,15 +55,25 @@ Open up Sublime text and in the top menu go `Project -> Add Folder to Project`, 
 
 In sublime text, open `Rocket-Listings-Django/rocketlistings/settings_dev_template.py`, and enter your Postgres username where indicated. Save the file not as `settings_dev_template.py`, but as `settings_dev.py`. You can do a `save_as` by going Command+Shift+S.
 
-Going back to the terminal, inside the project root directory (`Rocket-Listings-Django`) run this:
+Going back to the terminal, inside the project root directory (`Rocket-Listings-Django`) run the following commands in order, __making sure to say no when it asks you whether you want to create a superuser__:
 
 	python manage.py syncdb
 
+	python manage.py schemamigration listings --initial
+	python manage.py migrate listings --fake
+
+	python manage.py schemamigration users --initial
+	python manage.py migrate users --fake
+
+Now we create the superuser:
+	
+	python manage.py createsuperuser
+
 This adds all the DB tables you need for the project to work.
 
-If that runs without errors, it means your postgres install is working. That's very very good. Think about how good that is. 
+If that runs without errors, it means your db install is working. That's very very good. Think about how good that is. 
 
-After this command, the terminal may prompt you for you to add some superuser information. This is for administration of the local site, and has nothing to do with the codebase, so feel free to put your own info in there. 
+The superuser information is for administration of the local site, and has nothing to do with the codebase, so feel free to put your own info in there. 
 
 ### Start the development server
 
@@ -82,9 +89,13 @@ You'll hopefully find the new version of the Rocket Listings site.
 
 Let's stop for a second and realize how much easier that was than setting up the PHP site with all its Rails migrations, git submodule syncing, and apache virtual hosts.
 
-## Development Stuff
+If you want to show others the site you can run:
 
-### Tricks (?!)
+	python manage.py runserver 0.0.0.0:8000
+
+And then you can direct them to your ip (found using `ifconfig`) in their browser with `:8000` added to the end. This only works when you're on the same network as the person you want to show it to.
+
+## Development Stuff
 
 #### Shorten `python manage.py`
 If you're tired of typing `python manange.py runserver`,

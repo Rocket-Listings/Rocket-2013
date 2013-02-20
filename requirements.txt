@@ -5,7 +5,10 @@ sorl-thumbnail
 PIL
 python-memcached
 psycopg2
+mysql-python
 django-registration
 pyyaml
 django-haystack
 whoosh
+django-extensions
+virtualenv

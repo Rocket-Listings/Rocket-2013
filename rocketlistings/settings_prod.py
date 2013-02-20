@@ -1,8 +1,8 @@
 DEBUG = False
 
-DB_ENGINE = 'django.db.backends.postgresql_psycopg2' 
-DB_NAME = 'TBD' # Or path to database file if using sqlite3.
-DB_USER = 'TBD' # Not used with sqlite3.
+DB_ENGINE = 'django.db.backends.mysql' 
+DB_NAME = 'rocketlistings' # Or path to database file if using sqlite3.
+DB_USER = 'root' # Not used with sqlite3.
 DB_PASSWORD = '' # Not used with sqlite3.
 DB_HOST = '' # Keep empty string for localhost. 
 DB_PORT = '' # Keep empty string for default. 
