@@ -3,8 +3,9 @@ body{color:#435056;background-color:#F5F5F5;font-style:normal;font-family:Arial,
 .wrap{min-height:100%;height:auto !important;height:100%;margin:0 auto -66px;}
 .push{height:66px;}
 blockquote,q{quotes:none;}blockquote:before,q:before,blockquote:after,q:after{content:'';content:none;}
-.form li{list-style-type:none;}
-.form input,.form textarea,.form select{width:240px;}
+form ul li{list-style-type:none;}
+form .errorlist{color:red;}
+form input,form textarea,form select{width:160px;}
 .aCenter{text-align:center;}
 .center{margin:0 auto;}
 body a{color:#e26a59;text-decoration:none;}

@@ -6,7 +6,6 @@ PIL
 python-memcached
 psycopg2
 mysql-python
-django-registration
 pyyaml
 django-haystack
 whoosh

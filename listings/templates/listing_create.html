@@ -1,11 +1,16 @@
 {% extends 'listings_base.html' %}
 
 {% block content %}
-<form method="POST" action="">
-{% csrf_token %}
-<ul class="form">
-{{ form.as_ul }}
-<li><input class="btn" type="submit" value="Create your listing!"/></li>
-</ul>
-</form>
+<div class="listing-edit">
+	<form method="POST" action="">
+		{% csrf_token %}
+		<ul class="form">
+			{{ form.as_ul }}
+			<br/>
+			<li><input class="btn" type="submit" value="Create your listing!"/></li>
+		</ul>
+	</form>
+</div>
+{% include 'partials/listing_edit_dash.html' %}
+<div class="clearfix"></div>
 {% endblock %}

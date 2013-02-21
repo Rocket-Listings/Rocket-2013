@@ -1,4 +1,6 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+{% load thumbnail %}
+{% spaceless %}
+{# <!DOCTYPE> #}
 <table border="0" cellspacing="0" cellpadding="0" align="center">
 	<tr>
 		<td>
@@ -6,18 +8,16 @@
 				<tr>
 					<td bgcolor="#FFFFFF">
 						<table border="0" cellspacing="0" cellpadding="15">
+							{% if photos %}
 							<tr>
 								<td width="460">
 									{% with photos|first as first_photo %}
 									<a href="{{ listing.get_absolute_url }}" target="_blank">
-										<img src="{{MEDIA_URL}}{{ first_photo.url}}" />
+										<img src="{{MEDIA_URL}}{{ first_photo.url}}" width="400" />
 									</a>									
-									{% endif %}
-
 									{% endwith %}
 								</td>
 							</tr>
-							{% if images %}
 							<tr>
 								<td>
 									<font face="Verdana, Geneva, sans-serif" size="-1">
@@ -26,7 +26,7 @@
 									<br /><br />
 									{% for photo in photos %}
 										{% thumbnail photo.url "100x100" as im %}
-										<a href="" target="_blank"><img src="{{ im.url }}" data-full="{{ MEDIA_URL }}{{ photo.url }}" data-id="{{ photo.order }}"></a>
+										<a href="{{ listing.get_absolute_url }}#{{ photo.order}}" target="_blank"><img src="{{ im.url }}" data-full="{{ MEDIA_URL }}{{ photo.url }}" data-id="{{ photo.order }}"></a>
 										{% endthumbnail %}
 									{% endfor %}
 								</td>
@@ -37,10 +37,12 @@
 							<tr>
 								<td width="800" align="center">
 									<font face="Arial, Helvetica, sans-serif" size="-1">
-										{% if listing.listing_type == 'private' %}
+										{% if listing.listing_type.name == 'Private' %}
 											<p>For Sale by Owner</p>
-										{% elseif listing.listing_type == 'dealer' %}
+										{% elif listing.listing_type.name == 'Dealer' %}
 											<p>For Sale by Dealer</p>
+										{% else %}
+											<p>{{ listing.listing_type.name }}</p>
 										{% endif %}
 									</font>
 								</td>
@@ -52,10 +54,9 @@
 									<table border="1" cellspacing="0" cellpadding="10" width="100%" bordercolor="#D2DADD" style="border-collapse: collapse;">
 										<tr>
 											<td>
-
 												<font face="Arial, Helvetica, sans-serif" size="+1"><b>Description</b></font>
-												{{listing.description|nl2p('<font face="Verdana, Geneva, sans-serif" size="2">', '</font>')}}
-
+												<br/>
+												<font face="Verdana, Geneva, sans-serif" size="2">{{listing.description|linebreaks }}</font>
 											</td>
 										</tr>
 									</table>
@@ -84,8 +85,8 @@
 							{% if listing.location %}
 							<tr>
 								<td colspan="2">
-									<h3><font face="Arial, Helvetica, sans-serif">Location: <i>{{listing.location}}</i></font></h3>
-									<p><font face="Arial, Helvetica, sans-serif" size="-1"><a href="https://maps.google.com?q={{listing.location|url_encode()}}">Directions</a></font></p>
+									<h3><font face="Arial, Helvetica, sans-serif">Location: <a href="https://maps.google.com?q={{ listing.location|urlencode }}"><i>{{listing.location}}</i></a></font></h3>
+									<p><font face="Arial, Helvetica, sans-serif" size="-1"></font></p>
 								</td>
 							</tr>
 							{% endif %}
@@ -96,7 +97,7 @@
 					<td>
 						<table border="0" cellspacing="0" cellpadding="10" width="800">
 							<tr>
-								<td valign="middle" align="center" width="75" bgcolor="#F2F5F6" height="50"><a href="http://www.rocketlistings.com/" rel="nofollow"><img src="http://www.rocketlistings.com/images/iconFootnote.png" alt=" " /></a>
+								<td valign="middle" align="center" width="75" bgcolor="#F2F5F6" height="50"><a href="http://www.rocketlistings.com/" rel="nofollow"><img src="/static/img/icon-footnote.png" alt="" /></a>
 								</td>
 								<td valign="middle" align="center" bgcolor="#E7EDEF"><font face="Verdana, Geneva, sans-serif" size="-2">Created with <a href="http://www.rocketlistings.com/" rel="nofollow">Rocket Listings</a>. Blast off.</font>
 								</td>
@@ -108,3 +109,4 @@
 		</td>
 	</tr>
 </table>
+{% endspaceless %}

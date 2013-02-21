@@ -1,13 +1,15 @@
 {% extends 'users_base.html' %}
 
 {% block content %}
+<p class="text-success message" style="display:none;">Don't worry, your photos were saved. After logging in you'll be taken to finish your listing.</p>
 <form action="{% url auth_login %}" method="POST">
-{% csrf_token %} 
+{% csrf_token %}
 	<ul class="form">
 		{{ form.as_ul }}
 		<li><input class="btn" type="submit" value="Login"/></li>
 	</ul>
 	<input type="hidden" name="next" value="{{ next }}" />
-	<a href="{% url auth_password_reset %}">Forgot your password?</a>
+	<a href="{% url auth_password_reset %}">Forgot your password?</a><br/>
+	<a href="{% url registration_register %}{% if next %}?next={{next}}{% endif%}">Create an account</a>
 </form>
 {% endblock %}
