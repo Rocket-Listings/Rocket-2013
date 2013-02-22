@@ -1,13 +1,13 @@
 # Django settings for rocketlistings project.
 import os
 
-DATABASES = {}
-
  # DATABASE_URL is a heroku env var
 if os.environ.get('DATABASE_URL', None):
     from settings_prod import *
 else:
     from settings_dev import *
+
+DATABASES = { 'default': DB }
     
 #APP_ROOT = os.path.abspath(os.path.dirname(__file__))
 SITE_ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
