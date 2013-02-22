@@ -1,11 +1,11 @@
+import dj_database_url
+
+DATABASES['default'] =  dj_database_url.config()
+
 DEBUG = False
 
-DB_ENGINE = 'django.db.backends.mysql' 
-DB_NAME = 'rocketlistings' # Or path to database file if using sqlite3.
-DB_USER = 'root' # Not used with sqlite3.
-DB_PASSWORD = '' # Not used with sqlite3.
-DB_HOST = '' # Keep empty string for localhost. 
-DB_PORT = '' # Keep empty string for default. 
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

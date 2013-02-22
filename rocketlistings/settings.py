@@ -1,6 +1,10 @@
 # Django settings for rocketlistings project.
 import os
-if os.environ.get('ROCKET_PRODUCTION', None):
+
+DATABASES = {}
+
+ # DATABASE_URL is a heroku env var
+if os.environ.get('DATABASE_URL', None):
     from settings_prod import *
 else:
     from settings_dev import *
@@ -24,17 +28,6 @@ LOGIN_REDIRECT_URL = '/users/'
 LOGOUT_REDIRECT_URL = '/'
 
 MANAGERS = ADMINS
-
-DATABASES = {
-    'default': {
-        'ENGINE': DB_ENGINE, # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': DB_NAME,                      # Or path to database file if using sqlite3.
-        'USER': DB_USER,                      # Not used with sqlite3.
-        'PASSWORD': DB_PASSWORD,                  # Not used with sqlite3.
-        'HOST': DB_HOST,                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': DB_PORT,                      # Set to empty string for default. Not used with sqlite3.
-    }
-}
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
