@@ -19,6 +19,9 @@
         {#<script src="{{ STATIC_URL }}js/fancybox/jquery.fancybox.js"></script>#}
         <script src="{{ STATIC_URL }}js/jquery.cookie.js"></script> {# this is for ajax upload #}
 	    <script src="{{ STATIC_URL }}js/global.js"></script>
+	    <script type="text/javascript">
+		   var STATIC_URL = "{{ STATIC_URL }}";
+		</script>
 		{% block js %}{% endblock %}
 
 	</head>
