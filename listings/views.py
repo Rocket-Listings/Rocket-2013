@@ -5,7 +5,8 @@ from listings.forms import ListingForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from ajaxuploader.views import AjaxFileUploader
-from ListingsLocalUploadBackend import ListingsLocalUploadBackend
+#from ListingsLocalUploadBackend import ListingsLocalUploadBackend
+from ajaxuploader.backends.default_storage import DefaultStorageUploadBackend
 from django.utils import simplejson
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
@@ -94,4 +95,4 @@ def delete_ajax(request, listing_id):
 		response['reason'] = 'Cannot delete someone else\'s listings!'
 	return HttpResponse(simplejson.dumps(response), content_type = 'application/javascript; charset=utf8')
 
-import_uploader = AjaxFileUploader(backend=ListingsLocalUploadBackend)
+import_uploader = AjaxFileUploader(backend=DefaultStorageUploadBackend)

@@ -3,12 +3,12 @@ import os
 
  # DATABASE_URL is a heroku env var
 if bool(os.environ.get('DATABASE_URL', '')):
-    from settings_prod import *
+	from settings_prod import *
 else:
-    from settings_dev import *
+	from settings_dev import *
 
 DATABASES = { 'default': DB }
-    
+	
 #APP_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 TEMPLATE_DEBUG = DEBUG
@@ -16,9 +16,9 @@ THUMBNAIL_DEBUG = DEBUG
 
 AUTH_PROFILE_MODULE = 'users.UserProfile'
 ADMINS = (
-     ('Teddy Knox', 'teddy@rocketlistings.com'),
-     ('Brian Sirkia', 'brian@rocketlistings.com'),
-     ('Nat Kelner', 'nat@rocketlistings.com'),
+	 ('Teddy Knox', 'teddy@rocketlistings.com'),
+	 ('Brian Sirkia', 'brian@rocketlistings.com'),
+	 ('Nat Kelner', 'nat@rocketlistings.com'),
 )
 
 LOGIN_URL = '/users/login/' # references users/urls.py name
@@ -64,16 +64,16 @@ STATIC_ROOT = SITE_ROOT+'/static_collected/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+	# Put strings here, like "/home/html/static" or "C:/www/django/static".
+	# Always use forward slashes, even on Windows.
+	# Don't forget to use absolute paths, not relative paths.
 )
 
 # List of finder classes that know how to find static files in
 # various locations.
 STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+	'django.contrib.staticfiles.finders.FileSystemFinder',
+	'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
@@ -90,28 +90,30 @@ SECRET_KEY = '59%5@qdw12&amp;d)47=3=$ar4bv4vcgk)*-_f2=qr9(n9jy%z%1j!'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    'django.template.loaders.app_directories.Loader',
-    'django.template.loaders.filesystem.Loader',
+	'django.template.loaders.app_directories.Loader',
+	'django.template.loaders.filesystem.Loader',
 #     'django.template.loaders.eggs.Loader',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.core.context_processors.static',
-    'django.contrib.auth.context_processors.auth',
-    'django.contrib.messages.context_processors.messages',
+	'django.core.context_processors.debug',
+	'django.core.context_processors.i18n',
+	'django.core.context_processors.media',
+	'django.core.context_processors.static',
+	'django.contrib.auth.context_processors.auth',
+	'django.contrib.messages.context_processors.messages',
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	'django.middleware.cache.UpdateCacheMiddleware',
+	'django.middleware.common.CommonMiddleware',
+	'django.contrib.sessions.middleware.SessionMiddleware',
+	'django.middleware.csrf.CsrfViewMiddleware',
+	'django.contrib.auth.middleware.AuthenticationMiddleware',
+	'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',	
+	# Uncomment the next line for simple clickjacking protection:
+	# 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 ROOT_URLCONF = 'rocketlistings.urls'
@@ -120,33 +122,33 @@ ROOT_URLCONF = 'rocketlistings.urls'
 WSGI_APPLICATION = 'rocketlistings.wsgi.application'
 
 TEMPLATE_DIRS = (
-    #'/templates/',
-    #os.path.join(SITE_ROOT, 'templates'),
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+	#'/templates/',
+	#os.path.join(SITE_ROOT, 'templates'),
+	# Always use forward slashes, even on Windows.
+	# Don't forget to use absolute paths, not relative paths.
 )
 
 INSTALLED_APPS = (
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
+	'django.contrib.auth',
+	'django.contrib.contenttypes',
+	'django.contrib.sessions',
 #    'django.contrib.sites',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+	'django.contrib.messages',
+	'django.contrib.staticfiles',
 #    'suit',
-    'django.contrib.admin',
-    'django.contrib.admindocs',
-    'haystack',
-    'rocketlistings',
-    'static_pages',
-    'listings',
-    'users',
-    'south',
-    'registration',
-    'ajaxuploader',
-    'sorl.thumbnail',
-    'django_extensions', #added for some extra tools like reset_db
-    'storages',
+	'django.contrib.admin',
+	'django.contrib.admindocs',
+	'haystack',
+	'rocketlistings',
+	'static_pages',
+	'listings',
+	'users',
+	'south',
+	'registration',
+	'ajaxuploader',
+	'sorl.thumbnail',
+	'django_extensions', #added for some extra tools like reset_db
+	'storages',
 )
 
 HAYSTACK_SITECONF = 'rocketlistings.search_sites'
