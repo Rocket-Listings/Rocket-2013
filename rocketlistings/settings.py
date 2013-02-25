@@ -106,6 +106,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 MIDDLEWARE_CLASSES = (
 	'django.middleware.cache.UpdateCacheMiddleware',
+	'django.middleware.cache.GZipMiddleware',
 	'django.middleware.common.CommonMiddleware',
 	'django.contrib.sessions.middleware.SessionMiddleware',
 	'django.middleware.csrf.CsrfViewMiddleware',
