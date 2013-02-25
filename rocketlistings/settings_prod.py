@@ -26,7 +26,7 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 MEDIA_URL = 'http://static.rocketlistings.com/media/'
 
 # URL prefix for static files.
-# Example: "http://media.lawrence.com/static/"
+# Example: "http://media.lawrence.comhttp://static.rocketlistings.com/"
 STATIC_URL = 'http://static.rocketlistings.com/'
 
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'

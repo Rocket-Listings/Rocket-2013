@@ -151,8 +151,8 @@ The .less and .css files are separated by "application". An application in Djang
 
 So separating static resources by application is really helpful from an organizational standpoint, but not from technical standpoint. When we eventually deploy to production, want to be able to serve these static files using a real server, not just the Django development server. 'Real' servers include 'Apache', 'Lighttpd', 'nginx' and a few other. These servers excel at returning static files over http. So we want to let the real server do the work of returning the static files. We also want our static resources to have nice urls like this:
 
-	http://www.rocketlistings.com/static/img/logo.png
-	http://www.rocketlistings.com/static/css/global.css
-	http://www.rocketlistings.com/static/js/ajaxupload.js
+	http://www.rocketlistings.comhttp://static.rocketlistings.com/img/logo.png
+	http://www.rocketlistings.comhttp://static.rocketlistings.com/css/global.css
+	http://www.rocketlistings.comhttp://static.rocketlistings.com/js/ajaxupload.js
 
 We want the URLs to look like that no matter what application the resources are coming from. The problem is that the way the 'real' servers are set up, we'd have to point them to the 'static' folder of each app separately, instead of having one big combinded folder of static files. Django anticipates this problem, and, when getting ready to deploy, populates a folder in the project root called `staic_collected` to contain all of these static files (but still organized in their respective 'css', 'js', or 'img' folders). This makes it much easier to serve up these files later on. Since we're not getting ready to deploy anytime soon, `static_collected` is kept empty, and you can ignore that folder when you're developing. Actually, since that folder isn't even in version control, you really have nothing to worry about at all. 

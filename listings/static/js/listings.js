@@ -1,5 +1,5 @@
 $(function() {
-	ZeroClipboard.setDefaults({moviePath: '/static/js/ZeroClipboard.swf'});
+	ZeroClipboard.setDefaults({moviePath: 'http://static.rocketlistings.com/js/ZeroClipboard.swf'});
 	var clip = new ZeroClipboard( $(".clipboard") );
 
 	var photoId = parseInt((window.location.hash || "").substring(1));
