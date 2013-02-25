@@ -12,4 +12,8 @@ sorl-thumbnail==11.12
 virtualenv==1.8.4
 virtualenv-clone==0.2.4
 virtualenvwrapper==3.6
-dj-database-url==0.2.1
+django-suit==0.1.0
+docutils==0.10
+Pygments==1.6
+gunicorn==0.17.2
+boto==2.8.0
