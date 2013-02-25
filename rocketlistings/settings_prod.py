@@ -31,7 +31,7 @@ STATIC_URL = 'http://static.rocketlistings.com/'
 
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 
-PREPEND_WWW = True
+PREPEND_WWW = False
 
 LOGGING = {
     'version': 1,

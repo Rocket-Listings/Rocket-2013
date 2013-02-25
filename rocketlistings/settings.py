@@ -133,7 +133,7 @@ INSTALLED_APPS = (
 #    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'suit',
+#    'suit',
     'django.contrib.admin',
     'django.contrib.admindocs',
     'haystack',
