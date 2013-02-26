@@ -23,14 +23,14 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = '//s3.amazonaws.com/static.rocketlistings.com'
+MEDIA_URL = '//s3.amazonaws.com/static.rocketlistings.com/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.comhttp://static.rocketlistings.com/"
 
 # not using static.rocketlistings.com because the CNAME of that redirects to '
 # static.rocketlistings.com.s3-website-us-east-1.amazonaws.com' and that doesn't work with https apparently because of the '.' char.
-STATIC_URL = '//s3.amazonaws.com/static.rocketlistings.com'
+STATIC_URL = '//s3.amazonaws.com/static.rocketlistings.com/'
 
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 
