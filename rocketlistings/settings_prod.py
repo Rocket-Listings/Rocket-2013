@@ -33,24 +33,24 @@ ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 
 PREPEND_WWW = False
 
-os.environ['MEMCACHE_SERVERS'] = os.environ.get('MEMCACHIER_SERVERS', '').replace(',', ';')
-os.environ['MEMCACHE_USERNAME'] = os.environ.get('MEMCACHIER_USERNAME', '')
-os.environ['MEMCACHE_PASSWORD'] = os.environ.get('MEMCACHIER_PASSWORD', '')
+# os.environ['MEMCACHE_SERVERS'] = os.environ.get('MEMCACHIER_SERVERS', '').replace(',', ';')
+# os.environ['MEMCACHE_USERNAME'] = os.environ.get('MEMCACHIER_USERNAME', '')
+# os.environ['MEMCACHE_PASSWORD'] = os.environ.get('MEMCACHIER_PASSWORD', '')
 
-if bool(os.environ.get('LOCAL_MEMCACHE', '')):
-    CACHES = {
-      'default': {
-        'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
-        'LOCATION': os.environ.get('MEMCACHIER_SERVERS', '').replace(',', ';'),
-        'TIMEOUT': 500,
-        'BINARY': True,
-      }
-    }
+# if bool(os.environ.get('LOCAL_MEMCACHE', '')):
+#     CACHES = {
+#       'default': {
+#         'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
+#         'LOCATION': os.environ.get('MEMCACHIER_SERVERS', '').replace(',', ';'),
+#         'TIMEOUT': 500,
+#         'BINARY': True,
+#       }
+#     }
 
-#CACHE_MIDDLEWARE_ALIAS = 'local-rocket-cache'
-#CACHE_MIDDLEWARE_SECONDS = 300
-#CACHE_MIDDLEWARE_KEY_PREFIX = 'rocketlistings'
-CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True # Caching only anonymous pages.
+# ##CACHE_MIDDLEWARE_ALIAS = 'local-rocket-cache'
+# ##CACHE_MIDDLEWARE_SECONDS = 300
+# ##CACHE_MIDDLEWARE_KEY_PREFIX = 'rocketlistings'
+# CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True # Caching only anonymous pages.
 
 LOGGING = {
     'version': 1,
