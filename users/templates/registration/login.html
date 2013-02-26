@@ -1,7 +1,6 @@
 {% extends 'users_base.html' %}
 
 {% block content %}
-<p class="text-success message" style="display:none;">Don't worry, your photos were saved. After logging in you'll be taken to finish your listing.</p>
 <form action="{% url auth_login %}" method="POST">
 {% csrf_token %}
 	<ul class="form">
