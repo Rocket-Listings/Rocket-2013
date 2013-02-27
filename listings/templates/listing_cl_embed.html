@@ -25,9 +25,9 @@
 									</font>
 									<br /><br />
 									{% for photo in photos %}
-										{% thumbnail photo.url "100x100" as im %}
-										<a href="{{ listing.get_absolute_url }}#{{ photo.order}}" target="_blank"><img src="{{ im.url }}" data-full="{{ MEDIA_URL }}{{ photo.url }}" data-id="{{ photo.order }}"></a>
-										{% endthumbnail %}
+										{# {% thumbnail photo.url "100x100" as im %} #}
+										{# <a href="{{ listing.get_absolute_url }}#{{ photo.order}}" target="_blank"><img src="{{ im.url }}" data-full="{{ MEDIA_URL }}{{ photo.url }}" data-id="{{ photo.order }}"></a> #}
+										{# {% endthumbnail %} #}
 									{% endfor %}
 								</td>
 							</tr>
