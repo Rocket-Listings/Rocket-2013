@@ -1,9 +1,9 @@
 from ajaxuploader.backends.s3 import S3UploadBackend
-from ajaxuploader.backends.default_storage import DefaultStorageUploadBackend
+from ajaxuploader.backends.local import LocalUploadBackend
 from sorl.thumbnail import get_thumbnail
 from django.conf import settings
 from listings.models import ListingPhoto, Listing
-import uuid
+import uuid, os
 
 class RocketUploadBackend(object):
 
@@ -12,12 +12,13 @@ class RocketUploadBackend(object):
 		order = int(request.GET['order'])
 		ip = request.META['REMOTE_ADDR']
 		listing = None
-		url = self.UPLOAD_DIR + '/' + filename		
+#		url = self.UPLOAD_DIR + '/' + filename		
 		if listing_id != 0:
 			listing = Listing.objects.get(id=listing_id)
 
-		photoDict = {	'path': self._path,
-						'url': url,
+		photoDict = {	#'path': self._path,
+					#	'url': url,
+						'path' : filename,
 						'upload_ip': ip,
 						'order': order,
 						'listing': listing }
@@ -26,24 +27,24 @@ class RocketUploadBackend(object):
 		photo.clean()
 		photo.save()
 
-		thumbnail = get_thumbnail(self._path, self.DIMENSIONS)
-		thumbnail_url = settings.MEDIA_URL + thumbnail.name
+		path = os.path.join(settings.MEDIA_ROOT, self.UPLOAD_DIR, filename)
+		dims = "100x100"
+		thumbnail = get_thumbnail(path, dims)
+		# thumbnail_url = settings.MEDIA_URL + thumbnail.name
 
 		self._dest.close()
-		return {'path': url, 'thumbnail_path': thumbnail_url}
+		return {'thumbnail_name': thumbnail.name}
 
 # multiple inheritance for the win! Combining the above class with the DefaultStorageUploadBackend.
-class DevelopmentUploadBackend(RocketUploadBackend, DefaultStorageUploadBackend):
+class DevelopmentUploadBackend(RocketUploadBackend, LocalUploadBackend):
 	def update_filename(self, request, filename, *args, **kwargs): # indirectly (through multiple inheritance) overriding AbstractUploadBackend
 		ext = filename.split('.')[-1]
-		self._path = "%s/%s.%s" % (settings.UPLOAD_DIR, uuid.uuid4(), ext)
-		return self.path
+		return "%s.%s" % (uuid.uuid4(), ext)
 
 class ProductionUploadBackend(RocketUploadBackend, S3UploadBackend):
 	def update_filename(self, request, filename, *args, **kwargs): # indirectly (through multiple inheritance) overriding AbstractUploadBackend
 		ext = filename.split('.')[-1]
-		self._path = "%s%s.%s" % (uuid.uuid4(), ext)
-		return self.path
+		return "%s/%s.%s" % (settings.UPLOAD_DIR, uuid.uuid4(), ext)
 
 	def upload_complete(self, request, filename, *args, **kwargs): # override
 		super(S3UploadBackend, self).upload_complete(request, filename, *args, **kwargs)
