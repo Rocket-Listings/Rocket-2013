@@ -11,6 +11,7 @@ class RocketUploadBackend(object):
 		return "%s.%s" % (uuid.uuid4(), ext)
 
 	def upload_complete(self, request, filename, *args, **kwargs): # also overriding
+		print "rocket upload complete"
 		listing_id = int(request.GET['listingid'])
 		order = int(request.GET['order'])
 		ip = request.META['REMOTE_ADDR']
@@ -20,7 +21,7 @@ class RocketUploadBackend(object):
 			listing = Listing.objects.get(id=listing_id)
 
 		photoDict = {	#'path': self._path,
-					#	'url': url,
+						'url': 'sd',
 						'path' : filename,
 						'upload_ip': ip,
 						'order': order,
@@ -35,8 +36,9 @@ class RocketUploadBackend(object):
 		# thumbnail = get_thumbnail(path, dims)
 		# thumbnail_url = settings.MEDIA_URL + thumbnail.name
 
-		self._dest.close()
+		# self._dest.close()
 		# return {'thumbnail_name': thumbnail.name}
+		# return {}
 
 # multiple inheritance for the win! Combining the above class with the DefaultStorageUploadBackend.
 class DevelopmentUploadBackend(RocketUploadBackend, LocalUploadBackend): pass
@@ -45,5 +47,6 @@ class DevelopmentUploadBackend(RocketUploadBackend, LocalUploadBackend): pass
 class ProductionUploadBackend(RocketUploadBackend, DefaultStorageUploadBackend):
 
 	def upload_complete(self, request, filename, *args, **kwargs): # override
-		super(DefaultStorageUploadBackend, self).upload_complete(request, settings.UPLOAD_DIR+'/'+filename, *args, **kwargs)
-		return super(RocketUploadBackend, self).upload_complete(request, filename, *args, **kwargs)
+		super(RocketUploadBackend, self).upload_complete(request, filename, *args, **kwargs)
+		print "Production upload backend"
+		return super(DefaultStorageUploadBackend, self).upload_complete(request, settings.UPLOAD_DIR+'/'+filename, *args, **kwargs)
