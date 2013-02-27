@@ -11,12 +11,12 @@
 	<div class="l-body">
 		<div class="l-entry">
 			{#<a href="{{ craigslist }}" target="_blank">Jump over to Craigslist to post your listing!</a>#}
-			<div class="l-thumbnails">
 			{% if photos %}
+				<div class="l-thumbnails">
 				{% for photo in photos %}
-					{% thumbnail photo.url "100x100" as im %}
-					<img src="{{ im.url }}" data-full="{{ MEDIA_URL }}{{ photo.url }}" data-id="{{ photo.order }}"/>
-					{% endthumbnail %}
+					{# {% thumbnail photo.url "100x100" as im %} #}
+					{# <img src="{{ im.url }}" data-full="{{ MEDIA_URL }}{{ photo.url }}" data-id="{{ photo.order }}"/> #}
+					{# {% endthumbnail %} #}
 				{% endfor %}					
 				</div>
 				<div class="l-stage">
