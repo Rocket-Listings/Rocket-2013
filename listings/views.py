@@ -29,11 +29,13 @@ def create(request):
 			listing.user = request.user
 			listing.save()
 			expire_time = datetime.now() - timedelta(minutes=settings.ROCKET_UNUSED_PHOTO_MINS)
+
 			if 'HTTP_X_FORWARDED_FOR' in request.META:
 			    ip_adds = request.META['HTTP_X_FORWARDED_FOR'].split(",")   
 			    ip = ip_adds[0]
 			else:
 			    ip = request.META['REMOTE_ADDR']
+			    
 			ListingPhoto.objects.filter(upload_ip=ip, upload_date__gt=expire_time, listing=None).update(listing=listing)
 			if request.user.is_authenticated():
 				return redirect(listing)

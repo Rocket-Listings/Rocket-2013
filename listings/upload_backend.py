@@ -14,7 +14,11 @@ class RocketUploadBackend(object):
 		print "rocket upload complete"
 		listing_id = int(request.GET['listingid'])
 		order = int(request.GET['order'])
-		ip = request.META['REMOTE_ADDR']
+		if 'HTTP_X_FORWARDED_FOR' in request.META:
+		    ip_adds = request.META['HTTP_X_FORWARDED_FOR'].split(",")   
+		    ip = ip_adds[0]
+		else:
+		    ip = request.META['REMOTE_ADDR']
 		listing = None
 #		url = self.UPLOAD_DIR + '/' + filename		
 		if listing_id != 0:
