@@ -42,7 +42,7 @@ class RocketUploadBackend(object):
 class DevelopmentUploadBackend(RocketUploadBackend, LocalUploadBackend): pass
 
 
-class ProductionUploadBackend(RocketUploadBackend, S3UploadBackend):
+class ProductionUploadBackend(RocketUploadBackend, DefaultStorageUploadBackend):
 
 	def upload_complete(self, request, filename, *args, **kwargs): # override
 		super(DefaultStorageUploadBackend, self).upload_complete(request, settings.UPLOAD_DIR+'/'+filename, *args, **kwargs)
