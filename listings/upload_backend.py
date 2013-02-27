@@ -1,9 +1,9 @@
-from ajaxuploader.backends.s3 import S3UploadBackend
 from ajaxuploader.backends.local import LocalUploadBackend
+from ajaxuploader.backends.default_storage import DefaultStorageUploadBackend
 from sorl.thumbnail import get_thumbnail
 from django.conf import settings
 from listings.models import ListingPhoto, Listing
-import uuid, os
+import uuid
 
 class RocketUploadBackend(object):
 	def update_filename(self, request, filename, *args, **kwargs): # indirectly (through multiple inheritance) overriding AbstractUploadBackend
@@ -45,5 +45,5 @@ class DevelopmentUploadBackend(RocketUploadBackend, LocalUploadBackend): pass
 class ProductionUploadBackend(RocketUploadBackend, S3UploadBackend):
 
 	def upload_complete(self, request, filename, *args, **kwargs): # override
-		super(S3UploadBackend, self).upload_complete(request, filename, *args, **kwargs)
+		super(DefaultStorageUploadBackend, self).upload_complete(request, settings.UPLOAD_DIR+'/'+filename, *args, **kwargs)
 		return super(RocketUploadBackend, self).upload_complete(request, filename, *args, **kwargs)
