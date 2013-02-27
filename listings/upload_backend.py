@@ -46,4 +46,4 @@ class ProductionUploadBackend(RocketUploadBackend, S3UploadBackend):
 
 	def upload_complete(self, request, filename, *args, **kwargs): # override
 		super(S3UploadBackend, self).upload_complete(request, filename, *args, **kwargs)
-		return super(RocketUploadBackend, self).upload_complete(request, settings.UPLOAD_DIR+'/'+filename, *args, **kwargs)
+		return super(RocketUploadBackend, self).upload_complete(request, filename, *args, **kwargs)
