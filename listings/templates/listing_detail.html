@@ -22,7 +22,7 @@
 				</div>
 				<div class="l-stage">
 					{% with photos|first as first_photo %}
-					<img src="{{MEDIA_URL}}{{ first_photo.url}}"/>
+					<img src="{{MEDIA_URL}}{{ first_photo.path}}"/>
 					{% endwith %}
 				</div>
 			</div>
