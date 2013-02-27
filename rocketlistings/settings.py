@@ -2,7 +2,9 @@
 import os
 
  # DATABASE_URL is a heroku env var
-if bool(os.environ.get('DATABASE_URL', '')):
+PRODUCTION = bool(os.environ.get('DATABASE_URL', ''))
+
+if PRODUCTION:
 	from settings_prod import *
 else:
 	from settings_dev import *
@@ -61,6 +63,9 @@ MEDIA_ROOT = SITE_ROOT+'/media/'
 # Example: "/home/media/media.lawrence.com/static/"
 #STATIC_ROOT = os.path.join(SITE_ROOT, 'static/')
 STATIC_ROOT = SITE_ROOT+'/static_collected/'
+
+# for user image uploads, within MEDIA_ROOT
+UPLOAD_DIR = 'uploads'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
