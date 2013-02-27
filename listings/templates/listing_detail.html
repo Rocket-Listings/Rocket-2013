@@ -14,9 +14,9 @@
 			{% if photos %}
 				<div class="l-thumbnails">
 				{% for photo in photos %}
-					{# {% thumbnail photo.url "100x100" as im %} #}
-					{# <img src="{{ im.url }}" data-full="{{ MEDIA_URL }}{{ photo.url }}" data-id="{{ photo.order }}"/> #}
-					{# {% endthumbnail %} #}
+					{% comment %}{% thumbnail photo.url "100x100" as im %}
+					<img src="{{ im.url }}" data-full="{{ MEDIA_URL }}{{ photo.url }}" data-id="{{ photo.order }}"/>
+					{% endthumbnail %}{% endcomment %}
 				{% endfor %}					
 				</div>
 				<div class="l-stage">
