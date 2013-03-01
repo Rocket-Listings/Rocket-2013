@@ -1,8 +1,8 @@
-import dj_database_url,os
+import dj_database_url
 
 DB =  dj_database_url.config()
 
-DEBUG = bool(os.environ.get('DJANGO_DEBUG', ''))
+DEBUG = False
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -13,25 +13,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
 
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_KEY')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET')
-AWS_STORAGE_BUCKET_NAME = 'static.rocketlistings.com'
-
-STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash.
-# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = 'http://static.rocketlistings.com/media/'
-
-# URL prefix for static files.
-# Example: "http://media.lawrence.comhttp://static.rocketlistings.com/"
-STATIC_URL = 'http://static.rocketlistings.com/'
-
-ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
-
-PREPEND_WWW = True
+PREPEND_WWW = False
 
 LOGGING = {
     'version': 1,

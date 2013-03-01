@@ -2,7 +2,7 @@
 import os
 
  # DATABASE_URL is a heroku env var
-if bool(os.environ.get('DATABASE_URL', '')):
+if os.environ.get('DATABASE_URL', None):
     from settings_prod import *
 else:
     from settings_dev import *
@@ -10,6 +10,7 @@ else:
 DATABASES = { 'default': DB }
     
 #APP_ROOT = os.path.abspath(os.path.dirname(__file__))
+SITE_ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
 TEMPLATE_DEBUG = DEBUG
 THUMBNAIL_DEBUG = DEBUG
@@ -49,11 +50,22 @@ USE_L10N = True
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
 
-SITE_ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
 MEDIA_ROOT = SITE_ROOT+'/media/'
+
+# URL that handles the media served from MEDIA_ROOT. Make sure to use a
+# trailing slash.
+# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
+MEDIA_URL = '/media/'
+
+# Minimum time that uploaded photos will stay on server if not assigned to a listing.
+ROCKET_UNUSED_PHOTO_MINS = 10
+SOUTH_AUTO_FREEZE_APP = True
+# need this so that users is used instead of user
+#ABSOLUTE_URL_OVERRIDES = {
+#    'auth.user': lambda u: "/users/%s" % u.username,
+#}
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -61,6 +73,9 @@ MEDIA_ROOT = SITE_ROOT+'/media/'
 # Example: "/home/media/media.lawrence.com/static/"
 #STATIC_ROOT = os.path.join(SITE_ROOT, 'static/')
 STATIC_ROOT = SITE_ROOT+'/static_collected/'
+# URL prefix for static files.
+# Example: "http://media.lawrence.com/static/"
+STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -76,14 +91,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
-
-# Minimum time that uploaded photos will stay on server if not assigned to a listing.
-ROCKET_UNUSED_PHOTO_MINS = 10
-SOUTH_AUTO_FREEZE_APP = True
-# need this so that users is used instead of user
-#ABSOLUTE_URL_OVERRIDES = {
-#    'auth.user': lambda u: "/users/%s" % u.username,
-#}
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '59%5@qdw12&amp;d)47=3=$ar4bv4vcgk)*-_f2=qr9(n9jy%z%1j!'
@@ -133,7 +140,6 @@ INSTALLED_APPS = (
 #    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'suit',
     'django.contrib.admin',
     'django.contrib.admindocs',
     'haystack',
@@ -146,7 +152,6 @@ INSTALLED_APPS = (
     'ajaxuploader',
     'sorl.thumbnail',
     'django_extensions', #added for some extra tools like reset_db
-    'storages',
 )
 
 HAYSTACK_SITECONF = 'rocketlistings.search_sites'

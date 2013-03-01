@@ -18,4 +18,3 @@ tmp
 .DS_Store
 *.sublime-*
 settings_dev.py
-.env

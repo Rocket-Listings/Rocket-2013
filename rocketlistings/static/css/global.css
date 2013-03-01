@@ -38,11 +38,11 @@ body a{color:#e26a59;text-decoration:none;}
 .header .upper ul.contact-menu li div.inverse-corners-left-inner{-moz-border-radius:0 4px 0 0;border-radius:0 4px 0 0;}
 .header .separator-1{border-bottom:solid #fff 1px;border-right:1px solid #A4B0B7;border-left:1px solid #A4B0B7;background:#e7e7e7;}.header .separator-1 .separator-2{border-top:5px solid #e26a59;border-bottom:solid #b2bec3 1px;}
 .hr{clear:both;display:block;overflow:hidden;height:0;}
-.footer{height:66px;border-right:1px solid #e3e3e3;border-left:1px solid #e3e3e3;border-bottom:1px solid #e3e3e3;background-color:#E8E8E8;}.footer .hrline1{overflow:hidden;height:9px;background:url(../img/footerHr.png) 0 0;line-height:0px;}
+.footer{height:66px;border-right:1px solid #e3e3e3;border-left:1px solid #e3e3e3;border-bottom:1px solid #e3e3e3;background-color:#E8E8E8;}.footer .hrline1{overflow:hidden;height:9px;background:url(/static/img/footerHr.png) 0 0;line-height:0px;}
 .footer .hrline2{overflow:hidden;height:1px;border-top:solid #232f33 1px;background:#6e787d;line-height:0px;}
 .footer .foot{margin:0 auto;width:600px;min-height:45px;line-height:45px;}.footer .foot p{color:#88979E;font-size:10px;font-family:Verdana,Geneva,sans-serif;}
 .hrline1{height:1px;border-top:solid #fff 2px;border-bottom:solid #fff 2px;background:#b2bec3;}
-.pattern1{background:url(../img/pattern1.png) 50% 0 !important;}
+.pattern1{background:url(/static/img/pattern1.png) 50% 0 !important;}
 .page-content{margin:0 auto;padding:30px 40px 40px 30px;}
 .fileDragOverlay{position:fixed;display:none;width:100%;height:100%;z-index:1000;}.fileDragOverlay span{display:none;}
 .fileDragOverlay.in{position:fixed;display:block;width:100%;height:100%;z-index:1000;}.fileDragOverlay.in span{display:none;}
