@@ -78,6 +78,12 @@ def delete(request, listing_id):
 		listing.delete()
 		return redirect('users.views.overview')
 
+def offers(request, listing_id):
+	listing = get_object_or_404(Listing, id=listing_id)
+	offers = listing.offer_set.all()
+	return render(request, 'listing_offers.html', {'offers': offers,})
+
+
 def delete_ajax(request, listing_id):
 	response = {}
 	try:

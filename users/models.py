@@ -14,6 +14,10 @@ class UserProfile(models.Model):
 	email = models.EmailField(max_length=255, blank=True)
 	bio = models.TextField(blank=True)
 
+
+
+
+
 	def get_absolute_url(self):
 		return reverse('users.views.info', args=[self.user.username])
 	

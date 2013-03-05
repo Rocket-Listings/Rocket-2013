@@ -28,6 +28,7 @@ class Listing(models.Model):
 	listing_type = models.ForeignKey(ListingType)
 	user = models.ForeignKey(User)
 
+
 	def __unicode__(self):
 		return self.title
 
@@ -56,3 +57,40 @@ class ListingPhoto(models.Model):
 	upload_ip = models.IPAddressField()
 	order = models.IntegerField(null = True, blank=True)
 	listing = models.ForeignKey(Listing, null = True, blank=True)
+
+class Buyer(models.Model):
+	listing = models.ForeignKey(Listing, blank=True) 
+	name = models.CharField(max_length=255)
+	email = models.EmailField(max_length=255, null = True, blank=True)
+
+class Offer(models.Model):
+	listing = models.ForeignKey(Listing, null = True, blank=True)
+	buyer = models.ForeignKey(Buyer)
+	value = models.IntegerField()
+	date = models.DateTimeField('date offered', auto_now_add=True)
+
+class BuyerMessage(models.Model):
+	buyer = models.ForeignKey(Buyer)
+	content = models.TextField()
+	date = models.DateTimeField('date received', auto_now_add=True)
+
+class SellerMessage(models.Model):
+	buyer = models.ForeignKey(Buyer)
+	content = models.TextField()
+	date = models.DateTimeField('date sent', auto_now_add=True)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
