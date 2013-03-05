@@ -1,0 +1,32 @@
+{% extends 'listings_base.html' %}
+
+{% block content %}
+{% comment %}
+Requires the context variable listings
+{% endcomment %}
+
+
+
+{% if offers %}
+<table class="table table-hover table-offers">
+	<thead>
+		<tr>
+			<th>Price</th>
+			<th>Date Offered</th>
+			<th>buyer</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for offer in offers %}
+		<tr>
+			<td>{{ offer.value }}</td>
+			<td>{{ offer.date }}</td>
+			<td>{{ offer.buyer.name }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% else %}
+<h4>You don't have any offers yet! </h4>
+{% endif %}
+{% endblock %}
