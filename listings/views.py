@@ -18,6 +18,7 @@ def latest(request):
 
 @login_required
 def create(request):
+	print "listings create"
 	if request.method == 'GET':
 		profile = request.user.get_profile()
 		defaults = {'location':profile.location, 'category':profile.default_category, 'listing_type':profile.default_listing_type}
