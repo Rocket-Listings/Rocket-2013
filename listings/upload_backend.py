@@ -5,6 +5,7 @@ from django.conf import settings
 from listings.models import ListingPhoto, Listing
 import uuid
 import os
+from rocketlistings import get_client_ip
 
 class RocketUploadBackend(object):
 	def update_filename(self, request, filename, *args, **kwargs): # indirectly (through multiple inheritance) overriding AbstractUploadBackend
@@ -12,20 +13,11 @@ class RocketUploadBackend(object):
 		return "%s.%s" % (uuid.uuid4(), ext)
 
 	def upload_complete(self, request, filename, *args, **kwargs): # also overriding
-		print "rocket upload complete"
+		
 		listing_id = int(request.GET['listingid'])
 		order = int(request.GET['order'])
-
-
-		ip_adds = os.environ.get('HTTP_X_FORWARDED_FOR', False)
-		if ip_adds:
-		    ip_adds = request.META['HTTP_X_FORWARDED_FOR'].split(",")   
-		    ip = ip_adds[0]
-		else:
-		    ip = request.META['REMOTE_ADDR']
-
+		ip = get_client_ip(request)
 		listing = None
-
 		url = self.UPLOAD_DIR + '/' + filename		
 
 		if listing_id != 0:
