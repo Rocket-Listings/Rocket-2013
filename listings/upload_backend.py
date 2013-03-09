@@ -4,6 +4,7 @@ from sorl.thumbnail import get_thumbnail
 from django.conf import settings
 from listings.models import ListingPhoto, Listing
 import uuid
+import os
 
 class RocketUploadBackend(object):
 	def update_filename(self, request, filename, *args, **kwargs): # indirectly (through multiple inheritance) overriding AbstractUploadBackend
@@ -15,7 +16,9 @@ class RocketUploadBackend(object):
 		listing_id = int(request.GET['listingid'])
 		order = int(request.GET['order'])
 
-		if 'HTTP_X_FORWARDED_FOR' in request.META:
+
+		ip_adds = os.environ.get('HTTP_X_FORWARDED_FOR', False)
+		if ip_adds:
 		    ip_adds = request.META['HTTP_X_FORWARDED_FOR'].split(",")   
 		    ip = ip_adds[0]
 		else:
