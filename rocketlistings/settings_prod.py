@@ -1,46 +1,32 @@
 import dj_database_url,os
 
-DB =  dj_database_url.config()
-
+# General Settings
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', ''))
-
-# Honor the 'X-Forwarded-Proto' header for request.is_secure()
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
 USE_X_FORWARDED_HOST = True
-
-# A sample logging configuration. The only tangible logging
-# performed by this configuration is to send an email to
-# the site admins on every HTTP 500 error when DEBUG=False.
-# See http://docs.djangoproject.com/en/dev/topics/logging for
-# more details on how to customize your logging configuration.
-
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_KEY')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET')
-AWS_STORAGE_BUCKET_NAME = 'static.rocketlistings.com'
-
-STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-
-# URL prefix for static files.
-# Example: "http://media.lawrence.comhttp://static.rocketlistings.com/"
-
-# not using static.rocketlistings.com because the CNAME of that redirects to '
-# static.rocketlistings.com.s3-website-us-east-1.amazonaws.com' and that doesn't work with https apparently because of the '.' char.
-STATIC_URL = '//s3.amazonaws.com/static.rocketlistings.com/'
-
-# for user image uploads, within MEDIA_ROOT
-UPLOAD_DIR = 'uploads'
-
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash.
-# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = STATIC_URL +  UPLOAD_DIR + '/'
-
-ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
-
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 PREPEND_WWW = False
 
+# Database settings sourced from Heroku
+DB =  dj_database_url.config()
+
+# File storage settings
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_KEY')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET')
+# AWS_STORAGE_BUCKET_NAME = 'static.rocketlistings.com'
+
+STATICFILES_STORAGE = 'rocketlistings.s3storages.StaticStorage'
+DEFAULT_FILE_STORAGE = 'rocketlistings.s3storages.MediaStorage'
+
+UPLOAD_DIR = 'uploads'
+
+# not using static.rocketlistings.com because its CNAME 
+# redirects to 'static.rocketlistings.com.s3-website-us-east-1.amazonaws.com' 
+# and that doesn't work with SSL apparently because of the '.' char.
+STATIC_URL = '//s3.amazonaws.com/static.rocketlistings.com/'
+MEDIA_URL = '//s3.amazonaws.com/media.rocketlistings.com/'
+ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+
+# Caching settings
 os.environ['MEMCACHE_SERVERS'] = os.environ.get('MEMCACHIER_SERVERS', '').replace(',', ';')
 os.environ['MEMCACHE_USERNAME'] = os.environ.get('MEMCACHIER_USERNAME', '')
 os.environ['MEMCACHE_PASSWORD'] = os.environ.get('MEMCACHIER_PASSWORD', '')

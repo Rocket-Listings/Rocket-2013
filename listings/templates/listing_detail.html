@@ -15,14 +15,14 @@
 
 				<div class="l-thumbnails">
 				{% for photo in photos %}
-				{% comment %}{% thumbnail photo.url "100x100" as im %}
-				<img src="{{ im.url }}" data-full="{{ MEDIA_URL }}{{ photo.url }}" data-id="{{ photo.order }}"/>
-				{% endthumbnail %}{% endcomment %}
+					{% thumbnail photo.url "100x100" as im %}
+					<img src="{{ im.url }}" data-full="{{ MEDIA_URL }}{{ photo.url }}" data-id="{{photo.order }}"/>
+					{% endthumbnail %}
 				{% endfor %}					
 				</div>
 				<div class="l-stage">
 					{% with photos|first as first_photo %}
-					<img src="{{MEDIA_URL}}{{ first_photo.path}}"/>
+					<img src="{{MEDIA_URL}}{{ first_photo.url}}"/>
 					{% endwith %}
 				</div>
 			</div>

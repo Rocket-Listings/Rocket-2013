@@ -14,19 +14,21 @@ class RocketUploadBackend(object):
 		print "rocket upload complete"
 		listing_id = int(request.GET['listingid'])
 		order = int(request.GET['order'])
+
 		if 'HTTP_X_FORWARDED_FOR' in request.META:
 		    ip_adds = request.META['HTTP_X_FORWARDED_FOR'].split(",")   
 		    ip = ip_adds[0]
 		else:
 		    ip = request.META['REMOTE_ADDR']
+
 		listing = None
-#		url = self.UPLOAD_DIR + '/' + filename		
+
+		url = self.UPLOAD_DIR + '/' + filename		
+
 		if listing_id != 0:
 			listing = Listing.objects.get(id=listing_id)
 
-		photoDict = {	#'path': self._path,
-						'url': 'sd',
-						'path' : filename,
+		photoDict = {	'url': url,
 						'upload_ip': ip,
 						'order': order,
 						'listing': listing }

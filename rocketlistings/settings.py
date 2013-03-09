@@ -51,22 +51,6 @@ USE_L10N = True
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
 
-SITE_ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-
-# Absolute filesystem path to the directory that will hold user-uploaded files.
-# Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = SITE_ROOT+'/media/'
-
-# Absolute path to the directory static files should be collected to.
-# Don't put anything in this directory yourself; store your static files
-# in apps' "static/" subdirectories and in STATICFILES_DIRS.
-# Example: "/home/media/media.lawrence.com/static/"
-#STATIC_ROOT = os.path.join(SITE_ROOT, 'static/')
-STATIC_ROOT = SITE_ROOT+'/static_collected/'
-
-# for user image uploads, within MEDIA_ROOT
-UPLOAD_DIR = 'uploads'
-
 # Additional locations of static files
 STATICFILES_DIRS = (
 	# Put strings here, like "/home/html/static" or "C:/www/django/static".

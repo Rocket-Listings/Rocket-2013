@@ -50,7 +50,6 @@ class ListingHighlight(models.Model):
 		return self.value
 
 class ListingPhoto(models.Model):
-	path = models.FilePathField(path=settings.MEDIA_ROOT+'uploads', max_length=255)
 	url = models.CharField(max_length=255)
 	upload_date = models.DateTimeField('date uploaded', auto_now_add=True)
 	upload_ip = models.IPAddressField()
