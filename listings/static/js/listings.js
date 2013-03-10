@@ -25,4 +25,11 @@ $(function() {
 		id = image.attr('data-id');
 		window.location.hash = image.attr('data-id');
 	}
+
+	var clembed = $('.cl-embed');
+	if(clembed) {
+		clembed.click(function(e) {
+			clembed.select();
+		});
+	}
 });
