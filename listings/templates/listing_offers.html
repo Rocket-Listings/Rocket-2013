@@ -8,18 +8,19 @@ Requires the context variable listings
 
 
 {% if offers %}
-<table class="table table-hover table-offers">
+<h4>Offers for your <a href= " {{ listing.get_absolute_url }}">{{ listing.title }}</a></h4>
+<table class="table table-striped table-bordered table-condensed tablesorter" id = "table-offers">
 	<thead>
 		<tr>
-			<th>Price</th>
-			<th>Date Offered</th>
-			<th>buyer</th>
+			<th>Offer <i class="icon-chevron-down"></th>
+			<th>Date Offered <i class="icon-chevron-down"></th>
+			<th>Buyer <i class="icon-chevron-down"></th>
 		</tr>
 	</thead>
 	<tbody>
 		{% for offer in offers %}
 		<tr>
-			<td>{{ offer.value }}</td>
+			<td>${{ offer.value }}</td>
 			<td>{{ offer.date }}</td>
 			<td>{{ offer.buyer.name }}</td>
 		</tr>

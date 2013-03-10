@@ -1,15 +1,16 @@
+
 {% comment %}
 Requires the context variable listings
 {% endcomment %}
 {% if listings %}
-<table class="table table-hover table-listings">
+<table class="table table-striped table-bordered table-condensed tablesorter id" id = "table-listings">
 	<thead>
 		<tr>
-			<th>Title</th>
-			<th>Price</th>
-			<th>Location</th>
-			<th>Category</th>
-			<th>Date Listed</th>
+			<th class = "sortable">Title <i class="icon-chevron-down"></i></th>
+			<th class = "sortable">Price <i class="icon-chevron-down"></i></th>
+			<th class = "sortable">Location <i class="icon-chevron-down"></i></th>
+			<th class = "sortable">Category <i class="icon-chevron-down"></i></th>
+			<th class = "sortable">Date Listed <i class="icon-chevron-down"></i></th>
 			<th>Offers</th>
 			<th>Messages</th>
 			<th>Copy <br> HTML</th>
@@ -21,15 +22,14 @@ Requires the context variable listings
 		{% for listing in listings %}
 		<tr>
 			<td><a href="{{ listing.get_absolute_url }}">{{ listing.title }}</a></td>
-			<td>{{ listing.price }}</td>
+			<td>${{ listing.price }}</td>
 			<td>{{ listing.location }}</td>
 			<td>{{ listing.category.name }}</td>
 			<td>{{ listing.pub_date }}</td>
-			<td><a href = "{% url listings.views.offers listing.id %}"> View </a></td>
-			
-			<td> <i class="icon-envelope"></i> </td>
-			<td><a class="clipboard" data-clipboard-text="test text"><i class="icon-download"></i></a></td>
-			<td><a href="{% url listings.views.update listing.id %}"><i class="icon-edit"></i></a><a href="{% url listings.views.delete listing.id %}"><i class="icon-trash"></i></a></td>
+			<td class = "centered-td"><a href = "{% url listings.views.offers listing.id %}"> View </a></td>
+			<td class = "centered-td"><a href = "{% url listings.views.messages listing.id %}"> <i class="icon-envelope"></i></a> </td>
+			<td class = "centered-td"><a class="clipboard" data-clipboard-text="test text"><i class="icon-download"></i></a></td>
+			<td class = "centered-td"><a href="{% url listings.views.update listing.id %}"><i class="icon-edit"></i></a><a href="{% url listings.views.delete listing.id %}"><i class="icon-trash"></i></a></td>
 		</tr>
 		{% endfor %}
 	</tbody>

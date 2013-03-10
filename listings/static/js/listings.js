@@ -26,3 +26,24 @@ $(function() {
 		window.location.hash = image.attr('data-id');
 	}
 });
+
+
+$(function() {
+	$('#table-offers').tablesorter();
+  });
+
+
+$(function(){
+	$('.content').hide();
+    });
+
+$(function(){
+	$('.btn').click(function(){
+		$('.content').show();
+		
+	});
+});
+
+
+
+

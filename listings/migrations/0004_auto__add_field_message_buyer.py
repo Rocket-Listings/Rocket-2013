@@ -8,15 +8,15 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding field 'Offer.listing'
-        db.add_column('listings_offer', 'listing',
-                      self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Listing'], null=True, blank=True),
+        # Adding field 'Message.buyer'
+        db.add_column('listings_message', 'buyer',
+                      self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Buyer'], null=True, blank=True),
                       keep_default=False)
 
 
     def backwards(self, orm):
-        # Deleting field 'Offer.listing'
-        db.delete_column('listings_offer', 'listing_id')
+        # Deleting field 'Message.buyer'
+        db.delete_column('listings_message', 'buyer_id')
 
 
     models = {
@@ -58,16 +58,10 @@ class Migration(SchemaMigration):
         },
         'listings.buyer': {
             'Meta': {'object_name': 'Buyer'},
+            'email': ('django.db.models.fields.EmailField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['listings.Listing']", 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'})
-        },
-        'listings.buyermessage': {
-            'Meta': {'object_name': 'BuyerMessage'},
-            'buyer': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['listings.Buyer']"}),
-            'content': ('django.db.models.fields.TextField', [], {}),
-            'date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
         },
         'listings.listing': {
             'Meta': {'object_name': 'Listing'},
@@ -98,7 +92,7 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['listings.Listing']", 'null': 'True', 'blank': 'True'}),
             'order': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'path': ('django.db.models.fields.FilePathField', [], {'path': "'/Volumes/Macintosh HHD/Users/Nat/workspace/Rocket-Listings-Django/media/uploads'", 'max_length': '255'}),
+            'path': ('django.db.models.fields.FilePathField', [], {'path': "'/Users/briansirkia/Documents/Rocket-Listings-Django/media/uploads'", 'max_length': '255'}),
             'upload_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'upload_ip': ('django.db.models.fields.IPAddressField', [], {'max_length': '15'}),
             'url': ('django.db.models.fields.CharField', [], {'max_length': '255'})
@@ -116,6 +110,15 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '60'})
         },
+        'listings.message': {
+            'Meta': {'object_name': 'Message'},
+            'buyer': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['listings.Buyer']", 'null': 'True', 'blank': 'True'}),
+            'content': ('django.db.models.fields.TextField', [], {}),
+            'date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'isSeller': ('django.db.models.fields.NullBooleanField', [], {'null': 'True', 'blank': 'True'}),
+            'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['listings.Listing']", 'null': 'True', 'blank': 'True'})
+        },
         'listings.offer': {
             'Meta': {'object_name': 'Offer'},
             'buyer': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['listings.Buyer']"}),
@@ -123,13 +126,6 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['listings.Listing']", 'null': 'True', 'blank': 'True'}),
             'value': ('django.db.models.fields.IntegerField', [], {})
-        },
-        'listings.sellermessage': {
-            'Meta': {'object_name': 'SellerMessage'},
-            'buyer': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['listings.Buyer']"}),
-            'content': ('django.db.models.fields.TextField', [], {}),
-            'date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
         }
     }
 

@@ -1,0 +1,52 @@
+{% extends 'listings_base.html' %}
+
+{% block content %}
+{% if messages %}
+<h4>Messages for your <a href= " {{ listing.get_absolute_url }}">{{ listing.title }}</a></h4>
+<div class = "messages-container">
+    <div class="sidebar">
+		<div class="btn-group-vertical" data-toggle="buttons-radio" >
+			{% for buyer in buyers %}
+			<button type="button" class="btn">
+						Buyer Name: {{ buyer.name }}<br>
+						{% if buyer.maxOffer %}
+							Highest Offer: ${{buyer.maxOffer}}<br>
+						{% else %}
+							Highest Offer:	None<br>
+						{% endif %}
+							Last Contacted:<br>
+
+			</button>
+		{% endfor %}
+		</div>
+
+	</div>
+	<div class="content">
+		{% for buyer in buyers %}
+			{% for message in messages %}
+				{% if message.isSeller %}
+					  <p class="triangle-border right">{{message.content}}</p>
+				{% else %}
+					 <p class="triangle-border left">{{message.content}}</p>
+				{% endif %}	 
+		   	{% endfor %}
+		{% endfor %}   	
+	</div>
+</div>
+	
+	  
+		
+
+	<div class = "bottom">
+		<div class = "message-box">
+			<input type="text" class="input-long" placeholder="  Message...">
+		</div>
+		<div class = "send">
+			<button type="submit" class="btn">Send</button> 
+		</div>
+	</div>
+
+{% else %}
+<h4>You don't have any messages yet!<h4>
+{% endif %}
+{% endblock %}

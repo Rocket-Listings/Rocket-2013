@@ -8,133 +8,23 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'ListingCategory'
-        db.create_table('listings_listingcategory', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=60)),
-            ('description', self.gf('django.db.models.fields.CharField')(max_length=200)),
-        ))
-        db.send_create_signal('listings', ['ListingCategory'])
+        # Adding field 'BuyerMessage.listing'
+        db.add_column('listings_buyermessage', 'listing',
+                      self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Listing'], null=True, blank=True),
+                      keep_default=False)
 
-        # Adding model 'ListingType'
-        db.create_table('listings_listingtype', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=60)),
-            ('description', self.gf('django.db.models.fields.CharField')(max_length=200)),
-        ))
-        db.send_create_signal('listings', ['ListingType'])
-
-        # Adding model 'Listing'
-        db.create_table('listings_listing', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('description', self.gf('django.db.models.fields.TextField')()),
-            ('pub_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('price', self.gf('django.db.models.fields.IntegerField')()),
-            ('location', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingCategory'])),
-            ('listing_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingType'])),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-        ))
-        db.send_create_signal('listings', ['Listing'])
-
-        # Adding model 'ListingSpec'
-        db.create_table('listings_listingspec', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('key', self.gf('django.db.models.fields.CharField')(max_length=60)),
-            ('value', self.gf('django.db.models.fields.CharField')(max_length=60)),
-            ('listing', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Listing'])),
-        ))
-        db.send_create_signal('listings', ['ListingSpec'])
-
-        # Adding model 'ListingHighlight'
-        db.create_table('listings_listinghighlight', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('value', self.gf('django.db.models.fields.CharField')(max_length=60)),
-            ('listing', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Listing'])),
-        ))
-        db.send_create_signal('listings', ['ListingHighlight'])
-
-        # Adding model 'ListingPhoto'
-        db.create_table('listings_listingphoto', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('path', self.gf('django.db.models.fields.FilePathField')(path='/Users/briansirkia/Documents/Rocket-Listings-Django/media/uploads', max_length=255)),
-            ('url', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('upload_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('upload_ip', self.gf('django.db.models.fields.IPAddressField')(max_length=15)),
-            ('order', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('listing', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Listing'], null=True, blank=True)),
-        ))
-        db.send_create_signal('listings', ['ListingPhoto'])
-
-        # Adding model 'Buyer'
-        db.create_table('listings_buyer', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('listing', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Listing'], blank=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('email', self.gf('django.db.models.fields.EmailField')(max_length=255, null=True, blank=True)),
-        ))
-        db.send_create_signal('listings', ['Buyer'])
-
-        # Adding model 'Offer'
-        db.create_table('listings_offer', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('listing', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Listing'], null=True, blank=True)),
-            ('buyer', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Buyer'])),
-            ('value', self.gf('django.db.models.fields.IntegerField')()),
-            ('date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-        ))
-        db.send_create_signal('listings', ['Offer'])
-
-        # Adding model 'BuyerMessage'
-        db.create_table('listings_buyermessage', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('buyer', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Buyer'])),
-            ('content', self.gf('django.db.models.fields.TextField')()),
-            ('date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-        ))
-        db.send_create_signal('listings', ['BuyerMessage'])
-
-        # Adding model 'SellerMessage'
-        db.create_table('listings_sellermessage', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('buyer', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Buyer'])),
-            ('content', self.gf('django.db.models.fields.TextField')()),
-            ('date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-        ))
-        db.send_create_signal('listings', ['SellerMessage'])
+        # Adding field 'SellerMessage.listing'
+        db.add_column('listings_sellermessage', 'listing',
+                      self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Listing'], null=True, blank=True),
+                      keep_default=False)
 
 
     def backwards(self, orm):
-        # Deleting model 'ListingCategory'
-        db.delete_table('listings_listingcategory')
+        # Deleting field 'BuyerMessage.listing'
+        db.delete_column('listings_buyermessage', 'listing_id')
 
-        # Deleting model 'ListingType'
-        db.delete_table('listings_listingtype')
-
-        # Deleting model 'Listing'
-        db.delete_table('listings_listing')
-
-        # Deleting model 'ListingSpec'
-        db.delete_table('listings_listingspec')
-
-        # Deleting model 'ListingHighlight'
-        db.delete_table('listings_listinghighlight')
-
-        # Deleting model 'ListingPhoto'
-        db.delete_table('listings_listingphoto')
-
-        # Deleting model 'Buyer'
-        db.delete_table('listings_buyer')
-
-        # Deleting model 'Offer'
-        db.delete_table('listings_offer')
-
-        # Deleting model 'BuyerMessage'
-        db.delete_table('listings_buyermessage')
-
-        # Deleting model 'SellerMessage'
-        db.delete_table('listings_sellermessage')
+        # Deleting field 'SellerMessage.listing'
+        db.delete_column('listings_sellermessage', 'listing_id')
 
 
     models = {
@@ -186,7 +76,8 @@ class Migration(SchemaMigration):
             'buyer': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['listings.Buyer']"}),
             'content': ('django.db.models.fields.TextField', [], {}),
             'date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['listings.Listing']", 'null': 'True', 'blank': 'True'})
         },
         'listings.listing': {
             'Meta': {'object_name': 'Listing'},
@@ -248,7 +139,8 @@ class Migration(SchemaMigration):
             'buyer': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['listings.Buyer']"}),
             'content': ('django.db.models.fields.TextField', [], {}),
             'date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['listings.Listing']", 'null': 'True', 'blank': 'True'})
         }
     }
 

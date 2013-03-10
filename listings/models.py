@@ -3,6 +3,7 @@ from datetime import datetime
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.conf import settings
+from django.db.models import Max
 
 class ListingCategory(models.Model):
 	name = models.CharField(max_length = 60)
@@ -62,22 +63,26 @@ class Buyer(models.Model):
 	listing = models.ForeignKey(Listing, blank=True) 
 	name = models.CharField(max_length=255)
 	email = models.EmailField(max_length=255, null = True, blank=True)
+	def maxOffer(self):
+		"Returns highest offer for that buyer"
+		return self.offer_set.aggregate(Max('value'))["value__max"]
+
+	def __unicode__(self):
+		return self.name
+
 
 class Offer(models.Model):
 	listing = models.ForeignKey(Listing, null = True, blank=True)
 	buyer = models.ForeignKey(Buyer)
 	value = models.IntegerField()
 	date = models.DateTimeField('date offered', auto_now_add=True)
-
-class BuyerMessage(models.Model):
-	buyer = models.ForeignKey(Buyer)
+	
+class Message(models.Model):
+	listing = models.ForeignKey(Listing, null = True, blank=True)
+	isSeller = models.NullBooleanField(blank=True)
+	buyer = models.ForeignKey(Buyer, null = True, blank=True)
 	content = models.TextField()
 	date = models.DateTimeField('date received', auto_now_add=True)
-
-class SellerMessage(models.Model):
-	buyer = models.ForeignKey(Buyer)
-	content = models.TextField()
-	date = models.DateTimeField('date sent', auto_now_add=True)
 
 
 
