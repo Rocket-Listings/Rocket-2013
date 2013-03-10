@@ -23,7 +23,7 @@ Requires the context variable listings
 			<td>{{ listing.location }}</td>
 			<td>{{ listing.category.name }}</td>
 			<td>{{ listing.pub_date }}</td>
-			<td><a class="clipboard" data-clipboard-text="test text"><i class="icon-download"></i></a></td>
+			<td><a class="clipboard" data-clipboard-text="{% filter force_escape %}{% include "listing_cl_embed.html" %}{% endfilter %}"><i class="icon-download"></i></a></td>
 			<td><a href="{% url listings.views.update listing.id %}"><i class="icon-edit"></i></a></td>
 			<td><a href="{% url listings.views.delete listing.id %}"><i class="icon-trash"></i></a></td>
 		</tr>

@@ -26,10 +26,10 @@ $(function() {
 		window.location.hash = image.attr('data-id');
 	}
 
-	var clembed = $('.cl-embed');
-	if(clembed) {
-		clembed.click(function(e) {
-			clembed.select();
+	var cl_embed = $('.cl-embed');
+	if(cl_embed) {
+		cl_embed.click(function(e) {
+			cl_embed.select();
 		});
 	}
 });

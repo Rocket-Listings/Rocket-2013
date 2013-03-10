@@ -1,5 +1,14 @@
 $(function(){
 //  $(".fancybox").fancybox();
+	
+	// menu activation
+	var url = window.location.url;
+	var path = window.location.pathname;
+	var links = $('.action-menu a[href="'+url+'"], .action-menu a[href="'+path+'"]')
+	links.parent().addClass('active');
+	links.addClass('active');
+
+
 	var exp = /listings\/\d+/gi;
 	var listingid = 0;
 	var listingMatch = location.pathname.match(exp);
@@ -39,6 +48,6 @@ $(function(){
 		}
 	}).on('submit', function(event, id, filename) {
 		$('.finish-upload-button').addClass('disabled');
-	    $(this).fineUploader('setParams', {'order':fileNum++, 'listingid':listingid});
+		$(this).fineUploader('setParams', {'order':fileNum++, 'listingid':listingid});
   });
 });
