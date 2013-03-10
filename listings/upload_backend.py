@@ -14,7 +14,7 @@ class RocketUploadBackend(object):
 
 	def upload_complete(self, request, filename, *args, **kwargs): # also overriding
 		print "RocketUploadBackend upload_complete"
-		
+
 		listing_id = int(request.GET['listingid'])
 		order = int(request.GET['order'])
 		ip = get_client_ip(request)
@@ -49,5 +49,5 @@ class DevelopmentUploadBackend(RocketUploadBackend, LocalUploadBackend): pass
 class ProductionUploadBackend(RocketUploadBackend, DefaultStorageUploadBackend):
 
 	def upload_complete(self, request, filename, *args, **kwargs): # override
-		super(RocketUploadBackend, self).upload_complete(request, filename, *args, **kwargs)
-		return super(DefaultStorageUploadBackend, self).upload_complete(request, filename, *args, **kwargs)
+		RocketUploadBackend.upload_complete(self, request, filename, *args, **kwargs)
+		return DefaultStorageUploadBackend.upload_complete(self, request, filename, *args, **kwargs)
