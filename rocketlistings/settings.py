@@ -94,7 +94,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 	'django.core.context_processors.csrf',
 	'django.contrib.auth.context_processors.auth',
 	'django.contrib.messages.context_processors.messages',
-	'django.core.context_processors.request',
+#	'django.core.context_processors.request', # suit installation
 )
 
 MIDDLEWARE_CLASSES = (
@@ -129,7 +129,7 @@ INSTALLED_APPS = (
    	'django.contrib.sites',
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
-    'suit',
+#    'suit', 
 	'django.contrib.admin',
 	'django.contrib.admindocs',
 	'haystack',
