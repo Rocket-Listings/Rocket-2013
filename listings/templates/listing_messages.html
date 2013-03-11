@@ -7,7 +7,7 @@
     <div class="sidebar">
 		<div class="btn-group-vertical" data-toggle="buttons-radio" >
 			{% for buyer in buyers %}
-			<button type="button" class="btn">
+			<button type="button" class="btn" data-buyerid="{{ buyer.id }}">
 						Buyer Name: {{ buyer.name }}<br>
 						{% if buyer.maxOffer %}
 							Highest Offer: ${{buyer.maxOffer}}<br>
@@ -21,17 +21,19 @@
 		</div>
 
 	</div>
-	<div class="content">
-		{% for buyer in buyers %}
+	{% for buyer in buyers %}
+		<div class="content" data-buyerid="{{ buyer.id }}">
 			{% for message in messages %}
-				{% if message.isSeller %}
-					  <p class="triangle-border right">{{message.content}}</p>
-				{% else %}
-					 <p class="triangle-border left">{{message.content}}</p>
-				{% endif %}	 
+				{% if buyer.name == message.buyer.name %}
+					{% if message.isSeller %}
+						  <p class="triangle-border right">{{message.content}}</p>
+					{% else %}
+						 <p class="triangle-border left">{{message.content}}</p>
+					{% endif %}	 
+			   	{% endif %}
 		   	{% endfor %}
-		{% endfor %}   	
-	</div>
+		</div>
+	{% endfor %}	
 </div>
 	
 	  

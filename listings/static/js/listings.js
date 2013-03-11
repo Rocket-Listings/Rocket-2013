@@ -38,11 +38,16 @@ $(function(){
     });
 
 $(function(){
-	$('.btn').click(function(){
-		$('.content').show();
+		$('.btn[data-buyerid]').click(function(){
+			var buyerid = $(event.target).data('buyerid');
+			$('.content').hide();
+			$('.content[data-buyerid="'+buyerid+'"]').show();
 		
 	});
 });
+
+
+
 
 
 

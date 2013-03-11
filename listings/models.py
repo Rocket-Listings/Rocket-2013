@@ -67,6 +67,9 @@ class Buyer(models.Model):
 		"Returns highest offer for that buyer"
 		return self.offer_set.aggregate(Max('value'))["value__max"]
 
+	def buyerMessages(self):
+		"returns all the messages for that buyer"
+		return self.message_set.all()
 	def __unicode__(self):
 		return self.name
 
