@@ -28,6 +28,8 @@ class Listing(models.Model):
 	category = models.ForeignKey(ListingCategory)
 	listing_type = models.ForeignKey(ListingType)
 	user = models.ForeignKey(User)
+	CL_link = models.URLField(null = True, blank = True)
+	RL_link = models.URLField(null = True, blank = True)
 
 
 	def __unicode__(self):

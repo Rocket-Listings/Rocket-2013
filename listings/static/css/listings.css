@@ -132,6 +132,7 @@
   position: relative;
   overflow: auto;
   width: 100%;
+  margin-top: 30px;
 }
 .messages-container .sidebar {
   float: left;

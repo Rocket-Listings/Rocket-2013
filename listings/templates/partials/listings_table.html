@@ -15,6 +15,7 @@ Requires the context variable listings
 			<th>Messages</th>
 			<th>Copy <br> HTML</th>
 			<th>Edit/Delete</th>
+			<th>View on Craigslist</th>
 			
 		</tr>
 	</thead>
@@ -26,10 +27,19 @@ Requires the context variable listings
 			<td>{{ listing.location }}</td>
 			<td>{{ listing.category.name }}</td>
 			<td>{{ listing.pub_date }}</td>
-			<td class = "centered-td"><a href = "{% url listings.views.offers listing.id %}"> View </a></td>
+			{% if offers %}
+				<td class = "centered-td"><a href = "{% url listings.views.offers listing.id %}"> View </a></td>
+			{% else %}
+				<td class = "centered-td"> N/A </td>
+			{% endif %}
 			<td class = "centered-td"><a href = "{% url listings.views.messages listing.id %}"> <i class="icon-envelope"></i></a> </td>
 			<td class = "centered-td"><a class="clipboard" data-clipboard-text="test text"><i class="icon-download"></i></a></td>
 			<td class = "centered-td"><a href="{% url listings.views.update listing.id %}"><i class="icon-edit"></i></a><a href="{% url listings.views.delete listing.id %}"><i class="icon-trash"></i></a></td>
+			{% if listing.CL_link %}
+				<td class = "centered-td"><a href = "{{listing.CL_link}}" target="_blank"><img src="/static/img/cl_icon.png" width = "25" height = "25"></i></a></td> 
+			{% else %}
+				<td class = "centered-td"> N/A </td>
+			{% endif %}
 		</tr>
 		{% endfor %}
 	</tbody>
