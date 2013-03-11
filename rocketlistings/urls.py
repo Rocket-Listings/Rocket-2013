@@ -6,6 +6,7 @@ from django.conf.urls.static import static
 admin.autodiscover()
 
 urlpatterns = patterns('',
+	url(r'^mail/', include('mail.urls')),
 	url(r'^listings/', include('listings.urls')),
 	url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 	url(r'^users/', include('users.urls')),
