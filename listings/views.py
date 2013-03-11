@@ -1,4 +1,5 @@
 from listings.models import Listing, ListingPhoto
+from listings.models import Buyer
 from django.conf import settings
 from datetime import datetime, timedelta
 from listings.forms import ListingForm
@@ -9,6 +10,7 @@ from ListingsLocalUploadBackend import ListingsLocalUploadBackend
 from django.utils import simplejson
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Max
 
 def latest(request):
 	listings = Listing.objects.all().order_by('-pub_date')[:10]
@@ -81,7 +83,13 @@ def delete(request, listing_id):
 def offers(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
 	offers = listing.offer_set.all()
-	return render(request, 'listing_offers.html', {'offers': offers,})
+	return render(request, 'listing_offers.html',  {'listing': listing, 'offers': offers,})
+
+def messages(request, listing_id):
+	listing = get_object_or_404(Listing, id=listing_id)
+	buyers = listing.buyer_set.all().order_by('name')
+	messages = listing.message_set.all().order_by('date')
+	return render(request, 'listing_messages.html', {'listing': listing, 'messages':messages, 'buyers': buyers,})	
 
 
 def delete_ajax(request, listing_id):

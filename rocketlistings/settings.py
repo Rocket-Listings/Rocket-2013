@@ -145,6 +145,7 @@ INSTALLED_APPS = (
     'haystack',
     'rocketlistings',
     'static_pages',
+    'mail',
     'listings',
     'users',
     'south',

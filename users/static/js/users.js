@@ -10,3 +10,10 @@ $(function() {
 	}
 
 });
+
+$(function() {
+	$('#table-listings').tablesorter();
+  });
+
+
+

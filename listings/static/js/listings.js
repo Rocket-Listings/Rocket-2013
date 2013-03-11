@@ -26,3 +26,29 @@ $(function() {
 		window.location.hash = image.attr('data-id');
 	}
 });
+
+
+$(function() {
+	$('#table-offers').tablesorter();
+  });
+
+
+$(function(){
+	$('.content').hide();
+    });
+
+$(function(){
+		$('.btn[data-buyerid]').click(function(){
+			var buyerid = $(event.target).data('buyerid');
+			$('.content').hide();
+			$('.content[data-buyerid="'+buyerid+'"]').show();
+		
+	});
+});
+
+
+
+
+
+
+
