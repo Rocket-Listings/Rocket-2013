@@ -6,6 +6,13 @@ USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 PREPEND_WWW = False
 
+# Hosts/domain names that are valid for this site; required if DEBUG is False
+# See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
+ALLOWED_HOSTS = [   'beta.rocketlistings.com', 
+                    'rocketlistings.com', 
+                    'www.rocketlistings.com', 
+                    'rocket-listings.herokuapp.com' ]
+
 # Database settings sourced from Heroku
 DB =  dj_database_url.config()
 
