@@ -3,7 +3,9 @@ PIL==1.1.7
 PyYAML==3.10
 South==0.7.6
 Whoosh==2.4.1
-ajaxuploader==0.2.4
+# ajaxuploader==0.2.4 
+# workaround until django 1.5 is supported
+-e git+https://github.com/teddyknox/django-ajax-uploader.git#egg=Package
 django-extensions==1.0.3
 django-haystack==1.2.7
 psycopg2==2.4.6
@@ -17,6 +19,7 @@ docutils==0.10
 Pygments==1.6
 gunicorn==0.17.2
 django-storages==1.1.6
+dj-database-url==0.2.1
 pylibmc==1.2.2
 django-pylibmc-sasl==0.2.4
-dj-database-url==0.2.1
+
