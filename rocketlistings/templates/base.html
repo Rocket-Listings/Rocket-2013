@@ -21,6 +21,7 @@
 	    <script src="{{ STATIC_URL }}js/global.js"></script>
 	    <script type="text/javascript">
 		   var STATIC_URL = "{{ STATIC_URL }}";
+		   console.log("{% static 'thisisatest.jpg' %}");
 		</script>
 		{% block js %}{% endblock %}
 

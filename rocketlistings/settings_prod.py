@@ -24,7 +24,7 @@ UPLOAD_DIR = 'uploads'
 # and that doesn't work with SSL apparently because of the '.' char.
 STATIC_URL = '//s3.amazonaws.com/static.rocketlistings.com/'
 MEDIA_URL = '//s3.amazonaws.com/media.rocketlistings.com/'
-AWS_S3_CUSTOM_DOMAIN = "s3.amazonaws.com/media.rocketlistings.com"
+#AWS_S3_CUSTOM_DOMAIN = "s3.amazonaws.com/media.rocketlistings.com"
 AWS_S3_SECURE_URLS = False
 
 # Caching settings
