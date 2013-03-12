@@ -6,6 +6,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 #from forms import UserProfileForm
 from django.core.exceptions import PermissionDenied
+from django.core.mail import send_mail
 
 @login_required
 def overview(request, username=None):
@@ -14,6 +15,10 @@ def overview(request, username=None):
 		user = get_object_or_404(User, username=username)
 	listings = Listing.objects.filter(user=user).order_by('-pub_date')[:10]
 	offers = listing.offer_set.all()
+
+	#debug email
+	send_mail('Subject here', 'Here is the message.', 'postmaster@rocketlistings.mailgun.org', ['nat@rocketlistings.com'], fail_silently=False)
+
 # 	userprofile = request.user.userprofile # if no username parameter is passed, defaults to the currently logged in user.
 # 	if request.user.username == username: # updating his own listing
 # 		if request.method == 'POST':

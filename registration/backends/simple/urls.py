@@ -20,6 +20,7 @@ up your own URL patterns for these views instead.
 
 from django.conf.urls.defaults import *
 from django.views.generic.simple import direct_to_template
+from users.urls import *
 
 from registration.views import activate
 from registration.views import register
@@ -28,6 +29,7 @@ from registration.views import register
 urlpatterns = patterns('',
                        url(r'^register/$',
                            register,
+                           #{'success_url': 'reg_complete'},
                            {'backend': 'registration.backends.simple.SimpleBackend'},
                            name='registration_register'),
                        url(r'^register/closed/$',

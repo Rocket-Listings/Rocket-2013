@@ -162,6 +162,6 @@ HAYSTACK_WHOOSH_PATH = os.path.join(os.path.dirname(__file__), 'whoosh_index')
 
 EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
 MAILGUN_ACCESS_KEY = 'key-9flqj538z-my-qcnpc74c2wit4vibl-3'
-MAILGUN_SERVER_NAME = 'smtp.mailgun.org'
+MAILGUN_SERVER_NAME = 'rocketlistings.mailgun.org'
 
 ACCOUNT_ACTIVATION_DAYS = 7

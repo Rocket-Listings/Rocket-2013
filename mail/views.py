@@ -2,6 +2,7 @@ from mail.models import mailgun
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 import hashlib, hmac
+from django.core.mail import send_mail
 
 
 # this function secures the webook by:
@@ -33,6 +34,9 @@ def on_incoming_message(request):
 		m = mailgun(recipient = recipient, sender = sender, frm = frm, subject = subject, body = body, text = text, 
 		signature = signature, timestamp = timestamp, token = token, sig = sig)
 		m.save()
+
+
+		send_mail('Subject here', 'Here is the message.', 'postmaster@rocketlistings.mailgun.org', ['nat@rocketlistings.com'], fail_silently=False)
 
 		return HttpResponse('OK')
 	else:
