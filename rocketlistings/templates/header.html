@@ -1,7 +1,7 @@
 <div class="header">
 	<div class="container">
 		<div class="upper">
-			<a href="{% url home %}"><img class="logo" src="{{ STATIC_URL }}img/logo-beta.png" width="180" height="67" alt="Rocket Listing"></a>
+			<a href="{% url 'home' %}"><img class="logo" src="{{ STATIC_URL }}img/logo-beta.png" width="180" height="67" alt="Rocket Listing"></a>
 			<ul class="site-menu">
 				<li class="inverse-corners-outer">
 					<div class="inverse-corners-left-inner"></div>
@@ -25,7 +25,7 @@
 					<div class="inverse-corners-left-inner"></div>
 				</li>
 				<li class="left">
-					<a href="{% url contact %}">Contact Us</a>
+					<a href="{% url "contact" %}">Contact Us</a>
 				</li>
 				<li>
 					<a href="/help">Learn More</a>
@@ -49,18 +49,18 @@
 				</li>
 				{% if user.is_authenticated %}
 				<li class="left">
-					<a href="{% url users.views.listings user.username %}">Listings <i class="icon-th-list icon-white"></i></a>
+					<a href="{% url "users.views.listings" user.username %}">Listings <i class="icon-th-list icon-white"></i></a>
 				</li>
 				<li class="user-link">
-					<a href="{% url users.views.info user.username %}">Account <i class="icon-user icon-white"></i></a>
+					<a href="{% url "users.views.info" user.username %}">Account <i class="icon-user icon-white"></i></a>
 				</li>
-				<li class="right"><a href="{% url auth_logout %}">Logout <i class="icon-off icon-white"></i></a></li>
+				<li class="right"><a href="{% url "auth_logout" %}">Logout <i class="icon-off icon-white"></i></a></li>
 				{% else %}
 				<li class="sign-in left">
-					<a href="{% url auth_login %}">Login</a>
+					<a href="{% url "auth_login" %}">Login</a>
 				</li>
 				<li class="sign-in right">
-					<a href="{% url registration_register %}">Register  <i class="icon-user icon-white"></i></a>
+					<a href="{% url "registration_register" %}">Register  <i class="icon-user icon-white"></i></a>
 				</li>
 				{% endif %}
 				<li class="inverse-corners-outer">

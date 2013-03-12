@@ -2,7 +2,7 @@ Hey there!
 
 Thanks for registering with Rocket Listings, in order to activate your account you'll need to click the link below:
 
-<a href="{% url registration_activate activation_key %}">{% url registration_activate activation_key %}</a>
+<a href="{% url 'registration_activate' activation_key %}">{% url 'registration_activate' activation_key %}</a>
 
 Try to activate your account within {{ expiration_days }} or this link will expire.
 

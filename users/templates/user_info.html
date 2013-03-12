@@ -33,8 +33,8 @@
 </table>
 
 <div class="user-info-buttons">
-	<a class="btn btn-info" href="{% url users.views.edit user.username %}">Edit your account info.</a>
-	<a class="btn btn-warning" href="{% url auth_password_change %}">Change your password.</a>
+	<a class="btn btn-info" href="{% url 'users.views.edit' user.username %}">Edit your account info.</a>
+	<a class="btn btn-warning" href="{% url 'auth_password_change' %}">Change your password.</a>
 	<div class="clearfix"></div>
 </div>
 
