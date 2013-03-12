@@ -5,7 +5,7 @@ import hashlib, hmac
 from django.core.mail import send_mail
 
 
-# this function secures the webook by:
+# this function secures the webhook by:
 # Concatenating timestamp and token values.
 # Encoding the resulting string with the HMAC algorithm (using your API Key as a key and SHA256 digest mode).
 # Comparing the resulting hexdigest to the signature.
@@ -35,7 +35,7 @@ def on_incoming_message(request):
 		signature = signature, timestamp = timestamp, token = token, sig = sig)
 		m.save()
 
-
+		# debugging email
 		send_mail('Subject here', 'Here is the message.', 'postmaster@rocketlistings.mailgun.org', ['nat@rocketlistings.com'], fail_silently=False)
 
 		return HttpResponse('OK')

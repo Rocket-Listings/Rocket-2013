@@ -16,10 +16,7 @@ def overview(request, username=None):
 	listings = Listing.objects.filter(user=user).order_by('-pub_date')[:10]
 	offers = listing.offer_set.all()
 
-	#debug email
-	send_mail('Subject here', 'Here is the message.', 'postmaster@rocketlistings.mailgun.org', ['nat@rocketlistings.com'], fail_silently=False)
-
-# 	userprofile = request.user.userprofile # if no username parameter is passed, defaults to the currently logged in user.
+	# 	userprofile = request.user.userprofile # if no username parameter is passed, defaults to the currently logged in user.
 # 	if request.user.username == username: # updating his own listing
 # 		if request.method == 'POST':
 # 			pass

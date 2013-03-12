@@ -33,16 +33,20 @@
 			   	{% endif %}
 		   	{% endfor %}
 		</div>
-	{% endfor %}	
-</div>	
-	<div class = "bottom">
-		<div class = "message-box">
-			<input type="text" class="input-long" placeholder="  Message...">
-		</div>
-		<div class = "send">
-			<button type="submit" class="btn">Send</button> 
-		</div>
+		
+		<div class = "bottom">
+		<form action = "{% url listings.views.messages listing.id %}" method = "POST">
+			<div class = "message-box">
+				<input type="text" name = 'content' class="input-long" placeholder="  Message..." >
+				<input type ="hidden" name = "buyer_id" value = "{{ buyer.id }}" >
+			</div>
+			<div class = "send">
+				<input type="submit" class="btn">
+			</div>
+		</form>	
 	</div>
+	{% endfor %}	
+</div>		
 
 {% else %}
 <h4>You don't have any messages yet!<h4>

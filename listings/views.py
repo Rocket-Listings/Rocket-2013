@@ -1,5 +1,5 @@
 from listings.models import Listing, ListingPhoto
-from listings.models import Buyer
+from listings.models import Buyer, Offer, Message 
 from django.conf import settings
 from datetime import datetime, timedelta
 from listings.forms import ListingForm
@@ -11,6 +11,8 @@ from django.utils import simplejson
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Max
+from django.views.decorators.csrf import csrf_exempt
+from django.core.mail import send_mail
 
 
 def latest(request):
@@ -86,7 +88,26 @@ def offers(request, listing_id):
 	offers = listing.offer_set.all()
 	return render(request, 'listing_offers.html',  {'listing': listing, 'offers': offers,})
 
+@csrf_exempt #this need to be changed but i cant be bothered to figure out the csrf stuff atm
 def messages(request, listing_id):
+	if request.method == "POST":
+
+		listing = get_object_or_404(Listing, id=listing_id)
+		buyerId = request.POST.get('buyer_id')
+		buyer = get_object_or_404(Buyer, id=buyerId)
+		content = request.POST.get('content')
+		subject = ('New Message from ' + listing.user.userprofile.name) 
+
+		send_mail( subject , 'Here is the message.', 'postmaster@rocketlistings.mailgun.org', [buyer.email], fail_silently=False)
+
+
+
+
+
+		m = Message(listing = listing, isSeller = True, buyer = buyer, content = content)
+		m.save()
+
+
 	listing = get_object_or_404(Listing, id=listing_id)
 	buyers = listing.buyer_set.all().order_by('name')
 	messages = listing.message_set.all().order_by('date')
