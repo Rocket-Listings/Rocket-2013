@@ -12,5 +12,4 @@ urlpatterns = patterns('',
 	url(r'^users/', include('users.urls')),
 	url(r'^admin/', include(admin.site.urls)),
 	url(r'^search/', include('haystack.urls')),
-	url(r'^grappelli/', include('grappelli.urls')),
 )
