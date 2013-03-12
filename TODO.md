@@ -17,3 +17,7 @@ MVP Site Features TODO
 - amazon S3 for images
 - MOD_WSGI apache setup
 - User info and profile pic
+
+Brian:
+
+Change Date-time format to be shorter (ie. instead of Mar. 3, 2015, 2:29pm make it 03/03/12 2:29pm. That will make the listings_overview table fit)

@@ -43,9 +43,14 @@ LANGUAGE_CODE = 'en-us'
 # to load the internationalization machinery.
 USE_I18N = False
 
+DATE_FORMAT = (
+    '%m/%d/%y %H:%M',   
+
+    )
+
 # If you set this to False, Django will not format dates, numbers and
 # calendars according to the current locale.
-USE_L10N = True
+USE_L10N = False
 
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True

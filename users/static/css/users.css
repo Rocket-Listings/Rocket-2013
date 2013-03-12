@@ -37,7 +37,19 @@
 .centered-td {
   text-align: center !important;
 }
+
+.centered-th{
+   text-align: center !important;
+}
+
+.grey{
+  -webkit-filter: grayscale(1);
+}
 .th-sortable {
   background: url("desc.gif") right center no-repeat;
   padding-right: 15px;
+}
+
+.stay-color{
+  color: black;
 }

@@ -31,12 +31,16 @@ class Listing(models.Model):
 	CL_link = models.URLField(null = True, blank = True)
 	RL_link = models.URLField(null = True, blank = True)
 
+	def max_offer(self):
+		"Returns highest offer made by any buyer for that listing"
+		return self.offer_set.aggregate(Max('value'))["value__max"]
 
 	def __unicode__(self):
 		return self.title
 
 	def get_absolute_url(self):
 		return reverse('listings.views.detail', args=[str(self.id)])
+
 
 class ListingSpec(models.Model):
 	key = models.CharField(max_length = 60)
@@ -65,15 +69,16 @@ class Buyer(models.Model):
 	listing = models.ForeignKey(Listing, blank=True) 
 	name = models.CharField(max_length=255)
 	email = models.EmailField(max_length=255, null = True, blank=True)
-	def maxOffer(self):
-		"Returns highest offer for that buyer"
-		return self.offer_set.aggregate(Max('value'))["value__max"]
+	def max_offer(self):
+		"Returns highest offer the buyer has made for the listing"
+		return self.listing.offer_set.filter(buyer=self).aggregate(Max('value'))["value__max"]
 
-	def buyerMessages(self):
-		"returns all the messages for that buyer"
-		return self.message_set.all()
 	def __unicode__(self):
 		return self.name
+
+	def last_message(self):
+		"returns the last message between the seller and buyer for that listing"
+		return self.listing.message_set.filter(buyer=self).latest('date')
 
 
 class Offer(models.Model):
@@ -88,6 +93,8 @@ class Message(models.Model):
 	buyer = models.ForeignKey(Buyer, null = True, blank=True)
 	content = models.TextField()
 	date = models.DateTimeField('date received', auto_now_add=True)
+
+
 
 
 
