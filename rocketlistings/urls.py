@@ -11,5 +11,6 @@ urlpatterns = patterns('',
 	url(r'^users/', include('users.urls')),
 	url(r'^admin/', include(admin.site.urls)),
 	url(r'^search/', include('haystack.urls')),
-	url(r'', include('static_pages.urls'))
-) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+	url(r'', include('static_pages.urls')),
+	url(r'^grappelli/', include('grappelli.urls')),
+)

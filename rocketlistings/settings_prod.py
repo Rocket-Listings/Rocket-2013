@@ -27,8 +27,6 @@ MEDIA_URL = '//s3.amazonaws.com/media.rocketlistings.com/'
 AWS_S3_CUSTOM_DOMAIN = "s3.amazonaws.com/media.rocketlistings.com"
 AWS_S3_SECURE_URLS = False
 
-ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
-
 # Caching settings
 os.environ['MEMCACHE_SERVERS'] = os.environ.get('MEMCACHIER_SERVERS', '').replace(',', ';')
 os.environ['MEMCACHE_USERNAME'] = os.environ.get('MEMCACHIER_USERNAME', '')
