@@ -14,6 +14,11 @@ AWS_ACCESS_KEY_ID = os.environ.get('AWS_KEY')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET')
 # AWS_STORAGE_BUCKET_NAME = 'static.rocketlistings.com'
 
+# see http://developer.yahoo.com/performance/rules.html#expires
+AWS_HEADERS = {
+    'Cache-Control': 'max-age=86400, pubic',
+}
+
 STATICFILES_STORAGE = 'rocketlistings.s3storages.StaticStorage'
 DEFAULT_FILE_STORAGE = 'rocketlistings.s3storages.MediaStorage'
 

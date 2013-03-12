@@ -1,7 +1,8 @@
+{% load static from staticfiles %}
 <div class="header">
 	<div class="container">
 		<div class="upper">
-			<a href="{% url 'home' %}"><img class="logo" src="{{ STATIC_URL }}img/logo-beta.png" width="180" height="67" alt="Rocket Listing"></a>
+			<a href="{% url 'home' %}"><img class="logo" src="{% static 'img/logo-beta.png' %}" width="180" height="67" alt="Rocket Listing"></a>
 			<ul class="site-menu">
 				<li class="inverse-corners-outer">
 					<div class="inverse-corners-left-inner"></div>
@@ -31,13 +32,13 @@
 					<a href="/help">Learn More</a>
 				</li>
 				<li class="social">
-					<a href="https://www.facebook.com/RocketListings" class="social" target="_blank"><img src="{{ STATIC_URL }}img/facebook-icon.png" alt="facebook"></a>
+					<a href="https://www.facebook.com/RocketListings" class="social" target="_blank"><img src="{% static 'img/facebook-icon.png' %}" alt="facebook"></a>
 				</li>
 				{% comment %} <li style="list-style: none; display: inline">
 					<script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
 				</li>{% endcomment %}
 				<li class="social right">
-					<a href="https://twitter.com/intent/follow?user_id=604017970"><img src="{{ STATIC_URL }}img/twitter-icon.png" alt="Folow Rocket Listings"></a>
+					<a href="https://twitter.com/intent/follow?user_id=604017970"><img src="{% static 'img/twitter-icon.png' %}" alt="Folow Rocket Listings"></a>
 				</li>
 				<li class="inverse-corners-outer">
 					<div class="inverse-corners-right-inner"></div>

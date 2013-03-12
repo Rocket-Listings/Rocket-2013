@@ -1,8 +1,9 @@
 {% extends "base.html" %}
+{% load static from staticfiles %}
 
 {# should really have a static_pages_base.html #}
-{% block css %}<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/static_pages.css"/>{% endblock %}
-{% block js %}<script type="text/javascript" src="{{ STATIC_URL }}js/static_pages.js"></script>{% endblock %}
+{% block css %}<link type="text/css" rel="stylesheet" href="{% static 'css/static_pages.css' %}"/>{% endblock %}
+{% block js %}<script type="text/javascript" src="{% static 'js/static_pages.js' %}"></script>{% endblock %}
 
 {% block content %}
 	<div class="homepage-row homepage-message">
@@ -54,26 +55,26 @@
 		<div class="homepage-heading">How Pricing Works</div>
 		<ul class="pricing-list">
 			<li>
-				<img src="{{ STATIC_URL }}img/freeBanner.png" width="661" height="102" alt="Free" />
+				<img src="{% static 'img/freeBanner.png' %}" width="661" height="102" alt="Free" />
 				<h4 class="tooLong">Create 3 listings <br/> every month for free!</h4>
 			</li>
 			<li class="then">
-				<img src="{{ STATIC_URL }}img/rocket-then.png" alt="then" />
+				<img src="{% static 'img/rocket-then.png' %}" alt="then" />
 			</li>
 			<li>
-				<img src="{{ STATIC_URL }}img/oneDollarBanner.png" width="661" height="102" />
+				<img src="{% static 'img/oneDollarBanner.png' %}" width="661" height="102" />
 				<h4>Pay as you go - $1 per listing</h4>
 			</li>
 			<li class="or">
-				<img src="{{ STATIC_URL }}img/rocket-or.png" alt="or" />
+				<img src="{% static 'img/rocket-or.png' %}" alt="or" />
 			</li>
 			<li>
-				<img src="{{ STATIC_URL }}img/subscription-banner.png" width="661" height="102" />
+				<img src="{% static 'img/subscription-banner.png' %}" width="661" height="102" />
 				<h4>List all you want - $10 per month</h4>
 			</li>
 		</ul>
 		<span class="homepage-why-pay" data-trigger="hover" data-html="true" data-title="So we can make Rocket better." data-placement="right" data-content="<p>Rocket Listings cost a dollar so that the RL team up in Burlington, VT can continue making the Craigslist experience a bit awesomer.</p><p>And since RL templates tend to add more than a dollar to your product's final sale price, we figure it's a win-win. :)</p>">
-			<img src="{{ STATIC_URL }}img/help.png" rel="question mark"/>
+			<img src="{% static 'img/help.png' %}" rel="question mark"/>
 			Why isn't Rocket free?
 		</span>
 		<div class="clearfix"></div>    
