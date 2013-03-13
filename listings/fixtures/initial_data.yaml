@@ -4,6 +4,20 @@
     name: Cars and Trucks
     description: Selling automobiles.
 
+- model: listings.ListingCategory
+  pk: 2
+  fields:
+    name: Antiques
+    description: Selling old stuff.
+
+- model: listings.ListingCategory
+  pk: 3
+  fields:
+    name: Electronics
+    description: Selling Electronics.
+
+
+
 - model: listings.ListingType
   pk: 1
   fields:

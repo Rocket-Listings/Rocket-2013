@@ -33,20 +33,37 @@ $(function() {
   });
 
 
+
+
 $(function(){
 	$('.content').hide();
     });
 
 $(function(){
-		$('.btn[data-buyerid]').click(function(){
+	$('.bottom').hide();
+    });
+
+
+$(function(){
+		var firstId = $('.buyer-tiles:first').data('buyerid');
+		$('.buyer-tiles:first').click(function(){ 
+			/*$('.content[data-buyerid="'firstId'"]').show();
+			$('.bottom[data-buyerid="'firstId'"]').show();
+			/$('buyer-tiles:first').trigger('click'); */ 
+	});
+});		
+
+
+
+$(function(){
+		$('.buyer-tiles').click(function(){
 			var buyerid = $(event.target).data('buyerid');
 			$('.content').hide();
 			$('.content[data-buyerid="'+buyerid+'"]').show();
-		
+			$('.bottom').hide();
+			$('.bottom[data-buyerid="'+buyerid+'"]').show();
 	});
 });
-
-
 
 
 
