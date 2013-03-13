@@ -29,7 +29,7 @@ class Listing(models.Model):
 	listing_type = models.ForeignKey(ListingType)
 	user = models.ForeignKey(User)
 	CL_link = models.URLField(null = True, blank = True)
-	RL_link = models.URLField(null = True, blank = True)
+	
 
 	def max_offer(self):
 		"Returns highest offer made by any buyer for that listing"

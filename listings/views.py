@@ -98,11 +98,7 @@ def messages(request, listing_id):
 		content = request.POST.get('content')
 		subject = ('New Message from ' + listing.user.userprofile.name) 
 
-		send_mail( subject , 'Here is the message.', 'postmaster@rocketlistings.mailgun.org', [buyer.email], fail_silently=False)
-
-
-
-
+		send_mail( subject , content, 'postmaster@rocketlistings.mailgun.org', [buyer.email], fail_silently=False)
 
 		m = Message(listing = listing, isSeller = True, buyer = buyer, content = content)
 		m.save()

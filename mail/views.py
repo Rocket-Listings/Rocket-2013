@@ -35,9 +35,6 @@ def on_incoming_message(request):
 		signature = signature, timestamp = timestamp, token = token, sig = sig)
 		m.save()
 
-		# debugging email
-		send_mail('Subject here', 'Here is the message.', 'postmaster@rocketlistings.mailgun.org', ['nat@rocketlistings.com'], fail_silently=False)
-
 		return HttpResponse('OK')
 	else:
 		return HttpResponse('Unauthorized')
