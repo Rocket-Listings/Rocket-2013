@@ -81,7 +81,7 @@ def delete(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
 	if request.user == listing.user:
 		listing.delete()
-		return redirect('users.views.overview')
+		return redirect('users.views.listings', username = request.user.username)
 
 def offers(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
