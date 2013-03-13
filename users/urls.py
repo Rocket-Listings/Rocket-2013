@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, url, include
+from registration.views import register
 
 urlpatterns = patterns('',
 	url(r'^$', 'users.views.overview'),
