@@ -37,13 +37,13 @@ Requires the context variable listings
 			{% endif %}
 
 			<!-- Message cell -->
-			<td class = "centered-td"><a href = "{% url listings.views.messages listing.id %}" class="stay-color"> <i class="icon-envelope icon-large"></i></a> </td> 
+			<td class = "centered-td"><a href = "{% url listings.views.messages listing.id %}" class="stay-color"> <i class="icon-envelope icon-2x"></i></a> </td> 
 
 			<!-- Copy HTML cell -->
-			<td class = "centered-td"><a class="clipboard stay-color" data-clipboard-text="test text"><i class="icon-download-alt icon-large"></i></a></td>
+			<td class = "centered-td"><a class="clipboard stay-color" data-clipboard-text="test text"><i class="icon-download-alt icon-2x"></i></a></td>
 
 			<!-- Edit/Delete cell -->
-			<td class = "centered-td"><a href="{% url listings.views.update listing.id %}" class="stay-color"><i class="icon-edit icon-large"></i></a><a href="{% url listings.views.delete listing.id %}" class="stay-color">     <i class="icon-trash icon-large"></i></a></td>
+			<td class = "centered-td"><a href="{% url listings.views.update listing.id %}" class="stay-color"><i class="icon-edit icon-2x"></i></a><a href="{% url listings.views.delete listing.id %}" class="stay-color">     <i class="icon-trash icon-2x"></i></a></td>
 
 			<!-- Craigslist cell -->
 			{% if listing.CL_link %}
