@@ -1,5 +1,22 @@
+.user-profile-table-group {
+  float: left;
+}
+.user-email-box {
+  float: right;
+  text-align: center;
+  font-family: "Open sans", "Helvetica", Arial;
+  font-size: 25px;
+  color: #222F33;
+  line-height: 45px;
+  font-weight: 700;
+  text-shadow: 1px 1px 5px #aebec6;
+  margin-bottom: 10px;
+}
+.user-email-instruction {
+  font-size: 13px;
+}
 .user-profile-table {
-  width: 600px;
+  width: 400px;
 }
 .user-info-buttons a {
   float: left;
@@ -37,19 +54,10 @@
 .centered-td {
   text-align: center !important;
 }
-
-.centered-th{
-   text-align: center !important;
-}
-
-.grey{
-  -webkit-filter: grayscale(1);
+.stay-color {
+  color: black;
 }
 .th-sortable {
   background: url("desc.gif") right center no-repeat;
   padding-right: 15px;
-}
-
-.stay-color{
-  color: black;
 }

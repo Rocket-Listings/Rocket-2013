@@ -33,7 +33,7 @@ def overview(request, username=None):
 	return render(request, 'user_overview.html', {'listing': listing,})
 
 @login_required
-def listings(request, username = None):
+def listings(request, username=None):
 	user = request.user # if no username parameter is passed, defaults to the currently logged in user.
 	if username:
 		user = get_object_or_404(User, username=username)
@@ -41,7 +41,7 @@ def listings(request, username = None):
 	return render(request, 'user_overview.html', {'listings': listings})
 
 @login_required
-def info(request, username):
+def info(request, username=None):
 	profile = request.user.get_profile()
 	return render(request, 'user_info.html', {'profile':profile,})
 
