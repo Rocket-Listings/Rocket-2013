@@ -43,16 +43,12 @@ $(function(){
 	$('.bottom').hide();
     });
 
-
 $(function(){
 		var firstId = $('.buyer-tiles:first').data('buyerid');
-		$('.buyer-tiles:first').click(function(){ 
-			/*$('.content[data-buyerid="'firstId'"]').show();
-			$('.bottom[data-buyerid="'firstId'"]').show();
-			/$('buyer-tiles:first').trigger('click'); */ 
-	});
-});		
-
+		$('.buyer-tiles[data-buyerid="'+firstId+'"]').click();
+		$('.content[data-buyerid="'+firstId+'"]').show();
+		$('.bottom[data-buyerid="'+firstId+'"]').show();
+    });
 
 
 $(function(){
@@ -64,6 +60,8 @@ $(function(){
 			$('.bottom[data-buyerid="'+buyerid+'"]').show();
 	});
 });
+
+
 
 
 
