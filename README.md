@@ -159,5 +159,7 @@ We want the URLs to look like that no matter what application the resources are 
 
 ## Deployment notes
 
+	brew install libmemcached
+	
 heroku labs:enable user-env-compile -a rocket-listings
 http://devcenter.heroku.com/articles/labs-user-env-compile
