@@ -1,5 +1,5 @@
 $(function() {
-	ZeroClipboard.setDefaults({moviePath: '/static/js/ZeroClipboard.swf'});
+	ZeroClipboard.setDefaults({moviePath: STATIC_URL+'js/ZeroClipboard.swf'});
 	var clip = new ZeroClipboard( $(".clipboard") );
 
 	var photoId = parseInt((window.location.hash || "").substring(1));
@@ -51,6 +51,12 @@ $(function(){
     });
 
 
+var cl_embed = $('.cl-embed');
+if(cl_embed) {
+		cl_embed.click(function(e) {
+			cl_embed.select();
+		});
+	}
 $(function(){
 		$('.buyer-tiles').click(function(){
 			var buyerid = $(event.target).data('buyerid');

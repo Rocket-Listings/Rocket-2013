@@ -6,10 +6,12 @@ from listings.forms import ListingForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from ajaxuploader.views import AjaxFileUploader
-from ListingsLocalUploadBackend import ListingsLocalUploadBackend
+#from ListingsLocalUploadBackend import ListingsLocalUploadBackend
+from listings.upload_backend import ProductionUploadBackend, DevelopmentUploadBackend
 from django.utils import simplejson
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
+from rocketlistings import get_client_ip
 from django.db.models import Max
 from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import send_mail
@@ -33,7 +35,9 @@ def create(request):
 			listing.user = request.user
 			listing.save()
 			expire_time = datetime.now() - timedelta(minutes=settings.ROCKET_UNUSED_PHOTO_MINS)
-			ListingPhoto.objects.filter(upload_ip=request.META['REMOTE_ADDR'], upload_date__gt=expire_time, listing=None).update(listing=listing)
+			ip = get_client_ip(request)
+
+			ListingPhoto.objects.filter(upload_ip=ip, upload_date__gt=expire_time, listing=None).update(listing=listing)
 			if request.user.is_authenticated():
 				return redirect(listing)
 			else:
@@ -126,4 +130,10 @@ def delete_ajax(request, listing_id):
 		response['reason'] = 'Cannot delete someone else\'s listings!'
 	return HttpResponse(simplejson.dumps(response), content_type = 'application/javascript; charset=utf8')
 
-import_uploader = AjaxFileUploader(backend=ListingsLocalUploadBackend)
+
+if settings.PRODUCTION:
+	upload_backend = ProductionUploadBackend
+else:
+	upload_backend = DevelopmentUploadBackend
+
+import_uploader = AjaxFileUploader(backend=upload_backend)

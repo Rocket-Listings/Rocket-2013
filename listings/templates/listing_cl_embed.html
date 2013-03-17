@@ -1,5 +1,6 @@
-{% load thumbnail %}
 {% spaceless %}
+{% load static from staticfiles %}
+{% load thumbnail %}
 {# <!DOCTYPE> #}
 <table border="0" cellspacing="0" cellpadding="0" align="center">
 	<tr>
@@ -25,9 +26,9 @@
 									</font>
 									<br /><br />
 									{% for photo in photos %}
-										{% thumbnail photo.url "100x100" as im %}
-										<a href="{{ listing.get_absolute_url }}#{{ photo.order}}" target="_blank"><img src="{{ im.url }}" data-full="{{ MEDIA_URL }}{{ photo.url }}" data-id="{{ photo.order }}"></a>
-										{% endthumbnail %}
+										{# {% thumbnail photo.url "100x100" as im %} #}
+										{# <a href="{{ listing.get_absolute_url }}#{{ photo.order}}" target="_blank"><img src="{{ im.url }}" data-full="{{ MEDIA_URL }}{{ photo.url }}" data-id="{{ photo.order }}"></a> #}
+										{# {% endthumbnail %} #}
 									{% endfor %}
 								</td>
 							</tr>
@@ -97,7 +98,7 @@
 					<td>
 						<table border="0" cellspacing="0" cellpadding="10" width="800">
 							<tr>
-								<td valign="middle" align="center" width="75" bgcolor="#F2F5F6" height="50"><a href="http://www.rocketlistings.com/" rel="nofollow"><img src="/static/img/icon-footnote.png" alt="" /></a>
+								<td valign="middle" align="center" width="75" bgcolor="#F2F5F6" height="50"><a href="http://www.rocketlistings.com/" rel="nofollow"><img src="{% static 'img/icon-footnote.png' %}" alt="" /></a>
 								</td>
 								<td valign="middle" align="center" bgcolor="#E7EDEF"><font face="Verdana, Geneva, sans-serif" size="-2">Created with <a href="http://www.rocketlistings.com/" rel="nofollow">Rocket Listings</a>. Blast off.</font>
 								</td>

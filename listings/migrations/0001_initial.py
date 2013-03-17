@@ -9,24 +9,24 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Adding model 'ListingCategory'
-        db.create_table('listings_listingcategory', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+        db.create_table(u'listings_listingcategory', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=60)),
             ('description', self.gf('django.db.models.fields.CharField')(max_length=200)),
         ))
-        db.send_create_signal('listings', ['ListingCategory'])
+        db.send_create_signal(u'listings', ['ListingCategory'])
 
         # Adding model 'ListingType'
-        db.create_table('listings_listingtype', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+        db.create_table(u'listings_listingtype', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=60)),
             ('description', self.gf('django.db.models.fields.CharField')(max_length=200)),
         ))
-        db.send_create_signal('listings', ['ListingType'])
+        db.send_create_signal(u'listings', ['ListingType'])
 
         # Adding model 'Listing'
-        db.create_table('listings_listing', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+        db.create_table(u'listings_listing', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=200)),
             ('description', self.gf('django.db.models.fields.TextField')()),
             ('pub_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
@@ -35,220 +35,205 @@ class Migration(SchemaMigration):
             ('category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingCategory'])),
             ('listing_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingType'])),
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+            ('CL_link', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
         ))
-        db.send_create_signal('listings', ['Listing'])
+        db.send_create_signal(u'listings', ['Listing'])
 
         # Adding model 'ListingSpec'
-        db.create_table('listings_listingspec', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+        db.create_table(u'listings_listingspec', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('key', self.gf('django.db.models.fields.CharField')(max_length=60)),
             ('value', self.gf('django.db.models.fields.CharField')(max_length=60)),
             ('listing', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Listing'])),
         ))
-        db.send_create_signal('listings', ['ListingSpec'])
+        db.send_create_signal(u'listings', ['ListingSpec'])
 
         # Adding model 'ListingHighlight'
-        db.create_table('listings_listinghighlight', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+        db.create_table(u'listings_listinghighlight', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('value', self.gf('django.db.models.fields.CharField')(max_length=60)),
             ('listing', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Listing'])),
         ))
-        db.send_create_signal('listings', ['ListingHighlight'])
+        db.send_create_signal(u'listings', ['ListingHighlight'])
 
         # Adding model 'ListingPhoto'
-        db.create_table('listings_listingphoto', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('path', self.gf('django.db.models.fields.FilePathField')(path='/Users/briansirkia/Documents/Rocket-Listings-Django/media/uploads', max_length=255)),
+        db.create_table(u'listings_listingphoto', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('url', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('upload_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
             ('upload_ip', self.gf('django.db.models.fields.IPAddressField')(max_length=15)),
             ('order', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
             ('listing', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Listing'], null=True, blank=True)),
         ))
-        db.send_create_signal('listings', ['ListingPhoto'])
+        db.send_create_signal(u'listings', ['ListingPhoto'])
 
         # Adding model 'Buyer'
-        db.create_table('listings_buyer', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+        db.create_table(u'listings_buyer', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('listing', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Listing'], blank=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('email', self.gf('django.db.models.fields.EmailField')(max_length=255, null=True, blank=True)),
         ))
-        db.send_create_signal('listings', ['Buyer'])
+        db.send_create_signal(u'listings', ['Buyer'])
 
         # Adding model 'Offer'
-        db.create_table('listings_offer', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+        db.create_table(u'listings_offer', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('listing', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Listing'], null=True, blank=True)),
             ('buyer', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Buyer'])),
             ('value', self.gf('django.db.models.fields.IntegerField')()),
             ('date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
         ))
-        db.send_create_signal('listings', ['Offer'])
+        db.send_create_signal(u'listings', ['Offer'])
 
-        # Adding model 'BuyerMessage'
-        db.create_table('listings_buyermessage', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('buyer', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Buyer'])),
+        # Adding model 'Message'
+        db.create_table(u'listings_message', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('listing', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Listing'], null=True, blank=True)),
+            ('isSeller', self.gf('django.db.models.fields.NullBooleanField')(null=True, blank=True)),
+            ('buyer', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Buyer'], null=True, blank=True)),
             ('content', self.gf('django.db.models.fields.TextField')()),
             ('date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
         ))
-        db.send_create_signal('listings', ['BuyerMessage'])
-
-        # Adding model 'SellerMessage'
-        db.create_table('listings_sellermessage', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('buyer', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Buyer'])),
-            ('content', self.gf('django.db.models.fields.TextField')()),
-            ('date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-        ))
-        db.send_create_signal('listings', ['SellerMessage'])
+        db.send_create_signal(u'listings', ['Message'])
 
 
     def backwards(self, orm):
         # Deleting model 'ListingCategory'
-        db.delete_table('listings_listingcategory')
+        db.delete_table(u'listings_listingcategory')
 
         # Deleting model 'ListingType'
-        db.delete_table('listings_listingtype')
+        db.delete_table(u'listings_listingtype')
 
         # Deleting model 'Listing'
-        db.delete_table('listings_listing')
+        db.delete_table(u'listings_listing')
 
         # Deleting model 'ListingSpec'
-        db.delete_table('listings_listingspec')
+        db.delete_table(u'listings_listingspec')
 
         # Deleting model 'ListingHighlight'
-        db.delete_table('listings_listinghighlight')
+        db.delete_table(u'listings_listinghighlight')
 
         # Deleting model 'ListingPhoto'
-        db.delete_table('listings_listingphoto')
+        db.delete_table(u'listings_listingphoto')
 
         # Deleting model 'Buyer'
-        db.delete_table('listings_buyer')
+        db.delete_table(u'listings_buyer')
 
         # Deleting model 'Offer'
-        db.delete_table('listings_offer')
+        db.delete_table(u'listings_offer')
 
-        # Deleting model 'BuyerMessage'
-        db.delete_table('listings_buyermessage')
-
-        # Deleting model 'SellerMessage'
-        db.delete_table('listings_sellermessage')
+        # Deleting model 'Message'
+        db.delete_table(u'listings_message')
 
 
     models = {
-        'auth.group': {
+        u'auth.group': {
             'Meta': {'object_name': 'Group'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '80'}),
-            'permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'})
+            'permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'})
         },
-        'auth.permission': {
-            'Meta': {'ordering': "('content_type__app_label', 'content_type__model', 'codename')", 'unique_together': "(('content_type', 'codename'),)", 'object_name': 'Permission'},
+        u'auth.permission': {
+            'Meta': {'ordering': "(u'content_type__app_label', u'content_type__model', u'codename')", 'unique_together': "((u'content_type', u'codename'),)", 'object_name': 'Permission'},
             'codename': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['contenttypes.ContentType']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         },
-        'auth.user': {
+        u'auth.user': {
             'Meta': {'object_name': 'User'},
             'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
-            'groups': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Group']", 'symmetrical': 'False', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'groups': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.Group']", 'symmetrical': 'False', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'is_superuser': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
             'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
-            'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'}),
+            'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'}),
             'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
         },
-        'contenttypes.contenttype': {
+        u'contenttypes.contenttype': {
             'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
             'app_label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        'listings.buyer': {
+        u'listings.buyer': {
             'Meta': {'object_name': 'Buyer'},
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['listings.Listing']", 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.Listing']", 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
-        'listings.buyermessage': {
-            'Meta': {'object_name': 'BuyerMessage'},
-            'buyer': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['listings.Buyer']"}),
-            'content': ('django.db.models.fields.TextField', [], {}),
-            'date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
-        },
-        'listings.listing': {
+        u'listings.listing': {
+            'CL_link': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'Meta': {'object_name': 'Listing'},
-            'category': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['listings.ListingCategory']"}),
+            'category': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.ListingCategory']"}),
             'description': ('django.db.models.fields.TextField', [], {}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'listing_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['listings.ListingType']"}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'listing_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.ListingType']"}),
             'location': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'price': ('django.db.models.fields.IntegerField', [], {}),
             'pub_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         },
-        'listings.listingcategory': {
+        u'listings.listingcategory': {
             'Meta': {'object_name': 'ListingCategory'},
             'description': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '60'})
         },
-        'listings.listinghighlight': {
+        u'listings.listinghighlight': {
             'Meta': {'object_name': 'ListingHighlight'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['listings.Listing']"}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.Listing']"}),
             'value': ('django.db.models.fields.CharField', [], {'max_length': '60'})
         },
-        'listings.listingphoto': {
+        u'listings.listingphoto': {
             'Meta': {'object_name': 'ListingPhoto'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['listings.Listing']", 'null': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.Listing']", 'null': 'True', 'blank': 'True'}),
             'order': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'path': ('django.db.models.fields.FilePathField', [], {'path': "'/Users/briansirkia/Documents/Rocket-Listings-Django/media/uploads'", 'max_length': '255'}),
             'upload_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'upload_ip': ('django.db.models.fields.IPAddressField', [], {'max_length': '15'}),
             'url': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
-        'listings.listingspec': {
+        u'listings.listingspec': {
             'Meta': {'object_name': 'ListingSpec'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'key': ('django.db.models.fields.CharField', [], {'max_length': '60'}),
-            'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['listings.Listing']"}),
+            'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.Listing']"}),
             'value': ('django.db.models.fields.CharField', [], {'max_length': '60'})
         },
-        'listings.listingtype': {
+        u'listings.listingtype': {
             'Meta': {'object_name': 'ListingType'},
             'description': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '60'})
         },
-        'listings.offer': {
-            'Meta': {'object_name': 'Offer'},
-            'buyer': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['listings.Buyer']"}),
-            'date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['listings.Listing']", 'null': 'True', 'blank': 'True'}),
-            'value': ('django.db.models.fields.IntegerField', [], {})
-        },
-        'listings.sellermessage': {
-            'Meta': {'object_name': 'SellerMessage'},
-            'buyer': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['listings.Buyer']"}),
+        u'listings.message': {
+            'Meta': {'object_name': 'Message'},
+            'buyer': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.Buyer']", 'null': 'True', 'blank': 'True'}),
             'content': ('django.db.models.fields.TextField', [], {}),
             'date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'isSeller': ('django.db.models.fields.NullBooleanField', [], {'null': 'True', 'blank': 'True'}),
+            'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.Listing']", 'null': 'True', 'blank': 'True'})
+        },
+        u'listings.offer': {
+            'Meta': {'object_name': 'Offer'},
+            'buyer': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.Buyer']"}),
+            'date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.Listing']", 'null': 'True', 'blank': 'True'}),
+            'value': ('django.db.models.fields.IntegerField', [], {})
         }
     }
 

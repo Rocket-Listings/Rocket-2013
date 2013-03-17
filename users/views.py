@@ -10,27 +10,7 @@ from django.core.mail import send_mail
 
 @login_required
 def overview(request, username=None):
-	user = request.user
-	if username:
-		user = get_object_or_404(User, username=username)
-	listings = Listing.objects.filter(user=user).order_by('-pub_date')[:10]
-
-
-# 	userprofile = request.user.userprofile # if no username parameter is passed, defaults to the currently logged in user.
-# 	if request.user.username == username: # updating his own listing
-# 		if request.method == 'POST':
-# 			pass
-# #			userprofile_form = UserProfileForm(request.POST, instance = userprofile)
-# #			if userprofile_form.is_valid():
-# #				return redirect(request.user)
-# 			#else:
-# #				return render(request, 'user_update.html', {'form': listing_form})
-# 		else:
-# 			return render(request, 'listing_update.html', {'form':ListingForm(instance = listing),})
-# 	else:
-# 		return render(request, '403.html')
-	
-	return render(request, 'user_overview.html', {'listing': listing,})
+	return listings(request)
 
 @login_required
 def listings(request, username=None):

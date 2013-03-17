@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
+{% load static from staticfiles %}
 
 {% block css %}
-<link type="text/css" rel="stylesheet" href="/static/css/listings.css"/>
+<link type="text/css" rel="stylesheet" href="{% static 'css/listings.css' %}"/>
 {% endblock %}
 
 {% block js %}
-<script src="{{ STATIC_URL }}js/ZeroClipboard.js" type="text/javascript"></script>
-<script src="{{ STATIC_URL }}js/listings.js" type="text/javascript"></script>
-<script src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
-<script src="{{ STATIC_URL }}js/jquery.tablesorter.min.js"></script>
+<script src="{% static 'js/ZeroClipboard.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/listings.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/jquery.tablesorter.js' %}"></script>
+<script src="{% static 'js/jquery.tablesorter.min.js' %}"></script>
 {% endblock %}
