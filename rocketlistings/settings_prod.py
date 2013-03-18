@@ -11,7 +11,9 @@ PREPEND_WWW = False
 ALLOWED_HOSTS = [   'beta.rocketlistings.com', 
                     'rocketlistings.com', 
                     'www.rocketlistings.com', 
-                    'rocket-listings.herokuapp.com' ]
+                    'rocket-listings.herokuapp.com',
+                    'whispering-springs-3228.herokuapp.com'
+                    ]
 
 # Database settings sourced from Heroku
 DB =  dj_database_url.config()

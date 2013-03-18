@@ -1,1 +1,1 @@
-web: gunicorn rocketlistings.wsgi:application
+web: python manage.py run_gunicorn
