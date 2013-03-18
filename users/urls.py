@@ -7,7 +7,7 @@ urlpatterns = patterns('',
 #	url(r'^$', 'users.views.overview'),
     url(r'^(?P<username>\w+)$/', 'users.views.overview'),
     url(r'^(?P<username>\w+)/listings/$', 'users.views.listings'),
-#    url(r'^info/$', 'users.views.info'),
+    url(r'^info/$', 'users.views.info'), # this url makes registration redirect work
     url(r'^(?P<username>\w+)/info/$', 'users.views.info'),
     url(r'^(?P<username>\w+)/edit/$', 'users.views.edit'),
 )
