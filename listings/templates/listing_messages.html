@@ -36,7 +36,7 @@
 		</div>
 
 		<div class = "bottom" data-buyerid="{{ buyer.id }}">
-		<form action = "{% url listings.views.messages listing.id %}" method = "POST">
+		<form action = "{% url "listings.views.messages" listing.id %}" method = "POST">
 			<div class = "message-box">
 				<input type="text" name = 'content' class="input-long" placeholder="  Message..." >
 				<input type ="hidden" name = "buyer_id" value = "{{ buyer.id }}" >
