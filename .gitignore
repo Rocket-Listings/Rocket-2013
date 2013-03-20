@@ -12,6 +12,8 @@ downloads
 eggs
 log
 parts
+cache
+uploads
 media/*
 whoosh_index
 static_collected/*
