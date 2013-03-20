@@ -25,45 +25,29 @@ $(function() {
 		id = image.attr('data-id');
 		window.location.hash = image.attr('data-id');
 	}
-});
 
-
-$(function() {
 	$('#table-offers').tablesorter();
-  });
-
-
-
-
-$(function(){
 	$('.content').hide();
-    });
-
-$(function(){
 	$('.bottom').hide();
-    });
-
-$(function(){
-		var firstId = $('.buyer-tiles:first').data('buyerid');
-		$('.buyer-tiles[data-buyerid="'+firstId+'"]').click();
-		$('.content[data-buyerid="'+firstId+'"]').show();
-		$('.bottom[data-buyerid="'+firstId+'"]').show();
-    });
+	
+	var firstId = $('.buyer-tiles:first').data('buyerid');
+	$('.buyer-tiles[data-buyerid="'+firstId+'"]').click();
+	$('.content[data-buyerid="'+firstId+'"]').show();
+	$('.bottom[data-buyerid="'+firstId+'"]').show();
 
 
-var cl_embed = $('.cl-embed');
-if(cl_embed) {
+	var cl_embed = $('.cl-embed');
+	if(cl_embed) {
 		cl_embed.click(function(e) {
 			cl_embed.select();
 		});
 	}
-$(function(){
-		$('.buyer-tiles').click(function(){
-			var buyerid = $(event.target).data('buyerid');
-			$('.content').hide();
-			$('.content[data-buyerid="'+buyerid+'"]').show();
-			$('.bottom').hide();
-			$('.bottom[data-buyerid="'+buyerid+'"]').show();
+	$('.buyer-tiles').click(function(){
+		var buyerid = $(event.target).data('buyerid');
+		$('.content').hide();
+		$('.content[data-buyerid="'+buyerid+'"]').show();
+		$('.bottom').hide();
+		$('.bottom[data-buyerid="'+buyerid+'"]').show();
 	});
 });
 
