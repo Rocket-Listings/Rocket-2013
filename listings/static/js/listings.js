@@ -1,5 +1,7 @@
 $(function() {
-	ZeroClipboard.setDefaults({moviePath: STATIC_URL +'js/ZeroClipboard.swf', trustedDomains: 's3.amazonaws.com'});
+	ZeroClipboard.setDefaults({moviePath: STATIC_URL +'js/ZeroClipboard.swf', 
+								trustedDomains: 's3.amazonaws.com', 
+								allowScriptAccess: 'always'});
 	var clip = new ZeroClipboard( $(".clipboard") );
 
 	var photoId = parseInt((window.location.hash || "").substring(1));
