@@ -1,8 +1,7 @@
 $(function() {
-	/*
-	ZeroClipboard.setDefaults({moviePath: '/static/js/ZeroClipboard.swf'});
+	ZeroClipboard.setDefaults({moviePath: STATIC_URL+'/js/ZeroClipboard.swf'});
 	var clip = new ZeroClipboard( $(".clipboard") );
-	function getURLParameter(name) {
+/*	function getURLParameter(name) {
 		return decodeURI(
 			(RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
 		);
