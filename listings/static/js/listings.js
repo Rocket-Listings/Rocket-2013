@@ -1,5 +1,6 @@
 $(function() {
 	ZeroClipboard.setDefaults({moviePath: STATIC_URL+'/js/ZeroClipboard.swf'});
+	console.log(moviePath);
 	var clip = new ZeroClipboard( $(".clipboard") );
 
 	var photoId = parseInt((window.location.hash || "").substring(1));
