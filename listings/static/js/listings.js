@@ -1,6 +1,6 @@
 $(function() {
-	ZeroClipboard.setDefaults({moviePath: '/static/js/ZeroClipboard.swf'});
-	var clip = new ZeroClipboard( $(".clipboard") );
+	/*ZeroClipboard.setDefaults({moviePath: '/static/js/ZeroClipboard.swf'});
+	var clip = new ZeroClipboard( $(".clipboard") );*/
 
 	var photoId = parseInt((window.location.hash || "").substring(1));
 	if(photoId) {
