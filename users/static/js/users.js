@@ -1,6 +1,6 @@
 $(function() {
 	ZeroClipboard.setDefaults({moviePath: STATIC_URL +'js/ZeroClipboard.swf', 
-								trustedDomains: 's3.amazonaws.com', 
+								trustedDomains: ['s3.amazonaws.com'], 
 								allowScriptAccess: 'always'});
 	var clip = new ZeroClipboard( $(".clipboard") );
 /*	function getURLParameter(name) {
