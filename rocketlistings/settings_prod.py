@@ -1,4 +1,4 @@
-import dj_databaS_url,os
+import dj_database_url,os
 
 # General Settings
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', ''))
