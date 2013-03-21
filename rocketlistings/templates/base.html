@@ -49,7 +49,7 @@
         {#<script src="{% static 'js/fancybox/jquery.fancybox.js' %}"></script>#}
         <script src="{% static 'js/jquery.cookie.js' %}"></script> {# this is for ajax upload #}
 	    <script type="text/javascript">
-		   var STATIC_URL = "{% static '' %}";
+		   var STATIC_URL = "{{ STATIC_URL }}";
 		</script>
 	    <script src="{% static 'js/global.js' %}"></script>		
 		{% block js %}{% endblock %}

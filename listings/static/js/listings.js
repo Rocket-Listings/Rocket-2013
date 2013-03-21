@@ -1,6 +1,9 @@
 $(function() {
-	ZeroClipboard.setDefaults({moviePath: '/static/js/ZeroClipboard.swf'});
-	var clip = new ZeroClipboard( $(".clipboard") );
+	ZeroClipboard.setDefaults({moviePath: STATIC_URL+'/js/ZeroClipboard.swf'});
+
+	var clip = new ZeroClipboard( $(".clipboard") )
+	clip.on( 'mousedown', function(client){ $(this).addClass("active"); })
+	clip.on( 'mouseup', function(client){ $(this).removeClass("active"); });
 
 	var photoId = parseInt((window.location.hash || "").substring(1));
 	if(photoId) {
@@ -26,7 +29,9 @@ $(function() {
 		window.location.hash = image.attr('data-id');
 	}
 
-	$('#table-offers').tablesorter();
+	$('#table-offers').tablesorter({ cssHeader: 'table-header'});
+	$('#table-listings').tablesorter({ cssHeader: 'table-header'});
+
 	$('.content').hide();
 	$('.bottom').hide();
 	
@@ -50,10 +55,3 @@ $(function() {
 		$('.bottom[data-buyerid="'+buyerid+'"]').show();
 	});
 });
-
-
-
-
-
-
-

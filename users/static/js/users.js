@@ -1,6 +1,4 @@
 $(function() {
-	ZeroClipboard.setDefaults({moviePath: '/static/js/ZeroClipboard.swf'});
-	var clip = new ZeroClipboard( $(".clipboard") );
 /*	function getURLParameter(name) {
 		return decodeURI(
 			(RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
@@ -11,7 +9,7 @@ $(function() {
 		$('.message').show();
 	}*/
 
-	$('#table-listings').tablesorter();
+	// $('#table-listings').tablesorter({ cssHeader: 'table-header'});
 });
 
 
