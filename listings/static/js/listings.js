@@ -2,7 +2,8 @@ $(function() {
 	ZeroClipboard.setDefaults({moviePath: STATIC_URL +'js/ZeroClipboard.swf', 
 
 								trustedDomains: ['s3.amazonaws.com'], 
-								allowScriptAccess: 'always'});
+								allowScriptAccess: ['always']});
+
 	var clip = new ZeroClipboard( $(".clipboard") )
 	clip.on( 'mousedown', function(client){ $(this).addClass("active"); })
 	clip.on( 'mouseup', function(client){ $(this).removeClass("active"); });
