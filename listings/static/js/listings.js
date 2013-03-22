@@ -1,5 +1,5 @@
 $(function() {
-	ZeroClipboard.setDefaults({moviePath: '//http://s3.amazonaws.com/static.rocketlistings.com/js/ZeroClipboard.swf', 
+	ZeroClipboard.setDefaults({moviePath: '//s3.amazonaws.com/static.rocketlistings.com/js/ZeroClipboard.swf', 
 								trustedDomains: ['*'], 
 								allowScriptAccess: 'always'});
 
