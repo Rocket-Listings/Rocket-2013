@@ -1,8 +1,7 @@
 $(function() {
-	ZeroClipboard.setDefaults({moviePath: STATIC_URL +'js/ZeroClipboard.swf', 
-
-								trustedDomains: ['s3.amazonaws.com'], 
-								allowScriptAccess: ['always']});
+	ZeroClipboard.setDefaults({moviePath: '//http://s3.amazonaws.com/static.rocketlistings.com/js/ZeroClipboard.swf', 
+								trustedDomains: ['*'], 
+								allowScriptAccess: 'always'});
 
 	var clip = new ZeroClipboard( $(".clipboard") )
 	clip.on( 'mousedown', function(client){ $(this).addClass("active"); })
