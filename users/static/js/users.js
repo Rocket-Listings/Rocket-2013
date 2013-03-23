@@ -1,6 +1,11 @@
 $(function() {
 	ZeroClipboard.setDefaults({moviePath: STATIC_URL +'js/ZeroClipboard.swf', 
 
+		/*okay. So trusted domains refers to the host domain(s) not the CDN (AKA aws s3)
+								see: https://github.com/jonrohan/ZeroClipboard/issues/116.
+								Also scripted access is not neccesary for out version of Zeroclipboard (1.1.6)
+								b/c its default value is 'always'.*/
+
 								trustedDomains: [   'beta.rocketlistings.com', 
                     'rocketlistings.com', 
                     'www.rocketlistings.com', 
