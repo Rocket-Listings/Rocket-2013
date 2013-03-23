@@ -8,8 +8,8 @@ $(function() {
                     						]});
 
 	var clip = new ZeroClipboard( $(".clipboard") )
-	/*clip.on( 'mousedown', function(client){ $(this).addClass("active"); })
-	clip.on( 'mouseup', function(client){ $(this).removeClass("active"); });*/
+	clip.on( 'mousedown', function(client){ $(this).addClass("active"); })
+	clip.on( 'mouseup', function(client){ $(this).removeClass("active"); });
 
 	var photoId = parseInt((window.location.hash || "").substring(1));
 	if(photoId) {
