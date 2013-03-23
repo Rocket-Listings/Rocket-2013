@@ -7,8 +7,8 @@ $(function() {
                     								'quiet-beyond-7797.herokuapp.com'
                     						]});
 	var clip = new ZeroClipboard( $(".clipboard") );
-	clip.on( 'mousedown', function(client){ $(this).addClass("active"); })
-	clip.on( 'mouseup', function(client){ $(this).removeClass("active"); });
+	/*clip.on( 'mousedown', function(client){ $(this).addClass("active"); })
+	clip.on( 'mouseup', function(client){ $(this).removeClass("active"); });*/
 /*	function getURLParameter(name) {
 		return decodeURI(
 			(RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
