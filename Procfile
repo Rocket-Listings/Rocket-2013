@@ -1,2 +1,1 @@
-web: gunicorn --workers=4 rocketlistings.wsgi -b 0.0.0.0:$PORT -k gevent
-
+web: gunicorn -c gunicorn.py rocketlistings.wsgi

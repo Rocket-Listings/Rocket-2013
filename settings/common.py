@@ -1,21 +1,11 @@
-# Django settings for rocketlistings project.
-import os
+import sys
+from path import path
 
- # DATABASE_URL is a heroku env var
-PRODUCTION = bool(os.environ.get('DATABASE_URL', ''))
+SITE_ROOT = path(__file__).abspath().dirname().dirname()
 
-if PRODUCTION:
-	from settings_prod import *
-else:
-	from settings_dev import *
-
-DATABASES = { 'default': DB }
-	
-#APP_ROOT = os.path.abspath(os.path.dirname(__file__))
-
-TEMPLATE_DEBUG = DEBUG
-THUMBNAIL_DEBUG = DEBUG
-
+sys.path.append(SITE_ROOT)
+sys.path.append(SITE_ROOT / 'apps')
+SOUTH_DATABASE_ADAPTERS = {'default':'south.db.postgresql_psycopg2'}
 AUTH_PROFILE_MODULE = 'users.UserProfile'
 ADMINS = (
 	 ('Teddy Knox', 'teddy@rocketlistings.com'),
@@ -154,7 +144,7 @@ INSTALLED_APPS = (
 
 HAYSTACK_SITECONF = 'rocketlistings.search_sites'
 HAYSTACK_SEARCH_ENGINE = 'whoosh'
-HAYSTACK_WHOOSH_PATH = os.path.join(os.path.dirname(__file__), 'whoosh_index')
+HAYSTACK_WHOOSH_PATH = path(__file__) / 'whoosh_index'
 
 EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
 MAILGUN_ACCESS_KEY = 'key-9flqj538z-my-qcnpc74c2wit4vibl-3'

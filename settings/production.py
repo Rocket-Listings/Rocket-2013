@@ -1,7 +1,14 @@
-import dj_database_url,os
+from common import *
+import dj_database_url, os
 
-# General Settings
+PRODUCTION = True
+
+# Debug Settings
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', ''))
+TEMPLATE_DEBUG = DEBUG
+THUMBNAIL_DEBUG = DEBUG
+
+# Http Settings
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 PREPEND_WWW = False
@@ -16,13 +23,12 @@ ALLOWED_HOSTS = [   'beta.rocketlistings.com',
                     ]
 
 # Database settings sourced from Heroku
-DB =  dj_database_url.config()
+DATABASES = { 'default': dj_database_url.config() }
 
-# File storage settings
+# CDN settings
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_KEY')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET')
 # AWS_STORAGE_BUCKET_NAME = 'static.rocketlistings.com'
-
 # see http://developer.yahoo.com/performance/rules.html#expires
 AWS_HEADERS = {
     'Cache-Control': 'max-age=86400, pubic',
