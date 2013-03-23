@@ -1,8 +1,7 @@
 $(function() {
 	ZeroClipboard.setDefaults({moviePath: STATIC_URL +'js/ZeroClipboard.swf', 
 
-								trustedDomains: ['http://quiet-beyond-7797.herokuapp.com/'], 
-								allowScriptAccess: 'always'});
+								trustedDomains: ['http://quiet-beyond-7797.herokuapp.com/']});
 	
 	var clip = new ZeroClipboard( $(".clipboard") )
 	clip.on( 'mousedown', function(client){ $(this).addClass("active"); })
