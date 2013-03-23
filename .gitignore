@@ -15,7 +15,7 @@ cache
 uploads
 media/*
 whoosh_index
-static_collected/*
+static_collected
 tmp
 .DS_Store
 *.sublime-*

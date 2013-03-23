@@ -5,6 +5,7 @@ SITE_ROOT = path(__file__).abspath().dirname().dirname()
 
 sys.path.append(SITE_ROOT)
 sys.path.append(SITE_ROOT / 'apps')
+
 SOUTH_DATABASE_ADAPTERS = {'default':'south.db.postgresql_psycopg2'}
 AUTH_PROFILE_MODULE = 'users.UserProfile'
 ADMINS = (
