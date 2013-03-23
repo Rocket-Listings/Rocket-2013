@@ -1,6 +1,6 @@
 $(function() {
 	ZeroClipboard.setDefaults({moviePath: STATIC_URL +'js/ZeroClipboard.swf', 
-								trustedDomains: [   'beta.rocketlistings.com', 
+								trustedDomain: [   'beta.rocketlistings.com', 
                     								'rocketlistings.com', 
                     								'www.rocketlistings.com', 
                     								'rocket-listings.herokuapp.com',
