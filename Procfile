@@ -1,1 +1,1 @@
-web: gunicorn -c gunicorn.py apps.rocketlistings.wsgi
+web: gunicorn -c gunicorn.py applications.rocketlistings.wsgi

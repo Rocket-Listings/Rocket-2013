@@ -5,7 +5,7 @@ workers = multiprocessing.cpu_count() * 2 + 1
 worker_class = "gevent"
 
 def def_post_fork(server, worker):
-    from apps.rocketlistings.psyco_gevent import make_psycopg_green
+    from applications.rocketlistings.psyco_gevent import make_psycopg_green
     make_psycopg_green()
     worker.log.info("Made Psycopg Green")
 
