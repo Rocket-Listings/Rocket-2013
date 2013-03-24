@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-import os
-import sys
+import sys, os
 
 if __name__ == "__main__":
     os.environ.get("DJANGO_SETTINGS_MODULE", "settings.development")

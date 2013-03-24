@@ -109,7 +109,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'rocketlistings.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'apps.rocketlistings.wsgi.application'
+WSGI_APPLICATION = 'rocketlistings.wsgi.application'
 
 TEMPLATE_DIRS = (
 	#'/templates/',
