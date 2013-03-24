@@ -20,5 +20,4 @@ static_collected
 tmp
 .DS_Store
 *.sublime-*
-settings_dev.py
-heroku.json
+development.py
