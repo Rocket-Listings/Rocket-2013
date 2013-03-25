@@ -143,7 +143,7 @@ INSTALLED_APPS = (
     "gunicorn"
 )
 
-HAYSTACK_SITECONF = 'rocketlistings.search_sites'
+HAYSTACK_SITECONF = 'settings.search_sites'
 HAYSTACK_SEARCH_ENGINE = 'whoosh'
 HAYSTACK_WHOOSH_PATH = path(__file__) / 'whoosh_index'
 

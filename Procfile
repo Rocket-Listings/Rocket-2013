@@ -1,1 +1,1 @@
-web: gunicorn -c gunicorn.py rocketlistings.wsgi
+web: gunicorn -c ./settings/gunicorn.py settings.wsgi

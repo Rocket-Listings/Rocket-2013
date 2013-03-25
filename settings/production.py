@@ -35,8 +35,8 @@ AWS_HEADERS = {
     
 }
 
-STATICFILES_STORAGE = 'rocketlistings.s3storages.StaticStorage'
-DEFAULT_FILE_STORAGE = 'rocketlistings.s3storages.MediaStorage'
+STATICFILES_STORAGE = 'settings.s3storages.StaticStorage'
+DEFAULT_FILE_STORAGE = 'settings.s3storages.MediaStorage'
 
 UPLOAD_DIR = 'uploads'
 

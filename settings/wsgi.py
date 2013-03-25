@@ -15,7 +15,7 @@ framework.
 """
 import sys, os
 
-os.environ.get("DJANGO_SETTINGS_MODULE", "settings.production")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings.production")
 
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION
