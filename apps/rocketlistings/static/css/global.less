@@ -1,12 +1,13 @@
-@border-color: #E3E3E3;
-@theme-accent-color: #E26A59;
+@theme-accent-color: /* #73B3BF; */ #E26A59; 
+@theme-accent-background: /*#E6F0F2;*/ #F5F5F5;
+@theme-accent-footer-background: #E8E8E8;
 html, body { /* sticky footer */
 	height: 100%;
 } 
 
 body {
 	color: #435056;
-	background-color: #F5F5F5;
+	background-color: @theme-accent-background;
 	font-style: normal;
 	font-family: Arial, Helvetica, sans-serif;
 }
@@ -406,10 +407,10 @@ body a {
 @footer-height: 66px;
 .footer { 
 	height: @footer-height;
-	border-right: 1px solid @border-color;
-	border-left: 1px solid @border-color;
-	border-bottom: 1px solid @border-color;
-	background-color: #E8E8E8;
+	border-right: 1px solid #E3E3E3;
+	border-left: 1px solid #E3E3E3;
+	border-bottom: 1px solid #E3E3E3;
+	background-color: @theme-accent-footer-background;
 	.hrline1 {
 		overflow: hidden;
 		height: 9px;
@@ -456,8 +457,6 @@ body a {
 .page-content {
 	margin: 0 auto;
 	padding: 30px 40px 40px 30px;
-/*	border-right: 1px solid @border-color;
-	border-left: 1px solid @border-color;*/
 }
 
 .fileDragOverlay {
@@ -515,5 +514,9 @@ body a {
 }
 
 /* upload modal styles */
+.qq-upload-button {
+	background-color: @theme-accent-color;
+	color: white;
+}
 
 .finish-upload-button {}
