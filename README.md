@@ -168,3 +168,7 @@ http://devcenter.heroku.com/articles/labs-user-env-compile
 	createdb rocketlistings
 	./manage.py syncdb
 	./manage.py migrate --all
+
+have to set env var in ~/.bash_profile  or whatever shell init file you're using:
+    
+    export DJANGO_SETTINGS_MODULE=settings.development

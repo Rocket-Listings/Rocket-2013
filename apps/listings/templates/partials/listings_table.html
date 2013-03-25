@@ -2,71 +2,71 @@
 
 {# Requires the context variable 'listings' #}
 {% if listings %}
-<table class="table table-striped table-condensed tablesorter id table-listings">
+<table class="table table-striped tablesorter table-condensed table-listings">
 	<thead>
 		<tr>
-			<th class = "sortable">Title <i class="icon-chevron-down"></i></th>
+			<th class = "sortable">Title<i class="icon-chevron-down"></i></th>
 			<th class = "sortable">Price<i class="icon-chevron-down"></i></th>
 			{# <th class = "sortable">Location<i class="icon-chevron-down"></i></th> #}
 			<th class = "sortable">Category<i class="icon-chevron-down"></i></th>
 			<th class = "sortable">Date Listed<i class="icon-chevron-down"></i></th>
-			<th>Highest Offer</th>
-			<th>Messages</th>
-			<th>Utils</th>
-			{# <th class = "centered-th">Copy HTML</th> #}
-			{# <th class = "centered-th">Edit</th> #}
-			{# <th class = "centered-th">Delete</th> #}
-			{# <th>View on Craigslist</th> #}
-			
+			<th>Messages <i class="icon-envelope"></i></th>
+			<th>Max Offer</th>
+			<th>Manage</th>	
 		</tr>
 	</thead>
 	<tbody>
 		{% for listing in listings %}
 		<tr>
-			<td><a href="{{ listing.get_absolute_url }}">{{ listing.title }}</a></td>
-			<td>${{ listing.price }}</td>
-			<td>{{ listing.location }}</td>
-			<td>{{ listing.category.name }}</td>
 			<td>
-				{{ listing.pub_date|date:"m-d-y"}} 
-				{{ listing.pub_date|date:"P"}}
+				<a href="{{ listing.get_absolute_url }}">
+					{{ listing.title }}
+				</a>
+			</td>
+			<td>${{ listing.price }}</td>
+			{# <td>{{ listing.location }}</td> #}
+			<td>{{ listing.category.name }}</td>
+			<td>{{ listing.pub_date|date:"m-d-y P" }}</td>
+			<td>
+				<a href = "{% url 'listings.views.messages' listing.id %}"> 
+					View messages
+				</a>
 			</td>
 			<td>
 				{% if listing.max_offer %}
-				${{listing.max_offer}}
-				<a href = "{% url 'listings.views.offers' listing.id %}">View All</a>
+				<a href = "{% url 'listings.views.offers' listing.id %}">${{listing.max_offer}}</a>				
 				{% else %}
 				None
 				{% endif %}
 			</td>
-
 			<td>
 				<div class="btn-toolbar">
 					<div class="btn-group">
-						<a href = "{% url 'listings.views.messages' listing.id %}" class="btn"> 
-							<i class="icon-envelope"></i>
-						</a>
+						{% comment %}
 						<a class="clipboard btn" data-clipboard-text="{% filter force_escape %}{% include "listing_cl_embed.html" %}{% endfilter %}">
 							<i class="icon-download"></i>
 						</a>
-						<a href="{% url 'listings.views.update' listing.id %}" class="btn" >
+						{% endcomment %}
+						<a href="{% url 'listings.views.update' listing.id %}" class="btn" data-container="body" data-toggle="tooltip" data-original-title="Edit Listing">
 							<i class="icon-edit"></i>
 						</a>
-						<a class="btn" href="{% url 'listings.views.delete' listing.id %}">
+						<a class="btn" href="{% url 'listings.views.delete' listing.id %}" data-container="body" data-toggle="tooltip" data-original-title="Delete Listing">
 							<i class="icon-trash"></i>
 						</a>
 					</div>
 				</div>
 			</td>
-{% comment %}			{% if listing.CL_link %}
+			{% comment %}
 			<td class = "centered-td">
+				{% if listing.CL_link %}
 				<a href = "{{listing.CL_link}}" target="_blank">
 					<img src="{% static 'img/cl_icon.png' %}" width = "25" height = "25" class = "grey"></i>
 				</a>
+				{% else %}
+				<td class = "centered-td"> N/A </td>
+				{% endif %}
 			</td> 
-			{% else %}
-			<td class = "centered-td"> N/A </td>
-			{% endif %} {% endcomment %}
+			{% endcomment %}
 		</tr>
 		{% endfor %}
 	</tbody>

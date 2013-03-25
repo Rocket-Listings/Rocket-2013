@@ -1,19 +1,35 @@
 $(function() {
-	ZeroClipboard.setDefaults({moviePath: STATIC_URL +'js/ZeroClipboard.swf', 
-								/*okay. So trusted domains refers to the host domain(s) not the CDN (AKA aws s3)
-								see: https://github.com/jonrohan/ZeroClipboard/issues/116.
-								Also scripted access is not neccesary for out version of Zeroclipboard (1.1.6)
-								b/c its default value is 'always'.*/
-								trustedDomains: [   'beta.rocketlistings.com', 
-                    								'rocketlistings.com', 
-                    								'www.rocketlistings.com', 
-                    								'rocket-listings.herokuapp.com',
-                    								'quiet-beyond-7797.herokuapp.com'
-                    							]});
+
+	/* Listings table */
+
+	$('.table-listings').tablesorter({ cssHeader: 'table-header'});
+
+	$('.table-listings').tooltip({
+		selector: "a[data-toggle=tooltip]"
+	});
+
+	/***
+	okay. So trusted domains refers to the host domain(s) not the CDN (AKA aws s3)
+	see: https://github.com/jonrohan/ZeroClipboard/issues/116.
+	Also scripted access is not neccesary for out version of Zeroclipboard (1.1.6)
+	b/c its default value is 'always'.
+	***/
+	ZeroClipboard.setDefaults({
+		moviePath: STATIC_URL +'js/ZeroClipboard.swf', 
+		trustedDomains: [   
+			'beta.rocketlistings.com', 
+			'rocketlistings.com', 
+			'www.rocketlistings.com', 
+			'rocket-listings.herokuapp.com',
+			'quiet-beyond-7797.herokuapp.com'
+		]
+	});
 
 	var clip = new ZeroClipboard( $(".clipboard") )
 	clip.on( 'mousedown', function(client){ $(this).addClass("active"); })
 	clip.on( 'mouseup', function(client){ $(this).removeClass("active"); });
+
+	/* Listing Detail */
 
 	var photoId = parseInt((window.location.hash || "").substring(1));
 	if(photoId) {
@@ -39,8 +55,16 @@ $(function() {
 		window.location.hash = image.attr('data-id');
 	}
 
+	var cl_embed = $('.cl-embed');
+	if(cl_embed) {
+		cl_embed.click(function(e) {
+			cl_embed.select();
+		});
+	}
+
+	/* Listing Offers */
+
 	$('.table-offers').tablesorter({ cssHeader: 'table-header'});
-	$('.table-listings').tablesorter({ cssHeader: 'table-header'});
 
 	$('.content').hide();
 	$('.bottom').hide();
@@ -50,13 +74,6 @@ $(function() {
 	$('.content[data-buyerid="'+firstId+'"]').show();
 	$('.bottom[data-buyerid="'+firstId+'"]').show();
 
-
-	var cl_embed = $('.cl-embed');
-	if(cl_embed) {
-		cl_embed.click(function(e) {
-			cl_embed.select();
-		});
-	}
 	$('.buyer-tiles').click(function(){
 		var buyerid = $(event.target).data('buyerid');
 		$('.content').hide();
