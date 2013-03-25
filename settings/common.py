@@ -101,7 +101,7 @@ MIDDLEWARE_CLASSES = (
 	'django.middleware.csrf.CsrfViewMiddleware',
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
-   'django.middleware.cache.FetchFromCacheMiddleware',	
+   	# 'django.middleware.cache.FetchFromCacheMiddleware',	
 	# Uncomment the next line for simple clickjacking protection:
 	# 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -109,7 +109,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'rocketlistings.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'rocketlistings.wsgi.application'
+WSGI_APPLICATION = 'settings.wsgi.application'
 
 TEMPLATE_DIRS = (
 	#'/templates/',
@@ -145,7 +145,7 @@ INSTALLED_APPS = (
 
 HAYSTACK_SITECONF = 'settings.search_sites'
 HAYSTACK_SEARCH_ENGINE = 'whoosh'
-HAYSTACK_WHOOSH_PATH = path(__file__) / 'whoosh_index'
+HAYSTACK_WHOOSH_PATH = path(__file__).abspath() / 'whoosh_index'
 
 EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
 MAILGUN_ACCESS_KEY = 'key-9flqj538z-my-qcnpc74c2wit4vibl-3'

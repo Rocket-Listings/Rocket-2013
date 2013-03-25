@@ -9,7 +9,7 @@ $(function() {
                     								'www.rocketlistings.com', 
                     								'rocket-listings.herokuapp.com',
                     								'quiet-beyond-7797.herokuapp.com'
-                    							]);
+                    							]});
 
 	var clip = new ZeroClipboard( $(".clipboard") )
 	clip.on( 'mousedown', function(client){ $(this).addClass("active"); })
@@ -39,8 +39,8 @@ $(function() {
 		window.location.hash = image.attr('data-id');
 	}
 
-	$('#table-offers').tablesorter({ cssHeader: 'table-header'});
-	$('#table-listings').tablesorter({ cssHeader: 'table-header'});
+	$('.table-offers').tablesorter({ cssHeader: 'table-header'});
+	$('.table-listings').tablesorter({ cssHeader: 'table-header'});
 
 	$('.content').hide();
 	$('.bottom').hide();

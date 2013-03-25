@@ -3,9 +3,24 @@
 
 {% block content %}
 <h3>{{user.username}}</h3>
+
+<p>
+{# <div class= "user-email-box"> #}
+	{# <div class="user-email-title"> #}
+	Your rocket email is .
+
+	{# </div> #}
+	{# <div class= "user-email-instruction"> #}
+	Use this email address when you list an item on any site.
+	{# </div> #}
+{# </div> #}
+</p>
 <div class="user-profile-table-group">
 	<table class="table user-profile-table">
 		<tbody>
+			<tr>
+				<td>Rocket Email:</td>
+				<td><code class="text-info">{{user.username}}@rocketlistings.mailgun.org</code></td>
 			<tr>
 				<td>Name:</td>
 				<td>{{ profile.name }}</td>
@@ -37,13 +52,6 @@
 	<a class="btn btn-info" href="{% url 'users.views.edit' user.username %}">Edit your account info.</a>
 	<a class="btn btn-warning" href="{% url 'auth_password_change' %}">Change your password.</a>
 	<div class="clearfix"></div>
-	</div>
-</div>
-
-<div class= "user-email-box">
-	<div class="user-email-title">Your rocket email is: <br/> {{user.username}}@rocketlistings.mailgun.org
-	</div>
-	<div class= "user-email-instruction">Use this email address when you list an item on any site
 	</div>
 </div>
 {% endblock %}
