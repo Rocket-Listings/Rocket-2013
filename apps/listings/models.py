@@ -5,24 +5,50 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.db.models import Max
 
+# Managers!
+
+# Natural key handling for fixtures
+# https://docs.djangoproject.com/en/dev/topics/serialization/#natural-keys
+class ListingManager(models.Manager):
+	def get_by_natural_key(self, title):
+		return self.get(title=title)
+
+# Used for both ListingCategory and ListingType and Buyer
+class GenericNameManager(models.Manager):
+	def get_by_natural_key(self, name):
+		return self.get(name=name)
+
+
+
+
+# Listing Categories
 class ListingCategory(models.Model):
+	objects = GenericNameManager()
+
 	name = models.CharField(max_length = 60)
 	description = models.CharField(max_length = 200)
 
 	def __unicode__(self):
 		return self.name
 
+# Listing Types
 class ListingType(models.Model):
+	objects = GenericNameManager()
+
 	name = models.CharField(max_length = 60)
 	description = models.CharField(max_length = 200)
 
 	def __unicode__(self):
 		return self.name
 
+# Listing Objects
 class Listing(models.Model):
+	# also for natural key handling
+	objects = ListingManager()
+
 	title = models.CharField(max_length=200)
 	description = models.TextField()
-	pub_date = models.DateTimeField('date published', auto_now_add=True)
+	pub_date = models.DateTimeField('date published', auto_now_add=True, default=datetime.now)
 	price = models.IntegerField()
 	location = models.CharField(max_length=200)
 	category = models.ForeignKey(ListingCategory)
@@ -41,7 +67,7 @@ class Listing(models.Model):
 	def get_absolute_url(self):
 		return reverse('listings.views.detail', args=[str(self.id)])
 
-
+# Listing Specification
 class ListingSpec(models.Model):
 	key = models.CharField(max_length = 60)
 	value = models.CharField(max_length = 60)
@@ -50,6 +76,7 @@ class ListingSpec(models.Model):
 	def __unicode__(self):
 		return self.key + ", " + self.value
 
+# Listing Highlight
 class ListingHighlight(models.Model):
 	value = models.CharField(max_length = 60)
 	listing = models.ForeignKey(Listing)
@@ -57,17 +84,22 @@ class ListingHighlight(models.Model):
 	def __unicode__(self):
 		return self.value
 
+# Listing Photo
 class ListingPhoto(models.Model):
 	url = models.CharField(max_length=255)
-	upload_date = models.DateTimeField('date uploaded', auto_now_add=True)
+	upload_date = models.DateTimeField('date uploaded', auto_now_add=True, default=datetime.now)
 	upload_ip = models.IPAddressField()
 	order = models.IntegerField(null = True, blank=True)
 	listing = models.ForeignKey(Listing, null = True, blank=True)
 
+# Buyer... not associated with account, unique to listing.
 class Buyer(models.Model):
+	objects = GenericNameManager()
+
 	listing = models.ForeignKey(Listing, blank=True) 
 	name = models.CharField(max_length=255)
 	email = models.EmailField(max_length=255, null = True, blank=True)
+
 	def max_offer(self):
 		"Returns highest offer the buyer has made for the listing"
 		return self.listing.offer_set.filter(buyer=self).aggregate(Max('value'))["value__max"]
@@ -79,34 +111,17 @@ class Buyer(models.Model):
 		"returns the last message between the seller and buyer for that listing"
 		return self.listing.message_set.filter(buyer=self).latest('date')
 
-
+# Listing Offer
 class Offer(models.Model):
 	listing = models.ForeignKey(Listing, null = True, blank=True)
 	buyer = models.ForeignKey(Buyer)
 	value = models.IntegerField()
-	date = models.DateTimeField('date offered', auto_now_add=True)
+	date = models.DateTimeField('date offered', auto_now_add=True, default=datetime.now)
 	
+# Listing Message
 class Message(models.Model):
 	listing = models.ForeignKey(Listing, null = True, blank=True)
 	isSeller = models.NullBooleanField(blank=True)
 	buyer = models.ForeignKey(Buyer, null = True, blank=True)
 	content = models.TextField()
-	date = models.DateTimeField('date received', auto_now_add=True)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	date = models.DateTimeField('date received', auto_now_add=True, default=datetime.now)

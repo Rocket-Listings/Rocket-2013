@@ -1,31 +1,29 @@
 - model: listings.ListingCategory
-  pk: 1
+  pk: null
   fields:
     name: Cars and Trucks
     description: Selling automobiles.
 
 - model: listings.ListingCategory
-  pk: 2
+  pk: null
   fields:
     name: Antiques
     description: Selling old stuff.
 
 - model: listings.ListingCategory
-  pk: 3
+  pk: null
   fields:
     name: Electronics
     description: Selling Electronics.
 
-
-
 - model: listings.ListingType
-  pk: 1
+  pk: null
   fields:
     name: Private
     description: Are you an individual?
 
 - model: listings.ListingType
-  pk: 2
+  pk: null
   fields:
     name: Public
     description: Are you an organization?

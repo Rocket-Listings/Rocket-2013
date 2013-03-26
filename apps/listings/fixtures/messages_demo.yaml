@@ -1,0 +1,103 @@
+# requires that initial_data.yaml be loaded already
+
+# password is 'test'
+- model: auth.user  
+  pk: null
+  fields:
+    email: chucknorris@gmail.com
+    first_name: 'Chuck'
+    is_active: true
+    is_staff: true
+    is_superuser: true
+    last_name: 'Norris'
+    password: pbkdf2_sha256$10000$7OzttrdLZ3TM$BRjWWSgMm8MTp+JgWfMpbQfZ99rXTVyIj+014hS+T8U=
+    user_permissions: []
+    username: chucknorris
+
+- model: listings.Listing
+  pk: null
+  fields:
+    title: 2000 Jeep Wrangler
+    description: Barely used. You should buy it. 
+    price: 10000
+    location: Bethesda, MD
+    category: [Cars and Trucks]
+    listing_type: [Private]
+    user: [chucknorris]
+
+- model: listings.Buyer
+  pk: null
+  fields:
+    listing: [2000 Jeep Wrangler]
+    name: John Wayne
+    email: johnwayne@gmail.com
+
+- model: listings.Buyer
+  pk: null
+  fields:
+    listing: [2000 Jeep Wrangler]
+    name: Peter Parker
+    email: peterparker@gmail.com
+
+- model: listings.Message
+  pk: null
+  fields:
+    listing: [2000 Jeep Wrangler]
+    buyer: [John Wayne]
+    isSeller: False
+    content: This looks like an awesome car! Would you take $9000 for it?
+
+- model: listings.Message
+  pk: null
+  fields:
+    listing: [2000 Jeep Wrangler]
+    buyer: [John Wayne]
+    isSeller: True
+    content: Hmmm, that's a little low. But since you're John Wayne, I'll give it to you for $9500.
+
+- model: listings.Message
+  pk: null
+  fields:
+    listing: [2000 Jeep Wrangler]
+    buyer: [John Wayne]
+    isSeller: False
+    content: I can work with $9500. Would you mind if I got it looked at by a mechanic?
+
+- model: listings.Message
+  pk: null
+  fields:
+    listing: [2000 Jeep Wrangler]
+    buyer: [John Wayne]
+    isSeller: True
+    content: Not at all. I should be able to drop it off anywhere reasonably close Saturday morning.
+
+- model: listings.Offer
+  pk: null
+  fields:
+    listing: [2000 Jeep Wrangler]
+    buyer: [John Wayne]
+    value: 9000
+
+- model: listings.Offer
+  pk: null
+  fields:
+    listing: [2000 Jeep Wrangler]
+    buyer: [John Wayne]
+    value: 9500
+
+- model: listings.Message
+  pk: null
+  fields:
+    listing: [2000 Jeep Wrangler]
+    buyer: [Peter Parker]
+    isSeller: False
+    content: That's a beautiful jeep, red is my favorite color. Do you know if it has ABS brakes? It would be great if I could come look at it sometime this weekend.
+
+- model: listings.Message
+  pk: null
+  fields:
+    listing: [2000 Jeep Wrangler]
+    buyer: [Peter Parker]
+    isSeller: True
+    content: Hi Peter, It does not have ABS breaks. I'm available for test drives most of Saturday afternoons, would that work for you?
+
