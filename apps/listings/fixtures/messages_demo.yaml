@@ -1,0 +1,43 @@
+# requires that initial_data.yaml be loaded already
+
+- model: auth.user  
+  pk: null
+  fields:
+    email: chucknorris@gmail.com
+    first_name: 'Chuck'
+    is_active: true
+    is_staff: true
+    is_superuser: true
+    last_name: 'Norris'
+    password: pbkdf2_sha256$10000$c6a0bHZmbGT8$WVFjBo5nr5eckzVeFV0lno0GZGr7mNG+XLS4wn+/GX8=
+    user_permissions: []
+    username: chucknorris
+
+- model: listings.Listing
+  pk: null
+  fields:
+    title: 2000 Jeep Wrangler
+    description: Barely used. You should buy it. 
+    price: 10000
+    location: Bethesda, MD
+    category: [Cars and Trucks]
+    listing_type: [Private]
+    user: [chucknorris]
+
+- model: listings.Buyer
+  pk: null
+  fields:
+    listing: [2000 Jeep Wrangler]
+    name: John Wayne
+    email: johnwayne@gmail.com
+
+- model: listings.Message
+  pk: null
+  fields:
+    listing: [2000 Jeep Wrangler]
+    buyer: [John Wayne]
+    isSeller: False
+    content: This looks like an awesome car! Would you take $9500 for it?
+
+
+
