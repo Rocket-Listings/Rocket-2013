@@ -15,6 +15,30 @@ from rocketlistings import get_client_ip
 from django.db.models import Max
 from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import send_mail
+from django.core import serializers
+from django.http import HttpResponse, HttpResponseBadRequest
+
+#this is my first api so I'm not gonna join the requests. If this is too slow
+#it wont be too hard to redo
+def buyer_table(request, listing_id):
+	'''Returns a list of Buyers associated with the listing id (of the logged in user)'''
+	listing = get_object_or_404(Listing, id=listing_id)
+	buyers = listing.buyer_set.all().order_by('name')
+
+	if 'application/json' in request.META.get('HTTP_ACCEPT'):
+		return HttpResponse(serializers.serialize("json", buyers), mimetype='application/json')
+	else:
+		return HttpResponseBadRequest("Sorry please submit a good request")
+
+def message_thread(request, listing_id, buyer_id):
+	listing = get_object_or_404(Listing, id=listing_id)
+	buyer = get_object_or_404(Buyer, id=buyer_id)
+	messages = listing.message_set.filter(buyer_id__exact=buyer_id).order_by('date')
+
+	if 'application/json' in request.META.get('HTTP_ACCEPT'):
+		return HttpResponse(serializers.serialize("json", messages), mimetype='application/json')
+	else:
+		return HttpResponseBadRequest("Sorry please submit a good request")
 
 
 def latest(request):

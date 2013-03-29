@@ -12,4 +12,7 @@ urlpatterns = patterns('listings.views',
 	url(r'^(?P<listing_id>\d+)/delete/$', 'delete'),
 	url(r'^(?P<listing_id>\d+)/delete_ajax/$', 'delete_ajax'),
 	url(r'^ajax-photo-upload/$', import_uploader, name="ajax_photo_upload"),
+	#api patterns
+	url(r'^(?P<listing_id>\d+)/api/buyers/$', 'buyer_table'),
+	url(r'^(?P<listing_id>\d+)/api/messages/(?P<buyer_id>\d+)/$', 'message_thread'),
 )
