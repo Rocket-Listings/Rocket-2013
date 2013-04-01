@@ -21,7 +21,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 #this is my first api so I'm not gonna join the requests. If this is too slow
 #it wont be too hard to redo
 def buyer_table(request, listing_id):
-	'''Returns a list of Buyers associated with the listing id (of the logged in user)'''
+	'''Returns a list of Buyers associated with the listing id'''
 	listing = get_object_or_404(Listing, id=listing_id)
 	buyers = listing.buyer_set.all().order_by('name')
 
@@ -31,6 +31,7 @@ def buyer_table(request, listing_id):
 		return HttpResponseBadRequest("Sorry please submit a good request")
 
 def message_thread(request, listing_id, buyer_id):
+	'''Returns a date ordered thread of messages associated with the listing id and the buyer_id'''
 	listing = get_object_or_404(Listing, id=listing_id)
 	buyer = get_object_or_404(Buyer, id=buyer_id)
 	messages = listing.message_set.filter(buyer_id__exact=buyer_id).order_by('date')
