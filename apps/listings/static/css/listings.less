@@ -1,6 +1,15 @@
 /* 	Doing this weird convention '.l-<CLASS>' because we don't want other outside class definitions to affect these.
 	For instance, if our title was simply '.title', then maybe a '.title' rule from global.less might take into effect. */
 
+.table-listings {
+	tbody tr:hover {
+		cursor:pointer;
+	}
+
+	td {
+		vertical-align: middle;
+	}
+}
 
 .listing {
 	position: relative;
@@ -200,6 +209,7 @@
 
 
 
+// gotta refactor this - Not good to stick 3rd party css in our own files
 
 // button group source: https://github.com/twitter/bootstrap/issues/2351
 

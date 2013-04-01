@@ -17,7 +17,7 @@
 	</thead>
 	<tbody>
 		{% for listing in listings %}
-		<tr>
+		<tr data-listing-id="{{ listing.id }}">
 			<td>
 				<a href="{{ listing.get_absolute_url }}">
 					{{ listing.title }}

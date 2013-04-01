@@ -1,5 +1,5 @@
-from listings.models import Listing, ListingPhoto
-from listings.models import Buyer, Offer, Message 
+from listings.models import Listing, ListingPhoto, Buyer, Offer, Message 
+from django.contrib.auth.models import User
 from django.conf import settings
 from datetime import datetime, timedelta
 from listings.forms import ListingForm
@@ -18,28 +18,23 @@ from django.core.mail import send_mail
 from django.core import serializers
 from django.http import HttpResponse, HttpResponseBadRequest
 
-#this is my first api so I'm not gonna join the requests. If this is too slow
-#it wont be too hard to redo
-def buyer_table(request, listing_id):
-	'''Returns a list of Buyers associated with the listing id (of the logged in user)'''
-	listing = get_object_or_404(Listing, id=listing_id)
-	buyers = listing.buyer_set.all().order_by('name')
+# Moved here from users/views.py
 
-	if 'application/json' in request.META.get('HTTP_ACCEPT'):
-		return HttpResponse(serializers.serialize("json", buyers), mimetype='application/json')
-	else:
-		return HttpResponseBadRequest("Sorry please submit a good request")
+@login_required
+def user_listings(request, username=None):
+	user = request.user # if no username parameter is passed, defaults to the currently logged in user.
+	if username:
+		user = get_object_or_404(User, username=username)
+	listings = Listing.objects.filter(user=user).order_by('-pub_date')[:10]
+	return render(request, 'user_overview.html', {'listings': listings})
 
-def message_thread(request, listing_id, buyer_id):
-	listing = get_object_or_404(Listing, id=listing_id)
-	buyer = get_object_or_404(Buyer, id=buyer_id)
-	messages = listing.message_set.filter(buyer_id__exact=buyer_id).order_by('date')
-
-	if 'application/json' in request.META.get('HTTP_ACCEPT'):
-		return HttpResponse(serializers.serialize("json", messages), mimetype='application/json')
-	else:
-		return HttpResponseBadRequest("Sorry please submit a good request")
-
+@login_required
+def dashboard(request, username=None):
+	user = request.user # if no username parameter is passed, defaults to the currently logged in user.
+	if username:
+		user = get_object_or_404(User, username=username)
+	listings = Listing.objects.filter(user=user).order_by('-pub_date')[:10]
+	return render(request, 'listings_dashboard.html', {'listings': listings})
 
 def latest(request):
 	listings = Listing.objects.all().order_by('-pub_date')[:10]
@@ -103,7 +98,6 @@ def update(request, listing_id):
 	else:
 		return render(request, '403.html')
 
-
 @login_required
 def delete(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
@@ -137,7 +131,6 @@ def messages(request, listing_id):
 	messages = listing.message_set.all().order_by('date')
 	return render(request, 'listing_messages.html', {'listing': listing, 'messages':messages, 'buyers': buyers,})	
 
-
 def delete_ajax(request, listing_id):
 	response = {}
 	try:
@@ -145,7 +138,6 @@ def delete_ajax(request, listing_id):
 	except ObjectDoesNotExist:
 		response['success'] = False
 		response['reason'] = 'Cannot find listing.'
-
 	if request.user == listing.user:
 		listing.delete()
 		response['success']= True
@@ -154,6 +146,31 @@ def delete_ajax(request, listing_id):
 		response['reason'] = 'Cannot delete someone else\'s listings!'
 	return HttpResponse(simplejson.dumps(response), content_type = 'application/javascript; charset=utf8')
 
+### DASHBOARD
+
+#this is my first api so I'm not gonna join the requests. If this is too slow
+#it wont be too hard to redo
+def ajax_listing_buyers(request, listing_id):
+	'''Returns a list of Buyers associated with the listing id (of the logged in user)'''
+	listing = get_object_or_404(Listing, id=listing_id)
+	buyers = listing.buyer_set.all().order_by('name')
+
+	# if 'application/json' in request.META.get('HTTP_ACCEPT'):
+	return HttpResponse(serializers.serialize("json", buyers), mimetype='application/json')
+	# else:
+		# return HttpResponseBadRequest("Sorry please submit a good request")
+
+def ajax_message_thread(request, listing_id, buyer_id):
+	listing = get_object_or_404(Listing, id=listing_id)
+	buyer = get_object_or_404(Buyer, id=buyer_id)
+	messages = listing.message_set.filter(buyer_id__exact=buyer_id).order_by('date')
+
+	# if 'application/json' in request.META.get('HTTP_ACCEPT'):
+	return HttpResponse(serializers.serialize("json", messages), mimetype='application/json')
+	# else:
+		# return HttpResponseBadRequest("Sorry please submit a good request")
+
+# Photo upload
 
 if settings.PRODUCTION:
 	upload_backend = ProductionUploadBackend
