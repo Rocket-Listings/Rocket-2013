@@ -8,17 +8,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 
-@login_required
 def overview(request, username=None):
-	return listings(request)
-
-@login_required
-def listings(request, username=None):
-	user = request.user # if no username parameter is passed, defaults to the currently logged in user.
-	if username:
-		user = get_object_or_404(User, username=username)
-	listings = Listing.objects.filter(user=user).order_by('-pub_date')[:10]
-	return render(request, 'user_overview.html', {'listings': listings})
+	return info(request, username)
 
 @login_required
 def info(request, username=None):

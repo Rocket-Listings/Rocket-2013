@@ -50,7 +50,7 @@
 				</li>
 				{% if user.is_authenticated %}
 				<li class="left">
-					<a href="{% url "users.views.listings" user.username %}">Listings <i class="icon-th-list icon-white"></i></a>
+					<a href="{% url "listings.views.user_listings" user.username %}">Listings <i class="icon-th-list icon-white"></i></a>
 				</li>
 				<li class="user-link">
 					<a href="{% url "users.views.info" user.username %}">Account <i class="icon-user icon-white"></i></a>

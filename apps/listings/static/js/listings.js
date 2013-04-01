@@ -14,7 +14,7 @@ $(function() {
 	Also scripted access is not neccesary for out version of Zeroclipboard (1.1.6)
 	b/c its default value is 'always'.
 	***/
-	ZeroClipboard.setDefaults({
+	/* ZeroClipboard.setDefaults({
 		moviePath: STATIC_URL +'js/ZeroClipboard.swf', 
 		trustedDomains: [   
 			'beta.rocketlistings.com', 
@@ -27,7 +27,7 @@ $(function() {
 
 	var clip = new ZeroClipboard( $(".clipboard") )
 	clip.on( 'mousedown', function(client){ $(this).addClass("active"); })
-	clip.on( 'mouseup', function(client){ $(this).removeClass("active"); });
+	clip.on( 'mouseup', function(client){ $(this).removeClass("active"); }); */
 
 	/* Listing Detail */
 
