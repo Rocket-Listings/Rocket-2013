@@ -18,6 +18,7 @@ from django.core.mail import send_mail
 from django.core import serializers
 from django.http import HttpResponse, HttpResponseBadRequest
 
+
 # Moved here from users/views.py
 
 @login_required

@@ -25,7 +25,7 @@ DATABASES = {
 
 
 # file storage settings
-STATIC_ROOT = SITE_ROOT / 'static_collected/')
+STATIC_ROOT = SITE_ROOT / 'static_collected/'
 MEDIA_ROOT =  SITE_ROOT / 'media/'
 UPLOAD_DIR = 'uploads'
 STATIC_URL = '/static/'

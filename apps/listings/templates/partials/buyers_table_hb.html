@@ -1,0 +1,24 @@
+{% verbatim %}
+<div id	="listing_{{listingID}}" style="display:none;">
+	<table class="table table-striped tablesorter table-condensed table-buyers" >
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Email</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each this}}
+			<tr data-buyer-id="{{this.pk}}">
+				<td>
+					{{this.fields.name}}
+				</td>
+				<td>{{this.fields.email}}</td>
+			</tr>
+			{{/each}}
+		</tbody>
+	</table>
+	<div class="buyers"></div>
+	</div>
+</div>
+{% endverbatim %}

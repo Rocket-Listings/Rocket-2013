@@ -8,60 +8,69 @@ $(function() {
 		}
 	});
 
-	$('.table-buyers tbody tr').click(function(event) {
+	$('#listings').on('click', '.table-buyers tbody tr', function(event){
 		var buyerID = $(event.target).parent().data('buyer-id');
-		var url = '/listings/' + currentListingID + '/api/messages/' + buyerID;
+		// if(!switch_buyer(buyerID)) {
+		var url = '/listings/' + curListingID + '/api/messages/' + buyerID + '/'
 		$.getJSON(url, load_buyer_callback);
+		// }
 	});
-
 
 	function load_listing_callback(data, textStatus, jqXHR) {
 		var listingID = data[0].fields.listing;
-		var inner_html = buyers_template(data);
-		var html = $('<div class="listing_buyers" style="display:none;"></div>')
-			.append(inner_html)
-			.attr('id', 'listing_buyers_' + listingID);
-		$('#all_listings_buyers').append(html);
+		data.listingID = listingID;
+		var html = buyers_template(data);
+		$('#listings').append(html);
 		switch_listing(listingID);
 	}
 
-	// function load_buyer_callback(data, textStatus, jqXHR) {
-	// 	var listingID = data[0].fields.listing;
-	// 	var html = $(messages_template(data));
-	// 	var html = html.attr('id', 'listing_buyers_' + listingID);
-	// 	$('#all_listings_buyers').append(html);
-	// 	switch_listing(listingID);
-	// }
+	function load_buyer_callback(data, textStatus, jqXHR) {
+		var buyerID = data[0].fields.buyer;
+		data.buyerID = buyerID;
+		var html = messages_template(data);
+		$('#listing_' + curListingID + ' .buyers').append(html);
+		switch_buyer(buyerID);
+	}
 
 	function switch_listing(listingID) {
-		if(currentListingID === listingID) {
-			return true;
-		} else {
-			var selected = $('#listing_buyers_'+listingID)
-			if (selected.length > 0) {
-				$('.listing_buyers_'+currentListingID).hide();
-				selected.show();
-				currentListingID = listingID;
+		if(curListingID !== listingID) {
+			var nextListing = $('#listing_' + listingID);
+			if (nextListing.length > 0) {
+				$('#listing_' + curListingID).hide();
+				nextListing.show();
+				curListingID = listingID;
 				return true;
 			} else {
 				return false;
 			}
+		} else {
+			return true;
 		}
 	}
 
-	// function switch_buyer(buyerID) {
-	// 	if(currentBuyer != -1) {
-	// 		$('.listing_buyers_'+buyerID).hide();
-	// 	}
-	// 	$('.listing_buyers_'+buyerID).show();
-	// }
+	function switch_buyer(listingID, buyerID) {
+		if(curBuyerID !== buyerID) {
+			var nextBuyer = $('#listing_' + curListingID + ' #buyer_' + buyerID);
+			if (nextBuyer.length > 0) {
+				$('#listing_' + curListingID + ' #buyer_' + curBuyerID).hide();
+				$('#listing_' + curListingID).hide();
 
-	var currentListingID = -1;
-	var currentBuyer = -1;
+				$('#listing_' + listingID).show();
+				$('#listing_' + listingID + ' #buyer_' + buyerID).show();
+				nextBuyer.show();
+				curBuyerID = buyerID;
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return true;
+		}
+	}
 
-	var source = $("#listing_buyers_table_hb").html();
-	var buyers_template = Handlebars.compile(source);
+	var curListingID = -1;
+	var curBuyerID = -1;
 
-	// var source = $("#buyer_message_thread_hb").html();
-	// var messages_template = Handlebars.compile(source);
+	var buyers_template = Handlebars.compile($("#listing_buyers_table_hb").html());
+	var messages_template = Handlebars.compile($("#buyer_messages_thread_hb").html());
 });

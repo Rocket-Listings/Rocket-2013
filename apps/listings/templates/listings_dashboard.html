@@ -3,20 +3,26 @@
 
 {% block title %}{{ block.super }} Dashboard{% endblock %}
 
+
 {% block js %}
-<script id="listing_buyers_table_hb" type="text/x-handlebars-template">
-	{% include 'partials/listing_buyers_table_hb.html' %}
-</script>
-<script id="buyer_messages_thread_hb" type="text/x-handlebars-template">
-	{% include 'partials/buyer_messages_thread_hb.html' %}
-</script>
-<script src="{% static 'js/handlebars.js' %}" type="text/javascript"></script>
-<script src="{% static 'js/listings_dashboard.js' %}" type="text/javascript"></script>	
-{{ block.super }} 
+
+	<script id="listing_buyers_table_hb" type="text/x-handlebars-template">
+		{% include 'partials/buyers_table_hb.html' %}
+	</script>
+	<script id="buyer_messages_thread_hb" type="text/x-handlebars-template">
+		{% include 'partials/buyer_messages_hb.html' %}
+	</script>
+	<script src="{% static 'js/handlebars.js' %}" type="text/javascript"></script>
+	<script src="{% static 'js/listings_dashboard.js' %}" type="text/javascript"></script>	
+	{{ block.super }}
+
 {% endblock %}
 
+
 {% block content %}
-<h3>Listings Dashboard</h3>
-{% include 'partials/listings_table.html' %}
-<div id="all_listings_buyers"></div>
+
+	<h3>Listings Dashboard</h3>
+	{% include 'partials/listings_table.html' %}
+	<div id="listings"></div>
+
 {% endblock %}
