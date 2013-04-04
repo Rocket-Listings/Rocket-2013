@@ -1,18 +1,11 @@
 {% verbatim %}
-<table class="table table-striped tablesorter table-condensed table-buyers">
-	<thead>
-		<tr>
-			<th>Name</th>
-			<th>Email</th>
-		</tr>
-	</thead>
-	<tbody>
-		{{#each this}}
-		<tr data-buyer-id="{{this.pk}}">
-			<td>{{this.fields.name}}</td>
-			<td>{{this.fields.email}}</td>
-		</tr>
-		{{/each}}
-	</tbody>
-</table>
+<div class="content" data-buyerid="{{ this.fields.buyer }}">
+	{{#each this}}
+		{{#if this.fields.isSeller }}
+			<p class="triangle-border right">{{this.fields.content}}</p>
+		{{else}}
+			<p class="triangle-border left">{{this.fields.content}}</p>
+		{{/if}}
+	{{/each}}
+</div>
 {% endverbatim %}

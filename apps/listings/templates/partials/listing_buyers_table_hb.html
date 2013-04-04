@@ -1,5 +1,5 @@
 {% verbatim %}
-<table class="table table-striped tablesorter table-condensed table-buyers">
+<table class="table table-striped tablesorter table-condensed table-buyers" >
 	<thead>
 		<tr>
 			<th>Name</th>
@@ -8,7 +8,7 @@
 	</thead>
 	<tbody>
 		{{#each this}}
-		<tr data-buyer-id="{{this.pk}}">
+		<tr data-buyer-id="{{this.pk}}" data-listing-id="{{ this.fields.listing }}">
 			<td>
 				{{this.fields.name}}
 			</td>

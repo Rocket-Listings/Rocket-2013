@@ -1,6 +1,6 @@
 $(function(){
 //  $(".fancybox").fancybox();
-	
+
 	// menu activation
 	var url = window.location.url;
 	var path = window.location.pathname;
