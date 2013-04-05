@@ -21,15 +21,16 @@ $(function() {
 		data.listingID = listingID;
 		var html = buyers_template(data);
 		$('#listings').append(html);
-		switch_listing(listingID);
+		console.log(switch_listing(listingID));
 	}
 
 	function load_buyer_callback(data, textStatus, jqXHR) {
 		var buyerID = data[0].fields.buyer;
 		data.buyerID = buyerID;
+
 		var html = messages_template(data);
 		$('#listing_' + curListingID + ' .buyers').append(html);
-		switch_buyer(buyerID);
+		switch_buyer(curListingID, buyerID);
 	}
 
 	function switch_listing(listingID) {
@@ -52,7 +53,7 @@ $(function() {
 		if(curBuyerID !== buyerID) {
 			var nextBuyer = $('#listing_' + curListingID + ' #buyer_' + buyerID);
 			if (nextBuyer.length > 0) {
-				$('#listing_' + curListingID + ' #buyer_' + curBuyerID).hide();
+				$('#listing_' + curListingID + ' #buyer_' + curBuyerID).remove();
 				$('#listing_' + curListingID).hide();
 
 				$('#listing_' + listingID).show();
