@@ -18,11 +18,13 @@ def listings(request, username=None):
 	if username:
 		user = get_object_or_404(User, username=username)
 	listings = Listing.objects.filter(user=user).order_by('-pub_date')[:10]
+
 	return render(request, 'user_overview.html', {'listings': listings})
 
 @login_required
 def info(request, username=None):
 	profile = request.user.get_profile()
+	send_mail( 'this is a subject', 'body', 'postmaster@rocketlistings.mailgun.org', ['nat@rocketlistings.com'], fail_silently=False)
 	return render(request, 'user_info.html', {'profile':profile,})
 
 @login_required

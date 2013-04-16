@@ -3,6 +3,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 import hashlib, hmac
 from django.core.mail import send_mail
+from django.contrib.auth.models import User
+from users.models import UserProfile
+from django.shortcuts import render, redirect, get_object_or_404
 
 
 
@@ -31,13 +34,17 @@ def on_incoming_message(request):
 		token = request.POST.get('token', '')
 		sig = request.POST.get('signature', '')
 
-	if verify(token, timestamp, sig):
+	if sender == 'robot@craigslist.org':
+		name = recipient.split('@')[0]
+		user = get_object_or_404(User, username=name)
+		email = user.email
+		send_mail( subject , body, 'postmaster@rocketlistings.mailgun.org', [email], fail_silently=False)
+		return HttpResponse('OK')
+
+	elif verify(token, timestamp, sig):
 		m = mailgun(recipient = recipient, sender = sender, frm = frm, subject = subject, body = body, text = text, 
 		signature = signature, timestamp = timestamp, token = token, sig = sig)
 		m.save()
-
-
-
 		return HttpResponse('OK')
 	else:
 		return HttpResponse('Unauthorized')
