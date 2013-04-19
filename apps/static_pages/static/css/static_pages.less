@@ -29,55 +29,77 @@
 
 .homepage-heading {
 	font-family: "Open sans", "Helvetica", Arial;
-	font-size: 43px;
+	font-size: 48px;
 	color: #222F33;
-	line-height: 45px;
+	text-align: center;
+	line-height: 35px;
 	font-weight: 700;
 	text-shadow: 1px 1px 5px #aebec6;
-	margin-bottom: 10px;
+	margin-top: 10px;
+	margin-bottom: 20px;
+	}
+
+
+
+.homepage-presenting {
+	.homepage-heading;
+	font-style: italic;
+	font-size: 38px;
+	font-weight: 400;
+	line-height: 25px;
+	margin-bottom: 30px;
+	margin-top: 20px;
+	text-shadow: none;
+
 }
 
 .homepage-subheading {
 	.homepage-heading;
-	font-size: 22px;
-	font-weight: 400;
-	text-shadow: 1px 1px 5px #aebec6;
-	margin-bottom:0;
-}
-
-.homepage-feature-list ol {
-	list-style-type: none;
-	font-family: Lucida Grande;
-	text-align: left;
-	font-size: 16px;
+	font-size: 24px;
+	font-weight: 100;
+	margin-bottom: 30px;
+	text-shadow: none;
 	line-height: 25px;
-	li {
-		margin-top: 20px;
-		padding: 5px 0 5px 30px;
-		background: none;
-		padding: 5px 0 5px 30px;
-		background: left center no-repeat url('../img/rocket-bullet_04.png');
-	}
+	
 
-	li:first-child { 
-		margin-top: 30px;
-	}
 }
+
+
 
 .homepage-message {
 
-	.homepage-listing {
-		float: left;
-		width: 411px;
-		height: 700px;
-		margin: 0 0 0 0;
-		background: top right no-repeat url('../img/rocket-homepage-listing-reduced.png');
-		background-size: 411px 700px;
-		/*    margin: 40px auto;    */
+	.homepage-listings-view {
+		display: block;
+		margin: auto;
+		width: 870px;
+		height: 420px;
+		background: top left no-repeat url('../img/listings-view.png');
+		background-size: 870px 420px;
 		-webkit-box-shadow: #aebec6 2px 2px 50px;
 		-moz-box-shadow: #aebec6 2px 2px 50px;
 		box-shadow: #aebec6 2px 2px 50px;
+
+
 	}
+	.homepage-signup{
+		display: block;
+		padding-top: 30px;
+		margin: auto;
+		width: 400px;
+
+		.btn-large{
+			font-size: 24px;
+			font-weight: 400;
+			color: #F0F0F0;
+			text-shadow: 1px 3px 3px rgba(0,0,0,0.3);
+			background-image: linear-gradient(to bottom, #E75547, #bd362f) !important;
+		
+	}
+		
+	}
+
+
+
 	.homepage-type {
 		position: relative;
 		float: right;
@@ -125,6 +147,26 @@
 		}
 	}
 }
+
+.homepage-feature-list ol {
+	list-style-type: none;
+	font-family: Lucida Grande;
+	text-align: left;
+	font-size: 16px;
+	line-height: 25px;
+	li {
+		margin-top: 20px;
+		padding: 5px 0 5px 30px;
+		background: none;
+		padding: 5px 0 5px 30px;
+		background: left center no-repeat url('../img/rocket-bullet_04.png');
+	}
+
+	li:first-child { 
+		margin-top: 30px;
+	}
+}
+
 
 .homepage-video {
 	margin: 0 auto 65px auto;
@@ -210,3 +252,43 @@
 	}
 }
 
+.features-craigslistemail{
+	width: 535px;
+	height: 50px;
+	background: center no-repeat url('../img/craigslist-email.png');
+	background-size: 540px 55px;
+	background-color: white;
+	padding: 10px;
+	-webkit-box-shadow: #aebec6 1px 1px 15px;
+	-moz-box-shadow: #aebec6 1px 1px 15px;
+	box-shadow: #aebec6 1px 1px 15px;
+	
+}
+
+.features-titles{
+	font-family: "Open sans", "Helvetica", Arial;
+	font-size: 28px;
+	color: #222F33;
+	font-weight: 400;
+	text-shadow: 1px 1px 5px #aebec6;
+	line-height: 28px;
+	text-align: center;
+	margin-top: 5px;
+	
+}
+
+.row-fluid{
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+.features-content{
+	font-size: 20px;
+	margin: 10px 0 20px 0px;
+	font-family: inherit;
+	font-weight: bold;
+	line-height: 24px;
+	color: inherit;
+	text-rendering: optimizelegibility;
+	text-align: center;
+}

@@ -6,36 +6,29 @@
 {% block js %}<script type="text/javascript" src="{% static 'js/static_pages.js' %}"></script>{% endblock %}
 
 {% block content %}
+	<div class="homepage-presenting">Introducing...</div>
+	<div class="homepage-heading">The listings manager for Craigslist.</div>
+	<div class="homepage-subheading">Organize all your listings, emails, offers, and potential buyers in one place.</div>
+	
+	
 	<div class="homepage-row homepage-message">
-		<div class="homepage-listing">{#<img src="images/homepage-rocket-listing.png" rel="homepage listing"/>#}</div>
-		<div class="homepage-type">
-			<div class="homepage-heading">Sell online<br/>without losing your mind.</div>
-			<div class="homepage-subheading">The email dashboard for Craigslist.</div>
-			<div class="homepage-feature-list" >
-				<ol>
-					<li>Create a Rocket Listing (it's easy).</li>
-					<li>Post your listing HTML everywhere using your <code class="text-info">@rocketlistings.com</code> email address.</li>
-					<li>Respond to waves of potential buyers through Rocket's organized dashboard.</li>
-					<li>Deal with each customer in a separate and straightforward message thread.</li>
-					<li>Rocket's algorithms look at your messages to pick out offers, questions, and appointment times to keep you organized.</li>
-					<!-- <li>Rocket Scientists are a phone call away! (Seriously, reach us at 240-479-4445)</li> -->
-				</ol>
-			</div>
-			<br/>
-			<a class="btn btn-primary btn-large" href="#modal-photo-upload" data-toggle="modal">
-				Upload photos to get started
-			</a>
-			{% comment %}
-			<div class="drag-and-drop" href="#modal-photo-upload" data-toggle="modal">
-				<div class="center">
-					<p class="InlineHoverNone">Drag and drop product photos<br/> anywhere to get started<br/></p>
-					<p class="noneHoverInline">Or click to upload normally</p>
-				</div>
-			</div>
-			{% endcomment %}
-		</div>
-		<div class="clearfix"></div>
+		<div class="homepage-listings-view">{#<img src="images/listings-view.png" rel="homepage listing"/>#}</div>
+		<div class = "homepage-signup">
+			<a class="btn btn-danger btn-large btn-block" href="#modal-photo-upload" data-toggle="modal">Sign-up free</a>
+		</div>	
 	</div>
+
+	
+
+
+
+
+
+
+
+
+
+	<!--
 	<div class="homepage-row homepage-video">
 			<iframe width="868" height="488" src="http://www.youtube.com/embed/__9JOe04yO8" frameborder="0" allowfullscreen></iframe>
 	</div>
@@ -67,4 +60,34 @@
 		</span>
 		<div class="clearfix"></div>    
 	</div>
+
+				
+		<div class="homepage-type">
+			<div class="homepage-feature-list" >
+				<ol>
+					<li>Use your Rocket Listings email when you list</li>
+					<li>Post your listing HTML everywhere using your <code class="text-info">@rocketlistings.com</code> email address.</li>
+					<li>Respond to waves of potential buyers through Rocket's organized dashboard.</li>
+					<li>Deal with each customer in a separate and straightforward message thread.</li>
+					<li>Rocket's algorithms look at your messages to pick out offers, questions, and appointment times to keep you organized.</li>
+					<li>Rocket Scientists are a phone call away! (Seriously, reach us at 240-479-4445)</li>
+				</ol>
+			</div>
+			<br/>
+			<a class="btn btn-primary btn-large" href="#modal-photo-upload" data-toggle="modal">
+				Upload photos to get started
+			</a>
+			
+			<div class="drag-and-drop" href="#modal-photo-upload" data-toggle="modal">
+				<div class="center">
+					<p class="InlineHoverNone">Drag and drop product photos<br/> anywhere to get started<br/></p>
+					<p class="noneHoverInline">Or click to upload normally</p>
+				</div>
+			</div>
+			
+		</div>
+		<div class="clearfix"></div>
+	</div>
+-->
+
 {% endblock %}
