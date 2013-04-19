@@ -3,6 +3,7 @@ $(function() {
 	$('.table-listings tbody tr').click(function(event) {
 		var listingID = $(event.target).parent().data('listing-id');
 		if(!switch_listing(listingID)) {
+			console.log('switch listing false');
 			var url = '/listings/' + listingID + '/api/buyers/'
 			$.getJSON(url, load_listing_callback);
 		}
@@ -10,10 +11,11 @@ $(function() {
 
 	$('#listings').on('click', '.table-buyers tbody tr', function(event){
 		var buyerID = $(event.target).parent().data('buyer-id');
-		// if(!switch_buyer(buyerID)) {
-		var url = '/listings/' + curListingID + '/api/messages/' + buyerID + '/'
-		$.getJSON(url, load_buyer_callback);
-		// }
+		if(!switch_buyer(curListingID, buyerID)) {
+			console.log('switch buyer false');			
+			var url = '/listings/' + curListingID + '/api/messages/' + buyerID + '/'
+			$.getJSON(url, load_buyer_callback);
+		}
 	});
 
 	function load_listing_callback(data, textStatus, jqXHR) {
@@ -52,6 +54,7 @@ $(function() {
 	function switch_buyer(listingID, buyerID) {
 		if(curBuyerID !== buyerID) {
 			var nextBuyer = $('#listing_' + curListingID + ' #buyer_' + buyerID);
+			console.log(nextBuyer);
 			if (nextBuyer.length > 0) {
 				$('#listing_' + curListingID + ' #buyer_' + curBuyerID).remove();
 				$('#listing_' + curListingID).hide();
@@ -60,11 +63,13 @@ $(function() {
 				$('#listing_' + listingID + ' #buyer_' + buyerID).show();
 				nextBuyer.show();
 				curBuyerID = buyerID;
+				console.log('swtich_buyer function true');
 				return true;
 			} else {
 				return false;
 			}
 		} else {
+			console.log('swtich_buyer function true');
 			return true;
 		}
 	}
