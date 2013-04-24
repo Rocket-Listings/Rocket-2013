@@ -71,9 +71,9 @@
   display: block;
   margin: auto;
   width: 870px;
-  height: 420px;
+  height: 400px;
   background: top left no-repeat url('../img/listings-view.png');
-  background-size: 870px 420px;
+  background-size: 870px 400px;
   -webkit-box-shadow: #aebec6 2px 2px 50px;
   -moz-box-shadow: #aebec6 2px 2px 50px;
   box-shadow: #aebec6 2px 2px 50px;
@@ -233,38 +233,61 @@
 .homepage-why-pay:hover {
   cursor: default;
 }
-.features-craigslistemail {
-  width: 535px;
-  height: 50px;
-  background: center no-repeat url('../img/craigslist-email.png');
-  background-size: 540px 55px;
+.well {
   background-color: white;
-  padding: 10px;
-  -webkit-box-shadow: #aebec6 1px 1px 15px;
-  -moz-box-shadow: #aebec6 1px 1px 15px;
-  box-shadow: #aebec6 1px 1px 15px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  border-radius: 15px;
 }
 .features-titles {
   font-family: "Open sans", "Helvetica", Arial;
-  font-size: 28px;
+  font-size: 20px;
   color: #222F33;
   font-weight: 400;
   text-shadow: 1px 1px 5px #aebec6;
   line-height: 28px;
   text-align: center;
+}
+.features-rlemail {
+  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+  color: #E75547;
+  font-size: 24px;
+  text-shadow: 1px 1px 2px #aebec6;
+  text-align: center;
+  margin-top: 15px;
+}
+.features-craigslistemail {
+  margin-top: 10px;
+  width: 485px;
+  height: 45px;
+  background: center no-repeat url('../img/craigslist-email.png');
+  background-size: 490px 50px;
+  background-color: white;
+  text-align: center;
+}
+.features-manylistings {
+  margin-top: 10px;
+  width: 480px;
+  height: 75px;
+  background: center no-repeat url('../img/many-listings.png');
+  background-size: 480px 75px;
+  -webkit-box-shadow: #aebec6 1px 1px 15px;
+  -moz-box-shadow: #aebec6 1px 1px 15px;
+  box-shadow: #aebec6 1px 1px 15px;
+  text-align: center;
+}
+.features-messages {
   margin-top: 5px;
+  width: 490px;
+  height: 110px;
+  background: left top no-repeat url('../img/messages.png');
+  background-size: 480px 100px;
+  -webkit-box-shadow: #aebec6 1px 1px 15px;
+  -moz-box-shadow: #aebec6 1px 1px 15px;
+  box-shadow: #aebec6 1px 1px 15px;
+  text-align: center;
 }
 .row-fluid {
-  margin-top: 30px;
-  margin-bottom: 30px;
-}
-.features-content {
-  font-size: 20px;
-  margin: 10px 0 20px 0px;
-  font-family: inherit;
-  font-weight: bold;
-  line-height: 24px;
-  color: inherit;
-  text-rendering: optimizelegibility;
-  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
