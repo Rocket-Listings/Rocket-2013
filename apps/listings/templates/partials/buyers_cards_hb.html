@@ -1,0 +1,18 @@
+{% verbatim %}
+<div class = "well l-well" id="listing_{{listingID}}" style="display:none;">
+
+	
+		{{#each this}}
+		<div class = "well l-card">
+			<img class ="l-user" src="/static/img/user.png" class="img-polaroid">
+			<br>
+			{{this.fields.name}}
+			<br>
+			{{this.fields.email}}
+		</div>
+		{{/each}}
+
+
+
+</div>
+{% endverbatim %}
