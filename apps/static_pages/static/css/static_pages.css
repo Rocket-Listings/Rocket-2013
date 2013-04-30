@@ -235,8 +235,8 @@
 }
 .well {
   background-color: white;
-  margin-top: 40px;
-  margin-bottom: 40px;
+  margin-top: 30px;
+  margin-bottom: 30px;
   border-radius: 15px;
 }
 .features-titles {
@@ -287,7 +287,69 @@
   box-shadow: #aebec6 1px 1px 15px;
   text-align: center;
 }
+.features-wrapup {
+  margin-top: 5px;
+  width: 490px;
+  height: 150px;
+  background: center no-repeat url('../img/wrapup.png');
+  background-size: 480px 130px;
+  -webkit-box-shadow: #aebec6 1px 1px 15px;
+  -moz-box-shadow: #aebec6 1px 1px 15px;
+  box-shadow: #aebec6 1px 1px 15px;
+  text-align: center;
+}
 .row-fluid {
   margin-top: 5px;
   margin-bottom: 5px;
+}
+.pricing-basic {
+  text-align: center;
+}
+.pricing-pro {
+  text-align: center;
+}
+.well-basic {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.well-pro {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.pricing-title {
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 26px;
+  line-height: 40px;
+  color: inherit;
+}
+.pricing-subtitle {
+  font-family: inherit;
+  font-size: 20px;
+  font-style: italic;
+}
+.pricing-subtitle.pro {
+  font-size: 16px;
+  text-align: center;
+}
+.pricing-list {
+  font-size: 16px;
+  text-align: left;
+}
+.pricing-list ul li {
+  line-height: 30px;
+}
+.dim {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  opacity: 0.70;
+}
+a.pricing-btn.btn.btn-primary {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 22px;
+  width: 70px;
 }

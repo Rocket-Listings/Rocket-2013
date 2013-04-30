@@ -60,7 +60,7 @@ body a {
 .header {
   position: relative;
   z-index: 3;
-  background: url(../img/concrete_wall_3.png) 50% 0 !important;
+  background: url(../img/retro_intro.png) 50% 0 !important;
   webkit-box-shadow: 0px 1px 12px #181B1D;
   -moz-box-shadow: 0px 1px 12px #181B1D;
   box-shadow: 0px 1px 12px #181B1D;
@@ -68,6 +68,28 @@ body a {
 .header .upper {
   height: 70px;
   position: relative;
+}
+.header .upper .login {
+  position: fixed;
+  left: 47%;
+  padding: 6px;
+  color: #435056;
+  text-align: center;
+  /* margin-left: 135px; /*TODO not the best way to center need to figure this out */
+
+  font-style: normal;
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 12px;
+  font-weight: 200;
+  background-color: white;
+  border-width: 1px;
+  -moz-border-radius: 0 0 3px 3px;
+  border-radius: 0 0 5px 5px;
+  margin-bottom: 10px;
+}
+.header .upper .login :hover {
+  text-decoration: none;
 }
 .header .upper .logo {
   float: left;
