@@ -98,7 +98,7 @@ body a {
 }
 .header .upper .navbar {
   float: right;
-  padding-top: 20px;
+  padding-top: 22px;
   padding-right: 0px;
   margin-bottom: 0px;
 }
@@ -106,6 +106,7 @@ body a {
   font-family: "Open sans", "Helvetica", Arial;
   font-size: 18px;
   color: #E75547;
+  padding: 10px 10px 10px 10px;
 }
 .header .upper .navbar .nav > li > a:hover {
   color: black;
@@ -238,4 +239,30 @@ body a {
 .qq-upload-button {
   background-color: /*#73B3BF; */ #e26a59;
   color: white;
+}
+.h4 {
+  text-align: center !important;
+}
+.register-form {
+  display: block:
+	margin: auto;
+  margin-top: 40px;
+  text-align: center;
+}
+.register-form label {
+  font-size: 18px;
+}
+.login-form {
+  display: block:
+	margin: auto;
+  margin-top: 40px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.login-form label {
+  font-size: 18px;
+  margin-top: 10px;
+}
+.login-help {
+  margin-top: 25px;
 }
