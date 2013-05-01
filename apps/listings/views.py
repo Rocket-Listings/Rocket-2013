@@ -156,6 +156,10 @@ def ajax_listing_buyers(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
 	buyers = listing.buyer_set.all().order_by('name')
 
+	#for buyer in buyers:
+	#	buyer.curMaxOffer = buyer.max_offer
+
+
 	# if 'application/json' in request.META.get('HTTP_ACCEPT'):
 	return HttpResponse(serializers.serialize("json", buyers), mimetype='application/json')
 	# else:

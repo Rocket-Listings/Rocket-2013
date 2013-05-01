@@ -9,7 +9,7 @@ $(function() {
 		}
 	});
 
-	$('#listings').on('click', '.l-user', function(event){
+	$('#listings').on('click', '.table-buyers tbody tr', function(event){
 		var buyerID = $(event.target).parent().data('buyer-id');
 		if(!switch_buyer(curListingID, buyerID)) {
 			console.log('switch buyer false');			

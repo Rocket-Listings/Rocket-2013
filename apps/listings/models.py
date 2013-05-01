@@ -95,6 +95,7 @@ class ListingPhoto(models.Model):
 # Buyer... not associated with account, unique to listing.
 class Buyer(models.Model):
 	objects = GenericNameManager()
+	curMaxOffer = models.IntegerField(null = True)
 
 	listing = models.ForeignKey(Listing, blank=True) 
 	name = models.CharField(max_length=255)

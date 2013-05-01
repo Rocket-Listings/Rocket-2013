@@ -5,6 +5,7 @@
 			<tr>
 				<th>Name</th>
 				<th>Email</th>
+				<th>Max Offer</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -13,7 +14,12 @@
 				<td>
 					{{this.fields.name}}
 				</td>
-				<td>{{this.fields.email}}</td>
+				<td>
+					{{this.fields.email}}
+				</td>
+				<td>
+					{{this.fields.curMaxOffer}}
+				</td>
 			</tr>
 			{{/each}}
 		</tbody>
