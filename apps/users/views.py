@@ -24,7 +24,6 @@ def listings(request, username=None):
 @login_required
 def info(request, username=None):
 	profile = request.user.get_profile()
-	send_mail( 'this is a subject', 'body', 'postmaster@rocketlistings.mailgun.org', ['nat@rocketlistings.com'], fail_silently=False)
 	return render(request, 'user_info.html', {'profile':profile,})
 
 @login_required
