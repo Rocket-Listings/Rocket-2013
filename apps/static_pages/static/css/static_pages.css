@@ -24,7 +24,7 @@
 }
 .homepage-heading {
   font-family: "Open sans", "Helvetica", Arial;
-  font-size: 48px;
+  font-size: 40px;
   color: #222F33;
   text-align: center;
   line-height: 35px;
@@ -35,7 +35,7 @@
 }
 .homepage-presenting {
   font-family: "Open sans", "Helvetica", Arial;
-  font-size: 48px;
+  font-size: 40px;
   color: #222F33;
   text-align: center;
   line-height: 35px;
@@ -53,7 +53,7 @@
 }
 .homepage-subheading {
   font-family: "Open sans", "Helvetica", Arial;
-  font-size: 48px;
+  font-size: 40px;
   color: #222F33;
   text-align: center;
   line-height: 35px;
@@ -80,7 +80,7 @@
 }
 .homepage-message .homepage-signup {
   display: block;
-  padding-top: 30px;
+  padding-top: 5px;
   margin: auto;
   width: 400px;
 }
