@@ -1,17 +1,28 @@
 {% verbatim %}
 <div class = "well l-well" id="listing_{{listingID}}" style="display:none;">
 
-	
 		{{#each this}}
-		<div class = "well l-card">
-			<img class ="l-user" src="/static/img/user.png" class="img-polaroid">
-			<br>
-			{{this.fields.name}}
-			<br>
-			{{this.fields.email}}
+		<div class= "well">
+		<div class="media" data-buyer-id = "{{this.pk}}">
+	  		<a class="pull-left" href="#">
+	    		<img class="media-object" data-src="holder.js/64x64" src = "/static/img/user-small.png">
+	  		</a>
+	  		<div class="media-body">
+	    	<h4 class="media-heading">{{this.fields.name}}</h4>
+	    		{{this.fields.email}}
+				<br>
+				{{#if this.fields.curMaxOffer}}
+					${{this.fields.curMaxOffer}}
+				{{else}}
+					No offer...yet!
+				{{/if}}
+			</div>
 		</div>
+	</div>
 		{{/each}}
 
+
+	<div class="buyers"></div>
 
 
 </div>
