@@ -41,7 +41,7 @@
 			</td>
 			<td>
 				<div class="btn-toolbar">
-					<div class="btn-group">
+					<div class="btn-group" data-listing-id="{{ listing.id }}">
 						{% comment %}
 						<a class="clipboard btn" data-clipboard-text="{% filter force_escape %}{% include "listing_cl_embed.html" %}{% endfilter %}">
 							<i class="icon-download"></i>
@@ -49,10 +49,15 @@
 						{% endcomment %}
 						<button class="btn" href="{% url 'listings.views.update' listing.id %}" data-container="body" data-toggle="tooltip" data-original-title="Edit Listing">
 							<i class="icon-edit"></i>
-						</a>
+						</button>
+
+						<button class="btn" id = "buyer-button" href="" data-container="body" data-toggle="tooltip" data-original-title="See Buyers" data-listing-id="{{ listing.id }}">
+							<i class="icon-user"></i>
+						</button>
+
 						<button class="btn" href="{% url 'listings.views.delete' listing.id %}" data-container="body" data-toggle="tooltip" data-original-title="Delete Listing">
 							<i class="icon-trash"></i>
-						</a>
+						</button>
 					</div>
 				</div>
 			</td>

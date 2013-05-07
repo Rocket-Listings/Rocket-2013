@@ -1,10 +1,11 @@
 $(function() {
 
-	$('.table-listings tbody tr').click(function(event) {
+	$('.table-listings tbody tr td').click(function(event) {
 		var listingID = $(event.target).parent().data('listing-id');
 		if(!switch_listing(listingID)) {
 			//console.log('switch listing false');
 			var url = '/listings/' + listingID + '/api/buyers/'
+			console.log(url);
 			$.getJSON(url, load_listing_callback);
 		}
 	});
