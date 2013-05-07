@@ -4,25 +4,37 @@
 		{{#each this}}
 		<div class= "well">
 		<div class="media" data-buyer-id = "{{this.pk}}">
-	  		<a class="pull-left" href="#">
+	  		<div class="pull-left" data-buyer-id = "{{this.pk}}">
 	    		<img class="media-object" data-src="holder.js/64x64" src = "/static/img/user-small.png">
-	  		</a>
+	    		<button class="btn btn-mini btn-messages" type="button">Messages</button>
+	  		</div>
 	  		<div class="media-body">
-	    	<h4 class="media-heading">{{this.fields.name}}</h4>
-	    		{{this.fields.email}}
-				<br>
-				{{#if this.fields.curMaxOffer}}
-					${{this.fields.curMaxOffer}}
-				{{else}}
-					No offer...yet!
-				{{/if}}
+	  			<div class = "row">
+	  				<div class = "span2">
+			    		<h4 class="media-heading">
+			    		{{this.fields.name}}
+			    		</h4>
+
+		    			{{this.fields.email}}
+						<br>
+						{{#if this.fields.curMaxOffer}}
+							Offering ${{this.fields.curMaxOffer}}
+						{{else}}
+							No offer...yet!
+						{{/if}}
+					</div>
+					<div class = "span7">
+						<div class="buyers_{{this.pk}}"></div>
+					</div>
+				</div>
 			</div>
+
 		</div>
 	</div>
 		{{/each}}
 
 
-	<div class="buyers"></div>
+	
 
 
 </div>
