@@ -1,5 +1,6 @@
 /* 	Doing this weird convention '.l-<CLASS>' because we don't want other outside class definitions to affect these.
 	For instance, if our title was simply '.title', then maybe a '.title' rule from global.less might take into effect. */
+<<<<<<< HEAD
 .l-well {
   background-color: white;
 }
@@ -17,6 +18,8 @@
 .table-listings td {
   vertical-align: middle;
 }
+=======
+>>>>>>> master
 .listing {
   position: relative;
   float: left;
@@ -185,9 +188,12 @@
   margin-top: 10px;
   margin-right: 30px;
 }
+<<<<<<< HEAD
 .media div.span2 {
   padding-top: 20px;
 }
+=======
+>>>>>>> master
 .btn {
   text-align: left !important;
 }
@@ -269,12 +275,20 @@
 /* Variant : for left positioned triangle
 ------------------------------------------ */
 .triangle-border.left {
+<<<<<<< HEAD
   margin-left: 30px;
+=======
+  margin-left: 5px;
+>>>>>>> master
 }
 /* Variant : for right positioned triangle
 ------------------------------------------ */
 .triangle-border.right {
+<<<<<<< HEAD
   margin-right: 30px;
+=======
+  margin-right: 5px;
+>>>>>>> master
 }
 /* THE TRIANGLE
 ------------------------------------------------------------------------------------------------------------------------------- */
