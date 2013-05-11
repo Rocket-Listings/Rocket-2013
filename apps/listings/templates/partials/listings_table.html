@@ -12,6 +12,7 @@
 			<th class = "sortable">Date Listed<i class="icon-chevron-down"></i></th>
 			<th>Messages <i class="icon-envelope"></i></th>
 			<th>Max Offer</th>
+			<th>Autopost</th>
 			<th>Manage</th>	
 		</tr>
 	</thead>
@@ -40,13 +41,18 @@
 				{% endif %}
 			</td>
 			<td>
+				<a href = "{% url 'listings.views.autopost' listing.id %}">autopost</a>	
+			</td>
+
+			<td>
 				<div class="btn-toolbar">
+
 					<div class="btn-group">
-						{% comment %}
-						<a class="clipboard btn" data-clipboard-text="{% filter force_escape %}{% include "listing_cl_embed.html" %}{% endfilter %}">
-							<i class="icon-download"></i>
-						</a>
-						{% endcomment %}
+						
+						
+						
+						
+						
 						<a href="{% url 'listings.views.update' listing.id %}" class="btn" data-container="body" data-toggle="tooltip" data-original-title="Edit Listing">
 							<i class="icon-edit"></i>
 						</a>
@@ -58,13 +64,13 @@
 			</td>
 			{% comment %}
 			<td class = "centered-td">
-				{% if listing.CL_link %}
+				
 				<a href = "{{listing.CL_link}}" target="_blank">
 					<img src="{% static 'img/cl_icon.png' %}" width = "25" height = "25" class = "grey"></i>
 				</a>
 				{% else %}
 				<td class = "centered-td"> N/A </td>
-				{% endif %}
+				
 			</td> 
 			{% endcomment %}
 		</tr>

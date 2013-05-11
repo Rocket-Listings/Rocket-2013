@@ -92,6 +92,11 @@ def offers(request, listing_id):
 	offers = listing.offer_set.all()
 	return render(request, 'listing_offers.html',  {'listing': listing, 'offers': offers,})
 
+def autopost(request, listing_id):
+	listing = get_object_or_404(Listing, id=listing_id)
+	offers = listing.offer_set.all()
+	return render(request, 'listings_autopost.html',  {'listing': listing, 'offers': offers,})
+
 @csrf_exempt #this need to be changed but i cant be bothered to figure out the csrf stuff atm
 def messages(request, listing_id):
 	if request.method == "POST":
