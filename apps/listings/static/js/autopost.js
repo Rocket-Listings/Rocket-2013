@@ -1,3 +1,6 @@
 $( document ).ready(function() {
-    console.log("test")
+    
+	var r = $.get('https://post.craigslist.org/c/brl?lang=en');
+
+	console.log(r)
 });
