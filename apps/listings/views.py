@@ -94,16 +94,6 @@ def offers(request, listing_id):
 	offers = listing.offer_set.all()
 	return render(request, 'listing_offers.html',  {'listing': listing, 'offers': offers,})
 
-def autopost(request, listing_id):
-	listing = get_object_or_404(Listing, id=listing_id)
-
-
-
-
-
-
-	return render(request, 'listings_autopost.html',  {'listing': listing,})
-
 @csrf_exempt #this need to be changed but i cant be bothered to figure out the csrf stuff atm
 def messages(request, listing_id):
 	if request.method == "POST":
@@ -156,7 +146,6 @@ def autopost(request, listing_id):
 	# Todo: implement sessions and location.
 	listing = get_object_or_404(Listing, id=listing_id)
 	photos = ListingPhoto.objects.filter(listing=listing).order_by('order')
-
 
 	
 	r = requests.get('https://post.craigslist.org/c/brl?lang=en') #GET the url to post to
