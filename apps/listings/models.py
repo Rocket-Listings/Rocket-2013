@@ -23,7 +23,6 @@ class ListingCategory(models.Model):
 	objects = GenericNameManager()
 
 	name = models.CharField(max_length = 60)
-	description = models.CharField(max_length = 200)
 	CL_id = models.IntegerField(null = True)
 	is_owner = models.NullBooleanField()
 
