@@ -15,13 +15,11 @@ from rocketlistings import get_client_ip
 from django.db.models import Max
 from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import send_mail
-<<<<<<< HEAD
 from django.core import serializers
 from django.http import HttpResponse, HttpResponseBadRequest
-=======
 import requests
 from bs4 import BeautifulSoup
->>>>>>> autopost
+
 
 
 # Moved here from users/views.py
