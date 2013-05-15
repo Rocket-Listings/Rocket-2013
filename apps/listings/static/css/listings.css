@@ -1,7 +1,7 @@
 /* 	Doing this weird convention '.l-<CLASS>' because we don't want other outside class definitions to affect these.
 	For instance, if our title was simply '.title', then maybe a '.title' rule from global.less might take into effect. */
-<<<<<<< HEAD
 .l-well {
+  padding: 2px;
   background-color: white;
 }
 .l-card {
@@ -18,8 +18,9 @@
 .table-listings td {
   vertical-align: middle;
 }
-=======
->>>>>>> master
+.table-listings tbody tr.highlight td {
+  background-color: rgba(67, 80, 86, 0.1);
+}
 .listing {
   position: relative;
   float: left;
@@ -145,20 +146,14 @@
   margin-bottom: 10px;
 }
 .messages-container {
-  background-color: white;
-  -webkit-box-shadow: #aebec6 2px 2px 50px;
-  -moz-box-shadow: #aebec6 2px 2px 50px;
-  box-shadow: #aebec6 2px 2px 50px;
   position: relative;
-  overflow: auto;
   width: 100%;
-  margin-top: 30px;
+  height: 300px;
 }
 .messages-container .sidebar {
   float: left;
   width: 25%;
   height: 100%;
-  margin: 5px;
 }
 .messages-container .content {
   padding-top: 20px;
@@ -167,33 +162,26 @@
   float: right;
   width: 68%;
   height: 100%;
-  margin: 5px;
 }
-.messages-container .bottom {
+.bottom {
   background-color: #b2bec3;
   width: 100%;
-  height: 8%;
-  float: left;
+  height: 70px;
 }
-.messages-container .bottom .message-box {
+.bottom .message-box {
   float: left;
-  margin-top: 10px;
   margin-left: 250px;
 }
-.messages-container .bottom .input-long {
-  width: 500px;
+.bottom .textarea {
+  width: 400px;
 }
-.messages-container .bottom .send {
+.bottom .send {
   float: right;
-  margin-top: 10px;
   margin-right: 30px;
 }
-<<<<<<< HEAD
 .media div.span2 {
   padding-top: 20px;
 }
-=======
->>>>>>> master
 .btn {
   text-align: left !important;
 }
@@ -254,16 +242,15 @@
 .btn-group-vertical .btn.active {
   z-index: 2;
 }
-/* THE SPEECH BUBBLE source: http://nicolasgallagher.com/pure-css-speech-bubbles/demo/
-------------------------------------------------------------------------------------------------------------------------------- */
-.triangle-border {
+/* Messages bubble */
+.message-bubble {
   position: relative;
-  padding-top: 10px;
+  padding-top: 5px;
   padding-right: 5px;
   padding-left: 5px;
-  padding-bottom: 10px;
-  margin: 2px 0 5px;
-  border: 3px solid #A3B0B6;
+  padding-bottom: 5px;
+  margin: 2px 0 20px;
+  border: 1px solid #A3B0B6;
   color: #333;
   background: #fff;
   /* css3 */
@@ -272,138 +259,29 @@
   -moz-border-radius: 10px;
   border-radius: 10px;
 }
-/* Variant : for left positioned triangle
------------------------------------------- */
-.triangle-border.left {
-<<<<<<< HEAD
+/* Left Bubble */
+.message-bubble.left {
   margin-left: 30px;
-=======
-  margin-left: 5px;
->>>>>>> master
 }
-/* Variant : for right positioned triangle
------------------------------------------- */
-.triangle-border.right {
-<<<<<<< HEAD
+/* Right Bubble  */
+.message-bubble.right {
   margin-right: 30px;
-=======
-  margin-right: 5px;
->>>>>>> master
+  background-color: rgba(67, 80, 86, 0.1);
 }
-/* THE TRIANGLE
-------------------------------------------------------------------------------------------------------------------------------- */
-.triangle-border:before {
-  content: "";
-  position: absolute;
-  bottom: -20px;
-  /* value = - border-top-width - border-bottom-width */
-
-  left: 20px;
-  /* controls horizontal position */
-
-  border-width: 20px 20px 0;
-  border-style: solid;
-  border-color: #A3B0B6 transparent;
-  /* reduce the damage in FF3.0 */
-
-  display: block;
-  width: 0;
+.messages-pane {
+  background-color: white;
+  height: 50px;
+  width: 600px;
+  overflow: auto;
 }
-/* creates the smaller  triangle */
-.triangle-border:after {
-  content: "";
-  position: absolute;
-  bottom: -13px;
-  /* value = - border-top-width - border-bottom-width */
-
-  left: 47px;
-  /* value = (:before left) + (:before border-left) - (:after border-left) */
-
-  border-width: 13px 13px 0;
-  border-style: solid;
-  border-color: #fff transparent;
-  /* reduce the damage in FF3.0 */
-
-  display: block;
-  width: 0;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 5px 0;
 }
-/* Variant : top
------------------------------------------- */
-/* creates the larger triangle */
-.triangle-border.top:before {
-  top: -20px;
-  /* value = - border-top-width - border-bottom-width */
-
-  bottom: auto;
-  left: auto;
-  right: 20px;
-  /* controls horizontal position */
-
-  border-width: 0 20px 20px;
-}
-/* creates the smaller  triangle */
-.triangle-border.top:after {
-  top: -13px;
-  /* value = - border-top-width - border-bottom-width */
-
-  bottom: auto;
-  left: auto;
-  right: 47px;
-  /* value = (:before right) + (:before border-right) - (:after border-right) */
-
-  border-width: 0 13px 13px;
-}
-/* Variant : left
------------------------------------------- */
-/* creates the larger triangle */
-.triangle-border.left:before {
-  top: 10px;
-  /* controls vertical position */
-
-  bottom: auto;
-  left: -30px;
-  /* value = - border-left-width - border-right-width */
-
-  border-width: 15px 30px 15px 0;
-  border-color: transparent #A3B0B6;
-}
-/* creates the smaller  triangle */
-.triangle-border.left:after {
-  top: 16px;
-  /* value = (:before top) + (:before border-top) - (:after border-top) */
-
-  bottom: auto;
-  left: -21px;
-  /* value = - border-left-width - border-right-width */
-
-  border-width: 9px 21px 9px 0;
-  border-color: transparent #fff;
-}
-/* Variant : right
------------------------------------------- */
-/* creates the larger triangle */
-.triangle-border.right:before {
-  top: 10px;
-  /* controls vertical position */
-
-  bottom: auto;
-  left: auto;
-  right: -30px;
-  /* value = - border-left-width - border-right-width */
-
-  border-width: 15px 0 15px 30px;
-  border-color: transparent #A3B0B6	;
-}
-/* creates the smaller  triangle */
-.triangle-border.right:after {
-  top: 16px;
-  /* value = (:before top) + (:before border-top) - (:after border-top) */
-
-  bottom: auto;
-  left: auto;
-  right: -21px;
-  /* value = - border-left-width - border-right-width */
-
-  border-width: 9px 0 9px 21px;
-  border-color: transparent #fff;
+.btn-send {
+  margin-top: 10px;
 }

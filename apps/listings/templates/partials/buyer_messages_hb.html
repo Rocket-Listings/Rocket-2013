@@ -1,16 +1,15 @@
 {% verbatim %}
-<div id="buyer_{{buyerID}}" style="display:none;">
-	{{#each this}}
-		{{#if this.fields.isSeller }}
-			<p class="triangle-border right">{{this.fields.content}}</p>
-		{{else}}
-			<p class="triangle-border left">{{this.fields.content}}</p>
-		{{/if}}
-	{{/each}}
-	<div class = "message-box">
-		<div class="input-append">
-		  <input class="span5" id="appendedInputButton" type="text">
-		  <button class="btn" type="button">Send</button>
-		</div>
-	</div>
+	<div id="buyer_{{buyerID}}" style="display:none;">
+		{{#each this}}
+		
+			{{#if this.fields.isSeller }}
+				<p class="message-bubble left">{{this.fields.content}}</p>
+			{{else}}
+				<p class="message-bubble right">{{this.fields.content}}</p>
+			{{/if}}
+
+		{{/each}}
+	
+</div>
+</body>
 {% endverbatim %}

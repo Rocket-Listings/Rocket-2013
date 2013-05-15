@@ -8,6 +8,8 @@ $(function() {
 		selector: "a[data-toggle=tooltip]"
 	});
 
+
+
 	/***
 	okay. So trusted domains refers to the host domain(s) not the CDN (AKA aws s3)
 	see: https://github.com/jonrohan/ZeroClipboard/issues/116.

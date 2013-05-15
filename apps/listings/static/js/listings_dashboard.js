@@ -1,27 +1,40 @@
 $(function() {
 
+	$("document").ready(function() {
+        $('.table-listings tbody tr td').trigger('click'); 
+        
+});
+
 	$('.table-listings tbody tr td').click(function(event) {
 		var listingID = $(event.target).parent().data('listing-id');
-		if(!switch_listing(listingID)) {
-			//console.log('switch listing false');
-			var url = '/listings/' + listingID + '/api/buyers/'
-			console.log(url);
-			$.getJSON(url, load_listing_callback);
+		console.log(listingID);
+		var buyerID = $(event.target).parent().data('buyer-id');
+		console.log(buyerID);
+			if(!switch_listing(listingID)) {
+				var url = '/listings/' + listingID + '/api/buyers/'
+				$.getJSON(url, load_listing_callback);
 		}
 	});
 
+	$('.table-listings tbody tr').click(function(event) {
+    	$(this).addClass('highlight').siblings().removeClass('highlight');
+});
+
+
 	$('#listings').on('click', 'button', function(event){
 		var buyerID = $(event.target).parent().data('buyer-id');
-		console.log(event.target);
+		console.log('buyerclick');
 		if(!switch_buyer(curListingID, buyerID)) {
 			//console.log('switch buyer false');			
 			var url = '/listings/' + curListingID + '/api/messages/' + buyerID + '/'
+			
 			$.getJSON(url, load_buyer_callback);
 		}
 	});
 
 	function load_listing_callback(data, textStatus, jqXHR) {
 		var listingID = data[0].fields.listing;
+		console.log(listingID);
 		data.listingID = listingID;
 		var html = buyers_template(data);
 		$('#listings').append(html);
@@ -30,10 +43,11 @@ $(function() {
 
 	function load_buyer_callback(data, textStatus, jqXHR) {
 		var buyerID = data[0].fields.buyer;
+		console.log(buyerID);
 		data.buyerID = buyerID;
-
 		var html = messages_template(data);
-		$('#listing_' + curListingID + ' .buyers_' + buyerID).append(html);
+		$('#listing_' + curListingID + ' .buyers_').append(html);
+		console.log('#listing_' + curListingID + ' .buyers_');
 		switch_buyer(curListingID, buyerID);
 	}
 
@@ -81,4 +95,5 @@ $(function() {
 
 	var buyers_template = Handlebars.compile($("#listing_buyers_table_hb").html());
 	var messages_template = Handlebars.compile($("#buyer_messages_thread_hb").html());
+	var nobuyers_template = Handlebars.compile($("#buyer_messages_thread_hb").html());
 });

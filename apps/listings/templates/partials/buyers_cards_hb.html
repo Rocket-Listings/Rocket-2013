@@ -1,41 +1,40 @@
 {% verbatim %}
 <div class = "well l-well" id="listing_{{listingID}}" style="display:none;">
 
-		{{#each this}}
-		<div class= "well">
-		<div class="media" data-buyer-id = "{{this.pk}}">
-	  		<div class="pull-left" data-buyer-id = "{{this.pk}}">
-	    		<img class="media-object" data-src="holder.js/64x64" src = "/static/img/user-small.png">
-	    		<button class="btn btn-mini btn-messages" type="button">Messages</button>
-	  		</div>
-	  		<div class="media-body">
-	  			<div class = "row">
-	  				<div class = "span2">
-			    		<h4 class="media-heading">
-			    		{{this.fields.name}}
-			    		</h4>
-
-		    			{{this.fields.email}}
-						<br>
+	<div class = "messages-container">
+	<div class = "sidebar">	
+		<div class="btn-group-vertical" data-toggle="buttons-radio" name = "buyer-tiles">
+			
+			{{#each this}}
+			 <div class= "" data-buyer-id = "{{this.pk}}">	
+				<button type="button" class="btn buyer-tiles" data-buyer-id = "{{this.pk}}">
+			    		<h4>{{this.fields.name}}</h4>
+		    			<h5>{{this.fields.email}}</h5>
 						{{#if this.fields.curMaxOffer}}
-							Offering ${{this.fields.curMaxOffer}}
+							Offering: ${{this.fields.curMaxOffer}}
 						{{else}}
 							No offer...yet!
 						{{/if}}
-					</div>
-					<div class = "span7">
-						<div class="buyers_{{this.pk}}"></div>
-					</div>
-				</div>
+				</button>
 			</div>
-
+			{{/each}}
 		</div>
 	</div>
-		{{/each}}
-
-
-	
-
-
+	<div class = "content">
+			<div class="buyers_"></div>
+	</div>
 </div>
+<div class = "bottom" data-buyerid="{{ buyer.id }}">
+		<form action = "{% url "listings.views.messages" listing.id %}" method = "POST">
+			<div class = "message-box">
+				<textarea rows="2" style = "width: 475px;"></textarea>
+				<input type ="hidden" name = "buyer_id" value = "{{ buyer.id }}" >
+			</div>
+			<div class = "send">
+				<button type="submit" class="btn btn-primary btn-send">Send</button>
+			</div>
+		</form>	
+	</div>
+</div>
+
 {% endverbatim %}

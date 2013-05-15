@@ -10,7 +10,6 @@
 			{# <th class = "sortable">Location<i class="icon-chevron-down"></i></th> #}
 			<th class = "sortable">Category<i class="icon-chevron-down"></i></th>
 			<th class = "sortable">Date Listed<i class="icon-chevron-down"></i></th>
-			<th>Messages <i class="icon-envelope"></i></th>
 			<th>Max Offer</th>
 			<th>Manage</th>	
 		</tr>
@@ -27,11 +26,6 @@
 			{# <td>{{ listing.location }}</td> #}
 			<td>{{ listing.category.name }}</td>
 			<td>{{ listing.pub_date|date:"m-d-y P" }}</td>
-			<td>
-				<a href = "{% url 'listings.views.messages' listing.id %}"> 
-					View messages
-				</a>
-			</td>
 			<td>
 				{% if listing.max_offer %}
 				<a href = "{% url 'listings.views.offers' listing.id %}">${{listing.max_offer}}</a>				

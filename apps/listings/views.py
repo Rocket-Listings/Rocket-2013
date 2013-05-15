@@ -126,7 +126,7 @@ def messages(request, listing_id):
 		m = Message(listing = listing, isSeller = True, buyer = buyer, content = content)
 		m.save()
 
-		
+
 	listing = get_object_or_404(Listing, id=listing_id)
 	buyers = listing.buyer_set.all().order_by('name')
 	messages = listing.message_set.all().order_by('date')
