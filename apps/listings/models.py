@@ -18,15 +18,13 @@ class GenericNameManager(models.Manager):
 	def get_by_natural_key(self, name):
 		return self.get(name=name)
 
-
-
-
 # Listing Categories
 class ListingCategory(models.Model):
 	objects = GenericNameManager()
 
 	name = models.CharField(max_length = 60)
 	description = models.CharField(max_length = 200)
+	CL_id = models.IntegerField(null = True)
 
 	def __unicode__(self):
 		return self.name
