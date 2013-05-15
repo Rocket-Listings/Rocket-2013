@@ -25,6 +25,7 @@ class ListingCategory(models.Model):
 	name = models.CharField(max_length = 60)
 	description = models.CharField(max_length = 200)
 	CL_id = models.IntegerField(null = True)
+	is_owner = models.NullBooleanField()
 
 	def __unicode__(self):
 		return self.name
