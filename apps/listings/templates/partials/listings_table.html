@@ -11,6 +11,7 @@
 			<th class = "sortable">Category<i class="icon-chevron-down"></i></th>
 			<th class = "sortable">Date Listed<i class="icon-chevron-down"></i></th>
 			<th>Max Offer</th>
+			<th>Autopost</th>
 			<th>Manage</th>	
 		</tr>
 	</thead>
@@ -33,6 +34,10 @@
 				None
 				{% endif %}
 			</td>
+			<td>
+				<a href = "{% url 'listings.views.autopost' listing.id %}">autopost</a>	
+			</td>
+
 			<td>
 				<div class="btn-toolbar">
 					<div class="btn-group" data-listing-id="{{ listing.id }}">
@@ -57,13 +62,13 @@
 			</td>
 			{% comment %}
 			<td class = "centered-td">
-				{% if listing.CL_link %}
+				
 				<a href = "{{listing.CL_link}}" target="_blank">
 					<img src="{% static 'img/cl_icon.png' %}" width = "25" height = "25" class = "grey"></i>
 				</a>
 				{% else %}
 				<td class = "centered-td"> N/A </td>
-				{% endif %}
+				
 			</td> 
 			{% endcomment %}
 		</tr>
