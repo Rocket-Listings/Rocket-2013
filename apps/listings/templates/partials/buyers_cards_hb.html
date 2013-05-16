@@ -25,7 +25,7 @@
 	</div>
 </div>
 <div class = "bottom" data-buyerid="{{ buyer.id }}">
-		<form action = "{% url "listings.views.messages" listing.id %}" method = "POST">
+		<form method = "POST">
 			<div class = "message-box">
 				<textarea rows="2" style = "width: 475px;"></textarea>
 				<input type ="hidden" name = "buyer_id" value = "{{ buyer.id }}" >

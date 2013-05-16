@@ -109,6 +109,7 @@ def delete(request, listing_id):
 		listing.delete()
 		return redirect('users.views.listings', username = request.user.username)
 
+
 def delete_ajax(request, listing_id):
 	response = {}
 	try:

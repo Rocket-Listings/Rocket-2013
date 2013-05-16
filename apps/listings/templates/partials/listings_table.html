@@ -29,7 +29,7 @@
 			<td>{{ listing.pub_date|date:"m-d-y P" }}</td>
 			<td>
 				{% if listing.max_offer %}
-				<a href = "{% url 'listings.views.offers' listing.id %}">${{listing.max_offer}}</a>				
+				${{listing.max_offer}}</a>				
 				{% else %}
 				None
 				{% endif %}

@@ -116,7 +116,9 @@ class Offer(models.Model):
 	buyer = models.ForeignKey(Buyer)
 	value = models.IntegerField()
 	date = models.DateTimeField('date offered', auto_now_add=True, default=datetime.now)
-	
+	def __unicode__(self):
+		return "$ " + str(self.value)
+
 # Listing Message
 class Message(models.Model):
 	listing = models.ForeignKey(Listing, null = True, blank=True)
