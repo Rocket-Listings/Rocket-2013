@@ -109,32 +109,6 @@ def delete(request, listing_id):
 		listing.delete()
 		return redirect('users.views.listings', username = request.user.username)
 
-def offers(request, listing_id):
-	listing = get_object_or_404(Listing, id=listing_id)
-	offers = listing.offer_set.all()
-	return render(request, 'listing_offers.html',  {'listing': listing, 'offers': offers,})
-
-@csrf_exempt #this need to be changed but i cant be bothered to figure out the csrf stuff atm
-def messages(request, listing_id):
-	if request.method == "POST":
-
-		listing = get_object_or_404(Listing, id=listing_id)
-		buyerId = request.POST.get('buyer_id')
-		buyer = get_object_or_404(Buyer, id=buyerId)
-		content = request.POST.get('content')
-		subject = ('New Message from ' + listing.user.userprofile.name) 
-
-		send_mail( subject , content, 'postmaster@rocketlistings.mailgun.org', [buyer.email], fail_silently=False)
-
-		m = Message(listing = listing, isSeller = True, buyer = buyer, content = content)
-		m.save()
-
-
-	listing = get_object_or_404(Listing, id=listing_id)
-	buyers = listing.buyer_set.all().order_by('name')
-	messages = listing.message_set.all().order_by('date')
-	return render(request, 'listing_messages.html', {'listing': listing, 'messages':messages, 'buyers': buyers,})	
-
 def delete_ajax(request, listing_id):
 	response = {}
 	try:
