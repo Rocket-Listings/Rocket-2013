@@ -34,14 +34,15 @@ def on_incoming_message(request):
 		token = request.POST.get('token', '')
 		sig = request.POST.get('signature', '')
 
-	if sender == 'robot@craigslist.org':
+	if str(sender).partition('@')[2] == 'craigslist.org':
 		name = recipient.split('@')[0]
 		user = get_object_or_404(User, username=name)
 		email = user.email
-		send_mail( subject , body, 'postmaster@rocketlistings.mailgun.org', [email], fail_silently=False)
+		
+		print send_mail( subject , body, 'postmaster@rocketlistings.mailgun.org', [email], fail_silently=False)
 		return HttpResponse('OK')
 
-	elif verify(token, timestamp, sig):
+	if verify(token, timestamp, sig):
 		m = mailgun(recipient = recipient, sender = sender, frm = frm, subject = subject, body = body, text = text, 
 		signature = signature, timestamp = timestamp, token = token, sig = sig)
 		m.save()

@@ -199,8 +199,8 @@ def autopost(request, listing_id):
 
 	payload_tuples = [('id2', '1916x831X1916x635X1920x1200'), 
 		  		('browserinfo', '%7B%0A%09%22plugins%22%3A%20%22'),
-				('FromEMail', 'ofgeyizx@sharklasers.com'), #enter your email here
-				('ConfirmEMail', 'ofgeyizx@sharklasers.com'),
+				('FromEMail', 'chucknorris@rocketlistings.mailgun.org'), #enter your email here
+				('ConfirmEMail', 'chucknorris@rocketlistings.mailgun.org'),
 				('xstreet0', ''),
 				('xstreet1', ''),
 				('city', ''),
