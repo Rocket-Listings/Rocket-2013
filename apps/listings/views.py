@@ -3,9 +3,9 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from datetime import datetime, timedelta
 from listings.forms import ListingForm
-from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from ajaxuploader.views import AjaxFileUploader
+from django.shortcuts import render, redirect, get_object_or_404
 #from ListingsLocalUploadBackend import ListingsLocalUploadBackend
 from listings.upload_backend import ProductionUploadBackend, DevelopmentUploadBackend
 from django.utils import simplejson
@@ -169,6 +169,14 @@ def autopost(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
 	photos = ListingPhoto.objects.filter(listing=listing).order_by('order')
 
+	buyers = listing.buyer_set.all()
+	for buyer in buyers:
+		if buyer.name == "Craigslist":
+			break
+	else:
+		b = Buyer(listing = listing, name = "Craigslist")#create a "buyer" to recieve cl messages
+		b.save()
+	
 	
 	r = requests.get('https://post.craigslist.org/c/brl?lang=en') #GET the url to post to
 	post_url = r.url.split('?')[0] #split out the query string

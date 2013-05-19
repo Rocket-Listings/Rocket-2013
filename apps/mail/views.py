@@ -1,4 +1,5 @@
 from mail.models import mailgun
+from listings.models import Message
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 import hashlib, hmac
@@ -23,7 +24,9 @@ def verify(token, timestamp, signature):
 @csrf_exempt
 def on_incoming_message(request):
 	if request.method == 'POST':
+		print "post recieved"
 		sender    = request.POST.get('sender')
+		print str(sender).partition('@')[2]
 		recipient = request.POST.get('recipient')
 		subject   = request.POST.get('subject', '')
 		frm = request.POST.get('from', '')
@@ -35,14 +38,19 @@ def on_incoming_message(request):
 		sig = request.POST.get('signature', '')
 
 	if str(sender).partition('@')[2] == 'craigslist.org':
+		print "is @craigslist"
 		name = recipient.split('@')[0]
 		user = get_object_or_404(User, username=name)
+		listing = user.listing_set.filter(title__exact= subject.partition('"')[2].partition('"')[0])
 		email = user.email
-		
+		#print subject.partition('"')[2].partition('"')[0]
 		print send_mail( subject , body, 'postmaster@rocketlistings.mailgun.org', [email], fail_silently=False)
-		return HttpResponse('OK')
+		#return HttpResponse('OK')
 
 	if verify(token, timestamp, sig):
+		print "verified"
+		message = Message(listing = listing, content = body)
+		message.save()
 		m = mailgun(recipient = recipient, sender = sender, frm = frm, subject = subject, body = body, text = text, 
 		signature = signature, timestamp = timestamp, token = token, sig = sig)
 		m.save()
