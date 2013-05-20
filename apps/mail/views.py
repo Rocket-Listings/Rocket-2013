@@ -41,7 +41,9 @@ def on_incoming_message(request):
 		print "is @craigslist"
 		name = recipient.split('@')[0]
 		user = get_object_or_404(User, username=name)
-		listing = user.listing_set.filter(title__exact= subject.partition('"')[2].partition('"')[0])
+		print user.listing_set.get(title__exact= subject.partition('"')[2].partition('"')[0])
+		#listing = user.listing_set.filter(title__exact= subject.partition('"')[2].partition('"')[0])
+		#listing = get_object_or_404(Listing, user = user, )
 		email = user.email
 		#print subject.partition('"')[2].partition('"')[0]
 		print send_mail( subject , body, 'postmaster@rocketlistings.mailgun.org', [email], fail_silently=False)
