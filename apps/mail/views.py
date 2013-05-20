@@ -41,8 +41,8 @@ def on_incoming_message(request):
 		print "is @craigslist"
 		name = recipient.split('@')[0]
 		user = get_object_or_404(User, username=name)
-		print user.listing_set.get(title__exact= subject.partition('"')[2].partition('"')[0])
-		#listing = user.listing_set.filter(title__exact= subject.partition('"')[2].partition('"')[0])
+		#print user.listing_set.get(title__exact= subject.partition('"')[2].partition('"')[0])
+		listing = user.listing_set.get(title__exact= subject.partition('"')[2].partition('"')[0])
 		#listing = get_object_or_404(Listing, user = user, )
 		email = user.email
 		#print subject.partition('"')[2].partition('"')[0]
@@ -51,7 +51,7 @@ def on_incoming_message(request):
 
 	if verify(token, timestamp, sig):
 		print "verified"
-		message = Message(listing = listing, content = body)
+		message = Message(listing = listing, content = body, buyer = listing.buyer_set.get(name__exact = "Craigslist"))
 		message.save()
 		m = mailgun(recipient = recipient, sender = sender, frm = frm, subject = subject, body = body, text = text, 
 		signature = signature, timestamp = timestamp, token = token, sig = sig)

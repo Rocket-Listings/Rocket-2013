@@ -46,17 +46,17 @@
 							<i class="icon-download"></i>
 						</a>
 						{% endcomment %}
-						<button class="btn" href="{% url 'listings.views.update' listing.id %}" data-container="body" data-toggle="tooltip" data-original-title="Edit Listing">
+						<a class="btn" href="{% url 'listings.views.update' listing.id %}" data-container="body" data-toggle="tooltip" data-original-title="Edit Listing">
 							<i class="icon-edit"></i>
-						</button>
+						</a>
 
-						<button class="btn" id = "buyer-button" href="" data-container="body" data-toggle="tooltip" data-original-title="See Buyers" data-listing-id="{{ listing.id }}">
+						<a class="btn" id = "buyer-button" href="" data-container="body" data-toggle="tooltip" data-original-title="See Buyers" data-listing-id="{{ listing.id }}">
 							<i class="icon-user"></i>
-						</button>
+						</a>
 
-						<button class="btn" href="{% url 'listings.views.delete' listing.id %}" data-container="body" data-toggle="tooltip" data-original-title="Delete Listing">
+						<a class="btn" href="{% url 'listings.views.delete' listing.id %}" data-container="body" data-toggle="tooltip" data-original-title="Delete Listing">
 							<i class="icon-trash"></i>
-						</button>
+						</a>
 					</div>
 				</div>
 			</td>
