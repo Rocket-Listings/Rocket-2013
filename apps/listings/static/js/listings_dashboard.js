@@ -1,19 +1,19 @@
 $(function() {
 
 	$("document").ready(function() {
-        $('.table-listings tbody tr td').trigger('click'); 
+        $('.table-listings tbody tr td.clickable:first').trigger('click'); 
         
-});
+        
+}); 
 
-	$('.table-listings tbody tr td').click(function(event) {
+	$('.table-listings tbody tr td.clickable').click(function(event) {
 		var listingID = $(event.target).parent().data('listing-id');
 		console.log(listingID);
-		var buyerID = $(event.target).parent().data('buyer-id');
-		console.log(buyerID);
 			if(!switch_listing(listingID)) {
 				var url = '/listings/' + listingID + '/api/buyers/'
 				$.getJSON(url, load_listing_callback);
 		}
+
 	});
 
 	$('.table-listings tbody tr').click(function(event) {
@@ -34,11 +34,11 @@ $(function() {
 
 	function load_listing_callback(data, textStatus, jqXHR) {
 		var listingID = data[0].fields.listing;
-		console.log(listingID);
 		data.listingID = listingID;
 		var html = buyers_template(data);
 		$('#listings').append(html);
 		switch_listing(listingID);
+
 	}
 
 	function load_buyer_callback(data, textStatus, jqXHR) {
@@ -90,10 +90,20 @@ $(function() {
 		}
 	}
 
+	$(document).on("click", ".deleteModal", function () {
+     var listingID = $(this).data('listing.id');
+     $(".modal").val( 'listing.id' );
+});
+
+    
+
+
 	var curListingID = -1;
 	var curBuyerID = -1;
 
 	var buyers_template = Handlebars.compile($("#listing_buyers_table_hb").html());
 	var messages_template = Handlebars.compile($("#buyer_messages_thread_hb").html());
 	var nobuyers_template = Handlebars.compile($("#buyer_messages_thread_hb").html());
+
+
 });
