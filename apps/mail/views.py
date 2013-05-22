@@ -31,6 +31,7 @@ def on_incoming_message(request):
 		subject   = request.POST.get('subject', '')
 		frm = request.POST.get('from', '')
 		body = request.POST.get('body-plain', '')
+		body_html = request.POST.get('body-html', '')
 		text = request.POST.get('stripped-text', '')
 		signature = request.POST.get('stripped-signature', '')
 		timestamp = request.POST.get('timestamp', '')
