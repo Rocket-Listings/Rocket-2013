@@ -41,18 +41,29 @@ class ListingType(models.Model):
 	def __unicode__(self):
 		return self.name
 
+#Listing Status
+class ListingStatus(models.Model):
+	objects = GenericNameManager()
+
+	name = models.CharField(max_length = 60)
+	description = models.CharField(max_length = 200)
+
+	def __unicode__(self):
+		return self.name
+
 # Listing Objects
 class Listing(models.Model):
 	# also for natural key handling
 	objects = ListingManager()
 
-	title = models.CharField(max_length=200)
-	description = models.TextField()
+	title = models.CharField(max_length=200, help_text="Be specific, direct, and include all the important details in your title.")
+	description = models.TextField(help_text="Make sure you include all the important facts (color, dimensions, build year, etc.), as well as when you bought it, why you're selling it and details on any defects or problems.")
 	pub_date = models.DateTimeField('date published', auto_now_add=True, default=datetime.now)
 	price = models.IntegerField()
 	location = models.CharField(max_length=200)
 	category = models.ForeignKey(ListingCategory)
 	listing_type = models.ForeignKey(ListingType)
+	status = models.ForeignKey(ListingStatus, null = True) # TODO want to be able to listings by this
 	user = models.ForeignKey(User)
 	CL_link = models.URLField(null = True, blank = True)
 	

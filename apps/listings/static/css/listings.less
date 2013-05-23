@@ -144,6 +144,10 @@
 }
 
 .form {
+
+	span.helptext{
+		position: block !important;
+	}
 	margin:0;
 	li {
 		list-style-type: none;
@@ -151,9 +155,25 @@
 	.errorlist {
 		color: red;
 	}
-
-	input, textarea, select {
+	
+	input#id_title{
 		width: 540px;
+	}
+
+	input#id_price{
+		width: 100px;
+	}
+
+	input#id_location{
+		width: 205px;
+	}
+
+	textarea {
+		width: 540px;
+	}
+
+	select{
+		width: 220px;
 	}
 }
 

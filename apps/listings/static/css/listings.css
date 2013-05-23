@@ -118,16 +118,29 @@
 .form {
   margin: 0;
 }
+.form span.helptext {
+  position: block !important;
+}
 .form li {
   list-style-type: none;
 }
 .form .errorlist {
   color: red;
 }
-.form input,
-.form textarea,
-.form select {
+.form input#id_title {
   width: 540px;
+}
+.form input#id_price {
+  width: 100px;
+}
+.form input#id_location {
+  width: 205px;
+}
+.form textarea {
+  width: 540px;
+}
+.form select {
+  width: 220px;
 }
 .listing-edit {
   float: left;
