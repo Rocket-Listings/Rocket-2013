@@ -471,3 +471,28 @@
   fields:
     name: Public
     description: Are you an organization?
+
+- model: listings.ListingStatus
+  pk: null
+  fields:
+    name: Active
+    description: Are you an organization?
+
+- model: listings.ListingStatus
+  pk: null
+  fields:
+    name: Draft
+    description: Are you an organization?
+
+- model: listings.ListingStatus
+  pk: null
+  fields:
+    name: Sold
+    description: Are you an organization?
+
+- model: listings.ListingStatus
+  pk: null
+  fields:
+    name: Deleted
+    description: Are you an organization?
+

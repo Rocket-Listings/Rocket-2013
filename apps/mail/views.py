@@ -31,7 +31,7 @@ def verify(token, timestamp, signature):
 def on_incoming_message(request):
 	if request.method == 'POST':
 		print "post recieved"
-		sender = request.POST.get('sender')
+		sender    = request.POST.get('sender')
 		print str(sender).partition('@')[2]
 		recipient = request.POST.get('recipient')
 		subject   = request.POST.get('subject', '')
@@ -96,9 +96,9 @@ def on_incoming_message(request):
 
 			message = Message(listing = listing, content = body, buyer = listing.buyer_set.get(name__exact = buyer))
 			message.save()
-			#m = mailgun(recipient = recipient, sender = sender, frm = frm, subject = subject, body = body, text = text, 
-			#signature = signature, timestamp = timestamp, token = token, sig = sig)
-			#m.save() -- This isnt working for some reason on of the params is of 255 chars in length. Need to investigate further. 
+			m = mailgun(recipient = recipient, sender = sender, frm = frm, subject = subject, body = body, text = text, 
+			signature = signature, timestamp = timestamp, token = token, sig = sig)
+			m.save()
 
 			return HttpResponse('OK')
 

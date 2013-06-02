@@ -4,9 +4,9 @@
 		<div class="upper">
 			{% if user.is_authenticated %}
 			<div class = "logo">
-			<a href="{% url "listings.views.user_listings" user.username %}"><img class="logo" src="{% static 'img/text-logo.png' %}" width="350" height="80" alt="Rocket Listing"></a>
+			<a href="{% url "listings.views.user_listings" user.username %}"><img class="logo" src="{% static 'img/text-logo.png' %}" width="250" height="60" alt="Rocket Listing"></a>
 			</div>
-				<div class = "login"><a href="#modal-photo-upload" data-toggle="modal">Post Something</a></div>
+				<div class = "login"><a href="#modal-photo-upload" data-toggle="modal">Post</a></div>
 				<div class = "navbar">
 					<ul class="nav nav-pills">
 							<li>

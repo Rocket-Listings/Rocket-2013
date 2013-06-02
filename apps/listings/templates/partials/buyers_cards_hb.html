@@ -8,8 +8,8 @@
 			{{#each this}}
 			 <div class= "" data-buyer-id = "{{this.pk}}">	
 				<button type="button" class="btn buyer-tiles" data-buyer-id = "{{this.pk}}">
-			    		<h4>{{this.fields.name}}</h4>
-		    			<h5>{{this.fields.email}}</h5>
+			    		<div class = "buyer-cards-name">{{this.fields.name}}</div>
+		    			<div class = "buyer-cards-email">{{this.fields.email}}</div>
 						{{#if this.fields.curMaxOffer}}
 							Offering: ${{this.fields.curMaxOffer}}
 						{{else}}

@@ -106,7 +106,7 @@ def delete(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
 	if request.user == listing.user:
 		listing.delete()
-		return redirect('users.views.listings', username = request.user.username)
+		return redirect('listings.views.user_listings', username = request.user.username)
 
 
 def delete_ajax(request, listing_id):
@@ -187,7 +187,7 @@ def autopost(request, listing_id):
 	tag = to_parse.find('input', type= "hidden") #select the input tag w/ hashed key/value
 	hashed_key = tag.attrs['name']
 	hashed_value = tag.attrs['value']
-	payload = {'id': 'fs', hashed_key: hashed_value}#assemble payload. fs = for sale
+	payload = {'id': 'fso', hashed_key: hashed_value}#assemble payload. fs = for sale
 	r = requests.post(post_url, data=payload)
 
 
@@ -197,14 +197,13 @@ def autopost(request, listing_id):
 	tag = to_parse.find('input', type= "hidden") #select the input tag w/ hashed key/value
 	hashed_key = tag.attrs['name']
 	hashed_value = tag.attrs['value']
-	payload = {'id': '169', hashed_key: hashed_value}#assemble payload. 169 = antiques
+	payload = {'id': '150', hashed_key: hashed_value}#assemble payload. 169 = antiques
 	r = requests.post(post_url, data=payload)#POST and Redirect
 
 
 #3rd Post request at ?=edit
 #############################
 	to_parse = BeautifulSoup(r.text) #parse
-
 	payload_tuples = [('id2', '1916x831X1916x635X1920x1200'), 
 		  		('browserinfo', '%7B%0A%09%22plugins%22%3A%20%22'),
 				('FromEMail',  request.user.username +'@rocketlistings.mailgun.org'), #enter your email here
@@ -217,14 +216,14 @@ def autopost(request, listing_id):
 				('go', 'Continue')] #intial (staticish) payload data. Using a list of tuples b/c it is mutable but easily converted into a dict
 
 
-	 #Still parsing
-	title_id = to_parse.find("span", text= "Posting Title:").next_sibling.contents[1].attrs['name']
+	#Still parsing
+	title_id = to_parse.find("span", text= "posting title:").next_sibling.contents[1].attrs['name']
 	payload_tuples += [(title_id, listing.title)] 
 
-	price_id = to_parse.find("span", text= "Price:").next_sibling.contents[1].attrs['name']
+	price_id = to_parse.find("span", text= "price:").next_sibling.contents[1].attrs['name']
 	payload_tuples += [(price_id, listing.price)]
 
-	location_id = to_parse.find("span", text= "Specific Location:").next_sibling.contents[0].attrs['name']
+	location_id = to_parse.find("span", text= "specific location:").next_sibling.contents[0].attrs['name']
 	payload_tuples += [(location_id, listing.location)]
 
 	anon_id = to_parse.find("label", title= "craigslist will anonymize your email address").contents[1].attrs['name']
@@ -276,12 +275,18 @@ def autopost(request, listing_id):
 #5th Post request at ?=preview
 #############################
 	to_parse = BeautifulSoup(r.text)
-	to_parse.prettify()
+
+
+	#print to_parse.find('section', id="previewButtons").contents[1].contents[1].attrs['name']
+	#print to_parse.find('section', id="previewButtons").contents[1].contents[1].attrs['value']
+	#print to_parse.find('section', id="previewButtons").contents[1].contents[1].contents[1].attrs['name']
+
 
 	payload_tuples = [('go', 'Continue')]
-	payload_tuples += [(to_parse.find('form', style="float: right;").contents[1].attrs['name'], to_parse.find('form', style="float: right;").contents[1].attrs['value'])]
-	payload_tuples += [(to_parse.find('form', style="float: right;").contents[1].contents[1].attrs['name'], to_parse.find('form', style="float: right;").contents[1].contents[1].attrs['value'])]
+	payload_tuples += [(to_parse.find('section', id="previewButtons").contents[1].contents[1].attrs['name'], to_parse.find('section', id="previewButtons").contents[1].contents[1].attrs['value'])]
+	payload_tuples += [(to_parse.find('section', id="previewButtons").contents[1].contents[1].contents[1].attrs['name'], 'y')]
 
+	print request.user.email
 	payload = dict(payload_tuples)
 	r = requests.post(post_url, data=payload)
 
