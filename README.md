@@ -1,61 +1,95 @@
 # Rocket Listings - Django
 
-_Last updated: 2/20/12_
+_Last updated: 6/4/13_
 
-## Setup
+## Developer Setup
 
-### Python installation
+Getting your machine ready to develop is a process. Make sure you to gain some familiarity with all of the components that we're using along the way.
 
-I think Python `2.7.3` is installed on OSX Mountain Lion by default, you can check this by running `python -V` in your terminal. If you don't have `2.7.3` installed for any reason, just install the homebrew version of python by running:
+The high-level setup steps:
 
-	brew install python 
+0. Install OSX Command Line Tools, Homebrew, configure PATH variable
+0. Install Python
+0. Install the Postgres database
+0. Clone and configure the Rocket Listings source
 
-If you don't have homebrew installed, get it installed [here](http://mxcl.github.com/homebrew/). 
+### OS X command line tools
 
-Try running `python -V` again. If you don't get `2.7.3` this time, the problem likely has to do with your terminal paths. Go:
+To compile homebrew/pip packages, we need to install Apple's command line tools.
+
+If you already happen to have Xcode installed, then you can ask it to install the tools. 
+
+- Open Xcode
+- Open up preferences (`cmd + ,`)
+- go to the `Downloads` tab, then the `Components` section and click to install the `command line tools`. 
+
+Otherwise, you can install the command line tools directly by downloading and installing one of the packages below.
+
+- [OS X Lion](https://mega.co.nz/#!HIA0mYJQ!fjzWBmVxAUReWZREp0QYlDztR9MkUbW0R4HED-F3sAk)
+- [OS X Mountain Lion](https://mega.co.nz/#!6YZxXQwS!WPec7z7ZmyTXLYgyZpV7CxPW3TNtppDnkReSqlwCLYE)
+
+### Homebrew
+
+Homebrew is a package manager for OS X. Read about it [here](http://mxcl.github.io/homebrew/).
+
+Install by doing `ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"`
+
+Now we're going to edit your [PATH environment variable](https://en.wikipedia.org/wiki/PATH_(variable)) so that packages installed by homebrew take precedence over those installed by default by OS X.
+
+The `/etc/paths` file contains your basic system path order. Open it up:
+
+	sudo nano /etc/paths
+	
+and make it look like this:
+
+	/usr/local/bin
+	/usr/local/sbin
+	/usr/bin
+	/bin
+	/usr/sbin
+	/sbin
+	
+To save and quit, go `ctrl+o`, `enter`, `ctrl+x`.
+
+### Python Install
+
+Python comes installed on OS X by default, but using homebrew's python has a few advantages. It updates you to the latest python 2.7.* version, installs Distribute and Pip, and keeps it all organized in homebrews install location.
+
+We're also installing git.
+
+	brew install python git
+
+### Postgres installation
+
+Download and install the (Postgres app)[http://postgresapp.com/]. Then start it.
+
+By default both your database name and postgres username is your computer's username, and the password is blank. 
+
+### Update path variable
+
+Open up your terminal configuration file
 
 	nano ~/.bash_profile
+	
+and add the line:
 
-and add the following line to the top:
+	export PATH=$PATH:/usr/local/share/python:/Applications/Postgres.app/Contents/MacOS/bin
 
-	export PATH=/usr/local/bin:$PATH
+Save and quit like before, and restart your terminal to apply the changes.
 
-After restarting your terminal tab, the output of `python -V` should be `2.7.3`.
+### Project setup
 
-### Django installation
-
-
-Let's see if `pip`, a python package manager is installed on the system by running:
-
-	which pip
-
-If that spits out a file path, you're good to go, otherwise, run `sudo easy_install pip` and you'll be good.
-
-This next line installs all of our project's dependencies.
-
-	pip install -r requirements.txt
-
-### Postgres/MySQL installation
-
-First remove any broken postgres installations you may have. 
-
-    brew remove postgres
-
-    brew cleanup
-
-Download and install the (postgres app)[http://postgresapp.com/].
-
-### Rocket Listings installation
-
-Run this in the folder that you want to contain the project (requires `git`):
+Clone the project
 
 	git clone git@github.com:Rocket-Listings/Rocket-Listings-Django.git
 
-Open up Sublime text and in the top menu go `Project -> Add Folder to Project`, and select `Rocket-Listings-Django`. After this we save the project by going `Project -> Save project as..` and saving the project file inside `Rocket-Listings-Django`, naming it whatever you want. From now on, to open the project, you can open Sublime Text, and hit Command+Control+P to open a dialog to select a project. Clicking on the project you want to open will open it. Having Sublime Text Projects allow you to have all kinds of cool stuff the file browser sidebar among other things.
+We recommend using [Sublime Text 2](http://www.sublimetext.com/) as your editor.
 
-In sublime text, open `Rocket-Listings-Django/rocketlistings/settings_dev_template.py`, and enter your Postgres username where indicated. Save the file not as `settings_dev_template.py`, but as `settings_dev.py`. You can do a `save_as` by going Command+Shift+S.
+Open up Sublime text and in the top menu go `Project -> Add Folder to Project`, and select `Rocket-Listings-Django`. After this we save the project by going `Project -> Save project as..` and saving the project file inside `Rocket-Listings-Django`, naming it whatever you want. From now on, to open the project, you can open Sublime Text, and hit `cmd+ctrl+P` to open a dialog to select a project. Clicking on the project you want to open will open it. Having Sublime Text Projects allow you to have all kinds of cool stuff the file browser sidebar among other things.
 
-Going back to the terminal, inside the project root directory (`Rocket-Listings-Django`) run the following commands in order, __making sure to say no when it asks you whether you want to create a superuser__:
+In in the project folder, open `settings/development_template.py`. Enter the postgres database name and username where indicated. Save the file as `settings_dev.py`. You can do a `save_as` by going `cmd+shift+S`.
+
+Going back to the terminal, inside the project's root directory (`Rocket-Listings-Django`) run the following commands in order, __making sure to say no when it asks you whether you want to create a superuser__:
 
 	python manage.py syncdb
 
@@ -87,8 +121,6 @@ If you direct your browser to:
 
 You'll hopefully find the new version of the Rocket Listings site.
 
-Let's stop for a second and realize how much easier that was than setting up the PHP site with all its Rails migrations, git submodule syncing, and apache virtual hosts.
-
 If you want to show others the site you can run:
 
 	python manage.py runserver 0.0.0.0:8000
@@ -102,13 +134,13 @@ If you're tired of typing `python manange.py runserver`,
 
 you can make `manage.py` executable by running:
 	
-	chmod 755 manage.py
+	chmod +x manage.py
 
 And now you can instead type:
 	
 	./manage.py runserver
 
-Sort of faster...
+Sort of faster
 
 
 #### Reduce clutter in sublime project sidebar files
