@@ -197,7 +197,7 @@ def autopost(request, listing_id):
 	tag = to_parse.find('input', type= "hidden") #select the input tag w/ hashed key/value
 	hashed_key = tag.attrs['name']
 	hashed_value = tag.attrs['value']
-	payload = {'id': '150', hashed_key: hashed_value}#assemble payload. 169 = antiques
+	payload = {'id': '150', hashed_key: hashed_value}#assemble payload. 150 = antiques
 	r = requests.post(post_url, data=payload)#POST and Redirect
 
 
@@ -286,7 +286,6 @@ def autopost(request, listing_id):
 	payload_tuples += [(to_parse.find('section', id="previewButtons").contents[1].contents[1].attrs['name'], to_parse.find('section', id="previewButtons").contents[1].contents[1].attrs['value'])]
 	payload_tuples += [(to_parse.find('section', id="previewButtons").contents[1].contents[1].contents[1].attrs['name'], 'y')]
 
-	print request.user.email
 	payload = dict(payload_tuples)
 	r = requests.post(post_url, data=payload)
 

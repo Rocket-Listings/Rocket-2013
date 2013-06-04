@@ -9,12 +9,6 @@ from users.models import UserProfile
 from django.shortcuts import render, redirect, get_object_or_404
 import re
 
-
-
-# this function secures the webhook by:
-# Concatenating timestamp and token values.
-# Encoding the resulting string with the HMAC algorithm (using your API Key as a key and SHA256 digest mode).
-# Comparing the resulting hexdigest to the signature.
 def verify(token, timestamp, signature):
 	"""this function secures the webhook by:
 	Concatenating timestamp and token values.
@@ -31,18 +25,29 @@ def verify(token, timestamp, signature):
 def on_incoming_message(request):
 	if request.method == 'POST':
 		print "post recieved"
+
 		sender    = request.POST.get('sender')
-		print str(sender).partition('@')[2]
+		print sender, len(sender)
+
 		recipient = request.POST.get('recipient')
+		print recipient, len(recipient)
+
 		subject   = request.POST.get('subject', '')
+		print subject, len(subject)
+
 		frm = request.POST.get('from', '')
+		print frm, len(frm)
+
 		body = request.POST.get('body-plain', '')
 		body_html = request.POST.get('body-html', '')
 		text = request.POST.get('stripped-text', '')
+
+
 		signature = request.POST.get('stripped-signature', '')
 		timestamp = request.POST.get('timestamp', '')
 		token = request.POST.get('token', '')
 		sig = request.POST.get('signature', '')
+		print signature, len(signature)
 
 	
 	if verify(token, timestamp, sig):
@@ -54,7 +59,6 @@ def on_incoming_message(request):
 			print "is @craigslist"
 			print sender
 			print frm
-			return HttpResponse('OK')
 			user = get_object_or_404(User, username= recipient.split('@')[0])
 			listing = user.listing_set.get(title__exact= subject.partition('"')[2].partition('"')[0])
 			email = user.email
@@ -80,15 +84,19 @@ def on_incoming_message(request):
 			print "is @sale.craigslist.org"
 			user = get_object_or_404(User, username= recipient.split('@')[0])
 			listing = user.listing_set.get(title__exact= subject.partition(' - ')[0])
-			buyer = str(re.findall(r'"(.*?)"', frm))
-			buyer_email = str(re.findall(r'<(.*?)>', frm))
+			buyer = re.findall(r'"(.*?)"', frm)
+			buyer_email = re.findall(r'<(.*?)>', frm)
+			print type(buyer)
 
 			buyers = listing.buyer_set.all()
+
 			for buy in buyers:
-				if buy.name == buyer:
+				print buy.name == str(buyer)
+				
+				if buy.name == str(buyer):
 					break
 			else:
-				b = Buyer(listing = listing, name = buyer, email = buyer_email)#create a "buyer" to recieve cl messages
+				b = Buyer(listing = listing, name = buyer)#create a "buyer" to recieve cl messages
 				b.save()
 
 			print body, buyer
