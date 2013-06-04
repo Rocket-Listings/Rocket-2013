@@ -87,7 +87,7 @@ We recommend using [Sublime Text 2](http://www.sublimetext.com/) as your editor.
 
 Open up Sublime text and in the top menu go `Project -> Add Folder to Project`, and select `Rocket-Listings-Django`. After this we save the project by going `Project -> Save project as..` and saving the project file inside `Rocket-Listings-Django`, naming it whatever you want. From now on, to open the project, you can open Sublime Text, and hit `cmd+ctrl+P` to open a dialog to select a project. Clicking on the project you want to open will open it. Having Sublime Text Projects allow you to have all kinds of cool stuff the file browser sidebar among other things.
 
-In in the project folder, open `settings/development_template.py`. Enter the postgres database name and username where indicated. Save the file as `settings_dev.py`. You can do a `save_as` by going `cmd+shift+S`.
+In in the project folder, open `settings/development_template.py`. Enter the postgres database name and username where indicated. Save the file as `development.py`. You can do a `save_as` by going `cmd+shift+S`.
 
 Going back to the terminal, inside the project's root directory (`Rocket-Listings-Django`) run the following commands in order, __making sure to say no when it asks you whether you want to create a superuser__:
 
