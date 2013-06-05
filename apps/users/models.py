@@ -14,10 +14,6 @@ class UserProfile(models.Model):
 	email = models.EmailField(max_length=255, blank=True)
 	bio = models.TextField(blank=True)
 
-
-
-
-
 	def get_absolute_url(self):
 		return reverse('users.views.info', args=[self.user.username])
 	
@@ -27,7 +23,7 @@ class UserProfile(models.Model):
 # Handles user profile creation if not already created
 def create_user_profile(sender, instance, created, **kwargs):  
     if created:  
-       profile, created = UserProfile.objects.get_or_create(user=instance)
+    	UserProfile.objects.create(user=instance)
 
 post_save.connect(create_user_profile, sender=User)
 
