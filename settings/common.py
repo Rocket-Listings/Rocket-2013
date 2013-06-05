@@ -1,7 +1,7 @@
 import sys
-from os.path import join
+from os.path import join, abspath, dirname
 
-SITE_ROOT = path(__file__).abspath().dirname().dirname()
+SITE_ROOT = dirname(dirname(abspath(__file__)))
 
 sys.path.append(SITE_ROOT)
 sys.path.append(join(SITE_ROOT, 'apps'))
@@ -146,7 +146,7 @@ INSTALLED_APPS = (
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-        'PATH': join(path(__file__).abspath(), 'whoosh_index'),
+        'PATH': join(abspath(__file__), 'whoosh_index'),
     }
 }
 
