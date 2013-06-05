@@ -12,6 +12,7 @@ eggs
 log
 parts
 cache
+src
 uploads
 media/*
 whoosh_index

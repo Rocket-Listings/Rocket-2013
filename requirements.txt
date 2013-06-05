@@ -24,6 +24,6 @@ django-mailgun
 boto
 path.py
 
-pylibmc==1.2.2 # Not working
-django-pylibmc-sasl==0.2.4
+# pylibmc==1.2.2 # Not working
+# django-pylibmc-sasl==0.2.4
 
