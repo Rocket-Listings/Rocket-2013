@@ -143,6 +143,13 @@ INSTALLED_APPS = (
     "gunicorn"
 )
 
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': path(__file__).abspath() / 'whoosh_index',
+    }
+}
+
 HAYSTACK_SITECONF = 'settings.search_sites'
 HAYSTACK_SEARCH_ENGINE = 'whoosh'
 HAYSTACK_WHOOSH_PATH = path(__file__).abspath() / 'whoosh_index'
