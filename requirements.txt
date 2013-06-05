@@ -3,8 +3,6 @@ PIL==1.1.7
 PyYAML==3.10
 South==0.7.6
 Whoosh==2.4.1
-# ajaxuploader==0.2.4 
-# workaround until django 1.5 is supported
 django-extensions==1.0.3
 django-haystack
 psycopg2==2.4.6
@@ -21,7 +19,3 @@ dj-database-url==0.2.1
 gevent==0.13.8
 django-mailgun
 boto
-
-# pylibmc==1.2.2 # Not working
-# django-pylibmc-sasl==0.2.4
-

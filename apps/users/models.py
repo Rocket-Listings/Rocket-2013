@@ -6,7 +6,6 @@ from django.db.models.signals import post_save
 
 class UserProfile(models.Model):
 	user = models.OneToOneField(User)
-
 	name = models.CharField(max_length=100, blank=True)
 	location = models.CharField(max_length=255, blank=True)
 	default_category = models.ForeignKey(ListingCategory, null=True, blank=True)

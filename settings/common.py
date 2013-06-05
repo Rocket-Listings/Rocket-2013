@@ -1,10 +1,10 @@
 import sys
-from path import path
+from os.path import join
 
 SITE_ROOT = path(__file__).abspath().dirname().dirname()
 
 sys.path.append(SITE_ROOT)
-sys.path.append(SITE_ROOT / 'apps')
+sys.path.append(join(SITE_ROOT, 'apps'))
 
 SOUTH_DATABASE_ADAPTERS = {'default':'south.db.postgresql_psycopg2'}
 AUTH_PROFILE_MODULE = 'users.UserProfile'
@@ -146,7 +146,7 @@ INSTALLED_APPS = (
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-        'PATH': path(__file__).abspath() / 'whoosh_index',
+        'PATH': join(path(__file__).abspath(), 'whoosh_index'),
     }
 }
 
