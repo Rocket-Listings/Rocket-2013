@@ -16,6 +16,6 @@ Pygments==1.6
 gunicorn==0.17.2
 django-storages==1.1.6
 dj-database-url==0.2.1
-gevent==0.13.8
+# gevent==0.13.8
 django-mailgun
 boto
