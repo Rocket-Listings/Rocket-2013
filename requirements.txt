@@ -19,3 +19,4 @@ dj-database-url==0.2.1
 # gevent==0.13.8
 django-mailgun
 boto
+BeautifulSoup4
