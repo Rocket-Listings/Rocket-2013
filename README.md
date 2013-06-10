@@ -83,6 +83,10 @@ Clone the project
 
 	git clone git@github.com:Rocket-Listings/Rocket-Listings-Django.git
 
+Now install all of the python package dependencies by going:
+	
+	pip install -r requirements.txt
+
 We recommend using [Sublime Text 2](http://www.sublimetext.com/) as your editor.
 
 Open up Sublime text and in the top menu go `Project -> Add Folder to Project`, and select `Rocket-Listings-Django`. After this we save the project by going `Project -> Save project as..` and saving the project file inside `Rocket-Listings-Django`, naming it whatever you want. From now on, to open the project, you can open Sublime Text, and hit `cmd+ctrl+P` to open a dialog to select a project. Clicking on the project you want to open will open it. Having Sublime Text Projects allow you to have all kinds of cool stuff the file browser sidebar among other things.
