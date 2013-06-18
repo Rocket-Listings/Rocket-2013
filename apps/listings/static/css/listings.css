@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* 	Doing this weird convention '.l-<CLASS>' because we don't want other outside class definitions to affect these.
 	For instance, if our title was simply '.title', then maybe a '.title' rule from global.less might take into effect. */
 .l-well {
@@ -303,3 +304,4 @@ h6 {
 .btn-send {
   margin-top: 10px;
 }
+

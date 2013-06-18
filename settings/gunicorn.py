@@ -2,7 +2,6 @@ import multiprocessing
 #import os
 # compensating for weird directory structure
 # import sys
-# from path import path
 # SITE_ROOT = path(__file__).abspath().dirname()
 # sys.path.append(SITE_ROOT)
 # sys.path.append(SITE_ROOT / 'apps')

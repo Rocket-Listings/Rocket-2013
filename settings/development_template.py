@@ -1,5 +1,5 @@
 from common import *
-from path import path
+from os.path import join
 
 # General settings
 DEBUG = True
@@ -14,19 +14,19 @@ ALLOWED_HOSTS = ['*']
 SOUTH_DATABASE_ADAPTERS = {'default':'south.db.postgresql_psycopg2'}
 DATABASES = { 
 	'default': {
-		'ENGINE': 'django.db.backends.postgresql_psycopg2' , # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-		'NAME': '',                      # Or path to database file if using sqlite3.
-		'USER': '',                      # Not used with sqlite3.
-		'PASSWORD': '',                  # Not used with sqlite3.
-		'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-		'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+		'ENGINE': 'django.db.backends.postgresql_psycopg2' ,
+		'NAME': '', # Defaults to your computer username
+		'USER': '', # Defaults to your computer username
+		'PASSWORD': '', # Leave this blank by default
+		'HOST': 'localhost',
+		'PORT': '',
 	}
 }
 
 
 # file storage settings
-STATIC_ROOT = SITE_ROOT / 'static_collected/'
-MEDIA_ROOT =  SITE_ROOT / 'media/'
+STATIC_ROOT = join(SITE_ROOT, 'static_collected/')
+MEDIA_ROOT =  join(SITE_ROOT, 'media/')
 UPLOAD_DIR = 'uploads'
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
