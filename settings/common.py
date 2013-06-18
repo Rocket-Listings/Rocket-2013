@@ -1,10 +1,10 @@
 import sys
-from path import path
+from os.path import join, abspath, dirname
 
-SITE_ROOT = path(__file__).abspath().dirname().dirname()
+SITE_ROOT = dirname(dirname(abspath(__file__)))
 
 sys.path.append(SITE_ROOT)
-sys.path.append(SITE_ROOT / 'apps')
+sys.path.append(join(SITE_ROOT, 'apps'))
 
 SOUTH_DATABASE_ADAPTERS = {'default':'south.db.postgresql_psycopg2'}
 AUTH_PROFILE_MODULE = 'users.UserProfile'
@@ -145,9 +145,12 @@ INSTALLED_APPS = (
     'pagination',
 )
 
-HAYSTACK_SITECONF = 'settings.search_sites'
-HAYSTACK_SEARCH_ENGINE = 'whoosh'
-HAYSTACK_WHOOSH_PATH = path(__file__).abspath() / 'whoosh_index'
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': join(abspath(__file__), 'whoosh_index'),
+    }
+}
 
 EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
 MAILGUN_ACCESS_KEY = 'key-9flqj538z-my-qcnpc74c2wit4vibl-3'
