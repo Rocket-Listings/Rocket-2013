@@ -12,27 +12,47 @@
 				<td><code class="text-info">{{user.username}}@rocketlistings.mailgun.org</code></td>
 			<tr>
 				<td>Name:</td>
+				{% if profile.name %}
 				<td>{{ profile.name }}</td>
+				{% else %}
+				<td>Add a name to your profile</td>
+				{% endif %}
 			</tr>
 			<tr>
 				<td>Email:</td>
-				<td>{{ profile.email }}</td>
+				<td>{{ user.email }}</td>
 			</tr>
 			<tr>
 				<td>Seller Blurb:</td>
+				{% if profile.bio %}
 				<td>{{ profile.bio }}</td>
+				{% else %}
+				<td>Add a bio to your profile</td>
+				{% endif %}
 			</tr>
 			<tr>
 				<td>Location:</td>
+				{% if profile.location %}
 				<td>{{ profile.location }}</td>
+				{% else %}
+				<td>Add a default location for your listings</td>
+				{% endif %}
 			</tr>
 			<tr>
-				<td>Default Category:</td>
-				<td>{{ profile.default_category.name }}</td>
+				<td>Default Category:</td>	
+				{% if profile.default_category.name  %}
+				<td>{{ profile.default_category.name  }}</td>
+				{% else %}
+				<td>Add a default category for your listings</td>
+				{% endif %}
 			</tr>
 			<tr>
 				<td>Default Listing Type:</td>
+				{% if profile.default_listing_type.name  %}
 				<td>{{ profile.default_listing_type.name }}</td>
+				{% else %}
+				<td>Add a default listing type</td>
+				{% endif %}
 			</tr>
 		</tbody>
 	</table>
