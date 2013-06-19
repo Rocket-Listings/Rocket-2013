@@ -162,7 +162,6 @@ def ajax_listing_buyers(request, listing_id):
 	for buyer in buyers:
 		buyer.curMaxOffer =  buyer.max_offer()
 
-
 	# if 'application/json' in request.META.get('HTTP_ACCEPT'):
 	return HttpResponse(serializers.serialize("json", buyers), mimetype='application/json')
 	# else:
