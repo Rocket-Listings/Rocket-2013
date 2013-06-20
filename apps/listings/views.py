@@ -76,7 +76,7 @@ def detail(request, listing_id):
 
 	# provide `url` and `thumbnail_url` for convenience.
 	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos) 
-	return render(request, 'listing_detail.html', {'listing':listing, 'photos':photos})
+	return render(request, 'listing_details.html', {'listing':listing, 'photos':photos})
 
 def embed(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
