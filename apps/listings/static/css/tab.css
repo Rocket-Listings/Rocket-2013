@@ -1,0 +1,10 @@
+.table th,
+.table td {
+  border-top: none;
+}
+h1 {
+  padding-bottom: 20px;
+}
+.tab-content {
+  height: 350px;
+}
