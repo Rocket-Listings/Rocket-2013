@@ -50,7 +50,7 @@ class RegistrationViewTests(TestCase):
         response = self.client.get(reverse('registration_register'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response,
-                                'registration/registration_form.html')
+                                'registration/index-register.html')
         self.failUnless(isinstance(response.context['form'],
                                    forms.RegistrationForm))
 
