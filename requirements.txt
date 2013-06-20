@@ -4,13 +4,8 @@ PyYAML==3.10
 South==0.7.6
 Whoosh==2.4.1
 django-extensions==1.0.3
-<<<<<<< HEAD
-django-haystack==2.0
-psycopg2==2.4.6
-=======
 django-haystack
 psycopg2
->>>>>>> 3beaca8d7057de5c5b0939172cb93bc4d347184e
 python-memcached==1.48
 sorl-thumbnail==11.12
 virtualenv==1.8.4
