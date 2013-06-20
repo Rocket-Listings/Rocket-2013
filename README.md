@@ -1,6 +1,15 @@
 # Rocket Listings - Django
 
-_Last updated: 6/4/13_
+_Last updated: 6/18/13_
+
+### DB Reset Instructions
+
+     dropdb <database_name>
+     createdb <database_name>
+     # don't create a superuser here
+     python manage.py syncdb 
+     python manage.py migrate
+     python manage.py createsuperuser
 
 ## Developer Setup
 
@@ -82,6 +91,10 @@ Save and quit like before, and restart your terminal to apply the changes.
 Clone the project
 
 	git clone git@github.com:Rocket-Listings/Rocket-Listings-Django.git
+
+Now install all of the python package dependencies by going:
+	
+	pip install -r requirements.txt
 
 We recommend using [Sublime Text 2](http://www.sublimetext.com/) as your editor.
 

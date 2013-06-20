@@ -19,12 +19,9 @@ class GenericNameManager(models.Manager):
 		return self.get(name=name)
 
 
-
-
 # Listing Categories
 class ListingCategory(models.Model):
 	objects = GenericNameManager()
-
 	name = models.CharField(max_length = 60)
 	description = models.CharField(max_length = 200)
 
@@ -33,6 +30,16 @@ class ListingCategory(models.Model):
 
 # Listing Types
 class ListingType(models.Model):
+	objects = GenericNameManager()
+
+	name = models.CharField(max_length = 60)
+	description = models.CharField(max_length = 200)
+
+	def __unicode__(self):
+		return self.name
+
+#Listing Status
+class ListingStatus(models.Model):
 	objects = GenericNameManager()
 
 	name = models.CharField(max_length = 60)
@@ -53,6 +60,7 @@ class Listing(models.Model):
 	location = models.CharField(max_length=200)
 	category = models.ForeignKey(ListingCategory)
 	listing_type = models.ForeignKey(ListingType)
+	status = models.ForeignKey(ListingStatus, null = True) # TODO want to be able to listings by this
 	user = models.ForeignKey(User)
 	CL_link = models.URLField(null = True, blank = True)
 	

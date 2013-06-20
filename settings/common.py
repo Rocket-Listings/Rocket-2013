@@ -1,10 +1,10 @@
 import sys
-from path import path
+from os.path import join, abspath, dirname
 
-SITE_ROOT = path(__file__).abspath().dirname().dirname()
+SITE_ROOT = dirname(dirname(abspath(__file__)))
 
 sys.path.append(SITE_ROOT)
-sys.path.append(SITE_ROOT / 'apps')
+sys.path.append(join(SITE_ROOT, 'apps'))
 
 SOUTH_DATABASE_ADAPTERS = {'default':'south.db.postgresql_psycopg2'}
 AUTH_PROFILE_MODULE = 'users.UserProfile'
@@ -104,6 +104,7 @@ MIDDLEWARE_CLASSES = (
    	#'django.middleware.cache.FetchFromCacheMiddleware',	
 	# Uncomment the next line for simple clickjacking protection:
 	# 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	'pagination.middleware.PaginationMiddleware',
 )
 
 ROOT_URLCONF = 'rocketlistings.urls'
@@ -140,13 +141,14 @@ INSTALLED_APPS = (
 	'django_extensions', #added for some extra tools like reset_db
 	'storages',
     'mail',
-    "gunicorn"
+    "gunicorn",
+    'pagination',
 )
 
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-        'PATH': path(__file__).abspath() / 'whoosh_index',
+        'PATH': join(abspath(__file__), 'whoosh_index'),
     }
 }
 

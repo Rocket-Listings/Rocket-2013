@@ -1,5 +1,5 @@
 from common import *
-from path import path
+from os.path import join
 
 # General settings
 DEBUG = True
@@ -25,8 +25,8 @@ DATABASES = {
 
 
 # file storage settings
-STATIC_ROOT = SITE_ROOT / 'static_collected/'
-MEDIA_ROOT =  SITE_ROOT / 'media/'
+STATIC_ROOT = join(SITE_ROOT, 'static_collected/')
+MEDIA_ROOT =  join(SITE_ROOT, 'media/')
 UPLOAD_DIR = 'uploads'
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'

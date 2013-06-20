@@ -3,11 +3,14 @@ PIL==1.1.7
 PyYAML==3.10
 South==0.7.6
 Whoosh==2.4.1
-# ajaxuploader==0.2.4 
-# workaround until django 1.5 is supported
 django-extensions==1.0.3
+<<<<<<< HEAD
 django-haystack==2.0
 psycopg2==2.4.6
+=======
+django-haystack
+psycopg2
+>>>>>>> 3beaca8d7057de5c5b0939172cb93bc4d347184e
 python-memcached==1.48
 sorl-thumbnail==11.12
 virtualenv==1.8.4
@@ -18,10 +21,8 @@ Pygments==1.6
 gunicorn==0.17.2
 django-storages==1.1.6
 dj-database-url==0.2.1
-gevent==0.13.8
+# gevent==0.13.8
 django-mailgun
 boto
-
-# pylibmc==1.2.2 # Not working
-# django-pylibmc-sasl==0.2.4
-
+BeautifulSoup
+django-pagination
