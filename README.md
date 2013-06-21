@@ -1,6 +1,15 @@
 # Rocket Listings - Django
 
-_Last updated: 6/4/13_
+_Last updated: 6/18/13_
+
+### DB Reset Instructions
+
+     dropdb <database_name>
+     createdb <database_name>
+     # don't create a superuser here
+     python manage.py syncdb 
+     python manage.py migrate
+     python manage.py createsuperuser
 
 ## Developer Setup
 

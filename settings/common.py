@@ -104,6 +104,7 @@ MIDDLEWARE_CLASSES = (
    	#'django.middleware.cache.FetchFromCacheMiddleware',	
 	# Uncomment the next line for simple clickjacking protection:
 	# 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	'pagination.middleware.PaginationMiddleware',
 )
 
 ROOT_URLCONF = 'rocketlistings.urls'
@@ -140,7 +141,8 @@ INSTALLED_APPS = (
 	'django_extensions', #added for some extra tools like reset_db
 	'storages',
     'mail',
-    "gunicorn"
+    "gunicorn",
+    'pagination',
 )
 
 HAYSTACK_CONNECTIONS = {
