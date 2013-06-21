@@ -3,7 +3,7 @@ from listings.views import import_uploader
 
 urlpatterns = patterns('listings.views',
 	url(r'^$', 'latest'),
-	url(r'^create/$', 'create'),
+	url(r'^category/$', 'category'),
 	url(r'^(?P<listing_id>\d+)/$', 'detail'),
 	url(r'^(?P<listing_id>\d+)/messages/$', 'messages'),
 	url(r'^(?P<listing_id>\d+)/offers/$', 'offers'),

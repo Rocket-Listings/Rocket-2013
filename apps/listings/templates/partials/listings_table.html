@@ -97,7 +97,7 @@
 	</tbody>
 </table>
 {% else %}
-<h4>You don't have any listings yet! <a href="#modal-photo-upload" data-toggle="modal">Let's get started making one.</a></h4>
+<h4>You don't have any listings yet! <a href="{% url 'listings.views.category' %}">Let's get started making one.</a></h4>
 <h4>Remember you can always just create a listing on Craigslist with your <code class="text-info">{{user.username}}@rocketlistings.mailgun.org</code> email and manage it here.</hr>
 {% endif %}
 {% paginate %}
