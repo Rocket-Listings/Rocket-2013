@@ -1,26 +1,17 @@
 $(function() {
-	console.log("Ready");
 
 	/* Process the start of the signup */
 	function signupStartHandler() {
-		console.log("click");
 		var address = $(".start-email").val().replace(/ /g, ""),
 			username;
 		if ((address != "") && validateEmail(address)) {
-			username = address.substring(0, indexOf("@"));
-			signupAnimate();
-			console.log("signup success");
+			username = address.substring(0, address.indexOf("@"));
 		}
 		else {
-			signupErr("start-signup-error", "Please enter a valid email address");
-			console.log("signup error");
+			signupErr("start-signup-error", "Please enter a valid email address.");
+			$(".start-email").select();
+			$(".start-email").keypress(removeSignupErr);
 		}
-		console.log(address);
-	}
-
-	function signupAnimate() {
-		$(".start-signup").slideUp(400);
-		console.log("1")
 	}
 
 	function validateEmail(address) {
@@ -34,10 +25,10 @@ $(function() {
 		$(selector).html(msg);
 	}
 
-	function removeSignupErr(classSelector) {
-		var selector = "." + classSelector;
-		$(selector.html(""))
+	function removeSignupErr() {
+		$(".start-signup-error").html("");
 	}
 
 	$(".start-submit").click(signupStartHandler);
+	$(".start-email").trigger("focus");
 });

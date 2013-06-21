@@ -11,20 +11,10 @@
 <div class="register-form start-signup">
 	<h4>Enter your email to start signing up.</h4>
 	<form class="form-horizontal">
-		<input type="email" class="start-email" placeholder="you@example.com">
-		<input type="button" class="btn btn-primary start-submit" value="Continue">
+		<input type="text" class="start-email" placeholder="you@example.com">
+		<input type="button" class="btn btn-primary btn-danger start-submit" value="Get Started">
 	</form>
-	<p class="start-signup-error"></p>
-</div>
-
-<div class="register-form hide finish-signup">
-	<form action="{% url 'registration_register' %}" method="POST">
-		<fieldset>
-		{% csrf_token %} 
-			{{ form.as_p }}
-			<p><input class="btn btn-primary btn-large" type="submit" value="Create Account"/></p>
-		</fieldset>
-	</form>
+	<p class="start-signup-error" style="color: red"></p>
 </div>
 {% endblock %}
 

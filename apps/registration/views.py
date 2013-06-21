@@ -94,7 +94,7 @@ def activate(request, backend,
 
 def register(request, backend, success_url=None, form_class=None,
              disallowed_url='registration_disallowed',
-             template_name='registration/index-register.html',
+             template_name='registration/registration_form.html',
              extra_context=None):
     """
     Allow a new user to register an account.
@@ -182,17 +182,20 @@ def register(request, backend, success_url=None, form_class=None,
         form_class = backend.get_form_class(request)
 
     if request.method == 'POST':
-        form = form_class(data=request.POST, files=request.FILES)
-        if form.is_valid():
-            new_user = backend.register(request, **form.cleaned_data)
-            if request.GET.get('next',''):
-                success_url = request.GET.get('next','')
-                return redirect(success_url)
-            elif success_url is None:
-                to, args, kwargs = backend.post_registration_redirect(request, new_user)
-                return redirect(to, *args, **kwargs)
-            else:
-                return redirect(success_url)
+        if not request.POST['email_only']:
+            form = form_class(data=request.POST, files=request.FILES)
+            if form.is_valid():
+                new_user = backend.register(request, **form.cleaned_data)
+                if request.GET.get('next',''):
+                    success_url = request.GET.get('next','')
+                    return redirect(success_url)
+                elif success_url is None:
+                    to, args, kwargs = backend.post_registration_redirect(request, new_user)
+                    return redirect(to, *args, **kwargs)
+                else:
+                    return redirect(success_url)
+        else:
+            form = form_class(initial=request.POST)#{ email: request.POST.email })
     else:
         form = form_class()
     

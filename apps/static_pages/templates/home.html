@@ -16,9 +16,21 @@
 		<div class="homepage-subheading" style = "margin-top: 40px;">You can create your listings on Craigslist and manage them here.</div>
 		<div class="homepage-subheading" style = "margin-top: 40px;">And, you can create a superior listing with us.</div>
 
-		<div class = "homepage-signup">
+		<!--{# <div class = "homepage-signup">
 			<a class="btn btn-danger btn-large btn-block" href="{% url "registration_register" %}" data-toggle="modal">Sign-up free</a>
-		</div>	
+		</div>	#}-->
+
+		<div class="register-form">
+			<h4>Enter your email to start signing up.</h4>
+			<form class="form-horizontal start-signup" action="/users/register/" method="POST">
+				{% csrf_token %}
+				<input type="text" name="email" class="start-email" placeholder="you@example.com">
+				<input type="button" name="email-submit" class="btn btn-primary btn-danger start-submit" value="Get Started">
+				<input type="hidden" name="username" class="username" value="">
+				<input type="hidden" name="email_only" value="true">
+			</form>
+			<p class="start-signup-error" style="color: red">&nbsp;</p>
+		</div>
 	</div>
 
 	
