@@ -10,6 +10,7 @@
 			<tr>
 				<td>Rocket Email:</td>
 				<td><code class="text-info">{{user.username}}@rocketlistings.mailgun.org</code></td>
+			</tr>
 			<tr>
 				<td>Name:</td>
 				{% if profile.name %}
@@ -60,6 +61,7 @@
 <div class="user-info-buttons">
 	<a class="btn btn-info" href="{% url 'users.views.edit' user.username %}">Edit your account info.</a>
 	<a class="btn btn-warning" href="{% url 'auth_password_change' %}">Change your password.</a>
+	<a class="btn btn-warning" href="{% url 'users.views.profile' user.username %}">View your profile.</a>
 	<div class="clearfix"></div>
 	</div>
 </div>

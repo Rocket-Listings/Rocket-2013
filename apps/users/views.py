@@ -17,6 +17,11 @@ def info(request, username=None):
 	return render(request, 'user_info.html', {'profile':profile,})
 
 @login_required
+def profile(request, username=None):
+	profile = request.user.get_profile()
+	return render(request, 'user_profile.html', {'profile':profile})
+
+@login_required
 def edit(request, username):
 	if request.user.username == username:
 		user = request.user
