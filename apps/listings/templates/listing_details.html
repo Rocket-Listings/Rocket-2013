@@ -1,0 +1,156 @@
+{% extends 'listings_base.html' %}
+{% load thumbnail %}
+
+{% block content %}
+<div class="listing-dash">
+<div class="dash-title">
+<div class="btn-group" data-toggle="buttons-radio">
+  <button type="button" class="btn btn-primary">Edit</button>
+  <button type="button" class="btn btn-primary">Preview</button>
+</div>
+</div>
+<div class="dash-content">
+<p>Choose whether to edit or </br>
+preview your content by </br>
+toggling the buttons above</p>
+</div>
+</div>
+<div class="row">
+  <div class="l-header">
+      <h1 class="l-title" style="text-align:left;float:left;">{{listing.title}}</h1>
+      <h1 class="l-dash" style="text-align:left;float:left;">
+         - 
+      </h1>
+      <h1 class="l-price" style="text-align:left;float:left;"><span>&nbsp;</span>${{listing.price}}</h1>
+      <h1 class = "l-location">
+        ({{listing.location}})
+      </h1><!--This has to from the address function-->
+</div>
+</div>
+<div class="container">
+          <!--  Carousel - consult the Twitter Bootstrap docs at 
+          http://twitter.github.com/bootstrap/javascript.html#carousel -->
+    <div id="this-carousel-id" class="carousel slide"><!-- class of slide for animation -->
+      <div class="carousel-inner">
+        {% for photo in photos %}
+        <div {% if forloop.first %} class="item active"
+              {% else %} class="item"{% endif %}><!-- class of active since it's the first item -->
+          
+          <img src="{{ MEDIA_URL }}{{ photo.url }}" alt="" />
+          <div class="carousel-caption">
+            <p>This is the first Picture's description</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div><!-- /.carousel-inner -->
+      <!--  Next and Previous controls below
+            href values must reference the id for this carousel -->
+        <a class="carousel-control left" href="#this-carousel-id" data-slide="prev">&lsaquo;</a>
+        <a class="carousel-control right" href="#this-carousel-id" data-slide="next">&rsaquo;</a>
+    </div><!-- /.carousel -->
+
+     {% comment %}
+                <!-- Example row of columns -->
+                <div class="row">
+                  <div class="span4">
+                    <h2><a href="#">Katsa</a></h2><!--Username/Nickname-->
+                  </div>
+                </div>
+                <div class="address">
+                  <h3 class="street">
+                    152 Church Street
+                  </h3>
+                  <h3 class="city">
+                    Burlington
+                  </h3>
+                  <h3 class="state">
+                    VT
+                  </h3>
+                </div>
+    {% endcomment %}
+
+      <div class="l-description l-entry">
+        {{listing.description|linebreaks}}
+      </div>
+
+    {% comment %}
+                <div class="specs">
+                  <table border='1'>
+                    <tr>
+                      <td>Dimensions</td>
+                      <td>25X11</td>
+                    </tr>
+                    <tr>
+                      <td>Year</td>
+                      <td>2005</td>
+                    </tr>
+                    <tr>
+                      <td>Condition</td>
+                      <td>Good</td>
+                    </tr>
+                  </table>
+                </div>
+    {% endcomment %}
+
+    <hr>
+
+      <footer>
+        <p class = "pID" style="text-align:left;float:left;">Posting ID: </p>
+        <p class = "pIDn" style="text-align:left;float:left;">1231441342342134141</p>
+        <p style="text-align:left;float:left;"> Posted: </p>
+        <p id = "date" style="text-align:left;float:left;"> </p>
+        <p id ='time'></p>
+      </footer>
+      <div class="l-footnote">
+        Created with <a href="http://www.rocketlistings.com" class="icon">Rocket Listings</a>. Blast off.
+      </div>
+
+    </div> <!-- /container -->
+    <div class="clearfix"></div>
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if necessary -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.7.2.min.js"><\/script>')</script>
+    <!-- Bootstrap jQuery plugins compiled and minified -->
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function(){
+        $('.carousel').carousel({
+          interval: 10000
+        });
+    })
+    </script>
+    <script>
+          $(document).ready(function(){
+          var currentTime = new Date()
+          var month = currentTime.getMonth() + 1
+          var day = currentTime.getDate()
+          var year = currentTime.getFullYear()
+          var date = (month + "-" + day + "-" + year)
+          console.log(date);
+          var to_change = document.getElementById("date");
+          to_change.innerHTML = date;
+
+          var hours = currentTime.getHours()
+          var minutes = currentTime.getMinutes()
+          var AM = ""
+          if (hours>11){
+            AM = "PM"
+            hours = hours - 12
+          }else{
+            AM = "AM"
+          }
+
+
+          var time = " " + hours + ":" + minutes + " " + AM
+          console.log(time);
+          var to_change2 = document.getElementById("time");
+          to_change2.innerHTML = time;
+          
+
+        })
+        </script>
+  {% endblock %}
