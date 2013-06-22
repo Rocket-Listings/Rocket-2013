@@ -1,14 +1,15 @@
 $(function() {
 
-	$("document").ready(function() {
+/*	$("document").ready(function() {
+		console.log("trigger click");
         $('.table-listings tbody tr td.clickable:first').trigger('click'); 
         
         
-}); 
+}); */ 
 
 	$('.table-listings tbody tr td.clickable').click(function(event) {
 		var listingID = $(event.target).parent().data('listing-id');
-		console.log(listingID);
+		console.log("listing clicked");
 			if(!switch_listing(listingID)) {
 				var url = '/listings/' + listingID + '/api/buyers/'
 				$.getJSON(url, load_listing_callback);
@@ -21,10 +22,11 @@ $(function() {
 });
 
 
-	$('#listings').on('click', 'button', function(event){
+	$('#buyers').on('click', 'button', function(event){
+		console.log("manual click handler");
 		var buyerID = $(event.target).parent().data('buyer-id');
 		if(!switch_buyer(curListingID, buyerID)) {
-			//console.log('switch buyer false');			
+			console.log('switch buyer false');			
 			var url = '/listings/' + curListingID + '/api/messages/' + buyerID + '/'
 			$.getJSON(url, load_buyer_callback);
 		}else{
@@ -35,14 +37,12 @@ $(function() {
 
 	function load_listing_callback(data, textStatus, jqXHR) {
 		console.log("loaded listing callback");
-		console.log(data);
 		var listingID = data[0].fields.listing;
-		console.log(listingID);
 		data.listingID = listingID;
 		var html = buyers_template(data);
-		$('#listings').append(html);
+		$('#buyers').append(html);
 		switch_listing(listingID);
-		$('.buyer-tiles:first').trigger('click');
+		
 
 	}
 
@@ -52,10 +52,9 @@ $(function() {
 		console.log(buyerID);
 		data.buyerID = buyerID;
 		var html = messages_template(data);
-		$('#listing_' + curListingID + ' .buyers_').append(html);
+		$('#messages').append(html);
 		console.log('#listing_' + curListingID + ' .buyers_');
-		$('.buyer-tiles:first').trigger('click');
-		switch_buyer(curListingID, buyerID);
+		
 
 	}
 
@@ -81,10 +80,12 @@ $(function() {
 
 	function switch_buyer(listingID, buyerID) {
 		console.log("loaded switch buyer")
+		console.log(curBuyerID);
 		if(curBuyerID !== buyerID) {
 			var nextBuyer = $('#listing_' + curListingID + ' #buyer_' + buyerID);
-			//console.log(nextBuyer);
+			console.log(nextBuyer);
 			if (nextBuyer.length > 0) {
+				console.log("you're doing it right");
 				$('#listing_' + curListingID + ' #buyer_' + curBuyerID).remove();
 				$('#listing_' + curListingID).hide();
 
@@ -117,7 +118,7 @@ $(function() {
 
 	var buyers_template = Handlebars.compile($("#listing_buyers_table_hb").html());
 	var messages_template = Handlebars.compile($("#buyer_messages_thread_hb").html());
-	var nobuyers_template = Handlebars.compile($("#buyer_messages_thread_hb").html());
+	
 
 
 });

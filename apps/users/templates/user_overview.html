@@ -1,8 +1,10 @@
-{% extends 'listings_base.html' %}
+{% extends 'marginless.html' %}
 {% load static from staticfiles %}
 
 {% block title %}{{ block.super }} Dashboard{% endblock %}
-
+{% block css %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/listings.css' %}"/>
+{% endblock %}
 
 {% block js %}
 
@@ -22,7 +24,20 @@
 {% block content %}
 
 	<h3>Listings Dashboard</h3>
-	{% include 'partials/listings_table.html' %}
-	<div id="listings"></div>
+	<div class = "container-fluid">
+		<div class = "row-fluid">
+			<div class = "span6">
+				{% include 'partials/listings_table.html' %}
+			</div>
+			<div class = "span2">
+				<p> buyer info</p>
+			</div>
+			<div class = "span4">
+				<p>messages</p>
+			</div>
+		</div>
+	</div>
+
+	<!--<div id="listings"></div>-->
 
 {% endblock %}

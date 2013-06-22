@@ -1,8 +1,7 @@
 {% verbatim %}
-<div class = "well l-well" id="listing_{{listingID}}" style="display:none;">
 
-	<div class = "messages-container">
-	<div class = "sidebar">	
+
+	<div class = "" id="listing_{{listingID}}" style="display:none;">
 		<div class="btn-group-vertical" data-toggle="buttons-radio" name = "buyer-tiles">
 			
 			{{#each this}}
@@ -20,10 +19,10 @@
 			{{/each}}
 		</div>
 	</div>
-	<div class = "content">
-			<div class="buyers_"></div>
-	</div>
-</div>
+	
+
+
+<!--
 <div class = "bottom" data-buyerid="{{ buyer.id }}">
 		<form action = "{% url "listings.views.messages" listing.id %}" method = "POST">
 			<div class = "message-box">
@@ -34,7 +33,7 @@
 				<button type="submit" class="btn btn-primary btn-send">Send</button>
 			</div>
 		</form>	
-	</div>
-</div>
+</div>-->
+
 
 {% endverbatim %}
