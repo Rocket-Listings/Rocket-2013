@@ -1,3 +1,215 @@
+@import "../../../rocketlistings/static/css/variables.less";
+
+h1.flag {
+	font-family: 'Radley';
+	font-size: 49px;
+	font-weight: 600;
+
+	padding: 20px;
+	color: @color6;
+	// color: #2200CC;
+	background-color: white;
+
+	outline: 2px solid white;
+	border: 1px solid grey;
+
+	width: 138px;
+
+	top: 60px;
+	left:0;
+	right:0;
+	
+	margin: 0 auto;
+	position: absolute;
+	z-index: 3;
+}
+
+.login-link-container {
+	position: relative;	
+}
+
+.login-link {
+	z-index: 3;
+
+	position: absolute;
+	top: 0;
+	right: 0;
+	background: @menu0;
+	padding: 4px 8px;
+	border-top: none;
+	border-right: 1px solid grey;
+	border-bottom: 1px solid grey;
+	border-left: 1px solid grey;
+}
+
+
+#header-map {
+	top: 0;
+	height: @map-height;
+	width: 100%;
+	position: absolute;
+}
+
+/* remove google map attributions (kinda illegal) */
+.gmnoprint a, .gmnoprint span, .gm-style-cc div { display:none; }
+.gmnoprint div, .gm-style-cc div { background:none !important; }
+#GMapsID div div a div img{ diplay:none; }
+
+#header-map-overlay {
+	height: 2*@map-height;
+	width: 100%;
+	top: -@map-height;
+	position: absolute;
+	background: -webkit-radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, .1));
+	visibility: hidden; /* made visible when map loads */
+	z-index: 2;
+}
+
+.header-menu-bar {
+
+	height: @menu-height;
+	width: 100%;
+	
+	margin-top: @map-height;	
+	background: @menu0;
+
+	position: relative;
+	
+	.header-menu {
+		list-style-type: none;
+		height: @menu-height;
+		width: @menu-width;
+
+		margin: 0 auto;
+
+		div {
+			a {
+				display: block;
+				color: @color6
+			}
+			height: 100%;
+			line-height: @menu-height;
+			float: left;
+			text-align: center;
+		}
+
+		.item1 {
+			&:hover, &:active {
+				background: @menu1H;
+			}
+			background: @menu1;
+			width: @menu-item-width;
+		}
+		.item2 {
+			&:hover, &:active {
+				background: @menu2H;
+			}			
+			background: @menu2;
+			width: @menu-item-width;
+		}
+		.item3 {
+			&:hover, &:active {
+				background: @menu3H;
+			}
+			background: @menu3;
+			width: @menu-item-width;
+		}
+		.item4 {
+			&:hover, &:active {
+				background: @menu4H;
+			}
+			background: @menu4;
+			width: @menu-item-width;
+		}	
+		.edge {
+			background: @menu5;
+			width: @menu-edge-width;
+		}
+	}
+}
+
+.hook {
+	background: #4A4742;
+	color: @menu0;
+}
+
+.header-signup {
+	text-align: center;
+	// border-bottom: 2px solid white;
+	margin-bottom: @menu-height*(2/3);
+
+	// padding: 10px 0;	
+	background: @menu0;
+	height: @menu-height;
+	// padding-left: -200px;
+	form {
+		width: @menu-width;
+		margin: 0 auto;
+		margin-bottom: 0;
+		position: relative;
+
+		.header-signup-field-wrap, 
+		.header-signup-button-wrap {
+			float: left;
+			margin:0;
+			padding:0;
+			border:none;
+			outline:none;
+		}
+		.header-signup-field-wrap {
+			width: 60%;
+		}
+		.header-signup-button-wrap{
+			width: 40%;
+		}
+
+		input {
+			border-radius: 0;
+			border-top: none;
+			border-bottom: none;
+			border-left: @menu-edge-width solid @menu5;
+			border-right: none;
+			margin-top: 0;
+			margin-bottom: 0;
+			padding: 0 10px;
+			font-size: 14px;
+			height: @menu-height;
+			background: rgba(255,255,255,0.7);
+			// display: block;
+			&:focus {
+				-webkit-box-shadow: none;
+				-moz-box-shadow: none;
+				box-shadow: none;
+				border-color: @menu5;
+				// background: @menu0;
+			}
+		}
+		button {
+			height: @menu-height;
+			background: rgba(255,255,255,0.7); //@menu0;
+			margin-left: -1px;
+			border-top: none;
+			border-bottom: none;
+			border-left: @menu-edge-width solid @menu0; //@menu5; 
+			display: block;
+			width: 100%;
+			border-radius: 0;
+			box-shadow: none;
+			color: @craigslistBlue;
+			-webkit-box-shadow: none;
+			-moz-box-shadow: none;
+			border-right: @menu-edge-width solid @menu5;
+			&:hover {
+				color: #2200CC;
+				text-decoration: underline;
+				background: rgba(255,255,255,0.7);
+			}
+		}
+	}
+}
+
+// old 
+/*
 .homepage-row {
 	margin-bottom: 80px;
 }
@@ -9,7 +221,7 @@
 		height: 478px;
 		background: top right no-repeat url('../img/catalog-preview.png');
 		background-size: 411px 478px;
-		/*    margin: 40px auto;    */
+		//   margin: 40px auto;
 		-webkit-box-shadow: #aebec6 2px 2px 50px;
 		-moz-box-shadow: #aebec6 2px 2px 50px;
 		box-shadow: #aebec6 2px 2px 50px;
@@ -188,7 +400,7 @@
 		list-style: none;
 		li {
 			position: relative;
-			/*padding: 0 0 61px 0;*/
+			//padding: 0 0 61px 0;
 			height: 102px;
 			line-height: 102px;
 
@@ -398,3 +610,4 @@ a.pricing-btn.btn.btn-primary{
     width: 70px;
 
 }
+*/

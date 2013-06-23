@@ -5,11 +5,9 @@
 	<div class="wrap">
 		{% include "partials/static_header.html" %}
 		<div class="container">
-			<div class="page-content">
-				{% block content %}<h3>Error 404</h3>{% endblock %}
-			</div>
-			<div class="push"></div>{# sticky footer div #}
+			{% block content %}<h3>Error 404</h3>{% endblock %}
 		</div>
+		<div class="push"></div>{# sticky footer div #}		
 	</div>
 	{% include "partials/static_footer.html" %}
 	{% include "partials/modal_photo_upload.html" %}
