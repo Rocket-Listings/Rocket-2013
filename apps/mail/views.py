@@ -22,9 +22,12 @@ def verify(token, timestamp, signature):
                              digestmod=hashlib.sha256).hexdigest()
 
 @csrf_exempt
-def on_incoming_message(request):
+def on_incoming_test_message(request):
 	if request.method == 'POST':
 		print "post recieved"
+
+		mime = request.POST.get('message-headers')
+		print mime
 
 		sender    = request.POST.get('sender')
 		print sender
@@ -62,3 +65,4 @@ def on_incoming_message(request):
 	else:
 		print "not verified"
 		return HttpResponse('Unauthorized')
+
