@@ -96,6 +96,7 @@
 .listing-dash .dash-title {
   background: #e7edef;
   padding: 10px;
+  text-align: center;
 }
 .listing-dash .dash-title h4 {
   width: 100%;
