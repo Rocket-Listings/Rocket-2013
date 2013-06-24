@@ -61,18 +61,22 @@ def on_incoming_admin_message(request):
 
 	if request.method == 'POST':
 		print "admin post recieved"
+		user = get_object_or_404(User, username=request.POST.get('recipient').split('@')[0])
 
-		timestamp = request.POST.get('timestamp', '')
-		token = request.POST.get('token', '')
-		sig = request.POST.get('signature', '')
+		for match in re.findall("(.*?)" ,request.POST.get('subject', '')):
+			print match
+
 		
-		user = request.POST.get('recipient').split('@')[0]
-		print user
+
+		#listing = get_object_or_404(Listing, title =)
 
 
 
 
-	if verify(token, timestamp, sig):
+
+
+
+	if verify(request.POST.get('token', ''), request.POST.get('timestamp', ''), request.POST.get('signature', '')):
 		print "verified"
 		return HttpResponse('OK')
 
