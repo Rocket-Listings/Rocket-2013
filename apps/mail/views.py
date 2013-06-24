@@ -61,17 +61,16 @@ def on_incoming_admin_message(request):
 
 	if request.method == 'POST':
 		print "admin post recieved"
-		user = get_object_or_404(User, username=request.POST.get('recipient').split('@')[0])
+		
 
-		print user
+		user = get_object_or_404(User, username= request.POST.get('recipient').split('@')[0])
+		listing = user.listing_set.get(title__exact= request.POST.get('subject', '').partition('"')[2].partition('"')[0])
+		email = user.email
+		
+		print send_mail( request.POST.get('subject', '') , request.POST.get('body-plain', ''), 'rocket@rocketlistings.mailgun.org', [email], fail_silently=False)
 
-		print str(re.findall(r'"(.*?)"' , request.POST.get('subject', '')))
-
-		listing = Listing.objects.filter(user=user, title= str(re.findall(r'"(.*?)"' , request.POST.get('subject', ''))))
-
-		print listing
-
-
+		message = Message(listing = listing, content = request.POST.get('body-plain', ''), buyer = listing.buyer_set.get(name__exact = "Craigslist"))
+		message.save()
 
 
 	if verify(request.POST.get('token', ''), request.POST.get('timestamp', ''), request.POST.get('signature', '')):
