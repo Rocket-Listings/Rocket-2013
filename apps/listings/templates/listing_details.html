@@ -2,11 +2,33 @@
 {% load thumbnail %}
 
 {% block content %}
+    {% block js %}
+      <script type="text/javascript"> (function(a){if(window.filepicker){return}var b=a.createElement("script");b.type="text/javascript";b.async=!0;b.src=("https:"===a.location.protocol?"https:":"http:")+"//api.filepicker.io/v1/filepicker.js";var c=a.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c);var d={};d._queue=[];var e="pick,pickMultiple,pickAndStore,read,write,writeUrl,export,convert,store,storeUrl,remove,stat,setKey,constructWidget,makeDropPane".split(",");var f=function(a,b){return function(){b.push([a,arguments])}};for(var g=0;g<e.length;g++){d[e[g]]=f(e[g],d._queue)}window.filepicker=d})(document); </script>
+      <script>
+        filepicker.setKey('ATM8Oz2TyCtiJiHu6pP6Qz');
+      </script>
+      <script>
+        function FilePickClick(){
+          filepicker.pickMultiple({
+              mimetypes: ['image/*', 'text/plain'],
+              services:['COMPUTER', 'URL'],
+            },
+            function(InkBlob){
+              console.log(JSON.stringify(InkBlob));
+            },
+            function(FPError){
+              console.log(FPError.toString());
+            }
+          );
+        }
+      </script>
+    {% endblock %}
+
 <div class="listing-dash">
 <div class="dash-title">
 <div class="btn-group" data-toggle="buttons-radio">
-  <button type="button" class="btn btn-primary">Edit</button>
-  <button type="button" class="btn btn-primary">Preview</button>
+  <button type="button" class="btn btn-primary" onclick="Edit()">Edit</button>
+  <button type="button" class="btn btn-primary active" onclick="Preview()">Preview</button>
 </div>
 </div>
 <div class="dash-content">
@@ -15,58 +37,71 @@ preview your content by </br>
 toggling the buttons above</p>
 </div>
 </div>
-<div class="row">
-  <div class="l-header">
+<script>
+  function Edit(){
+      $(document).ready(function(){
+        $(".preview").hide();
+        $(".edit").show();
+    })
+  };
+  function Preview(){
+      $(document).ready(function(){
+        $(".edit").hide();
+        $(".preview").show();
+    })
+  };
+
+</script>
+
+<div class="preview">
+  <div class="row">
+    <div class="l-header">
       <h1 class="l-title" style="text-align:left;float:left;">{{listing.title}}</h1>
-      <h1 class="l-dash" style="text-align:left;float:left;">
-         - 
-      </h1>
-      <h1 class="l-price" style="text-align:left;float:left;"><span>&nbsp;</span>${{listing.price}}</h1>
-      <h1 class = "l-location">
-        ({{listing.location}})
-      </h1><!--This has to from the address function-->
-</div>
-</div>
-<div class="container">
+      <h1 class="l-dash" style="text-align:left;float:left;"> - </h1>
+      <h1 class="l-price" style="text-align:left;float:left;"> <span>&nbsp;</span>${{listing.price}}</h1>
+      <h1 class = "l-location"> ({{listing.location}}) </h1><!--This has to from the address function-->
+    </div>
+  </div>
+  <div class="container">
           <!--  Carousel - consult the Twitter Bootstrap docs at 
           http://twitter.github.com/bootstrap/javascript.html#carousel -->
     <div id="this-carousel-id" class="carousel slide"><!-- class of slide for animation -->
       <div class="carousel-inner">
         {% for photo in photos %}
         <div {% if forloop.first %} class="item active"
-              {% else %} class="item"{% endif %}><!-- class of active since it's the first item -->
+          {% else %} class="item"{% endif %}><!-- class of active since it's the first item -->
           
           <img src="{{ MEDIA_URL }}{{ photo.url }}" alt="" />
           <div class="carousel-caption">
             <p>This is the first Picture's description</p>
           </div>
         </div>
-        {% endfor %}
+      {% endfor %}
       </div><!-- /.carousel-inner -->
-      <!--  Next and Previous controls below
-            href values must reference the id for this carousel -->
-        <a class="carousel-control left" href="#this-carousel-id" data-slide="prev">&lsaquo;</a>
-        <a class="carousel-control right" href="#this-carousel-id" data-slide="next">&rsaquo;</a>
+    <!--  Next and Previous controls below
+          href values must reference the id for this carousel -->
+    <a class="carousel-control left" href="#this-carousel-id" data-slide="prev">&lsaquo;</a>
+    <a class="carousel-control right" href="#this-carousel-id" data-slide="next">&rsaquo;</a>
     </div><!-- /.carousel -->
 
-     {% comment %}
+    {% comment %}
                 <!-- Example row of columns -->
-                <div class="row">
-                  <div class="span4">
-                    <h2><a href="#">Katsa</a></h2><!--Username/Nickname-->
-                  </div>
-                </div>
-                <div class="address">
-                  <h3 class="street">
-                    152 Church Street
-                  </h3>
-                  <h3 class="city">
-                    Burlington
-                  </h3>
-                  <h3 class="state">
-                    VT
-                  </h3>
-                </div>
+      <div class="row">
+        <div class="span4">
+          <h2><a href="#">Katsa</a></h2><!--Username/Nickname-->
+        </div>
+      </div>
+      <div class="address">
+        <h3 class="street">
+          152 Church Street
+        </h3>
+        <h3 class="city">
+          Burlington
+        </h3>
+        <h3 class="state">
+          VT
+        </h3>
+      </div>
     {% endcomment %}
 
       <div class="l-description l-entry">
@@ -74,22 +109,22 @@ toggling the buttons above</p>
       </div>
 
     {% comment %}
-                <div class="specs">
-                  <table border='1'>
-                    <tr>
-                      <td>Dimensions</td>
-                      <td>25X11</td>
-                    </tr>
-                    <tr>
-                      <td>Year</td>
-                      <td>2005</td>
-                    </tr>
-                    <tr>
-                      <td>Condition</td>
-                      <td>Good</td>
-                    </tr>
-                  </table>
-                </div>
+      <div class="specs">
+        <table border='1'>
+          <tr>
+            <td>Dimensions</td>
+            <td>25X11</td>
+          </tr>
+          <tr>
+            <td>Year</td>
+            <td>2005</td>
+          </tr>
+          <tr>
+            <td>Condition</td>
+            <td>Good</td>
+          </tr>
+        </table>
+      </div>
     {% endcomment %}
 
     <hr>
@@ -101,12 +136,56 @@ toggling the buttons above</p>
         <p id = "date" style="text-align:left;float:left;"> </p>
         <p id ='time'></p>
       </footer>
-      <div class="l-footnote">
-        Created with <a href="http://www.rocketlistings.com" class="icon">Rocket Listings</a>. Blast off.
-      </div>
+  </div> <!-- /container -->
+</div>
 
-    </div> <!-- /container -->
-    <div class="clearfix"></div>
+
+
+<!-- Edit Page -->
+<div class="edit" style="display:none">
+  <div class="row">
+    <div class="l-header">
+      <h1 class="l-title" style="text-align:left;float:left;">
+          <form_listing>
+            <fieldset>
+              <input type="text" placeholder="Title (E.g. 2001 Honda Civic)">
+              <input type="text" placeholder="Listing Price">
+              <input type="text" placeholder="Location">
+            </fieldset>
+          </form>
+      </h1>
+    </div>
+  </div>
+  <button type="button" class="btn btn-primary" onclick='FilePickClick()'>Upload Pictures Here</button>
+  </br>
+
+
+  <div class="l-description l-entry">
+
+    <input type="text" placeholder="Description" rows="3">
+  </div>
+
+
+    <hr>
+
+      <footer>
+        <p class = "pID" style="text-align:left;float:left;">Posting ID: </p>
+        <p class = "pIDn" style="text-align:left;float:left;">1231441342342134141</p>
+        <p style="text-align:left;float:left;"> Posted: </p>
+        <p id = "date" style="text-align:left;float:left;"> </p>
+        <p id ='time'></p>
+      </footer>
+  </div> 
+</div>
+<!-- End Edit Page -->
+
+
+
+<div class="l-footnote">
+  Created with <a href="http://www.rocketlistings.com" class="icon">Rocket Listings</a>. Blast off.
+</div>
+
+<div class="clearfix"></div>
 
 
     <!-- Le javascript
