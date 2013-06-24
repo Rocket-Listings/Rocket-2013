@@ -63,15 +63,13 @@ def on_incoming_admin_message(request):
 		print "admin post recieved"
 		user = get_object_or_404(User, username=request.POST.get('recipient').split('@')[0])
 
-		for match in re.findall("(.*?)" ,request.POST.get('subject', '')):
-			print match
+		print user
 
-		
+		print str(re.findall(r'"(.*?)"' , request.POST.get('subject', '')))
 
-		#listing = get_object_or_404(Listing, title =)
+		listing = Listing.objects.filter(user=user, title= str(re.findall(r'"(.*?)"' , request.POST.get('subject', ''))))
 
-
-
+		print listing
 
 
 
