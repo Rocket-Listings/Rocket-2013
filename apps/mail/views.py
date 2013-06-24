@@ -25,39 +25,28 @@ def verify(token, timestamp, signature):
 def on_incoming_test_message(request):
 	if request.method == 'POST':
 		print "post recieved"
-
 		mime = request.POST.get('message-headers')
 		print mime
-
-		sender    = request.POST.get('sender')
+		sender = request.POST.get('sender')
 		print sender
-
 		recipient = request.POST.get('recipient')
 		print recipient
-
 		subject   = request.POST.get('subject', '')
 		print subject
-
 		frm = request.POST.get('from', '')
 		print frm
-
 		body = request.POST.get('body-plain', '')
 		print body
-
 		body_html = request.POST.get('body-html', '')
 		print body_html
-
 		text = request.POST.get('stripped-text', '')
 		print text
-
 		signature = request.POST.get('stripped-signature', '')
 		print signature
 		timestamp = request.POST.get('timestamp', '')
 		token = request.POST.get('token', '')
 		sig = request.POST.get('signature', '')
 
-
-	
 	if verify(token, timestamp, sig):
 		print "verified"
 		return HttpResponse('OK')
@@ -66,3 +55,27 @@ def on_incoming_test_message(request):
 		print "not verified"
 		return HttpResponse('Unauthorized')
 
+
+@csrf_exempt
+def on_incoming_admin_message(request):
+
+	if request.method == 'POST':
+		print "admin post recieved"
+
+		timestamp = request.POST.get('timestamp', '')
+		token = request.POST.get('token', '')
+		sig = request.POST.get('signature', '')
+		
+		user = request.POST.get('recipient').split('@')[0]
+		print user
+
+
+
+
+	if verify(token, timestamp, sig):
+		print "verified"
+		return HttpResponse('OK')
+
+	else:
+		print "not verified"
+		return HttpResponse('Unauthorized')
