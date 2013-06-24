@@ -1,1 +1,63 @@
-.user-profile-table-group{float:left}.user-info-buttons a{float:left;margin-right:10px}.login-register-box{width:680px;margin:0 auto;padding:10px}.login-register-box .login-form{padding:10px;float:left;border-right:1px solid #d2dadd;padding-right:128px}.login-register-box .register-form{padding:10px;float:right}.form{margin:0}.form li{list-style-type:none}.form .errorlist{color:red}.form input,.form textarea,.form select{width:200px}.centered-td{text-align:center!important}.stay-color{color:black}.th-sortable{background:url("desc.gif") right center no-repeat;padding-right:15px}
+.user-profile-table-group {
+  float: left;
+}
+/*.user-email-box{
+	float: right;
+	text-align: center;
+	font-family: "Open sans", "Helvetica", Arial;
+	font-size: 25px;
+	color: #222F33;
+	line-height: 45px;
+	font-weight: 700;
+	text-shadow: 1px 1px 5px #aebec6;
+	margin-bottom: 10px;
+}
+.user-email-instruction{
+	font-size: 13px;
+}*/
+/*.user-profile-table {
+	width: 400px;
+}*/
+.user-info-buttons a {
+  float: left;
+  margin-right: 10px;
+}
+.login-register-box {
+  width: 680px;
+  margin: 0 auto;
+  padding: 10px;
+}
+.login-register-box .login-form {
+  padding: 10px;
+  float: left;
+  border-right: 1px solid #d2dadd;
+  padding-right: 128px;
+}
+.login-register-box .register-form {
+  padding: 10px;
+  float: right;
+}
+.form {
+  margin: 0;
+}
+.form li {
+  list-style-type: none;
+}
+.form .errorlist {
+  color: red;
+}
+.form input,
+.form textarea,
+.form select {
+  width: 200px;
+}
+.centered-td {
+  text-align: center !important;
+}
+.stay-color {
+  color: black;
+}
+.th-sortable {
+  background: url("desc.gif") right center no-repeat;
+  padding-right: 15px;
+}

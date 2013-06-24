@@ -45,12 +45,12 @@ def latest(request):
 	return render(request, 'listings_latest.html', {'listings': listings,})
 
 @login_required
-def create(request):
+def category(request):
 	if request.method == 'GET':
 		profile = request.user.get_profile()
 		defaults = {'location':profile.location, 'category':profile.default_category, 'listing_type':profile.default_listing_type}
 		form = ListingForm(initial=defaults)
-		return render(request, 'listing_create.html', {'form':form})
+		return render(request, 'listing_category.html', {'form':form})
 	elif request.method == 'POST':
 		listing_form = ListingForm(request.POST)
 		if listing_form.is_valid():
@@ -67,7 +67,7 @@ def create(request):
 				return redirect(listing)
 				# Do something for anonymous users.
 		else:
-			return render(request, 'listing_create.html', {'form': ListingForm(request.POST),})
+			return render(request, 'listing_category.html', {'form': ListingForm(request.POST),})
 
 
 def detail(request, listing_id):
@@ -76,7 +76,7 @@ def detail(request, listing_id):
 
 	# provide `url` and `thumbnail_url` for convenience.
 	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos) 
-	return render(request, 'listing_detail.html', {'listing':listing, 'photos':photos})
+	return render(request, 'listing_details.html', {'listing':listing, 'photos':photos})
 
 def embed(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)

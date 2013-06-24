@@ -1,0 +1,123 @@
+{% extends 'listings_base.html' %}
+{% load static from staticfiles %}
+
+{% block js %}
+    <script src="{% static 'js/listings_reference.js' %}" type="text/javascript"></script>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/category.css' %}"/>
+
+{% endblock%}
+
+{% block content %}
+
+	<body>
+		<div class= "container">
+            <div class="accordion" id="accordion2">
+                <div class="accordion-group">
+                    <div class="accordion-heading row">
+                        <a class="accordion-toggle span 4" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                            For Sale
+                        </a>
+
+                        <a class="accordion-toggle span 4" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                            Housing
+                        </a>
+
+                        <p id="category" class="span6"></p>
+
+                    </div>
+                    <div id="collapseOne" class="accordion-body collapse in">
+                        <div class="accordion-inner">
+                            <table class="table">
+                                <tr>
+                                    <td><a href="#" class="for_sale"> appliances </a></td>
+                                    <td><a href="#" class="for_sale"> antiques </a></td>
+                                    <td><a href="#" class="for_sale"> arts and crafts </a></td>
+                                    <td><a href="#" class="for_sale"> auto parts </a></td>
+                                    <td><a href="#" class="for_sale"> baby and kids </a></td>
+                                </tr>
+                                               
+                                <tr>
+                                    <td><a href="#" class="for_sale"> barter </a></td>
+                                    <td><a href="#" class="for_sale"> beauty and health </a></td>
+                                    <td><a href="#" class="for_sale"> bikes </a></td>
+                                    <td><a href="#" class="for_sale"> boats </a></td>
+                                    <td><a href="#" class="for_sale"> books </a></td>
+                                </tr>
+
+                                <tr>
+                                    <td><a href="#" class="for_sale"> business </a></td>
+                                    <td><a href="#" class="for_sale"> cars and trucks </a></td>
+                                    <td><a href="#" class="for_sale"> cds/dvd/vhs </a></td>
+                                    <td><a href="#" class="for_sale"> cell phones </a></td>
+                                    <td><a href="#" class="for_sale"> clothes and accessories </a></td>
+                                </tr>       
+
+                                <tr>
+                                    <td><a href="#" class="for_sale"> collectibles </a></td>
+                                    <td><a href="#" class="for_sale"> computer </a></td>
+                                    <td><a href="#" class="for_sale"> electronics </a></td>
+                                    <td><a href="#" class="for_sale"> farm and garden </a></td>
+                                    <td><a href="#" class="for_sale"> free </a></td>
+                                </tr>
+
+                                <tr>
+                                    <td><a href="#" class="for_sale"> furniture </a></td>
+                                    <td><a href="#" class="for_sale"> garage sale </a></td>
+                                    <td><a href="#" class="for_sale"> general </a></td>
+                                    <td><a href="#" class="for_sale"> household </a></td>
+                                    <td><a href="#" class="for_sale"> jewelry </a></td>
+                                </tr>
+
+                                <tr>
+                                    <td><a href="#" class="for_sale"> materials </a></td>
+                                    <td><a href="#" class="for_sale"> motorcycles </a></td>
+                                    <td><a href="#" class="for_sale"> music instruments </a></td>
+                                    <td><a href="#" class="for_sale"> photo and video </a></td>
+                                    <td><a href="#" class="for_sale"> rvs </a></td>
+                                </tr>
+                        
+                                <tr>
+                                    <td><a href="#" class="for_sale"> sporting </a></td>
+                                    <td><a href="#" class="for_sale"> tickets </a></td>
+                                    <td><a href="#" class="for_sale"> tools </a></td>
+                                    <td><a href="#" class="for_sale"> toys and games </a></td>
+                                    <td><a href="#" class="for_sale"> video gaming </a></td>
+                                </tr>
+
+                                <tr>
+                                    <td><a href="#" class="for_sale"> wanted </a></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-group">
+                    
+                    <div id="collapseTwo" class="accordion-body collapse">
+                        <div class="accordion-inner">
+                            <table class="table">
+                                <tr>
+                                    <td><a href="#" class="housing"> apartments / housing </a></td>
+                                    <td><a href="#" class="housing"> rooms / shared </a></td>
+                                    <td><a href="#" class="housing"> sublets / temporary </a></td>
+                                    <td><a href="#" class="housing"> housing wanted </a></td>
+                                </tr>
+                                                
+                                <tr>
+                                    <td><a href="#" class="housing"> housing swap </a></td>
+                                    <td><a href="#" class="housing"> vacation rentals </a></td>
+                                    <td><a href="#" class="housing"> parking / storage </a></td>
+                                    <td><a href="#" class="housing"> office / commercial </a></td>
+                                </tr>
+
+                                <tr>
+                                    <td><a href="#" class="housing"> real estate for sale </a></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		</div>
+	</body>
+{% endblock %}
