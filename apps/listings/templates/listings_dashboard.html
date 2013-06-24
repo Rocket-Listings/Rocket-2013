@@ -4,17 +4,11 @@
 {% block title %}{{ block.super }} Dashboard{% endblock %}
 {% block css %}
 <link type="text/css" rel="stylesheet" href="{% static 'css/listings.css' %}"/>
+<link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap-custom.css' %}"/>
+<link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap-custom.min.css' %}"/>
 {% endblock %}
 
 {% block js %}
-
-	<script id="listing_buyers_table_hb" type="text/x-handlebars-template">
-		{% include 'partials/buyers_cards_hb.html' %}
-	</script>
-	<script id="buyer_messages_thread_hb" type="text/x-handlebars-template">
-		{% include 'partials/buyer_messages_hb.html' %}
-	</script>
-	<script src="{% static 'js/handlebars.js' %}" type="text/javascript"></script>
 	<script src="{% static 'js/listings_dashboard.js' %}" type="text/javascript"></script>	
 	{{ block.super }}
 
@@ -26,16 +20,14 @@
 	<div class = "dashboard-title"><h3>Listings Dashboard</h3></div>
 	<div class = "container-fluid">
 		<div class = "row-fluid">
-			<div class = "span6">
+			<div class = "span7">
 				{% include 'partials/listings_table.html' %}
 			</div>
 			<div class = "span2">
-			<h5>Buyers</h5>
-				<div id="buyers"></div>			
+				{% include 'partials/buyers_cards.html' %}
 			</div>
-			<div class = "span4">
-			<h5>Messages</h5>
-				<div id="messages"></div>
+			<div class = "span3">
+				{% include 'partials/messages_panel.html' %}
 			</div>
 
 		</div>

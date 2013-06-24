@@ -104,7 +104,6 @@ class ListingPhoto(models.Model):
 class Buyer(models.Model):
 	objects = GenericNameManager()
 	curMaxOffer = models.IntegerField(null = True, blank = True)
-
 	listing = models.ForeignKey(Listing, blank=True) 
 	name = models.CharField(max_length=255)
 	email = models.EmailField(max_length=255, null = True, blank=True)

@@ -30,7 +30,11 @@ def user_listings(request, username=None):
 	if username:
 		user = get_object_or_404(User, username=username)
 	listings = Listing.objects.filter(user=user).order_by('-pub_date')[:10]
-	return render(request, 'listings_dashboard.html', {'listings': listings})
+	buyers = Buyer.objects.filter(listing__user=user)
+	messages = Message.objects.filter(listing__user=user)
+	return render(request, 'listings_dashboard.html', {'listings': listings, 'buyers': buyers, 'messages':messages,})
+
+
 
 @login_required
 def dashboard(request, username=None):
@@ -38,11 +42,18 @@ def dashboard(request, username=None):
 	if username:
 		user = get_object_or_404(User, username=username)
 	listings = Listing.objects.filter(user=user).order_by('-pub_date')[:10]
-	return render(request, 'listings_dashboard.html', {'listings': listings})
+	buyers = Buyer.objects.all()
+	messages = Messages.objects.all()
+
+	return render(request, 'listings_dashboard.html',  {'listing': listing, 'buyer': buyer, 'message':message,})	
 
 def latest(request):
 	listings = Listing.objects.all().order_by('-pub_date')[:10]
 	return render(request, 'listings_latest.html', {'listings': listings,})
+
+
+
+
 
 @login_required
 def create(request):

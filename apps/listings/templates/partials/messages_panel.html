@@ -1,0 +1,29 @@
+{% load static from staticfiles %}
+{# Requires the context variable 'listings' #}	
+{# Requires the context variable 'buyers' #}	
+{# Requires the context variable 'messages' #}	
+
+<div class = "dash-titles">Messages</div>
+<div class = "messages-panel" >
+		{% for message in messages %}
+		<div class="message buyer_{{message.buyer.id}}" style = "display: none">
+				{% if message.isSeller %}
+					  <p class="message-bubble left">{{message.content}}</p>
+				{% else %}
+					 <p class="message-bubble right">{{message.content}}</p>
+		   	{% endif %}
+	   	</div>
+	   	{% endfor %}
+</div>	
+
+	<div class = "bottom">
+		<form>
+			<div class = "message-box">
+				<textarea rows= "3" name = 'content' class="input-long" placeholder="  Message..." ></textarea>
+				<input type ="hidden" name = "buyer_id" value = "{{ buyer.id }}" >
+			</div>
+			<div class = "send">
+				<input type="submit" class="btn" id = "send-button" data-buyerid="{{ buyer.id }}">
+			</div>
+		</form>	
+	</div>
