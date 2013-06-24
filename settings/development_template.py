@@ -15,8 +15,8 @@ SOUTH_DATABASE_ADAPTERS = {'default':'south.db.postgresql_psycopg2'}
 DATABASES = { 
 	'default': {
 		'ENGINE': 'django.db.backends.postgresql_psycopg2' ,
-		'NAME': '', # Defaults to your computer username
-		'USER': '', # Defaults to your computer username
+		'NAME': 'katsa', # Defaults to your computer username
+		'USER': 'katsa', # Defaults to your computer username
 		'PASSWORD': '', # Leave this blank by default
 		'HOST': 'localhost',
 		'PORT': '',
