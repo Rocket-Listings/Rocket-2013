@@ -21,18 +21,37 @@
 		</div>
 	</div>
 	<div class="header-signup">
-		<form class="form-inline">
+		<form class="form-inline start-signup" action="/users/register/" method="POST">
+			{% csrf_token %}
 			<div class="header-signup-field-wrap">
-				<input class="input-block-level" autocomplete="off" type="text" name="email" placeholder="Email"/>
+				<input class="input-block-level start-email" autocomplete="off" type="text" name="email" placeholder="Email"/>
+				<input type="hidden" name="username" class="username" value=""/>
+				<input type="hidden" name="email_only" value="true"/>
 			</div>
 			<div class="header-signup-button-wrap">
-				<button type="submit" class="btn">post to classifieds</button>
-			</div>				
+				<button type="submit" class="btn start-submit">post to classifieds</button>
+			</div>			
 			<div class="clearfix"></div>
 		</form>
 	</div>
 </div>
-	{% comment %}
+
+{% comment %} 
+{% block content %}
+		<div class="register-form">
+			<h4>Enter your email to start signing up.</h4>
+			<form class="form-horizontal start-signup" action="/users/register/" method="POST">
+				{% csrf_token %}
+				<input type="text" name="email" class="start-email" placeholder="you@example.com">
+				<input type="button" name="email-submit" class="btn btn-primary btn-danger start-submit" value="Get Started">
+				<input type="hidden" name="username" class="username" value="">
+				<input type="hidden" name="email_only" value="true">
+			</form>
+			<p class="start-signup-error" style="color: red">&nbsp;</p>
+		</div>
+{% endblock %}
+
+
 			<div class = "logo">
 			<a href="{% url 'home' %}"><img class="logo" src="{% static 'img/text-logo.png' %}" width="250" height="60" alt="Rocket Listing"></a>
 			</div>

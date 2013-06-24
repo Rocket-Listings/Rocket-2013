@@ -3,19 +3,7 @@
 
 {% block css %}<link type="text/css" rel="stylesheet" href="{% static 'css/static_pages.css' %}"/>{% endblock %}
 
-{% block content %}
-		<div class="register-form">
-			<h4>Enter your email to start signing up.</h4>
-			<form class="form-horizontal start-signup" action="/users/register/" method="POST">
-				{% csrf_token %}
-				<input type="text" name="email" class="start-email" placeholder="you@example.com">
-				<input type="button" name="email-submit" class="btn btn-primary btn-danger start-submit" value="Get Started">
-				<input type="hidden" name="username" class="username" value="">
-				<input type="hidden" name="email_only" value="true">
-			</form>
-			<p class="start-signup-error" style="color: red">&nbsp;</p>
-		</div>
-{% endblock %}
+{% block content %}{% endblock %}
 	
 {% block js %}
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuRtB1F8XVtV22jQ3dkGQPqWCKQz4suJ0&sensor=false"></script>
