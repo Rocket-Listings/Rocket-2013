@@ -1,26 +1,38 @@
 {% load static from staticfiles %}
 <div class="header">
-	<div class="container">
-		<div class="upper">
-			{% if user.is_authenticated %}
-			<div class = "logo">
-			<a href="{% url "listings.views.user_listings" user.username %}"><img class="logo" src="{% static 'img/text-logo.png' %}" width="250" height="60" alt="Rocket Listing"></a>
+	<h1 class="flag">rocket</h1>
+	<div class="container login-link-container"><a class="login-link" href="{% url 'auth_login' %}">login</a></div>
+	<div id="header-map"></div>
+	<div id="header-map-overlay"></div>
+	<div class="header-menu-bar">
+		<div class="header-menu">
+			<div class="edge"></div>
+			<div class="item1"><a >What</a></div>
+			<div class="item2"><a href="#">How</a></div>
+			<div class="item3"><a href="#">Who</a></div>
+			<div class="item4"><a href="#">Pricing</a></div>
+			<div class="edge"></div>
+		</div>
+	</div>
+	<div class="hook">
+		<div class="container">
+			<h3>Tools for selling on Craigslist.</h3>
+			<p class="lead">We're doing listing creation, management, and payment the way they should be.</p>
+		</div>
+	</div>
+	<div class="header-signup">
+		<form class="form-inline">
+			<div class="header-signup-field-wrap">
+				<input class="input-block-level" autocomplete="off" type="text" name="email" placeholder="Email"/>
 			</div>
-				<div class = "login"><a href="#modal-photo-upload" data-toggle="modal">Post</a></div>
-				<div class = "navbar">
-					<ul class="nav nav-pills">
-							<li>
-							<a href="{% url "listings.views.user_listings" user.username %}">Listings <i class="icon-th-list icon-white" style = "margin-top: 6px; color: #E75547;"></i></a>
-							</li>
-							<li>
-								<a href="{% url "users.views.info" user.username %}">Account <i class="icon-user icon-white" style = "margin-top: 6px;"></i></a>
-							</li>
-							<li>
-								<a href="{% url "auth_logout" %}">Logout <i class="icon-off icon-white" style = "margin-top: 6px;"></i></a>
-							</li>
-					</ul>
-				</div>	
-			{% else %}
+			<div class="header-signup-button-wrap">
+				<button type="submit" class="btn">post to classifieds</button>
+			</div>				
+			<div class="clearfix"></div>
+		</form>
+	</div>
+</div>
+	{% comment %}
 			<div class = "logo">
 			<a href="{% url 'home' %}"><img class="logo" src="{% static 'img/text-logo.png' %}" width="250" height="60" alt="Rocket Listing"></a>
 			</div>
@@ -45,4 +57,4 @@
 	</div>
 </div>
 
-
+{% endcomment %}

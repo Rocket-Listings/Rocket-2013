@@ -169,14 +169,12 @@ def ajax_listing_buyers(request, listing_id):
 	'''Returns a list of Buyers associated with the listing id (of the logged in user)'''
 	listing = get_object_or_404(Listing, id=listing_id)
 	buyers = listing.buyer_set.all().order_by('name')
-	print (buyers)
 
 	for buyer in buyers:
 		buyer.curMaxOffer =  buyer.max_offer()
 
 	# if 'application/json' in request.META.get('HTTP_ACCEPT'):
 	json = serializers.serialize("json", buyers)
-	print(json)
 	return HttpResponse(serializers.serialize("json", buyers), mimetype='application/json')
 	# else:
 		# return HttpResponseBadRequest("Sorry please submit a good request")

@@ -1,96 +1,13 @@
 {% extends "static_pages_base.html" %}
 {% load static from staticfiles %}
 
-{# should really have a static_pages_base.html #}
 {% block css %}<link type="text/css" rel="stylesheet" href="{% static 'css/static_pages.css' %}"/>{% endblock %}
-{% block js %}<script type="text/javascript" src="{% static 'js/static_pages.js' %}"></script>{% endblock %}
+
+{% block js %}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuRtB1F8XVtV22jQ3dkGQPqWCKQz4suJ0&sensor=false"></script>
+<script type="text/javascript" src="{% static 'js/static_pages.js' %}"></script>
+{% endblock %}
 
 {% block content %}
-	<div class="homepage-presenting">Introducing...</div>
-	<div class="homepage-heading">The hassle-free way to sell on Craigslist.</div>
-	<div class="homepage-subheading">Organize all your listings, emails, offers, and potential buyers in one place.</div>
-	
-	
-	<div class="homepage-row homepage-message">
-		<div class="homepage-listings-view">{#<img src="images/listings-view.png" rel="homepage listing"/>#}</div>
-		<div class="homepage-subheading" style = "margin-top: 40px;">You can create your listings on Craigslist and manage them here.</div>
-		<div class="homepage-subheading" style = "margin-top: 40px;">And, you can create a superior listing with us.</div>
-
-		<div class = "homepage-signup">
-			<a class="btn btn-danger btn-large btn-block" href="{% url "registration_register" %}" data-toggle="modal">Sign-up free</a>
-		</div>	
-	</div>
-
-	
-
-
-
-
-
-
-
-
-
-	<!--
-	<div class="homepage-row homepage-video">
-			<iframe width="868" height="488" src="http://www.youtube.com/embed/__9JOe04yO8" frameborder="0" allowfullscreen></iframe>
-	</div>
-	<div class="homepage-row homepage-pricing">
-		<div class="homepage-heading">How Pricing Works</div>
-		<ul class="pricing-list">
-			<li>
-				<img src="{% static 'img/freeBanner.png' %}" width="661" height="102" alt="Free" />
-				<h4 class="tooLong">Create 3 listings <br/> every month for free!</h4>
-			</li>
-			<li class="then">
-				<img src="{% static 'img/rocket-then.png' %}" alt="then" />
-			</li>
-			<li>
-				<img src="{% static 'img/oneDollarBanner.png' %}" width="661" height="102" />
-				<h4>Pay as you go - $1 per listing</h4>
-			</li>
-			<li class="or">
-				<img src="{% static 'img/rocket-or.png' %}" alt="or" />
-			</li>
-			<li>
-				<img src="{% static 'img/subscription-banner.png' %}" width="661" height="102" />
-				<h4>List all you want - $10 per month</h4>
-			</li>
-		</ul>
-		<span class="homepage-why-pay" data-trigger="hover" data-html="true" data-title="So we can make Rocket better." data-placement="right" data-content="<p>Rocket Listings cost a dollar so that the RL team up in Burlington, VT can continue making the Craigslist experience a bit awesomer.</p><p>And since RL templates tend to add more than a dollar to your product's final sale price, we figure it's a win-win. :)</p>">
-			<img src="{% static 'img/help.png' %}" rel="question mark"/>
-			Why isn't Rocket free?
-		</span>
-		<div class="clearfix"></div>    
-	</div>
-
-				
-		<div class="homepage-type">
-			<div class="homepage-feature-list" >
-				<ol>
-					<li>Use your Rocket Listings email when you list</li>
-					<li>Post your listing HTML everywhere using your <code class="text-info">@rocketlistings.com</code> email address.</li>
-					<li>Respond to waves of potential buyers through Rocket's organized dashboard.</li>
-					<li>Deal with each customer in a separate and straightforward message thread.</li>
-					<li>Rocket's algorithms look at your messages to pick out offers, questions, and appointment times to keep you organized.</li>
-					<li>Rocket Scientists are a phone call away! (Seriously, reach us at 240-479-4445)</li>
-				</ol>
-			</div>
-			<br/>
-			<a class="btn btn-primary btn-large" href="#modal-photo-upload" data-toggle="modal">
-				Upload photos to get started
-			</a>
-			
-			<div class="drag-and-drop" href="#modal-photo-upload" data-toggle="modal">
-				<div class="center">
-					<p class="InlineHoverNone">Drag and drop product photos<br/> anywhere to get started<br/></p>
-					<p class="noneHoverInline">Or click to upload normally</p>
-				</div>
-			</div>
-			
-		</div>
-		<div class="clearfix"></div>
-	</div>
--->
-
+	<h2>hello world!</h2>
 {% endblock %}
