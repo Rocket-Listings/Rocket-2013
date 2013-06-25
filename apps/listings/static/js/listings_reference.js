@@ -1,3 +1,5 @@
+
+
 $(document).ready(function(){
 	var prev = "";
 	function eventHandlers() {
@@ -33,22 +35,8 @@ $(document).ready(function(){
 	eventHandlers();
 });
 
-function FilePickClick(){
-  filepicker.pickMultiple({
-      mimetypes: ['image/*', 'text/plain'],
-      services:['COMPUTER', 'URL'],
-    },
-    function(InkBlob){
-      console.log(JSON.stringify(InkBlob));
-    },
-    function(FPError){
-      console.log(FPError.toString());
-    }
-  );
-};
-
 function fileUpload(){
-	filepicker.pickAndStore( {
+	filepicker.pickAndStore({
 		services: ['COMPUTER','URL'],
 		mimetype:"image/*",
 		multiple: true,
@@ -59,15 +47,17 @@ function fileUpload(){
 		}
 	);
 };
+
 function Edit(){
       $(document).ready(function(){
         $(".listing").hide();
         $(".edit").show();
     })
-  };
-  function Preview(){
+};
+
+function Preview(){
       $(document).ready(function(){
         $(".edit").hide();
         $(".listing").show();
     })
-  };
+};
