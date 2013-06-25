@@ -80,3 +80,23 @@ def on_incoming_admin_message(request):
 	else:
 		print "not verified"
 		return HttpResponse('Unauthorized')
+
+
+@csrf_exempt
+def on_incoming_buyer_message(request):
+
+	if request.method == 'POST':
+		print "buyer post recieved"
+		mime = request.POST.get('message-headers')
+		print mime
+		
+		user = get_object_or_404(User, username= request.POST.get('recipient').split('@')[0])
+		
+
+	if verify(request.POST.get('token', ''), request.POST.get('timestamp', ''), request.POST.get('signature', '')):
+		print "verified"
+		return HttpResponse('OK')
+
+	else:
+		print "not verified"
+		return HttpResponse('Unauthorized')
