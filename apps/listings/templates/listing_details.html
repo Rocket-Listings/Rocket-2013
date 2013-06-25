@@ -2,6 +2,10 @@
 {% load thumbnail %}
 
 {% block content %}
+  <script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
+  <script>
+      filepicker.setKey('ATM8Oz2TyCtiJiHu6pP6Qz');
+  </script>
 
 <div class="listing-dash">
   <div class="dash-title">
@@ -16,6 +20,7 @@
     toggling the buttons above</p>
   </div>
 </div>
+
 <div class="listing">
   <div class="row">
     <div class="l-body">
@@ -25,80 +30,40 @@
       <h1 class = "l-location"> ({{listing.location}}) </h1><!--This has to from the address function-->
     </div>
   </div>
+
   <div class="container">
           <!--  Carousel - consult the Twitter Bootstrap docs at 
           http://twitter.github.com/bootstrap/javascript.html#carousel -->
-    <div id="this-carousel-id" class="carousel slide"><!-- class of slide for animation -->
-      <div class="carousel-inner">
-        {% for photo in photos %}
-        <div {% if forloop.first %} class="item active"
-          {% else %} class="item"{% endif %}><!-- class of active since it's the first item -->
-          
-          <img src="{{ MEDIA_URL }}{{ photo.url }}" alt="" />
-          <div class="carousel-caption">
-            <p>This is the first Picture's description</p>
-          </div>
-        </div>
-      {% endfor %}
-      </div><!-- /.carousel-inner -->
-    <!--  Next and Previous controls below
-          href values must reference the id for this carousel -->
-    <a class="carousel-control left" href="#this-carousel-id" data-slide="prev">&lsaquo;</a>
-    <a class="carousel-control right" href="#this-carousel-id" data-slide="next">&rsaquo;</a>
-    </div><!-- /.carousel -->
+    <div class="span8">
+      <div id="this-carousel-id" class="carousel slide"><!-- class of slide for animation -->
+        <div class="carousel-inner">
+          {% for photo in photos %}
+            <div {% if forloop.first %} class="item active" {% else %} class="item"{% endif %}> <!-- class of active since it's the first item --> 
+              <img src="{{ MEDIA_URL }}{{ photo.url }}" alt="" />
+              <div class="carousel-caption">
+                <p>This is the first Picture's description</p>
+              </div>
+            </div>
+          {% endfor %}
+        </div><!-- /.carousel-inner -->
+        <!--  Next and Previous controls below
+              href values must reference the id for this carousel -->
+        <a class="carousel-control left" href="#this-carousel-id" data-slide="prev">&lsaquo;</a>
+        <a class="carousel-control right" href="#this-carousel-id" data-slide="next">&rsaquo;</a>
+      </div><!-- /.carousel -->
+    </div><!-- span8 -->
+    
+    <div class="l-description l-entry">
+      {{listing.description|linebreaks}}
+    </div>
 
-    {% comment %}
-                <!-- Example row of columns -->
-      <div class="row">
-        <div class="span4">
-          <h2><a href="#">Katsa</a></h2><!--Username/Nickname-->
-        </div>
-      </div>
-      <div class="address">
-        <h3 class="street">
-          152 Church Street
-        </h3>
-        <h3 class="city">
-          Burlington
-        </h3>
-        <h3 class="state">
-          VT
-        </h3>
-      </div>
-    {% endcomment %}
-
-      <div class="l-description l-entry">
-        {{listing.description|linebreaks}}
-      </div>
-
-    {% comment %}
-      <div class="specs">
-        <table border='1'>
-          <tr>
-            <td>Dimensions</td>
-            <td>25X11</td>
-          </tr>
-          <tr>
-            <td>Year</td>
-            <td>2005</td>
-          </tr>
-          <tr>
-            <td>Condition</td>
-            <td>Good</td>
-          </tr>
-        </table>
-      </div>
-    {% endcomment %}
-
-    <hr>
-
-      <footer>
-        <p class = "pID" style="text-align:left;float:left;">Posting ID: </p>
-        <p class = "pIDn" style="text-align:left;float:left;">1231441342342134141</p>
-        <p style="text-align:left;float:left;"> Posted: </p>
-        <p id = "date" style="text-align:left;float:left;"> </p>
-        <p id ='time'></p>
-      </footer>
+    <footer>
+      <p class = "pID" style="text-align:left;float:left;">Posting ID: </p>
+      <p class = "pIDn" style="text-align:left;float:left;">1231441342342134141</p>
+      <p style="text-align:left;float:left;"> Posted: </p>
+      <p id = "date" style="text-align:left;float:left;"> </p>
+      <p id ='time'></p>
+    </footer>
   </div> <!-- /container -->
 </div>
 
@@ -120,7 +85,7 @@
       </h1>
     </div>
   </div>
-  <button type="button" class="btn btn-primary" onclick='FilePickClick()'>Upload Pictures Here</button>
+  <button type="button" class="btn btn-primary" onclick='fileUpload()'>Upload Pictures Here</button>
   </br>
 
 
@@ -129,8 +94,6 @@
     <input type="text" placeholder="Description" rows="3">
   </div>
 
-
-    <hr>
 
       <footer>
         <p class = "pID" style="text-align:left;float:left;">Posting ID: </p>
