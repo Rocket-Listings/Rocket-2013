@@ -2,67 +2,150 @@
 {% block title %}Account Info{% endblock %}
 
 {% block content %}
-<h3>{{user.username}}</h3>
+<h3>Manage {{user.username}}'s account</h3>
 
 <div class="user-profile-table-group">
-	<table class="table user-profile-table">
+	<h4>User Info</h4>
+	<table class="table table-striped user-profile-table">
 		<tbody>
 			<tr>
-				<td>Rocket Email:</td>
-				<td><code class="text-info">{{user.username}}@rocketlistings.mailgun.org</code></td>
-			</tr>
-			<tr>
-				<td>Name:</td>
+				<td class="category">Name:</td>
 				{% if profile.name %}
 				<td>{{ profile.name }}</td>
 				{% else %}
-				<td>Add a name to your profile</td>
+				<td class="muted">Add a name to your profile</td>
 				{% endif %}
+				<td><a href="#">Edit</a></td>
+			</tr>
+			<tr>
+				<td>Password:</td>
+				<td>&#149;&#149;&#149;&#149;&#149;&#149;&#149;&#149;</td>
+				<td><a href="{% url 'auth_password_change' %}">Change password</a></td>
 			</tr>
 			<tr>
 				<td>Email:</td>
 				<td>{{ user.email }}</td>
+				<td><a href="#">Edit</a></td>
+			</tr>
+			<tr>
+				<td>Phone:</td>
+				{% if profile.phone %}
+				<td>{{ profile.phone }}</td>
+				{% else %}
+				<td class="muted">Add a phone number to your profile</td>
+				{% endif %}
+				<td><a href="#">Edit</a></td>
 			</tr>
 			<tr>
 				<td>Seller Blurb:</td>
 				{% if profile.bio %}
 				<td>{{ profile.bio }}</td>
 				{% else %}
-				<td>Add a bio to your profile</td>
+				<td class="muted">Add a bio to your profile</td>
 				{% endif %}
+				<td><a href="#">Edit</a></td>
 			</tr>
 			<tr>
 				<td>Location:</td>
 				{% if profile.location %}
 				<td>{{ profile.location }}</td>
 				{% else %}
-				<td>Add a default location for your listings</td>
+				<td class="muted">Add a default location for your listings</td>
 				{% endif %}
+				<td><a href="#">Edit</a></td>
+			</tr>
+		</tbody>
+	</table>
+	<h4>Listings</h4>
+	<table class="table table-striped user-profile-table">
+		<tbody>
+			<tr>
+				<td>Rocket Email:</td>
+				<td><code class="text-info">{{user.username}}@rocketlistings.mailgun.org</code></td>
+				<td></td>
 			</tr>
 			<tr>
 				<td>Default Category:</td>	
 				{% if profile.default_category.name  %}
 				<td>{{ profile.default_category.name  }}</td>
 				{% else %}
-				<td>Add a default category for your listings</td>
+				<td class="muted">Add a default category for your listings</td>
 				{% endif %}
+				<td><a href="#">Edit</a></td>
 			</tr>
 			<tr>
 				<td>Default Listing Type:</td>
 				{% if profile.default_listing_type.name  %}
 				<td>{{ profile.default_listing_type.name }}</td>
 				{% else %}
-				<td>Add a default listing type</td>
+				<td class="muted">Add a default listing type</td>
 				{% endif %}
+				<td><a href="#">Edit</a></td>
 			</tr>
 		</tbody>
 	</table>
+	<!-- {# <h4>Notifications</h4>
+	<table class="table table-striped user-profile-table">
+		<tbody>
+			<tr>
+				<td class="no-wrap">Send me emails about my listings</td>
+				<td>{{ profile.emailpref }}Weekly</td>
+				<td><a href="#">Edit</a></td>
+			</tr>
+		</tbody>
+	</table> #} -->
+	<h4>Privacy</h4>
+	<table class="table table-striped user-profile-table">
+		<tbody>
+			<tr>
+				<td>Email:</td>
+				{% if profile.emailprivate %}
+				<td>Private</td>
+				{% else %}
+				<td>Public</td>
+				{% endif %}
+				<td><a href="#">Edit</a></td>
+			</tr>
+			{% if profile.name %}
+			<tr>
+				<td>Name:</td>
+				{% if profile.nameprivate %}
+				<td>Private</td>
+				{% else %}
+				<td>Public</td>
+				{% endif %}
+				<td><a href="#">Edit</a></td>
+			</tr>
+			{% endif %}
+			{% if profile.bio %}
+			<tr>
+				{% if profile.bioprivate %}
+				<td>Private</td>
+				{% else %}
+				<td>Public</td>
+				{% endif %}
+				<td><a href="#">Edit</a></td>
+			</tr>
+			{% endif %}
+			{% if profile.location %}
+			<tr>
+				{% if profile.locationprivate %}
+				<td>Private</td>
+				{% else %}
+				<td>Public</td>
+				{% endif %}
+				<td><a href="#">Edit</a></td>
+			</tr>
+			{% endif %}
+		</tbody>
+	</table>
+
 
 <div class="user-info-buttons">
-	<a class="btn btn-info" href="{% url 'users.views.edit' user.username %}">Edit your account info.</a>
-	<a class="btn btn-warning" href="{% url 'auth_password_change' %}">Change your password.</a>
+	<!--<a class="btn btn-info" href="{% url 'users.views.edit' user.username %}">Edit your account info.</a>
+	<a class="btn btn-warning" href="{% url 'auth_password_change' %}">Change your password.</a>-->
 	<a class="btn btn-warning" href="{% url 'users.views.profile' user.username %}">View your profile.</a>
 	<div class="clearfix"></div>
-	</div>
+</div>
 </div>
 {% endblock %}

@@ -12,6 +12,10 @@ class UserProfile(models.Model):
 	default_listing_type = models.ForeignKey(ListingType, null=True, blank=True)
 	email = models.EmailField(max_length=255, blank=True)
 	bio = models.TextField(blank=True)
+	nameprivate = models.BooleanField(blank=False, null=False)
+	emailprivate = models.BooleanField(blank=False, null=False)
+	biopricate = models.BooleanField(blank=False, null=False)
+	locationprivate = models.BooleanField(blank=False, null=False)
 
 	def get_absolute_url(self):
 		return reverse('users.views.info', args=[self.user.username])
