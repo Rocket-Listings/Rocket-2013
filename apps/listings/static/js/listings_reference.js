@@ -9,14 +9,16 @@ $(document).ready(function(){
 
 	function handleForSaleClick(e){
 		var val = ($(this).attr("data-id"));
-
 		$("#category").text( "for sale >> " + $(this).html());
 		$("#collapseOne").collapse('hide');
 		if (prev != val ){
 			$('.category_' + prev).hide();
 			$(".edit").show();
 			$('.category_' + val).show();
+			console.log('p '+prev);
 			prev = val;
+			console.log('d  '+prev);
+			console.log(val);
 
 		}
 		else{
@@ -27,9 +29,23 @@ $(document).ready(function(){
 	}
 
 	function handleHousingClick(e){
+		var val = ($(this).attr("data-id"));
 		$("#category").text("housing >> " + $(this).html());
 		$("#collapseTwo").collapse('hide');
+		if (prev != val ){
+			$('.category_' + prev).hide();
+			$(".edit").show();
+			$('.category_' + val).show();
+			console.log('p '+prev);
+			prev = val;
+			console.log('d '+prev);
+			console.log(val);
+		}
+		else{
+		prev = val;
 		$(".edit").show();
+		$('.category_' + val).show();
+		}
 	}
 
 	eventHandlers();

@@ -4,7 +4,7 @@
 
 {% block content %}
 
-	<body class='specs'>
+	<div class="for sale" style="margin-bottom:10px;">
 		<div class="category_appliances" style = "display: none;">
 			<table border='1'>
 				<tr>
@@ -774,7 +774,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>Digital?></td>
+					<td>Digital?</td>
 					<td>
 						<select id='Digital' name='Digital'>
 						<option value selected="selected">-----</option>
@@ -818,7 +818,168 @@
 				</tr>
 			</table>
 		</div>
-	</body>
+	</div>
+	<div class="category_housing" style = "display: none; margin-bottom:10px;">
+		<table border='1'>
+			<tr>
+				<td>Rooms</td>	
+				<td><input type="text" placeholder="(Optional)"></td>
+				<td></td>
+				<td>No. of Bathooms</td>	
+				<td><input type="text" placeholder="(Optional)"></td>
+			</tr>
+			<tr>
+				<td>Floor Number</td>	
+				<td><input type="text" placeholder="(Optional)"></td>
+				<td></td>
+				<td>Payment Plan</td>
+				<td>
+					<select id='Payment Plan' name='Payment Plan'>
+					<option value selected="selected">-----</option>
+					<option value='1'>Monthly</option>
+					<option value='2'>One Payment</option>
+					<option vlaue='3'>Weekly</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Type of Property</td>
+				<td>
+					<select id='Type of Property' name='Type of Property'>
+					<option value selected="selected">-----</option>
+					<option value='1'>House</option>
+					<option value='2'>Apartment</option>
+					<option value='3'>Condo</option>
+					</select>
+				</td>
+				<td></td>
+				<td>Wifi</td>
+				<td>
+					<select id='Wifi' name='Wifi'>
+					<option value selected="selected">-----</option>
+					<option value='1'>Yes</option>
+					<option value='2'>No</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Cable</td>
+				<td>
+					<select id='Cable' name='Cable'>
+					<option value selected="selected">-----</option>
+					<option value='1'>Yes</option>
+					<option value='2'>No</option>
+					</select>
+				</td>
+				<td></td>
+				<td>Television</td>
+				<td>
+					<select id='Television' name='Television'>
+					<option value selected="selected">-----</option>
+					<option value='1'>Yes</option>
+					<option value='2'>No</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Gym</td>
+				<td>
+					<select id='Gym' name='Gym'>
+					<option value selected="selected">-----</option>
+					<option value='1'>Yes</option>
+					<option value='2'>No</option>
+					</select>
+				</td>
+				<td></td>
+				<td>Laundry</td>
+				<td>
+					<select id='Laundry' name='Laundry'>
+					<option value selected="selected">-----</option>
+					<option value='1'>Yes</option>
+					<option value='2'>No</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>A/C</td>
+				<td>
+					<select id='ac' name='ac'>
+					<option value selected="selected">-----</option>
+					<option value='1'>Yes</option>
+					<option value='2'>No</option>
+					</select>
+				</td>
+				<td></td>
+				<td>Pets</td>
+				<td>
+					<select id='Pets' name='Pets'>
+					<option value selected="selected">-----</option>
+					<option value='1'>Yes</option>
+					<option value='2'>No</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Parking</td>
+				<td>
+					<select id='Parking' name='Parking'>
+					<option value selected="selected">-----</option>
+					<option value='1'>Yes</option>
+					<option value='2'>No</option>
+					</select>
+				</td>
+				<td></td>
+				<td>Fidge</td>
+				<td>
+					<select id='Fidge' name='Fidge'>
+					<option value selected="selected">-----</option>
+					<option value='1'>Yes</option>
+					<option value='2'>No</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Oven</td>
+				<td>
+					<select id='Oven' name='Oven'>
+					<option value selected="selected">-----</option>
+					<option value='1'>Yes</option>
+					<option value='2'>No</option>
+					</select>
+				</td>
+				<td></td>
+				<td>Stove</td>
+				<td>
+					<select id='Stove' name='Stove'>
+					<option value selected="selected">-----</option>
+					<option value='1'>Yes</option>
+					<option value='2'>No</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Microwave</td>
+				<td>
+					<select id='Microwave' name='Microwave'>
+					<option value selected="selected">-----</option>
+					<option value='1'>Yes</option>
+					<option value='2'>No</option>
+					</select>
+				</td>
+				<td></td>
+				<td>View</td>
+				<td>
+					<select id='View' name='View'>
+					<option value selected="selected">-----</option>
+					<option value='1'>Yes</option>
+					<option value='2'>No</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+
 {% endblock %}
 
 
