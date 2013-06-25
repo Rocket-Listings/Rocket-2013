@@ -12,18 +12,14 @@ $(document).ready(function(){
 		$("#collapseOne").collapse('hide');
 		if (prev != val ){
 			$('.category_' + prev).hide();
+			$(".edit").show();
 			$('.category_' + val).show();
-
-			console.log('v'+val);
-			console.log('p'+prev);
 			prev = val;
-			console.log('p'+prev);
 
 		}
 		else{
 		prev = val;
-		console.log(prev);
-		console.log(val);
+		$(".edit").show();
 		$('.category_' + val).show();
 		}
 	}
@@ -52,10 +48,26 @@ function FilePickClick(){
 };
 
 function fileUpload(){
-	filepicker.pickAndStore({
-		mimetype:"image/*"},
-	    {location:"S3"}, 
-	    function(InkBlobs){
-	   		console.log(JSON.stringify(InkBlobs));
-	});
+	filepicker.pickAndStore( {
+		services: ['COMPUTER','URL'],
+		mimetype:"image/*",
+		multiple: true,
+		},
+		{location:"S3"},
+	function(InkBlobs){
+		console.log(JSON.stringify(InkBlobs));
+		}
+	);
 };
+function Edit(){
+      $(document).ready(function(){
+        $(".listing").hide();
+        $(".edit").show();
+    })
+  };
+  function Preview(){
+      $(document).ready(function(){
+        $(".edit").hide();
+        $(".listing").show();
+    })
+  };

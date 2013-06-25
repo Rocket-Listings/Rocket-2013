@@ -2,62 +2,25 @@
 {% load thumbnail %}
 
 {% block content %}
-    {% block js %}
-      <script type="text/javascript"> (function(a){if(window.filepicker){return}var b=a.createElement("script");b.type="text/javascript";b.async=!0;b.src=("https:"===a.location.protocol?"https:":"http:")+"//api.filepicker.io/v1/filepicker.js";var c=a.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c);var d={};d._queue=[];var e="pick,pickMultiple,pickAndStore,read,write,writeUrl,export,convert,store,storeUrl,remove,stat,setKey,constructWidget,makeDropPane".split(",");var f=function(a,b){return function(){b.push([a,arguments])}};for(var g=0;g<e.length;g++){d[e[g]]=f(e[g],d._queue)}window.filepicker=d})(document); </script>
-      <script>
-        filepicker.setKey('ATM8Oz2TyCtiJiHu6pP6Qz');
-      </script>
-      <script>
-        function FilePickClick(){
-          filepicker.pickMultiple({
-              mimetypes: ['image/*', 'text/plain'],
-              services:['COMPUTER', 'URL'],
-            },
-            function(InkBlob){
-              console.log(JSON.stringify(InkBlob));
-            },
-            function(FPError){
-              console.log(FPError.toString());
-            }
-          );
-        }
-      </script>
-    {% endblock %}
 
 <div class="listing-dash">
-<div class="dash-title">
-<div class="btn-group" data-toggle="buttons-radio">
-  <button type="button" class="btn btn-primary" onclick="Edit()">Edit</button>
-  <button type="button" class="btn btn-primary active" onclick="Preview()">Preview</button>
+  <div class="dash-title">
+    <div class="btn-group" data-toggle="buttons-radio">
+      <button type="button" class="btn btn-primary" onclick="Edit()">Edit</button>
+      <button type="button" class="btn btn-primary active" onclick="Preview()">Preview</button>
+    </div>
+  </div>  
+  <div class="dash-content">
+    <p>Choose whether to edit or </br>
+    preview your content by </br>
+    toggling the buttons above</p>
+  </div>
 </div>
-</div>
-<div class="dash-content">
-<p>Choose whether to edit or </br>
-preview your content by </br>
-toggling the buttons above</p>
-</div>
-</div>
-<script>
-  function Edit(){
-      $(document).ready(function(){
-        $(".preview").hide();
-        $(".edit").show();
-    })
-  };
-  function Preview(){
-      $(document).ready(function(){
-        $(".edit").hide();
-        $(".preview").show();
-    })
-  };
-
-</script>
-
-<div class="preview">
+<div class="listing">
   <div class="row">
-    <div class="l-header">
+    <div class="l-body">
       <h1 class="l-title" style="text-align:left;float:left;">{{listing.title}}</h1>
-      <h1 class="l-dash" style="text-align:left;float:left;"> - </h1>
+      <h1 class="l-dash" style="text-align:left;float:left;margin-left:11px;"> - </h1>
       <h1 class="l-price" style="text-align:left;float:left;"> <span>&nbsp;</span>${{listing.price}}</h1>
       <h1 class = "l-location"> ({{listing.location}}) </h1><!--This has to from the address function-->
     </div>
@@ -148,9 +111,10 @@ toggling the buttons above</p>
       <h1 class="l-title" style="text-align:left;float:left;">
           <form_listing>
             <fieldset>
-              <input type="text" placeholder="Title (E.g. 2001 Honda Civic)">
-              <input type="text" placeholder="Listing Price">
-              <input type="text" placeholder="Location">
+              <input type="text" class="l-title" style="text-align:left;float:left;" placeholder="{{listing.title}}">
+              <h1 class="l-dash" style="text-align:left;float:left;"> - </h1>
+              <input type="text" class="l-price" placeholder="{{listing.price}}">
+              <input type="text" class = "l-location" placeholder="({{listing.location}})">
             </fieldset>
           </form>
       </h1>
