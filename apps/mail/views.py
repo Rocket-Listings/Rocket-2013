@@ -61,24 +61,17 @@ def on_incoming_admin_message(request):
 
 	if request.method == 'POST':
 		print "admin post recieved"
-		
 
 		user = get_object_or_404(User, username= request.POST.get('recipient').split('@')[0])
 		listing = user.listing_set.get(title__exact= request.POST.get('subject', '').partition('"')[2].partition('"')[0])
 		email = user.email
-		
-		print send_mail( request.POST.get('subject', '') , request.POST.get('body-plain', ''), 'rocket@rocketlistings.mailgun.org', [email], fail_silently=False)
-
+		send_mail( request.POST.get('subject', '') , request.POST.get('body-plain', ''), 'rocket@rocketlistings.mailgun.org', [email], fail_silently=False)
 		message = Message(listing = listing, content = request.POST.get('body-plain', ''), buyer = listing.buyer_set.get(name__exact = "Craigslist"))
 		message.save()
 
-
 	if verify(request.POST.get('token', ''), request.POST.get('timestamp', ''), request.POST.get('signature', '')):
-		print "verified"
 		return HttpResponse('OK')
-
 	else:
-		print "not verified"
 		return HttpResponse('Unauthorized')
 
 
@@ -89,7 +82,25 @@ def on_incoming_buyer_message(request):
 		print "buyer post recieved"
 		mime = request.POST.get('message-headers')
 		print mime
-		
+
+
+		sender = request.POST.get('sender')
+		print sender
+		recipient = request.POST.get('recipient')
+		print recipient
+		subject   = request.POST.get('subject', '')
+		print subject
+		frm = request.POST.get('from', '')
+		print frm.partition('"')[2].partition('"')[0]
+		body = request.POST.get('body-plain', '')
+		print body
+		body_html = request.POST.get('body-html', '')
+		print body_html
+		text = request.POST.get('stripped-text', '')
+		print text
+		signature = request.POST.get('stripped-signature', '')
+		print signature
+
 		user = get_object_or_404(User, username= request.POST.get('recipient').split('@')[0])
 		
 
