@@ -126,40 +126,35 @@
             <div class="l-header">
               <h1 class="l-title" style="text-align:left;float:left;">
                   <form_listing>
-                    <fieldset>
-                      <input type="text" placeholder="Title (E.g. 2001 Honda Civic)">
-                      <input type="text" placeholder="Listing Price">
-                      <input type="text" placeholder="Location">
-                    </fieldset>
-                  </form>
+            <fieldset>
+              <input type="text" class="l-title" style="text-align:left;float:left;margin-left:30px;" placeholder="Enter Listing Title">
+              <h1 class="l-dash" style="text-align:left;float:left;"> - </h1>
+              <input type="text" class="l-price" placeholder="Enter Listing Price">
+              <input type="text" class = "l-location" placeholder="Enter Listing Location">
+            </fieldset>
+          </form>
               </h1>
             </div>
           </div>
-          <button type="button" class="btn btn-primary" onclick='fileUpload()'>Upload Pictures Here</button>
+          <button type="button" class="btn btn-primary" onclick='fileUpload()' style="margin-bottom:10px;">Upload Pictures Here</button>
           </br>
 
 
           <div class="l-description l-entry">
 
-            <input type="text" placeholder="Description" rows="3">
+            <input type="text" placeholder="Enter Listing Description" rows="3">
           </div>
+          {% include "listings_specs.html" %}
 
 
-            <hr>
-
-              <footer>
-                <p class = "pID" style="text-align:left;float:left;">Posting ID: </p>
-                <p class = "pIDn" style="text-align:left;float:left;">1231441342342134141</p>
-                <p style="text-align:left;float:left;"> Posted: </p>
-                <p id = "date" style="text-align:left;float:left;"> </p>
-                <p id ='time'></p>
-              </footer>
-          </div> 
-        </div>
         <!-- End Edit Page -->
 
 
 
 	</body>
-    {% include "listings_specs.html" %}
+    <footer>
+         <button type="button" class="btn btn-primary" onclick='' style="margin-top:10px;">Submit</button>
+    </footer>
+
+    
 {% endblock %}
