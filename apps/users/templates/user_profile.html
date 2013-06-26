@@ -1,22 +1,13 @@
 {% extends 'users_base.html' %}
 {% load static from staticfiles %}
 
-
-{% block title %} Account Profile {% endblock %}
-
 {% block js %}
-	<script>
-	$(document).ready(function(){
-		if (profile.bio.length > 200) {
-			var bio = getElementsByTagName('biography');
-			bio = profile.bio.substring(0,100)+"...";
-		}
-	}
-	</script>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 
 {% endblock %}
 
 
+<<<<<<< HEAD
 {% block content %}
 
 			<div class="profile_heading">
@@ -35,33 +26,83 @@
 						<p id="biography">{{ profile.bio }} </p>
 					</div>
 			</div>
+=======
+{% block title %} Account Profile {% endblock %}
+>>>>>>> 1727c78049e3d1c9f01e6dc8f234777144506712
 
-<div class="user-profile-page">
-	<table class="table user-profile-">
-		<tbody>
+{% block content %}
+<div class="profile_heading">
+	<span class="profile-picture">
+		{% comment %}
+		{% if user.photo %}
+			<img src=" {% static 'images/unknown_user_photo.jpg' %}" alt="Profile Pic" width='250px' height='300px'>
+		{% else %}
+			<img src=" {% user.photo %}" alt="Profile Pic" width='250px' height='300px'>
+		{% endif %}
+		{% endcomment %}
+		<img src=" {% static 'images/unknown_user_photo.jpg' %}" alt="Profile Pic" width='250px' height='300px'>
+	</span>
+	<span class="profile_user_info">
+		{% if profile.name %}
+			<p class="name">{{ profile.name }}</p>
+			{% if profile.location %}
+				<p class="location">{{ profile.location }}</p>
+			{% else %}
+				<p class="location">Location: Unknown</p>
+			{% endif %}
+		{% else %}
+			<p class="name">"{{ user.username }}"</p>
 
-			
-			<tr class="selling-these-items">
-				<code class ="text-info">What {{ profile.name }} is selling: </code>
-			</tr>
-			<br>
-			
-			<tr class="user-testimonials">
+			{% if profile.location %}
+				<p class="location">{{ profile.location }}</p>
+			{% else %}
+				<p class="location">Location: Unknown</p>
+			{% endif %}
+		{% endif %}
+		<p><a class="btn btn-warning">Message</a></p>
+	</span>
 
-					TESTIMONIALS
-
-			</tr>
-			
-			<tr>
-				<td>
-							-------Contact  Card---------
-				</td>
-				<td>
-							--------Google Map---------
-				</td>
-			</tr>
-		</tbody>
-	</table>
+	<div class="profile-bio">
+		<h5>About</h5>
+		<div class="bio-display after" id="dot3" style="word-wrap: break-word;">
+			{{ profile.bio }}
+			<a href="#" id="read" class="more">Read more &raquo;</a>
+		</div>
+	</div>
 </div>
+<div class="selling-these-items">
+	<code class ="text-info">What {{ profile.name }} is selling: </code>
 
+</div>
+<br>
+<span class="profile_carousel">
+	<div id="this-carousel-id" class="carousel slide">
+		<!-- class of slide for animation -->
+		<div class="carousel-inner">
+			{% for listing in listing %}
+			<div {% if forloop.first %} class="item active">{% endif %}
+				<!-- class of active since it's the first item -->
+				<div class="thumbnail">
+				{% with photos|first as first_photo %}
+					<img src="{{ MEDIA_URL }}{{ first_photo.url }}"/>
+					<h3 class="thumbnail-title">{{ listing.title }}</h3>
+					<p class="thumbnail-price">{{ listing.price }}</p>
+					<a href="{{ listing.get_absolute_url }}" >
+
+				</div>
+			</div>
+				{% endwith %}
+			{% endfor %}
+		</div>
+		{% comment %}
+		<!-- /.carousel-inner -->
+		<!--  Next and Previous controls below
+       		  href values must reference the id for this carousel -->
+       	{% endcomment %}
+		<a class="carousel-control left" href="#this-carousel-id" data-slide="prev">&lsaquo;</a>
+		<a class="carousel-control right" href="#this-carousel-id" data-slide="next">&rsaquo;</a>
+	</div>
+
+</span>
+<span id="map-canvas"></span>
 {% endblock %}

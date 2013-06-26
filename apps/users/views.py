@@ -1,4 +1,4 @@
-from listings.models import Listing
+from listings.models import Listing, ListingPhoto, Buyer, Offer, Message 
 #from users.models import UserProfile
 from users.forms import UserProfileForm
 from users.models import UserProfile
@@ -35,8 +35,20 @@ def info(request):
 	# return render(request, 'user_info.html', {'profile':profile,})
 
 def profile(request, username=None):
+<<<<<<< HEAD
 	user = User.objects.get(username=username)
 	return render(request, 'user_profile.html', {'user': user})
+=======
+	print username
+	profile = request.user.get_profile()
+	relevant_user = request.user
+	user=relevant_user
+	listings = Listing.objects.filter(user=relevant_user).order_by('-pub_date')[:10]
+	photos = ListingPhoto.objects.filter(listing=relevant_user)
+	# provide `url` and `thumbnail_url` for convenience.
+	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos) 
+	return render(request, 'user_profile.html', {'profile':profile, 'listings':listings, 'photos':photos})
+>>>>>>> 1727c78049e3d1c9f01e6dc8f234777144506712
 
 # @login_required
 # def edit(request, username):
