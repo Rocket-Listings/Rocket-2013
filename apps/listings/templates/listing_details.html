@@ -67,8 +67,8 @@
       <h1 class="l-title" style="text-align:left;float:left;">
           <form_listing>
             <fieldset>
-              <input type="text" class="l-title" style="text-align:left;float:left;" placeholder="{{listing.title}}">
-              <h1 class="l-dash" style="text-align:left;float:left;"> - </h1>
+              <input type="text" class="l-title" style="text-align:left;float:left;margin-top:5px;" placeholder="{{listing.title}}">
+              <h1 class="l-dash" style="text-align:left;float:left;margin-left:5px;margin-right:5px;margin-top:-3px;"> - </h1>
               <input type="text" class="l-price" placeholder="{{listing.price}}">
               <input type="text" class = "l-location" placeholder="({{listing.location}})">
             </fieldset>
@@ -79,11 +79,7 @@
   <button type="button" class="btn btn-primary" onclick='fileUpload()' style="margin-bottom:15px;">Upload Pictures Here</button>
   </br>
 
-
-  <div class="l-description l-entry">
-
-    <input type="text" placeholder="Description" rows="3">
-  </div>
+    <textarea type="text" placeholder="Description" style="height:150px;width:400px;"></textarea>
   </div> 
 </div>
 <!-- End Edit Page -->

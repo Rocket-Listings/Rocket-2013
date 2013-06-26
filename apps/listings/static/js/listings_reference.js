@@ -68,9 +68,12 @@ function fileUpload(){
 function filePreview(ink){
 	var text = ""
 	for (var i=0; i<ink.length; i++){ 
-		text = text + ink[i].filename + " sucessfully uploaded.  "
+		text = ink[i].filename + " sucessfully uploaded."
+		var li = $('<li>')
+			.text(text)
+			.appendTo('#pics');
 	}
-	$("#pics").text( text );
+
 }
 
 
