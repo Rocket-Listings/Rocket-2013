@@ -169,12 +169,10 @@ def autopost(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
 	photos = ListingPhoto.objects.filter(listing=listing).order_by('order')
 
-	buyers = listing.buyer_set.all()
-	for buyer in buyers:
-		if buyer.name == "Craigslist":
-			break
-	else:
-		b = Buyer(listing = listing, name = "Craigslist")#create a "buyer" to recieve cl messages
+	try:
+		b = Buyer.objects.get(listing= listing, name= "Craigslist")
+	except ObjectDoesNotExist:
+		b = Buyer(listing = listing, name = "Craigslist", email = "robots@craigslist.org")
 		b.save()
 	
 	
