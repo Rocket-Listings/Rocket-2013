@@ -1,0 +1,18 @@
+{% extends "static_pages_base.html" %}
+{% load static from staticfiles %}
+
+{% block css %}<link type="text/css" rel="stylesheet" href="{% static 'css/static_pages.css' %}"/>{% endblock %}
+
+{% block js %}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuRtB1F8XVtV22jQ3dkGQPqWCKQz4suJ0&sensor=false"></script>
+<script type="text/javascript" src="{% static 'js/static_pages.js' %}"></script>
+{% endblock %}
+
+{% block title %}Who Are We?{% endblock %}
+{% block content %}
+<h2> Who are we? </h2>
+<h1> CATS! </h1>
+<img src="{{STATIC_URL}}/img/watermelon-cat.png">
+	
+
+{% endblock %}
