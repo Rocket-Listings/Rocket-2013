@@ -1,6 +1,30 @@
 .user-profile-table-group {
   float: left;
 }
+.user-profile-table-group .user-profile-table tbody tr td a {
+  float: right;
+}
+.user-profile-table-group .user-profile-table tbody tr td span {
+  float: right;
+}
+.user-profile-table-group .user-profile-table tbody tr td:nth-child(1) {
+  width: 150px;
+}
+.user-profile-table-group .user-profile-table tbody tr td:nth-child(2) {
+  width: 300px;
+}
+.user-profile-table-group .user-profile-table tbody tr td.bio {
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.user-profile-table-group .user-profile-table tbody tr td.form-partial {
+  padding: 3px 5px 0 1px;
+}
+.user-profile-table-group .user-profile-table tbody tr.in-edit {
+  background-color: #ededed;
+}
 /*.user-email-box{
 	float: right;
 	text-align: center;

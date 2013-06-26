@@ -1,4 +1,36 @@
 .user-profile-table-group{
+	.user-profile-table {
+		tbody {
+			tr {
+				td {
+					a {
+						float: right;
+					}
+					span {
+						float: right;
+					}
+					&:nth-child(1) {
+						width: 150px;
+					}
+					&:nth-child(2) {
+						width: 300px;
+					}
+					&.bio {
+						max-width: 300px;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
+					}
+					&.form-partial {
+						padding: 3px 5px 0 1px;
+					}
+				}
+				&.in-edit {
+					background-color: #ededed;
+				}	
+			}
+		}
+	}
 	float: left;
 }
 
