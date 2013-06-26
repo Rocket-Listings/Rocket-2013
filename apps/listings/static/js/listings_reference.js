@@ -1,5 +1,3 @@
-
-
 $(document).ready(function(){
 	var prev = "";
 	function eventHandlers() {
@@ -11,6 +9,7 @@ $(document).ready(function(){
 		var val = ($(this).attr("data-id"));
 
 		$("#category").text( "for sale >> " + $(this).html());
+		$("#nameTitle").text($(this).html());
 		$("#collapseOne").collapse('hide');
 		if (prev != val ){
 			$('.category_' + prev).hide();
@@ -30,6 +29,7 @@ $(document).ready(function(){
 		$("#category").text("housing >> " + $(this).html());
 		$("#collapseTwo").collapse('hide');
 		$(".edit").show();
+		$("#nameTitle").text($(this).html());
 	}
 
 	eventHandlers();
@@ -39,25 +39,35 @@ function fileUpload(){
 	filepicker.pickAndStore({
 		services: ['COMPUTER','URL'],
 		mimetype:"image/*",
-		multiple: true,
+		multiple: true
 		},
 		{location:"S3"},
 	function(InkBlobs){
-		console.log(JSON.stringify(InkBlobs));
+		var inky = InkBlobs;
+		filePreview(inky);
 		}
 	);
-};
+}
+
+function filePreview(ink){
+	var text = ""
+	for (var i=0; i<ink.length; i++){ 
+		text = text + ink[i].filename + " sucessfully uploaded.  "
+	}
+	$("#pics").text( text );
+}
+
 
 function Edit(){
       $(document).ready(function(){
         $(".listing").hide();
         $(".edit").show();
-    })
-};
+    });
+}
 
 function Preview(){
       $(document).ready(function(){
         $(".edit").hide();
         $(".listing").show();
-    })
-};
+    });
+}
