@@ -2,150 +2,274 @@
 {% block title %}Account Info{% endblock %}
 
 {% block content %}
-<h3>Manage {{user.username}}'s account</h3>
+{% if profile.name %}
+<h3>{{ profile.name }}'s info</h3>
+{% else %}
+<h3>{{user.username}}'s info</h3>
+{% endif %}
 
 <div class="user-profile-table-group">
-	<h4>User Info</h4>
-	<table class="table table-striped user-profile-table">
-		<tbody>
-			<tr>
-				<td class="category">Name:</td>
-				{% if profile.name %}
-				<td>{{ profile.name }}</td>
-				{% else %}
-				<td class="muted">Add a name to your profile</td>
-				{% endif %}
-				<td><a href="#">Edit</a></td>
-			</tr>
-			<tr>
-				<td>Password:</td>
-				<td>&#149;&#149;&#149;&#149;&#149;&#149;&#149;&#149;</td>
-				<td><a href="{% url 'auth_password_change' %}">Change password</a></td>
-			</tr>
-			<tr>
-				<td>Email:</td>
-				<td>{{ user.email }}</td>
-				<td><a href="#">Edit</a></td>
-			</tr>
-			<tr>
-				<td>Phone:</td>
-				{% if profile.phone %}
-				<td>{{ profile.phone }}</td>
-				{% else %}
-				<td class="muted">Add a phone number to your profile</td>
-				{% endif %}
-				<td><a href="#">Edit</a></td>
-			</tr>
-			<tr>
-				<td>Seller Blurb:</td>
-				{% if profile.bio %}
-				<td>{{ profile.bio }}</td>
-				{% else %}
-				<td class="muted">Add a bio to your profile</td>
-				{% endif %}
-				<td><a href="#">Edit</a></td>
-			</tr>
-			<tr>
-				<td>Location:</td>
-				{% if profile.location %}
-				<td>{{ profile.location }}</td>
-				{% else %}
-				<td class="muted">Add a default location for your listings</td>
-				{% endif %}
-				<td><a href="#">Edit</a></td>
-			</tr>
-		</tbody>
-	</table>
-	<h4>Listings</h4>
-	<table class="table table-striped user-profile-table">
-		<tbody>
-			<tr>
-				<td>Rocket Email:</td>
-				<td><code class="text-info">{{user.username}}@rocketlistings.mailgun.org</code></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>Default Category:</td>	
-				{% if profile.default_category.name  %}
-				<td>{{ profile.default_category.name  }}</td>
-				{% else %}
-				<td class="muted">Add a default category for your listings</td>
-				{% endif %}
-				<td><a href="#">Edit</a></td>
-			</tr>
-			<tr>
-				<td>Default Listing Type:</td>
-				{% if profile.default_listing_type.name  %}
-				<td>{{ profile.default_listing_type.name }}</td>
-				{% else %}
-				<td class="muted">Add a default listing type</td>
-				{% endif %}
-				<td><a href="#">Edit</a></td>
-			</tr>
-		</tbody>
-	</table>
-	<!-- {# <h4>Notifications</h4>
-	<table class="table table-striped user-profile-table">
-		<tbody>
-			<tr>
-				<td class="no-wrap">Send me emails about my listings</td>
-				<td>{{ profile.emailpref }}Weekly</td>
-				<td><a href="#">Edit</a></td>
-			</tr>
-		</tbody>
-	</table> #} -->
-	<h4>Privacy</h4>
-	<table class="table table-striped user-profile-table">
-		<tbody>
-			<tr>
-				<td>Email:</td>
-				{% if profile.emailprivate %}
-				<td>Private</td>
-				{% else %}
-				<td>Public</td>
-				{% endif %}
-				<td><a href="#">Edit</a></td>
-			</tr>
-			{% if profile.name %}
-			<tr>
-				<td>Name:</td>
-				{% if profile.nameprivate %}
-				<td>Private</td>
-				{% else %}
-				<td>Public</td>
-				{% endif %}
-				<td><a href="#">Edit</a></td>
-			</tr>
-			{% endif %}
-			{% if profile.bio %}
-			<tr>
-				{% if profile.bioprivate %}
-				<td>Private</td>
-				{% else %}
-				<td>Public</td>
-				{% endif %}
-				<td><a href="#">Edit</a></td>
-			</tr>
-			{% endif %}
-			{% if profile.location %}
-			<tr>
-				{% if profile.locationprivate %}
-				<td>Private</td>
-				{% else %}
-				<td>Public</td>
-				{% endif %}
-				<td><a href="#">Edit</a></td>
-			</tr>
-			{% endif %}
-		</tbody>
-	</table>
-
-
-<div class="user-info-buttons">
-	<!--<a class="btn btn-info" href="{% url 'users.views.edit' user.username %}">Edit your account info.</a>
-	<a class="btn btn-warning" href="{% url 'auth_password_change' %}">Change your password.</a>-->
-	<a class="btn btn-warning" href="{% url 'users.views.profile' user.username %}">View your profile.</a>
-	<div class="clearfix"></div>
-</div>
+	<form class="user-info-form form-horizontal" action="" method="POST">
+		<h4>User Info</h4>
+		<table class="table table-hover user-profile-table">
+			<tbody>
+				<tr>
+					<td>Name:</td>
+					{% if profile.name %}
+					<td>{{ profile.name }}</td>
+					{% else %}
+					<td class="muted">Add a name to your profile</td>
+					{% endif %}
+					<td><a class="edit" href="#">Edit</a></td>
+				</tr>
+				<tr class="in-edit hide">
+					<td>Name:</td>
+					<td class="form-partial">
+						<input name="name" type="text" value="{{ profile.name }}">
+						<input class="btn" type="submit" value="Save">
+					</td>
+					<td><span class="unedit muted">Edit</span></td>
+				</tr>
+				<tr>
+					<td>Password:</td>
+					<td>&#149;&#149;&#149;&#149;&#149;&#149;&#149;&#149;</td>
+					<td><a class="change-password" href="{% url 'auth_password_change' %}">Change password</a></td>
+				</tr>
+				<tr>
+					<td>Email:</td>
+					<td>{{ user.email }}</td>
+					<td><a class="edit" href="#">Edit</a></td>
+				</tr>
+				<tr class="in-edit hide">
+					<td>Email:</td>
+					<td class="form-partial">
+						<input name="email" type="text" value="{{ user.email }}">
+						<input class="btn" type="submit" value="Save">
+					</td>
+					<td><span class="unedit muted">Edit</span></td>
+				</tr>
+				<tr>
+					<td>Phone:</td>
+					{% if profile.phone %}
+					<td>{{ profile.phone }}</td>
+					{% else %}
+					<td class="muted">Add a phone number to your profile</td>
+					{% endif %}
+					<td><a class="edit" href="#">Edit</a></td>
+				</tr>
+				<tr class="in-edit hide">
+					<td>Phone:</td>
+					<td class="form-partial">
+						<input name="phone" type="text" value="{{ profile.phone }}">
+						<input class="btn" type="submit" value="Save">
+					</td>
+					<td><span class="unedit muted">Edit</span></td>
+				</tr>
+				<tr>
+					<td>Seller Blurb:</td>
+					{% if profile.bio %}
+					<td class="bio">{{ profile.bio }}</td>
+					{% else %}
+					<td class="muted">Add a bio to your profile</td>
+					{% endif %}
+					<td><a class="edit" href="#">Edit</a></td>
+				</tr>
+				<tr class="in-edit hide">
+					<td>Seller Blurb:</td>
+					<td class="form-partial">
+						<input name="email" type="text-area" value="{{ profile.bio }}">
+						<input class="btn" type="submit" value="Save">
+					</td>
+					<td><span class="unedit muted">Edit</span></td>
+				</tr>
+				<tr>
+					<td>Location:</td>
+					{% if profile.location %}
+					<td>{{ profile.location }}</td>
+					{% else %}
+					<td class="muted">Add a default location for your listings</td>
+					{% endif %}
+					<td><a class="edit" href="#">Edit</a></td>
+				</tr>
+				<tr class="in-edit hide">
+					<td>Location:</td>
+					<td class="form-partial">
+						<input name="location" type="text" value="{{ profile.location }}">
+						<input class="btn" type="submit" value="Save">
+					</td>
+					<td><span class="unedit muted">Edit</span></td>
+				</tr>
+			</tbody>
+		</table>
+		<h4>Listings</h4>
+		<table class="table table-hover user-profile-table">
+			<tbody>
+				<tr>
+					<td>Rocket Email:</td>
+					<td><code class="text-info">{{user.username}}@rocketlistings.mailgun.org</code></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Default Category:</td>	
+					{% if profile.default_category.name  %}
+					<td>{{ profile.default_category.name  }}</td>
+					{% else %}
+					<td class="muted">Add a default category for your listings</td>
+					{% endif %}
+					<td><a class="edit" href="#">Edit</a></td>
+				</tr>
+				<tr class="in-edit hide">
+					<td>Default Category:</td>
+					<td class="form-partial">
+						<select name="default_category">
+							<option selected="true">{{ profile.default_category.name }}</option>
+						</select>
+						<input class="btn" type="submit" value="Save">
+					</td>
+					<td><span class="unedit muted">Edit</span></td>
+				</tr>
+				<tr>
+					<td>Default Listing Type:</td>
+					{% if profile.default_listing_type.name  %}
+					<td>{{ profile.default_listing_type.name }}</td>
+					{% else %}
+					<td class="muted">Add a default listing type</td>
+					{% endif %}
+					<td><a class="edit" href="#">Edit</a></td>
+				</tr>
+				<tr class="in-edit hide">
+					<td>Default Listing Type:</td>
+					<td class="form-partial">
+						<select name="default_listing_type.name">
+							<option selected="true">{{ profile.default_listing_type.name }}</option>
+						</select>
+						<input class="btn" type="submit" value="Save">
+					</td>
+					<td><span class="unedit muted">Edit</span></td>
+				</tr>
+			</tbody>
+		</table>
+		<!-- {# <h4>Notifications</h4>
+		<table class="table table-striped user-profile-table">
+			<tbody>
+				<tr>
+					<td>Send me emails about my listings</td>
+					<td>{{ profile.emailpref }}Weekly</td>
+					<td><a href="#">Edit</a></td>
+				</tr>
+			</tbody>
+		</table> #} -->
+		<h4>Privacy</h4>
+		<table class="table table-hover user-profile-table">
+			<tbody>
+				<tr>
+					<td>Name:</td>
+					{% if profile.nameprivate %}
+					<td>Private</td>
+					{% else %}
+					<td>Public</td>
+					{% endif %}
+					<td><a class="edit" href="#">Edit</a></td>
+				</tr>
+				<tr class="in-edit hide">
+					<td>Name:</td>
+					<td class="form-partial">
+						<select name="nameprivate">
+							{% if profile.nameprivate %}
+							<option>Public</option>
+							<option selected="true">Private</option>
+							{% else %}
+							<option selected="true">Public</option>
+							<option>Private</option>
+							{% endif %}
+						</select>
+						<input class="btn" type="submit" value="Save">
+					</td>
+					<td><span class="unedit muted">Edit</span></td>
+				</tr>
+				<tr>
+					<td>Email:</td>
+					{% if profile.emailprivate %}
+					<td>Private</td>
+					{% else %}
+					<td>Public</td>
+					{% endif %}
+					<td><a class="edit" href="#">Edit</a></td>
+				</tr>
+				<tr class="in-edit hide">
+					<td>Email:</td>
+					<td class="form-partial">
+						<select name="emailprivate">
+							{% if profile.emailprivate %}
+							<option>Public</option>
+							<option selected="true">Private</option>
+							{% else %}
+							<option selected="true">Public</option>
+							<option>Private</option>
+							{% endif %}
+						</select>
+						<input class="btn" type="submit" value="Save">
+					</td>
+					<td><span class="unedit muted">Edit</span></td>
+				</tr>
+				<tr>
+					<td>Seller Blurb:</td>
+					{% if profile.bioprivate %}
+					<td>Private</td>
+					{% else %}
+					<td>Public</td>
+					{% endif %}
+					<td><a class="edit" href="#">Edit</a></td>
+				</tr>
+				<tr class="in-edit hide">
+					<td>Seller Blurb:</td>
+					<td class="form-partial">
+						<select name="bioprivate">
+							{% if profile.bioprivate %}
+							<option>Public</option>
+							<option selected="true">Private</option>
+							{% else %}
+							<option selected="true">Public</option>
+							<option>Private</option>
+							{% endif %}
+						</select>
+						<input class="btn" type="submit" value="Save">
+					</td>
+					<td><span class="unedit muted">Edit</span></td>
+				</tr>
+				<tr>
+					<td>Location:</td>
+					{% if profile.locationprivate %}
+					<td>Private</td>
+					{% else %}
+					<td>Public</td>
+					{% endif %}
+					<td><a class="edit" href="#">Edit</a></td>
+				</tr>
+				<tr class="in-edit hide">
+					<td>Location:</td>
+					<td class="form-partial">
+						<select name="locationprivate">
+							{% if profile.locationprivate %}
+							<option value="False">Public</option>
+							<option value="True" selected="true">Private</option>
+							{% else %}
+							<option value="False" selected="true">Public</option>
+							<option value="True">Private</option>
+							{% endif %}
+						</select>
+						<input class="btn" type="submit" value="Save">
+					</td>
+					<td><span class="unedit muted">Edit</span></td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+	<div class="user-info-buttons">
+		<!--<a class="btn btn-info" href="{% url 'users.views.edit' user.username %}">Edit your account info.</a>
+		<a class="btn btn-warning" href="{% url 'auth_password_change' %}">Change your password.</a>-->
+		<a class="btn btn-warning" href="{% url 'users.views.profile' user.username %}">View your profile.</a>
+		<div class="clearfix"></div>
+	</div>
 </div>
 {% endblock %}

@@ -1,34 +1,44 @@
 $(function() {
-
-	/* Process the start of the signup */
-	function signupStartHandler() {
-		var address = $(".start-email").val().replace(/ /g, ""),
-			username;
-		if ((address != "") && validateEmail(address)) {
-			username = address.substring(0, address.indexOf("@"));
-		}
-		else {
-			signupErr("start-signup-error", "Please enter a valid email address.");
-			$(".start-email").select();
-			$(".start-email").keypress(removeSignupErr);
-		}
+	function handleEvents() {
+		var prevData = null;
+		$(".edit").click(function(e) {
+			e.preventDefault();
+			prevData = $(this).parent().prev().val();
+			$(this).parent().parent().hide();
+			$(this).parent().parent().next().show();
+			if ($(this).parent().parent().next().find("input")[1]) {
+				$(this).parent().parent().next().find("input")[0].focus();
+			}
+			else{
+				$(this).parent().parent().next().find("select")[0].focus();
+			}
+			$(".edit").replaceWith("<span class='edit muted'>Edit</span>");
+			$(".change-password").replaceWith("<span class='muted'>Change password</span>");
+			$("table").removeClass("table-hover");
+		});
+		// $(".unedit").click(function(e) {
+		// 	e.preventDefault();
+		// 	$(this).parent().parent().hide();
+		// 	$(this).parent().parent().prev().show();
+		// 	$(".edit").replaceWith("<a class='edit' href='#'>Edit</a>");
+		// 	$("table").addClass("table-hover");
+		// 	handleEvents();
+		// });
+		$(".user-info-form").submit(function() {
+			var csrftoken = $.cookie('csrftoken');
+			$.ajax({
+				data: $(this).serialize(),
+				type: $(this).attr('method'),
+				url: $(this).attr('action'),
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader("X-CSRFToken", csrftoken);
+				},
+				success: function(response) {
+					console.log(response);
+				}
+			});
+			return false;
+		});
 	}
-
-	function validateEmail(address) {
-		var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-		if (regex.test(address)) return true;
-		else return false;
-	}
-
-	function signupErr(classSelector, msg) {
-		var selector = "." + classSelector;
-		$(selector).html(msg);
-	}
-
-	function removeSignupErr() {
-		$(".start-signup-error").html("");
-	}
-
-	$(".start-submit").click(signupStartHandler);
-	$(".start-email").trigger("focus");
+	handleEvents();
 });
