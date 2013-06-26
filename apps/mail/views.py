@@ -61,7 +61,6 @@ def on_incoming_test_message(request):
 def on_incoming_admin_message(request):
 
 	if request.method == 'POST':
-		print "admin post recieved"
 
 		user = get_object_or_404(User, username= request.POST.get('recipient').split('@')[0])
 		listing = user.listing_set.get(title__exact= request.POST.get('subject', '').partition('"')[2].partition('"')[0])
@@ -80,63 +79,22 @@ def on_incoming_admin_message(request):
 def on_incoming_buyer_message(request):
 
 	if request.method == 'POST':
-		print "buyer post recieved"
-		
+
 		user = get_object_or_404(User, username= request.POST.get('recipient').split('@')[0])
 		listing = user.listing_set.get(title__exact= request.POST.get('subject', '').partition(' - ')[0])
-
-		print request.POST.get('message-headers')
-
 		buyer_name = request.POST.get('from', '').partition("\"")[2].partition("\"")[0]
 		buyer_email = request.POST.get('from', '').partition("<")[2].partition(">")[0]
 
-		print buyer_email
-
 		try:
 			b = Buyer.objects.get(listing= listing, name= buyer_name)
-			print "found buyer"
 		except ObjectDoesNotExist:
-			print "buyer not found--creating buyer"
-
 			b = Buyer(listing = listing, name = buyer_name, email = buyer_email)
 			b.save()
 
-		print b
-
-		
-		#message = Message(listing = listing, content = body, buyer = listing.buyer_set.get(name__exact = buyer))
-		#message.save()
-		#m = mailgun(recipient = recipient, sender = sender, frm = frm, subject = subject, body = body, text = text, 
-		#signature = signature, timestamp = timestamp, token = token, sig = sig)
-		#m.save()
-
-
-
-
-		#buyers = listing.buyer_set.all()
-
-		#for buy in buyers:
-			#print buy.name == str(buyer)
-			
-			#if buy.name == str(buyer):
-				#break
-		#else:
-			#b = Buyer(listing = listing, name = buyer)#create a "buyer" to recieve cl messages
-			#b.save()
-
-		#print body, buyer
-		
-
-		#message = Message(listing = listing, content = body, buyer = listing.buyer_set.get(name__exact = buyer))
-		#message.save()
-		#m = mailgun(recipient = recipient, sender = sender, frm = frm, subject = subject, body = body, text = text, 
-		#signature = signature, timestamp = timestamp, token = token, sig = sig)
-		#m.save()
+		message = Message(listing = listing, content = request.POST.get('body-plain', ''), buyer = b)
+		message.save()
 
 	if verify(request.POST.get('token', ''), request.POST.get('timestamp', ''), request.POST.get('signature', '')):
-		print "verified"
 		return HttpResponse('OK')
-
 	else:
-		print "not verified"
 		return HttpResponse('Unauthorized')
