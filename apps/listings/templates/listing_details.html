@@ -51,17 +51,10 @@
       <a class="carousel-control right" href="#this-carousel-id" data-slide="next">&rsaquo;</a>
     </div><!-- /.carousel -->
 
+
     <div class="l-description l-entry">
       {{listing.description|linebreaks}}
     </div>
-
-    <footer>
-      <p class = "pID" style="text-align:left;float:left;">Posting ID: </p>
-      <p class = "pIDn" style="text-align:left;float:left;">1231441342342134141</p>
-      <p style="text-align:left;float:left;"> Posted: </p>
-      <p id = "date" style="text-align:left;float:left;"> </p>
-      <p id ='time'></p>
-    </footer>
   </div> <!-- /container -->
 </div>
 
@@ -83,7 +76,7 @@
       </h1>
     </div>
   </div>
-  <button type="button" class="btn btn-primary" onclick='fileUpload()'>Upload Pictures Here</button>
+  <button type="button" class="btn btn-primary" onclick='fileUpload()' style="margin-bottom:15px;">Upload Pictures Here</button>
   </br>
 
 
@@ -91,22 +84,13 @@
 
     <input type="text" placeholder="Description" rows="3">
   </div>
-
-
-      <footer>
-        <p class = "pID" style="text-align:left;float:left;">Posting ID: </p>
-        <p class = "pIDn" style="text-align:left;float:left;">1231441342342134141</p>
-        <p style="text-align:left;float:left;"> Posted: </p>
-        <p id = "date" style="text-align:left;float:left;"> </p>
-        <p id ='time'></p>
-      </footer>
   </div> 
 </div>
 <!-- End Edit Page -->
 
 
 
-<div class="l-footnote">
+<div class="l-footnote" style ="margin-left:55px;">
   Created with <a href="http://www.rocketlistings.com" class="icon">Rocket Listings</a>. Blast off.
 </div>
 
@@ -127,34 +111,4 @@
         });
     })
     </script>
-    <script>
-          $(document).ready(function(){
-          var currentTime = new Date()
-          var month = currentTime.getMonth() + 1
-          var day = currentTime.getDate()
-          var year = currentTime.getFullYear()
-          var date = (month + "-" + day + "-" + year)
-          console.log(date);
-          var to_change = document.getElementById("date");
-          to_change.innerHTML = date;
-
-          var hours = currentTime.getHours()
-          var minutes = currentTime.getMinutes()
-          var AM = ""
-          if (hours>11){
-            AM = "PM"
-            hours = hours - 12
-          }else{
-            AM = "AM"
-          }
-
-
-          var time = " " + hours + ":" + minutes + " " + AM
-          console.log(time);
-          var to_change2 = document.getElementById("time");
-          to_change2.innerHTML = time;
-          
-
-        })
-        </script>
   {% endblock %}

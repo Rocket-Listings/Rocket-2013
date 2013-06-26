@@ -12,7 +12,6 @@
 
 {% block content %}
 
-	<body>
 		<div class= "container">
             <div class="accordion" id="accordion2">
                 <div class="accordion-group">
@@ -100,17 +99,17 @@
                         <div class="accordion-inner">
                             <table class="table">
                                 <tr>
-                                    <td><a href="#" class="housing"> apartments / housing </a></td>
-                                    <td><a href="#" class="housing"> rooms / shared </a></td>
-                                    <td><a href="#" class="housing"> sublets / temporary </a></td>
-                                    <td><a href="#" class="housing"> housing wanted </a></td>
+                                    <td><a href="#" class="housing" data-id="housing"> apartments / housing </a></td>
+                                    <td><a href="#" class="housing" data-id="housing"> rooms / shared </a></td>
+                                    <td><a href="#" class="housing" data-id="housing"> sublets / temporary </a></td>
+                                    <td><a href="#" class="housing" data-id="housing"> housing wanted </a></td>
                                 </tr>
                                                 
                                 <tr>
-                                    <td><a href="#" class="housing"> housing swap </a></td>
-                                    <td><a href="#" class="housing"> vacation rentals </a></td>
-                                    <td><a href="#" class="housing"> parking / storage </a></td>
-                                    <td><a href="#" class="housing"> office / commercial </a></td>
+                                    <td><a href="#" class="housing" data-id="housing"> housing swap </a></td>
+                                    <td><a href="#" class="housing" data-id="housing"> vacation rentals </a></td>
+                                    <td><a href="#" class="housing" data-id="housing"> parking / storage </a></td>
+                                    <td><a href="#" class="housing" data-id="housing"> office / commercial </a></td>
                                 </tr>
 
                                 <tr>
@@ -137,7 +136,7 @@
                             </fieldset>
                         </h1>
                     </div>
-
+                    {% include "listings_specs.html" %}
 
                     <ul class="form">
                         <li>
@@ -169,7 +168,6 @@
                 </form>
             </div>
         </div>
-
         <!-- Edit Page -->
 
 	</body>
