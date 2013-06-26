@@ -19,7 +19,7 @@ class UserProfile(models.Model):
 	locationprivate = models.BooleanField(blank=False, null=False)
 
 	def get_absolute_url(self):
-		return reverse('users.views.info', args=[self.user.username])
+		return reverse('users.views.info')
 	
 	def __unicode__(self):
 		return self.user.username

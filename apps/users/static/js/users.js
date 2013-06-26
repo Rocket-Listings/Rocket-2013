@@ -16,14 +16,6 @@ $(function() {
 			$(".change-password").replaceWith("<span class='muted'>Change password</span>");
 			$("table").removeClass("table-hover");
 		});
-		// $(".unedit").click(function(e) {
-		// 	e.preventDefault();
-		// 	$(this).parent().parent().hide();
-		// 	$(this).parent().parent().prev().show();
-		// 	$(".edit").replaceWith("<a class='edit' href='#'>Edit</a>");
-		// 	$("table").addClass("table-hover");
-		// 	handleEvents();
-		// });
 		$(".user-info-form").submit(function() {
 			var csrftoken = $.cookie('csrftoken');
 			$.ajax({
@@ -34,7 +26,7 @@ $(function() {
 					xhr.setRequestHeader("X-CSRFToken", csrftoken);
 				},
 				success: function(response) {
-					console.log(response);
+					console.log(response[0].fields);
 				}
 			});
 			return false;
