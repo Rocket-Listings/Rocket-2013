@@ -61,7 +61,18 @@
 .profile-bio {
   display: inline;
   width: 200px;
-  height: auto;
+  height: 200px
+	height: auto;
+  float: right;
+}
+#dot3 {
+  height: 150px;
+}
+#map-canvas {
+  margin: 0;
+  padding: 0;
+  height: 200px;
+  width: 200px;
   float: right;
 }
 #slider-code {

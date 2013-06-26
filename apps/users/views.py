@@ -1,4 +1,4 @@
-from listings.models import Listing
+from listings.models import Listing, ListingPhoto, Buyer, Offer, Message 
 #from users.models import UserProfile
 from users.forms import UserProfileForm
 from django.contrib.auth.models import User
@@ -19,7 +19,13 @@ def info(request, username=None):
 @login_required
 def profile(request, username=None):
 	profile = request.user.get_profile()
-	return render(request, 'user_profile.html', {'profile':profile})
+	relevant_user = request.user
+	user=relevant_user
+	listings = Listing.objects.filter(user=relevant_user).order_by('-pub_date')[:10]
+	photos = ListingPhoto.objects.filter(listing=relevant_user)
+	# provide `url` and `thumbnail_url` for convenience.
+	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos) 
+	return render(request, 'user_profile.html', {'profile':profile, 'listings':listings, 'photos':photos})
 
 @login_required
 def edit(request, username):
