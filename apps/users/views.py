@@ -20,11 +20,9 @@ def info(request):
 	profile = user.get_profile()
 	if request.method == 'POST':
 		user_profile_form = UserProfileForm(request.POST, instance = profile)
-		print request.POST
-		print UserProfileForm(request.POST, instance = profile)
 		if user_profile_form.is_valid():
-			print "valid"
 			user_profile = user_profile_form.save()
+			User.objects.filter(username = user).update(email=request.POST['email'])
 			responseData = serializers.serialize("json", UserProfile.objects.filter(user=user))
 			return HttpResponse(responseData, content_type="application/json")
 		else:
