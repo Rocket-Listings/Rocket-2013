@@ -16,7 +16,7 @@ urlpatterns = patterns('listings.views',
 
 	# moved here from users/urls.py
     url(r'^(?P<username>\w+)/dashboard/$', 'dashboard'),
-    url(r'^(?P<username>\w+)/$', 'user_listings'),
+    url(r'^(?P<username>\w+)/$', 'user_listings', name='user_listings'),
 
 	#api patterns TODO: respond differently based on HTTP_ACCEPT header, but keep urls the same
 	url(r'^(?P<listing_id>\d+)/api/buyers/$', 'ajax_listing_buyers'),

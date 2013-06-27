@@ -34,8 +34,10 @@ $(function() {
 	});
 
 	function load_listing_callback(data, textStatus, jqXHR) {
-		console.log("loaded listing callback")
+		console.log("loaded listing callback");
+		console.log(data);
 		var listingID = data[0].fields.listing;
+		console.log(listingID);
 		data.listingID = listingID;
 		var html = buyers_template(data);
 		$('#listings').append(html);
