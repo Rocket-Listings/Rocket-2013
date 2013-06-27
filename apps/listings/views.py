@@ -172,9 +172,8 @@ def autopost(request, listing_id):
 	try:
 		b = Buyer.objects.get(listing= listing, name= "Craigslist")
 	except ObjectDoesNotExist:
-		b = Buyer(listing = listing, name = "Craigslist", email = "robots@craigslist.org")
+		b = Buyer(listing = listing, name = "Craigslist", email = "robot@craigslist.org")
 		b.save()
-	
 	
 	r = requests.get('https://post.craigslist.org/c/brl?lang=en') #GET the url to post to
 	post_url = r.url.split('?')[0] #split out the query string
@@ -186,6 +185,7 @@ def autopost(request, listing_id):
 	hashed_key = tag.attrs['name']
 	hashed_value = tag.attrs['value']
 	payload = {'id': 'fso', hashed_key: hashed_value}#assemble payload. fs = for sale
+	#need to figure our how to make above statement based on listing rather than hard-coded
 	r = requests.post(post_url, data=payload)
 
 
@@ -195,7 +195,8 @@ def autopost(request, listing_id):
 	tag = to_parse.find('input', type= "hidden") #select the input tag w/ hashed key/value
 	hashed_key = tag.attrs['name']
 	hashed_value = tag.attrs['value']
-	payload = {'id': '150', hashed_key: hashed_value}#assemble payload. 150 = antiques
+	payload = {'id': '145', hashed_key: hashed_value}#assemble payload. 145 = cars
+	#payload = {'id': listing.category.CL_id, hashed_key: hashed_value}
 	r = requests.post(post_url, data=payload)#POST and Redirect
 
 
@@ -204,8 +205,8 @@ def autopost(request, listing_id):
 	to_parse = BeautifulSoup(r.text) #parse
 	payload_tuples = [('id2', '1916x831X1916x635X1920x1200'), 
 		  		('browserinfo', '%7B%0A%09%22plugins%22%3A%20%22'),
-				('FromEMail',  request.user.username +'@rocketlistings.mailgun.org'), #enter your email here
-				('ConfirmEMail', request.user.username + '@rocketlistings.mailgun.org'),
+				('FromEMail',  'uqbibklr@sharklasers.com'), #enter your email here
+				('ConfirmEMail', 'uqbibklr@sharklasers.com'),
 				('xstreet0', ''),
 				('xstreet1', ''),
 				('city', ''),
@@ -255,8 +256,9 @@ def autopost(request, listing_id):
 
 	fileslist = []
 	for photo in photos:
-		fileslist += [('file', ('photo', open( 'media/' +photo.url, 'rb')))]
+		fileslist += [(str(photo.order), ('photo', open( 'media/' +photo.url, 'rb')))]
 	files = dict(fileslist)
+	print files
 	r = requests.post(post_url, files = files, data=payload)
 
 	# submit POST
@@ -273,12 +275,6 @@ def autopost(request, listing_id):
 #5th Post request at ?=preview
 #############################
 	to_parse = BeautifulSoup(r.text)
-
-
-	#print to_parse.find('section', id="previewButtons").contents[1].contents[1].attrs['name']
-	#print to_parse.find('section', id="previewButtons").contents[1].contents[1].attrs['value']
-	#print to_parse.find('section', id="previewButtons").contents[1].contents[1].contents[1].attrs['name']
-
 
 	payload_tuples = [('go', 'Continue')]
 	payload_tuples += [(to_parse.find('section', id="previewButtons").contents[1].contents[1].attrs['name'], to_parse.find('section', id="previewButtons").contents[1].contents[1].attrs['value'])]
