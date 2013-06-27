@@ -3,7 +3,8 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from listings.models import ListingCategory, ListingType
 from django.db.models.signals import post_save
-# import django_filepicker
+import django_filepicker
+
 
 # User Profile
 class UserProfile(models.Model):
@@ -23,11 +24,14 @@ class UserProfile(models.Model):
 	#photo = django_filepicker.models.FPFileField(upload_to='uploads')
 
 	def get_absolute_url(self):
+<<<<<<< HEAD
 		return reverse('users.views.info')
+=======
 		return reverse('users.views.info', args=[self.user.username])
 
-	# def get_location(self):
-	# 	return location
+	def get_location(self):
+		return location
+>>>>>>> 1727c78049e3d1c9f01e6dc8f234777144506712
 	
 	def __unicode__(self):
 		return self.user.username
