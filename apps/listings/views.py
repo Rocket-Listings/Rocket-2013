@@ -256,7 +256,7 @@ def autopost(request, listing_id):
 
 	fileslist = []
 	for photo in photos:
-		fileslist += [(str(photo.order), ('photo', open( 'media/' +photo.url, 'rb')))]
+		fileslist += ['file', ('photo', open( 'media/' +photo.url, 'rb')))]
 	files = dict(fileslist)
 	print files
 	r = requests.post(post_url, files = files, data=payload)
