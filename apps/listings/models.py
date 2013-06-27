@@ -58,6 +58,7 @@ class Listing(models.Model):
 	pub_date = models.DateTimeField('date published', auto_now_add=True, default=datetime.now)
 	price = models.IntegerField()
 	location = models.CharField(max_length=200)
+	pictures = models.CharField(max_length=200, default= True)
 	category = models.ForeignKey(ListingCategory)
 	listing_type = models.ForeignKey(ListingType)
 	status = models.ForeignKey(ListingStatus, null = True) # TODO want to be able to listings by this

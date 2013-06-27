@@ -143,6 +143,9 @@
                             <textarea cols="60" id="id_description" name="description" rows="10" placeholder="Description"></textarea>
                         </li>
                         <li>
+                        <li>
+                            <textarea cols="60" id="id_pictures" name="pictures" rows="10" style="display:none"></textarea>
+                        </li>
                             <select id="id_category" name="category" style="display:none">
                                 <option value="1" selected="selected" id="nameTitle">
                                 </option>
@@ -155,6 +158,7 @@
                             </select>
                         </li>
                         <button type="button" class="btn btn-primary" onclick='fileUpload()'>Upload Pictures Here</button>
+                        <div id="image"></div>
                         <br>
                         <div>
                             <ul id="pics">

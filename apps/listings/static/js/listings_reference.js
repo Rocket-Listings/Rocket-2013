@@ -9,6 +9,7 @@ $(document).ready(function(){
 		var val = ($(this).attr("data-id"));
 		$("#category").text( "for sale >> " + $(this).html());
 		$("#nameTitle").text($(this).html());
+
 		$("#collapseOne").collapse('hide');
 		if (prev != val ){
 			$('.category_' + prev).hide();
@@ -61,11 +62,14 @@ function fileUpload(){
 	function(InkBlobs){
 		var inky = InkBlobs;
 		filePreview(inky);
+		image(inky[0].url);
+
 		}
 	);
 }
 
 function filePreview(ink){
+	$("#id_pictures").text(ink[0].url);
 	var text = ""
 	for (var i=0; i<ink.length; i++){ 
 		text = ink[i].filename + " sucessfully uploaded."
@@ -73,8 +77,14 @@ function filePreview(ink){
 			.text(text)
 			.appendTo('#pics');
 	}
-
 }
+
+function image(url) {
+	var img = document.createElement("IMG");
+	img.src = url;
+	document.getElementById('image').appendChild(img);
+}
+
 
 
 function Edit(){
