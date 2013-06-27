@@ -1,7 +1,159 @@
-@theme-accent-color: /*#73B3BF; */ #E26A59;
-@theme-accent-background:/* #E6F0F2;*/ #F5F5F5; 
-@theme-accent-footer-background: #E8E8E8;
-html, body { /* sticky footer */
+@import "variables.less";
+
+/* fix navbar container */
+@media (min-width: 1200px) {
+    .navbar .container {
+        width:1170px;
+    }   
+}
+@media (min-width: 979px) and (max-width: 1200px) {
+    .navbar .container {
+        width:960px;
+    }   
+}
+@media (min-width: 768px) and (max-width: 979px) {
+    .navbar .container {
+        width:744px;
+    }   
+}
+
+.navbar {
+
+	border:none;
+	// border-bottom: 1px solid #ededed;
+	.navbar-inner {
+		border: none;
+		background: @menu0;
+		height: @navbar-height;
+		min-height: @navbar-height;
+	}
+
+	.container {
+		height: @navbar-height;
+	}
+
+	.nav>li>a, .nav>li.active>a {
+		padding: 7px 15px 7px;
+		// line-height: 36px;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+.accent {
+	float:left;
+	height: @navbar-height;
+	width: @accent-width;
+	position: relative;
+	left: -4*@accent-width;
+}
+.accent1 {
+	background:@menu1;
+}
+.accent2 {
+	background:@menu2;
+}
+.accent3 {
+	background:@menu3;
+}
+.accent4 {
+	background:@menu4;
+}
+
+.navbar .flag {
+	float: left;
+	font-family: 'Radley';
+	font-size: 20px;
+	font-weight: 600;
+	line-height: @navbar-height;
+	padding: 0 20px;
+	color: @color6;
+	// color: #2200CC;
+	background-color: white;
+	margin:0;
+	position: relative;
+	left: -4*@accent-width;
+}
+
+.footer {
+	background: #4A4742;
+}
+
+/* sticky footer */
+html,
+body {
+	height: 100%;
+	/* The html and body elements cannot have any padding or margin. */
+}
+
+/* Wrapper for page content to push down footer */
+.wrap {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	/* Negative indent footer by it's height */
+	margin: 0 auto -@footer-height;
+}
+
+/* Set the fixed height of the footer here */
+.push, .footer {
+	height: @footer-height;
+}
+
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 767px) {
+	.footer {
+	  margin-left: -20px;
+	  margin-right: -20px;
+	  padding-left: 20px;
+	  padding-right: 20px;
+	}
+}
+
+/* Flatten das boostrap */
+.well, .navbar-inner, .popover, .btn, .tooltip, input, select, textarea, pre, .progress, 
+.modal, .add-on, .alert, .table-bordered, .nav>.active>a, .dropdown-menu, .tooltip-inner, .badge, .label, .img-polaroid {
+	-moz-box-shadow: none !important;
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+	-webkit-border-radius: 0px !important;
+	-moz-border-radius: 0px !important;
+	border-radius: 0px !important;
+	border-collapse: collapse !important;
+	background-image: none !important;
+}
+
+@media (max-width: 767px) {
+	body {
+		padding:0;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// old
+// @theme-accent-color: /*#73B3BF; */ #E26A59;
+// @theme-accent-background:/* #E6F0F2;*/ #F5F5F5; 
+// @theme-accent-footer-background: #E8E8E8;
+/*
+html, body { // sticky footer
 	height: 100%;
 } 
 
@@ -15,7 +167,7 @@ body {
 .container {
 	margin-right: auto;
 	margin-left: auto;
-	max-width: 1050px; /* or 950px */
+	max-width: 1050px; // or 950px 
 }
 
 
@@ -84,7 +236,7 @@ body a {
 			padding: 6px;
 			color: #435056;
 			text-align: center;
-			/* margin-left: 135px; /*TODO not the best way to center need to figure this out */
+			// margin-left: 135px; // TODO not the best way to center need to figure this out 
 			font-style: normal;
 			font-size: 16px;
 			font-family: Arial, Helvetica, sans-serif;
@@ -143,14 +295,14 @@ body a {
 		}
 	}
 
-	/*.lower {
-		position: relative;
-		z-index: 2;
-		background: #e8edef;
-		border-right: 1px solid #A4B0B7;
-		border-left: 1px solid #A4B0B7;
-		height: 20px;
-	}*/
+	//.lower {
+	// 	position: relative;
+	// 	z-index: 2;
+	// 	background: #e8edef;
+	// 	border-right: 1px solid #A4B0B7;
+	// 	border-left: 1px solid #A4B0B7;
+	// 	height: 20px;
+	// }
 
 
 
@@ -173,7 +325,7 @@ body a {
 		height: 9px;
 		background: url(../img/footerHr.png) 0 0;
 		line-height: 0px;
-		/*zoom: 1;*/
+		//zoom: 1;
 	}
 
 	.hrline2 {
@@ -189,11 +341,11 @@ body a {
 		margin: 0 auto;
 		width: 600px;
 		min-height: 45px;
-		/*border-top: solid #b2bec3 1px;*/
+		//border-top: solid #b2bec3 1px;
 		line-height: 45px;
 
 		p {
-			/*border-top: solid #e8edef 1px;*/
+			//border-top: solid #e8edef 1px;
 			color: #88979E;
 			font-size: 10px;
 			font-family:
@@ -270,7 +422,7 @@ body a {
 	}
 }
 
-/* upload modal styles */
+// upload modal styles 
 .qq-upload-button {
 	background-color: @theme-accent-color;
 	color: white;
@@ -309,4 +461,5 @@ body a {
 
 .login-help{
 	margin-top: 25px;
-}
+} 
+*/
