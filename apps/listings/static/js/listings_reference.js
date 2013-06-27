@@ -3,6 +3,7 @@ $(document).ready(function(){
 	function eventHandlers() {
 		$(".for_sale").click(handleForSaleClick);
 		$(".housing").click(handleHousingClick);
+		$('.show-container').click(handleShowClick);
 	}
 
 	function handleForSaleClick(e){
@@ -10,6 +11,7 @@ $(document).ready(function(){
 		$("#category").text( "for sale >> " + $(this).html());
 		$("#nameTitle").text($(this).html());
 		$("#collapseOne").collapse('hide');
+		
 		if (prev != val ){
 			$('.category_' + prev).hide();
 			$(".edit").show();
@@ -25,6 +27,9 @@ $(document).ready(function(){
 		$(".edit").show();
 		$('.category_' + val).show();
 		}
+		$('.accordion-toggle').hide();
+		$('.show-container').show();
+		
 	}
 
 	function handleHousingClick(e){
@@ -46,6 +51,14 @@ $(document).ready(function(){
 		$(".edit").show();
 		$('.category_' + val).show();
 		}
+		$('.accordion-toggle').hide();
+		$('.show-container').show();
+	}
+
+	function handleShowClick(e){
+		$('.accordion-toggle').show();
+		$("#category").text("Repick your category");
+		$('.show-container').hide();
 	}
 
 	eventHandlers();
