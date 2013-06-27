@@ -18,7 +18,12 @@
 		</div>
 		<table class="table table-hover user-profile-table">
 			<tbody>
-				<tr>
+				<tr class="uneditable">
+					<td>Username:</td>
+					<td class="username"><code class="text-info">{{ user.username }}</code></td>
+					<td></td>
+				</tr>
+				<tr class="name">
 					<td>Name:</td>
 					{% if user.get_profile.name %}
 					<td class="name">{{ user.get_profile.name }}</td>
@@ -30,28 +35,26 @@
 				<tr class="in-edit hide">
 					<td>Name:</td>
 					<td class="form-partial">
-						<input name="name" type="text" value="{{ user.get_profile.name }}">
-						<input class="btn" type="submit" value="Save">
+						<input tabindex="1" name="name" type="text" value="{{ user.get_profile.name }}">
 					</td>
-					<td><span class="unedit muted">Edit</span></td>
+					<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
 				</tr>
-				<tr>
+				<tr class="uneditable">
 					<td>Password:</td>
 					<td>&#149;&#149;&#149;&#149;&#149;&#149;&#149;&#149;</td>
 					<td><a class="change-password" href="{% url 'auth_password_change' %}">Change password</a></td>
 				</tr>
-				<tr>
+				<tr class="email">
 					<td>Email:</td>
-					<td>{{ user.email }}</td>
+					<td>{{ user.get_profile.email }}</td>
 					<td><a class="edit" href="#">Edit</a></td>
 				</tr>
 				<tr class="in-edit hide">
 					<td>Email:</td>
 					<td class="form-partial">
-						<input name="email" type="text" value="{{ user.email }}">
-						<input class="btn" type="submit" value="Save">
+						<input tabindex="2" name="email" type="text" value="{{ user.get_profile.email }}">
 					</td>
-					<td><span class="unedit muted">Edit</span></td>
+					<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
 				</tr>
 				<tr>
 					<td>Phone:</td>
@@ -65,10 +68,9 @@
 				<tr class="in-edit hide">
 					<td>Phone:</td>
 					<td class="form-partial">
-						<input name="phone" type="text" value="{{ user.get_profile.phone }}">
-						<input class="btn" type="submit" value="Save">
+						<input tabindex="3" name="phone" type="text" value="{{ user.get_profile.phone }}">
 					</td>
-					<td><span class="unedit muted">Edit</span></td>
+					<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
 				</tr>
 				<tr>
 					<td>Seller Blurb:</td>
@@ -82,10 +84,9 @@
 				<tr class="in-edit hide">
 					<td>Seller Blurb:</td>
 					<td class="form-partial">
-						<input name="email" type="text-area" value="{{ user.get_profile.bio }}">
-						<input class="btn" type="submit" value="Save">
+						<input tabindex="4" name="email" type="text" value="{{ user.get_profile.bio }}">
 					</td>
-					<td><span class="unedit muted">Edit</span></td>
+					<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
 				</tr>
 				<tr>
 					<td>Location:</td>
@@ -99,17 +100,16 @@
 				<tr class="in-edit hide">
 					<td>Location:</td>
 					<td class="form-partial">
-						<input name="location" type="text" value="{{ user.get_profile.location }}">
-						<input class="btn" type="submit" value="Save">
+						<input tabindex="4" name="location" type="text" value="{{ user.get_profile.location }}">
 					</td>
-					<td><span class="unedit muted">Edit</span></td>
+					<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
 				</tr>
 			</tbody>
 		</table>
 		<h4>Listings</h4>
 		<table class="table table-hover user-profile-table">
 			<tbody>
-				<tr>
+				<tr class="uneditable">
 					<td>Rocket Email:</td>
 					<td><code class="text-info">{{user.username}}@rocketlistings.mailgun.org</code></td>
 					<td></td>
@@ -126,12 +126,11 @@
 				<tr class="in-edit hide">
 					<td>Default Category:</td>
 					<td class="form-partial">
-						<select name="default_category">
+						<select tabindex="5" name="default_category">
 							<option selected="true">{{ user.get_profile.default_category.name }}</option>
 						</select>
-						<input class="btn" type="submit" value="Save">
 					</td>
-					<td><span class="unedit muted">Edit</span></td>
+					<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
 				</tr>
 				<tr>
 					<td>Default Listing Type:</td>
@@ -145,12 +144,11 @@
 				<tr class="in-edit hide">
 					<td>Default Listing Type:</td>
 					<td class="form-partial">
-						<select name="default_listing_type.name">
+						<select tabindex="6" name="default_listing_type.name">
 							<option selected="true">{{ user.get_profile.default_listing_type.name }}</option>
 						</select>
-						<input class="btn" type="submit" value="Save">
 					</td>
-					<td><span class="unedit muted">Edit</span></td>
+					<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
 				</tr>
 			</tbody>
 		</table>
@@ -179,7 +177,7 @@
 				<tr class="in-edit hide">
 					<td>Name:</td>
 					<td class="form-partial">
-						<select name="nameprivate">
+						<select tabindex="7" name="nameprivate">
 							{% if user.get_profile.nameprivate %}
 							<option value="False">Public</option>
 							<option value="True" selected="true">Private</option>
@@ -188,59 +186,8 @@
 							<option value="True">Private</option>
 							{% endif %}
 						</select>
-						<input class="btn" type="submit" value="Save">
 					</td>
-					<td><span class="unedit muted">Edit</span></td>
-				</tr>
-				<tr>
-					<td>Email:</td>
-					{% if user.get_profile.emailprivate %}
-					<td>Private</td>
-					{% else %}
-					<td>Public</td>
-					{% endif %}
-					<td><a class="edit" href="#">Edit</a></td>
-				</tr>
-				<tr class="in-edit hide">
-					<td>Email:</td>
-					<td class="form-partial">
-						<select name="emailprivate">
-							{% if user.get_profile.emailprivate %}
-							<option value="False">Public</option>
-							<option value="True" selected="true">Private</option>
-							{% else %}
-							<option value="False" selected="true">Public</option>
-							<option value="True">Private</option>
-							{% endif %}
-						</select>
-						<input class="btn" type="submit" value="Save">
-					</td>
-					<td><span class="unedit muted">Edit</span></td>
-				</tr>
-				<tr>
-					<td>Seller Blurb:</td>
-					{% if user.get_profile.bioprivate %}
-					<td>Private</td>
-					{% else %}
-					<td>Public</td>
-					{% endif %}
-					<td><a class="edit" href="#">Edit</a></td>
-				</tr>
-				<tr class="in-edit hide">
-					<td>Seller Blurb:</td>
-					<td class="form-partial">
-						<select name="bioprivate">
-							{% if user.get_profile.bioprivate %}
-							<option value="False">Public</option>
-							<option value="True" selected="true">Private</option>
-							{% else %}
-							<option value="False" selected="true">Public</option>
-							<option value="True">Private</option>
-							{% endif %}
-						</select>
-						<input class="btn" type="submit" value="Save">
-					</td>
-					<td><span class="unedit muted">Edit</span></td>
+					<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
 				</tr>
 				<tr>
 					<td>Location:</td>
@@ -254,7 +201,7 @@
 				<tr class="in-edit hide">
 					<td>Location:</td>
 					<td class="form-partial">
-						<select name="locationprivate">
+						<select tabindex="10" name="locationprivate">
 							{% if user.get_profile.locationprivate %}
 							<option value="False">Public</option>
 							<option value="True" selected="true">Private</option>
@@ -263,9 +210,8 @@
 							<option value="True">Private</option>
 							{% endif %}
 						</select>
-						<input class="btn" type="submit" value="Save">
 					</td>
-					<td><span class="unedit muted">Edit</span></td>
+					<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
 				</tr>
 			</tbody>
 		</table>
@@ -274,8 +220,8 @@
 			<!--<a class="btn btn-info" href="{% url 'users.views.edit' user.username %}">Edit your account info.</a>
 			<a class="btn btn-warning" href="{% url 'auth_password_change' %}">Change your password.</a>-->
 			{% endcomment %}
-			<input class="btn btn-info save-all" type="submit" value="Save all.">
 			<a class="btn btn-warning view-profile" href="{% url 'users.views.profile' user.username %}">View your profile.</a>
+			<input class="btn btn-info save-all hide" type="submit" value="Save all.">
 			<div class="clearfix"></div>
 	</div>
 	</form>

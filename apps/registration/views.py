@@ -8,6 +8,8 @@ from django.shortcuts import redirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth.models import User
+from users.models import UserProfile
+from users.forms import UserProfileForm
 
 from registration.backends import get_backend
 
@@ -186,7 +188,10 @@ def register(request, backend, success_url=None, form_class=None,
         if not request.POST.get('email_only', False):
             form = form_class(data=request.POST, files=request.FILES)
             if form.is_valid():
+                
                 new_user = backend.register(request, **form.cleaned_data)
+                # user_profile_form = UserProfileForm(request.POST, instance=request.user.get_profile())
+                # user_profile_form.save()
                 if request.GET.get('next',''):
                     success_url = request.GET.get('next','')
                     return redirect(success_url)

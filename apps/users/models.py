@@ -16,8 +16,6 @@ class UserProfile(models.Model):
 	phone = models.CharField(max_length=50, blank=True)
 	bio = models.TextField(blank=True)
 	nameprivate = models.BooleanField(blank=False, null=False)
-	emailprivate = models.BooleanField(blank=False, null=False)
-	bioprivate = models.BooleanField(blank=False, null=False)
 	locationprivate = models.BooleanField(blank=False, null=False)
 
 	#photo = django_filepicker.models.FPFileField(upload_to='uploads')

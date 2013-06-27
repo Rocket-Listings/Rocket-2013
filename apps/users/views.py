@@ -21,7 +21,9 @@ def info(request):
 	if request.method == 'POST':
 		user_profile_form = UserProfileForm(request.POST, instance = profile)
 		print request.POST
+		print UserProfileForm(request.POST, instance = profile)
 		if user_profile_form.is_valid():
+			print "valid"
 			user_profile = user_profile_form.save()
 			responseData = serializers.serialize("json", UserProfile.objects.filter(user=user))
 			return HttpResponse(responseData, content_type="application/json")
@@ -35,10 +37,8 @@ def info(request):
 	# return render(request, 'user_info.html', {'profile':profile,})
 
 def profile(request, username=None):
-
 	user = User.objects.get(username=username)
 	return render(request, 'user_profile.html', {'user': user})
-
 	print username
 	profile = request.user.get_profile()
 	relevant_user = request.user

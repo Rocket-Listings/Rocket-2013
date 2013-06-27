@@ -1,6 +1,5 @@
 $(function() {
-	function handleEvents() {
-		var prevData = null;
+	function handleClickEvents() {
 		$(".edit").click(function(e) {
 			e.preventDefault();
 			prevData = $(this).parent().prev().val();
@@ -9,32 +8,53 @@ $(function() {
 			if ($(this).parent().parent().next().find("input")[1]) {
 				$(this).parent().parent().next().find("input")[0].focus();
 			}
-			else{
+			else {
 				$(this).parent().parent().next().find("select")[0].focus();
 			}
 			$(".edit").replaceWith("<span class='edit muted'>Edit</span>");
-			$(".change-password").replaceWith("<span class='muted'>Change password</span>");
+			$(".change-password").replaceWith("<span class='change-password muted'>Change password</span>");
 			$("table").removeClass("table-hover");
 		});
-		$(".user-info-form").submit(function() {
-			var csrftoken = $.cookie('csrftoken');
-			$.ajax({
-				data: $(this).serialize(),
-				type: $(this).attr('method'),
-				url: $(this).attr('action'),
-				beforeSend: function(xhr) {
-					xhr.setRequestHeader("X-CSRFToken", csrftoken);
-				},
-				success: function(response) {
-					console.log(response[0].fields);
-				}
-			});
-			return false;
+		$(".edit-all").click(function(e) {
+			e.preventDefault();
+			$(".edit").parent().parent().hide();
+			$(".in-edit").show();
+			//$(".uneditable").css({"background-color": "#EDEDED"});
+			$(".save-all").show();
+			$(".partial-submit").replaceWith("<span class='muted partial-submit'>Edit</span>");
+			$("table").removeClass("table-hover");
+			$(".edit-all-wrapper").addClass("muted");
+			$(".change-password").replaceWith("<span class='change-password muted'>Change password</span>");
 		});
 	}
+	$(".user-info-form").submit(function() {
+		var csrftoken = $.cookie('csrftoken');
+		$.ajax({
+			data: $(this).serialize(),
+			type: $(this).attr('method'),
+			url: $(this).attr('action'),
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader("X-CSRFToken", csrftoken);
+			},
+			success: function(response) {
+				console.log(response[0].fields);
+				$(".in-edit").hide();
+				$(".edit").replaceWith("<a class='edit' href='#'>Edit</a>");
+				$(".edit").parent().parent().show();
+				$(".change-password").replaceWith("<a class='change-password' href='{% url 'auth_password_change' %}'>Change password</a>");
+				$("table").addClass("table-hover");
+				$(".save-all").hide();
+				$(".partial-submit").replaceWith("<input class='btn btn-info partial-submit' type='submit' value='Save'>");
+				handleClickEvents();
+			}
+		});
+		return false;
+	});
+	handleClickEvents();
+});
 
 	/*
-	Sorry, had to comment this out right now.  Causeing a lot of errors.
+	Sorry, had to comment this out right now.  Causing a lot of errors.
 
 	$('#dot3').dotdotdot({
 		after: 'a.more',
@@ -85,7 +105,3 @@ $(function() {
 
     $('.carousel').carousel({ });
     */
-
-	handleEvents();
-
-});

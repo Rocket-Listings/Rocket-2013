@@ -5,5 +5,5 @@ class UserProfileForm(ModelForm):
 	class Meta:
 		model = UserProfile
 		exclude = ('user')
-		fields = ('name', 'email', 'phone', 'location', 'bio', 'default_category', 'default_listing_type', 'nameprivate', 'emailprivate', 'bioprivate', 'locationprivate')
+		fields = ('name', 'email', 'phone', 'location', 'bio', 'default_category', 'default_listing_type', 'nameprivate', 'locationprivate')
 

@@ -22,12 +22,21 @@
 .user-profile-table-group .user-profile-table tbody tr td.form-partial {
   padding: 3px 5px 0 1px;
 }
+.user-profile-table-group .user-profile-table tbody tr td.form-partial input.btn {
+  float: right;
+}
+.user-profile-table-group .user-profile-table tbody tr td code {
+  font-size: 10pt;
+}
+.user-profile-table-group .user-profile-table tbody tr td span.partial-submit {
+  margin: 5px 3px 0 0;
+}
 .user-profile-table-group .user-profile-table tbody tr.in-edit {
   background-color: #ededed;
 }
 .user-profile-table-group span.edit-all-wrapper {
   float: right;
-  margin-top: -5px;
+  margin: -5px 5px 0 0;
 }
 .user-profile-table-group span.h4 {
   width: 200px;
