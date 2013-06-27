@@ -1,25 +1,23 @@
-
 $(function() {
 
-	$(document).ready(function(){
-		$('.table-listings tbody tr td:first').click();
-	 });		
+	$('.table-listings tbody tr').first().click();
 
 	$('.table-listings tbody tr').click(function(event) {
-		$(this).addClass('highlight').siblings().removeClass('highlight');
-		var listingID = $(event.target).parent().data('listing-id');
-		console.log(listingID);
+		var listingRow = $(this);
+		listingRow.addClass('highlight').siblings().removeClass('highlight');
+		var id = listingRow.data('listing-id');
 		$(".message").hide();
-		$(".buyer_card").hide();
-		$(".listingID_" + listingID).show();	
+		$(".buyer-card").hide();
+		$(".listing-" + id).show();	
 	});
 
-	$('.table-buyers').click(function(event){
-		$('.table-buyers').removeClass('highlight');	
-		$(this).addClass('highlight')
-		var buyerID = $(event.target).parent().data('buyer-id');
+	$('.buyer-card').click(function(event){
+		var buyerCard = $(this);
+		$('.buyer-card').removeClass('highlight');	
+		buyerCard.addClass('highlight');
+		var id = buyerCard.data('buyer-id');
+		console.log(id);
 		$(".message").hide();
-		$('.buyer_'  + buyerID).show();
-			
+		$('.buyer-'  + id).show();
 	});
 });

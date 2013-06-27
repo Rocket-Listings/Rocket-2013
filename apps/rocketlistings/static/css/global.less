@@ -76,8 +76,24 @@
 	left: -4*@accent-width;
 }
 
-.footer {
+.footer, .footer-fixed {
 	background: #4A4742;
+	p {
+		margin: 0;
+		line-height: @footer-height;
+	}
+}
+
+/* fixed footer */
+.footer-fixed {
+	position:fixed;
+	bottom:0;
+	width: 100%;
+}
+
+.wrap-fixed {
+	height: 90%;               /* fallback for browsers without support for calc() */
+	height: calc(100% - @footer-height);
 }
 
 /* sticky footer */
@@ -97,7 +113,7 @@ body {
 }
 
 /* Set the fixed height of the footer here */
-.push, .footer {
+.push, .footer, .footer-fixed {
 	height: @footer-height;
 }
 
