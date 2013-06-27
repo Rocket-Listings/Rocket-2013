@@ -254,13 +254,10 @@ def autopost(request, listing_id):
 
 	payload = dict(payload_tuples)
 
-	fileslist = []
 	for photo in photos:
 		r = requests.post(post_url, files = dict([('file', ('photo', open( 'media/' +photo.url, 'rb')))]), data=payload)
-		#fileslist += [('file', ('photo', open( 'media/' +photo.url, 'rb')))]
-	#files = dict(fileslist)
-	#print files
-	#r = requests.post(post_url, files = files, data=payload)
+		print "uploading photo" + photo.url
+
 
 	# submit POST
 	to_parse = BeautifulSoup(r.text)
