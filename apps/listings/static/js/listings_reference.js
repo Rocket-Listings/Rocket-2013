@@ -1,9 +1,15 @@
 $(document).ready(function(){
 	var prev = "";
 	function eventHandlers() {
+<<<<<<< HEAD
 		//$(".for_sale").click(handleForSaleClick);
 		//$(".housing").click(handleHousingClick);
 		$("a", ".tab-pane").click(handleClick);
+=======
+		$(".for_sale").click(handleForSaleClick);
+		$(".housing").click(handleHousingClick);
+		$('.show-container').click(handleShowClick);
+>>>>>>> ee710fa8eb4d07bafe340a3e2231ccccc9d594d1
 	}
 
 	function handleClick(e) {
@@ -13,6 +19,12 @@ $(document).ready(function(){
 		$(this).removeClass("unselected");
 		$(this).addClass("selected");
 		$("#nameTitle").text($(this).html());
+<<<<<<< HEAD
+=======
+
+		$("#collapseOne").collapse('hide');
+		
+>>>>>>> ee710fa8eb4d07bafe340a3e2231ccccc9d594d1
 		if (prev != val ){
 			$('.category_' + prev).hide();
 			$(".edit").show();
@@ -23,10 +35,37 @@ $(document).ready(function(){
 			console.log(val);
 		}
 		else{
+<<<<<<< HEAD
 			prev = val;
+=======
+		prev = val;
+		$(".edit").show();
+		$('.category_' + val).show();
+		}
+		$('.accordion-toggle').hide();
+		$('.show-container').show();
+		
+	}
+
+	function handleHousingClick(e){
+		var val = ($(this).attr("data-id"));
+		$("#category").text("housing >> " + $(this).html());
+		$("#collapseTwo").collapse('hide');
+		$("#nameTitle").text($(this).html());
+		if (prev != val ){
+			$('.category_' + prev).hide();
+>>>>>>> ee710fa8eb4d07bafe340a3e2231ccccc9d594d1
 			$(".edit").show();
 			$('.category_' + val).show();
 		}
+		$('.accordion-toggle').hide();
+		$('.show-container').show();
+	}
+
+	function handleShowClick(e){
+		$('.accordion-toggle').show();
+		$("#category").text("Repick your category");
+		$('.show-container').hide();
 	}
 
 	// function handleForSaleClick(e){
@@ -96,11 +135,14 @@ function fileUpload(){
 	function(InkBlobs){
 		var inky = InkBlobs;
 		filePreview(inky);
+		image(inky[0].url);
+
 		}
 	);
 }
 
 function filePreview(ink){
+	$("#id_pictures").text(ink[0].url);
 	var text = ""
 	for (var i=0; i<ink.length; i++){ 
 		text = ink[i].filename + " sucessfully uploaded."
@@ -108,8 +150,14 @@ function filePreview(ink){
 			.text(text)
 			.appendTo('#pics');
 	}
-
 }
+
+function image(url) {
+	var img = document.createElement("IMG");
+	img.src = url;
+	document.getElementById('image').appendChild(img);
+}
+
 
 
 function Edit(){
