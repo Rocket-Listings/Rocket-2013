@@ -48,7 +48,7 @@ def profile(request, username=None):
 	photos = ListingPhoto.objects.filter(listing=relevant_user)
 	# provide `url` and `thumbnail_url` for convenience.
 	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos) 
-	return render(request, 'user_profile.html', {'profile':profile, 'listings':listings, 'photos':photos})
+	return render(request, 'user_profile.html', {'profile':profile, 'listings':listings, 'photos':photos, 'user':relevant_user})
 
 @login_required
 def edit(request, username):

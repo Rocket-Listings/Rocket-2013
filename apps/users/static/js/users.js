@@ -41,12 +41,6 @@ $(function() {
 		});
 	}
 
-	$('#dot3').dotdotdot({
-		after: 'a.more',
-		height: '50px',
-		watch: true
-	})
-
 	function initializeGoogleMaps() {
   	var mapOptions = {
     	zoom: 8,
@@ -77,17 +71,14 @@ $(function() {
 }
 
 
-	$("#dot3").bind("click", function() {
-		if ($("#dot3").innerHTML = "Read more") {
-			var el = $('#dot3'),
-    		curHeight = el.height(),
-    		autoHeight = el.css('height', 'auto').height();
-			el.height(curHeight).animate({height: autoHeight}, 1000);
-		} else if ($("#dot3").innerHTML = "Read Less") {
-			$(".biodisplay").height(150);
-			$("#dot3").innerHTML = "Read more";
-		} else
-			console.log("Yeahhhh, we got a problem...");
+	$(".read-more").onClick(function() {
+		button = $(".read-more")
+		box = $("profile-bio")
+		profile_space = &("profile_heading")
+		box.css("width", "300px")
+		box.css("height", "auto")
+		profile_space.css("height", "auto")
+		
 	})
 
 

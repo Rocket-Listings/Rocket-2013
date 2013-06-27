@@ -43,15 +43,16 @@
 
 	<div class="profile-bio">
 		<h5>About</h5>
-		<div class="bio-display after" id="dot3" style="word-wrap: break-word;">
+		<div>
 			{{ profile.bio }}
-			<a href="#" id="read" class="more">Read more &raquo;</a>
+			{% if {profile.bio\length} > 200 %}
+			<button class="read-more">Read More.</button>
+			{% endif %}
 		</div>
 	</div>
 </div>
 <div class="selling-these-items">
 	<code class ="text-info">What {{ profile.name }} is selling: </code>
-
 </div>
 <br>
 <span class="profile_carousel">

@@ -76,6 +76,7 @@
   display: inline-block;
   font-size: 18px;
   color: #B2B2B2;
+  height: auto;
 }
 .profile_user_info .name {
   font-size: 22px;
@@ -88,8 +89,9 @@
   height: 200px
 	height: auto;
   float: right;
+  text-overflow: ellipsis;
 }
-#dot3 {
+.readmore {
   height: 150px;
 }
 #map-canvas {
@@ -98,6 +100,16 @@
   height: 200px;
   width: 200px;
   float: right;
+}
+.thumbnail {
+  text-align: center;
+}
+.thumbnail-price {
+  font-size: 14px;
+  color: #B2B2B2;
+}
+.thumbnail-title {
+  font-size: 14px;
 }
 #slider-code {
   height: 125px;
