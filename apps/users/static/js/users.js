@@ -34,50 +34,34 @@ $(function() {
 	}
 
 
-	/*
-	Sorry, had to comment this out right now.  Causeing a lot of errors.
+var map;
+function initialize() {
+  	var mapOptions = {
+    	zoom: 8,
+    	center: new google.maps.LatLng(-34.397, 150.644),
+    	mapTypeId: google.maps.MapTypeId.ROADMAP
+  	};
+  	map = new google.maps.Map(document.getElementById('map-canvas'),
+     mapOptions);
+};
 
-	function initializeGoogleMaps() {
-	  	var mapOptions = {
-	    	zoom: 8,
-	    	center: new google.maps.LatLng(44.4758, -73.2125),
-	    	mapTypeId: google.maps.MapTypeId.ROADMAP
-	  		},
-	  		map = new google.maps.Map($('#map-canvas'), mapOptions);
-	  	codeAddress();
-	}
+var geocoder = new google.maps.Geocoder();
+var address = "Burlington, Vt";
+geocoder.geocode( { 'address': address}, function(results, status) {
+	if (status == google.maps.GeocoderStatus.OK) {
+		latitude = results[0].geometry.location.lat();
+		longitude = results[0].geometry.location.lng();
+		var myLatlng = new google.maps.LatLng(latitude,longitude);
+		var marker = new google.maps.Marker({
+    		position: myLatlng,
+		});
+		marker.setMap(map);
+		console.log(longitude);
+		console.log(latitude);
+    };
+});
 
-	google.maps.event.addDomListener(window, 'load', initializeGoogleMaps);
+google.maps.event.addDomListener(window, 'load', initialize);
 
-	function codeAddress() {
-		console.log(location);
-	    geocoder.geocode( { 'address': location}, function(results, status) {
-	      if (status == google.maps.GeocoderStatus.OK) {
-	        map.setCenter(results[0].geometry.location);
-	        var marker = new google.maps.Marker({
-	            map: map,
-	            position: results[0].geometry.location
-	        });
-	      } else {
-	        alert("Geocode was not successful for the following reason: " + status);
-	      }
-	    });
-	}
-
-	$(".read-more").onClick(function() {
-		button = $(".read-more")
-		box = $("profile-bio")
-		profile_space = &("profile_heading")
-		box.css("width", "300px")
-		box.css("height", "auto")
-		profile_space.css("height", "auto")
-		
-	})
-
-
-    $('.carousel').carousel({ });
-    */
-
-	handleEvents();
 
 });

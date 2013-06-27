@@ -35,19 +35,19 @@ def info(request):
 	# return render(request, 'user_info.html', {'profile':profile,})
 
 def profile(request, username=None):
-
 	user = User.objects.get(username=username)
-	return render(request, 'user_profile.html', {'user': user})
+	listings = Listing.objects.filter(user=user)
+	photo_list = []
+	photos = ListingPhoto.objects.order_by('order')
+	photos = map(lambda photo: {'url':photo.url, 'order':photo.order, 'listing':photo.listing}, photos)
 
-	print username
-	profile = request.user.get_profile()
-	relevant_user = request.user
-	user=relevant_user
-	listings = Listing.objects.filter(user=relevant_user).order_by('-pub_date')[:10]
-	photos = ListingPhoto.objects.filter(listing=relevant_user)
+	# for photo in photos:
+	# 	if photo.listing == listings:
+	# 		photo_list.append(photo)
+
+			
 	# provide `url` and `thumbnail_url` for convenience.
-	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos) 
-	return render(request, 'user_profile.html', {'profile':profile, 'listings':listings, 'photos':photos, 'user':relevant_user})
+	return render(request, 'user_profile.html', {'listings':listings, 'photos':photo_list, 'user':user})
 
 
 # @login_required

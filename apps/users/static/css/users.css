@@ -94,18 +94,14 @@
   display: inline;
   width: 200px;
   height: 200px
-	height: auto;
-  float: right;
+	float: right;
   text-overflow: ellipsis;
-}
-.readmore {
-  height: 150px;
 }
 #map-canvas {
   margin: 0;
   padding: 0;
-  height: 200px;
-  width: 200px;
+  height: 275px;
+  width: 300px;
   float: right;
 }
 .thumbnail {
@@ -115,52 +111,9 @@
   font-size: 14px;
   color: #B2B2B2;
 }
-.thumbnail-title {
+.listing-title {
   font-size: 14px;
-}
-#slider-code {
-  height: 125px;
-  overflow: hidden;
-}
-#slider-code .viewport {
-  float: left;
-  width: 240px;
-  height: 125px;
-  overflow: hidden;
-  position: relative;
-}
-#slider1 .buttons {
-  background: url("users/static/images/buttons.png") no-repeat scroll 0 0 transparent;
-  display: block;
-  margin: 30px 10px 0 0;
-  background-position: 0 -38px;
-  text-indent: -999em;
-  float: left;
-  width: 39px;
-  height: 37px;
-  overflow: hidden;
-  position: relative;
-}
-#slider-code .next {
-  margin: 30px 0 0 10px;
-}
-#slider-code .disable {
-  visibility: hidden;
-}
-#slider-code .overview {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  left: 0;
-  top: 0;
-}
-#slider-code .overview li {
-  float: left;
-  margin: 0 20px 0 0;
-  padding: 1px;
-  height: 121px;
-  border: 1px solid #dcdcdc;
-  width: 236px;
+  font-weight: bold;
 }
 .form {
   margin: 0;
