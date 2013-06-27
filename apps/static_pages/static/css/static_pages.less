@@ -136,7 +136,7 @@ h1.flag {
 .header-signup {
 	text-align: center;
 	// border-bottom: 2px solid white;
-	margin-bottom: @menu-height*(2/3);
+	//margin-bottom: @menu-height*(2/3);
 
 	// padding: 10px 0;	
 	background: @menu0;
@@ -215,6 +215,8 @@ h1.flag {
 	background-repeat:no-repeat;
 	width: 100px;
 	height: 80px;
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
 .icon-share{
@@ -224,6 +226,8 @@ h1.flag {
 	background-size: 100% 90%;
 	width: 100px;
 	height: 80px;
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
 .icon-laptop{
@@ -233,15 +237,22 @@ h1.flag {
 	background-size: 100% 100%;
 	width: 100px;
 	height: 80px;
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
 .home-description{
-	text-align: left;
+	text-align:justify;
+	text-justify:inter-word;
 	font-size: 16px;
+	line-height: 24px;
+	padding: 0 15px 0 15px;
 }
 
+
+
 .learn-more{
-	margin-top: 50px;
+	margin-top: 40px;
 	width: 80px;
 	display: block;
 	margin-left: auto;
@@ -254,6 +265,10 @@ h1.flag {
 	}
 }
 
+
+.container-fluid.home-features{
+	margin-top: 10px;
+}
 .well{
 	background-color: #f5f5f5;
 	margin-top: 30px;
@@ -261,9 +276,34 @@ h1.flag {
 	border-radius: 15px !important;
 }
 
-.listing-features{
+.how-descriptions{
+	text-align:justify;
+	text-justify:inter-word;
+	font-size: 16px;
+	line-height: 24px;
+	padding: 0 15px 0 15px;
+}
+
+.features{
 	text-align: center;
 
+		h4{
+			padding-bottom: 10px;
+		}
+
+}
+
+.features-titles{
+	text-align: center; 
+	margin-bottom: 10px;
+	margin-top: 80px;
+	font-size: 24.5px;
+	line-height: 40px;
+	font-family: inherit;
+	font-weight: bold;
+	line-height: 20px;
+	color: inherit;
+	text-rendering: optimizelegibility;
 }
 
 .features-listing-listingform{
@@ -329,10 +369,40 @@ h1.flag {
 	text-align: center;
 }
 
+	
+.whitespace{
+	height: 500px;
+}
 .row-fluid {
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
+
+
+.who-container{
+	height: 1000px;
+	width: 100%;
+	background: top no-repeat;
+	background-image: url("../img/church-dark.png");
+	
+}
+
+.who-transparentbox{
+	margin: 0px 200px 0px 200px;
+	padding-top: 40px;
+	height: 200px;
+	
+}
+
+.who-text{
+	font-style: inherit;
+	font-size: 22px;
+	margin: 0px 200px 0px 200px;
+	padding-top: 40px;
+	line-height: 28px;
+	font-weight: 500;
+}
+
 
 
 .pricing-basic{
