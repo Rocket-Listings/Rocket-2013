@@ -18,6 +18,7 @@ from django.core.mail import send_mail
 from django.core import serializers
 from django.http import HttpResponse, HttpResponseBadRequest
 import requests
+from itertools import chain
 from bs4 import BeautifulSoup
 
 
@@ -34,26 +35,17 @@ def user_listings(request, username=None):
 	messages = Message.objects.filter(listing__user=user)
 	return render(request, 'listings_dashboard.html', {'listings': listings, 'buyers': buyers, 'messages':messages,})
 
-
-
 @login_required
-def dashboard(request, username=None):
-	user = request.user # if no username parameter is passed, defaults to the currently logged in user.
-	if username:
-		user = get_object_or_404(User, username=username)
+def dashboard(request):
+	user = request.user
 	listings = Listing.objects.filter(user=user).order_by('-pub_date')[:10]
-	buyers = Buyer.objects.all()
-	messages = Messages.objects.all()
-
-	return render(request, 'listings_dashboard.html',  {'listing': listing, 'buyer': buyer, 'message':message,})	
+	buyers = list(chain(map(lambda l: l.buyer_set.all(), listings)))
+	messages list(chain(map(lambda b: b.message_set.all(), buyers)))
+	return render(request, 'listings_dashboard.html',  {'listings': listings, 'buyers': buyers, 'messages':messages,})	
 
 def latest(request):
 	listings = Listing.objects.all().order_by('-pub_date')[:10]
 	return render(request, 'listings_latest.html', {'listings': listings,})
-
-
-
-
 
 @login_required
 def create(request):
