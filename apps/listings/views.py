@@ -172,7 +172,7 @@ def autopost(request, listing_id):
 	try:
 		b = Buyer.objects.get(listing= listing, name= "Craigslist")
 	except ObjectDoesNotExist:
-		b = Buyer(listing = listing, name = "Craigslist", email = "robot@craigslist.org")
+		b = Buyer(listing = listing, name = "Craigslist", email = "robots@craigslist.org")
 		b.save()
 	
 	r = requests.get('https://post.craigslist.org/c/brl?lang=en') #GET the url to post to
@@ -205,8 +205,8 @@ def autopost(request, listing_id):
 	to_parse = BeautifulSoup(r.text) #parse
 	payload_tuples = [('id2', '1916x831X1916x635X1920x1200'), 
 		  		('browserinfo', '%7B%0A%09%22plugins%22%3A%20%22'),
-				('FromEMail',  'uqbibklr@sharklasers.com'), #enter your email here
-				('ConfirmEMail', 'uqbibklr@sharklasers.com'),
+				('FromEMail',  'hugyjfre@sharklasers.com'), #enter your email here
+				('ConfirmEMail', 'hugyjfre@sharklasers.com'),
 				('xstreet0', ''),
 				('xstreet1', ''),
 				('city', ''),
@@ -256,10 +256,11 @@ def autopost(request, listing_id):
 
 	fileslist = []
 	for photo in photos:
-		fileslist += ['file', ('photo', open( 'media/' +photo.url, 'rb')))]
-	files = dict(fileslist)
-	print files
-	r = requests.post(post_url, files = files, data=payload)
+		r = requests.post(post_url, files = dict([('file', ('photo', open( 'media/' +photo.url, 'rb')))]), data=payload)
+		#fileslist += [('file', ('photo', open( 'media/' +photo.url, 'rb')))]
+	#files = dict(fileslist)
+	#print files
+	#r = requests.post(post_url, files = files, data=payload)
 
 	# submit POST
 	to_parse = BeautifulSoup(r.text)
