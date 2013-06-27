@@ -25,6 +25,14 @@
 .user-profile-table-group .user-profile-table tbody tr.in-edit {
   background-color: #ededed;
 }
+.user-profile-table-group span.edit-all-wrapper {
+  float: right;
+  margin-top: -5px;
+}
+.user-profile-table-group span.h4 {
+  width: 200px;
+  font-size: 14pt;
+}
 /*.user-email-box{
 	float: right;
 	text-align: center;
@@ -43,7 +51,6 @@
 	width: 400px;
 }*/
 .user-info-buttons a {
-  float: left;
   margin-right: 10px;
 }
 .login-register-box {
