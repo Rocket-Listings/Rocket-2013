@@ -325,11 +325,18 @@ td {
   height: 250px;
   width: 900px;
 }
+.nav {
+  margin-bottom: 0px;
+}
 .large {
-  border: 1px solid #d2dadd;
+  border-bottom: 1px solid #d2dadd;
+  border-left: 1px solid #d2dadd;
+  border-right: 1px solid #d2dadd;
 }
 .small {
-  border: 1px solid #d2dadd;
+  border-bottom: 1px solid #d2dadd;
+  border-left: 1px solid #d2dadd;
+  border-right: 1px solid #d2dadd;
 }
 .selected {
   color: black;

@@ -1,10 +1,10 @@
 <div class="listing">
   <div class="row">
     <div class="l-body">
-      <h1 class="l-title title" style="text-align:left;float:left;">{{listing.title}}</h1>
+      <h1 class="l-title title" style="text-align:left;float:left;"></h1>
       <h1 class="l-dash" style="text-align:left;float:left;margin-left:11px;"> - </h1>
-      <h1 class="l-price" style="text-align:left;float:left;"> <span>&nbsp;</span>${{listing.price}}</h1>
-      <h1 class = "l-location"> ({{listing.location}}) </h1><!--This has to from the address function-->
+      <h1 class="l-price" style="text-align:left;float:left;">$</h1>
+      <h1 class = "l-location" style="padding-top:5px"> () </h1><!--This has to from the address function-->
     </div>
   </div>
 
@@ -23,14 +23,22 @@
       </div><!-- /.carousel-inner -->
       <!--  Next and Previous controls below
             href values must reference the id for this carousel -->
-      <a class="carousel-control left" href="#this-carousel-id" data-slide="prev">&lsaquo;</a>
+      <a class="carousel-control left" href="#this-carousesl-id" data-slide="prev">&lsaquo;</a>
       <a class="carousel-control right" href="#this-carousel-id" data-slide="next">&rsaquo;</a>
     </div><!-- /.carousel -->
 
 
-    <div class="l-description l-entry">
-      {{listing.description|linebreaks}}
+    <div class="l-description l-entry" style="white-space: pre-wrap;">
+      
     </div>
-    
+    <br>
+    <div class="l-footnote">
+      Created with 
+      <a href="http://www.rocketlistings.com" class="icon">
+        Rocket Listings
+      </a>
+      . Blast off. 
+    </div>
+
   </div> <!-- /container -->
 </div>
