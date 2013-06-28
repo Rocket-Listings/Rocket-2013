@@ -71,12 +71,20 @@ def create(request):
 
 
 def detail(request, listing_id):
-	listing = get_object_or_404(Listing, id=listing_id)
-	photos = ListingPhoto.objects.filter(listing=listing).order_by('order')
+	if request.method == 'GET':
+		listing = get_object_or_404(Listing, id=listing_id)
+		return render(request, 'listing_details.html', {'listing':listing})
+	elif request.method == 'POST':
+		listing = get_object_or_404(Listing, id=listing_id)
+		if request.user == listing.user: # updating his own listing
+			listing_form = ListingForm(request.POST, instance = listing)		
+			if listing_form.is_valid():
+				listing = listing_form.save()
+				return redirect(listing)
+			else:
+				return render(request, 'listing_update.html', {'form': listing_form})
 
-	# provide `url` and `thumbnail_url` for convenience.
-	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos) 
-	return render(request, 'listing_details.html', {'listing':listing, 'photos':photos})
+
 
 def embed(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
