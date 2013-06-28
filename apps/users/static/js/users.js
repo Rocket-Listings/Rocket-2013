@@ -70,21 +70,26 @@ $(function() {
 	function insertNewValues(data) {
 		for (key in data) {
 			var tag = $("." + key.toString())
+			console.log(key, tag.is("td"));
 			if (tag.is("td") && (tag.html() !== "Private") && (tag.html() !== "Public")) {
-				tag.html(data[key]);
-				if (tag.hasClass("muted")) tag.removeClass("muted");
+				var tdTag = $("td." + key.toString());
+				tdTag.html(data[key]);
+				if (tdTag.hasClass("muted")) tdTag.removeClass("muted");
 				if ((data[key] === "") || (data[key] === null)) {
-					tag.addClass("muted");
-					if (tag.hasClass("name")) tag.html("Add a name to your profile");
-					if (tag.hasClass("phone")) tag.html("Add a phone number to your profile");
-					if (tag.hasClass("bio")) tag.html("Add a bio to your profile");
-					if (tag.hasClass("location")) tag.html("Add a default location for your listings");
-					if (tag.hasClass("default_category")) tag.html("Add a default category for your listings");
-					if (tag.hasClass("default_listing_type")) tag.html("Add a default listing type");
+					tdTag.addClass("muted");
+					if (tdTag.hasClass("name")) tdTag.html("Add a name to your profile");
+					if (tdTag.hasClass("phone")) tdTag.html("Add a phone number to your profile");
+					if (tdTag.hasClass("bio")) tdTag.html("Add a bio to your profile");
+					if (tdTag.hasClass("location")) tdTag.html("Add a default location for your listings");
+					if (tdTag.hasClass("default_category")) tdTag.html("Add a default category for your listings");
+					if (tdTag.hasClass("default_listing_type")) tdTag.html("Add a default listing type");
 				}
 			}
 			if (tag.is("input") && !tag.is("option")) {
 				tag.val(data[key]);
+			}
+			if (tag.is("textarea")) {
+				$("textarea.bio").html(data[key]);
 			}
 			if (key.toString() === "nameprivate") {
 				if (data[key] === true) tag.html("Private");

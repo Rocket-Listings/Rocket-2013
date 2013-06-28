@@ -87,9 +87,6 @@
 				<tr class="in-edit hide">
 					<td>Seller Blurb:</td>
 					<td class="form-partial">
-						{% comment %}
-						<input class="bio" tabindex="4" name="bio" type="textarea" rows="3" value="{{ user.get_profile.bio }}">
-						{% endcomment %}
 						<textarea class="bio" tabindex="4" name="bio" rows="3">{{ user.get_profile.bio }}</textarea>
 					</td>
 					<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
