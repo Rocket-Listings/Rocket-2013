@@ -1,0 +1,36 @@
+<div class="listing">
+  <div class="row">
+    <div class="l-body">
+      <h1 class="l-title title" style="text-align:left;float:left;">{{listing.title}}</h1>
+      <h1 class="l-dash" style="text-align:left;float:left;margin-left:11px;"> - </h1>
+      <h1 class="l-price" style="text-align:left;float:left;"> <span>&nbsp;</span>${{listing.price}}</h1>
+      <h1 class = "l-location"> ({{listing.location}}) </h1><!--This has to from the address function-->
+    </div>
+  </div>
+
+  <div class="container span8">
+          <!--  Carousel - consult the Twitter Bootstrap docs at 
+          http://twitter.github.com/bootstrap/javascript.html#carousel -->
+    <div id="this-carousel-id" class="carousel slide"><!-- class of slide for animation -->
+      <div class="carousel-inner">
+        {% for photo in photos %}
+          <div {% if forloop.first %} class="item active" {% else %} class="item"{% endif %}> <!-- class of active since it's the first item --> 
+            <img src="{{ MEDIA_URL }}{{ photo.url }}" alt="" />
+            <div class="carousel-caption">
+            </div>
+          </div>
+        {% endfor %}
+      </div><!-- /.carousel-inner -->
+      <!--  Next and Previous controls below
+            href values must reference the id for this carousel -->
+      <a class="carousel-control left" href="#this-carousel-id" data-slide="prev">&lsaquo;</a>
+      <a class="carousel-control right" href="#this-carousel-id" data-slide="next">&rsaquo;</a>
+    </div><!-- /.carousel -->
+
+
+    <div class="l-description l-entry">
+      {{listing.description|linebreaks}}
+    </div>
+    
+  </div> <!-- /container -->
+</div>
