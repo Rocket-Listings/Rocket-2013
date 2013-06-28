@@ -92,9 +92,9 @@
           <div class="l-header">
               <h1 class="l-title">
                   <fieldset>
-                      <input id="id_title" name="title" type="text" value="{{listing.title}}">
-                      <input id="id_price" name="price" type="text" value="{{listing.price}}">
-                      <input id="id_location" name="location" type="text" value="{{listing.location}}">
+                      <input id="id_title" name="title" placeholder="Title" type="text" value="{{listing.title}}">
+                      <input id="id_price" name="price" type="text" placeholder="Price" value="{{listing.price}}">
+                      <input id="id_location" name="location" type="text" placeholder="Location" value="{{listing.location}}">
                   </fieldset>
               </h1>
           </div>
@@ -103,7 +103,7 @@
 
           <ul class="form">
               <li>
-                  <textarea cols="60" id="id_description" name="description" rows="10">{{listing.description}}</textarea>
+                  <textarea cols="60" id="id_description" name="description" placeholder="Description" rows="10">{{listing.description}}</textarea>
               </li>
               <li>
                   <select id="id_category" name="category" style="display:none">
@@ -131,9 +131,7 @@
   </div>
   <div class="l-footnote" style ="margin-left:55px;">
     Created with 
-    <a href="http://www.rocketlistings.com" class="icon">
-      Rocket Listings
-    </a>
+    <a href="http://www.rocketlistings.com" class="icon"> Rocket Listings</a>
     . Blast off. 
   </div>
 </div>
