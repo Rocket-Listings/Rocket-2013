@@ -6,7 +6,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 #from forms import UserProfileForm
 from django.core.exceptions import PermissionDenied
-from django.core.mail import send_mail
+
 
 def overview(request, username=None):
 	return info(request, username)
