@@ -3,30 +3,25 @@
 {# Requires the context variable 'buyers' #}	
 
 
-<div class = "dash-titles">Buyers</div>
-<div class = "buyers-cards">
+<div class="dash-subtitle">Buyers</div>
+<div class="buyers-cards">
 	{% for buyer in buyers %}
-		<div class="buyer_card listingID_{{buyer.listing.id}}" style = "display: none" >
-			<table class="table table-condensed table-buyers">
-			<!--  TODO find a better way to select the buyer id data -->
-			<tr data-buyer-id="{{ buyer.id }}">
-				<td>{{ buyer.name }}</td>
-			</tr>
-			<tr data-buyer-id="{{ buyer.id }}">
-				<td>
-				{% if buyer.max_offer %}
-					 Offering ${{buyer.max_offer}}
-				{% else %}
-					No offer
-				{% endif %}
-				</td>
-			</tr>
-			<tr data-buyer-id="{{ buyer.id }}">
-				<td>{{ buyer.last_message.date|date:"m-d-y P" }}</td>
-			</tr>
-			</table>
-		</div>
+	<table class="table table-condensed buyer-card listing-{{buyer.listing.id}} hide" data-buyer-id="{{ buyer.id }}">
+		<tr>
+			<td>{{ buyer.name }}</td>
+		</tr>
+		<tr>
+			<td>
+			{% if buyer.max_offer %}
+			Offering ${{buyer.max_offer}}
+			{% else %}
+			No offer
+			{% endif %}
+			</td>
+		</tr>
+		<tr>
+			<td>{{ buyer.last_message.date|date:"m-d-y P" }}</td>
+		</tr>
+	</table>
 	{% endfor %}
 </div>
-
-

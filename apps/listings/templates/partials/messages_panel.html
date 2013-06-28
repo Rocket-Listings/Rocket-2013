@@ -1,30 +1,25 @@
 {% load static from staticfiles %}
-{# Requires the context variable 'listings' #}	
-{# Requires the context variable 'buyers' #}	
 {# Requires the context variable 'messages' #}	
 
-<div class = "dash-titles">Messages</div>
-<div class = "messages-panel" >
-		{% for message in messages %}
-		<div class="message buyer_{{message.buyer.id}}" style = "display: none">
-				{% if message.isSeller %}
-					  <p class="message-bubble left">{{message.content}}</p>
-				{% else %}
-					 <p class="message-bubble right">{{message.content}}</p>
-		   	{% endif %}
-	   	</div>
-	   	{% endfor %}
-</div>	
-
-	<div class = "bottom">
-		<form>
-			<div class = "message-box">
-				<textarea rows= "2" name = 'content' class="input-long" placeholder="  Message..." ></textarea>
-				<input type ="hidden" name = "buyer_id" value = "{{ buyer.id }}" >
-			</div>
-			<div class = "send">
-				<input type="submit" class="btn" id = "send-button" data-buyerid="{{ buyer.id }}">
-			</div>
-		</form>	
-	</div>
-	<div class = "clearfix"></div>
+<div class="dash-subtitle">Messages</div>
+<div class="messages-panel" >
+	{% for message in messages %}
+	<div class="message buyer-{{message.buyer.id}} hide">
+		{% if message.isSeller %}
+		{% if user.get_profile.name %}
+		<h6>{{ user.get_profile.name }}</h6>
+		{% else %}
+		<h6>{{ user.username }}</h6>		
+		{% endif %}
+		<p class="seller">{{message.content}}</p>
+		{% else %}
+		<h6>{{message.buyer.name}}</h6>
+		<p class="buyer">{{message.content}}</p>
+	   	{% endif %}
+   	</div>
+   	{% endfor %}
+</div>
+<form class="message-form hide">
+	<textarea rows="2" name='content' class="input-long" placeholder="  Message..." ></textarea>
+	<input type="submit" class="btn send-button"> {# needs to be enabled #}
+</form>	
