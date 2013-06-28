@@ -23,14 +23,22 @@
       </div><!-- /.carousel-inner -->
       <!--  Next and Previous controls below
             href values must reference the id for this carousel -->
-      <a class="carousel-control left" href="#this-carousel-id" data-slide="prev">&lsaquo;</a>
+      <a class="carousel-control left" href="#this-carousesl-id" data-slide="prev">&lsaquo;</a>
       <a class="carousel-control right" href="#this-carousel-id" data-slide="next">&rsaquo;</a>
     </div><!-- /.carousel -->
 
 
-    <div class="l-description l-entry">
-      {{listing.description|linebreaks}}
+    <div class="l-description l-entry" style="white-space: pre-wrap;">
+      {{listing.description}}
     </div>
-    
+    <br>
+    <div class="l-footnote">
+      Created with 
+      <a href="http://www.rocketlistings.com" class="icon">
+        Rocket Listings
+      </a>
+      . Blast off. 
+    </div>
+
   </div> <!-- /container -->
 </div>
