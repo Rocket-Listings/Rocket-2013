@@ -1,16 +1,16 @@
 $(document).ready(function(){
 	var prev = "";
 	function eventHandlers() {
-		$(".for_sale").click(handleForSaleClick);
-		$(".housing").click(handleHousingClick);
+		$("a", ".tab-pane").click(handleClick);
 	}
 
-	function handleForSaleClick(e){
-		var val = ($(this).attr("data-id"));
-		$("#category").text( "for sale >> " + $(this).html());
+	function handleClick(e) {
+		var val = ($(this).data("id"));
+		$("a", ".tab-pane").addClass("unselected");
+		$("a", ".tab-pane").removeClass("selected");
+		$(this).removeClass("unselected");
+		$(this).addClass("selected");
 		$("#nameTitle").text($(this).html());
-
-		$("#collapseOne").collapse('hide');
 		if (prev != val ){
 			$('.category_' + prev).hide();
 			$(".edit").show();
@@ -19,36 +19,13 @@ $(document).ready(function(){
 			prev = val;
 			console.log('d  '+prev);
 			console.log(val);
-
 		}
 		else{
 		prev = val;
 		$(".edit").show();
 		$('.category_' + val).show();
-		}
+		}		
 	}
-
-	function handleHousingClick(e){
-		var val = ($(this).attr("data-id"));
-		$("#category").text("housing >> " + $(this).html());
-		$("#collapseTwo").collapse('hide');
-		$("#nameTitle").text($(this).html());
-		if (prev != val ){
-			$('.category_' + prev).hide();
-			$(".edit").show();
-			$('.category_' + val).show();
-			console.log('p '+prev);
-			prev = val;
-			console.log('d '+prev);
-			console.log(val);
-		}
-		else{
-		prev = val;
-		$(".edit").show();
-		$('.category_' + val).show();
-		}
-	}
-
 	eventHandlers();
 });
 

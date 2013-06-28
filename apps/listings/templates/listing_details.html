@@ -1,12 +1,23 @@
 {% extends 'listings_base.html' %}
 {% load thumbnail %}
+{% load static from staticfiles %}
 
-{% block content %}
+{% block js %}
   <script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
+  <script type="text/javascript" src="{% static 'js/listings_reference.js' %}"></script>
   <script>
       filepicker.setKey('ATM8Oz2TyCtiJiHu6pP6Qz');
   </script>
+  <script>
+    $(document).ready(function(){
+      $('.carousel').carousel({
+        interval: 10000
+      });
+    })
+  </script>
+{% endblock %}
 
+{% block content %}
 <div class="listing-dash">
   <div class="dash-title">
     <div class="btn-group" data-toggle="buttons-radio">
@@ -23,8 +34,8 @@
   </div>
 </div>
 
-<!-- Preview Page -->
 <div class="listing">
+  <div>
   <div class="row">
     <div class="l-body">
       <h1 class="l-title title" style="text-align:left;float:left;">{{listing.title}}</h1>
@@ -57,9 +68,14 @@
     <div class="l-description l-entry">
       {{listing.description|linebreaks}}
     </div>
+    
   </div> <!-- /container -->
+  <br><br><br>
+<div class="l-footnote" style ="margin-left:55px;">
+    Created with <a href="http://www.rocketlistings.com" class="icon">Rocket Listings</a>. Blast off.
+  </div>
 </div>
-<!-- Preview Page -->
+</div>
 
 
 
@@ -123,6 +139,95 @@
 <!-- Edit Page
 <div class="edit" style="display:none">
   <div class="listing-edit">
+    <div>
+                    <div class="tabbable">  
+                        <ul class="nav nav-tabs">  
+                          <li class="active"><a href="#1" data-toggle="tab">For Sale</a></li>  
+                          <li class=""><a href="#2" data-toggle="tab">Housing</a></li> 
+                        </ul>  
+                        <div class="tab-content">  
+                          <div class="tab-pane active large" id="1" data-type="for_sale">
+                            <table class="table">
+                                <tr>
+                                    <td><a href="#" data-id='appliances'> appliances </a></td>
+                                    <td><a href="#" data-id='antiques'> antiques </a></td>
+                                    <td><a href="#" data-id='arts_and_crafts'> arts and crafts </a></td>
+                                    <td><a href="#" data-id='auto_parts'> auto parts </a></td>
+                                    <td><a href="#" data-id='baby_and_kids'> baby and kids </a></td>
+                                    <td><a href="#" data-id='barter'> barter </a></td>
+                                    <td><a href="#" data-id='beauty_and_health'> beauty and health </a></td>
+                                </tr>
+                                               
+                                <tr>
+                                    <td><a href="#" data-id='bikes'> bikes </a></td>
+                                    <td><a href="#" data-id='boats'> boats </a></td>
+                                    <td><a href="#" data-id='books'> books </a></td>
+                                    <td><a href="#" data-id='business'> business </a></td>
+                                    <td><a href="#" data-id='cars_and_trucks'> cars and trucks </a></td>
+                                    <td><a href="#" data-id='cds_dvd_vhs'> cds/dvd/vhs </a></td>
+                                    <td><a href="#" data-id='cell_phones'> cell phones </a></td>
+                                </tr>
+
+                                <tr>
+                                    <td><a href="#" data-id='collectibles'> collectibles </a></td>
+                                    <td><a href="#" data-id='computer'> computer </a></td>
+                                    <td><a href="#" data-id='electronics'> electronics </a></td>
+                                    <td><a href="#" data-id='farm_and_garden'> farm and garden </a></td>
+                                    <td><a href="#" data-id='free'> free </a></td>                   
+                                    <td><a href="#" data-id='clothes_and_accessories'> clothes and accessories </a></td>
+                                    <td><a href="#" data-id='furniture'> furniture </a></td>
+                                </tr>    
+
+                                <tr>
+                                    <td><a href="#" data-id='garage_sale'> garage sale </a></td>
+                                    <td><a href="#" data-id='general'> general </a></td>
+                                    <td><a href="#" data-id='household'> household </a></td>
+                                    <td><a href="#" data-id='jewelry'> jewelry </a></td>
+                                    <td><a href="#" data-id='materials'> materials </a></td>
+                                    <td><a href="#" data-id='motorcycles'> motorcycles </a></td>
+                                    <td><a href="#" data-id='music_instruments'> music instruments </a></td>
+                                </tr>
+
+                                <tr>
+                                    <td><a href="#" data-id='photo_and_video'> photo and video </a></td>
+                                    <td><a href="#" data-id='rvs'> rvs </a></td>
+                                    <td><a href="#" data-id='sporting'> sporting </a></td>
+                                    <td><a href="#" data-id='tickets'> tickets </a></td>
+                                    <td><a href="#" data-id='tools'> tools </a></td>
+                                    <td><a href="#" data-id='toys_and_games'> toys and games </a></td>
+                                    <td><a href="#" data-id='video_gaming'> video gaming </a></td>
+                                </tr>
+
+                                <tr>
+                                    <td><a href="#" class="for_sale" data-id='wanted'> wanted </a></td>
+                                </tr>
+                            </table>
+                        </div>
+                  
+                
+                          <div class="tab-pane small" data-type="housing" id="2">  
+                            <table class="table">
+                                <tr>
+                                    <td><a href="#" data-id="housing"> apartments / housing </a></td>
+                                    <td><a href="#" data-id="housing"> rooms / shared </a></td>
+                                    <td><a href="#" data-id="housing"> sublets / temporary </a></td>
+                                    <td><a href="#" data-id="housing"> housing wanted </a></td>
+                                    <td><a href="#" data-id="housing"> housing swap </a></td>
+                                    <td><a href="#" data-id="housing"> vacation rentals </a></td>
+                                </tr>
+                                                
+                                <tr>
+
+                                    <td><a href="#" data-id="housing"> parking / storage </a></td>
+                                    <td><a href="#" data-id="housing"> office / commercial </a></td>
+                                    <td><a href="#" data-id="housing"> real estate for sale </a></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+    
+
       <form method="POST" action="">
           {% csrf_token %}
           <div class="l-header">
@@ -165,7 +270,12 @@
           </ul>
       </form>
   </div>
+  <div class="l-footnote" style ="margin-left:55px;">
+    Created with <a href="http://www.rocketlistings.com" class="icon">Rocket Listings</a>. Blast off.
+  </div>
 </div>
+</div>
+<<<<<<< HEAD
 </div>
 End Edit Page -->
 
@@ -181,19 +291,4 @@ End Edit Page -->
 
 <div class="clearfix"></div>
 
-
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if necessary -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/jquery-1.7.2.min.js"><\/script>')</script>
-    <!-- Bootstrap jQuery plugins compiled and minified -->
-    <script src="js/bootstrap.min.js"></script>
-    <script>
-      $(document).ready(function(){
-        $('.carousel').carousel({
-          interval: 10000
-        });
-    })
-    </script>
   {% endblock %}

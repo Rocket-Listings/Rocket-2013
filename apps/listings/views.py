@@ -45,12 +45,12 @@ def latest(request):
 	return render(request, 'listings_latest.html', {'listings': listings,})
 
 @login_required
-def category(request):
+def create(request):
 	if request.method == 'GET':
 		profile = request.user.get_profile()
 		defaults = {'location':profile.location, 'category':profile.default_category, 'listing_type':profile.default_listing_type}
 		form = ListingForm(initial=defaults)
-		return render(request, 'listing_category.html', {'form':form})
+		return render(request, 'listing_create.html', {'form':form})
 	elif request.method == 'POST':
 		listing_form = ListingForm(request.POST)
 		if listing_form.is_valid():
@@ -67,7 +67,7 @@ def category(request):
 				return redirect(listing)
 				# Do something for anonymous users.
 		else:
-			return render(request, 'listing_category.html', {'form': ListingForm(request.POST),})
+			return render(request, 'listing_create.html', {'form': ListingForm(request.POST),})
 
 
 def detail(request, listing_id):
