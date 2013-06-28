@@ -12,7 +12,7 @@ class UserProfile(models.Model):
 	location = models.CharField(max_length=255, blank=True)
 	default_category = models.ForeignKey(ListingCategory, null=True, blank=True)
 	default_listing_type = models.ForeignKey(ListingType, null=True, blank=True)
-	email = models.EmailField(max_length=255, blank=True)
+	email = models.EmailField(max_length=255, blank=False)
 	phone = models.CharField(max_length=50, blank=True)
 	bio = models.TextField(blank=True)
 	nameprivate = models.BooleanField(blank=False, null=False)
