@@ -8,6 +8,7 @@
   float: right;
 }
 .user-profile-table-group .user-profile-table tbody tr td:nth-child(1) {
+  text-align: right;
   width: 150px;
 }
 .user-profile-table-group .user-profile-table tbody tr td:nth-child(2) {
@@ -31,6 +32,10 @@
 .user-profile-table-group .user-profile-table tbody tr td span.partial-submit {
   margin: 5px 3px 0 0;
 }
+.user-profile-table-group .user-profile-table tbody tr td textarea {
+  width: 290px;
+  max-width: 290px;
+}
 .user-profile-table-group .user-profile-table tbody tr.in-edit {
   background-color: #ededed;
 }
@@ -38,9 +43,16 @@
   float: right;
   margin: -5px 5px 0 0;
 }
+.user-profile-table-group span.view-profile-wrapper {
+  float: right;
+  margin: -5px 5px 0 0;
+}
 .user-profile-table-group span.h4 {
   width: 200px;
   font-size: 14pt;
+}
+.capital {
+  text-transform: capitalize;
 }
 /*.user-email-box{
 	float: right;

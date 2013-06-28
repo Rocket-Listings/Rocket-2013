@@ -131,6 +131,9 @@ pre,
   border-collapse: collapse !important;
   background-image: none !important;
 }
+select:focus {
+  outline: none !important;
+}
 @media (max-width: 767px) {
   body {
     padding: 0;

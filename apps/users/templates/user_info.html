@@ -3,18 +3,21 @@
 
 {% block content %}
 {% if user.get_profile.name %}
-<h3>{{ user.get_profile.name }}'s info</h3>
+<h3 class="name">{{ user.get_profile.name }}'s info</h3>
 {% else %}
-<h3>{{user.username}}'s info</h3>
+<h3 class="name">{{user.username}}'s info</h3>
 {% endif %}
 
 <div class="user-profile-table-group">
+	<div class="errors alert alert-error hide"></div>
 	<form class="user-info-form form-horizontal" action="" method="POST">
 		<div style="margin-bottom: 5px">
 			<span class="h4"><strong>User Info</strong></span>
 			<span class="edit-all-wrapper">
 				<a class="btn btn-info edit-all" href="#">Edit all.</a>
+				<input class="btn btn-info save-all hide" type="submit" value="Save all.">
 			</span>
+			<span class="view-profile-wrapper"><a class="btn btn-warning view-profile" href="{% url 'users.views.profile' user.username %}">View your profile.</a></span>
 		</div>
 		<table class="table table-hover user-profile-table">
 			<tbody>
@@ -84,7 +87,10 @@
 				<tr class="in-edit hide">
 					<td>Seller Blurb:</td>
 					<td class="form-partial">
-						<input class="bio" tabindex="4" name="bio" type="text" value="{{ user.get_profile.bio }}">
+						{% comment %}
+						<input class="bio" tabindex="4" name="bio" type="textarea" rows="3" value="{{ user.get_profile.bio }}">
+						{% endcomment %}
+						<textarea class="bio" tabindex="4" name="bio" rows="3">{{ user.get_profile.bio }}</textarea>
 					</td>
 					<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
 				</tr>
@@ -115,24 +121,6 @@
 					<td></td>
 				</tr>
 				<tr>
-					<td>Default Category:</td>	
-					{% if user.get_profile.default_category.name  %}
-					<td class="default_category">{{ user.get_profile.default_category.name  }}</td>
-					{% else %}
-					<td class="default_category muted">Add a default category for your listings</td>
-					{% endif %}
-					<td><a class="edit" href="#">Edit</a></td>
-				</tr>
-				<tr class="in-edit hide">
-					<td>Default Category:</td>
-					<td class="form-partial">
-						<select tabindex="5" name="default_category">
-							<option class="" selected="true">{{ user.get_profile.default_category.name }}</option>
-						</select>
-					</td>
-					<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
-				</tr>
-				<tr>
 					<td>Default Listing Type:</td>
 					{% if user.get_profile.default_listing_type.name  %}
 					<td class="default_listing_type">{{ user.get_profile.default_listing_type.name }}</td>
@@ -150,18 +138,26 @@
 					</td>
 					<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
 				</tr>
-			</tbody>
-		</table>
-		<!-- {# <h4>Notifications</h4>
-		<table class="table table-striped user-profile-table">
-			<tbody>
 				<tr>
-					<td>Send me emails about my listings</td>
-					<td>{{ user.get_profile.emailpref }}Weekly</td>
-					<td><a href="#">Edit</a></td>
+					<td>Default Category:</td>	
+					{% if user.get_profile.default_category.name  %}
+					<td class="default_category">{{ user.get_profile.default_category.name  }}</td>
+					{% else %}
+					<td class="default_category muted">Add a default category for your listings</td>
+					{% endif %}
+					<td><a class="edit" href="#">Edit</a></td>
+				</tr>
+				<tr class="in-edit hide">
+					<td>Default Category:</td>
+					<td class="form-partial">
+						<select tabindex="5" name="default_category">
+							<option class="" selected="true">{{ user.get_profile.default_category.name }}</option>
+						</select>
+					</td>
+					<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
 				</tr>
 			</tbody>
-		</table> #} -->
+		</table>
 		<h4>Privacy</h4>
 		<table class="table table-hover user-profile-table">
 			<tbody>
@@ -215,15 +211,6 @@
 				</tr>
 			</tbody>
 		</table>
-		<div class="user-info-buttons">
-			{% comment %}
-			<!--<a class="btn btn-info" href="{% url 'users.views.edit' user.username %}">Edit your account info.</a>
-			<a class="btn btn-warning" href="{% url 'auth_password_change' %}">Change your password.</a>-->
-			{% endcomment %}
-			<a class="btn btn-warning view-profile" href="{% url 'users.views.profile' user.username %}">View your profile.</a>
-			<input class="btn btn-info save-all hide" type="submit" value="Save all.">
-			<div class="clearfix"></div>
-	</div>
 	</form>
 </div>
 {% endblock %}

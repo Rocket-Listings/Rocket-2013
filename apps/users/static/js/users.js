@@ -8,8 +8,11 @@ $(function() {
 			if ($(this).parent().parent().next().find("input")[1]) {
 				$(this).parent().parent().next().find("input")[0].focus();
 			}
-			else {
+			else if ($(this).parent().parent().next().find("select")[0]) {
 				$(this).parent().parent().next().find("select")[0].focus();
+			}
+			else {
+				$(this).parent().parent().next().find("textarea")[0].focus();
 			}
 			$(".edit").replaceWith("<span class='edit muted'>Edit</span>");
 			$(".change-password").replaceWith("<span class='change-password muted'>Change password</span>");
@@ -17,9 +20,9 @@ $(function() {
 		});
 		$(".edit-all").click(function(e) {
 			e.preventDefault();
+			$(".edit-all").hide();
 			$(".edit").parent().parent().hide();
 			$(".in-edit").show();
-			//$(".uneditable").css({"background-color": "#EDEDED"});
 			$(".save-all").show();
 			$(".partial-submit").replaceWith("<span class='muted partial-submit'>Edit</span>");
 			$("table").removeClass("table-hover");
@@ -37,21 +40,34 @@ $(function() {
 				xhr.setRequestHeader("X-CSRFToken", csrftoken);
 			},
 			success: function(response) {
-				$(".in-edit").hide();
-				$(".edit").replaceWith("<a class='edit' href='#'>Edit</a>");
-				$(".edit").parent().parent().show();
-				$(".change-password").replaceWith("<a class='change-password' href='{% url 'auth_password_change' %}'>Change password</a>");
-				$("table").addClass("table-hover");
-				$(".save-all").hide();
-				$(".partial-submit").replaceWith("<input class='btn btn-info partial-submit' type='submit' value='Save'>");
-				insertNewValues(response[0].fields);
+				if (response[0]) {
+					$(".in-edit").hide();
+					$(".edit").replaceWith("<a class='edit' href='#'>Edit</a>");
+					$(".edit").parent().parent().show();
+					$(".change-password").replaceWith("<a class='change-password' href='{% url 'auth_password_change' %}'>Change password</a>");
+					$("table").addClass("table-hover");
+					$(".save-all").hide();
+					$(".edit-all").show();
+					$(".errors").hide();
+					$(".partial-submit").replaceWith("<input class='btn btn-info partial-submit' type='submit' value='Save'>");
+					insertNewValues(response[0].fields);
+				}
+				else {
+					var errors = $(".errors"),
+						dismissError = '<a href="#" class="close" data-dismiss="alert">&times;</a>';
+					//errors.html(dismissError);
+					errors.html("");
+					for (key in response) {
+						errors.append("<strong class='capital'>" + key + ": </strong>" + response[key] + "<br>");
+					}
+					errors.show();
+				}
 				handleClickEvents();
 			}
 		});
 		return false;
 	});
 	function insertNewValues(data) {
-		console.log(data);
 		for (key in data) {
 			var tag = $("." + key.toString())
 			if (tag.is("td") && (tag.html() !== "Private") && (tag.html() !== "Public")) {
@@ -67,16 +83,23 @@ $(function() {
 					if (tag.hasClass("default_listing_type")) tag.html("Add a default listing type");
 				}
 			}
-			else if (tag.is("input") && !tag.is("option")) {
+			if (tag.is("input") && !tag.is("option")) {
 				tag.val(data[key]);
 			}
-			else if (key.toString() === "nameprivate") {
+			if (key.toString() === "nameprivate") {
 				if (data[key] === true) tag.html("Private");
 				else tag.html("Public");
 			}
-			else if (key.toString() === "locationprivate") {
+			if (key.toString() === "locationprivate") {
 				if (data[key] === true) tag.html("Private");
 				else tag.html("Public");
+			}
+			if (key.toString() === "name") {
+				if (data[key] !== "") $("h3.name").html(data[key] + "'s info");
+				else {
+					var username = $(".username > code").html();
+					$("h3.name").html(username + "'s info").removeClass("muted");
+				}
 			}
 		}
 	}
