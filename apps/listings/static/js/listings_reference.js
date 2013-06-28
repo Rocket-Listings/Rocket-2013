@@ -17,6 +17,8 @@ $(document).ready(function(){
 		$(this).removeClass("unselected");
 		$(this).addClass("selected");
 		$("#nameTitle").text($(this).html());
+		$("#listingType").text("Public");	
+		$("#id_pictures").text("True");
 		if (prev != val ){
 			$('.category_' + prev).hide();
 			$(".edit").show();
@@ -41,23 +43,12 @@ function fileUpload(){
 		{location:"S3"},
 	function(InkBlobs){
 		var inky = InkBlobs;
-		filePreview(inky);
+		console.log(inky[0].url)
 		image(inky[0].url);
-
 		}
 	);
 }
 
-function filePreview(ink){
-	$("#id_pictures").text(ink[0].url);
-	var text = ""
-	for (var i=0; i<ink.length; i++){ 
-		text = ink[i].filename + " sucessfully uploaded."
-		var li = $('<li>')
-			.text(text)
-			.appendTo('#pics');
-	}
-}
 
 function image(url) {
 	var img = document.createElement("IMG");

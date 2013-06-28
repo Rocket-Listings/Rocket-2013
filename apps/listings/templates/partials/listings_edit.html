@@ -103,22 +103,31 @@
 
           <ul class="form">
               <li>
-                  <textarea cols="60" id="id_description" name="description" placeholder="Description" rows="10">{{listing.description}}</textarea>
+                  <textarea cols="60" id="id_description" name="description" rows="10" placeholder="Description">{{listing.description}}</textarea>
               </li>
               <li>
+<<<<<<< HEAD
                   <input type="hidden" class="hidden" value="{{listing.category}}"/>
 
+=======
+                  <select id="id_category" name="category" style="display:none">
+                      <option value="1" selected="selected" id="nameTitle">
+                        {{listing.category}}
+                      </option>
+                  </select>
+>>>>>>> 8f1a46bb9c0c30c9593eeba045cba473b79cb6b8
               </li>
               <li>
                 <textarea cols="60" id="id_pictures" name="pictures" rows="10" style="display:none">{{listing.pictures}}</textarea>
               </li>
               <li>
                   <select id="id_listing_type" name="listing_type" style="display:none">
-                      <option value="1" selected="selected">{{listing.listing_type}}</option>
+                      <option value="1" selected="selected" id="listingType">{{listing.listing_type}}</option>
                   </select>
               </li>
               <br>
               <button type="button" class="btn btn-primary" onclick='fileUpload()'>Upload More Pictures Here</button>
+              <div id="image"></div>
               <li>
                   <input class="btn" type="submit" value="Update" style="display:none" id="primaryButton">
               </li>
