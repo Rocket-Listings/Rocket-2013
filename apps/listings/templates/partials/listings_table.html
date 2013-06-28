@@ -25,10 +25,28 @@
 					{{ listing.title }}
 				</a>
 			</td>
+<<<<<<< HEAD
 			<td>${{ listing.price }}</td>
 			{# <td>{{ listing.location }}</td> #}
 			<td>{{ listing.category.name }}</td>
 			<td>{{ listing.pub_date|date:"m-d-y P" }}</td>
+=======
+			<td class = "clickable">${{ listing.price }}</td>
+			{# <td class = "clickable">{{ listing.location }}</td> #}
+			<td class = "clickable">{{ listing.category.name }}</td>
+			<td class = "clickable">{{ listing.pub_date|date:"m-d-y P" }}</td>
+			<td class = "clickable">
+				{% if listing.max_offer %}
+				${{listing.max_offer}}</a>				
+				{% else %}
+				None
+				{% endif %}
+			</td>
+			<td class = "clickable">
+				<a href = "{% url 'listings.views.autopost' listing.id %}">Craigslist</a>	
+			</td>
+
+>>>>>>> master
 			<td> 
 				<div class="btn-toolbar" style="text-align: center;">
 					<a href="{{ listing.get_absolute_url }}">Link</a>
@@ -39,7 +57,7 @@
 						<a class="btn" href="{% url 'listings.views.update' listing.id %}" data-container="body" data-toggle="tooltip" data-original-title="Edit Listing">
 							<i class="icon-edit"></i>
 						</a>
-						
+					
 						<!--delete button -->
 						<a class="deleteModal btn" href="#deleteModal" data-toggle="modal"><i class="icon-trash"></i> </a>
 							
@@ -78,3 +96,4 @@
 <h4>Remember you can always just create a listing on Craigslist with your <code class="text-info">{{user.username}}@rocketlistings.mailgun.org</code> email and manage it here.</hr>
 {% endif %}
 {% paginate %}
+
