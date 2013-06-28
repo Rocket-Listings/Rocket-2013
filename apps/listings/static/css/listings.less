@@ -178,19 +178,59 @@
 	// box-shadow: #aebec6 2px 2px 50px;
 }
 
-.dashboard-title{
+.dashboard-title {
 	text-align: center;
 	margin-top: 20px;
 	margin-bottom: 20px;
 }
 
+.dashboard-panel {
+	position:absolute;
+	top:106px;
+	left:0;
+	bottom:0;
+	right:0;
 
-.container-fluid{
-	margin-left: 80px;
-	margin-right: 80px;	
-	padding: 0px;
+	.listings-col {
+		height: 100%;
+		padding:0;
+		margin:0;
+		border-right: 1px solid #dddddd;
+	}
+	.buyers-col {
+		height: 100%;
+		border-right: 1px solid #dddddd;
+	}
+	.messages-col {
+		heigth: 100%;
+	}
 }
+
+// Making bootstrap table-hover work with highlight
+.table-hover tbody tr:hover > td, .table-hover tbody tr:hover > th {
+	background: none;
+}
+.table-hover tbody tr:hover, .table-hover tbody tr:hover {
+	background: #f5f5f5;
+}
+.table-hover tbody tr.highlight:hover {
+	background: inherit;
+}
+
 .table-listings {
+	a {
+		text-decoration: underline;
+	}
+
+	tr.highlight {
+		background-color: #8CA8C8 !important; /* overriding specificity problems */
+		color: white;
+
+		a {
+			color: white;
+		}
+	}
+
 	tbody tr:hover {
 		cursor:pointer;
 	}
@@ -198,61 +238,42 @@
 	td {
 		vertical-align: middle;
 	}
+	border-bottom: 1px solid #dddddd;
 }
 
-
-.table-listings tbody tr.highlight {
-	background-color:rgba(67,80,86,0.1);
-}
-
-.dash-titles{
-	margin: 4px 0;
+.dash-subtitle {
+	padding: 8px;
 	font-family: inherit;
 	font-weight: bold;
 	line-height: 20px;
 	color: inherit;
 	text-rendering: optimizelegibility;
 	text-align: center;
+	border-bottom: 1px solid #dddddd;
 }
 
-.buyers-cards{
-	border-top: 1px solid #dddddd;
-	z-index: 1;
-
-}
-
-.buyer-card:hover {
-	cursor: pointer;
-}
-
-.table-buyers {
-	background-color:rgba(67,80,86,0.1);
+.buyer-card {
 	margin-bottom: 0px !important;
+	border-bottom: 1px solid #dddddd;;
+	&:hover {
+		cursor: pointer;
+		background: #f5f5f5;
+	}
+
+	&.highlight {
+		background-color: #8CA8C8 !important;		
+		color: white;
+	}
+	tr {
+		border-style: none;
+	}
+
+	td {
+		border-style: none;
+	}
 }
 
-.table-buyers tr{
-	border-style: none;
-}
-
-.table-buyers tr td{
-	border-style: none;
-}
-
-.table-buyers.highlight{
-	background-color:rgba(67,80,86,0.2);
-}
-
-
-.table-buyers.highlight td{
-	border: solid #d2dadd 0px;
-}
-
-.messages-panel{
-	border-top: 1px solid #dddddd;
-}
-
-.messageForm{
-
+.message-form {
 	background-color: #b2bec3;
 	width: 100%;
 	margin: 0;
@@ -265,7 +286,8 @@
 		-webkit-box-sizing: border-box;
 		-moz-box-sizing: border-box;
 		box-sizing: border-box;   
-		border-bottom: none;		
+		border-bottom: none;
+		resize:vertical;	
 	}
 
 	input.send-button {
@@ -274,52 +296,18 @@
 
 }
 
-.media div.span2{
-
-	// padding-top: 20px;
-}
-
-
-
-
-// gotta refactor this - Not good to stick 3rd party css in our own files
-
-
-
 /* Messages bubble */
-
-.message-bubble {
-	position:relative;
-	padding: 5px;
-	margin-bottom: 20px;
+.message {
+	padding: 0 10px;
+	margin: 0;
 	color:#333;
-	background:#fff;
+
+	&.buyer {
+		margin-left:30px;
+	}
+	/* Right Bubble  */
+	&.left {
+		margin-right:30px;
+		background-color:rgba(67,80,86,0.1);
+	}
 }
-
-/* Left Bubble */
-.message .right {
-	margin-left:30px;
-
-}
-
-/* Right Bubble  */
-.message .left {
-	margin-right:30px;
-	background-color:rgba(67,80,86,0.1);
-}
-
-.messages-pane {
-	background-color: white;
-	height: 50px;
-	width: 600px;
-	overflow: auto;
-}
-
-h1, h2, h3, h4, h5, h6{
-	margin: 5px 0;
-}
-
-.btn-send{
-	margin-top: 10px;
-}
-

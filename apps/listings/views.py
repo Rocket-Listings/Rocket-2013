@@ -39,8 +39,8 @@ def user_listings(request, username=None):
 def dashboard(request):
 	user = request.user
 	listings = Listing.objects.filter(user=user).order_by('-pub_date')[:10]
-	buyers = list(chain(map(lambda l: l.buyer_set.all(), listings)))
-	messages list(chain(map(lambda b: b.message_set.all(), buyers)))
+	buyers = list(reduce(chain, (map(lambda l: l.buyer_set.all(), listings))))
+	messages = list(chain(reduce(chain, map(lambda b: list(b.message_set.all()), buyers))))
 	return render(request, 'listings_dashboard.html',  {'listings': listings, 'buyers': buyers, 'messages':messages,})	
 
 def latest(request):

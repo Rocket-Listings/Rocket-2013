@@ -3,11 +3,10 @@
 {# Requires the context variable 'buyers' #}	
 
 
-<div class="dash-titles">Buyers</div>
+<div class="dash-subtitle">Buyers</div>
 <div class="buyers-cards">
 	{% for buyer in buyers %}
-	<div class="buyer-card listing-{{buyer.listing.id}} hide" data-buyer-id="{{ buyer.id }}">
-		<table class="table table-condensed table-buyers">
+	<table class="table table-condensed buyer-card listing-{{buyer.listing.id}} hide" data-buyer-id="{{ buyer.id }}">
 		<tr>
 			<td>{{ buyer.name }}</td>
 		</tr>
@@ -23,9 +22,6 @@
 		<tr>
 			<td>{{ buyer.last_message.date|date:"m-d-y P" }}</td>
 		</tr>
-		</table>
-	</div>
+	</table>
 	{% endfor %}
 </div>
-
-
