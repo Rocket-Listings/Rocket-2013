@@ -1,8 +1,10 @@
 $(document).ready(function(){
+
 	$('.l-description').text($('#id_description').val());
 	$('.title').text($('#id_title').val());
 	$('.l-location').text("(" + $('#id_location').val() + ")");
 	$('.l-price').text("$" + $('#id_price').val());
+
 	var prev = "";
 	function eventHandlers() {
 		$("a", ".tab-pane").click(handleClick);
