@@ -127,7 +127,6 @@ h1.flag {
 }
 .header-signup {
   text-align: center;
-  margin-bottom: 24px;
   background: #ededed;
   height: 36px;
 }
@@ -202,6 +201,222 @@ h1.flag {
 .header-signup form button.disable:hover {
   color: #0000EE;
   text-decoration: none;
+}
+.icon-newspaper {
+  background-image: url("../img/newspaper.svg");
+  background-position: 50% 40%;
+  background-size: 400px 400px;
+  background-repeat: no-repeat;
+  width: 100px;
+  height: 80px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.icon-share {
+  background-image: url("../img/share.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 90%;
+  width: 100px;
+  height: 80px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.icon-laptop {
+  background-image: url("../img/laptop.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 100px;
+  height: 80px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.home-description {
+  text-align: justify;
+  text-justify: inter-word;
+  font-size: 16px;
+  line-height: 24px;
+  padding: 0 15px 0 15px;
+}
+.learn-more {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  width: 80px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  color: #0000ee;
+}
+.learn-more:hover {
+  color: #2200CC;
+  text-decoration: underline;
+  background: rgba(255, 255, 255, 0.7);
+}
+.container-fluid.home-features {
+  margin-top: 10px;
+}
+.well {
+  background-color: #f5f5f5;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border-radius: 15px !important;
+}
+.how-descriptions {
+  text-align: justify;
+  text-justify: inter-word;
+  font-size: 16px;
+  line-height: 24px;
+  padding: 0 15px 0 15px;
+}
+.features {
+  text-align: center;
+}
+.features h4 {
+  padding-bottom: 10px;
+}
+.features-titles {
+  text-align: center;
+  margin-bottom: 10px;
+  margin-top: 80px;
+  font-size: 24.5px;
+  line-height: 40px;
+  font-family: inherit;
+  font-weight: bold;
+  line-height: 20px;
+  color: inherit;
+  text-rendering: optimizelegibility;
+}
+.features-listing-listingform {
+  padding-top: 10px;
+}
+.features-rlemail {
+  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+  color: #E75547;
+  font-size: 20px;
+  text-shadow: 1px 1px 2px #aebec6;
+  text-align: center;
+  margin-top: 15px;
+}
+.features-craigslistemail {
+  margin-top: 10px;
+  width: 485px;
+  height: 45px;
+  background: center no-repeat url('../img/craigslist-email.png');
+  background-size: 490px 50px;
+  background-color: white;
+  text-align: center;
+}
+.features-manylistings {
+  margin-top: 10px;
+  width: 480px;
+  height: 75px;
+  background: center no-repeat url('../img/many-listings.png');
+  background-size: 480px 75px;
+  -webkit-box-shadow: #aebec6 1px 1px 15px;
+  -moz-box-shadow: #aebec6 1px 1px 15px;
+  box-shadow: #aebec6 1px 1px 15px;
+  text-align: center;
+}
+.features-messages {
+  margin-top: 5px;
+  width: 490px;
+  height: 110px;
+  background: left top no-repeat url('../img/messages.png');
+  background-size: 480px 100px;
+  -webkit-box-shadow: #aebec6 1px 1px 15px;
+  -moz-box-shadow: #aebec6 1px 1px 15px;
+  box-shadow: #aebec6 1px 1px 15px;
+  text-align: center;
+}
+.features-wrapup {
+  margin-top: 5px;
+  width: 490px;
+  height: 150px;
+  background: center no-repeat url('../img/wrapup.png');
+  background-size: 480px 130px;
+  -webkit-box-shadow: #aebec6 1px 1px 15px;
+  -moz-box-shadow: #aebec6 1px 1px 15px;
+  box-shadow: #aebec6 1px 1px 15px;
+  text-align: center;
+}
+.whitespace {
+  height: 500px;
+}
+.row-fluid {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.who-container {
+  height: 800px;
+  width: 100%;
+  background: top no-repeat;
+  background-image: url("../img/church-dark.png");
+}
+.who-container .who-transparent-box {
+  height: auto;
+  background-color: black;
+  opacity: 0.7;
+}
+.who-container .who-transparent-box .who-text {
+  padding: 20px 30px 20px 30px;
+  font-style: inherit;
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 200;
+  color: white;
+  text-align: justify;
+}
+.pricing-basic {
+  text-align: center;
+}
+.pricing-pro {
+  text-align: center;
+}
+.well-basic {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.well-pro {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.pricing-title {
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 26px;
+  line-height: 40px;
+  color: inherit;
+}
+.pricing-subtitle {
+  font-family: inherit;
+  font-size: 20px;
+  font-style: italic;
+}
+.pricing-subtitle.pro {
+  font-size: 16px;
+  text-align: center;
+}
+.pricing-list {
+  font-size: 16px;
+  text-align: left;
+}
+.pricing-list ul li {
+  line-height: 30px;
+}
+.dim {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  opacity: 0.70;
+}
+a.pricing-btn.btn.btn-primary {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 22px;
+  width: 70px;
 }
 /*
 .homepage-row {
@@ -458,150 +673,5 @@ h1.flag {
 	}
 }
 
-.well{
-	background-color: white;
-	margin-top: 30px;
-	margin-bottom: 30px;
-	border-radius: 15px;
-}
 
-.features-titles{
-	font-family: "Open sans", "Helvetica", Arial;
-	font-size: 20px;
-	color: #222F33;
-	font-weight: 400;
-	text-shadow: 1px 1px 5px #aebec6;
-	line-height: 28px;
-	text-align: center;
-}
-
-.features-rlemail{
-	font-family: Monaco,Menlo,Consolas, "Courier New", monospace;
-	text-align: center;	
-	color: #E75547;
-	font-size: 24px;
-	text-shadow: 1px 1px 2px #aebec6;
-	text-align: center;	
-	margin-top: 15px;
-}
-
-
-.features-craigslistemail{
-	margin-top: 10px;
-	width: 485px;
-	height: 45px;
-	background: center no-repeat url('../img/craigslist-email.png');
-	background-size: 490px 50px;
-	background-color: white;
-	text-align: center;	
-}
-
-
-.features-manylistings{
-	margin-top: 10px;
-	width: 480px;
-	height: 75px;
-	background: center no-repeat url('../img/many-listings.png');
-	background-size: 480px 75px;
-	-webkit-box-shadow: #aebec6 1px 1px 15px;
-	-moz-box-shadow: #aebec6 1px 1px 15px;
-	box-shadow: #aebec6 1px 1px 15px;	
-	text-align: center;
-}
-
-.features-messages{
-	margin-top: 5px;
-	width: 490px;
-	height: 110px;
-	background: left top no-repeat url('../img/messages.png');
-	background-size: 480px 100px;
-	-webkit-box-shadow: #aebec6 1px 1px 15px;
-	-moz-box-shadow: #aebec6 1px 1px 15px;
-	box-shadow: #aebec6 1px 1px 15px;	
-	text-align: center;
-}
-
-.features-wrapup{
-	margin-top: 5px;
-	width: 490px;
-	height: 150px;
-	background: center no-repeat url('../img/wrapup.png');
-	background-size: 480px 130px;
-	-webkit-box-shadow: #aebec6 1px 1px 15px;
-	-moz-box-shadow: #aebec6 1px 1px 15px;
-	box-shadow: #aebec6 1px 1px 15px;	
-	text-align: center;
-}
-
-.row-fluid {
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
-
-
-.pricing-basic{
-	text-align: center;
-}
-
-.pricing-pro{
-	text-align: center;
-}
-
-.well-basic{
-	margin-left: 20px;
-	margin-right: 20px;
-}
-
-.well-pro{
-	margin-left: 20px;
-	margin-right: 20px;
-}
-
-.pricing-title{
-	font-family: inherit;
-	font-weight: bold;
-	font-size: 26px;
-	line-height: 40px;
-	color: inherit;
-}
-
-.pricing-subtitle{
-	font-family: inherit;
-	font-size: 20px;
-	font-style: italic;
-}
-
-.pricing-subtitle.pro{
-	font-size: 16px;
-	text-align: center;
-
-}
-
-
-.pricing-list{
-	font-size: 16px;
-	text-align: left;
-
-	ul li{
-			line-height: 30px;
-	}
-}
-
-.dim
-{
-	position:absolute;  
-	width:100%;  
-	height:100%;  
-	background-color:#000000;  
-	opacity:0.70; 
-}
-
-a.pricing-btn.btn.btn-primary{
-	display: block;
-	margin-left: auto;
-    margin-right: auto;
-    margin-top: 22px;
-    width: 70px;
-
-}
 */

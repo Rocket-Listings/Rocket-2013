@@ -5,8 +5,6 @@ urlpatterns = patterns('listings.views',
 	url(r'^$', 'latest'),
 	url(r'^create/$', 'create'),
 	url(r'^(?P<listing_id>\d+)/$', 'detail'),
-	url(r'^(?P<listing_id>\d+)/messages/$', 'messages'),
-	url(r'^(?P<listing_id>\d+)/offers/$', 'offers'),
 	url(r'^(?P<listing_id>\d+)/autopost/$', 'autopost'),
 	url(r'^(?P<listing_id>\d+)/cl-embed/$', 'embed'),	
 	url(r'^(?P<listing_id>\d+)/update/$', 'update'),
@@ -15,7 +13,7 @@ urlpatterns = patterns('listings.views',
 	url(r'^ajax-photo-upload/$', import_uploader, name="ajax_photo_upload"),
 
 	# moved here from users/urls.py
-    url(r'^(?P<username>\w+)/dashboard/$', 'dashboard'),
+	url(r'^dashboard/$', 'dashboard'),
     url(r'^(?P<username>\w+)/$', 'user_listings', name='user_listings'),
 
 	#api patterns TODO: respond differently based on HTTP_ACCEPT header, but keep urls the same
