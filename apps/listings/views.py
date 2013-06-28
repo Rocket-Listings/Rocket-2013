@@ -3,9 +3,9 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from datetime import datetime, timedelta
 from listings.forms import ListingForm
-from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from ajaxuploader.views import AjaxFileUploader
+from django.shortcuts import render, redirect, get_object_or_404
 #from ListingsLocalUploadBackend import ListingsLocalUploadBackend
 from listings.upload_backend import ProductionUploadBackend, DevelopmentUploadBackend
 from django.utils import simplejson
@@ -14,7 +14,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from rocketlistings import get_client_ip
 from django.db.models import Max
 from django.views.decorators.csrf import csrf_exempt
-from django.core.mail import send_mail
 from django.core import serializers
 from django.http import HttpResponse, HttpResponseBadRequest
 import requests
@@ -109,31 +108,6 @@ def delete(request, listing_id):
 		listing.delete()
 		return redirect('listings.views.user_listings', username = request.user.username)
 
-def offers(request, listing_id):
-	listing = get_object_or_404(Listing, id=listing_id)
-	offers = listing.offer_set.all()
-	return render(request, 'listing_offers.html',  {'listing': listing, 'offers': offers,})
-
-@csrf_exempt #this need to be changed but i cant be bothered to figure out the csrf stuff atm
-def messages(request, listing_id):
-	if request.method == "POST":
-
-		listing = get_object_or_404(Listing, id=listing_id)
-		buyerId = request.POST.get('buyer_id')
-		buyer = get_object_or_404(Buyer, id=buyerId)
-		content = request.POST.get('content')
-		subject = ('New Message from ' + listing.user.userprofile.name) 
-
-		send_mail( subject , content, 'postmaster@rocketlistings.mailgun.org', [buyer.email], fail_silently=False)
-
-		m = Message(listing = listing, isSeller = True, buyer = buyer, content = content)
-		m.save()
-
-
-	listing = get_object_or_404(Listing, id=listing_id)
-	buyers = listing.buyer_set.all().order_by('name')
-	messages = listing.message_set.all().order_by('date')
-	return render(request, 'listing_messages.html', {'listing': listing, 'messages':messages, 'buyers': buyers,})	
 
 def delete_ajax(request, listing_id):
 	response = {}
@@ -195,6 +169,11 @@ def autopost(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
 	photos = ListingPhoto.objects.filter(listing=listing).order_by('order')
 
+	try:
+		b = Buyer.objects.get(listing= listing, name= "Craigslist")
+	except ObjectDoesNotExist:
+		b = Buyer(listing = listing, name = "Craigslist", email = "robots@craigslist.org")
+		b.save()
 	
 	r = requests.get('https://post.craigslist.org/c/brl?lang=en') #GET the url to post to
 	post_url = r.url.split('?')[0] #split out the query string
@@ -205,7 +184,8 @@ def autopost(request, listing_id):
 	tag = to_parse.find('input', type= "hidden") #select the input tag w/ hashed key/value
 	hashed_key = tag.attrs['name']
 	hashed_value = tag.attrs['value']
-	payload = {'id': 'fs', hashed_key: hashed_value}#assemble payload. fs = for sale
+	payload = {'id': 'fso', hashed_key: hashed_value}#assemble payload. fs = for sale
+	#need to figure our how to make above statement based on listing rather than hard-coded
 	r = requests.post(post_url, data=payload)
 
 
@@ -215,18 +195,18 @@ def autopost(request, listing_id):
 	tag = to_parse.find('input', type= "hidden") #select the input tag w/ hashed key/value
 	hashed_key = tag.attrs['name']
 	hashed_value = tag.attrs['value']
-	payload = {'id': '169', hashed_key: hashed_value}#assemble payload. 169 = antiques
+	payload = {'id': '145', hashed_key: hashed_value}#assemble payload. 145 = cars
+	#payload = {'id': listing.category.CL_id, hashed_key: hashed_value}
 	r = requests.post(post_url, data=payload)#POST and Redirect
 
 
 #3rd Post request at ?=edit
 #############################
 	to_parse = BeautifulSoup(r.text) #parse
-
 	payload_tuples = [('id2', '1916x831X1916x635X1920x1200'), 
 		  		('browserinfo', '%7B%0A%09%22plugins%22%3A%20%22'),
-				('FromEMail', 'ofgeyizx@sharklasers.com'), #enter your email here
-				('ConfirmEMail', 'ofgeyizx@sharklasers.com'),
+				('FromEMail',  request.user.username + '@rocketlistings.mailgun.org'), #enter your email here
+				('ConfirmEMail', request.user.username + '@rocketlistings.mailgun.org'),
 				('xstreet0', ''),
 				('xstreet1', ''),
 				('city', ''),
@@ -235,14 +215,14 @@ def autopost(request, listing_id):
 				('go', 'Continue')] #intial (staticish) payload data. Using a list of tuples b/c it is mutable but easily converted into a dict
 
 
-	 #Still parsing
-	title_id = to_parse.find("span", text= "Posting Title:").next_sibling.contents[1].attrs['name']
+	#Still parsing
+	title_id = to_parse.find("span", text= "posting title:").next_sibling.contents[1].attrs['name']
 	payload_tuples += [(title_id, listing.title)] 
 
-	price_id = to_parse.find("span", text= "Price:").next_sibling.contents[1].attrs['name']
+	price_id = to_parse.find("span", text= "price:").next_sibling.contents[1].attrs['name']
 	payload_tuples += [(price_id, listing.price)]
 
-	location_id = to_parse.find("span", text= "Specific Location:").next_sibling.contents[0].attrs['name']
+	location_id = to_parse.find("span", text= "specific location:").next_sibling.contents[0].attrs['name']
 	payload_tuples += [(location_id, listing.location)]
 
 	anon_id = to_parse.find("label", title= "craigslist will anonymize your email address").contents[1].attrs['name']
@@ -274,11 +254,10 @@ def autopost(request, listing_id):
 
 	payload = dict(payload_tuples)
 
-	fileslist = []
 	for photo in photos:
-		fileslist += [('file', ('photo', open( 'media/' +photo.url, 'rb')))]
-	files = dict(fileslist)
-	r = requests.post(post_url, files = files, data=payload)
+		r = requests.post(post_url, files = dict([('file', ('photo', open( 'media/' +photo.url, 'rb')))]), data=payload)
+		print "uploading photo" + photo.url
+
 
 	# submit POST
 	to_parse = BeautifulSoup(r.text)
@@ -294,11 +273,10 @@ def autopost(request, listing_id):
 #5th Post request at ?=preview
 #############################
 	to_parse = BeautifulSoup(r.text)
-	to_parse.prettify()
 
 	payload_tuples = [('go', 'Continue')]
-	payload_tuples += [(to_parse.find('form', style="float: right;").contents[1].attrs['name'], to_parse.find('form', style="float: right;").contents[1].attrs['value'])]
-	payload_tuples += [(to_parse.find('form', style="float: right;").contents[1].contents[1].attrs['name'], to_parse.find('form', style="float: right;").contents[1].contents[1].attrs['value'])]
+	payload_tuples += [(to_parse.find('section', id="previewButtons").contents[1].contents[1].attrs['name'], to_parse.find('section', id="previewButtons").contents[1].contents[1].attrs['value'])]
+	payload_tuples += [(to_parse.find('section', id="previewButtons").contents[1].contents[1].contents[1].attrs['name'], 'y')]
 
 	payload = dict(payload_tuples)
 	r = requests.post(post_url, data=payload)

@@ -32,7 +32,7 @@
 			<td class = "clickable">{{ listing.pub_date|date:"m-d-y P" }}</td>
 			<td class = "clickable">
 				{% if listing.max_offer %}
-				<a href = "{% url 'listings.views.offers' listing.id %}">${{listing.max_offer}}</a>				
+				${{listing.max_offer}}</a>				
 				{% else %}
 				None
 				{% endif %}
@@ -53,6 +53,7 @@
 						<a class="btn" href="{% url 'listings.views.update' listing.id %}" data-container="body" data-toggle="tooltip" data-original-title="Edit Listing">
 							<i class="icon-edit"></i>
 						</a>
+
 						<!--buyer button 
 						<a class="btn" id = "buyer-button" href="" data-container="body" data-toggle="tooltip" data-original-title="See Buyers" data-listing-id="{{ listing.id }}">
 							<i class="icon-user"></i>
@@ -76,7 +77,6 @@
 						    <a class="btn btn-primary" href="{% url 'listings.views.delete' listing.id %}" data-container="body">Confirm</a>
 						  </div>
 						</div>
-
 					</div>
 				</div>
 			</td>
@@ -101,3 +101,4 @@
 <h4>Remember you can always just create a listing on Craigslist with your <code class="text-info">{{user.username}}@rocketlistings.mailgun.org</code> email and manage it here.</hr>
 {% endif %}
 {% paginate %}
+
