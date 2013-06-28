@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Registration{% endblock %}
 {% block content %}
-<h4 style = "text-align: center">Congrats! You're just seconds away <br> from saving a ton of time selling your stuff. </h4>
+<h4 style = "text-align: center"></h4>
 <div class = "register-form">
 	<form action="{% url 'registration_register' %}" method="POST">
 		<fieldset>
@@ -11,4 +11,10 @@
 		</fieldset>
 	</form>
 </div>
+{% endblock %}
+
+{% block js %}
+	<script>
+		$('input[name="password1"]').focus();
+	</script>
 {% endblock %}

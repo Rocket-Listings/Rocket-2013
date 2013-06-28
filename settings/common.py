@@ -16,7 +16,7 @@ ADMINS = (
 
 LOGIN_URL = '/users/login/' # references users/urls.py name
 LOGOUT_URL = '/users/logout/' #references users/urls.py name
-LOGIN_REDIRECT_URL = '/users/'
+LOGIN_REDIRECT_URL = '/users/info/'
 LOGOUT_REDIRECT_URL = '/'
 
 MANAGERS = ADMINS

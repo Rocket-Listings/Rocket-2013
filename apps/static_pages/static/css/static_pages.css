@@ -191,6 +191,18 @@ h1.flag {
   text-decoration: underline;
   background: rgba(255, 255, 255, 0.7);
 }
+.header-signup form button.disable {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-left: 2px rgba(255, 0, 0, 0.5) solid;
+  background: #ededed;
+  cursor: default;
+}
+.header-signup form button.disable:hover {
+  color: #0000EE;
+  text-decoration: none;
+}
 .icon-newspaper {
   background-image: url("../img/newspaper.svg");
   background-position: 50% 40%;
