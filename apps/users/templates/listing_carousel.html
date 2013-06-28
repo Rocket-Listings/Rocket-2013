@@ -1,0 +1,28 @@
+{% extends 'users_base.html' %}
+{% block title %}Listing Carousel{% endblock %}
+
+<script src="users/static/js/jquery.tinycarousel.min.js" type = "text/javascript">
+	$(document).ready(function(){
+        $('#slider2').tinycarousel({ display: 2 });
+    });
+</script>
+
+
+<div id="slider-code">
+	<a class="buttons prev" href="#" src="/users/static/images/left.gif">left</a>
+	<div class="viewport">
+    	<ul class="overview">
+		{% for listing in listings %}
+    		<li>
+           		<img src={{ listing.photo }} alt="{{ listing.description }}"> <br>
+           		<p>{{ listing.title }}</p><br>
+           		<p>{{ listing.price }}</p>
+           	</li>
+		{% endfor %}
+      	</ul>
+    </div>
+    <a class="buttons next" href="#" src="/users/static/images/right.gif">right</a>
+</div>
+
+
+{% endblock %}
