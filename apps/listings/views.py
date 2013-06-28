@@ -1,4 +1,4 @@
-from listings.models import Listing, ListingPhoto, Buyer, Offer, Message 
+from listings.models import Listing, ListingPhoto, Buyer, Offer, Message
 from django.contrib.auth.models import User
 from django.conf import settings
 from datetime import datetime, timedelta
@@ -37,10 +37,13 @@ def user_listings(request, username=None):
 @login_required
 def dashboard(request):
 	user = request.user
-	listings = Listing.objects.filter(user=user).order_by('-pub_date')[:10]
-	buyers = list(reduce(chain, (map(lambda l: l.buyer_set.all(), listings))))
-	messages = list(chain(reduce(chain, map(lambda b: list(b.message_set.all()), buyers))))
-	return render(request, 'listings_dashboard.html',  {'listings': listings, 'buyers': buyers, 'messages':messages,})	
+	listings = Listing.objects.filter(user=user).order_by('-pub_date').all()
+	if listings:
+		buyers = list(reduce(chain, (map(lambda l: l.buyer_set.all(), listings))))
+		messages = list(chain(reduce(chain, map(lambda b: list(b.message_set.all()), buyers))))
+	else:
+		buyers, messages = None, None
+	return render(request, 'listings_dashboard.html',  {'listings': listings, 'buyers': buyers, 'messages':messages,})
 
 def latest(request):
 	listings = Listing.objects.all().order_by('-pub_date')[:10]
@@ -77,7 +80,7 @@ def detail(request, listing_id):
 	photos = ListingPhoto.objects.filter(listing=listing).order_by('order')
 
 	# provide `url` and `thumbnail_url` for convenience.
-	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos) 
+	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos)
 	return render(request, 'listing_detail.html', {'listing':listing, 'photos':photos})
 
 def embed(request, listing_id):
@@ -85,7 +88,7 @@ def embed(request, listing_id):
 	photos = ListingPhoto.objects.filter(listing=listing).order_by('order')
 
 	# provide `url` and `thumbnail_url` for convenience.
-	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos) 
+	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos)
 	return render(request, 'listing_cl_embed.html', {'listing':listing, 'photos':photos})
 
 @login_required
@@ -93,7 +96,7 @@ def update(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
 	if request.user == listing.user: # updating his own listing
 		if request.method == 'POST':
-			listing_form = ListingForm(request.POST, instance = listing)		
+			listing_form = ListingForm(request.POST, instance = listing)
 			if listing_form.is_valid():
 				listing = listing_form.save()
 				return redirect(listing)
@@ -177,7 +180,7 @@ def autopost(request, listing_id):
 	except ObjectDoesNotExist:
 		b = Buyer(listing = listing, name = "Craigslist", email = "robots@craigslist.org")
 		b.save()
-	
+
 	r = requests.get('https://post.craigslist.org/c/brl?lang=en') #GET the url to post to
 	post_url = r.url.split('?')[0] #split out the query string
 
@@ -206,7 +209,7 @@ def autopost(request, listing_id):
 #3rd Post request at ?=edit
 #############################
 	to_parse = BeautifulSoup(r.text) #parse
-	payload_tuples = [('id2', '1916x831X1916x635X1920x1200'), 
+	payload_tuples = [('id2', '1916x831X1916x635X1920x1200'),
 		  		('browserinfo', '%7B%0A%09%22plugins%22%3A%20%22'),
 				('FromEMail',  request.user.username + '@rocketlistings.mailgun.org'), #enter your email here
 				('ConfirmEMail', request.user.username + '@rocketlistings.mailgun.org'),
@@ -220,7 +223,7 @@ def autopost(request, listing_id):
 
 	#Still parsing
 	title_id = to_parse.find("span", text= "posting title:").next_sibling.contents[1].attrs['name']
-	payload_tuples += [(title_id, listing.title)] 
+	payload_tuples += [(title_id, listing.title)]
 
 	price_id = to_parse.find("span", text= "price:").next_sibling.contents[1].attrs['name']
 	payload_tuples += [(price_id, listing.price)]

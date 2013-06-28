@@ -4,17 +4,17 @@
 @media (min-width: 1200px) {
     .navbar .container {
         width:1170px;
-    }   
+    }
 }
 @media (min-width: 979px) and (max-width: 1200px) {
     .navbar .container {
         width:960px;
-    }   
+    }
 }
 @media (min-width: 768px) and (max-width: 979px) {
     .navbar .container {
         width:744px;
-    }   
+    }
 }
 
 .navbar {
@@ -37,45 +37,67 @@
 		// line-height: 36px;
 		&:hover {
 			text-decoration: underline;
+			span {
+				text-decoration: none;
+			}
 		}
 	}
 }
 
-.accent {
-	float:left;
-	height: @navbar-height;
-	width: @accent-width;
-	position: relative;
-	left: -4*@accent-width;
-}
-.accent1 {
-	background:@menu1;
-}
-.accent2 {
-	background:@menu2;
-}
-.accent3 {
-	background:@menu3;
-}
-.accent4 {
-	background:@menu4;
-}
-
-.navbar .flag {
+.navbar-logo {
 	float: left;
-	font-family: 'Radley';
-	font-size: 20px;
-	font-weight: 600;
-	line-height: @navbar-height;
-	padding: 0 20px;
-	color: @color6;
-	// color: #2200CC;
-	background-color: white;
-	margin:0;
+	display:block;
 	position: relative;
 	left: -4*@accent-width;
-}
 
+	.accent {
+		float:left;
+		height: @navbar-height;
+		width: @accent-width;
+	}
+	.accent1 {
+		background:@menu1;
+	}
+	.accent2 {
+		background:@menu2;
+	}
+	.accent3 {
+		background:@menu3;
+	}
+	.accent4 {
+		background:@menu4;
+	}
+
+	&:hover .accent1 {
+		background:@menu1H;
+	}
+	&:hover .accent2 {
+		background:@menu2H;
+	}
+	&:hover .accent3 {
+		background:@menu3H;
+	}
+	&:hover .accent4 {
+		background:@menu4H;
+	}
+
+	.logo-text {
+		float: left;
+		font-family: 'Radley';
+		font-size: 20px;
+		font-weight: 600;
+		line-height: @navbar-height;
+		padding: 0 20px;
+		color: @color6;
+		// color: #2200CC;
+		background-color: white;
+		margin:0;
+		position: relative;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
 .footer, .footer-fixed {
 	background: #4A4742;
 	p {
@@ -134,7 +156,7 @@ body {
 }
 
 /* Flatten das boostrap */
-.well, .navbar-inner, .popover, .btn, .tooltip, input, select, textarea, pre, .progress, 
+.well, .navbar-inner, .popover, .btn, .tooltip, input, select, textarea, pre, .progress,
 .modal, .add-on, .alert, .table-bordered, .nav>.active>a, .dropdown-menu, .tooltip-inner, .badge, .label, .img-polaroid {
 	-moz-box-shadow: none !important;
 	-webkit-box-shadow: none !important;

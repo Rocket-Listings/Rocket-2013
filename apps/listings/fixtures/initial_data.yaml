@@ -3,456 +3,456 @@
   fields:
     name: antiques by dealer
     CL_id: 150
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: appliances by owner
     CL_id: 162
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: appliances by dealer
     CL_id: 149
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: arts & crafts by owner
     CL_id: 170
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: arts & crafts by dealer
     CL_id: 135
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: auto parts by owner
     CL_id: 163
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: auto parts by dealer
     CL_id: 122
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: baby & kid stuff by owner
     CL_id: 171
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: baby & kid stuff by dealer
     CL_id: 107
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: bicycles by owner
     CL_id: 172
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: bicycles by dealer
     CL_id: 68
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: boats by owner
     CL_id: 164
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: boats by dealer
     CL_id: 119
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: books & magazines by owner
     CL_id: 173
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: books & magazines by dealer
     CL_id: 92
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: business/commercial by owner
     CL_id: 174
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: business/commercial by dealer
     CL_id: 134
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: cars & trucks by owner
     CL_id: 146
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: cars & trucks by dealer
     CL_id: 145
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: cds / dvds / vhs by owner
     CL_id: 175
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: cds / dvds / vhs by dealer
     CL_id: 117
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: cell phones by owner
     CL_id: 165
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: cell phones by dealer
     CL_id: 153
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: clothing & accessories by owner
     CL_id: 176
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: clothing & accessories by dealer
     CL_id: 94
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: collectibles by owner
     CL_id: 177
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: collectibles by dealer
     CL_id: 95
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: computers by owner
     CL_id: 166
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: computers by dealer
     CL_id: 7
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: electronics by owner
     CL_id: 167
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: electronics by dealer
     CL_id: 96
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: farm & garden by owner
     CL_id: 178
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: farm & garden by dealer
     CL_id: 133
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: free stuff by dealer
     CL_id: 101
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: furniture by owner
     CL_id: 142
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: furniture by dealer
     CL_id: 141
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: garage & moving sales by dealer
     CL_id: 73
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: general for sale by owner
     CL_id: 179
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: general for sale by dealer
     CL_id: 5
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: health and beauty by owner
     CL_id: 180
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: health and beauty by dealer
     CL_id: 152
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: household items by owner
     CL_id: 181
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: household items by dealer
     CL_id: 97
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: items wanted by dealer
     CL_id: 20
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: jewelry by owner
     CL_id: 182
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: jewelry by dealer
     CL_id: 120
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: materials by owner
     CL_id: 183
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: materials by dealer
     CL_id: 136
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: motorcycles/scooters by owner
     CL_id: 160
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: motorcycles/scooters by dealer
     CL_id: 69
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: musical instruments by owner
     CL_id: 184
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: musical instruments by dealer
     CL_id: 98
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: photo/video by owner
     CL_id: 185
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: photo/video by dealer
     CL_id: 137
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: rvs by owner
     CL_id: 168
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: rvs by dealer
     CL_id: 124
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: sporting goods by owner
     CL_id: 186
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: sporting goods by dealer
     CL_id: 93
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: tickets by owner
     CL_id: 161
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: tickets by dealer
     CL_id: 44
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: tools by owner
     CL_id: 187
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: tools by dealer
     CL_id: 118
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: toys & games by owner
     CL_id: 188
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: toys & games by dealer
     CL_id: 132
-    is_owner: False 
-    
+    is_owner: False
+
 - model: listings.ListingCategory
   pk: null
   fields:
     name: video gaming by owner
     CL_id: 189
-    is_owner: True 
-    
+    is_owner: True
+
 - model: listings.ListingCategory
   pk: null
   fields:

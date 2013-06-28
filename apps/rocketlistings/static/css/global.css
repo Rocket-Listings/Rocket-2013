@@ -36,26 +36,46 @@
 .navbar .nav > li.active > a:hover {
   text-decoration: underline;
 }
-.accent {
+.navbar .nav > li > a:hover span,
+.navbar .nav > li.active > a:hover span {
+  text-decoration: none;
+}
+.navbar-logo {
   float: left;
-  height: 36px;
-  width: 5px;
+  display: block;
   position: relative;
   left: -20px;
 }
-.accent1 {
+.navbar-logo .accent {
+  float: left;
+  height: 36px;
+  width: 5px;
+}
+.navbar-logo .accent1 {
   background: #d0e3eb;
 }
-.accent2 {
+.navbar-logo .accent2 {
   background: #ecdbf1;
 }
-.accent3 {
+.navbar-logo .accent3 {
   background: #f6eae6;
 }
-.accent4 {
+.navbar-logo .accent4 {
   background: #f3faf1;
 }
-.navbar .flag {
+.navbar-logo:hover .accent1 {
+  background: #bcddeb;
+}
+.navbar-logo:hover .accent2 {
+  background: #e8c7f2;
+}
+.navbar-logo:hover .accent3 {
+  background: #f5d7ce;
+}
+.navbar-logo:hover .accent4 {
+  background: #e0fad9;
+}
+.navbar-logo .logo-text {
   float: left;
   font-family: 'Radley';
   font-size: 20px;
@@ -66,7 +86,9 @@
   background-color: white;
   margin: 0;
   position: relative;
-  left: -20px;
+}
+.navbar-logo .logo-text:hover {
+  text-decoration: underline;
 }
 .footer,
 .footer-fixed {

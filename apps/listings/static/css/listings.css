@@ -79,32 +79,6 @@
 .listing .l-body .l-entry .l-thumbnails img {
   margin: 1%;
 }
-.listing-dash {
-  background-color: white;
-  float: right;
-  position: relative;
-}
-.listing-dash .dash-title {
-  background: #e7edef;
-  padding: 10px;
-}
-.listing-dash .dash-title h4 {
-  width: 100%;
-  margin: 0;
-}
-.listing-dash .dash-content {
-  padding: 10px;
-}
-.listing-dash .dash-content textarea {
-  margin: 0;
-  height: 100px;
-}
-.dash-tips {
-  width: 240px;
-}
-.dash-tips li {
-  margin-bottom: 10px;
-}
 .form {
   margin: 0;
 }
@@ -139,30 +113,36 @@
   border: solid #d2dadd 1px;
   background: #fff;
 }
-.dashboard-title {
-  text-align: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
 .dashboard-panel {
   position: absolute;
-  top: 106px;
-  left: 0;
+  top: 126px;
   bottom: 0;
-  right: 0;
+}
+.dashboard-panel .table-listings thead tr th:first-child,
+.dashboard-panel .table-listings tbody tr td:first-child {
+  padding-left: 40px;
 }
 .dashboard-panel .listings-col {
   height: 100%;
-  padding: 0;
   margin: 0;
   border-right: 1px solid #dddddd;
 }
 .dashboard-panel .buyers-col {
   height: 100%;
   border-right: 1px solid #dddddd;
+  background: #FCFCFC;
+}
+.dashboard-panel .buyers-col .dash-subtitle {
+  background: white;
 }
 .dashboard-panel .messages-col {
   heigth: 100%;
+}
+.dashboard-panel .messages-col .dash-subtitle {
+  padding-right: 48px;
+}
+.dashboard-panel .messages-col .messages-panel {
+  margin-right: 40px;
 }
 .table-hover tbody tr:hover > td,
 .table-hover tbody tr:hover > th {
@@ -196,6 +176,9 @@
 .table-listings td {
   vertical-align: middle;
 }
+.dash-title {
+  margin: 25px 0;
+}
 .dash-subtitle {
   padding: 8px;
   font-family: inherit;
@@ -204,6 +187,9 @@
   color: inherit;
   text-rendering: optimizelegibility;
   text-align: center;
+}
+.dash-subtitle,
+.table-listings thead {
   border-bottom: 1px solid #dddddd;
 }
 .buyer-card {

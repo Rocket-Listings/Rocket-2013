@@ -25,12 +25,13 @@ h1.flag {
   position: absolute;
   top: 0;
   right: 0;
-  background: #ededed;
+  background: white;
   padding: 4px 8px;
   border-top: none;
   border-right: 1px solid grey;
   border-bottom: 1px solid grey;
   border-left: 1px solid grey;
+  outline: 1px solid white;
 }
 #header-map {
   top: 0;
@@ -86,36 +87,36 @@ h1.flag {
   color: #3b2317;
 }
 .header-menu-bar .header-menu .item1 {
+  /*&:hover, &:active {
+				background: @menu1H;
+			}*/
+
   background: #d0e3eb;
   width: 91px;
 }
-.header-menu-bar .header-menu .item1:hover,
-.header-menu-bar .header-menu .item1:active {
-  background: #bcddeb;
-}
 .header-menu-bar .header-menu .item2 {
+  /*&:hover, &:active {
+				background: @menu2H;
+			}*/
+
   background: #ecdbf1;
   width: 91px;
 }
-.header-menu-bar .header-menu .item2:hover,
-.header-menu-bar .header-menu .item2:active {
-  background: #e8c7f2;
-}
 .header-menu-bar .header-menu .item3 {
+  /*&:hover, &:active {
+				background: @menu3H;
+			}*/
+
   background: #f6eae6;
   width: 91px;
 }
-.header-menu-bar .header-menu .item3:hover,
-.header-menu-bar .header-menu .item3:active {
-  background: #f5d7ce;
-}
 .header-menu-bar .header-menu .item4 {
+  /*&:hover, &:active {
+				background: @menu4H;
+			}*/
+
   background: #f3faf1;
   width: 91px;
-}
-.header-menu-bar .header-menu .item4:hover,
-.header-menu-bar .header-menu .item4:active {
-  background: #e0fad9;
 }
 .header-menu-bar .header-menu .edge {
   background: #f6f6f6;
@@ -432,7 +433,7 @@ a.pricing-btn.btn.btn-primary {
 		display: block;
 		padding: 0 20px 0 0;
 		margin: 0 0 0 0;
-	
+
 	}
 }
 
@@ -469,7 +470,7 @@ a.pricing-btn.btn.btn-primary {
 	margin-bottom: 30px;
 	text-shadow: none;
 	line-height: 25px;
-	
+
 
 }
 
@@ -502,9 +503,9 @@ a.pricing-btn.btn.btn-primary {
 			color: #F0F0F0;
 			text-shadow: 1px 3px 3px rgba(0,0,0,0.3);
 			background-image: linear-gradient(to bottom, #E75547, #bd362f) !important;
-		
+
 	}
-		
+
 	}
 
 
@@ -534,12 +535,12 @@ a.pricing-btn.btn.btn-primary {
 			text-decoration: none;
 			color: inherit;
 
-			&:hover { 
+			&:hover {
 				border: 5px dashed #E26A59;
 				p.InlineHoverNone { display: none }
 				p.noneHoverInline { display: inline }
 			}
-			
+
 			.center {
 				margin-top: 20px;
 			}
@@ -571,7 +572,7 @@ a.pricing-btn.btn.btn-primary {
 		background: left center no-repeat url('../img/rocket-bullet_04.png');
 	}
 
-	li:first-child { 
+	li:first-child {
 		margin-top: 30px;
 	}
 }
@@ -588,7 +589,7 @@ a.pricing-btn.btn.btn-primary {
 
 
 
-.homepage-pricing { 
+.homepage-pricing {
 	text-align: center;
 	margin-bottom: 0;
 	ul.pricing-list {
@@ -625,8 +626,8 @@ a.pricing-btn.btn.btn-primary {
 				line-height: 28px;
 				font-family: "semi-bold", "Helvetica Neue", Helvetica, Arial, sans-serif;
 			}
-			
-			&.then, 
+
+			&.then,
 			&.or {
 				height: 70px;
 				line-height: 70px;
@@ -647,7 +648,7 @@ a.pricing-btn.btn.btn-primary {
 				width: auto;
 				line-height: 70px;
 			}
-			&.or img {	
+			&.or img {
 				height: 30px;
 				width: auto;
 			}
@@ -655,7 +656,7 @@ a.pricing-btn.btn.btn-primary {
 	}
 }
 
-.homepage-why-pay { 
+.homepage-why-pay {
 	&:hover {
 		cursor:default;
 	}

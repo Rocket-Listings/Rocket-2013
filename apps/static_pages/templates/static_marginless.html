@@ -2,13 +2,13 @@
 
 {% block body %}
 	<div class="wrap">
-		{% include "partials/static_header.html" %}
+		{% include "partials/header_static.html" %}
 		<div>
 			{% block content %}<h3>Error 404</h3>{% endblock %}
 		</div>
-		{# sticky footer div #}		
+		{# sticky footer div #}
 	</div>
-	{% include "partials/static_footer.html" %}
+	{% include "partials/footer_static.html" %}
 	{% include "partials/modal_photo_upload.html" %}
 	</div>
 {% endblock %}

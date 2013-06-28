@@ -100,39 +100,6 @@
 	}
 }
 
-.listing-dash {
-	background-color: white;
-	float: right;
-	// -webkit-box-shadow: #aebec6 2px 2px 50px;
-	// -moz-box-shadow: #aebec6 2px 2px 50px;
-	// box-shadow: #aebec6 2px 2px 50px;
-	position: relative;
-
-	.dash-title {
-		background:#e7edef;
-		padding: 10px;
-		h4 {
-			width: 100%;
-			margin: 0;
-		}
-	}
-	.dash-content {
-		padding: 10px;
-		textarea {
-			margin: 0;
-			height:100px;
-		}
-	}
-}
-
-.dash-tips {
-	width: 240px;
-	li {
-		margin-bottom: 10px;
-	}
-}
-
-
 .form {
 
 	span.helptext{
@@ -145,7 +112,7 @@
 	.errorlist {
 		color: red;
 	}
-	
+
 	input#id_title{
 		width: 540px;
 	}
@@ -178,30 +145,36 @@
 	// box-shadow: #aebec6 2px 2px 50px;
 }
 
-.dashboard-title {
-	text-align: center;
-	margin-top: 20px;
-	margin-bottom: 20px;
-}
-
 .dashboard-panel {
 	position:absolute;
-	top:106px;
-	left:0;
+	top:126px;
 	bottom:0;
-	right:0;
+
+	.table-listings thead tr th:first-child, .table-listings tbody tr td:first-child {
+		padding-left: 40px;
+	}
 
 	.listings-col {
 		height: 100%;
-		padding:0;
 		margin:0;
 		border-right: 1px solid #dddddd;
 	}
 	.buyers-col {
 		height: 100%;
 		border-right: 1px solid #dddddd;
+		background: #FCFCFC;
+		.dash-subtitle {
+			background: white;
+		}
 	}
 	.messages-col {
+		.dash-subtitle {
+			padding-right: 48px;
+		}
+		.messages-panel {
+			margin-right: 40px;
+		}
+
 		heigth: 100%;
 	}
 }
@@ -241,6 +214,10 @@
 	border-bottom: 1px solid #dddddd;
 }
 
+.dash-title {
+	margin:25px 0;
+}
+
 .dash-subtitle {
 	padding: 8px;
 	font-family: inherit;
@@ -249,9 +226,11 @@
 	color: inherit;
 	text-rendering: optimizelegibility;
 	text-align: center;
-	border-bottom: 1px solid #dddddd;
 }
 
+.dash-subtitle, .table-listings thead {
+	border-bottom: 1px solid #dddddd;
+}
 .buyer-card {
 	margin-bottom: 0px !important;
 	border-bottom: 1px solid #dddddd;;
@@ -261,7 +240,7 @@
 	}
 
 	&.highlight {
-		background-color: #8CA8C8 !important;		
+		background-color: #8CA8C8 !important;
 		color: white;
 	}
 	tr {
@@ -285,9 +264,9 @@
 		width: 100%;
 		-webkit-box-sizing: border-box;
 		-moz-box-sizing: border-box;
-		box-sizing: border-box;   
+		box-sizing: border-box;
 		border-bottom: none;
-		resize:vertical;	
+		resize:vertical;
 	}
 
 	input.send-button {
