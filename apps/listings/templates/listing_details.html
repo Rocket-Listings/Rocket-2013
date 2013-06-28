@@ -15,9 +15,11 @@
     </div>
   </div>  
   <div class="dash-content">
-    <p>Choose whether to edit or </br>
-    preview your content by </br>
-    toggling the buttons above</p>
+    <p>
+      Choose whether to edit or </br>
+      preview your content by </br>
+      toggling the buttons above
+    </p>
   </div>
 </div>
 
@@ -60,7 +62,65 @@
 <!-- Preview Page -->
 
 
-<!-- Edit Page -->
+
+
+<div class="edit" style="display:none">
+  <div class="listing-edit">
+    <form method="POST" action="" enctype="multipart/form-data">
+      {% csrf_token %}
+      <ul class="form">
+        <li>
+          <input id="id_title" maxlength="200" name="title" type="text" value="{{listing.title}}" class="required">
+        </li>
+          <textarea cols="40" id="id_description" name="description" rows="10">
+            {{listing.description}}
+          </textarea>
+        </li>
+          <input id="id_price" name="price" type="text" value="{{listing.price}}">
+        </li>
+        <li>
+          <input id="id_location" maxlength="200" name="location" type="text" value="{{listing.location}}">
+        </li>
+        <li>
+          <input id="id_pictures" maxlength="200" name="pictures" type="text" value="{{listing.pictures}}">
+        </li>
+        <li>
+          <select id="id_category" name="category">
+            <option value="1" selected="selected">{{listing.category}}</option>
+          </select>
+        </li>
+        <li>
+          <select id="id_listing_type" name="listing_type">
+            <option value="1" selected="selected">{{listing.listing_type}}</option>
+          </select>
+        </li>
+        <li>
+          <select id="id_status" name="status">
+            <option value="3" selected="selected">Sold</option>
+          </select>
+        </li>
+        <li>
+          <select id="id_user" name="user">
+            <option value="1" selected="selected">moore</option>
+          </select>
+        </li>
+        <li>
+          <div>
+            <label for="id_CL_link">CL link:</label>
+            <input class="vURLField" id="id_CL_link" maxlength="200" name="CL_link" type="text">
+          </div>
+        </li>
+        <br>
+        <li>
+          <input type="submit" value="Save" class="btn">
+        </li>
+      </ul>
+    </form>
+  </div>
+</div>
+
+
+<!-- Edit Page
 <div class="edit" style="display:none">
   <div class="listing-edit">
       <form method="POST" action="">
@@ -82,32 +142,41 @@
               </li>
               <li>
                   <select id="id_category" name="category" style="display:none">
-                      <option value="1" selected="selected" id="nameTitle">
+                      <option value="1" selected="selected">
+                        {{listing.category}}
                       </option>
                   </select>
               </li>
               <li>
+                <textarea cols="60" id="id_pictures" name="pictures" rows="10" style="display:none">
+                  {{listing.pictures}}
+                </textarea>
+              </li>
+              <li>
                   <select id="id_listing_type" name="listing_type" style="display:none">
-                      <option value="1">Private</option>
-                      <option value="2" selected="selected">Public</option>
+                      <option value="1" selected="selected">{{listing.listing_type}}</option>
                   </select>
               </li>
               <br>
               <button type="button" class="btn btn-primary" onclick='fileUpload()'>Upload More Pictures Here</button>
-              <p>
-                  <div id="pics"></div>
-              </p>
+              <li>
+                  <input class="btn" type="submit" value="Update">
+              </li>
           </ul>
       </form>
   </div>
 </div>
-      </div>
-<!-- End Edit Page -->
+</div>
+End Edit Page -->
 
 
 
 <div class="l-footnote" style ="margin-left:55px;">
-  Created with <a href="http://www.rocketlistings.com" class="icon">Rocket Listings</a>. Blast off.
+  Created with 
+  <a href="http://www.rocketlistings.com" class="icon">
+    Rocket Listings
+  </a>
+  . Blast off.
 </div>
 
 <div class="clearfix"></div>
