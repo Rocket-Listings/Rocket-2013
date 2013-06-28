@@ -4,6 +4,21 @@
 {# Requires the context variable 'listings' #}
 
 {% if listings %}
+
+<div id = "loadingModal" class="modal hide fade">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Modal header</h3>
+  </div>
+  <div class="modal-body">
+    <p>One fine body…</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn">Close</a>
+    <a href="#" class="btn btn-primary">Save changes</a>
+  </div>
+</div>
+
 <table class="table table-striped tablesorter table-condensed table-listings" name="listing-name">
 	<thead>
 		<tr>
@@ -38,7 +53,7 @@
 				{% endif %}
 			</td>
 			<td class = "clickable">
-				<a href = "{% url 'mail.views.autopost' listing.id %}">Craigslist</a>	
+				<button type = "button" href = "{% url 'mail.views.autopost' listing.id %}" data-toggle="modal" data-target="#loadingModal">Craigslist</button>	
 			</td>
 
 			<td> 
@@ -50,7 +65,7 @@
 							<i class="icon-download"></i>
 						</a>
 						{% endcomment %}
-						<a class="btn" href="{% url 'listings.views.update' listing.id %}" data-container="body" data-toggle="tooltip" data-original-title="Edit Listing">
+						<a class="btn" data-container="body" data-toggle="tooltip" data-original-title="Edit Listing">
 							<i class="icon-edit"></i>
 						</a>
 
@@ -96,6 +111,7 @@
 		
 	</tbody>
 </table>
+
 {% else %}
 <h4>You don't have any listings yet! <a href="#modal-photo-upload" data-toggle="modal">Let's get started making one.</a></h4>
 <h4>Remember you can always just create a listing on Craigslist with your <code class="text-info">{{user.username}}@rocketlistings.mailgun.org</code> email and manage it here.</hr>
