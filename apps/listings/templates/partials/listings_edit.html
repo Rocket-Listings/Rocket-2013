@@ -92,9 +92,9 @@
           <div class="l-header">
               <h1 class="l-title">
                   <fieldset>
-                      <input id="id_title" name="title" type="text" value="{{listing.title}}">
-                      <input id="id_price" name="price" type="text" value="{{listing.price}}">
-                      <input id="id_location" name="location" type="text" value="{{listing.location}}">
+                      <input id="id_title" name="title" type="text" value="{{listing.title}}" placeholder="Title (e.g 2012 Macbook Pro">
+                      <input id="id_price" name="price" type="text" value="{{listing.price}}" placeholder="Price">
+                      <input id="id_location" name="location" type="text" value="{{listing.location}}" placeholder="Location">
                   </fieldset>
               </h1>
           </div>
@@ -103,11 +103,11 @@
 
           <ul class="form">
               <li>
-                  <textarea cols="60" id="id_description" name="description" rows="10">{{listing.description}}</textarea>
+                  <textarea cols="60" id="id_description" name="description" rows="10" placeholder="Description">{{listing.description}}</textarea>
               </li>
               <li>
                   <select id="id_category" name="category" style="display:none">
-                      <option value="1" selected="selected">
+                      <option value="1" selected="selected" id="nameTitle">
                         {{listing.category}}
                       </option>
                   </select>
@@ -117,11 +117,12 @@
               </li>
               <li>
                   <select id="id_listing_type" name="listing_type" style="display:none">
-                      <option value="1" selected="selected">{{listing.listing_type}}</option>
+                      <option value="1" selected="selected" id="listingType">{{listing.listing_type}}</option>
                   </select>
               </li>
               <br>
               <button type="button" class="btn btn-primary" onclick='fileUpload()'>Upload More Pictures Here</button>
+              <div id="image"></div>
               <li>
                   <input class="btn" type="submit" value="Update" style="display:none" id="primaryButton">
               </li>

@@ -44,7 +44,7 @@ def latest(request):
 	listings = Listing.objects.all().order_by('-pub_date')[:10]
 	return render(request, 'listings_latest.html', {'listings': listings,})
 
-@login_required
+
 def create(request):
 	if request.method == 'GET':
 		profile = request.user.get_profile()
@@ -57,10 +57,6 @@ def create(request):
 			listing = listing_form.save(commit=False)
 			listing.user = request.user
 			listing.save()
-			expire_time = datetime.now() - timedelta(minutes=settings.ROCKET_UNUSED_PHOTO_MINS)
-			ip = get_client_ip(request)
-
-			ListingPhoto.objects.filter(upload_ip=ip, upload_date__gt=expire_time, listing=None).update(listing=listing)
 			if request.user.is_authenticated():
 				return redirect(listing)
 			else:
@@ -68,7 +64,6 @@ def create(request):
 				# Do something for anonymous users.
 		else:
 			return render(request, 'listing_create.html', {'form': ListingForm(request.POST),})
-
 
 def detail(request, listing_id):
 	if request.method == 'GET':
