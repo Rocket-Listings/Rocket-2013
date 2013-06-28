@@ -23,19 +23,19 @@
 					<td class="username"><code class="text-info">{{ user.username }}</code></td>
 					<td></td>
 				</tr>
-				<tr class="name">
+				<tr>
 					<td>Name:</td>
 					{% if user.get_profile.name %}
 					<td class="name">{{ user.get_profile.name }}</td>
 					{% else %}
-					<td class="muted">Add a name to your profile</td>
+					<td class="name muted">Add a name to your profile</td>
 					{% endif %}
 					<td><a class="edit" href="#">Edit</a></td>
 				</tr>
 				<tr class="in-edit hide">
 					<td>Name:</td>
 					<td class="form-partial">
-						<input tabindex="1" name="name" type="text" value="{{ user.get_profile.name }}">
+						<input class="name" tabindex="1" name="name" type="text" value="{{ user.get_profile.name }}">
 					</td>
 					<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
 				</tr>
@@ -44,31 +44,31 @@
 					<td>&#149;&#149;&#149;&#149;&#149;&#149;&#149;&#149;</td>
 					<td><a class="change-password" href="{% url 'auth_password_change' %}">Change password</a></td>
 				</tr>
-				<tr class="email">
+				<tr>
 					<td>Email:</td>
-					<td>{{ user.get_profile.email }}</td>
+					<td class="email">{{ user.get_profile.email }}</td>
 					<td><a class="edit" href="#">Edit</a></td>
 				</tr>
 				<tr class="in-edit hide field-wrapper">
 					<td>Email:</td>
 					<td class="form-partial">
-						<input tabindex="2" name="email" type="text" value="{{ user.get_profile.email }}">
+						<input class="email" tabindex="2" name="email" type="text" value="{{ user.get_profile.email }}">
 					</td>
 					<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
 				</tr>
 				<tr>
 					<td>Phone:</td>
 					{% if user.get_profile.phone %}
-					<td>{{ user.get_profile.phone }}</td>
+					<td class="phone">{{ user.get_profile.phone }}</td>
 					{% else %}
-					<td class="muted">Add a phone number to your profile</td>
+					<td class="phone muted">Add a phone number to your profile</td>
 					{% endif %}
 					<td><a class="edit" href="#">Edit</a></td>
 				</tr>
 				<tr class="in-edit hide">
 					<td>Phone:</td>
 					<td class="form-partial">
-						<input tabindex="3" name="phone" type="text" value="{{ user.get_profile.phone }}">
+						<input class="phone" tabindex="3" name="phone" type="text" value="{{ user.get_profile.phone }}">
 					</td>
 					<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
 				</tr>
@@ -77,30 +77,30 @@
 					{% if user.get_profile.bio %}
 					<td class="bio">{{ user.get_profile.bio }}</td>
 					{% else %}
-					<td class="muted">Add a bio to your profile</td>
+					<td class="bio muted">Add a bio to your profile</td>
 					{% endif %}
 					<td><a class="edit" href="#">Edit</a></td>
 				</tr>
 				<tr class="in-edit hide">
 					<td>Seller Blurb:</td>
 					<td class="form-partial">
-						<input tabindex="4" name="bio" type="text" value="{{ user.get_profile.bio }}">
+						<input class="bio" tabindex="4" name="bio" type="text" value="{{ user.get_profile.bio }}">
 					</td>
 					<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
 				</tr>
 				<tr>
 					<td>Location:</td>
 					{% if user.get_profile.location %}
-					<td>{{ user.get_profile.location }}</td>
+					<td class="location">{{ user.get_profile.location }}</td>
 					{% else %}
-					<td class="muted">Add a default location for your listings</td>
+					<td class="location muted">Add a default location for your listings</td>
 					{% endif %}
 					<td><a class="edit" href="#">Edit</a></td>
 				</tr>
 				<tr class="in-edit hide">
 					<td>Location:</td>
 					<td class="form-partial">
-						<input tabindex="4" id="id_location" name="location" type="text" value="{{ user.get_profile.location }}">
+						<input class="location" tabindex="4" id="id_location" name="location" type="text" value="{{ user.get_profile.location }}">
 					</td>
 					<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
 				</tr>
@@ -117,9 +117,9 @@
 				<tr>
 					<td>Default Category:</td>	
 					{% if user.get_profile.default_category.name  %}
-					<td>{{ user.get_profile.default_category.name  }}</td>
+					<td class="default_category">{{ user.get_profile.default_category.name  }}</td>
 					{% else %}
-					<td class="muted">Add a default category for your listings</td>
+					<td class="default_category muted">Add a default category for your listings</td>
 					{% endif %}
 					<td><a class="edit" href="#">Edit</a></td>
 				</tr>
@@ -127,7 +127,7 @@
 					<td>Default Category:</td>
 					<td class="form-partial">
 						<select tabindex="5" name="default_category">
-							<option selected="true">{{ user.get_profile.default_category.name }}</option>
+							<option class="" selected="true">{{ user.get_profile.default_category.name }}</option>
 						</select>
 					</td>
 					<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
@@ -135,9 +135,9 @@
 				<tr>
 					<td>Default Listing Type:</td>
 					{% if user.get_profile.default_listing_type.name  %}
-					<td>{{ user.get_profile.default_listing_type.name }}</td>
+					<td class="default_listing_type">{{ user.get_profile.default_listing_type.name }}</td>
 					{% else %}
-					<td class="muted">Add a default listing type</td>
+					<td class="default_listings_type muted">Add a default listing type</td>
 					{% endif %}
 					<td><a class="edit" href="#">Edit</a></td>
 				</tr>
@@ -145,7 +145,7 @@
 					<td>Default Listing Type:</td>
 					<td class="form-partial">
 						<select tabindex="6" name="default_listing_type.name">
-							<option selected="true">{{ user.get_profile.default_listing_type.name }}</option>
+							<option class="" selected="true">{{ user.get_profile.default_listing_type.name }}</option>
 						</select>
 					</td>
 					<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
@@ -168,9 +168,9 @@
 				<tr>
 					<td>Name:</td>
 					{% if user.get_profile.nameprivate %}
-					<td>Private</td>
+					<td class="nameprivate">Private</td>
 					{% else %}
-					<td>Public</td>
+					<td class="nameprivate">Public</td>
 					{% endif %}
 					<td><a class="edit" href="#">Edit</a></td>
 				</tr>
@@ -192,9 +192,9 @@
 				<tr>
 					<td>Location:</td>
 					{% if user.get_profile.locationprivate %}
-					<td>Private</td>
+					<td class="locationprivate">Private</td>
 					{% else %}
-					<td>Public</td>
+					<td class="locationprivate">Public</td>
 					{% endif %}
 					<td><a class="edit" href="#">Edit</a></td>
 				</tr>
