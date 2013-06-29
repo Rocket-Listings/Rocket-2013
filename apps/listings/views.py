@@ -37,7 +37,7 @@ def user_listings(request, username=None):
 @login_required
 def dashboard(request):
 	user = request.user
-	listings = Listing.objects.filter(user=user).order_by('-pub_date').all()
+	listings = Listing.objects.filter(user=user).order_by('-pub_date').all() # later on we can change how many are returned
 	if listings:
 		buyers = list(reduce(chain, (map(lambda l: l.buyer_set.all(), listings))))
 		messages = list(chain(reduce(chain, map(lambda b: list(b.message_set.all()), buyers))))
@@ -134,7 +134,7 @@ def delete_ajax(request, listing_id):
 
 #this is my first api so I'm not gonna join the requests. If this is too slow
 #it wont be too hard to redo
-def ajax_listing_buyers(request, listing_id):
+def listing_buyers_ajax(request, listing_id):
 	'''Returns a list of Buyers associated with the listing id (of the logged in user)'''
 	listing = get_object_or_404(Listing, id=listing_id)
 	buyers = listing.buyer_set.all().order_by('name')
@@ -148,7 +148,7 @@ def ajax_listing_buyers(request, listing_id):
 	# else:
 		# return HttpResponseBadRequest("Sorry please submit a good request")
 
-def ajax_message_thread(request, listing_id, buyer_id):
+def message_thread_ajax(request, listing_id, buyer_id):
 	listing = get_object_or_404(Listing, id=listing_id)
 	buyer = get_object_or_404(Buyer, id=buyer_id)
 	messages = listing.message_set.filter(buyer_id__exact=buyer_id).order_by('date')

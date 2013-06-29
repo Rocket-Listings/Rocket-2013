@@ -17,14 +17,14 @@
 			</a>
 			{% if user.is_authenticated %}
 			<ul class="nav pull-right">
-				<li class="{% active 'user_listings' %}">
-					<a href="{% url 'listings.views.user_listings' user.username %}">
+				<li class="{% active 'dashboard' %}">
+					<a href="{% url 'listings.views.dashboard' %}">
 						Listings<span> </span><i class="icon-th-list"></i>
 					</a>
 				</li>
 				<li class="{% active 'user_info' %}">
-					<a href="{% url "users.views.info" %}">
-						Account <i class="icon-user"></i>
+					<a href="{% url 'users.views.profile' user.username %}">
+						Profile <i class="icon-user"></i>
 					</a>
 				</li>
 				<li>
@@ -42,5 +42,6 @@
 				</li>
 			</ul>
 			{% endif %}
+		</div>
 	</div>
 </div>
