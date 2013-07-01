@@ -226,4 +226,4 @@ def autopost(request, listing_id):
 	payload = dict(payload_tuples)
 	r = requests.post(post_url, data=payload)
 
-	return render(request, 'listings_autopost.html',  {'listing': listing, 'debug': r.text})
+	return render(request, 'listings_autopost.html')
