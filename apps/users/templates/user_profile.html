@@ -1,31 +1,74 @@
 {% extends 'users_base.html' %}
 {% load static from staticfiles %}
 
-{% block title %} Account Profile {% endblock %}
+{% block title %}{{user.username}}{% endblock %}
 
 {% block js %}
-{% comment %}
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-{% endcomment %}
+
 {% endblock %}
 
 {% block content %}
-<div class="profile_heading">
-	<span class="profile-picture">
-			<img src=" {% static 'images/profilepicwomp.jpg' %}" alt="Profile Pic" width='250px' height='300px'>
-	</span>
-	<span class="profile_user_info">
-		<p class="name">{{ user.get_profile.name }}</p>
-		<p class="username">"{{ user.username }}"</p>
-		<p class="location">{{ profile.location }}</p>
-		<p><input class="btn btn-primary btn-medium" type="submit" value="Message"/></p>
-	</span>
-		<div class="profile-bio">
-			<h5>About</h5>
-			<p id="biography">{{ profile.bio }} </p>
+<div class="profile-content">
+	<div class="profile-header">
+		<ul class="thumbnails profile-picture span3">
+			<li>
+			{% if user.get_profile.propic %}
+				<img class="thumbnail" src="{{ user.get_profile.propic }}">
+			{% else %}
+				<img class="thumbnail" src=" {% static 'images/no-photo.png' %}">
+			{% endif %}
+			</li>
+		</ul>
+		<div class="profile-info span6">
+			{% if user.get_profile.name and not user.get_profile.nameprivate or request.user == user and user.get_profile.name %}
+			<div class="name-wrapper">
+				<ul class="inline">
+					<li><h3>{{user.get_profile.name}}</h3></li>
+					{% if request.user == user %}
+					<li style="float:right;"><a class="btn btn-warning edit-profile" href="{% url 'users.views.info' %}">Update your profile.</a></li>
+					{% endif %}
+				</ul>
+				<span class="sub-username">{{user.username}}</span>
+			</div>
+			{% else %}
+			<div class="name-wrapper">
+				<h3>{{user.username}}</h3>
+			</div>
+			{% endif %}
+			<div class="profile-bio">
+				{% if user.get_profile.bio %}
+					<p>{{user.get_profile.bio}}</p>
+				{% else %}
+					{% if request.user == user %}
+					<p>Looks like you don't have a bio! <a href="{% url 'users.views.info' %}">Update</a> your profile and add one.</p>
+					{% else %}
+					<p>Sorry, but {{user.username}} doesn't have a bio.</p>
+					{% endif %}
+				{% endif %}
+			</div>
 		</div>
+		<div class="profile-stats span3">
+			<h3>Listings</h3>
+			<h4 class="green">{{ listings|length }}</h4>
+		</div>
+
+
+		{% comment %}
+		<span class="profile_user_info">
+			<p class="name">{{ user.get_profile.name }}</p>
+			<p class="username">"{{ user.username }}"</p>
+			<p class="location">{{ profile.location }}</p>
+			<p><input class="btn btn-primary btn-medium" type="submit" value="Message"/></p>
+		</span>
+			<div class="profile-bio">
+				<h5>About</h5>
+				<p id="biography">{{ profile.bio }} </p>
+			</div>
+		{% endcomment %}
+	</div>
 </div>
 
+{% comment %}
 <div class="profile_heading">
 	<span class="profile-picture">
 		{% comment %}
@@ -34,7 +77,7 @@
 		{% else %}
 			<img src=" {% user.photo %}" alt="Profile Pic" width='250px' height='300px'>
 		{% endif %}
-		{% endcomment %}
+
 		<img src=" {% static 'images/unknown_user_photo.jpg' %}" alt="Profile Pic" width='250px' height='300px'>
 	</span>
 	<span class="profile_user_info">
@@ -69,6 +112,7 @@
 	<code class ="text-info">What {{ profile.name }} is selling: </code>
 
 </div>
+
 <br>
 <span class="profile_carousel">
 	<div id="this-carousel-id" class="carousel slide">
@@ -93,11 +137,11 @@
 		<!-- /.carousel-inner -->
 		<!--  Next and Previous controls below
        		  href values must reference the id for this carousel -->
-       	{% endcomment %}
 		<a class="carousel-control left" href="#this-carousel-id" data-slide="prev">&lsaquo;</a>
 		<a class="carousel-control right" href="#this-carousel-id" data-slide="next">&rsaquo;</a>
 	</div>
 
 </span>
 <span id="map-canvas"></span>
+{% endcomment %}
 {% endblock %}

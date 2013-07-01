@@ -7,3 +7,8 @@ class UserProfileForm(ModelForm):
 		exclude = ('user')
 		fields = ('name', 'email', 'phone', 'location', 'bio', 'default_category', 'default_listing_type', 'nameprivate', 'locationprivate')
 
+	def clean(self):
+		for field in self.cleaned_data:
+			if isinstance(self.cleaned_data[field], basestring):
+				self.cleaned_data[field] = self.cleaned_data[field].strip()
+		return self.cleaned_data

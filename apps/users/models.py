@@ -17,15 +17,13 @@ class UserProfile(models.Model):
 	bio = models.TextField(blank=True)
 	nameprivate = models.BooleanField(blank=False, null=False)
 	locationprivate = models.BooleanField(blank=False, null=False)
+	propic = models.CharField(max_length=200, blank=True)
 
 	#photo = django_filepicker.models.FPFileField(upload_to='uploads')
 
 	def get_absolute_url(self):
 		return reverse('users.views.info')
 		return reverse('users.views.info', args=[self.user.username])
-
-	# def get_location(self):
-	# 	return location
 	
 	def __unicode__(self):
 		return self.user.username

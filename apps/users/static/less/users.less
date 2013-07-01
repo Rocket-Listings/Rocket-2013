@@ -109,37 +109,54 @@
 
 }
 
-.profile-picture {
-	width: 300 px;
-	height: 300 px;
-	margin-right: 14px;
-	margin-bottom: 14px;
- }
-
-.profile_heading {
-	border-bottom-style: solid;
-	border-width: 5px;
-	padding: 15px;
-}
-
-.profile_user_info {
-	display: inline-block;
-	font-size: 18px;
-	color: #B2B2B2;
-
-	.name {
-		font-size: 22px;
-		font-weight: bold;
-		color: #000000;
+.profile-content {
+	.profile-header {
+		height: auto;
+		min-height: 210px;
+		.profile-picture {
+		width: 200 px;
+			img.thumbnail {
+				border-radius: 0px;
+			 	-webkit-border-radius: 0px;
+			 	-moz-border-radius: 0px;
+			 	-o-border-radius: 0px;
+				}
+	 	}
+	 	span.sub-username {
+	 		font-size: 20px;
+	 		color: #777;
+	 	}
+	 	.profile-info {
+	 		text-align: left;
+	 		border-right: solid 1px #DDD;
+	 		padding-right: 30px;
+	 		margin-left: 10px;
+	 		min-height: 210px;
+	 		.name-wrapper {
+	 			height: 80px;
+	 			ul {
+	 				padding: 0;
+	 				margin: 0;
+	 				li {
+	 					padding: 0;
+	 					margin: 0;
+	 				}
+	 			}
+	 		}
+	 		.profile-bio {
+	 			margin: 20px 0 0 0;
+	 		}
+	 		.edit-profile, .send-message {
+	 			margin-top: 15px;
+	 		}
+	 	}
+	 	.profile-stats {
+	 		text-align: center;
+	 		h3 {
+	 			font-size: 20px;
+	 		}
+	 	}
 	}
-}
-
-.profile-bio {
-	display: inline;
-	width: 200px;
-	height: 200px
-	height: auto;
-	float: right;
 }
 
 #dot3 {
