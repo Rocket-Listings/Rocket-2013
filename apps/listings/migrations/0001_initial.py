@@ -12,7 +12,8 @@ class Migration(SchemaMigration):
         db.create_table(u'listings_listingcategory', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=60)),
-            ('description', self.gf('django.db.models.fields.CharField')(max_length=200)),
+            ('CL_id', self.gf('django.db.models.fields.IntegerField')(null=True)),
+            ('is_owner', self.gf('django.db.models.fields.NullBooleanField')(null=True, blank=True)),
         ))
         db.send_create_signal(u'listings', ['ListingCategory'])
 
@@ -24,16 +25,25 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'listings', ['ListingType'])
 
+        # Adding model 'ListingStatus'
+        db.create_table(u'listings_listingstatus', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=60)),
+            ('description', self.gf('django.db.models.fields.CharField')(max_length=200)),
+        ))
+        db.send_create_signal(u'listings', ['ListingStatus'])
+
         # Adding model 'Listing'
         db.create_table(u'listings_listing', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=200)),
             ('description', self.gf('django.db.models.fields.TextField')()),
-            ('pub_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('pub_date', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, auto_now_add=True, blank=True)),
             ('price', self.gf('django.db.models.fields.IntegerField')()),
             ('location', self.gf('django.db.models.fields.CharField')(max_length=200)),
             ('category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingCategory'])),
             ('listing_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingType'])),
+            ('status', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingStatus'], null=True)),
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
             ('CL_link', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
         ))
@@ -60,7 +70,7 @@ class Migration(SchemaMigration):
         db.create_table(u'listings_listingphoto', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('url', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('upload_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('upload_date', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, auto_now_add=True, blank=True)),
             ('upload_ip', self.gf('django.db.models.fields.IPAddressField')(max_length=15)),
             ('order', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
             ('listing', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Listing'], null=True, blank=True)),
@@ -70,6 +80,7 @@ class Migration(SchemaMigration):
         # Adding model 'Buyer'
         db.create_table(u'listings_buyer', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('curMaxOffer', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
             ('listing', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Listing'], blank=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('email', self.gf('django.db.models.fields.EmailField')(max_length=255, null=True, blank=True)),
@@ -82,7 +93,7 @@ class Migration(SchemaMigration):
             ('listing', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Listing'], null=True, blank=True)),
             ('buyer', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Buyer'])),
             ('value', self.gf('django.db.models.fields.IntegerField')()),
-            ('date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('date', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, auto_now_add=True, blank=True)),
         ))
         db.send_create_signal(u'listings', ['Offer'])
 
@@ -93,7 +104,7 @@ class Migration(SchemaMigration):
             ('isSeller', self.gf('django.db.models.fields.NullBooleanField')(null=True, blank=True)),
             ('buyer', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Buyer'], null=True, blank=True)),
             ('content', self.gf('django.db.models.fields.TextField')()),
-            ('date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('date', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, auto_now_add=True, blank=True)),
         ))
         db.send_create_signal(u'listings', ['Message'])
 
@@ -104,6 +115,9 @@ class Migration(SchemaMigration):
 
         # Deleting model 'ListingType'
         db.delete_table(u'listings_listingtype')
+
+        # Deleting model 'ListingStatus'
+        db.delete_table(u'listings_listingstatus')
 
         # Deleting model 'Listing'
         db.delete_table(u'listings_listing')
@@ -166,6 +180,7 @@ class Migration(SchemaMigration):
         },
         u'listings.buyer': {
             'Meta': {'object_name': 'Buyer'},
+            'curMaxOffer': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.Listing']", 'blank': 'True'}),
@@ -180,14 +195,16 @@ class Migration(SchemaMigration):
             'listing_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.ListingType']"}),
             'location': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'price': ('django.db.models.fields.IntegerField', [], {}),
-            'pub_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'auto_now_add': 'True', 'blank': 'True'}),
+            'status': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.ListingStatus']", 'null': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         },
         u'listings.listingcategory': {
+            'CL_id': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
             'Meta': {'object_name': 'ListingCategory'},
-            'description': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'is_owner': ('django.db.models.fields.NullBooleanField', [], {'null': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '60'})
         },
         u'listings.listinghighlight': {
@@ -201,7 +218,7 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.Listing']", 'null': 'True', 'blank': 'True'}),
             'order': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'upload_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'upload_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'auto_now_add': 'True', 'blank': 'True'}),
             'upload_ip': ('django.db.models.fields.IPAddressField', [], {'max_length': '15'}),
             'url': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
@@ -211,6 +228,12 @@ class Migration(SchemaMigration):
             'key': ('django.db.models.fields.CharField', [], {'max_length': '60'}),
             'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.Listing']"}),
             'value': ('django.db.models.fields.CharField', [], {'max_length': '60'})
+        },
+        u'listings.listingstatus': {
+            'Meta': {'object_name': 'ListingStatus'},
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '60'})
         },
         u'listings.listingtype': {
             'Meta': {'object_name': 'ListingType'},
@@ -222,7 +245,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'Message'},
             'buyer': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.Buyer']", 'null': 'True', 'blank': 'True'}),
             'content': ('django.db.models.fields.TextField', [], {}),
-            'date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'auto_now_add': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'isSeller': ('django.db.models.fields.NullBooleanField', [], {'null': 'True', 'blank': 'True'}),
             'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.Listing']", 'null': 'True', 'blank': 'True'})
@@ -230,7 +253,7 @@ class Migration(SchemaMigration):
         u'listings.offer': {
             'Meta': {'object_name': 'Offer'},
             'buyer': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.Buyer']"}),
-            'date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'auto_now_add': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.Listing']", 'null': 'True', 'blank': 'True'}),
             'value': ('django.db.models.fields.IntegerField', [], {})

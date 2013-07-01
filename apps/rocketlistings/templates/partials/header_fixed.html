@@ -3,28 +3,28 @@
 
 <div class="navbar">
 	<div class="navbar-inner">
-		<div class="container">
-			{% if user.is_authenticated %}
-			<a class="navbar-logo" href="{% url 'listings.views.user_listings' user.username %}">
-			{% else %}
-			<a class="navbar-logo" href="{% url 'home' %}">
-			{% endif %}
-				<div class="accent accent1"></div>
-				<div class="accent accent2"></div>
-				<div class="accent accent3"></div>
-				<div class="accent accent4"></div>
-				<span class="logo-text">rocket</span>
-			</a>
+		<div class="container-fluid">
+				{% if user.is_authenticated %}
+				<a class="navbar-logo" href="{% url 'dashboard' %}">
+				{% else %}
+				<a class="navbar-logo" href="{% url 'home' %}">
+				{% endif %}
+					<div class="accent accent1"></div>
+					<div class="accent accent2"></div>
+					<div class="accent accent3"></div>
+					<div class="accent accent4"></div>
+					<span class="logo-text">rocket</span>
+				</a>
 			{% if user.is_authenticated %}
 			<ul class="nav pull-right">
 				<li class="{% active 'dashboard' %}">
-					<a href="{% url 'listings.views.dashboard' %}">
+					<a href="{% url 'dashboard' %}">
 						Listings<span> </span><i class="icon-th-list"></i>
 					</a>
 				</li>
-				<li class="{% active 'user_profile' %}">
-					<a href="{% url 'user_profile' user.username %}">
-						Profile <i class="icon-user"></i>
+				<li class="{% active 'user_info' %}">
+					<a href="{% url 'users.views.info' %}">
+						Account<span> </span><i class="icon-user"></i>
 					</a>
 				</li>
 				<li>
@@ -42,6 +42,5 @@
 				</li>
 			</ul>
 			{% endif %}
-		</div>
 	</div>
 </div>

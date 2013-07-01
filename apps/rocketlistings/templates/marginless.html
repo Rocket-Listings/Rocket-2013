@@ -2,15 +2,15 @@
 {% load static from staticfiles %}
 
 {% block bootstrap_css %}
-<link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap-gutterless.css' %}"/>
+<link type="text/css" rel="stylesheet" href="{% static 'vendorcss/bootstrap-gutterless.css' %}"/>
 {% endblock %}
 
 {% block body %}
 	<div class="wrap-fixed">
 		{% include "partials/header.html" %}
-		{% block content %}<h3>Error 404</h3>{% endblock %}
-	</div>
-	{% include "partials/footer-fixed.html" %}
+  	{% block content %}<h3>Error 404</h3>{% endblock %}
+  </div>
+	{% include "partials/footer_fixed.html" %}
 	{% include "partials/modal_photo_upload.html" %}
 	</div>
 {% endblock %}

@@ -1,29 +1,26 @@
-{% extends "static_marginless.html" %}
+{% extends "static_pages_base.html" %}
 {% load static from staticfiles %}
 
-{% block css %}<link type="text/css" rel="stylesheet" href="{% static 'css/static_pages.css' %}"/>{% endblock %}
+{% block title %}About Rocket{% endblock %}
 
-{% block js %}
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuRtB1F8XVtV22jQ3dkGQPqWCKQz4suJ0&sensor=false"></script>
-<script type="text/javascript" src="{% static 'js/static_pages.js' %}"></script>
-{% endblock %}
-
-{% block title %}Who Are We?{% endblock %}
 {% block content %}
-<div class="container-fluid who-container">
-	<div class="row-fluid">
-		<div class="span4 offset2">
-		<div class = "image">
-			<img src="{{STATIC_URL}}/img/church-light.jpg"  style="float: right; width: 400px;">
+
+	<div class="container-fluid who-container">
+		<div class="row-fluid ">
+			<div class="span4 offset2">
+			<div class = "image">
+				<img src="{{STATIC_URL}}/img/church-light.jpg"  style="float: right; width: 400px;">
+			</div>
+		</div>
+		<div class = "span4">
+				<div class="who-text">
+					<p>Based in the center of Burlington, VT, the Rocket Listings team is commited to making the whole process of selling a used item online easier, from the minute you want to sell it until you have cash in your hand.</p>
+
+					<p>The idea started when all of us, as avid Craiglist users, got interested in what we could do to make things faster and easier. We tried some browser plugins, some rss feeds, and even some other third party sites, but nothing quite did it. We eventually decided to build our own tools, and that's where Rocket was started. </p><p>Please let us know if you think we're doing a good job or if you have any other feedback by emailing us here at <a href="mailto:info@rocketlistings.com" style="color: white;"> info@rocketlistings.com</a> </p>
+				</div>
+
+			</div>
 		</div>
 	</div>
-	<div class = "span4">
-			<div class="who-text">
-				<p>Based in the center of Burlington, VT, the Rocket Listings team is commited to making the whole process of selling a used item online easier, from the minute you want to sell it until you have cash in your hand.</p> <p>The idea started when all of us, as avid Craiglist users, got interested in what we could do to make things faster and easier. We tried some browser plugins, some rss feeds, and even some other third party sites, but nothing quite did it. We eventually decided to build our own tools, and that's where Rocket was started. </p><p>Please let us know if you think we're doing a good job or if you have any other feedback by emailing us here at <a href="mailto:info@rocketlistings.com" style="color: white;"> info@rocketlistings.com</a> </p>
-			</div>
-			
-		</div>			
-	</div>
-</div>
 
 {% endblock %}

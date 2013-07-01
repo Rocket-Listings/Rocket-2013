@@ -63,7 +63,7 @@ class Listing(models.Model):
 	status = models.ForeignKey(ListingStatus, null = True) # TODO want to be able to listings by this
 	user = models.ForeignKey(User)
 	CL_link = models.URLField(null = True, blank = True)
-	
+
 
 	def max_offer(self):
 		"Returns highest offer made by any buyer for that listing"
@@ -104,7 +104,7 @@ class ListingPhoto(models.Model):
 class Buyer(models.Model):
 	objects = GenericNameManager()
 	curMaxOffer = models.IntegerField(null = True, blank = True)
-	listing = models.ForeignKey(Listing, blank=True) 
+	listing = models.ForeignKey(Listing, blank=True)
 	name = models.CharField(max_length=255)
 	email = models.EmailField(max_length=255, null = True, blank=True)
 
@@ -125,7 +125,7 @@ class Offer(models.Model):
 	buyer = models.ForeignKey(Buyer)
 	value = models.IntegerField()
 	date = models.DateTimeField('date offered', auto_now_add=True, default=datetime.now)
-	
+
 	def __unicode__(self):
 		return "$ " + str(self.value)
 

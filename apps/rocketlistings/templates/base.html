@@ -4,18 +4,23 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>{% block pagetitle %}Rocket Listings{% endblock %}</title>
-		
+		<title>{% block pagetitle %}rocket{% endblock %}</title>
+
 		<link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
 
 		{% block bootstrap_css %}
 		{# CDN CSS #}
-		<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+		{# <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet"> #}
 		{# Offline CSS #}
-		{# <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}"> #}
+		{# <link rel="stylesheet" type="text/css" href="{% static 'vendorcss/bootstrap.min.css' %}"> #}
+		{# <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet"> #}
+		{# Offline CSS #}
+		<link rel="stylesheet" type="text/css" href="{% static 'vendorcss/bootstrap.min.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'vendorcss/bootstrap-responsive.min.css' %}">
 		{% endblock %}
-		{# <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.fancybox.css' %}" media="screen" />#}
-		<link rel="stylesheet" type="text/css" href="{% static 'css/fineuploader.css' %}" media="screen" />
+
+		{# <link rel="stylesheet" type="text/css" href="{% static 'vendorcss/jquery.fancybox.css' %}" media="screen" />#}
+		<link rel="stylesheet" type="text/css" href="{% static 'vendorcss/fineuploader.css' %}" media="screen" />
 		<link rel="stylesheet" type="text/css" href="{% static 'css/global.css' %}">
 		{% block css %}{% endblock%}
 	</head>
@@ -26,19 +31,20 @@
 			<div class="container">
 				{% block content %}<h3>Error 404</h3>{% endblock %}
 			</div>
-			<div class="push"></div>{# sticky footer div #}			
+			<div class="push"></div>{# sticky footer div #}
 		</div>
 		{% include "partials/footer.html" %}
 		{% include "partials/modal_photo_upload.html" %}
-		</div>
 		{% endblock %}
 		{# CDN JS #}
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 		<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
-		
+
 		{# for offline development #}
-		{# <script src="{% static 'js/jquery-1.9.0.js' %}"></script>  #}
-		{# <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script> #}
+		{% comment %}
+		<script src="{% static 'js/jquery-1.9.0.js' %}"></script>
+		<script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
+		{% endcomment %}
 
 
 		<script src="{% static 'js/fineuploader/jquery.fineuploader-3.1.1.js' %}" ></script>
@@ -47,7 +53,7 @@
 		<script type="text/javascript">
 		   var STATIC_URL = "{{ STATIC_URL }}";
 		</script>
-		<script src="{% static 'js/global.js' %}"></script>		
+		<script src="{% static 'js/global.js' %}"></script>
 		{% block js %}{% endblock %}
 
 		{# UserVoice Plugin #}
@@ -71,6 +77,8 @@
 		</script>
 		{% endcomment %}
 		{# Google Analytics #}
+
+		{% comment %}
 		<script type="text/javascript">
 			var _gaq = _gaq || [];
 			var pluginUrl = '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
@@ -84,5 +92,6 @@
 				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 			})();
 		</script>
+		{% endcomment %}
 	</body>
 </html>
