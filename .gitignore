@@ -21,4 +21,4 @@ tmp
 .DS_Store
 *.sublime-*
 development.py
-css/
+css/*
