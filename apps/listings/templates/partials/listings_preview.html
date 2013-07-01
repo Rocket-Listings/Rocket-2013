@@ -1,44 +1,42 @@
-<div class="listing">
-  <div class="row">
-    <div class="l-body">
-      <h1 class="l-title title" style="text-align:left;float:left;"></h1>
-      <h1 class="l-dash" style="text-align:left;float:left;margin-left:11px;"> - </h1>
-      <h1 class="l-price" style="text-align:left;float:left;">$</h1>
-      <h1 class = "l-location" style="padding-top:5px"> () </h1><!--This has to from the address function-->
+<div class="preview-pane">
+  <h5 class="l-category">></h5>
+  <div class="listing">
+    <div class="row">
+      <div class="l-body">
+        <h1 class="l-title title" style="text-align:left;float:left;"></h1>
+        <h1 class="l-dash" style="text-align:left;float:left;margin-left:11px;"> - </h1>
+        <h1 class="l-price" style="text-align:left;float:left;">$</h1>
+        <h1 class = "l-location" style="padding-top:5px"> () </h1><!--This has to from the address function-->
+      </div>
     </div>
-  </div>
 
-  <div class="container span8">
+    <div class="container span8">
           <!--  Carousel - consult the Twitter Bootstrap docs at 
           http://twitter.github.com/bootstrap/javascript.html#carousel -->
-    <div id="this-carousel-id" class="carousel slide"><!-- class of slide for animation -->
-      <div class="carousel-inner">
-        {% for photo in photos %}
-          <div {% if forloop.first %} class="item active" {% else %} class="item"{% endif %}> <!-- class of active since it's the first item --> 
-            <img src="{{ MEDIA_URL }}{{ photo.url }}" alt="" />
-            <div class="carousel-caption">
+      <div id="this-carousel-id" class="carousel slide"><!-- class of slide for animation -->
+        <div class="carousel-inner">
+          {% for photo in photos %}
+            <div {% if forloop.first %} class="item active" {% else %} class="item"{% endif %}> <!-- class of active since it's the first  item --> 
+              <img src="{{ MEDIA_URL }}{{ photo.url }}" alt="" />
+              <div class="carousel-caption"></div>
             </div>
-          </div>
-        {% endfor %}
-      </div><!-- /.carousel-inner -->
-      <!--  Next and Previous controls below
+          {% endfor %}
+        </div><!-- /.carousel-inner -->
+        <!--  Next and Previous controls below
             href values must reference the id for this carousel -->
-      <a class="carousel-control left" href="#this-carousesl-id" data-slide="prev">&lsaquo;</a>
-      <a class="carousel-control right" href="#this-carousel-id" data-slide="next">&rsaquo;</a>
-    </div><!-- /.carousel -->
+        <a class="carousel-control left" href="#this-carousesl-id" data-slide="prev">&lsaquo;</a>
+        <a class="carousel-control right" href="#this-carousel-id" data-slide="next">&rsaquo;</a>
+      </div><!-- /.carousel -->
 
 
-    <div class="l-description l-entry" style="white-space: pre-wrap;">
+      <div class="l-description l-entry" style="white-space: pre-wrap;"></div>
+      <br>
+      <div class="l-footnote">
+        Created with 
+        <a href="http://www.rocketlistings.com" class="icon">Rocket Listings</a>
+        . Blast off. 
+      </div>
       
-    </div>
-    <br>
-    <div class="l-footnote">
-      Created with 
-      <a href="http://www.rocketlistings.com" class="icon">
-        Rocket Listings
-      </a>
-      . Blast off. 
-    </div>
-
-  </div> <!-- /container -->
+    </div> <!-- /container -->
+  </div>
 </div>

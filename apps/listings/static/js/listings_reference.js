@@ -21,13 +21,11 @@ $(document).ready(function(){
 		$("#id_pictures").text("True");
 		if (prev != val ){
 			$('.category_' + prev).hide();
-			$(".edit").show();
 			$('.category_' + val).show();
 			prev = val;
 		}
 		else{
 		prev = val;
-		$(".edit").show();
 		$('.category_' + val).show();
 		}		
 	}
