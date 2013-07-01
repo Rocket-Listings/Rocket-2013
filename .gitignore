@@ -22,4 +22,3 @@ tmp
 *.sublime-*
 development.py
 css/
-*.css
