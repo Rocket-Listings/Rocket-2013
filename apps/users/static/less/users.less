@@ -84,12 +84,6 @@
 	width: 400px;
 }*/
 
-.user-info-buttons {
-	a {	
-		margin-right: 10px;
-	}
-}
-
 .login-register-box {
 	width:680px;
 	margin: 0 auto;
@@ -111,15 +105,17 @@
 
 .profile-content {
 	.profile-header {
-		height: auto;
-		min-height: 210px;
+		margin-left: 0px;
 		.profile-picture {
-		width: 200 px;
+		margin-bottom: 0px;
+		height: 210px;
 			img.thumbnail {
 				border-radius: 0px;
 			 	-webkit-border-radius: 0px;
 			 	-moz-border-radius: 0px;
 			 	-o-border-radius: 0px;
+			 	height: 200px
+			 	width: 200px;
 				}
 	 	}
 	 	span.sub-username {
@@ -157,6 +153,11 @@
 	 		}
 	 	}
 	}
+	div.separator {
+		height: 1px;
+		background-color: #DDD;
+		margin: 20px 0;
+	}
 }
 
 #dot3 {
@@ -164,11 +165,11 @@
 }
 
  #map-canvas {
-        margin: 0;
-        padding: 0;
-        height: 200px;
-        width: 200px;      
-        float: right;
+    margin: 0;
+    padding: 0;
+    height: 200px;
+    width: 200px;      
+    float: right;
 }
 
 .thumbnail {

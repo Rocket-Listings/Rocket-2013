@@ -9,7 +9,7 @@
 
 {% block content %}
 <div class="profile-content">
-	<div class="profile-header">
+	<div class="profile-header row">
 		<ul class="thumbnails profile-picture span3">
 			<li>
 			{% if user.get_profile.propic %}
@@ -51,21 +51,8 @@
 			<h3>Listings</h3>
 			<h4 class="green">{{ listings|length }}</h4>
 		</div>
-
-
-		{% comment %}
-		<span class="profile_user_info">
-			<p class="name">{{ user.get_profile.name }}</p>
-			<p class="username">"{{ user.username }}"</p>
-			<p class="location">{{ profile.location }}</p>
-			<p><input class="btn btn-primary btn-medium" type="submit" value="Message"/></p>
-		</span>
-			<div class="profile-bio">
-				<h5>About</h5>
-				<p id="biography">{{ profile.bio }} </p>
-			</div>
-		{% endcomment %}
 	</div>
+	<div class="separator"></div>
 </div>
 
 {% comment %}
