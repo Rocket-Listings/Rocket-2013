@@ -339,24 +339,18 @@ h1.flag {
 .who-container {
   margin-top: 50px;
 }
-.who-box {
-  height: 4em;
-  padding-top: 2em;
-  opacity: 0.5;
-  background: black;
-  border-top: 3px solid #ccc;
-  border-bottom: 3px solid #ccc;
-  margin-top: 5.0em;
-}
 .who-text {
-  position: relative;
-  top: 4.7em;
+  float: right;
+  width: 326.5px;
+  height: 423px;
+  padding: 20px 30px 20px 30px;
   font-style: inherit;
   font-size: 18px;
   line-height: 22px;
   font-weight: 200;
-  color: #333333;
+  color: white;
   text-align: justify;
+  background-color: #4A4742;
 }
 .pricing-basic {
   text-align: center;
