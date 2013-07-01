@@ -10,16 +10,17 @@
 
 {% block title %}Who Are We?{% endblock %}
 {% block content %}
-<div class = "who-container">
-	<div class = "spacer" style ="height: 60px"></div>
-		<div class ="row-fluid">
-			<div class = "span4 offset4">
-				<div class = "who-transparent-box">
-					<div class = "who-text">
-					<p>Based on Church Street in the heart of Burlington, VT, the Rocket Listings team is commited to making the whole process of selling a used item online easier, from the minute you want to sell it until you have cash in your hand.</p> <p>The idea started when all of us, as avid Craiglist users, got interested in what we could do to make things faster and easier. We tried some great browser plugins, but nothing quite did it. We eventually decided to build our own tools, and that's where Rocket was started. </p><p>Please let us know if you think we're doing a good job or if you have any other feedback by emailing us here at <a href ="mailto:info@rocketlistings.com"> info@rocketlistings.com</a> </p>
-					</div>
+<div class="container-fluid who-container">
+	<div class="row-fluid">
+		<div class="span6 offset2">
+			<img src="{{STATIC_URL}}/img/church-light.jpg" style="float: left">
+				<div class="who-text">
+					<p>Based on Church Street in the heart of Burlington, VT, the Rocket Listings team is commited to making the whole process of selling a used item online easier, from the minute you want to sell it until you have cash in your hand.</p> <p>The idea started when all of us, as avid Craiglist users, got interested in what we could do to make things faster and easier. We tried some browser plugins, some rss feeds, and even some other third party sites, but nothing quite did it. We eventually decided to build our own tools, and that's where Rocket was started. </p><p>Please let us know if you think we're doing a good job or if you have any other feedback by emailing us here at <a href="mailto:info@rocketlistings.com"> info@rocketlistings.com</a> </p>
 				</div>
-			</div>
+				<div class="who-box"></div>
+			
+
+		</div>
 	</div>
 </div>
 {% endblock %}
