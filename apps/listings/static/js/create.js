@@ -21,7 +21,7 @@ $(document).ready(function(){
 		$(".edit").show();
 		$(".preview-pane").hide();
 	});
-	$('#wrapper').affix()
+	$('.wrapper').affix()
 		
   	});
 
