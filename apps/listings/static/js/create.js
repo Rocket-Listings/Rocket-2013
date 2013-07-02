@@ -21,4 +21,27 @@ $(document).ready(function(){
 		$(".edit").show();
 		$(".preview-pane").hide();
 	});
-});
+	$('#wrapper').affix()
+		
+  	});
+
+
+
+
+
+
+//var msie6 = $.browser == 'msie' && $.browser.version < 7;
+
+//		if (!msie6) {
+//			var top = $('#wrapper').offset().top - parseFloat($('#wrapper').css('margin-top').replace(/auto/, 0));
+//			console.log(top)
+//	  		$(window).scroll(function() {
+	  			//what the y position of the scroll i
+//	  			var y = $(window).scrollTop();
+//	  			if (y >= top) {
+//	  				$('#wrapper').addClass('fixed');
+//	  			} else {
+//	  				$('#wrapper').removeClass('fixed');
+//	  			}
+//	  		});
+//		}
