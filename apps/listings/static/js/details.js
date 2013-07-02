@@ -20,6 +20,7 @@ function Edit(){
       $(document).ready(function(){
         $(".preview-pane").hide();
         $(".edit").show();
+        $('.submit').show();
     });
 }
 
@@ -33,5 +34,6 @@ function Preview(){
   var category = $('.hidden').text().toLowerCase().trim();
   var base_category = $("li.active").text().toLowerCase().trim();
   $(".l-category").text(base_category + " > " + category);
+  $('.submit').hide();
 
 }

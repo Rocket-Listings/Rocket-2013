@@ -21,7 +21,7 @@
 {% block content %}
   <div class="row">
 
-    <div class="listing-dash span2 wrapper">
+    <div class="listing-dash span2 wrapper" data-spy="affix" data-offset-top="400" style='position:fixed;top:55px;right:55px;'>
       <div class="dash-title">
         <div class="btn-group" data-toggle="buttons-radio">
           <button type="button" class="btn btn-primary" onclick="Edit()">Edit</button>
@@ -33,7 +33,7 @@
           Choose whether to edit or preview your content by toggling the buttons above
         </p>
       </div>
-      <button type="button" style="margin-left:10px;" class="btn btn-primary" onclick="document.getElementById('primaryButton').click()">Submit Changes</button>
+      <button type="button" style="margin-left:10px;display:none;" class="btn btn-primary submit" onclick="document.getElementById('primaryButton').click()">Submit Changes</button>
     </div>
 
     <div class="span10">
