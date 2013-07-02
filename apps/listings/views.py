@@ -51,11 +51,12 @@ def create(request):
 		defaults = {'location':profile.location, 'category':profile.default_category, 'listing_type':profile.default_listing_type}
 		form = ListingForm(initial=defaults)
 		categories = ListingCategory.objects.all()
-		return render(request, 'listing_create.html', {'form':form , 'categories': categories})
+		return render(request, 'listing_create.html', {'form':form , 'categories':categories})
 
 	elif request.method == 'POST':
 		listing_form = ListingForm(request.POST)
 		if listing_form.is_valid():
+			categories = ListingCategory.objects.all()
 			listing = listing_form.save(commit=False)
 			listing.user = request.user
 			listing.save()
@@ -65,7 +66,7 @@ def create(request):
 				return redirect(listing)
 				# Do something for anonymous users.
 		else:
-			return render(request, 'listing_create.html', {'form': ListingForm(request.POST),})
+			return render(request, 'listing_create.html', {'form': ListingForm(request.POST), 'categories':categories})
 
 def detail(request, listing_id):
 	if request.method == 'GET':
@@ -73,7 +74,8 @@ def detail(request, listing_id):
 		profile = request.user.get_profile()
 		defaults = {'location':listing.location, 'category':listing.category, 'listing_type':profile.default_listing_type}
 		form = ListingForm(initial=defaults)
-		return render(request, 'listing_details.html', {'listing':listing, 'form':form})
+		categories = ListingCategory.objects.all()
+		return render(request, 'listing_details.html', {'listing':listing, 'form':form, 'categories':categories})
 	elif request.method == 'POST':
 		listing = get_object_or_404(Listing, id=listing_id)
 		if request.user == listing.user: # updating his own listing

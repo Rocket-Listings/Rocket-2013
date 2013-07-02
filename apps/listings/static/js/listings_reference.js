@@ -11,7 +11,7 @@ $(document).ready(function(){
 	}
 
 	function handleClick(e) {
-		var y = $(this).attr("data-id");
+		var y = $(this).html();
 		function changeCat() {
 			var x = document.getElementById("id_category");
 			for (var i=1; i<x.length; i++) {
@@ -23,7 +23,17 @@ $(document).ready(function(){
 
 		changeCat();
 
-		var val = ($(this).data("id"));
+		var val = $(this).html();
+
+		if (val == 'apartment and housing' || val == 'rooms and shared' || val == 'sublets and temporary' 
+    	|| val == 'housing wanted' || val == 'housing swap' || val == 'vacation rentals' 
+    	|| val == 'parking and storage' || val == 'office and commercial' || val == 'real estate for sale') {
+
+			val = "housing";
+ 		}
+
+ 		val = val.replace(/ /g,"_");
+
 		$("a", ".tab-pane").addClass("unselected");
 		$("a", ".tab-pane").removeClass("selected");
 		$(this).removeClass("unselected");

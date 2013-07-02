@@ -243,3 +243,63 @@
   fields:
     name: video gaming
     description: video gaming
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: wanted
+    description: wanted
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: apartments and housing
+    description: apartments and housing
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: housing swap
+    description: housing swap
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: housing wanted
+    description: housing wanted
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: office and commercial
+    description: office and commercial
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: parking and storage
+    description: parking and storage
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: real estate for sale
+    description: real estate for sale
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: rooms and shared
+    description: rooms and shared
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: sublets and temporary
+    description: sublets and temporary
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: vacation rentals
+    description: vacation rentals

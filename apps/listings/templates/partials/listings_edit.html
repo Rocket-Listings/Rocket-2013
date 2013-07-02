@@ -3,99 +3,43 @@
     <div>
       <div class="tabbable">  
         <ul class="nav nav-tabs">  
-          <li class="active"><a href="#1" id = "tab1" data-toggle="tab">For Sale</a></li>  
-          <li class=""><a href="#2" id = "tab2" data-toggle="tab">Housing</a></li> 
+          <li class="active li1"><a href="#1" id = "tab1" data-toggle="tab">For Sale</a></li>  
+          <li class="li2"><a href="#2" id = "tab2" data-toggle="tab">Housing</a></li> 
         </ul>  
         <div class="tab-content">  
           <div class="tab-pane active large" id="1" data-type="for_sale">
             <table class="table">
-              {{categories}}
                 <tr>
-                    <td><a href="#" data-id='appliances'>appliances</a></td>
-                    <td><a href="#" data-id='antiques'>antiques</a></td>
-                    <td><a href="#" data-id='arts_and_crafts'> arts and crafts </a></td>
-                    <td><a href="#" data-id='auto_parts'>auto parts</a></td>
-                    <td><a href="#" data-id='baby_and_kids'>baby and kids</a></td>
-                    <td><a href="#" data-id='barter'>barter</a></td>
-                    <td><a href="#" data-id='beauty_and_health'>beauty and health</a></td>
+                    {% for item in categories %}
+                      <td><a href="#">{{item}}</a></td>
+                      {% if forloop.counter == 36 %}
+                              </tr>
+                            </table>
+                          </div>
+                          <div class="tab-pane small" data-type="housing" id="2">
+                            <table class="table">
+                              <tr>
+                      {% else %}
+                        {% if forloop.counter|divisibleby:"7" %}
+                          </tr><tr>
+                        {% endif %}
+                      {% endif %}
+                    {% endfor %}
                 </tr>
-                               
-                <tr>
-                    <td><a href="#" data-id='bikes'>bikes</a></td>
-                    <td><a href="#" data-id='boats'>boats</a></td>
-                    <td><a href="#" data-id='books'>books</a></td>
-                    <td><a href="#" data-id='business'>business</a></td>
-                    <td><a href="#" data-id='cars_and_trucks'>cars and trucks</a></td>
-                    <td><a href="#" data-id='cds_dvd_vhs'>cds/dvd/vhs</a></td>
-                    <td><a href="#" data-id='cell_phones'>cell phones</a></td>
-                </tr>
-
-                <tr>
-                    <td><a href="#" data-id='collectibles'>Collectibles</a></td>
-                    <td><a href="#" data-id='computer'>Computer</a></td>
-                    <td><a href="#" data-id='electronics'>Electronics</a></td>
-                    <td><a href="#" data-id='farm and garden'>Farm and Garden</a></td>
-                    <td><a href="#" data-id='free'>Free</a></td>                   
-                    <td><a href="#" data-id='clothes and accessories'>Clothes and Accessories</a></td>
-                    <td><a href="#" data-id='furniture'> furniture </a></td>
-                </tr>    
-
-                <tr>
-                    <td><a href="#" data-id='garage sale'>Garage Sale</a></td>
-                    <td><a href="#" data-id='general'>General</a></td>
-                    <td><a href="#" data-id='household'>Household</a></td>
-                    <td><a href="#" data-id='jewelry'>Jewelry</a></td>
-                    <td><a href="#" data-id='materials'>Materials</a></td>
-                    <td><a href="#" data-id='motorcycles'>Motorcycles</a></td>
-                    <td><a href="#" data-id='music instruments'>Music Instruments</a></td>
-                </tr>
-
-                <tr>
-                    <td><a href="#" data-id='photo and video'>Photo and Video</a></td>
-                    <td><a href="#" data-id='rvs'>RVs</a></td>
-                    <td><a href="#" data-id='sporting'>Sporting</a></td>
-                    <td><a href="#" data-id='tickets'>Tickets</a></td>
-                    <td><a href="#" data-id='tools'>Tools</a></td>
-                    <td><a href="#" data-id='toys and games'>Toys and Games</a></td>
-                    <td><a href="#" data-id='video gaming'>Video Gaming</a></td>
-                </tr>
-
-                <tr>
-                    <td><a href="#" class="for_sale" data-id='wanted'>Wanted</a></td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="tab-pane small" data-type="housing" id="2">  
-            <table class="table">
-              <tr>
-                <td><a href="#" data-id="housing">Apartments/Housing</a></td>
-                <td><a href="#" data-id="housing">Rooms/Shared</a></td>
-                <td><a href="#" data-id="housing">Sublets/Temporary</a></td>
-                <td><a href="#" data-id="housing">Housing Wanted</a></td>
-                <td><a href="#" data-id="housing">Housing Swap</a></td>
-                <td><a href="#" data-id="housing">Vacation Rentals</a></td>
-              </tr>
-                              
-              <tr>
-                <td><a href="#" data-id="housing">Parking/Storage</a></td>
-                <td><a href="#" data-id="housing">Office/Commercial</a></td>
-                <td><a href="#" data-id="housing">Real Estate For Sale</a></td>
-              </tr>
-            </table>
+              </table>
+            </div>
           </div>
-        </div>
-      </div>
-    
+        </div>    
+
 
       <form method="POST" action="">
           {% csrf_token %}
           <div class="l-header">
               <h1 class="l-title">
                   <fieldset>
-                      <input id="id_title" name="title" placeholder="Title" type="text" value="{{listing.title}}">
-                      <input id="id_price" name="price" type="text" placeholder="Price" value="{{listing.price}}">
-                      <input id="id_location" name="location" type="text" placeholder="Location" value="{{listing.location}}">
+                      <input id="id_title" name="title" placeholder="Title" type="text" value="{{listing.title}}"/>
+                      <input id="id_price" name="price" type="text" placeholder="Price" value="{{listing.price}}"/>
+                      <input id="id_location" name="location" type="text" placeholder="Location" value="{{listing.location}}"/>
                   </fieldset>
               </h1>
           </div>
@@ -107,7 +51,7 @@
                   <textarea cols="60" id="id_description" name="description" rows="10" placeholder="Description">{{listing.description}}</textarea>
               </li>
               <li>
-                <div style="display:none" class="hidden">
+                <div class="hidden" style="display:none">
                 {{ form.category }}
                 </div>
               </li>
@@ -121,10 +65,10 @@
               </li>
               <br>
               <button type="button" class="btn btn-primary" onclick='fileUpload()'>Upload Picture Here</button>
-              <img id="image_2" src="{{listing.pictures}}">
-              <img id="images">
+              <img id="image_2" src="{{listing.pictures}}"/>
+              <img id="images"/>
               <li>
-                  <input class="btn" type="submit" value="Update" style="display:none" id="primaryButton">
+                  <input class="btn" type="submit" value="Update" style="display:none" id="primaryButton"/>
               </li>
           </ul>
       </form>

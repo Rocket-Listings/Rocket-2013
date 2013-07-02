@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	
 	function pageLoad() {
 		$(".edit").show();
 		$(".preview-pane").hide();
@@ -12,7 +13,7 @@ $(document).ready(function(){
 		$('.title').text($('#id_title').val());
 		$('.l-location').text("(" + $('#id_location').val() + ")");
 		$('.l-price').text("$" + $('#id_price').val());
-		var category = $('.hidden').text().toLowerCase().trim();
+		var category = $(".hidden > select option:selected").html();
   		var base_category = $("li.active").text().toLowerCase().trim();
   		$(".l-category").text(base_category + " > " + category);
 
