@@ -1,7 +1,7 @@
 from multiprocessing import cpu_count
 from os import environ
 
-bind = '0.0.0.0:' + os.environ.get('PORT', '8000')
+bind = '0.0.0.0:' + environ.get('PORT', '8000')
 workers = cpu_count() * 2 + 1
 max_requests = 10000
 worker_class = "gevent"
