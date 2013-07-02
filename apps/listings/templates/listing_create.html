@@ -19,27 +19,34 @@
 {% endblock %}
 
 {% block content %}
-  <div class="row">
+ <div class="row"> 
+    <div class="span10">
+      {% include 'partials/listings_edit.html' %}
+      {% include 'partials/listings_preview.html' %}
 
-    <div class="listing-dash span2">
-      <div class="dash-title">
-        <div class="btn-group" data-toggle="buttons-radio">
-          <button type="button" class="edit-btn btn btn-primary active">Edit</button>
-          <button type="button" class="preview-btn btn btn-primary">Preview</button>
+    </div>
+    <div id='wrapper' class='span2' data-spy="affix" data-offset-top="400">
+      <div class="listing-dash">
+        <div class="dash-title">
+          <div class="btn-group" data-toggle="buttons-radio">
+            <button type="button" class="edit-btn btn btn-primary active">Edit</button>
+            <button type="button" class="preview-btn btn btn-primary">Preview</button>
+          </div>
+        </div>  
+        <div class="dash-content">
+          <p>
+            Choose whether to edit or preview your content by toggling the buttons above
+          </p>
         </div>
-      </div>  
-      <div class="dash-content">
-        <p>
-          Choose whether to edit or preview your content by toggling the buttons above
-        </p>
+        <button type="button" style="margin-left:10px;" class="btn btn-primary" onclick="document.getElementById('primaryButton').click()">Submit Changes</button>
       </div>
-      <button type="button" style="margin-left:10px;" class="btn btn-primary" onclick="document.getElementById('primaryButton').click()">Submit Changes</button>
     </div>
 
     <div class="span10">
     	{% include 'partials/listings_edit.html' %}
     	{% include 'partials/listings_preview.html' %}
     </div>
+
   </div>
 
   <div class="clearfix"></div>
