@@ -115,6 +115,9 @@
 		 	-webkit-border-radius: 0px;
 		 	-moz-border-radius: 0px;
 		 	-o-border-radius: 0px;
+		 	box-shadow: none;
+		 	-webkit-box-shadow: none;
+		 	-moz-box-shadow: none;
 		 	height: 200px
 		 	width: 200px;
 			}
@@ -163,9 +166,46 @@
 	.profile-selling {
 		ul.thumbnails {
 			margin-top: 10px;
-			a {
+			li {
+				margin-bottom: 0px;
+			}
+			a.thumbnail {
 				color: #000;
 				text-decoration: none;
+				border-radius: 0px;
+				-webkit-border-radius: 0px;
+				-moz-border-radius: 0px;
+				-o-border-radius: 0px;
+				box-shadow: none;
+				-webkit-box-shadow: none;
+				-moz-box-shadow: none;
+				height: 310px;
+				li {
+					font-size: 20px;
+					font-weight: 600;
+					padding: 5px 0;
+				}
+				.profile-listing-title {
+					float: left;
+					padding-left: 10px;
+					text-align: left;
+					word-wrap: break-word;
+					white-space: pre-line;
+					max-width: 65%;
+				}
+				.profile-listing-price {
+					float: right;
+					padding-right: 10px;
+					text-align: right;
+					color: #4cbb17;
+					letter-spacing: 1px;
+				}
+				p {
+					padding: 0 10px;
+					text-align: left;
+					max-height: 40px;
+					overflow: hidden;
+				}
 			}
 		}
 	}

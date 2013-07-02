@@ -56,17 +56,21 @@
 	<div class="profile-selling">
 		<span class="subtitle">Listings by {{user.username}}:</span>
 		<ul class="thumbnails">
-			{% for listing in listings|slice:":6" %}
-			<li class="span2">
+			{% for listing in listings|slice:":4" %}
+			<li class="span3">
 				<a class="thumbnail" href="{{ listing.get_absolute_url }}">
 					<img src="{% static 'images/sail.jpg' %}">
-					<h4>{{listing.title}}</h4>
-					<p>${{listing.price}}</p>
+					<ul class="inline clearfix">
+						<h4 class="profile-listing-price">${{listing.price}}</h4>
+						<h4 class="profile-listing-title">{{listing.title}}</h4>
+					</ul>
+					<p>{{listing.description}}</p>
 				</a>
 			</li>
 			{% endfor %}
 		</ul>
 	</div>
+	<div class="separator"></div>
 </div>
 
 {% comment %}
