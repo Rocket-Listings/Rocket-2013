@@ -17,11 +17,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 from django.http import HttpResponse, HttpResponseBadRequest
 import requests
-from itertools import chain
 from bs4 import BeautifulSoup
-
-
-
+from operator import __add__
 # Moved here from users/views.py
 
 @login_required
@@ -38,12 +35,9 @@ def user_listings(request, username=None):
 def dashboard(request):
 	user = request.user
 	listings = Listing.objects.filter(user=user).order_by('-pub_date').all() # later on we can change how many are returned
-	if listings:
-		buyers = list(reduce(chain, (map(lambda l: l.buyer_set.all(), listings))))
-		messages = list(chain(reduce(chain, map(lambda b: list(b.message_set.all()), buyers))))
-	else:
-		buyers, messages = None, None
-	return render(request, 'listings_dashboard.html',  {'listings': listings, 'buyers': buyers, 'messages':messages,})
+	buyers = reduce(__add__, map(lambda l: list(l.buyer_set.all()), listings), [])
+	messages = reduce(__add__, map(lambda b: list(b.message_set.all()), buyers), [])
+	return render(request, 'listings_dashboard.html',  {'listings': listings, 'buyers': buyers, 'messages':messages})
 
 def latest(request):
 	listings = Listing.objects.all().order_by('-pub_date')[:10]
