@@ -25,14 +25,13 @@ $(document).ready(function(){
  }
 
  function Preview(){
-   $(".edit").hide();
-   $(".preview-pane").show();
-   $('.l-description').text($('#id_description').val());
+  $(".edit").hide();
+  $(".preview-pane").show();
+  $('.l-description').text($('#id_description').val());
  	$('.title').text($('#id_title').val());
  	$('.l-location').text("(" + $('#id_location').val() + ")");
- 	$('.l-price').text("$" + $('#id_price').text());
-   var category = $(".hidden > select option:selected").html().toLowerCase().trim();
-   var base_category = $("li.active").text().toLowerCase().trim();
-   $(".l-category").text(base_category + " > " + category);
-
+ 	$('.l-price').text("$" + $('#id_price').val());
+  var category = $(".hidden > select option:selected").html().toLowerCase().trim();
+  var base_category = $("li.active").text().toLowerCase().trim();
+  $(".l-category").text(base_category + " > " + category);
  }
