@@ -4,6 +4,7 @@ $(document).ready(function(){
 	$('.title').text($('#id_title').val());
 	$('.l-location').text("(" + $('#id_location').val() + ")");
 	$('.l-price').text("$" + $('#id_price').val());
+
 	var prev = "";
 	function eventHandlers() {
 		$("a", ".tab-pane").click(handleClick);
@@ -32,13 +33,11 @@ $(document).ready(function(){
 		$("#id_pictures").text("True");
 		if (prev != val ){
 			$('.category_' + prev).hide();
-			$(".edit").show();
 			$('.category_' + val).show();
 			prev = val;
 		}
 		else{
 		prev = val;
-		$(".edit").show();
 		$('.category_' + val).show();
 		}		
 	}

@@ -3,31 +3,31 @@
     <div>
       <div class="tabbable">  
         <ul class="nav nav-tabs">  
-          <li class="active"><a href="#1" data-toggle="tab">For Sale</a></li>  
-          <li class=""><a href="#2" data-toggle="tab">Housing</a></li> 
+          <li class="active"><a href="#1" id = "tab1" data-toggle="tab">For Sale</a></li>  
+          <li class=""><a href="#2" id = "tab2" data-toggle="tab">Housing</a></li> 
         </ul>  
         <div class="tab-content">  
           <div class="tab-pane active large" id="1" data-type="for_sale">
             <table class="table">
               {{categories}}
                 <tr>
-                    <td><a href="#" data-id='appliances'>Appliances</a></td>
-                    <td><a href="#" data-id='antiques'>Antiques</a></td>
-                    <td><a href="#" data-id='arts and crafts'>Arts and Crafts</a></td>
-                    <td><a href="#" data-id='auto parts'>Auto Parts</a></td>
-                    <td><a href="#" data-id='baby and kids'>Baby and Kids</a></td>
-                    <td><a href="#" data-id='barter'>Barter</a></td>
-                    <td><a href="#" data-id='beauty and health'>Beauty and Health</a></td>
+                    <td><a href="#" data-id='appliances'>appliances</a></td>
+                    <td><a href="#" data-id='antiques'>antiques</a></td>
+                    <td><a href="#" data-id='arts_and_crafts'> arts and crafts </a></td>
+                    <td><a href="#" data-id='auto_parts'>auto parts</a></td>
+                    <td><a href="#" data-id='baby_and_kids'>baby and kids</a></td>
+                    <td><a href="#" data-id='barter'>barter</a></td>
+                    <td><a href="#" data-id='beauty_and_health'>beauty and health</a></td>
                 </tr>
                                
                 <tr>
-                    <td><a href="#" data-id='bikes'>Bikes</a></td>
-                    <td><a href="#" data-id='boats'>Boats</a></td>
-                    <td><a href="#" data-id='books'>Books</a></td>
-                    <td><a href="#" data-id='business'>Business</a></td>
-                    <td><a href="#" data-id='cars and trucks'>Cars and Trucks</a></td>
-                    <td><a href="#" data-id='cds dvd vhs'>CD/DVD/VHS</a></td>
-                    <td><a href="#" data-id='cell phones'>Cell Phones</a></td>
+                    <td><a href="#" data-id='bikes'>bikes</a></td>
+                    <td><a href="#" data-id='boats'>boats</a></td>
+                    <td><a href="#" data-id='books'>books</a></td>
+                    <td><a href="#" data-id='business'>business</a></td>
+                    <td><a href="#" data-id='cars_and_trucks'>cars and trucks</a></td>
+                    <td><a href="#" data-id='cds_dvd_vhs'>cds/dvd/vhs</a></td>
+                    <td><a href="#" data-id='cell_phones'>cell phones</a></td>
                 </tr>
 
                 <tr>
@@ -107,7 +107,7 @@
                   <textarea cols="60" id="id_description" name="description" rows="10" placeholder="Description">{{listing.description}}</textarea>
               </li>
               <li>
-                <div>
+                <div style="display:none" class="hidden">
                 {{ form.category }}
                 </div>
               </li>
