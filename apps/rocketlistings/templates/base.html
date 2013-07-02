@@ -8,21 +8,20 @@
 
 		<link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
 
-		{% block bootstrap_css %}
-		{# CDN CSS #}
+		{% block bootstrap %}
+		{# CDN #}
 		{# <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet"> #}
-		{# Offline CSS #}
-		{# <link rel="stylesheet" type="text/css" href="{% static 'vendorcss/bootstrap.min.css' %}"> #}
-		{# <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet"> #}
-		{# Offline CSS #}
+
+		{# Offline/s3 #}
 		<link rel="stylesheet" type="text/css" href="{% static 'vendorcss/bootstrap.min.css' %}">
 		<link rel="stylesheet" type="text/css" href="{% static 'vendorcss/bootstrap-responsive.min.css' %}">
 		{% endblock %}
 
 		{# <link rel="stylesheet" type="text/css" href="{% static 'vendorcss/jquery.fancybox.css' %}" media="screen" />#}
 		<link rel="stylesheet" type="text/css" href="{% static 'vendorcss/fineuploader.css' %}" media="screen" />
+		{% block css %}
 		<link rel="stylesheet" type="text/css" href="{% static 'css/global.css' %}">
-		{% block css %}{% endblock%}
+		{% endblock%}
 	</head>
 	<body>
 		{% block body %}
