@@ -1,21 +1,3 @@
-- model: listings.ListingCategory
-  pk: null
-  fields:
-    name: Cars and Trucks
-    description: Selling automobiles.
-
-- model: listings.ListingCategory
-  pk: null
-  fields:
-    name: Antiques
-    description: Selling old stuff.
-
-- model: listings.ListingCategory
-  pk: null
-  fields:
-    name: Electronics
-    description: Selling Electronics.
-
 - model: listings.ListingType
   pk: null
   fields:
@@ -51,3 +33,213 @@
   fields:
     name: Deleted
     description: Are you an organization?
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: appliances
+    description: appliances
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: antiques
+    description: antiques
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: arts and crafts
+    description: arts and crafts
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: auto parts
+    description: auto parts
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: baby and kids
+    description: baby and kids
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: barter
+    description: barter
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: beauty and health
+    description: beauty and health
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: bikes
+    description: bikes
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: boats
+    description: boats
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: books
+    description: books
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: business
+    description: business
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: cars and trucks
+    description: cars and trucks
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: cds dvd vhs
+    description: cds dvd vhs
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: cell phones
+    description: cell phones
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: collectibles
+    description: collectibles
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: computer
+    description: computer
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: electronics
+    description: electronics
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: farm and garden
+    description: farm and garden
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: free
+    description: free
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: clothes and accessories
+    description: clothes and accessories
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: furniture
+    description: furniture
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: garage sale
+    description: garage sale
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: general
+    description: general
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: household
+    description: household
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: jewelry
+    description: jewelry
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: materials
+    description: materials
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: motorcycles
+    description: motorcycles
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: music instruments
+    description: music instruments
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: photo and video
+    description: photo and video
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: rvs
+    description: rvs
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: sporting
+    description: sporting
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: tickets
+    description: tickets
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: tools
+    description: tools
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: toys and games
+    description: toys and games
+
+- model: listings.ListingCategory
+  pk: null
+  fields:
+    name: video gaming
+    description: video gaming

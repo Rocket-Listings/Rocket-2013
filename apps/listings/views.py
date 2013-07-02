@@ -1,4 +1,4 @@
-from listings.models import Listing, ListingPhoto, Buyer, Offer, Message 
+from listings.models import Listing, ListingPhoto, Buyer, Offer, Message, ListingCategory 
 from django.contrib.auth.models import User
 from django.conf import settings
 from datetime import datetime, timedelta
@@ -50,7 +50,9 @@ def create(request):
 		profile = request.user.get_profile()
 		defaults = {'location':profile.location, 'category':profile.default_category, 'listing_type':profile.default_listing_type}
 		form = ListingForm(initial=defaults)
-		return render(request, 'listing_create.html', {'form':form})
+		categories = ListingCategory.objects.all()
+		return render(request, 'listing_create.html', {'form':form , 'categories': categories})
+
 	elif request.method == 'POST':
 		listing_form = ListingForm(request.POST)
 		if listing_form.is_valid():
@@ -68,7 +70,10 @@ def create(request):
 def detail(request, listing_id):
 	if request.method == 'GET':
 		listing = get_object_or_404(Listing, id=listing_id)
-		return render(request, 'listing_details.html', {'listing':listing})
+		profile = request.user.get_profile()
+		defaults = {'location':listing.location, 'category':listing.category, 'listing_type':profile.default_listing_type}
+		form = ListingForm(initial=defaults)
+		return render(request, 'listing_details.html', {'listing':listing, 'form':form})
 	elif request.method == 'POST':
 		listing = get_object_or_404(Listing, id=listing_id)
 		if request.user == listing.user: # updating his own listing

@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
 	$('.l-description').text($('#id_description').val());
 	$('.title').text($('#id_title').val());
 	$('.l-location').text("(" + $('#id_location').val() + ")");
@@ -9,6 +10,18 @@ $(document).ready(function(){
 	}
 
 	function handleClick(e) {
+		var y = $(this).attr("data-id");
+		function changeCat() {
+			var x = document.getElementById("id_category");
+			for (var i=1; i<x.length; i++) {
+				if ( x.options[i].text == y) {
+					document.getElementById('id_category').value = i;
+				}
+			}
+		}
+
+		changeCat();
+
 		var val = ($(this).data("id"));
 		$("a", ".tab-pane").addClass("unselected");
 		$("a", ".tab-pane").removeClass("selected");
@@ -35,13 +48,12 @@ $(document).ready(function(){
 function fileUpload(){
 	filepicker.pickAndStore({
 		services: ['COMPUTER','URL'],
-		mimetype:"image/*",
-		multiple: true
+		mimetype:"image/*"
 		},
 		{location:"S3"},
 	function(InkBlobs){
 		var inky = InkBlobs;
-		console.log(inky[0].url)
+		$("#id_pictures").text(inky[0].url);
 		image(inky[0].url);
 		}
 	);
@@ -49,7 +61,9 @@ function fileUpload(){
 
 
 function image(url) {
-	var img = document.createElement("IMG");
-	img.src = url;
-	document.getElementById('image').appendChild(img);
+	document.getElementById('image_1').style.display = 'none';
+	document.getElementById('image_2').style.display = 'none';
+	document.getElementById('image').src= url;
+	document.getElementById('images').src= url;
 }
+

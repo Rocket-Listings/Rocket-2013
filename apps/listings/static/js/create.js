@@ -2,7 +2,6 @@ $(document).ready(function(){
 	function pageLoad() {
 		$(".edit").show();
 		$(".listing").hide();
-		$("#primaryButton").show();
 	}
 	pageLoad();
 
