@@ -21,6 +21,12 @@
 {% block content %}
   <div class="row">
 
+    <div class="span10">
+      {% include 'partials/listings_preview.html' %}
+
+      {% include 'partials/listings_edit.html' %}
+    </div>
+    
     <div class="listing-dash span2 wrapper">
       <div class="dash-title">
         <div class="btn-group" data-toggle="buttons-radio">
@@ -36,11 +42,6 @@
       <button type="button" style="margin-left:10px;" class="btn btn-primary" onclick="document.getElementById('primaryButton').click()">Submit Changes</button>
     </div>
 
-    <div class="span10">
-      {% include 'partials/listings_preview.html' %}
-
-      {% include 'partials/listings_edit.html' %}
-    </div>
   </div>
 
   <div class="clearfix"></div>
