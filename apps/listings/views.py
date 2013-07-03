@@ -91,6 +91,7 @@ def detail(request, listing_id):
 		defaults = {'location':listing.location, 'category':listing.category, 'listing_type':profile.default_listing_type}
 		form = ListingForm(initial=defaults)
 		categories = ListingCategory.objects.all()
+		photos = listing.listingphoto_set.all()
 		return render(request, 'listing_details.html', {'listing':listing, 'form':form, 'categories':categories, 'photos':photos})
 
 	elif request.method == 'POST':
