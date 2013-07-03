@@ -8,18 +8,26 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding field 'Listing.pictures'
-        db.add_column(u'listings_listing', 'pictures',
-                      self.gf('django.db.models.fields.CharField')(default=True, max_length=200),
-                      keep_default=False)
+        # Deleting field 'ListingPhoto.upload_ip'
+        db.delete_column(u'listings_listingphoto', 'upload_ip')
+
+        # Deleting field 'ListingPhoto.upload_date'
+        db.delete_column(u'listings_listingphoto', 'upload_date')
 
 
         # Changing field 'Listing.status'
         db.alter_column(u'listings_listing', 'status_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingStatus'], null=True))
 
     def backwards(self, orm):
-        # Deleting field 'Listing.pictures'
-        db.delete_column(u'listings_listing', 'pictures')
+        # Adding field 'ListingPhoto.upload_ip'
+        db.add_column(u'listings_listingphoto', 'upload_ip',
+                      self.gf('django.db.models.fields.IPAddressField')(default='null', max_length=15),
+                      keep_default=False)
+
+        # Adding field 'ListingPhoto.upload_date'
+        db.add_column(u'listings_listingphoto', 'upload_date',
+                      self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, auto_now_add=True, blank=True),
+                      keep_default=False)
 
 
         # Changing field 'Listing.status'
@@ -78,7 +86,6 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'listing_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.ListingType']"}),
             'location': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'pictures': ('django.db.models.fields.CharField', [], {'default': 'True', 'max_length': '200'}),
             'price': ('django.db.models.fields.IntegerField', [], {}),
             'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'auto_now_add': 'True', 'blank': 'True'}),
             'status': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.ListingStatus']", 'null': 'True'}),
@@ -102,8 +109,6 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.Listing']", 'null': 'True', 'blank': 'True'}),
             'order': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'upload_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'auto_now_add': 'True', 'blank': 'True'}),
-            'upload_ip': ('django.db.models.fields.IPAddressField', [], {'max_length': '15'}),
             'url': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
         u'listings.listingspec': {

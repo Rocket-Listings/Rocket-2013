@@ -58,7 +58,6 @@ class Listing(models.Model):
 	pub_date = models.DateTimeField('date published', auto_now_add=True, default=datetime.now)
 	price = models.IntegerField()
 	location = models.CharField(max_length=200)
-	pictures = models.CharField(max_length=200, default= True)
 	category = models.ForeignKey(ListingCategory)
 	listing_type = models.ForeignKey(ListingType)
 	status = models.ForeignKey(ListingStatus, null = True) # TODO want to be able to listings by this
@@ -96,8 +95,6 @@ class ListingHighlight(models.Model):
 # Listing Photo
 class ListingPhoto(models.Model):
 	url = models.CharField(max_length=255)
-	upload_date = models.DateTimeField('date uploaded', auto_now_add=True, default=datetime.now)
-	upload_ip = models.IPAddressField()
 	order = models.IntegerField(null = True, blank=True)
 	listing = models.ForeignKey(Listing, null = True, blank=True)
 

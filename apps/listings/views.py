@@ -2,7 +2,7 @@ from listings.models import Listing, ListingPhoto, Buyer, Offer, Message, Listin
 from django.contrib.auth.models import User
 from django.conf import settings
 from datetime import datetime, timedelta
-from listings.forms import ListingForm
+from listings.forms import ListingForm, ListingPics
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from ajaxuploader.views import AjaxFileUploader
@@ -54,11 +54,27 @@ def create(request):
 		return render(request, 'listing_create.html', {'form':form , 'categories': categories})
 
 	elif request.method == 'POST':
+		count = request.POST.get('final_count')
+		print count
+		count = int(count)
+
+		d={}
+
+		for x in range(0, count):
+			d["photo{0}".format(x)] = request.POST.get(str(x))
+
 		listing_form = ListingForm(request.POST)
 		if listing_form.is_valid():
 			listing = listing_form.save(commit=False)
 			listing.user = request.user
 			listing.save()
+			listing_id = listing.id
+			for x in range(0, count):
+				string = d["photo%d" %(x)]
+				photoDict = {'url': string, 'order': x, 'listing': listing}
+				photo = ListingPhoto(**photoDict)
+				photo.clean()
+				photo.save()
 			if request.user.is_authenticated():
 				return redirect(listing)
 			else:
@@ -73,7 +89,8 @@ def detail(request, listing_id):
 		profile = request.user.get_profile()
 		defaults = {'location':listing.location, 'category':listing.category, 'listing_type':profile.default_listing_type}
 		form = ListingForm(initial=defaults)
-		return render(request, 'listing_details.html', {'listing':listing, 'form':form})
+		photos = listing.listingphoto_set.all()
+		return render(request, 'listing_details.html', {'listing':listing, 'form':form, 'photos':photos})
 	elif request.method == 'POST':
 		listing = get_object_or_404(Listing, id=listing_id)
 		if request.user == listing.user: # updating his own listing

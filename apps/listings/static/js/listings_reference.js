@@ -1,3 +1,4 @@
+var counter = 0;
 $(document).ready(function(){
 
 	$('.l-description').text($('#id_description').val());
@@ -39,7 +40,7 @@ $(document).ready(function(){
 		else{
 		prev = val;
 		$('.category_' + val).show();
-		}		
+		}
 	}
 	eventHandlers();
 });
@@ -47,22 +48,45 @@ $(document).ready(function(){
 function fileUpload(){
 	filepicker.pickAndStore({
 		services: ['COMPUTER','URL'],
-		mimetype:"image/*"
+		mimetype:"image/*",
+		multiple: "true"
 		},
 		{location:"S3"},
 	function(InkBlobs){
 		var inky = InkBlobs;
-		$("#id_pictures").text(inky[0].url);
-		image(inky[0].url);
+		console.log(inky)
+		photoLog(inky);
 		}
 	);
 }
 
-
-function image(url) {
-	document.getElementById('image_1').style.display = 'none';
-	document.getElementById('image_2').style.display = 'none';
-	document.getElementById('image').src= url;
-	document.getElementById('images').src= url;
+function photoLog(ink) {
+	var html = [];
+	var number = ink.length + counter;
+	for (var i=counter; i<number; i++) {
+		html.push("<input type = 'hidden' name='", i, "' value='", ink[i-counter].url, "'>");
+	}
+	$('#picsyo').append(html.join(''));
+	image(ink);
+	images(ink);
+	counter++;
+	$('#final_countdown').attr('value', counter);
 }
 
+function image(ink) {
+	var html = [];
+	for (var i=0; i<ink.length; i++) {
+		html.push("<img src ='", ink[i].url, "'>");
+	}
+	$('#image').append(html.join(''));
+
+}
+
+function images(ink) {
+	var html = [];
+	for (var i=0; i<ink.length; i++) {
+		html.push("<div class='item'><img src ='", ink[i].url, "'></div>");
+	}
+	$('#images').append(html.join(''));
+
+}

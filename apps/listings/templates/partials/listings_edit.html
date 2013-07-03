@@ -9,7 +9,6 @@
         <div class="tab-content">  
           <div class="tab-pane active large" id="1" data-type="for_sale">
             <table class="table">
-              {{categories}}
                 <tr>
                     <td><a href="#" data-id='appliances'>appliances</a></td>
                     <td><a href="#" data-id='antiques'>antiques</a></td>
@@ -112,17 +111,15 @@
                 </div>
               </li>
               <li>
-                <textarea cols="60" id="id_pictures" name="pictures" rows="10" style="display:none">{{listing.pictures}}</textarea>
-              </li>
-              <li>
                   <select id="id_listing_type" name="listing_type" style="display:none">
                       <option value="1" selected="selected" id="listingType">{{listing.listing_type}}</option>
                   </select>
               </li>
+                <div id="picsyo"></div>
               <br>
               <button type="button" class="btn btn-primary" onclick='fileUpload()'>Upload Picture Here</button>
-              <img id="image_2" src="{{listing.pictures}}">
-              <img id="images">
+              <div id="image"></div>
+              <input type="hidden" name="final_count" id="final_countdown" value="0">
               <li>
                   <input class="btn" type="submit" value="Update" style="display:none" id="primaryButton">
               </li>
