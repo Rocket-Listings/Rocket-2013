@@ -1,4 +1,5 @@
 var counter = 0;
+var catChange = 0;
 $(document).ready(function(){
 
 	$('.l-description').text($('#id_description').val());
@@ -23,6 +24,7 @@ $(document).ready(function(){
 		}
 
 		changeCat();
+		catChange = 1;
 
 		var val = $(this).html();
 
@@ -99,3 +101,36 @@ function images(ink) {
 	$('#images').append(html.join(''));
 
 }
+
+
+function validateForm() {
+	if (catChange===0) {
+		alert("Please select a Category");
+	}
+	else if (document.getElementById('id_title').value==="") {
+		alert("Please Fill in a Title");
+	}
+	else if (document.getElementById('id_price').value==="") {
+		alert("Please Fill in a Price");
+	}
+	else if (document.getElementById('id_location').value==="") {
+		alert("Please Fill in a Location");
+	}
+	else if (document.getElementById('id_description').value==="") {
+		alert("Please Fill in a Description");
+	}
+	else {
+		document.getElementById('primaryButton').click();
+	}
+}
+
+
+
+
+
+
+
+
+
+
+

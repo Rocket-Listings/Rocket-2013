@@ -55,7 +55,7 @@ def create(request):
 
 	elif request.method == 'POST':
 		categories = ListingCategory.objects.all()
-		count = request.POST.get('final_count')
+		count = request.POST.get('final_count', 0)
 		count = int(count)
 		d={}
 
@@ -63,6 +63,7 @@ def create(request):
 			d["photo{0}".format(x)] = request.POST.get(str(x))
 
 		listing_form = ListingForm(request.POST)
+		print listing_form
 		if listing_form.is_valid():
 			listing = listing_form.save(commit=False)
 			listing.user = request.user
