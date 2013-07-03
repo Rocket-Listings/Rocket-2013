@@ -9,9 +9,7 @@ I just installed a django plugin called Django-Compressor which makes developmen
 		pip install -r requirements.txt
 		brew install node
 		npm install -g less
-		echo "PATH=/usr/local/share/npm/bin:$PATH" >> ~/.bash_profile
-
-The npm command might need `sudo`.
+		echo "export PATH=/usr/local/share/npm/bin:$PATH" >> ~/.bash_profile
 
 ### Fabric Commands (run from project root)
 
