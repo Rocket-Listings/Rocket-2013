@@ -16,11 +16,11 @@ Pygments==1.6
 gunicorn==0.17.2
 django-storages==1.1.6
 dj-database-url==0.2.1
-gevent
+# gevent
 django-mailgun
 boto
 BeautifulSoup==3.2.1
-BeautifulSoup4==3.2.1
+BeautifulSoup4==4.2.1
 django-pagination
 django-compressor
 lxml
