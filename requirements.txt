@@ -23,3 +23,4 @@ BeautifulSoup4
 django-pagination
 django-compressor
 lxml
+fabric

@@ -1,13 +1,6 @@
 {% extends "static_pages_base.html" %}
 {% load static from staticfiles %}
 
-{% block css %}<link type="text/css" rel="stylesheet" href="{% static 'css/static_pages.css' %}"/>{% endblock %}
-
-{% block js %}
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuRtB1F8XVtV22jQ3dkGQPqWCKQz4suJ0&sensor=false"></script>
-<script type="text/javascript" src="{% static 'js/static_pages.js' %}"></script>
-{% endblock %}
-
 {% block title %}Pricing{% endblock %}
 {% block content %}
 
@@ -18,7 +11,7 @@
 						<div class = "well well-basic">
 							<div class = "pricing-title"> Basic </div>
 							<div class = "pricing-subtitle"> Free </div>
-							<h4 style = "text-align: left;"> Includes: </h4>	
+							<h4 style = "text-align: left;"> Includes: </h4>
 							<div class = "pricing-list">
 								<ul>
 									<li>Your own <code> @rocketlistings.com</code> email</li>
@@ -38,7 +31,7 @@
 						<div class = "pricing-title" style = "color: #E75547"> Pro </div>
 						<div class = "pricing-subtitle"> $1 per listing </div>
 						<h4 style = "text-align: left;"> Includes: </h4>
-						<div class = "pricing-list" >	
+						<div class = "pricing-list" >
 							<ul>
 								<li>Everything in the basic plan</li>
 								<li>Auto-posting to Craigslist</li>
