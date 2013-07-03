@@ -11,6 +11,8 @@ I just installed a django plugin called Django-Compressor which makes developmen
 		npm install -g less
 		echo "PATH=/usr/local/share/npm/bin:$PATH" >> ~/.bash_profile
 
+The npm command might need `sudo`.
+
 ### Fabric Commands (run from project root)
 
 		fab resetdb[:<db_name>]
