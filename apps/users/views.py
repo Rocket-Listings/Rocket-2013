@@ -20,7 +20,7 @@ def info(request):
 	user = request.user
 	profile = user.get_profile()
 	if request.method == 'POST':
-		user_profile_form = UserProfileForm(request.POST, instance = profile)
+		user_profile_form = UserProfileForm(request.POST, instance=profile)
 		if user_profile_form.is_valid():
 			user_profile = user_profile_form.save()
 			User.objects.filter(username = user).update(email=request.POST['email'])
@@ -39,24 +39,3 @@ def profile(request, username=None):
 	# provide `url` and `thumbnail_url` for convenience.
 	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos)
 	return render(request, 'user_profile.html', {'user':user, 'listings':listings, 'photos':photos})
-
-
-# @login_required
-# def edit(request, username):
-# 	if request.user.username == username:
-# 		user = request.user
-# 		profile = user.get_profile()
-# 		print "valid"
-# 		if request.method == 'POST':
-# 			user_profile_form = UserProfileForm(request.POST, instance = profile)
-# 			print "post"
-# 			if user_profile_form.is_valid():
-# 				user_profile = user_profile_form.save()
-# 				return redirect(user_profile)
-# 				print "save"
-# 			else:
-# 				return render(request, 'user_edit.html', {'form': user_profile_form})
-# 		else:
-# 			return render(request, 'user_edit.html', {'form': UserProfileForm(instance = profile),})
-# 	else:
-# 		raise PermissionDenied

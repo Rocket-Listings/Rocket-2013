@@ -3,10 +3,6 @@
 
 {% block title %}{{user.username}}{% endblock %}
 
-{% block js %}
-
-{% endblock %}
-
 {% block content %}
 <div class="profile-content">
 	<div class="profile-header row">
@@ -32,7 +28,12 @@
 			</div>
 			{% else %}
 			<div class="name-wrapper">
-				<h3>{{user.username}}</h3>
+				<ul class="inline">
+					<li><h3>{{user.username}}</h3></li>
+					{% if request.user == user %}
+					<li style="float:right;"><a class="btn btn-warning edit-profile" href="{% url 'users.views.info' %}">Update your profile.</a></li>
+					{% endif %}
+				</ul>
 			</div>
 			{% endif %}
 			<div class="profile-bio">
@@ -55,15 +56,15 @@
 	<div class="separator"></div>
 	<div class="profile-selling">
 		<ul class="thumbnails">
-			{% for listing in listings|slice:":4" %}
-			<li class="span3">
+			{% for listing in listings|slice:":6" %}
+			<li class="span2">
 				<a class="thumbnail" href="{{ listing.get_absolute_url }}">
 					<img src="{% static 'images/sail.jpg' %}">
 					<ul class="inline clearfix">
 						<h4 class="profile-listing-price">${{listing.price}}</h4>
 						<h4 class="profile-listing-title">{{listing.title}}</h4>
 					</ul>
-					<p>{{listing.description}}</p>
+					<p class="profile-listing-description">{{listing.description}}</p>
 				</a>
 			</li>
 			{% endfor %}
