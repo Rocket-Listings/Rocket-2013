@@ -19,7 +19,8 @@ dj-database-url==0.2.1
 gevent
 django-mailgun
 boto
-BeautifulSoup4
+BeautifulSoup==3.2.1
+BeautifulSoup4==3.2.1
 django-pagination
 django-compressor
 lxml

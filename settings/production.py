@@ -48,6 +48,7 @@ MEDIA_URL = '//s3.amazonaws.com/media.rocketlistings.com/'
 AWS_S3_SECURE_URLS = False
 COMPRESS_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
+
 # Caching settings
 os.environ['MEMCACHE_SERVERS'] = os.environ.get('MEMCACHIER_SERVERS', '').replace(',', ';')
 os.environ['MEMCACHE_USERNAME'] = os.environ.get('MEMCACHIER_USERNAME', '')
