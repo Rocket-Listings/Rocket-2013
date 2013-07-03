@@ -2,10 +2,14 @@
 {% load static from staticfiles %}
 
 {% block css %}
-<link type="text/css" rel="stylesheet" href="{% static 'css/static_pages.css' %}"/>
+<link rel="stylesheet" type="text/less" media="all" href="{% static 'less/static_pages.less' %}"/>
 {% endblock %}
 
-{% block js %}<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuRtB1F8XVtV22jQ3dkGQPqWCKQz4suJ0&sensor=false"></script>
+{% block cdnjs %}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuRtB1F8XVtV22jQ3dkGQPqWCKQz4suJ0&sensor=false"></script>
+{% endblock %}
+
+{% block js %}
 <script type="text/javascript" src="{% static 'js/static_pages.js' %}"></script>
 {% endblock %}
 

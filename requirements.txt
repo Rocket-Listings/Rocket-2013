@@ -21,3 +21,5 @@ django-mailgun
 boto
 BeautifulSoup4
 django-pagination
+django-compressor
+lxml

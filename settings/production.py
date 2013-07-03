@@ -15,9 +15,9 @@ PREPEND_WWW = False
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = [   'beta.rocketlistings.com', 
-                    'rocketlistings.com', 
-                    'www.rocketlistings.com', 
+ALLOWED_HOSTS = [   'beta.rocketlistings.com',
+                    'rocketlistings.com',
+                    'www.rocketlistings.com',
                     'rocket-listings.herokuapp.com',
                     'quiet-beyond-7797.herokuapp.com'
                     ]
@@ -32,7 +32,6 @@ AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET')
 # see http://developer.yahoo.com/performance/rules.html#expires
 AWS_HEADERS = {
     'Cache-Control': 'max-age=86400, pubic',
-    
 }
 
 STATICFILES_STORAGE = 'settings.s3storages.StaticStorage'
@@ -40,13 +39,14 @@ DEFAULT_FILE_STORAGE = 'settings.s3storages.MediaStorage'
 
 UPLOAD_DIR = 'uploads'
 
-# not using static.rocketlistings.com because its CNAME 
-# redirects to 'static.rocketlistings.com.s3-website-us-east-1.amazonaws.com' 
+# not using static.rocketlistings.com because its CNAME
+# redirects to 'static.rocketlistings.com.s3-website-us-east-1.amazonaws.com'
 # and that doesn't work with SSL apparently because of the '.' char.
 STATIC_URL = '//s3.amazonaws.com/static.rocketlistings.com/'
 MEDIA_URL = '//s3.amazonaws.com/media.rocketlistings.com/'
 #AWS_S3_CUSTOM_DOMAIN = "s3.amazonaws.com/media.rocketlistings.com"
 AWS_S3_SECURE_URLS = False
+COMPRESS_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
 # Caching settings
 os.environ['MEMCACHE_SERVERS'] = os.environ.get('MEMCACHIER_SERVERS', '').replace(',', ';')

@@ -38,9 +38,9 @@ LANGUAGE_CODE = 'en-us'
 USE_I18N = False
 
 DATE_FORMAT = (
-    '%m/%d/%y %H:%M',   
+		'%m/%d/%y %H:%M',
 
-    )
+		)
 
 # If you set this to False, Django will not format dates, numbers and
 # calendars according to the current locale.
@@ -62,6 +62,7 @@ STATICFILES_FINDERS = (
 	'django.contrib.staticfiles.finders.FileSystemFinder',
 	'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+	'compressor.finders.CompressorFinder',
 )
 
 # Minimum time that uploaded photos will stay on server if not assigned to a listing.
@@ -101,7 +102,7 @@ MIDDLEWARE_CLASSES = (
 	'django.middleware.csrf.CsrfViewMiddleware',
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
-   	#'django.middleware.cache.FetchFromCacheMiddleware',	
+		#'django.middleware.cache.FetchFromCacheMiddleware',
 	# Uncomment the next line for simple clickjacking protection:
 	# 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 	'pagination.middleware.PaginationMiddleware',
@@ -123,10 +124,10 @@ INSTALLED_APPS = (
 	'django.contrib.auth',
 	'django.contrib.contenttypes',
 	'django.contrib.sessions',
-   	'django.contrib.sites',
+	'django.contrib.sites',
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
-    #'suit', 
+	#'suit',
 	'django.contrib.admin',
 	'django.contrib.admindocs',
 	'haystack',
@@ -140,16 +141,17 @@ INSTALLED_APPS = (
 	'sorl.thumbnail',
 	'django_extensions', #added for some extra tools like reset_db
 	'storages',
-    'mail',
-    "gunicorn",
-    'pagination',
+	'mail',
+	'gunicorn',
+	'pagination',
+	'compressor',
 )
 
 HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-        'PATH': join(abspath(__file__), 'whoosh_index'),
-    }
+		'default': {
+				'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+				'PATH': join(abspath(__file__), 'whoosh_index'),
+		}
 }
 
 EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
@@ -157,3 +159,7 @@ MAILGUN_ACCESS_KEY = 'key-9flqj538z-my-qcnpc74c2wit4vibl-3'
 MAILGUN_SERVER_NAME = 'rocketlistings.mailgun.org'
 
 ACCOUNT_ACTIVATION_DAYS = 7
+
+COMPRESS_PRECOMPILERS = (
+    ('text/less', 'lessc {infile} {outfile}'),
+)
