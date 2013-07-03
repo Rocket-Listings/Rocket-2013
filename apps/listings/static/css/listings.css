@@ -88,9 +88,20 @@
 .listing .l-body .l-entry .l-thumbnails img {
   margin: 1%;
 }
+.wrapper {
+  margin-top: 20px;
+  margin-left: 10px;
+  padding-top: 20px;
+  float: right;
+}
+.affix {
+  position: fixed;
+  top: 55px;
+  right: 55px;
+}
 .listing-dash {
   background-color: white;
-  float: right;
+  float: left;
   position: relative;
 }
 .listing-dash .dash-title {
