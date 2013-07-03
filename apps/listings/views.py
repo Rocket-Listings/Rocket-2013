@@ -54,10 +54,9 @@ def create(request):
 		return render(request, 'listing_create.html', {'form':form , 'categories':categories})
 
 	elif request.method == 'POST':
+		categories = ListingCategory.objects.all()
 		count = request.POST.get('final_count')
-		print count
 		count = int(count)
-
 		d={}
 
 		for x in range(0, count):
@@ -65,17 +64,17 @@ def create(request):
 
 		listing_form = ListingForm(request.POST)
 		if listing_form.is_valid():
-			categories = ListingCategory.objects.all()
 			listing = listing_form.save(commit=False)
 			listing.user = request.user
 			listing.save()
-			listing_id = listing.id
 			for x in range(0, count):
 				string = d["photo%d" %(x)]
+				print string
 				photoDict = {'url': string, 'order': x, 'listing': listing}
 				photo = ListingPhoto(**photoDict)
 				photo.clean()
 				photo.save()
+				print "success"
 			if request.user.is_authenticated():
 				return redirect(listing)
 			else:

@@ -64,11 +64,9 @@ function fileUpload(){
 		{location:"S3"},
 	function(InkBlobs){
 		var inky = InkBlobs;
-		console.log(inky)
 		photoLog(inky);
 		image(inky);
 		images(inky);
-		counter++;
 		}
 	);
 }
@@ -80,6 +78,7 @@ function photoLog(ink) {
 		html.push("<input type = 'hidden' name='", i, "' value='", ink[i-counter].url, "'>");
 	}
 	$('#picsyo').append(html.join(''));
+	counter++;
 	$('#final_countdown').attr('value', counter);
 }
 
