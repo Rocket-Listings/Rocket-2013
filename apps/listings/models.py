@@ -76,13 +76,14 @@ class Listing(models.Model):
 		return reverse('listings.views.detail', args=[str(self.id)])
 
 # Listing Specification
-class ListingSpec(models.Model):
-	key = models.CharField(max_length = 60)
-	value = models.CharField(max_length = 60)
+class ListingSpecKey(models.Model):
+	key = models.CharField(max_length = 100)
 	listing = models.ForeignKey(Listing)
 
-	def __unicode__(self):
-		return self.key + ", " + self.value
+class ListingSpecValue(models.Model):
+	value = models.CharField(max_length = 100)
+	key = models.ForeignKey(ListingSpecKey)
+	category = models.ForeignKey(ListingCategory)
 
 # Listing Highlight
 class ListingHighlight(models.Model):
