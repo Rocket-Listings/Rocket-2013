@@ -1,13 +1,15 @@
 {% extends 'users_base.html' %}
 {% block title %}Listing Carousel{% endblock %}
 
+{% block js %}
 <script src="users/static/js/jquery.tinycarousel.min.js" type = "text/javascript">
 	$(document).ready(function(){
         $('#slider2').tinycarousel({ display: 2 });
     });
 </script>
+{% endblock %}
 
-
+{% block content %}
 <div id="slider-code">
 	<a class="buttons prev" href="#" src="/users/static/images/left.gif">left</a>
 	<div class="viewport">
@@ -23,6 +25,4 @@
     </div>
     <a class="buttons next" href="#" src="/users/static/images/right.gif">right</a>
 </div>
-
-
 {% endblock %}

@@ -3,3 +3,4 @@
 gunicorn==0.17.2
 pylibmc
 gevent
+django-postgrespool

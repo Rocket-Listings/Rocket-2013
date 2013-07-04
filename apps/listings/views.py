@@ -154,7 +154,7 @@ def message_thread_ajax(request, listing_id, buyer_id):
 
 # Photo upload
 
-if settings.PRODUCTION:
+if not settings.DEBUG:
 	upload_backend = ProductionUploadBackend
 else:
 	upload_backend = DevelopmentUploadBackend

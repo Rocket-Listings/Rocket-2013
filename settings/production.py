@@ -1,10 +1,8 @@
 from common import *
 import dj_database_url, os
 
-PRODUCTION = True
-
 # Debug Settings
-DEBUG = bool(os.environ.get('DJANGO_DEBUG', ''))
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 THUMBNAIL_DEBUG = DEBUG
 
@@ -13,40 +11,45 @@ USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 PREPEND_WWW = False
 
-# Hosts/domain names that are valid for this site; required if DEBUG is False
-# See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
+DOMAIN_NAME = "beta.rocketlistings.com"
+SITE_NAME = "Rocket"
 ALLOWED_HOSTS = [   'beta.rocketlistings.com',
-                    'rocketlistings.com',
-                    'www.rocketlistings.com',
-                    'rocket-listings.herokuapp.com',
-                    'quiet-beyond-7797.herokuapp.com'
-                    ]
+                    'rocket-listings.herokuapp.com' ]
+
 
 # Database settings sourced from Heroku
-DATABASES = { 'default': dj_database_url.config() }
+DATABASES['default'] = dj_database_url.config()
+DATABASES['default']['ENGINE'] = 'django_postgrespool'
+DATABASE_POOL_ARGS = {
+    'max_overflow': 10,
+    'pool_size': 10,
+    'recycle': 300
+}
+SOUTH_DATABASE_ADAPTERS = {
+    'default': 'south.db.postgresql_psycopg2'
+}
 
-# CDN settings
+# S3 settings
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_KEY')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET')
-# AWS_STORAGE_BUCKET_NAME = 'static.rocketlistings.com'
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_BUCKET')
+
 # see http://developer.yahoo.com/performance/rules.html#expires
 AWS_HEADERS = {
     'Cache-Control': 'max-age=86400, pubic',
 }
 
-STATICFILES_STORAGE = 'settings.s3storages.StaticStorage'
-DEFAULT_FILE_STORAGE = 'settings.s3storages.MediaStorage'
+DEFAULT_FILE_STORAGE = "settings.storage.S3MediaStorage"
+STATICFILES_STORAGE = "settings.storage.CachedS3StaticStorage"
+COMPRESS_STORAGE = "settings.storage.CachedS3StaticStorage"
 
 UPLOAD_DIR = 'uploads'
 
-# not using static.rocketlistings.com because its CNAME
-# redirects to 'static.rocketlistings.com.s3-website-us-east-1.amazonaws.com'
-# and that doesn't work with SSL apparently because of the '.' char.
-STATIC_URL = '//s3.amazonaws.com/static.rocketlistings.com/'
-MEDIA_URL = '//s3.amazonaws.com/media.rocketlistings.com/'
+STATIC_URL = "https://{0}.s3.amazonaws.com/static/".format(AWS_STORAGE_BUCKET_NAME)
+MEDIA_URL = "https://{0}.s3.amazonaws.com/media/".format(AWS_STORAGE_BUCKET_NAME)
 #AWS_S3_CUSTOM_DOMAIN = "s3.amazonaws.com/media.rocketlistings.com"
 AWS_S3_SECURE_URLS = False
-COMPRESS_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
 COMPRESS_OFFLINE = True
 
 # Caching settings
