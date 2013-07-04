@@ -18,7 +18,7 @@ ALLOWED_HOSTS = [   'beta.rocketlistings.com',
 
 
 # Database settings sourced from Heroku
-DATABASES['default'] = dj_database_url.config()
+DATABASES = { 'default': dj_database_url.config() }
 DATABASES['default']['ENGINE'] = 'django_postgrespool'
 DATABASE_POOL_ARGS = {
     'max_overflow': 10,
