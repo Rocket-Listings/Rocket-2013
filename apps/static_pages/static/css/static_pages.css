@@ -284,57 +284,17 @@ h1.flag {
 }
 .row-pricing {
   margin-top: 50px;
-}
-.well-pricing {
-  margin-left: 20px;
-  margin-right: 20px;
-}
-.span-basic-pricing {
   text-align: center;
 }
-.span-basic-pricing h2 {
-  font-family: inherit;
-  font-weight: bold;
-  font-size: 26px;
-  line-height: 30px;
-  color: inherit;
-  margin-bottom: 0px;
+.row-pricing h2 {
+  margin-bottom: 20px;
 }
-.span-basic-pricing h3 {
-  margin-top: 0px;
-  font-weight: normal;
-  font-family: inherit;
-  font-size: 20px;
-  font-style: italic;
+.row-pricing h3 {
+  margin-bottom: 20px;
 }
-.span-pro-pricing {
-  text-align: center;
-}
-.span-pro-pricing h2 {
-  font-family: inherit;
-  font-weight: bold;
-  font-size: 26px;
-  line-height: 30px;
-  color: inherit;
-  margin-bottom: 0px;
-}
-.span-pro-pricing h3 {
-  margin-top: 0px;
-  font-weight: normal;
-  font-family: inherit;
-  font-size: 20px;
-  font-style: italic;
-}
-.pricing-subtitle.pro {
-  font-size: 16px;
-  text-align: center;
-}
-.pricing-list {
-  font-size: 16px;
-  text-align: left;
-}
-.pricing-list ul li {
-  line-height: 30px;
+.row-pricing a {
+  width: 100px;
+  font-size: 18px;
 }
 .dim {
   position: absolute;
@@ -342,13 +302,6 @@ h1.flag {
   height: 100%;
   background-color: #000000;
   opacity: 0.70;
-}
-a.pricing-btn.btn.btn-primary {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 22px;
-  width: 70px;
 }
 /*
 .homepage-row {
