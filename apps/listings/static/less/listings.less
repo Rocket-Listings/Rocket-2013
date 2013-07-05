@@ -1,0 +1,292 @@
+/* 	Doing this weird convention '.l-<CLASS>' because we don't want other outside class definitions to affect these.
+	For instance, if our title was simply '.title', then maybe a '.title' rule from global.less might take into effect. */
+
+
+.l-well{
+	padding: 2px;
+	background-color: white;
+
+}
+
+
+.l-card{
+	text-align: center;
+	display: inline-block;
+
+	margin-left: 55px;
+	margin-right: 55px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+
+.listing {
+	position: relative;
+	float:left;
+	width: 600px;
+	border: solid #d2dadd 1px;
+	background: #fff;
+
+	.l-header {
+		height: 57px;
+		border-bottom: solid #d2dadd 1px;
+		background: #e7edef;
+		line-height: 57px;
+
+		.l-title {
+			width: 70%;
+			float:left;
+			padding: 0 4%;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			font-weight: 600;
+			font-style: italic;
+			font-family: Arial, Helvetica, sans-serif;
+		}
+
+		.l-price {
+			span {
+				position: absolute;
+				top: 0;
+				left: -1px;
+				z-index: 2;
+				display: block;
+				height: 100%;
+				background: url('../img/price-arrow.png') 0 50% no-repeat;
+			}
+			min-width: 10%;
+			padding: 0 2%;
+			position: relative;
+			float: right;
+			margin:0;
+			height: 55px;
+			border: solid #b03828 1px;
+			background: url('../img/price-grad.png') 0 0 repeat-x;
+			color: #fff;
+			text-align: center;
+			// text-shadow: 1px 1px 1px #aebec6;
+			font-weight: 600;
+			font-style: italic;
+			font-size: 24px;
+			font-family: Arial, Helvetica, sans-serif;
+			line-height: 57px;
+		}
+	}
+	.l-body {
+		padding: 0 4% 4% 4%;
+		.l-entry {
+			padding: 4% 0 0 0;
+			p {
+				font-size: 14px;
+				line-height: 25px;
+				margin-bottom: 20px;
+			}
+			.l-entry-content {
+
+			}
+
+				.l-stage {}
+				.l-thumbnails {
+					img {
+						margin: 1%;
+					}
+					margin-bottom: 1%;
+				}
+		}
+
+		.l-footnote {
+		}
+	}
+}
+
+.form {
+
+	span.helptext{
+		position:;
+	}
+	margin:0;
+	li {
+		list-style-type: none;
+	}
+	.errorlist {
+		color: red;
+	}
+
+	input#id_title{
+		width: 540px;
+	}
+
+	input#id_price{
+		width: 100px;
+	}
+
+	input#id_location{
+		width: 205px;
+	}
+
+	textarea {
+		width: 540px;
+	}
+
+	select{
+		width: 220px;
+	}
+}
+
+.listing-edit {
+	float:left;
+	position: relative;
+	padding:20px;
+	border: solid #d2dadd 1px;
+	background: #fff;
+	// -webkit-box-shadow: #aebec6 2px 2px 50px;
+	// -moz-box-shadow: #aebec6 2px 2px 50px;
+	// box-shadow: #aebec6 2px 2px 50px;
+}
+
+.dashboard-panel {
+	position:absolute;
+	top:126px;
+	bottom:0;
+
+	.table-listings thead tr th:first-child, .table-listings tbody tr td:first-child {
+		padding-left: 40px;
+	}
+
+	.listings-col {
+		height: 100%;
+		margin:0;
+		border-right: 1px solid #dddddd;
+	}
+	.buyers-col {
+		height: 100%;
+		border-right: 1px solid #dddddd;
+		background: #FCFCFC;
+		.dash-subtitle {
+			background: white;
+		}
+	}
+	.messages-col {
+		.dash-subtitle {
+			padding-right: 48px;
+		}
+		.messages-panel {
+			margin-right: 40px;
+		}
+
+		heigth: 100%;
+	}
+}
+
+// Making bootstrap table-hover work with highlight
+.table-hover tbody tr:hover > td, .table-hover tbody tr:hover > th {
+	background: none;
+}
+.table-hover tbody tr:hover, .table-hover tbody tr:hover {
+	background: #f5f5f5;
+}
+.table-hover tbody tr.highlight:hover {
+	background: inherit;
+}
+
+.table-listings {
+	a {
+		text-decoration: underline;
+	}
+
+	tr.highlight {
+		background-color: #8CA8C8 !important; /* overriding specificity problems */
+		color: white;
+
+		a {
+			color: white;
+		}
+	}
+
+	tbody tr:hover {
+		cursor:pointer;
+	}
+
+	td {
+		vertical-align: middle;
+	}
+	border-bottom: 1px solid #dddddd;
+}
+
+.dash-title {
+	margin:25px 0;
+}
+
+.dash-subtitle {
+	padding: 8px;
+	font-family: inherit;
+	font-weight: bold;
+	line-height: 20px;
+	color: inherit;
+	text-rendering: optimizelegibility;
+	text-align: center;
+}
+
+.dash-subtitle, .table-listings thead {
+	border-bottom: 1px solid #dddddd;
+}
+.buyer-card {
+	margin-bottom: 0px !important;
+	border-bottom: 1px solid #dddddd;;
+	&:hover {
+		cursor: pointer;
+		background: #f5f5f5;
+	}
+
+	&.highlight {
+		background-color: #8CA8C8 !important;
+		color: white;
+	}
+	tr {
+		border-style: none;
+	}
+
+	td {
+		border-style: none;
+	}
+}
+
+.message-form {
+	background-color: #b2bec3;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+
+	textarea {
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		border-bottom: none;
+		resize:vertical;
+	}
+
+	input.send-button {
+		width: 100%;
+	}
+
+}
+
+/* Messages bubble */
+.message {
+	padding: 0 10px;
+	margin: 0;
+	color:#333;
+
+	&.buyer {
+		margin-left:30px;
+	}
+	/* Right Bubble  */
+	&.left {
+		margin-right:30px;
+		background-color:rgba(67,80,86,0.1);
+	}
+}

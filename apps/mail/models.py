@@ -7,7 +7,7 @@ class mailgun(models.Model):
 	subject = models.CharField(max_length=255, blank=True)
 	body = models.TextField()
 	text = models.TextField(null = True)
-	signature = models.CharField(max_length=255, blank=True)
+	signature = models.TextField(blank=True, null = True)
 	timestamp = models.IntegerField(null = True)
 	token = models.CharField(max_length=50, blank=True)
 	sig = models.CharField(max_length=255, blank=True)

@@ -8,5 +8,6 @@ urlpatterns = patterns('',
 	url(r'^contact/$', TemplateView.as_view(template_name='contact.html'), name='contact'),
 	url(r'^faq/$', TemplateView.as_view(template_name='faq.html'), name='faq'),
 	url(r'^pricing/$', TemplateView.as_view(template_name='pricing.html'), name='pricing'),
-	url(r'^features/$', TemplateView.as_view(template_name='features.html'), name='features'),
+	url(r'^how/$', TemplateView.as_view(template_name='how.html'), name='how'),
+	url(r'^who/$', TemplateView.as_view(template_name='who.html'), name='who'),
 )

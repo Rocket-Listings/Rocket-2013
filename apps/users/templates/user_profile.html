@@ -1,95 +1,103 @@
 {% extends 'users_base.html' %}
 {% load static from staticfiles %}
-
-{% block title %} Account Profile {% endblock %}
-
+{% block title %}{{ user.username }}{% endblock %}
 {% block content %}
-<div class="profile_heading">
-	<span class="profile-picture">
-		{% comment %}
-		{% if user.photo %}
-			<img src=" {% static 'images/unknown_user_photo.jpg' %}" alt="Profile Pic" width='250px' height='300px'>
-		{% else %}
-			<img src=" {% user.photo %}" alt="Profile Pic" width='250px' height='300px'>
-		{% endif %}
-		{% endcomment %}
-		<img src=" {% static 'images/unknown_user_photo.jpg' %}" alt="Profile Pic" width='250px' height='300px'>
-	</span>
-	<span class="profile_user_info">
-		{% if user.get_profile.name %}
-			<p class="name">{{ user.get_profile.name }}</p>
-			{% if user.get_profile.location %}
-				<p class="location">{{ user.get_profile.location }}</p>
+<div class="profile-content">
+	<div class="profile-header row">
+		<ul class="thumbnails profile-picture span3">
+			<li>
+			{% if user.get_profile.propic %}
+				<img class="thumbnail" src="{{ user.get_profile.propic }}">
 			{% else %}
-				<p class="location">Location: Unknown</p>
+				<img class="thumbnail" src=" {% static 'images/no-photo.png' %}">
 			{% endif %}
-		{% else %}
-			<p class="name">"{{ user.username }}"</p>
-
-			{% if user.get_profile.location %}
-				<p class="location">{{ user.get_profile.location }}</p>
+			</li>
+		</ul>
+		<div class="profile-info span6">
+			{% if user.get_profile.name and not user.get_profile.nameprivate or request.user == user and user.get_profile.name %}
+			<div class="name-wrapper">
+				<ul class="inline">
+					<li><h3>{{user.get_profile.name}}</h3></li>
+					{% if request.user == user %}
+					<li style="float:right;"><a class="btn btn-warning edit-profile" href="{% url 'users.views.info' %}">Update your profile.</a></li>
+					{% endif %}
+				</ul>
+				<span class="subtitle gray">{{user.username}}</span>
+			</div>
 			{% else %}
-				<p class="location">Location: Unknown</p>
+			<div class="name-wrapper">
+				<h3>{{user.username}}</h3>
+			</div>
 			{% endif %}
-		{% endif %}
-		<p><a class="btn btn-warning">Message</a></p>
-	</span>
-	<span id="map-canvas"></span>  {# ---------------------Map #}
-	<br>
-
-	<span class="profile-bio">
-		<h5>About</h5>
-		<span class="text_bio">
-			{{ user.get_profile.bio }}
-		</span>
+			<div class="profile-bio">
+				{% if user.get_profile.bio %}
+					<p>{{user.get_profile.bio}}</p>
+				{% else %}
+					{% if request.user == user %}
+					<p>Looks like you don't have a bio! <a href="{% url 'users.views.info' %}">Update</a> your profile and add one.</p>
+					{% else %}
+					<p>Sorry, but {{user.username}} doesn't have a bio.</p>
+					{% endif %}
+				{% endif %}
+			</div>
+		</div>
+		<div class="profile-stats span3">
+			<h3>Listings</h3>
+			<h4 class="green">{{ listings|length }}</h4>
+		</div>
+	</div>
+	<div class="separator"></div>
+	<div class="profile-selling">
+		<span class="subtitle">Listings by {{user.username}}:</span>
+		<ul class="thumbnails">
+			{% for listing in listings|slice:":4" %}
+			<li class="span3">
+				<a class="thumbnail" href="{{ listing.get_absolute_url }}">
+					<img src="{% static 'images/sail.jpg' %}">
+					<ul class="inline clearfix">
+						<h4 class="profile-listing-price">${{listing.price}}</h4>
+						<h4 class="profile-listing-title">{{listing.title}}</h4>
+					</ul>
+					<p>{{listing.description}}</p>
+				</a>
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+	<div class="separator"></div>
+	<div class="comment_container">
+		<span class="subtitle">Comments:</span><br>
+		<ul class="comments-list">
+		{% for comment in user_comments|slice:":3" %}
+			<li class="comments">
+				<span id="comment-name"><strong>{{comment.name}} </strong>said: </span><span id="actual-comment">{{ comment.comment }} </span>
+			</li>
+		{% endfor %}
+		</ul>
+	</div>
+</div>
+<div id="comment-form">
+	<span id="comment-data">
+		<div id="modal-header">
+			<h3>Let us know what you think.</h3>
+			<span class="unstyled">
+				<p>Good feedback is what the <strong>best sellers</strong>  have on their profile. Make sure you give your honest opinion:
+				</p>
+			</span>
+		</div>
+{% comment %}
+ 		<form id="modal-comment-data body" method="POST" action="" >
+			{{ formset.CommentSubmitForm }}
+			{% for form in formset %}
+				{{ form }}
+			{% endfor %}
+		</form>
+{% endcomment %}
+		<form id="comment-data-form body" method="POST">{% csrf_token %}
+			{{ CommentSubmitForm }}
+			<br>
+			<input type="submit" value="Submit" />
+		</form>
 	</span>
 </div>
-<span class="selling-these-items">
-	<code class ="text-info">What {{ user.get_profile.name }} is selling: </code>
-
-
-	<span>
-		{% for listing in listings %}
-		{% for photo in photos %}
-			<img src="{{ photo.url }}"/>
-	<span>
-			<p class="listing-title">{{ listing.title }}</p>
-			<p>Price: ${{ listing.price }}</p>
-			<br>
-			<p>{{ listing.description }}</p>
-		</span>
-		{% endfor %}
-		{% endfor %}
-</span>
-<br>
-{% comment %}
-<span class="profile_carousel">
-	<div id="this-carousel-id" class="carousel slide">
-		<!-- class of slide for animation -->
-		<div class="carousel-inner">
-			{% for listing in listing %}
-			<div {% if forloop.first %} class="item active">{% endif %}
-				<!-- class of active since it's the first item -->
-				<div class="thumbnail">
-				{% with photos|first as first_photo %}
-					<img src="{{ MEDIA_URL }}{{ first_photo.url }}"/>
-					<h3 class="thumbnail-title">{{ listing.title }}</h3>
-					<p class="thumbnail-price">{{ listing.price }}</p>
-					<a href="{{ listing.get_absolute_url }}" ></a>
-
-				</div>
-			</div>
-				{% endwith %}
-			{% endfor %}
-		</div>
-		<!-- /.carousel-inner -->
-		<!--  Next and Previous controls below
-       		  href values must reference the id for this carousel -->
-		<a class="carousel-control left" href="#this-carousel-id" data-slide="prev">&lsaquo;</a>
-		<a class="carousel-control right" href="#this-carousel-id" data-slide="next">&rsaquo;</a>
-	</div>
-
-</span>
-{% endcomment %}
-
 {% endblock %}

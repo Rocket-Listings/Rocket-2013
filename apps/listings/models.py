@@ -18,12 +18,12 @@ class GenericNameManager(models.Manager):
 	def get_by_natural_key(self, name):
 		return self.get(name=name)
 
-
 # Listing Categories
 class ListingCategory(models.Model):
 	objects = GenericNameManager()
 	name = models.CharField(max_length = 60)
-	description = models.CharField(max_length = 200)
+	CL_id = models.IntegerField(null = True)
+	is_owner = models.NullBooleanField()
 
 	def __unicode__(self):
 		return self.name
@@ -53,8 +53,8 @@ class Listing(models.Model):
 	# also for natural key handling
 	objects = ListingManager()
 
-	title = models.CharField(max_length=200)
-	description = models.TextField()
+	title = models.CharField(max_length=200, help_text="Be specific, direct, and include all the important details in your title.")
+	description = models.TextField(help_text="Make sure you include all the important facts (color, dimensions, build year, etc.), as well as when you bought it, why you're selling it and details on any defects or problems.")
 	pub_date = models.DateTimeField('date published', auto_now_add=True, default=datetime.now)
 	price = models.IntegerField()
 	location = models.CharField(max_length=200)
@@ -63,7 +63,7 @@ class Listing(models.Model):
 	status = models.ForeignKey(ListingStatus, null = True) # TODO want to be able to listings by this
 	user = models.ForeignKey(User)
 	CL_link = models.URLField(null = True, blank = True)
-	
+
 
 	def max_offer(self):
 		"Returns highest offer made by any buyer for that listing"
@@ -104,8 +104,7 @@ class ListingPhoto(models.Model):
 class Buyer(models.Model):
 	objects = GenericNameManager()
 	curMaxOffer = models.IntegerField(null = True, blank = True)
-
-	listing = models.ForeignKey(Listing, blank=True) 
+	listing = models.ForeignKey(Listing, blank=True)
 	name = models.CharField(max_length=255)
 	email = models.EmailField(max_length=255, null = True, blank=True)
 
@@ -126,7 +125,10 @@ class Offer(models.Model):
 	buyer = models.ForeignKey(Buyer)
 	value = models.IntegerField()
 	date = models.DateTimeField('date offered', auto_now_add=True, default=datetime.now)
-	
+
+	def __unicode__(self):
+		return "$ " + str(self.value)
+
 # Listing Message
 class Message(models.Model):
 	listing = models.ForeignKey(Listing, null = True, blank=True)
