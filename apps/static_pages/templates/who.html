@@ -1,26 +1,21 @@
 {% extends "static_pages_base.html" %}
 {% load static from staticfiles %}
+{% block bootstrap_css %}
+<link type="text/css" rel="stylesheet" href="{% static 'vendorcss/bootstrap-gutterless.css' %}"/>
+{% endblock %}
 
 {% block title %}About Rocket{% endblock %}
 
 {% block content %}
-
-	<div class="container-fluid who-container">
-		<div class="row-fluid ">
-			<div class="span4 offset2">
-			<div class = "image">
-				<img src="{{STATIC_URL}}/img/church-light.jpg"  style="float: right; width: 400px;">
-			</div>
-		</div>
-		<div class = "span4">
-				<div class="who-text">
-					<p>Based in the center of Burlington, VT, the Rocket Listings team is commited to making the whole process of selling a used item online easier, from the minute you want to sell it until you have cash in your hand.</p>
-
-					<p>The idea started when all of us, as avid Craiglist users, got interested in what we could do to make things faster and easier. We tried some browser plugins, some rss feeds, and even some other third party sites, but nothing quite did it. We eventually decided to build our own tools, and that's where Rocket was started. </p><p>Please let us know if you think we're doing a good job or if you have any other feedback by emailing us here at <a href="mailto:info@rocketlistings.com" style="color: white;"> info@rocketlistings.com</a> </p>
-				</div>
-
-			</div>
-		</div>
+<div class="row who-row">
+	<div class="span6 who-img-span">
+		<img src="{{STATIC_URL}}/img/church-light.jpg"  width="100%" >
 	</div>
+	<div class = "span5 who-text-span">
+		<p>Our mission is to make it super easy to sell and buy used stuff that you don't pay for online and get shipped. In other words, we want to make the best online classifieds site ever.</p>
+		<p>To have the best classifieds site ever, you need two things: helpful tools and a big network. Our tools are aimed at making the entire process easier, from the moment you decide to sell or buy until the transaction is finished, and we link with Craigslist for the network. </p>
+		<p>We're a young group in the heart of Burlington, Vermont giving it our best shot, so please let us know if you have any feedback by emailing <a href="mailto:info@rocketlistings.com" style="color: white;"> info@rocketlistings.com</a></p>
+	</div>
+</div>
 
 {% endblock %}

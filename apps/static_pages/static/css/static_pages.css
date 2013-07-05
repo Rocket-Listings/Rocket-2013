@@ -190,6 +190,17 @@ h1.flag {
   text-decoration: underline;
   background: rgba(255, 255, 255, 0.7);
 }
+.homepage-row {
+  text-align: center;
+  margin-top: 25px;
+}
+.homepage-row p {
+  text-align: justify;
+  font-size: 16px;
+  line-height: 24px;
+  padding: 0 15px 0 15px;
+  font-weight: 300;
+}
 .icon-newspaper {
   background-image: url("../img/newspaper.svg");
   background-position: 50% 40%;
@@ -220,14 +231,7 @@ h1.flag {
   margin-top: 20px;
   margin-bottom: 20px;
 }
-.home-description {
-  text-align: justify;
-  font-size: 16px;
-  line-height: 24px;
-  padding: 0 15px 0 15px;
-  font-weight: 300;
-}
-.learn-more {
+.learn-more-link {
   font-size: 22px;
   margin-top: 40px;
   margin-bottom: 40px;
@@ -237,143 +241,86 @@ h1.flag {
   margin-right: auto;
   color: #0000ee;
 }
-.learn-more:hover {
+.learn-more-link:hover {
   color: #2200CC;
   text-decoration: underline;
   background: rgba(255, 255, 255, 0.7);
 }
-.container-fluid.home-features {
-  margin-top: 10px;
+.how-row {
+  margin-top: 75px;
 }
-.well {
-  background-color: #f5f5f5;
-  margin-top: 30px;
-  margin-bottom: 30px;
-  border-radius: 15px !important;
-}
-.how-descriptions {
+.how-row p {
   text-align: justify;
   text-justify: inter-word;
   font-size: 16px;
   line-height: 24px;
-  padding: 0 15px 0 15px;
 }
-.features {
+.how-row h4 {
   text-align: center;
 }
-.features h4 {
-  padding-bottom: 10px;
+.how-row:last-child {
+  margin-bottom: 200px;
 }
-.features-titles {
-  text-align: center;
-  margin-bottom: 10px;
-  margin-top: 80px;
-  font-size: 24.5px;
-  line-height: 40px;
-  font-family: inherit;
-  font-weight: bold;
-  line-height: 20px;
-  color: inherit;
-  text-rendering: optimizelegibility;
+.who-row {
+  margin-top: 75px;
+  margin-bottom: 100px;
 }
-.features-listing-listingform {
-  padding-top: 10px;
+.who-row .who-img-span {
+  text-align: right;
 }
-.features-rlemail {
-  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
-  color: #E75547;
-  font-size: 20px;
-  text-shadow: 1px 1px 2px #aebec6;
-  text-align: center;
-  margin-top: 15px;
-}
-.features-craigslistemail {
-  margin-top: 10px;
-  width: 485px;
-  height: 45px;
-  background: center no-repeat url('../img/craigslist-email.png');
-  background-size: 490px 50px;
-  background-color: white;
-  text-align: center;
-}
-.features-manylistings {
-  margin-top: 10px;
-  width: 480px;
-  height: 75px;
-  background: center no-repeat url('../img/many-listings.png');
-  background-size: 480px 75px;
-  -webkit-box-shadow: #aebec6 1px 1px 15px;
-  -moz-box-shadow: #aebec6 1px 1px 15px;
-  box-shadow: #aebec6 1px 1px 15px;
-  text-align: center;
-}
-.features-messages {
-  margin-top: 5px;
-  width: 490px;
-  height: 110px;
-  background: left top no-repeat url('../img/messages.png');
-  background-size: 480px 100px;
-  -webkit-box-shadow: #aebec6 1px 1px 15px;
-  -moz-box-shadow: #aebec6 1px 1px 15px;
-  box-shadow: #aebec6 1px 1px 15px;
-  text-align: center;
-}
-.features-wrapup {
-  margin-top: 5px;
-  width: 490px;
-  height: 150px;
-  background: center no-repeat url('../img/wrapup.png');
-  background-size: 480px 130px;
-  -webkit-box-shadow: #aebec6 1px 1px 15px;
-  -moz-box-shadow: #aebec6 1px 1px 15px;
-  box-shadow: #aebec6 1px 1px 15px;
-  text-align: center;
-}
-.whitespace {
-  height: 500px;
-}
-.row-fluid {
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-.who-container {
-  margin-top: 50px;
-}
-.who-text {
+.who-text-span {
   float: left;
-  width: 326.5px;
-  height: 423px;
+  background-color: #4A4742;
   padding: 20px 30px 20px 30px;
+}
+.who-text-span p {
+  letter-spacing: 2px;
   font-style: inherit;
   font-size: 18px;
-  line-height: 22px;
+  line-height: 26px;
   font-weight: 200;
   color: white;
   text-align: justify;
-  background-color: #4A4742;
 }
-.pricing-basic {
-  text-align: center;
+.row-pricing {
+  margin-top: 50px;
 }
-.pricing-pro {
-  text-align: center;
-}
-.well-basic {
+.well-pricing {
   margin-left: 20px;
   margin-right: 20px;
 }
-.well-pro {
-  margin-left: 20px;
-  margin-right: 20px;
+.span-basic-pricing {
+  text-align: center;
 }
-.pricing-title {
+.span-basic-pricing h2 {
   font-family: inherit;
   font-weight: bold;
   font-size: 26px;
-  line-height: 40px;
+  line-height: 30px;
   color: inherit;
+  margin-bottom: 0px;
 }
-.pricing-subtitle {
+.span-basic-pricing h3 {
+  margin-top: 0px;
+  font-weight: normal;
+  font-family: inherit;
+  font-size: 20px;
+  font-style: italic;
+}
+.span-pro-pricing {
+  text-align: center;
+}
+.span-pro-pricing h2 {
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 26px;
+  line-height: 30px;
+  color: inherit;
+  margin-bottom: 0px;
+}
+.span-pro-pricing h3 {
+  margin-top: 0px;
+  font-weight: normal;
   font-family: inherit;
   font-size: 20px;
   font-style: italic;

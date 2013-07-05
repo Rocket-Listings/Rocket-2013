@@ -9,5 +9,5 @@ urlpatterns = patterns('',
 	url(r'^faq/$', TemplateView.as_view(template_name='faq.html'), name='faq'),
 	url(r'^pricing/$', TemplateView.as_view(template_name='pricing.html'), name='pricing'),
 	url(r'^how/$', TemplateView.as_view(template_name='how.html'), name='how'),
-	url(r'^who/$', TemplateView.as_view(template_name='who.html'), name='who'),
+	url(r'^why/$', TemplateView.as_view(template_name='why.html'), name='why'),
 )
