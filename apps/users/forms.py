@@ -7,7 +7,7 @@ class UserProfileForm(ModelForm):
 	class Meta:
 		model = UserProfile
 		exclude = ('user')
-		fields = ('name', 'email', 'phone', 'location', 'bio', 'default_category', 'default_listing_type', 'nameprivate', 'locationprivate')
+		fields = ('name', 'email', 'phone', 'location', 'bio', 'default_category', 'default_listing_type', 'nameprivate', 'locationprivate', 'propic')
 
 	def clean(self):
 		for field in self.cleaned_data:

@@ -1,8 +1,11 @@
-$(function(response) {
+
+$(function() {
+	// USER MANAGEMENT JS
+	filepicker.setKey('ATM8Oz2TyCtiJiHu6pP6Qz');
 	function handleClickEvents() {
 		$(".edit").click(function(e) {
 			e.preventDefault();
-			prevData = $(this).parent().prev().val();
+			// Crazy selectors to hide the normal view and show/focus the right input
 			$(this).parent().parent().hide();
 			$(this).parent().parent().next().show();
 			if ($(this).parent().parent().next().find("input")[1]) {
@@ -14,22 +17,53 @@ $(function(response) {
 			else {
 				$(this).parent().parent().next().find("textarea")[0].focus();
 			}
-			$(".edit").replaceWith("<span class='edit muted'>Edit</span>");
-			$(".change-password").replaceWith("<span class='change-password muted'>Change password</span>");
+			$(".active").hide();
+			$(".inactive").show();
 			$("table").removeClass("table-hover");
 		});
 		$(".edit-all").click(function(e) {
 			e.preventDefault();
 			$(".edit-all").hide();
+			$(".save-all").show();
+			$(".active").hide();
+			$(".inactive").show();
 			$(".edit").parent().parent().hide();
 			$(".in-edit").show();
-			$(".save-all").show();
-			$(".partial-submit").replaceWith("<span class='muted partial-submit'>Edit</span>");
 			$("table").removeClass("table-hover");
 			$(".edit-all-wrapper").addClass("muted");
-			$(".change-password").replaceWith("<span class='change-password muted'>Change password</span>");
 		});
 	}
+	$(".change-propic").click(function(e) {
+		e.preventDefault();
+		filepicker.pick({
+			mimetype: "image/*",
+			multiple: false,
+			services: ['COMPUTER', 'URL']
+		},
+		function(InkBlob) {
+			filepicker.convert(InkBlob, {
+				width: 200, 
+				height: 200,
+				format: 'png',
+				fit: 'crop',
+				align: 'faces'
+			},
+			{
+				location: 'S3',
+				path: '/propics/' + $(".username").text() + '.png'
+			},
+			function(NewBlob) {
+				$(".propic-url").val(NewBlob.url);
+				$(".user-info-form").submit();
+			},
+			function(FPError) {
+				console.log(FPError);
+			});
+		},
+		function(FPError) {
+			console.log(FPError);
+		});
+	});
 	$(".user-info-form").submit(function() {
 		var csrftoken = $.cookie('csrftoken');
 		$.ajax({
@@ -42,9 +76,9 @@ $(function(response) {
 			success: function(response) {
 				if (response[0]) {
 					$(".in-edit").hide();
-					$(".edit").replaceWith("<a class='edit' href='#'>Edit</a>");
 					$(".edit").parent().parent().show();
-					$(".change-password").replaceWith("<a class='change-password' href='{% url 'auth_password_change' %}'>Change password</a>");
+					$(".inactive").hide();
+					$(".active").show();
 					$("table").addClass("table-hover");
 					$(".save-all").hide();
 					$(".edit-all").show();
@@ -69,20 +103,21 @@ $(function(response) {
 		})
 	function insertNewValues(data) {
 		for (key in data) {
-			var tag = $("." + key.toString())
-			console.log(key, tag.is("td"));
-			if (tag.is("td") && (tag.html() !== "Private") && (tag.html() !== "Public")) {
-				var tdTag = $("td." + key.toString());
-				tdTag.html(data[key]);
-				if (tdTag.hasClass("muted")) tdTag.removeClass("muted");
-				if ((data[key] === "") || (data[key] === null)) {
-					tdTag.addClass("muted");
-					if (tdTag.hasClass("name")) tdTag.html("Add a name to your profile");
-					if (tdTag.hasClass("phone")) tdTag.html("Add a phone number to your profile");
-					if (tdTag.hasClass("bio")) tdTag.html("Add a bio to your profile");
-					if (tdTag.hasClass("location")) tdTag.html("Add a default location for your listings");
-					if (tdTag.hasClass("default_category")) tdTag.html("Add a default category for your listings");
-					if (tdTag.hasClass("default_listing_type")) tdTag.html("Add a default listing type");
+			var tag = $("." + key.toString());
+			if ((key !== "nameprivate") && (key !== "locationprivate")  && (key !== "propic")) {
+				if (tag.is("td")) {
+					var tdTag = $("td." + key.toString());
+					tdTag.html(data[key]);
+					if (tdTag.hasClass("muted")) tdTag.removeClass("muted");
+					if ((data[key] === "") || (data[key] === null)) {
+						tdTag.addClass("muted");
+						if (tdTag.hasClass("name")) tdTag.html("Add a name to your profile");
+						if (tdTag.hasClass("phone")) tdTag.html("Add a phone number to your profile");
+						if (tdTag.hasClass("bio")) tdTag.html("Add a bio to your profile");
+						if (tdTag.hasClass("location")) tdTag.html("Add a default location for your listings");
+						if (tdTag.hasClass("default_category")) tdTag.html("Add a default category for your listings");
+						if (tdTag.hasClass("default_listing_type")) tdTag.html("Add a default listing type");
+					}
 				}
 			}
 			if (tag.is("input") && !tag.is("option")) {
@@ -106,8 +141,14 @@ $(function(response) {
 					$("h3.name").html(username + "'s info").removeClass("muted");
 				}
 			}
+			if (key.toString() === "propic") {
+				$(".loading").show();
+				$(".propic > img").attr("src", data[key]);
+				$(".loading").hide();
+			}
 		}
 	}
+
 	$('.comment-data-form').submit(function(){
 		var csrftoken = $.cookie('csrftoken');
 		$.ajaxSetup{
@@ -185,4 +226,10 @@ $(function(response) {
 	$(".comments-list li:even").css("background-color", "#FFEED2")
 	$(".comments-list li:odd").css("background-color", "#FFF8EC")
 	handleClickEvents()
+})
+
+	// PROFILE JS
+	// formatting
+	$(".profile-listing-description").ellipsis();
 });
+

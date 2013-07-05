@@ -9,7 +9,6 @@ urlpatterns = patterns('listings.views',
 	url(r'^(?P<listing_id>\d+)/delete/$', 'delete'),
 	# url(r'^(?P<listing_id>\d+)/delete_ajax/$', 'delete_ajax'),
 
-	url(r'^(?P<listing_id>\d+)/autopost/$', 'autopost'),
 	url(r'^(?P<listing_id>\d+)/cl-embed/$', 'embed'),
 	url(r'^ajax-photo-upload/$', import_uploader, name="ajax_photo_upload"),
 
