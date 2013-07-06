@@ -209,7 +209,6 @@ h1.flag {
   width: 100px;
   height: 80px;
   margin-top: 20px;
-  margin-bottom: 20px;
 }
 .icon-share {
   background-image: url("../img/share.svg");
@@ -219,7 +218,6 @@ h1.flag {
   width: 100px;
   height: 80px;
   margin-top: 20px;
-  margin-bottom: 20px;
 }
 .icon-laptop {
   background-image: url("../img/laptop.svg");
@@ -229,7 +227,6 @@ h1.flag {
   width: 100px;
   height: 80px;
   margin-top: 20px;
-  margin-bottom: 20px;
 }
 .learn-more-link {
   font-size: 22px;
