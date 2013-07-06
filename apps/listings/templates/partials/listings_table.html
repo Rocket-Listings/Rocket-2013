@@ -44,7 +44,7 @@
 					<a href="{{ listing.get_absolute_url }}">Link</a>
 					<div class="btn-group">
 
-						<a class="btn" href="{% url 'mail.views.autopost' listing.id %}" data-toggle="tooltip" data-original-title="Autopost to Craigslist"><i class ="icon-share"></i></a>
+						<a class="btn" href="{% url 'mail.views.autopost' listing.id %}" data-toggle="modal" data-target = "#loadingModal" data-original-title="Autopost to Craigslist"><i class ="icon-share"></i></a>
 						<a class="btn" href="{% url 'listings.views.update' listing.id %}" data-container="body" data-toggle="tooltip" data-original-title="Edit Listing"><i class="icon-edit"></i></a>
 
 						<!--delete button -->

@@ -1,15 +1,19 @@
 # Rocket Listings - Django
 
-_Last updated: 6/18/13_
+_Last updated: 7/3/13_
 
-### DB Reset Instructions
+### Getting django compressor working
 
-     dropdb <database_name>
-     createdb <database_name>
-     # don't create a superuser here
-     python manage.py syncdb
-     python manage.py migrate
-     python manage.py createsuperuser
+I just installed a django plugin called Django-Compressor which makes development/deploy with less stylesheets a lot easier. For every pageload it checks if any .less files have changed, and if so recompiles them using the `lessc` command line program. That program is acutally just a node package, so for better or for worse we're now dependent on node and its package manager. This means that you don't need to use the less.app to compile your stylesheets anymore, everything happens automatically. The following commands make sure that you have django-compressor, node and less installed, and that your path to the `lessc` command is set up correctly. I also added `fabric` functionality which makes it easier to go through the process of a db reset.
+
+		pip install -r requirements.txt
+		brew install node
+		npm install -g less
+		echo "export PATH=/usr/local/share/npm/bin:$PATH" >> ~/.bash_profile
+
+### Fabric Commands (run from project root)
+
+		fab resetdb[:<db_name>]
 
 ## Developer Setup
 
