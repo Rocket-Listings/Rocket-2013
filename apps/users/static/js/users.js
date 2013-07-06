@@ -22,14 +22,15 @@ $(function() {
 		});
 		$(".edit-all").click(function(e) {
 			e.preventDefault();
-			$(".edit-all").hide();
-			$(".save-all").show();
 			$(".active").hide();
 			$(".inactive").show();
+			$(".partial-submit").hide();
+			$(".edit-all").hide();
+			$(".save-all").show();
 			$(".edit").parent().parent().hide();
+			$(".partial-submit").replaceWith("<span class='muted partial-submit'>Edit</span>");
 			$(".in-edit").show();
 			$("table").removeClass("table-hover");
-			$(".edit-all-wrapper").addClass("muted");
 		});
 	}
 	$(".change-propic").click(function(e) {
