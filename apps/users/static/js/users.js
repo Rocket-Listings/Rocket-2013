@@ -1,3 +1,4 @@
+
 $(function() {
 	// USER MANAGEMENT JS
 	filepicker.setKey('ATM8Oz2TyCtiJiHu6pP6Qz');
@@ -89,18 +90,18 @@ $(function() {
 				else {
 					var errors = $(".errors"),
 						dismissError = '<a href="#" class="close" data-dismiss="alert">&times;</a>';
-					//errors.html(dismissError);
-					errors.html("");
-					for (key in response) {
-						errors.append("<strong class='capital'>" + key + ": </strong>" + response[key] + "<br>");
+						//errors.html(dismissError);
+						errors.html("");
+						for (key in response) {
+							errors.append(" <strong class='capital'>" + key + ":</strong>" + response[key] + "<br>");
+						}
+						errors.show();
 					}
-					errors.show();
+					handleClickEvents();
 				}
-				handleClickEvents();
-			}
-		});
-		return false;
-	});
+			});
+			return false;
+		})
 	function insertNewValues(data) {
 		for (key in data) {
 			var tag = $("." + key.toString());
@@ -134,7 +135,7 @@ $(function() {
 				if (data[key] === true) tag.html("Private");
 				else tag.html("Public");
 			}
-			if (key.toString() === "name") {
+			if (key.toString() === "name") {`
 				if (data[key] !== "") $("h3.name").html(data[key] + "'s info");
 				else {
 					var username = $(".username > code").html();
@@ -148,48 +149,88 @@ $(function() {
 			}
 		}
 	}
-	handleClickEvents();
+
+	$('.comment-data-form').submit(function(){
+		var csrftoken = $.cookie('csrftoken');
+		$.ajaxSetup{
+			data: $(this).serialize(),
+			type: $(this).attr('method'),
+			url: $(this).attr('action'),
+    		crossDomain: false, // obviates need for sameOrigin test
+    		beforeSend: function(xhr, settings) {
+        		if (!csrfSafeMethod(settings.type)) 
+            		xhr.setRequestHeader("X-CSRFToken", csrftoken);
+    		},
+    		success: function(response){
+    			$('.comment-data-form').reset();
+    		}
+		
+		}
+	}
+
+	// $(document).ready(function() {
+	// 	var OSX = {
+	// 		container: null,
+	// 		init: function () {
+	// 			$("input.comment-button, a.comment-button").click(function (e) {
+	// 				e.preventDefault();	
+	// 				$("#comment-form").modal({
+	// 					overlayId: 'comment-form-overlay',
+	// 					containerId: 'comment-form-container',
+	// 					closeHTML: null,
+	// 					minHeight: 80,
+	// 					opacity: 65, 
+	// 					position: ['0',],
+	// 					overlayClose: true,
+	// 					onOpen: OSX.open,
+	// 					onClose: OSX.close
+	// 				});
+	// 			});
+	// 		},
+	// 		open: function (d) {
+	// 			var self = this;
+	// 			self.container = d.container[0];
+	// 			d.overlay.fadeIn('slow', function () {
+	// 				$("#comment-form", self.container).show();
+	// 				var title = $("#comment-form-title", self.container);
+	// 				title.show();
+	// 				d.container.slideDown('slow', function () {
+	// 					setTimeout(function () {
+	// 						var h = $("#comment-data", self.container).height()
+	// 							+ title.height()
+	// 							+ 40; // padding
+	// 						d.container.animate(
+	// 							{height: h + 20}, 
+	// 							200,
+	// 							function () {
+	// 								$("div.close", self.container).show();
+	// 								$("#comment-data", self.container).show();
+	// 							}
+	// 						);
+	// 					}, 10000);
+	// 				});
+	// 			})
+	// 		},
+	// 		close: function (d) {
+	// 			var self = this; // this = SimpleModal object
+	// 			d.container.animate(
+	// 				{top:"-" + (d.container.height() + 20)},
+	// 				500,
+	// 				function () {
+	// 					self.close(); // or $.modal.close();
+	// 				}
+	// 			);
+	// 		}
+	// 	};
+	// 	OSX.init();
+	// })
+	$(".comments-list li:even").css("background-color", "#FFEED2")
+	$(".comments-list li:odd").css("background-color", "#FFF8EC")
+	handleClickEvents()
+})
 
 	// PROFILE JS
 	// formatting
 	$(".profile-listing-description").ellipsis();
 });
 
-	/*
-	Sorry, had to comment this out right now.  Causing a lot of errors.
-
-	$('#dot3').dotdotdot({
-		after: 'a.more',
-		height: '50px',
-		watch: true
-	});
-
-	function initializeGoogleMaps() {
-	  	var mapOptions = {
-	    	zoom: 8,
-	    	center: new google.maps.LatLng(44.4758, -73.2125),
-	    	mapTypeId: google.maps.MapTypeId.ROADMAP
-	  		},
-	  		map = new google.maps.Map($('#map-canvas'), mapOptions);
-	  	codeAddress();
-	}
-
-	google.maps.event.addDomListener(window, 'load', initializeGoogleMaps);
-
-	function codeAddress() {
-		console.log(location);
-	    geocoder.geocode( { 'address': location}, function(results, status) {
-	      if (status == google.maps.GeocoderStatus.OK) {
-	        map.setCenter(results[0].geometry.location);
-	        var marker = new google.maps.Marker({
-	            map: map,
-	            position: results[0].geometry.location
-	        });
-	      } else {
-	        alert("Geocode was not successful for the following reason: " + status);
-	      }
-	    });
-	}
-
-    $('.carousel').carousel({ });
-    */
