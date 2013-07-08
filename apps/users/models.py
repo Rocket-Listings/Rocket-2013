@@ -19,15 +19,12 @@ class UserProfile(models.Model):
 	locationprivate = models.BooleanField(blank=False, null=False)
 	propic = models.CharField(max_length=200, blank=True)
 
-	#photo = django_filepicker.models.FPFileField(upload_to='uploads')
-
 	def get_absolute_url(self):
 		return reverse('users.views.info')
 		return reverse('users.views.info', args=[self.user.username])
-	
+
 	def __unicode__(self):
 		return self.user.username
-
 
 # Handles user profile creation if not already created
 def create_user_profile(sender, instance, created, **kwargs):  
@@ -48,6 +45,5 @@ class UserComment(models.Model):
 
 	def __unicode__(self):
 		return self.user.username
-
 
 #User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])

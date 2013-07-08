@@ -47,7 +47,7 @@
 			</div>
 		</div>
 		<div class="profile-stats span3">
-			<h3>Listings</h3>
+			<h3 class="listing-stat-header">Listings</h3>
 			<h4 class="green">{{ listings|length }}</h4>
 		</div>
 	</div>
@@ -119,7 +119,6 @@
 		<h4>Bought from {% if user.get_profile.name %}{{user.get_profile.name}}{% else %}{{user.username}}{% endif %}? Give them some feedback!</h4>
 		<div class="errors alert alert-error hide"></div>
 		<form class="comment-form" action="" method="POST">
-			{%csrf_token%}
 			<ul class="inline clearfix">
 				<li><label for="title">Title:</label><input type="text" name="title"></li>
 				<li><label for="name">Name:</label><input type="text" name="name"></li>

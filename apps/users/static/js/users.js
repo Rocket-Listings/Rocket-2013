@@ -64,7 +64,7 @@ $(function() {
 		function(FPError) {
 			console.log(FPError);
 		});
-	});
+	})
 	$(".user-info-form").submit(function() {
 		var csrftoken = $.cookie('csrftoken');
 		$.ajax({

@@ -1,3 +1,188 @@
+@import url(http://fonts.googleapis.com/css?family=Radley);
+/* http://colourco.de/quad/4/%23f3e0dd */
+/* fix navbar container */
+@media (min-width: 1200px) {
+  .navbar .container {
+    width: 1170px;
+  }
+}
+@media (min-width: 979px) and (max-width: 1200px) {
+  .navbar .container {
+    width: 960px;
+  }
+}
+@media (min-width: 768px) and (max-width: 979px) {
+  .navbar .container {
+    width: 744px;
+  }
+}
+.navbar {
+  border: none;
+}
+.navbar .navbar-inner {
+  border: none;
+  background: #ededed;
+  height: 36px;
+  min-height: 36px;
+}
+.navbar .container {
+  height: 36px;
+}
+.navbar .nav > li > a,
+.navbar .nav > li.active > a {
+  padding: 7px 15px 7px;
+}
+.navbar .nav > li > a:hover,
+.navbar .nav > li.active > a:hover {
+  text-decoration: underline;
+}
+.navbar .nav > li > a:hover span,
+.navbar .nav > li.active > a:hover span {
+  text-decoration: none;
+}
+.navbar-logo {
+  float: left;
+  display: block;
+  position: relative;
+  left: -20px;
+}
+.navbar-logo .accent {
+  float: left;
+  height: 36px;
+  width: 5px;
+}
+.navbar-logo .accent1 {
+  background: #d0e3eb;
+}
+.navbar-logo .accent2 {
+  background: #ecdbf1;
+}
+.navbar-logo .accent3 {
+  background: #f6eae6;
+}
+.navbar-logo .accent4 {
+  background: #f3faf1;
+}
+.navbar-logo:hover .accent1 {
+  background: #bcddeb;
+}
+.navbar-logo:hover .accent2 {
+  background: #e8c7f2;
+}
+.navbar-logo:hover .accent3 {
+  background: #f5d7ce;
+}
+.navbar-logo:hover .accent4 {
+  background: #e0fad9;
+}
+.navbar-logo .logo-text {
+  float: left;
+  font-family: 'Radley';
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 36px;
+  padding: 0 20px;
+  color: #3b2317;
+  background-color: white;
+  margin: 0;
+  position: relative;
+}
+.navbar-logo .logo-text:hover {
+  text-decoration: underline;
+}
+.footer,
+.footer-fixed {
+  background: #4A4742;
+}
+.footer p,
+.footer-fixed p {
+  margin: 0;
+  line-height: 36px;
+}
+/* fixed footer */
+.footer-fixed {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+.wrap-fixed {
+  position: relative;
+  height: 95%;
+  height: -webkit-calc(100% - 36px);
+  height: -moz-calc(100% - 36px);
+  height: calc(100% - 36px);
+}
+.full-height {
+  height: 100%;
+}
+/* sticky footer */
+html,
+body {
+  height: 100%;
+  /* The html and body elements cannot have any padding or margin. */
+
+}
+/* Wrapper for page content to push down footer */
+.wrap {
+  min-height: 100%;
+  height: auto !important;
+  /* Negative indent footer by it's height */
+
+  margin: 0 auto -36px;
+}
+/* Set the fixed height of the footer here */
+.push,
+.footer,
+.footer-fixed {
+  height: 36px;
+}
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 767px) {
+  .footer {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+/* Flatten das boostrap */
+.well,
+.navbar-inner,
+.popover,
+.btn,
+.tooltip,
+input,
+select,
+textarea,
+pre,
+.progress,
+.modal,
+.add-on,
+.alert,
+.table-bordered,
+.nav > .active > a,
+.dropdown-menu,
+.tooltip-inner,
+.badge,
+.label,
+.img-polaroid {
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  -webkit-border-radius: 0px !important;
+  -moz-border-radius: 0px !important;
+  border-radius: 0px !important;
+  border-collapse: collapse !important;
+  background-image: none !important;
+}
+select:focus {
+  outline: none !important;
+}
+@media (max-width: 767px) {
+  body {
+    padding: 0;
+  }
+}
 .user-profile-table-group {
   float: left;
 }
@@ -35,6 +220,9 @@
 .user-profile-table-group .user-profile-table tbody tr td textarea {
   width: 290px;
   max-width: 290px;
+}
+.user-profile-table-group .user-profile-table tbody tr td img.propic {
+  border: 1px solid #999;
 }
 .user-profile-table-group .user-profile-table tbody tr.in-edit {
   background-color: #ededed;
@@ -86,7 +274,7 @@
   padding: 10px;
   float: right;
 }
-.profile-content .row {
+.profile-content .profile-header.row {
   margin-left: 0px;
 }
 .profile-content .profile-picture {
@@ -147,7 +335,8 @@
   margin: 20px 0;
 }
 .profile-content .profile-selling ul.thumbnails {
-  margin-top: 10px;
+  margin: 10px 0 0 -30px;
+  display: table-layout;
 }
 .profile-content .profile-selling ul.thumbnails li {
   margin-bottom: 0px;
@@ -162,9 +351,8 @@
   box-shadow: none;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
-  height: 310px;
 }
-.profile-content .profile-selling ul.thumbnails a.thumbnail li {
+.profile-content .profile-selling ul.thumbnails a.thumbnail ul li {
   font-size: 20px;
   font-weight: 600;
   padding: 5px 0;
@@ -175,20 +363,20 @@
   text-align: left;
   word-wrap: break-word;
   white-space: pre-line;
-  max-width: 65%;
+  width: 60%;
 }
 .profile-content .profile-selling ul.thumbnails a.thumbnail .profile-listing-price {
   float: right;
-  padding-right: 10px;
   text-align: right;
   color: #4cbb17;
   letter-spacing: 1px;
+  padding-right: 10px;
 }
 .profile-content .profile-selling ul.thumbnails a.thumbnail p {
   padding: 0 10px;
   text-align: left;
-  max-height: 40px;
   overflow: hidden;
+  max-height: 60px;
 }
 #map-canvas {
   margin: 0;
@@ -207,6 +395,13 @@
 .comments-list #actual-comment {
   color: #CFCFCF;
 }
+#map-canvas {
+  margin: 0;
+  padding: 0;
+  height: 200px;
+  width: 200px;
+  float: right;
+}
 .thumbnail {
   text-align: center;
 }
@@ -217,6 +412,50 @@
 .listing-title {
   font-size: 14px;
   font-weight: bold;
+}
+#slider-code {
+  height: 125px;
+  overflow: hidden;
+}
+#slider-code .viewport {
+  float: left;
+  width: 240px;
+  height: 125px;
+  overflow: hidden;
+  position: relative;
+}
+#slider1 .buttons {
+  background: url("users/static/images/buttons.png") no-repeat scroll 0 0 transparent;
+  display: block;
+  margin: 30px 10px 0 0;
+  background-position: 0 -38px;
+  text-indent: -999em;
+  float: left;
+  width: 39px;
+  height: 37px;
+  overflow: hidden;
+  position: relative;
+}
+#slider-code .next {
+  margin: 30px 0 0 10px;
+}
+#slider-code .disable {
+  visibility: hidden;
+}
+#slider-code .overview {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  left: 0;
+  top: 0;
+}
+#slider-code .overview li {
+  float: left;
+  margin: 0 20px 0 0;
+  padding: 1px;
+  height: 121px;
+  border: 1px solid #dcdcdc;
+  width: 236px;
 }
 .form {
   margin: 0;
