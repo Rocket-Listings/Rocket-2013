@@ -121,7 +121,9 @@ function validateForm() {
 	}
 	else {
 		document.getElementById('primaryButton').click();
+	console.log("here");
 	}
+
 }
 
 
