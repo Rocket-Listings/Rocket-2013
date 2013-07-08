@@ -58,11 +58,15 @@
 			{% for listing in listings|slice:":6" %}
 			<li class="span2">
 				<a class="thumbnail" href="{{ listing.get_absolute_url }}">
-					<img src="{% static 'images/sail.jpg' %}">
-					<ul class="inline clearfix">
-						<h4 class="profile-listing-price">${{listing.price}}</h4>
-						<h4 class="profile-listing-title">{{listing.title}}</h4>
-					</ul>
+					{% if photos %}
+						{% for photo in photos|slice:":1" %}
+						<img src="photo.url">
+						{% endfor %}
+					{% else %}
+						<img src="{% static 'images/sail.jpg' %}">
+					{% endif %}
+					<h4 class="profile-listing-title">{{listing.title}}</h4>
+					<h4 class="profile-listing-price">${{listing.price}}</h4>
 					<p class="profile-listing-description">{{listing.description}}</p>
 				</a>
 			</li>
@@ -109,6 +113,8 @@
 			</tbody>
 		</table>
 	</div>
+	{% if request.user != user %}
+	<div class="separator"></div>
 	<div class="comment-form-container">
 		<h4>Bought from {% if user.get_profile.name %}{{user.get_profile.name}}{% else %}{{user.username}}{% endif %}? Give them some feedback!</h4>
 		<div class="errors alert alert-error hide"></div>
@@ -123,5 +129,6 @@
 			<input class="btn btn-info comment-submit" type="submit" value="Submit">
 		</form>
 	</div>
+	{% endif %}
 </div>
 {% endblock %}
