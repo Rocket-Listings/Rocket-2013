@@ -15,14 +15,12 @@ class UserProfileForm(ModelForm):
 				self.cleaned_data[field] = self.cleaned_data[field].strip()
 		return self.cleaned_data
 
-
-
-
 class CommentSubmitForm(ModelForm):
 	class Meta:
 		model = UserComment
 		fields = ('name','email','comment')	
 		exclude = ('user', 'is_removed', 'date_posted')
+		
 	def clean(self):
 		for field in self.cleaned_data:
 			if isinstance(self.cleaned_data[field], basestring):

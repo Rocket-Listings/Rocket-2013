@@ -34,17 +34,17 @@ def create_user_profile(sender, instance, created, **kwargs):
     if created:  
     	UserProfile.objects.create(user=instance)
 
-post_save.connect(create_user_profile, sender=User)
+	post_save.connect(create_user_profile, sender=User)
 
 
 # Model for comments about a user
 class UserComment(models.Model): 
 	date_posted = models.DateField(auto_now=False, auto_now_add=False)
-	comment = models.TextField()
-	email = models.EmailField() # email of commenter
+	comment = models.TextField(blank=False)
+	email = models.EmailField(max_length=255, blank=False) # email of commenter
 	user = models.ForeignKey(User) # contains user foreignkey
-	is_removed = models.BooleanField() # if true comment will not display
-	name = models.CharField(max_length=15)
+	is_removed = models.BooleanField(blank=True) # if true comment will not display
+	name = models.CharField(max_length=100)
 
 	def __unicode__(self):
 		return self.user.username

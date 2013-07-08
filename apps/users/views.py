@@ -29,8 +29,7 @@ def info(request):
 			User.objects.filter(username = user).update(email=request.POST['email'])
 			responseData = serializers.serialize("json", UserProfile.objects.filter(user=user))
 			return HttpResponse(responseData, content_type="application/json")
-
-    	else:
+		else:
 			errors = user_profile_form.errors
 			return HttpResponse(simplejson.dumps(errors), content_type="application/json")
 	else:
@@ -50,11 +49,11 @@ def profile(request, username=None):
 			# user_comment_form.name = form.cleaned_data['name']
 			# user_comment_form.email = form.cleaned_data['email']
 			# user_comment_form.comment = form.cleaned_data['comment']
-			user_comment = user_profile_form.save()
+			user_comment = user_comment_form.save()
 			responseData = serializers.serialize("json", UserComment.objects.filter(user=user))
 			return HttpResponse(responseData, content_type="application/json")
 		else:
-			errors = user_profile_form.errors
+			errors = user_comment_form.errors
 			return HttpResponse(simplejson.dumps(errors), content_type="application/json")
 	else:
 		return render(request, 'user_profile.html', {'user':user, 'listings':listings, 'photos':photos, 'user_comments':user_comments, 'CommentSubmitForm':commentForm})
