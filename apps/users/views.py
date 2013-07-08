@@ -1,9 +1,8 @@
-from listings.models import Listing, ListingPhoto, Buyer, Offer, Message
+from listings.models import Listing, ListingPhoto, Buyer, Offer, Message, ListingStatus
 import datetime
 #from users.models import UserProfile
 from users.forms import UserProfileForm, CommentSubmitForm
-from users.models import UserProfile
-from users.models import UserComment
+from users.models import UserProfile, UserComment
 from django.forms.models import inlineformset_factory
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
@@ -21,23 +20,23 @@ def overview(request, username=None):
 def info(request):
 	user = request.user
 	profile = user.get_profile()
-	# if request.method == 'POST':
-	# 	user_profile_form = UserProfileForm(request.POST, instance=profile)
-	# 	if user_profile_form.is_valid():
-	# 		user_profile = user_profile_form.save()
-	# 		User.objects.filter(username = user).update(email=request.POST['email'])
-	# 		responseData = serializers.serialize("json", UserProfile.objects.filter(user=user))
-	# 		return HttpResponse(responseData, content_type="application/json")
-
- #    	else:
-	# 		errors = user_profile_form.errors
-	# 		return HttpResponse(simplejson.dumps(errors), content_type="application/json")
-	# else:
-	return render(request, 'user_info.html', {'user': user})
+	if request.method == 'POST':
+		user_profile_form = UserProfileForm(request.POST, instance=profile)
+		if user_profile_form.is_valid():
+			user_profile = user_profile_form.save()
+			User.objects.filter(username = user).update(email=request.POST['email'])
+			responseData = serializers.serialize("json", UserProfile.objects.filter(user=user))
+			return HttpResponse(responseData, content_type="application/json")
+		else:
+			errors = user_profile_form.errors
+			return HttpResponse(simplejson.dumps(errors), content_type="application/json")
+	else:
+		return render(request, 'user_info.html', {'user': user})
 
 def profile(request, username=None):
 	user = User.objects.get(username=username)
-	listings = Listing.objects.filter(user=user).order_by('-pub_date')[:10]
+	active = ListingStatus(pk=1)
+	listings = Listing.objects.filter(user=user).order_by('-pub_date').filter(status=active)[:6]
 	photos = ListingPhoto.objects.filter(listing=user)
 	# provide `url` and `thumbnail_url` for convenience.
 	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos)
@@ -45,9 +44,12 @@ def profile(request, username=None):
 	if request.method == 'POST':
 		user_comment_form = CommentSubmitForm(request.POST)
 		if user_comment_form.is_valid():
-			user_comment = user_comment_form.save(commit=False)
-			user_comment_form.save()
-			return render(request, 'user_profile.html', {'user':user, 'listings':listings, 'photos':photos, 'user_comments':user_comments, 'CommentSubmitForm':commentForm})
+			# user_comment_form.name = form.cleaned_data['name']
+			# user_comment_form.email = form.cleaned_data['email']
+			# user_comment_form.comment = form.cleaned_data['comment']
+			user_comment = user_comment_form.save()
+			responseData = serializers.serialize("json", UserComment.objects.filter(user=user))
+			return HttpResponse(responseData, content_type="application/json")
 		else:
 			errors = user_comment_form.errors
 			return HttpResponse(simplejson.dumps(errors), content_type="application/json")
