@@ -39,7 +39,7 @@ post_save.connect(create_user_profile, sender=User)
 
 # Model for comments about a user
 class UserComment(models.Model): 
-	date_posted = models.DateField(auto_now=False, auto_now_add=False)
+	date_posted = models.DateField(auto_now=False, auto_now_add=True)
 	comment = models.TextField(blank=False)
 	email = models.EmailField(max_length=255, blank=True) # email of commenter
 	user = models.ForeignKey(User) # contains user foreignkey
@@ -48,6 +48,6 @@ class UserComment(models.Model):
 
 	def __unicode__(self):
 		return self.user.username
- 
+
 
 #User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])

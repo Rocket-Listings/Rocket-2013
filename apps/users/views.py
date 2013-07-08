@@ -37,16 +37,15 @@ def info(request):
 
 def profile(request, username=None):
 	user = User.objects.get(username=username)
-	# commentForm = CommentSubmitForm(initial={'date_posted':datetime.datetime.now(),'user':user})
-	listings = Listing.objects.filter(user=user).order_by('-pub_date')[:10]
+	listings = Listing.objects.filter(user=user).order_by('-pub_date')[:6]
 	photos = ListingPhoto.objects.filter(listing=user)
-	# provide `url` and `thumbnail_url` for convenience.
 	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos)
-	comments = UserComment.objects.filter(user=user)
+	comments = UserComment.objects.filter(user=user).order_by('-date_posted')[:5]
 	if request.method == 'POST':
-		comment_form = CommentSubmitForm(request.POST, instance = user_comments)
+		comment_form = CommentSubmitForm(request.POST, instance = UserComment(user=user))
 		if comment_form.is_valid():
 			comment = comment_form.save()
+			return render(request, 'user_profile.html', {'user':user, 'listings':listings, 'photos':photos, 'comments':comments})
 		else:
 			errors = comment_form.errors
 			return HttpResponse(simplejson.dumps(errors), content_type="application/json")

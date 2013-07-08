@@ -18,9 +18,9 @@ class UserProfileForm(ModelForm):
 class CommentSubmitForm(ModelForm):
 	class Meta:
 		model = UserComment
-		fields = ('name','email','comment')	
+		fields = ('name','email','comment', 'title')	
 		exclude = ('user', 'is_removed', 'date_posted')
-		
+
 	def clean(self):
 		for field in self.cleaned_data:
 			if isinstance(self.cleaned_data[field], basestring):
