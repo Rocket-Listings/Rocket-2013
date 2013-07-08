@@ -28,26 +28,21 @@ class UserProfile(models.Model):
 	def __unicode__(self):
 		return self.user.username
 
-
 # Handles user profile creation if not already created
-def create_user_profile(sender, instance, created, **kwargs):  
-    if created:  
-    	UserProfile.objects.create(user=instance)
-
-post_save.connect(create_user_profile, sender=User)
+	def create_user_profile(sender, instance, created, **kwargs):  
+		if created:
+			UserProfile.objects.create(user=instance)
+	
+	post_save.connect(create_user_profile, sender=User)
 
 
 # Model for comments about a user
 class UserComment(models.Model): 
-	date_posted = models.DateField(auto_now=False, auto_now_add=False)
-	comment = models.TextField()
-	email = models.EmailField() # email of commenter
+	date_posted = models.DateField(auto_now=False, auto_now_add=True)
+	comment = models.TextField(blank=False)
+	email = models.EmailField(max_length=255, blank=False) # email of commenter
 	user = models.ForeignKey(User) # contains user foreignkey
-	is_removed = models.BooleanField() # if true comment will not display
+	is_removed = models.BooleanField(False) # if true comment will not display
 	name = models.CharField(max_length=15)
-
-	def __unicode__(self):
-		return self.user.username
- 
 
 #User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])

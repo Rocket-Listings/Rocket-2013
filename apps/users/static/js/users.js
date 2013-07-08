@@ -63,7 +63,7 @@ $(function() {
 		function(FPError) {
 			console.log(FPError);
 		});
-	});
+	})
 	$(".user-info-form").submit(function() {
 		var csrftoken = $.cookie('csrftoken');
 		$.ajax({
@@ -134,7 +134,7 @@ $(function() {
 				if (data[key] === true) tag.html("Private");
 				else tag.html("Public");
 			}
-			if (key.toString() === "name") {`
+			if (key.toString() === "name") {
 				if (data[key] !== "") $("h3.name").html(data[key] + "'s info");
 				else {
 					var username = $(".username > code").html();
@@ -149,9 +149,10 @@ $(function() {
 		}
 	}
 
-	$('.comment-data-form').submit(function(){
+	$('.comment-data-form').submit(function(e){
+		e.preventDefault();
 		var csrftoken = $.cookie('csrftoken');
-		$.ajaxSetup{
+		$.ajax(){
 			data: $(this).serialize(),
 			type: $(this).attr('method'),
 			url: $(this).attr('action'),
@@ -159,9 +160,11 @@ $(function() {
     		beforeSend: function(xhr, settings) {
         		if (!csrfSafeMethod(settings.type)) 
             		xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            		console.log(csrftoken);
     		},
     		success: function(response){
     			$('.comment-data-form').reset();
+    			console.log(data)
     		}
 		
 		}
@@ -230,6 +233,6 @@ $(function() {
 
 	// PROFILE JS
 	// formatting
-	$(".profile-listing-description").ellipsis();
+$(".profile-listing-description").ellipsis();
 });
 

@@ -89,16 +89,11 @@
 				</p>
 			</span>
 		</div>
-{% comment %}
- 		<form id="modal-comment-data body" method="POST" action="" >
-			{{ formset.CommentSubmitForm }}
-			{% for form in formset %}
-				{{ form }}
-			{% endfor %}
-		</form>
-{% endcomment %}
 		<form id="comment-data-form body" method="POST">{% csrf_token %}
-			{{ CommentSubmitForm }}
+			<p>Name: <input id="id_name" type="text" name="name" maxlength="40"/></p>
+			<p>Email: <input id="id_email" type="text" name="email" maxlength="100" /></p>
+			<p>Comment:<br>
+			<input id="id_comment" type="text" name="comment" maxlength="100" /></p>
 			<br>
 			<input type="submit" value="Submit" />
 		</form>
