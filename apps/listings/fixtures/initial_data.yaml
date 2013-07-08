@@ -35,271 +35,271 @@
     description: Are you an organization?
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 1
   fields:
     name: appliances
     description: appliances
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 2
   fields:
     name: antiques
     description: antiques
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 3
   fields:
     name: arts and crafts
     description: arts and crafts
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 4
   fields:
     name: auto parts
     description: auto parts
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 5
   fields:
     name: baby and kids
     description: baby and kids
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 6
   fields:
     name: barter
     description: barter
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 7
   fields:
     name: beauty and health
     description: beauty and health
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 8
   fields:
     name: bikes
     description: bikes
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 9
   fields:
     name: boats
     description: boats
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 10
   fields:
     name: books
     description: books
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 11
   fields:
     name: business
     description: business
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 12
   fields:
     name: cars and trucks
     description: cars and trucks
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 13
   fields:
     name: cds dvd vhs
     description: cds dvd vhs
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 14
   fields:
     name: cell phones
     description: cell phones
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 15
   fields:
     name: collectibles
     description: collectibles
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 16
   fields:
     name: computer
     description: computer
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 17
   fields:
     name: electronics
     description: electronics
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 18
   fields:
     name: farm and garden
     description: farm and garden
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 19
   fields:
     name: free
     description: free
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 20
   fields:
     name: clothes and accessories
     description: clothes and accessories
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 21
   fields:
     name: furniture
     description: furniture
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 22
   fields:
     name: garage sale
     description: garage sale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 23
   fields:
     name: general
     description: general
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 24
   fields:
     name: household
     description: household
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 25
   fields:
     name: jewelry
     description: jewelry
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 26
   fields:
     name: materials
     description: materials
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 27
   fields:
     name: motorcycles
     description: motorcycles
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 28
   fields:
     name: music instruments
     description: music instruments
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 29
   fields:
     name: photo and video
     description: photo and video
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 30
   fields:
     name: rvs
     description: rvs
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 31
   fields:
     name: sporting
     description: sporting
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 32
   fields:
     name: tickets
     description: tickets
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 33
   fields:
     name: tools
     description: tools
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 34
   fields:
     name: toys and games
     description: toys and games
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 35
   fields:
     name: video gaming
     description: video gaming
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 36
   fields:
     name: wanted
     description: wanted
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 37
   fields:
     name: apartments and housing
     description: apartments and housing
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 38
   fields:
     name: housing swap
     description: housing swap
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 39
   fields:
     name: housing wanted
     description: housing wanted
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 40
   fields:
     name: office and commercial
     description: office and commercial
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 41
   fields:
     name: parking and storage
     description: parking and storage
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 42
   fields:
     name: real estate for sale
     description: real estate for sale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 43
   fields:
     name: rooms and shared
     description: rooms and shared
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 44
   fields:
     name: sublets and temporary
     description: sublets and temporary
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 45
   fields:
     name: vacation rentals
     description: vacation rentals
@@ -307,749 +307,1668 @@
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: dimensions
-    category: appliances
+    key: dimensions
+    category: 1
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: brand
-    category: appliances
+    key: brand
+    category: 1
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: model
-    category: appliances
+    key: model
+    category: 1
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: remote
-    category: appliances
+    key: remote
+    category: 1
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: usage
-    category: appliances
+    key: usage
+    category: 1
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: dimensions
-    category: antiques
+    key: dimensions
+    category: 2
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: location created
-    category: antiques
+    key: location created
+    category: 2
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: year created
-    category: antiques
+    key: year created
+    category: 2
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: utility
-    category: antiques
+    key: utility
+    category: 2
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: color
-    category: bikes
+    key: color
+    category: 8
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: gears
-    category: bikes
+    key: gears
+    category: 8
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: type of bike
-    category: bikes
+    key: type of bike
+    category: 8
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: wheel dimensions
-    category: bikes
+    key: wheel dimensions
+    category: 8
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: usage
-    category: bikes
+    key: usage
+    category: 8
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: color
-    category: boats
+    key: color
+    category: 9
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: dimensions
-    category: boats
+    key: dimensions
+    category: 9
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: engine size
-    category: boats
+    key: engine size
+    category: 9
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: sail dimensions
-    category: boats
+    key: sail dimensions
+    category: 9
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: max speed
-    category: boats
+    key: max speed
+    category: 9
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: usage
-    category: boats
+    key: usage
+    category: 9
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: genre
-    category: books
+    key: genre
+    category: 10
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: condition
-    category: books
+    key: condition
+    category: 10
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: cover
-    category: books   
+    key: cover
+    category: 10   
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: dimensions
-    category: business 
+    key: dimensions
+    category: 11 
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: type of business
-    category: business
+    key: type of business
+    category: 11
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: dimensions
-    category: computer
+    key: dimensions
+    category: 16
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: brand
-    category: computer 
+    key: brand
+    category: 16 
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: ram size
-    category: computer
+    key: ram size
+    category: 16
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: hd size
-    category: computer
+    key: hd size
+    category: 16
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: processor specs
-    category: computer
+    key: processor specs
+    category: 16
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: year manufactured
-    category: computer  
+    key: year manufactured
+    category: 16  
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: condition
-    category: computer 
+    key: condition
+    category: 16 
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: microsoft office
-    category: computer
+    key: microsoft office
+    category: 16
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: dimensions
-    category: free
+    key: dimensions
+    category: 19
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: utility
-    category: free
+    key: utility
+    category: 19
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: dimensions
-    category: furniture
+    key: dimensions
+    category: 21
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: years old
-    category: furniture 
+    key: years old
+    category: 21 
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: condition
-    category: furniture   
+    key: condition
+    category: 21   
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: foldout
-    category: furniture  
+    key: foldout
+    category: 21  
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: type of accessory
-    category: jewelry
+    key: type of accessory
+    category: 25
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: dimensions
-    category: rvs
+    key: dimensions
+    category: 30
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: year manufactured
-    category: rvs   
+    key: year manufactured
+    category: 30   
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: condition
-    category: rvs
+    key: condition
+    category: 30
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: mileage
-    category: rvs
+    key: mileage
+    category: 30
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: which sport
-    category: sporting
+    key: which sport
+    category: 31
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: condition
-    category: sporting
+    key: condition
+    category: 31
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: event
-    category: tickets
+    key: event
+    category: 32
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: location in venue
-    category: tickets
+    key: location in venue
+    category: 32
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: utility
-    category: tools
+    key: utility
+    category: 33
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: type
-    category: tools
+    key: type
+    category: 33
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: model of car
-    category: auto parts
+    key: model of car
+    category: 4
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: location on car
-    category: auto parts
+    key: location on car
+    category: 4
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: dimensions
-    category: baby and kids
+    key: dimensions
+    category: 5
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: utility
-    category: baby and kids
+    key: utility
+    category: 5
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: year manufactured
-    category: baby and kids
+    key: year manufactured
+    category: 5
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: condition
-    category: baby and kids
+    key: condition
+    category: 5
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: gender
-    category: baby and kids
+    key: gender
+    category: 5
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: color
-    category: cars and trucks
+    key: color
+    category: 12
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: model
-    category: cars and trucks
+    key: model
+    category: 12
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: mileage
-    category: cars and trucks
+    key: mileage
+    category: 12
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: year
-    category: cars and trucks
+    key: year
+    category: 12
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: engine specs
-    category: cars and trucks
+    key: engine specs
+    category: 12
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: condition
-    category: cars and trucks
+    key: condition
+    category: 12
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: category
-    category: cds dvd vhs
+    key: category
+    category: 13
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: type of phone
-    category: cell phones 
+    key: type of phone
+    category: 14 
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: charger
-    category: cell phones
+    key: charger
+    category: 14
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: phone model
-    category: cell phones
+    key: phone model
+    category: 14
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: year
-    category: cell phones
+    key: year
+    category: 14
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: memory capacity
-    category: cell phones   
+    key: memory capacity
+    category: 14   
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: color
-    category: cell phones
+    key: color
+    category: 14
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: occasion
-    category: clothes and accessories
+    key: occasion
+    category: 20
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: gender
-    category: clothes and accessories
+    key: gender
+    category: 20
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: size
-    category: clothes and accessories
+    key: size
+    category: 20
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: color
-    category: clothes and accessories
+    key: color
+    category: 20
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: fabric
-    category: clothes and accessories
+    key: fabric
+    category: 20
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: brand
-    category: electronics
+    key: brand
+    category: 17
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: dimensions
-    category: electronics
+    key: dimensions
+    category: 17
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: memory capacity
-    category: electronics
+    key: memory capacity
+    category: 17
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: condition
-    category: electronics
+    key: condition
+    category: 17
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: dimensions
-    category: farm and garden
+    key: dimensions
+    category: 18
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: utility
-    category: farm and garden
+    key: utility
+    category: 18
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: brand
-    category: household
+    key: brand
+    category: 24
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: materials
-    category: household
+    key: materials
+    category: 24
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: dimensions
-    category: household
+    key: dimensions
+    category: 24
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: utility
-    category: household
+    key: utility
+    category: 24
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: condition
-    category: household
+    key: condition
+    category: 24
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: model
-    category: motorcycles
+    key: model
+    category: 27
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: year manufactured
-    category: motorcycles
+    key: year manufactured
+    category: 27
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: mileage
-    category: motorcycles
+    key: mileage
+    category: 27
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: size
-    category: motorcycles
+    key: size
+    category: 27
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: wheel dimensions
-    category: motorcycles
+    key: wheel dimensions
+    category: 27
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: engine specs
-    category: motorcycles
+    key: engine specs
+    category: 27
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: condition
-    category: motorcycles
+    key: condition
+    category: 27
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: year
-    category: music instruments
+    key: year
+    category: 28
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: materials
-    category: music instruments
+    key: materials
+    category: 28
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: dimensions
-    category: music instruments
+    key: dimensions
+    category: 28
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: famous artist
-    category: music instruments
+    key: famous artist
+    category: 28
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: condition 
-    category: music instruments
+    key: condition 
+    category: 28
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: brand
-    category: photo and video
+    key: brand
+    category: 29
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: megapixels
-    category: photo and video
+    key: megapixels
+    category: 29
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: frames per second
-    category: photo and video
+    key: frames per second
+    category: 29
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: lens specs
-    category: photo and video
+    key: lens specs
+    category: 29
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: slr
-    category: photo and video
+    key: slr
+    category: 29
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: digital
-    category: photo and video
+    key: digital
+    category: 29
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: condition
-    category: photo and video
+    key: condition
+    category: 29
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: age oriented
-    category: toys and games
+    key: age oriented
+    category: 34
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: type of game
-    category: toys and video
+    key: type of game
+    category: 34
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: console
-    category: video gaming
+    key: console
+    category: 35
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: rooms
-    category: housing
+    key: rooms
+    category: 36
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: floor number
-    category: housing
+    key: floor number
+    category: 36
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: payment plan
-    category: housing
+    key: payment plan
+    category: 36
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: type of property
-    category: housing
+    key: type of property
+    category: 36
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: wifi
-    category: housing
+    key: wifi
+    category: 36
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: cable
-    category: housing
+    key: cable
+    category: 36
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: television
-    category: housing
+    key: television
+    category: 36
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: gym
-    category: housing
+    key: gym
+    category: 36
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: laundry
-    category: housing
+    key: laundry
+    category: 36
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: a/c
-    category: housing
+    key: a/c
+    category: 36
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: pets
-    category: housing
+    key: pets
+    category: 36
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: parking
-    category: housing
+    key: parking
+    category: 36
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: fridge
-    category: housing
+    key: fridge
+    category: 36
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: oven
-    category: housing
+    key: oven
+    category: 36
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: stove
-    category: housing
+    key: stove
+    category: 36
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: microwave
-    category: housing
+    key: microwave
+    category: 36
 
 - model: listings.ListingSpecKey
   pk: null  
   fields:
-    name: view
-    category: housing
+    key: view
+    category: 36
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: rooms
+    category: 37
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: floor number
+    category: 37
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: payment plan
+    category: 37
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: type of property
+    category: 37
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: wifi
+    category: 37
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: cable
+    category: 37
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: television
+    category: 37
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: gym
+    category: 37
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: laundry
+    category: 37
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: a/c
+    category: 37
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: pets
+    category: 37
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: parking
+    category: 37
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: fridge
+    category: 37
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: oven
+    category: 37
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: stove
+    category: 37
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: microwave
+    category: 37
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: view
+    category: 37    
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: rooms
+    category: 38
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: floor number
+    category: 38
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: payment plan
+    category: 38
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: type of property
+    category: 38
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: wifi
+    category: 38
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: cable
+    category: 38
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: television
+    category: 38
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: gym
+    category: 38
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: laundry
+    category: 38
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: a/c
+    category: 38
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: pets
+    category: 38
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: parking
+    category: 38
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: fridge
+    category: 38
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: oven
+    category: 38
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: stove
+    category: 38
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: microwave
+    category: 38
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: view
+    category: 38
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: rooms
+    category: 39
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: floor number
+    category: 39
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: payment plan
+    category: 39
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: type of property
+    category: 39
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: wifi
+    category: 39
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: cable
+    category: 39
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: television
+    category: 39
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: gym
+    category: 39
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: laundry
+    category: 39
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: a/c
+    category: 39
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: pets
+    category: 39
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: parking
+    category: 39
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: fridge
+    category: 39
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: oven
+    category: 39
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: stove
+    category: 39
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: microwave
+    category: 39
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: view
+    category: 39
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: rooms
+    category: 40
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: floor number
+    category: 40
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: payment plan
+    category: 40
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: type of property
+    category: 40
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: wifi
+    category: 40
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: cable
+    category: 40
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: television
+    category: 40
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: gym
+    category: 40
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: laundry
+    category: 40
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: a/c
+    category: 40
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: pets
+    category: 40
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: parking
+    category: 40
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: fridge
+    category: 40
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: oven
+    category: 40
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: stove
+    category: 40
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: microwave
+    category: 40
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: view
+    category: 40
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: rooms
+    category: 41
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: floor number
+    category: 41
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: payment plan
+    category: 41
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: type of property
+    category: 41
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: wifi
+    category: 41
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: cable
+    category: 41
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: television
+    category: 41
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: gym
+    category: 41
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: laundry
+    category: 41
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: a/c
+    category: 41
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: pets
+    category: 41
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: parking
+    category: 41
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: fridge
+    category: 41
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: oven
+    category: 41
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: stove
+    category: 41
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: microwave
+    category: 41
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: view
+    category: 41
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: rooms
+    category: 42
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: floor number
+    category: 42
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: payment plan
+    category: 42
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: type of property
+    category: 42
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: wifi
+    category: 42
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: cable
+    category: 42
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: television
+    category: 42
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: gym
+    category: 42
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: laundry
+    category: 42
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: a/c
+    category: 42
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: pets
+    category: 42
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: parking
+    category: 42
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: fridge
+    category: 42
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: oven
+    category: 42
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: stove
+    category: 42
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: microwave
+    category: 42
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: view
+    category: 42
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: rooms
+    category: 43
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: floor number
+    category: 43
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: payment plan
+    category: 43
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: type of property
+    category: 43
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: wifi
+    category: 43
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: cable
+    category: 43
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: television
+    category: 43
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: gym
+    category: 43
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: laundry
+    category: 43
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: a/c
+    category: 43
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: pets
+    category: 43
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: parking
+    category: 43
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: fridge
+    category: 43
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: oven
+    category: 43
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: stove
+    category: 43
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: microwave
+    category: 43
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: view
+    category: 43
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: rooms
+    category: 44
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: floor number
+    category: 44
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: payment plan
+    category: 44
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: type of property
+    category: 44
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: wifi
+    category: 44
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: cable
+    category: 44
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: television
+    category: 44
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: gym
+    category: 44
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: laundry
+    category: 44
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: a/c
+    category: 44
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: pets
+    category: 44
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: parking
+    category: 44
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: fridge
+    category: 44
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: oven
+    category: 44
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: stove
+    category: 44
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: microwave
+    category: 44
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: view
+    category: 44
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: rooms
+    category: 45
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: floor number
+    category: 45
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: payment plan
+    category: 45
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: type of property
+    category: 45
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: wifi
+    category: 45
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: cable
+    category: 45
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: television
+    category: 45
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: gym
+    category: 45
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: laundry
+    category: 45
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: a/c
+    category: 45
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: pets
+    category: 45
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: parking
+    category: 45
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: fridge
+    category: 45
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: oven
+    category: 45
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: stove
+    category: 45
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: microwave
+    category: 45
+
+- model: listings.ListingSpecKey
+  pk: null  
+  fields:
+    key: view
+    category: 45
+    

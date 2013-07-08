@@ -78,12 +78,13 @@ class Listing(models.Model):
 # Listing Specification
 class ListingSpecKey(models.Model):
 	key = models.CharField(max_length = 100)
-	listing = models.ForeignKey(Listing)
+	category = models.ForeignKey(ListingCategory)
 
 class ListingSpecValue(models.Model):
 	value = models.CharField(max_length = 100)
 	key = models.ForeignKey(ListingSpecKey)
-	category = models.ForeignKey(ListingCategory)
+	listing = models.ForeignKey(Listing)
+
 
 # Listing Highlight
 class ListingHighlight(models.Model):
