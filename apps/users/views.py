@@ -37,26 +37,21 @@ def info(request):
 
 def profile(request, username=None):
 	user = User.objects.get(username=username)
-	commentForm = CommentSubmitForm(initial={'date_posted':datetime.datetime.now(),'user':user})
+	# commentForm = CommentSubmitForm(initial={'date_posted':datetime.datetime.now(),'user':user})
 	listings = Listing.objects.filter(user=user).order_by('-pub_date')[:10]
 	photos = ListingPhoto.objects.filter(listing=user)
 	# provide `url` and `thumbnail_url` for convenience.
 	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos)
-	user_comments = UserComment.objects.filter(user=user)
+	comments = UserComment.objects.filter(user=user)
 	if request.method == 'POST':
-		user_comment_form = CommentSubmitForm(request.POST, instance = user_comments)
-		if user_comment_form.is_valid():
-			# user_comment_form.name = form.cleaned_data['name']
-			# user_comment_form.email = form.cleaned_data['email']
-			# user_comment_form.comment = form.cleaned_data['comment']
-			user_comment = user_comment_form.save()
-			responseData = serializers.serialize("json", UserComment.objects.filter(user=user))
-			return HttpResponse(responseData, content_type="application/json")
+		comment_form = CommentSubmitForm(request.POST, instance = user_comments)
+		if comment_form.is_valid():
+			comment = comment_form.save()
 		else:
-			errors = user_comment_form.errors
+			errors = comment_form.errors
 			return HttpResponse(simplejson.dumps(errors), content_type="application/json")
 	else:
-		return render(request, 'user_profile.html', {'user':user, 'listings':listings, 'photos':photos, 'user_comments':user_comments, 'CommentSubmitForm':commentForm})
+		return render(request, 'user_profile.html', {'user':user, 'listings':listings, 'photos':photos, 'comments':comments})
 
 
 # @login_required
