@@ -45,7 +45,8 @@ def profile(request, username=None):
 		comment_form = CommentSubmitForm(request.POST, instance = UserComment(user=user))
 		if comment_form.is_valid():
 			comment = comment_form.save()
-			return render(request, 'user_profile.html', {'user':user, 'listings':listings, 'photos':photos, 'comments':comments})
+			responseData = serializers.serialize("json", UserComment.objects.filter(pk=comment.pk));
+			return HttpResponse(responseData, content_type="application/json")
 		else:
 			errors = comment_form.errors
 			return HttpResponse(simplejson.dumps(errors), content_type="application/json")
