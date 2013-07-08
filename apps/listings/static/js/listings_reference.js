@@ -80,7 +80,7 @@ function photoLog(ink) {
 		html.push("<input type = 'hidden' name='", i, "' value='", ink[i-counter].url, "'>");
 	}
 	$('#picsyo').append(html.join(''));
-	counter++;
+	counter= counter + ink.length;
 	$('#final_countdown').attr('value', counter);
 }
 

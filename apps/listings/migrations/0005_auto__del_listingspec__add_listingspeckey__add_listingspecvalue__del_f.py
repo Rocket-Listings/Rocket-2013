@@ -8,6 +8,26 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
+        # Deleting model 'ListingSpec'
+        db.delete_table(u'listings_listingspec')
+
+        # Adding model 'ListingSpecKey'
+        db.create_table(u'listings_listingspeckey', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('key', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('listing', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Listing'])),
+        ))
+        db.send_create_signal(u'listings', ['ListingSpecKey'])
+
+        # Adding model 'ListingSpecValue'
+        db.create_table(u'listings_listingspecvalue', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('key', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingSpecKey'])),
+            ('category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingCategory'])),
+        ))
+        db.send_create_signal(u'listings', ['ListingSpecValue'])
+
         # Deleting field 'ListingPhoto.upload_ip'
         db.delete_column(u'listings_listingphoto', 'upload_ip')
 
@@ -19,6 +39,21 @@ class Migration(SchemaMigration):
         db.alter_column(u'listings_listing', 'status_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingStatus'], null=True))
 
     def backwards(self, orm):
+        # Adding model 'ListingSpec'
+        db.create_table(u'listings_listingspec', (
+            ('value', self.gf('django.db.models.fields.CharField')(max_length=60)),
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('key', self.gf('django.db.models.fields.CharField')(max_length=60)),
+            ('listing', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Listing'])),
+        ))
+        db.send_create_signal(u'listings', ['ListingSpec'])
+
+        # Deleting model 'ListingSpecKey'
+        db.delete_table(u'listings_listingspeckey')
+
+        # Deleting model 'ListingSpecValue'
+        db.delete_table(u'listings_listingspecvalue')
+
         # Adding field 'ListingPhoto.upload_ip'
         db.add_column(u'listings_listingphoto', 'upload_ip',
                       self.gf('django.db.models.fields.IPAddressField')(default='null', max_length=15),
@@ -111,12 +146,18 @@ class Migration(SchemaMigration):
             'order': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'url': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
-        u'listings.listingspec': {
-            'Meta': {'object_name': 'ListingSpec'},
+        u'listings.listingspeckey': {
+            'Meta': {'object_name': 'ListingSpecKey'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'key': ('django.db.models.fields.CharField', [], {'max_length': '60'}),
-            'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.Listing']"}),
-            'value': ('django.db.models.fields.CharField', [], {'max_length': '60'})
+            'key': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.Listing']"})
+        },
+        u'listings.listingspecvalue': {
+            'Meta': {'object_name': 'ListingSpecValue'},
+            'category': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.ListingCategory']"}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'key': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.ListingSpecKey']"}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
         u'listings.listingstatus': {
             'Meta': {'object_name': 'ListingStatus'},
