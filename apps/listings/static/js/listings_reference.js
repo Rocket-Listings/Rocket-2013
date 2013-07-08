@@ -34,8 +34,9 @@ $(document).ready(function(){
 
 			val = "housing";
  		}
-
- 		val = val.replace(/ /g,"_");
+ 		string = val.split(" ");
+ 		first_word = string[0];
+ 		console.log(first_word);
 
 		$("a", ".tab-pane").addClass("unselected");
 		$("a", ".tab-pane").removeClass("selected");
@@ -44,14 +45,14 @@ $(document).ready(function(){
 		$("#nameTitle").text($(this).html());
 		$("#listingType").text("Public");	
 		$("#id_pictures").text("True");
-		if (prev != val ){
+		if (prev != first_word ){
 			$('.category_' + prev).hide();
-			$('.category_' + val).show();
-			prev = val;
+			$('.category_' + first_word).show();
+			prev = first_word;
 		}
 		else{
-		prev = val;
-		$('.category_' + val).show();
+		prev = first_word;
+		$('.category_' + first_word).show();
 		}
 	}
 	eventHandlers();
@@ -121,18 +122,6 @@ function validateForm() {
 	}
 	else {
 		document.getElementById('primaryButton').click();
-	console.log("here");
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-

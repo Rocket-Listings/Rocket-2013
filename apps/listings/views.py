@@ -1,4 +1,4 @@
-from listings.models import Listing, ListingPhoto, Buyer, Offer, Message, ListingCategory 
+from listings.models import Listing, ListingPhoto, Buyer, Offer, Message, ListingCategory, ListingSpecKey
 from django.contrib.auth.models import User
 from django.conf import settings
 from datetime import datetime, timedelta
@@ -51,9 +51,12 @@ def create(request):
 		defaults = {'location':profile.location, 'category':profile.default_category, 'listing_type':profile.default_listing_type}
 		form = ListingForm(initial=defaults)
 		categories = ListingCategory.objects.all()
-		return render(request, 'listing_create.html', {'form':form , 'categories':categories})
+		specs = ListingSpecKey.objects.all()
+		return render(request, 'listing_create.html', {'form':form , 'categories':categories, 'specs':specs})
 
 	elif request.method == 'POST':
+		specs = ListingSpecKey.objects.all()
+
 		categories = ListingCategory.objects.all()
 		count = request.POST.get('final_count', 0)
 		count = int(count)
@@ -70,12 +73,10 @@ def create(request):
 			listing.save()
 			for x in range(0, count):
 				string = d["photo%d" %(x)]
-				print string
 				photoDict = {'url': string, 'order': x, 'listing': listing}
 				photo = ListingPhoto(**photoDict)
 				photo.clean()
 				photo.save()
-				print "success"
 			if request.user.is_authenticated():
 				return redirect(listing)
 			else:

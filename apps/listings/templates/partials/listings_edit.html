@@ -29,8 +29,7 @@
               </table>
             </div>
           </div>
-        </div>  
-
+        </div>
 
       <form method="POST" action="">
           {% csrf_token %}
@@ -43,8 +42,22 @@
                   </fieldset>
               </h1>
           </div>
-          
-          {% include "listings_specs.html" %}
+
+
+          {% for item in categories %}
+            <div class="category_{{item}}" style="display:none">
+              <table border='1'>
+                {% for spec_value in specs %}
+                  {% if spec_value.category.name == item.name %}
+                    <tr>
+                      <td>{{spec_value.key}}</td>
+                      <td><input id = {{spec_value.category.name}}_{{spec_value.key}} type="text"></td>
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+              </table>
+            </div>
+          {% endfor %}
 
           <ul class="form">
               <li>

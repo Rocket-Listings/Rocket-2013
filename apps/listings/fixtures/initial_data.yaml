@@ -304,571 +304,571 @@
     name: vacation rentals
     description: vacation rentals
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: dimensions
     category: 1
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: brand
     category: 1
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: model
     category: 1
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: remote
     category: 1
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: usage
     category: 1
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: dimensions
     category: 2
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: location created
     category: 2
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: year created
     category: 2
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: utility
     category: 2
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: color
     category: 8
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: gears
     category: 8
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: type of bike
     category: 8
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: wheel dimensions
     category: 8
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: usage
     category: 8
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: color
     category: 9
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: dimensions
     category: 9
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: engine size
     category: 9
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: sail dimensions
     category: 9
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: max speed
     category: 9
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: usage
     category: 9
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: genre
     category: 10
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: condition
     category: 10
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: cover
     category: 10   
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: dimensions
     category: 11 
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: type of business
     category: 11
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: dimensions
     category: 16
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: brand
     category: 16 
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: ram size
     category: 16
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: hd size
     category: 16
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: processor specs
     category: 16
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: year manufactured
     category: 16  
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: condition
     category: 16 
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: microsoft office
     category: 16
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: dimensions
     category: 19
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: utility
     category: 19
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: dimensions
     category: 21
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: years old
     category: 21 
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: condition
     category: 21   
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: foldout
     category: 21  
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: type of accessory
     category: 25
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: dimensions
     category: 30
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: year manufactured
     category: 30   
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: condition
     category: 30
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: mileage
     category: 30
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: which sport
     category: 31
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: condition
     category: 31
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: event
     category: 32
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: location in venue
     category: 32
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: utility
     category: 33
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: type
     category: 33
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: model of car
     category: 4
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: location on car
     category: 4
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: dimensions
     category: 5
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: utility
     category: 5
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: year manufactured
     category: 5
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: condition
     category: 5
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: gender
     category: 5
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: color
     category: 12
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: model
     category: 12
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: mileage
     category: 12
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: year
     category: 12
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: engine specs
     category: 12
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: condition
     category: 12
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: category
     category: 13
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: type of phone
     category: 14 
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: charger
     category: 14
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: phone model
     category: 14
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: year
     category: 14
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: memory capacity
     category: 14   
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: color
     category: 14
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: occasion
     category: 20
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: gender
     category: 20
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: size
     category: 20
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: color
     category: 20
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: fabric
     category: 20
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: brand
     category: 17
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: dimensions
     category: 17
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: memory capacity
     category: 17
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: condition
     category: 17
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: dimensions
     category: 18
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: utility
     category: 18
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: brand
     category: 24
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: materials
     category: 24
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: dimensions
     category: 24
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: utility
     category: 24
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: condition
     category: 24
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: model
     category: 27
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: year manufactured
     category: 27
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: mileage
     category: 27
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: size
     category: 27
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: wheel dimensions
     category: 27
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: engine specs
     category: 27
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: condition
     category: 27
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: year
     category: 28
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: materials
@@ -1792,183 +1792,182 @@
     key: type of property
     category: 44
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: wifi
     category: 44
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: cable
     category: 44
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: television
     category: 44
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: gym
     category: 44
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: laundry
     category: 44
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: a/c
     category: 44
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: pets
     category: 44
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: parking
     category: 44
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: fridge
     category: 44
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: oven
     category: 44
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: stove
     category: 44
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: microwave
     category: 44
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: view
     category: 44
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: rooms
     category: 45
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: floor number
     category: 45
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: payment plan
     category: 45
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: type of property
     category: 45
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: wifi
     category: 45
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: cable
     category: 45
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: television
     category: 45
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: gym
     category: 45
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: laundry
     category: 45
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: a/c
     category: 45
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: pets
     category: 45
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: parking
     category: 45
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: fridge
     category: 45
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: oven
     category: 45
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: stove
     category: 45
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: microwave
     category: 45
 
-- model: listings.ListingSpecValue
+- model: listings.ListingSpecKey
   pk: null  
   fields:
     key: view
     category: 45
-    
