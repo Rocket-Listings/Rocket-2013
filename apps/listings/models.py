@@ -45,7 +45,7 @@ class ListingStatus(models.Model):
 	name = models.CharField(max_length = 60)
 	description = models.CharField(max_length = 200)
 
-	def __unicode  __(self):
+	def __unicode__(self):
 		return self.name
 
 # Listing Objects
