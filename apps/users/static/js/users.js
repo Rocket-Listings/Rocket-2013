@@ -93,7 +93,7 @@ $(function() {
 						//errors.html(dismissError);
 						errors.html("");
 						for (key in response) {
-							errors.append(" <strong class='capital'>" + key + ":</strong>" + response[key] + "<br>");
+							errors.append(" <strong class='capital'>" + key + ":</strong> " + response[key] + "<br>");
 						}
 						errors.show();
 					}
@@ -150,26 +150,6 @@ $(function() {
 		}
 	}
 
-	// $('.comment-data-form').submit(function(){
-	// 	var csrftoken = $.cookie('csrftoken');
-	// 	$.ajaxSetup{
-	// 		data: $(this).serialize(),
-	// 		type: $(this).attr('method'),
-	// 		url: $(this).attr('action'),
- //    		crossDomain: false, // obviates need for sameOrigin test
- //    		beforeSend: function(xhr, settings) {
- //        		if (!csrfSafeMethod(settings.type)) 
- //            		xhr.setRequestHeader("X-CSRFToken", csrftoken);
- //    		},
- //    		success: function(response){
- //    			$('.comment-data-form').reset();
- //    		}
-		
-	// 	}
-	// }
-
-	$(".comments-list li:even").css("background-color", "#FFEED2");
-	$(".comments-list li:odd").css("background-color", "#FFF8EC");
 	handleClickEvents();
 
 	// PROFILE JS

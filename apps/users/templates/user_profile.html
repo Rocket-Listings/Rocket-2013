@@ -19,7 +19,7 @@
 				<ul class="inline">
 					<li><h3>{{user.get_profile.name}}</h3></li>
 					{% if request.user == user %}
-					<li style="float:right;"><a class="btn btn-warning edit-profile" href="{% url 'users.views.info' %}">Update your profile.</a></li>
+					<li style="float:right;"><a class="btn btn-warning edit-profile" href="{% url 'users.views.info' %}">Update your profile</a></li>
 					{% endif %}
 				</ul>
 				<span class="subtitle gray">{{user.username}}</span>
@@ -29,7 +29,7 @@
 				<ul class="inline">
 					<li><h3>{{user.username}}</h3></li>
 					{% if request.user == user %}
-					<li style="float:right;"><a class="btn btn-warning edit-profile" href="{% url 'users.views.info' %}">Update your profile.</a></li>
+					<li style="float:right;"><a class="btn btn-warning edit-profile" href="{% url 'users.views.info' %}">Update your profile</a></li>
 					{% endif %}
 				</ul>
 			</div>
@@ -78,35 +78,50 @@
 			{% endif %}
 		</ul>
 	</div>
-	{% if comments %}
 	<div class="separator"></div>
 	<div class="comment-container">
-		<h4>Buyer Feedback</h4>
+		<ul class="inline clearfix">
+			<li><h4>Buyer Feedback</h4></li>
+			<li><h5>Only showing the most recent comments. <a href="#">See all feedback</a></h5></li>
+		</ul>
 		<table class="table table-striped">
 			<tbody>
-			{% for comment in comments|slice:":5" %}
+			{% if comments %}
+				{% for comment in comments|slice:":5" %}
+					<tr><td>
+						<ul class="inline clearfix">
+							<li><h4>{{comment.title}}</h4></li>
+							<li><h6>By: {{comment.name}}</h6></li>
+							<li><h6 class="muted">{{comment.date_posted}}</h6></li>
+						</ul>
+						<p style="padding-left: 10px">{{comment.comment}}</p>
+					</td></tr>
+				{% endfor %}
+			{% elif request.user == user %}
 				<tr><td>
-					<h4>{{comment.name}}&nbsp;&nbsp;&nbsp;<span style="font-size: 15px">{{comment.date_posted}}</span></h4>
-					<p style="padding-left: 10px">{{comment.comment}}</p>
+					<h4>No one has commented on your skills as a seller. Go sell some stuff and get some feedback!</h4>
 				</td></tr>
-			{% endfor %}
+			{% else %}
+				<tr><td>
+					<h4>Sorry but {{user.username}} doesn't have any feedback.</h4>
+				</td></tr>
+			{% endif %}
 			</tbody>
 		</table>
 	</div>
-	{% endif %}
-</div>
-<div id="comment-form">
-	<span id="comment-data">
-		<div id="modal-header">
-			<h4>Bought from {{user.username}}? Write a comment!</h4>
-			<span class="unstyled">
-			</span>
-		</div>
-		<form id="comment-data-form body" method="POST">{% csrf_token %}
-			{{ CommentSubmitForm }}
-			<br>
-			<input type="submit" value="Submit" />
+	<div class="comment-form">
+		<h4>Bought from {% if user.get_profile.name %}{{user.get_profile.name}}{% else %}{{user.username}}{% endif %}? Give them some feedback!</h4>
+		<div class="errors alert alert-error hide"></div>
+		<form action="" method="POST">
+			{%csrf_token%}
+			<ul class="inline clearfix">
+				<li><label for="title">Title:</label><input type="text" name="title"></li>
+				<li><label for="name">Name:</label><input type="text" name="name"></li>
+				<li><label for="email">Email: (optional)</label><input type="email" name="email"></li>
+			</ul>
+			<textarea class="comment-textarea" placeholder="Write your comment here..." name="comment" rows="5"></textarea><br>
+			<input class="btn btn-info comment-submit" type="submit" value="Submit">
 		</form>
-	</span>
+	</div>
 </div>
 {% endblock %}

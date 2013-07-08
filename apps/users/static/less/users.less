@@ -219,8 +219,35 @@
 }
 
 .comment-container {
+	margin-top: -10px;
 	td {
 		border-top: none;
+	}
+	ul.inline > li {
+		padding-left: 0px;
+	}
+	ul {
+		margin-bottom: 0px;
+	}
+}
+
+.comment-form {
+	form > textarea {
+		margin-left: 5px;
+	}
+	.comment-textarea {
+		@media all and (min-width: 675px) {
+			width: 675px;
+		}
+		@media all and (min-width: 440px) and (max-width: 675px) {
+			width: 440px;
+		}
+		@media all and (max-width: 439px) and (min-width: 220px) {
+			width: 205px;
+		}
+	}
+	.comment-submit {
+		margin-left: 5px;
 	}
 }
 
