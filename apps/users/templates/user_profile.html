@@ -48,14 +48,19 @@
 		</div>
 		<div class="profile-stats span3">
 			<h3 class="listing-stat-header">Listings</h3>
-			<h4 class="green">{{ listings|length }}</h4>
+			<h4 class="green">{{ activelistings|length }}</h4>
+			{% if request.user == user %}
+				<h3 class="listing-stat-header">Listings (in progress)</h3>
+				<h4><a href="{% url 'listings.views.dashboard' %}">{{ draftlistings|length }}</a>
+			{% endif %}
 		</div>
 	</div>
 	<div class="separator"></div>
 	<div class="profile-selling">
 		<ul class="thumbnails">
-			{% if listings %}
-			{% for listing in listings|slice:":6" %}
+
+			{% if activelistings %}
+			{% for listing in activelistings|slice:":6" %}
 			<li class="span2">
 				<a class="thumbnail" href="{{ listing.get_absolute_url }}">
 					{% if photos %}
