@@ -1,0 +1,33 @@
+{% load static from staticfiles %}
+
+<div class="profile-selling">
+	<ul class="thumbnails">
+
+		{% if activelistings %}
+		{% for listing in activelistings|slice:":6" %}
+		<li class="span2">
+			<a class="thumbnail" href="{{ listing.get_absolute_url }}">
+				{% if photos %}
+					{% for photo in photos|slice:":1" %}
+					<img src="photo.url">
+					{% endfor %}
+				{% else %}
+					<img src="{% static 'images/sail.jpg' %}">
+				{% endif %}
+				<h4 class="profile-listing-title">{{listing.title}}</h4>
+				<h4 class="profile-listing-price">${{listing.price}}</h4>
+				<p class="profile-listing-description">{{listing.description}}</p>
+			</a>
+		</li>
+		{% endfor %}
+		{% else %}
+		<li class="span2">
+			<a class="thumbnail" href="/listings/create">
+				<img src="{% static 'images/sail.jpg' %}">
+				<h4 style="text-align: left">Go ahead, make a listing!</h4>
+				<p style="padding: 0">Just click here to get started.</p>
+			</a>
+		</li>
+		{% endif %}
+	</ul>
+</div>
