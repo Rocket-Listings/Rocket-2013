@@ -38,7 +38,6 @@ def profile(request, username=None):
 	allListings = Listing.objects.filter(user=user).order_by('-pub_date')
 	activelistings = allListings.filter(status=ListingStatus(pk=1))
 	draftlistings = allListings.filter(status=ListingStatus(pk=2))
-	listingsDict = {'listings.active': activelistings, 'listings.draft': draftlistings}
 	photos = ListingPhoto.objects.filter(listing=user)
 	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos)
 	comments = UserComment.objects.filter(user=user).order_by('-date_posted')[:5]
@@ -52,5 +51,4 @@ def profile(request, username=None):
 			errors = comment_form.errors
 			return HttpResponse(simplejson.dumps(errors), content_type="application/json")
 	else:
-		return render(request, 'user_profile.html', {'user':user, 'activelistings':activelistings, 'draftlistings':draftlistings, 'photos':photos, 'comments':comments, 'listingsDict':listingsDict})
-
+		return render(request, 'user_profile.html', {'user':user, 'activelistings':activelistings, 'draftlistings':draftlistings, 'photos':photos, 'comments':comments})
