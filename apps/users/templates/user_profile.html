@@ -15,33 +15,40 @@
 		</ul>
 		<div class="profile-info span6">
 			{% if user.get_profile.name and not user.get_profile.nameprivate or request.user == user and user.get_profile.name %}
-			<div class="name-wrapper">
-				<ul class="inline">
-					<li><h3>{{user.get_profile.name}}</h3></li>
-					{% if request.user == user %}
-					<li style="float:right;"><a class="btn btn-warning edit-profile" href="{% url 'users.views.info' %}">Update your profile</a></li>
-					{% endif %}
-				</ul>
-				<span class="subtitle gray">{{user.username}}</span>
-			</div>
+				<div class="name-wrapper">
+					<ul class="inline">
+						<li><h3>{{user.get_profile.name}}</h3></li>
+						{% if not user.get_profile.locationprivate %}
+							<li><h6>&nbsp;&nbsp;&nbsp; {{user.get_profile.location}}</h6></li>
+						{% endif %}
+						{% if request.user == user %}
+							<li style="float:right;"><a class="btn btn-warning edit-profile" href="{% url 'users.views.info' %}">Update your profile</a></li>
+						{% endif %}
+					</ul>
+					<span class="subtitle gray">{{user.username}}</span>
+				</div>
 			{% else %}
-			<div class="name-wrapper">
-				<ul class="inline">
-					<li><h3>{{user.username}}</h3></li>
-					{% if request.user == user %}
-					<li style="float:right;"><a class="btn btn-warning edit-profile" href="{% url 'users.views.info' %}">Update your profile</a></li>
-					{% endif %}
-				</ul>
-			</div>
+				<div class="name-wrapper">
+					<ul class="inline">
+						<li><h3>{{user.username}}</h3></li>
+						{% if not user.get_profile.locationprivate %}
+							<li><h6>&nbsp;&nbsp;&nbsp; {{user.get_profile.location}}</h6></li>
+						{% endif %}
+						{% if request.user == user %}
+							<li style="float:right;"><a class="btn btn-warning edit-profile" href="{% url 'users.views.info' %}">Update your profile</a></li>
+						{% endif %}
+					</ul>
+				</div>
 			{% endif %}
+			
 			<div class="profile-bio">
 				{% if user.get_profile.bio %}
 					<p>{{user.get_profile.bio}}</p>
 				{% else %}
 					{% if request.user == user %}
-					<p>Looks like you don't have a bio! <a href="{% url 'users.views.info' %}">Update</a> your profile and add one.</p>
+						<p>Looks like you don't have a bio! <a href="{% url 'users.views.info' %}">Update</a> your profile and add one.</p>
 					{% else %}
-					<p>Sorry, but {{user.username}} doesn't have a bio.</p>
+						<p>Sorry, but {{user.username}} doesn't have a bio.</p>
 					{% endif %}
 				{% endif %}
 			</div>
@@ -51,15 +58,14 @@
 			<h4 class="green">{{ activelistings|length }}</h4>
 			{% if request.user == user %}
 				<h3 class="listing-stat-header">Listings (in progress)</h3>
-				<h4><a href="{% url 'listings.views.dashboard' %}">{{ draftlistings|length }}</a>
+				<h4><a href="{% url 'listings.views.dashboard' %}">{{ draftlistings|length }}</a></h4>
 			{% endif %}
 		</div>
 	</div>
 	<div class="separator"></div>
+	{% if activelistings or request.user = user %}
 	<div class="profile-selling">
 		<ul class="thumbnails">
-
-			{% if activelistings %}
 			{% for listing in activelistings|slice:":6" %}
 			<li class="span2">
 				<a class="thumbnail" href="{{ listing.get_absolute_url }}">
@@ -76,7 +82,7 @@
 				</a>
 			</li>
 			{% endfor %}
-			{% else %}
+			{% if activelistings|length == 0 %}
 			<li class="span2">
 				<a class="thumbnail" href="/listings/create">
 					<img src="{% static 'images/sail.jpg' %}">
@@ -87,11 +93,17 @@
 			{% endif %}
 		</ul>
 	</div>
+	{% endif %}
 	<div class="separator"></div>
 	<div class="comment-container">
 		<ul class="inline clearfix">
-			<li><h4>Buyer Feedback</h4></li>
-			<li><h5>Only showing the most recent comments. <a href="#">See all feedback</a></h5></li>
+			<li><h4 class="feedback-heading">Buyer Feedback</h4></li>
+			{% if comments %}
+			<li><h5 class="gray most-recent-statement">Only showing the most recent comments. 
+					{% if comments|length > 5 %}
+					<a href="#">See all feedback</a></h5></li>
+					{% endif %}
+			{% endif %}
 		</ul>
 		<table class="table table-striped">
 			<tbody class="comment-body">
@@ -99,9 +111,9 @@
 				{% for comment in comments|slice:":5" %}
 					<tr><td>
 						<ul class="inline clearfix">
-							<li><h4>{{comment.title}}</h4></li>
-							<li><h6>By: {{comment.name}}</h6></li>
-							<li><h6>{{comment.email}}</h6></li>
+							<li><h4 id="title">{{comment.title}}</h4></li>
+							<li><h6 id="name">By: {{comment.name}}</h6></li>
+							<li><h6 id="email">{{comment.email}}</h6></li>
 							<li><h6 class="muted">{{comment.date_posted}}</h6></li>
 						</ul>
 						<p style="padding-left: 10px">{{comment.comment}}</p>
@@ -126,9 +138,9 @@
 		<div class="errors alert alert-error hide"></div>
 		<form class="comment-form" action="" method="POST">
 			<ul class="inline clearfix">
-				<li><label for="title">Title:</label><input type="text" name="title"></li>
-				<li><label for="name">Name:</label><input type="text" name="name"></li>
-				<li><label for="email">Email: (optional)</label><input type="email" name="email"></li>
+				<li ><label for="title">Title:</label><input type="text" name="title"></li>
+				<li ><label for="name">Name:</label><input type="text" name="name"></li>
+				<li ><label for="email">Email: (optional)</label><input type="email" name="email"></li>
 			</ul>
 			<textarea class="comment-textarea" placeholder="Write your comment here..." name="comment" rows="5"></textarea><br>
 			<input class="btn btn-info comment-submit" type="submit" value="Submit">
