@@ -29,7 +29,7 @@ def user_listings(request, username=None):
 	listings = Listing.objects.filter(user=user).order_by('-pub_date')[:10]
 	buyers = Buyer.objects.filter(listing__user=user)
 	messages = Message.objects.filter(listing__user=user)
-	return render(request, 'listings_dashboard.html', {'listings': listings, 'buyers': buyers, 'messages':messages,})
+	return render(request, 'listings/listings_dashboard.html', {'listings': listings, 'buyers': buyers, 'messages':messages,})
 
 @login_required
 def dashboard(request):
@@ -37,11 +37,11 @@ def dashboard(request):
 	listings = Listing.objects.filter(user=user).order_by('-pub_date').all() # later on we can change how many are returned
 	buyers = reduce(__add__, map(lambda l: list(l.buyer_set.all()), listings), [])
 	messages = reduce(__add__, map(lambda b: list(b.message_set.all()), buyers), [])
-	return render(request, 'listings_dashboard.html',  {'listings': listings, 'buyers': buyers, 'messages':messages})
+	return render(request, 'listings/listings_dashboard.html',  {'listings': listings, 'buyers': buyers, 'messages':messages})
 
 def latest(request):
 	listings = Listing.objects.all().order_by('-pub_date')[:10]
-	return render(request, 'listings_latest.html', {'listings': listings,})
+	return render(request, 'listings/listings_latest.html', {'listings': listings,})
 
 @login_required
 def create(request):
@@ -49,7 +49,7 @@ def create(request):
 		profile = request.user.get_profile()
 		defaults = {'location':profile.location, 'category':profile.default_category, 'listing_type':profile.default_listing_type}
 		form = ListingForm(initial=defaults)
-		return render(request, 'listing_create.html', {'form':form})
+		return render(request, 'listings/listing_create.html', {'form':form})
 	elif request.method == 'POST':
 		listing_form = ListingForm(request.POST)
 		if listing_form.is_valid():
@@ -66,7 +66,7 @@ def create(request):
 				return redirect(listing)
 				# Do something for anonymous users.
 		else:
-			return render(request, 'listing_create.html', {'form': ListingForm(request.POST),})
+			return render(request, 'listings/listing_create.html', {'form': ListingForm(request.POST),})
 
 
 def detail(request, listing_id):
@@ -75,7 +75,7 @@ def detail(request, listing_id):
 
 	# provide `url` and `thumbnail_url` for convenience.
 	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos)
-	return render(request, 'listing_detail.html', {'listing':listing, 'photos':photos})
+	return render(request, 'listings/listing_detail.html', {'listing':listing, 'photos':photos})
 
 def embed(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
@@ -83,7 +83,7 @@ def embed(request, listing_id):
 
 	# provide `url` and `thumbnail_url` for convenience.
 	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos)
-	return render(request, 'listing_cl_embed.html', {'listing':listing, 'photos':photos})
+	return render(request, 'listings/listing_cl_embed.html', {'listing':listing, 'photos':photos})
 
 @login_required
 def update(request, listing_id):
@@ -95,11 +95,11 @@ def update(request, listing_id):
 				listing = listing_form.save()
 				return redirect(listing)
 			else:
-				return render(request, 'listing_update.html', {'form': listing_form})
+				return render(request, 'listings/listing_update.html', {'form': listing_form})
 		else:
-			return render(request, 'listing_update.html', {'form':ListingForm(instance = listing),})
+			return render(request, 'listings/listing_update.html', {'form':ListingForm(instance = listing),})
 	else:
-		return render(request, '403.html')
+		return render(request, 'static_pages/403.html')
 
 @login_required
 def delete(request, listing_id):

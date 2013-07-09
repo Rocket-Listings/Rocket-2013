@@ -1,0 +1,13 @@
+{% extends "static_pages/static_pages_base.html" %}
+{% load static from staticfiles %}
+
+{% block css %}<link type="text/css" rel="stylesheet" href="{% static 'static_pages/css/static_pages.css' %}"/>{% endblock %}
+{% block js %}<script type="text/javascript" src="{% static 'static_pages/js/static_pages.js' %}"></script>{% endblock %}
+
+{% block title %}403 Forbidden{% endblock %}
+
+{% block content %}
+<h3>403 Forbidden</h3>
+
+<p>Sorry, but you're not allowed here.</p>
+{% endblock %}

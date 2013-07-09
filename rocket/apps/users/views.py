@@ -31,7 +31,7 @@ def info(request):
 			errors = user_profile_form.errors
 			return HttpResponse(simplejson.dumps(errors), content_type="application/json")
 	else:
-		return render(request, 'user_info.html', {'user': user})
+		return render(request, 'users/user_info.html', {'user': user})
 
 def profile(request, username=None):
 	user = User.objects.get(username=username)
@@ -53,5 +53,5 @@ def profile(request, username=None):
 			errors = comment_form.errors
 			return HttpResponse(simplejson.dumps(errors), content_type="application/json")
 	else:
-		return render(request, 'user_profile.html', {'user':user, 'activelistings':activelistings, 'draftlistings':draftlistings, 'photos':photos, 'user_comments':user_comments})
+		return render(request, 'users/user_profile.html', {'user':user, 'activelistings':activelistings, 'draftlistings':draftlistings, 'photos':photos, 'user_comments':user_comments})
 

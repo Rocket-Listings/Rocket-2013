@@ -17,9 +17,9 @@ SERVER_EMAIL = EMAIL_HOST_USER
 DATABASES = postgresify()
 DATABASES['default']['ENGINE'] = 'django_postgrespool'
 DATABASE_POOL_ARGS = {
-    'max_overflow': 10,
-    'pool_size': 10,
-    'recycle': 300
+  'max_overflow': 10,
+  'pool_size': 10,
+  'recycle': 300
 }
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#caches

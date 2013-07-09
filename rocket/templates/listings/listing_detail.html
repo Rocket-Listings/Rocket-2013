@@ -1,0 +1,117 @@
+{% extends 'listings/listings_base.html' %}
+{% load thumbnail %}
+
+{% block content %}
+<div class="listing">
+	<div class="l-header">
+		<h3 class="l-title">{{listing.title}}</h3>
+		<h3 class="l-price"><span>&nbsp;</span>${{listing.price}}</h3>	
+		<div class="clearfix"></div>
+	</div>
+	<div class="l-body">
+			{% if photos %}
+			<div class="l-entry">
+			{#<a href="{{ craigslist }}" target="_blank">Jump over to Craigslist to post your listing!</a>#}
+
+				<div class="l-thumbnails">
+				{% for photo in photos %}
+					{% thumbnail photo.url "100x100" as im %}
+					<img src="{{ im.url }}" data-full="{{ MEDIA_URL }}{{ photo.url }}" data-id="{{ photo.order }}"/>
+					{% endthumbnail %}
+				{% endfor %}			
+				</div>
+				<div class="l-stage">
+					{% with photos|first as first_photo %}
+					<img src="{{ MEDIA_URL }}{{ first_photo.url}}"/>
+					{% endwith %}
+				</div>
+			</div>
+			{% endif %}
+			<div class="l-description l-entry">
+				{{listing.description|linebreaks}}
+				<div class="clearfix"></div>
+			</div>
+	{% comment %}		<div class="l-entry">
+				<h2 class="l-entry-title">Specifications</h2>
+				<div class="l-entry-content left-half">
+					<table class="l-entry-speclist">
+						<tbody>
+						{% for specification in specifications %}
+							<tr class="specList">
+								<td class="spec">{{specification.specification}}</td>
+								<td class="val">{{specification.value}}</td>
+							</tr>    
+						{% endfor %}
+						</tbody>
+					</table>
+				</div>
+				<div class="clearfix"></div>
+			</div> {% endcomment %}
+							
+		{% comment %}		<div class="l-entry">
+				<h2 class="l-title">Highlights</h2>
+				<div class="l-entry-content left-half">
+					<ul>
+					{% for highlight in highlights %}
+						<li>{{highlight.highlight}}</li>
+					{% endfor %} 
+					</ul>
+				</div>    
+				<div class="clearfix"></div>
+			</div>{% endcomment %}
+							
+			{# <div class="l-entry"> #}
+				{# <div class="l-mapview"> #}
+					{# <img src="images/map.png" height="200" width="600" alt=" " /> #}
+				{# </div> #}
+			{# </div> #}
+
+			{# <div class="l-entry"> #}
+				{#<h3 class="l-entry-title">Seller Info</h3>#}
+				{# {% if listing.user.anonymize == 0 %} #}
+				{# <div class="l-entry-content l-sellerinfo"> #}
+					{# <img class="l-seller-profpic" width="60" height="60" src="" /> #}
+					{# <div class="l-seller-info"> #}
+						{# {% if listing.user.email %} #}
+						{# <p>{{listing.user.email}}</p> #}
+						{#{% endif %}#}
+						{# {% if listing.user.phone_number %} #}
+							{# <cite>p: {{listing.user.phone_number}}</cite> #}
+						{# {% endif %} #}
+					{# </div> #}
+				{# </div> #}
+				{# <div id="showDescription">Teddy is a great guy.</div> #}
+			{# </div> #}
+			{# {% else %} #}
+			{# <div class="l-entry l-sellerinfo"> #}
+	{% comment %}			<div class="avatar">
+					<img width="60" height="60" alt=" " src="/images/default-avatar60.png" />
+				</div>
+				<div class="SellerInfoDetail">
+					<h4>user appellation</h4>
+					<cite><a href="mailto:{{listing.user.email}}">email this seller</a></cite>
+				</div>
+				<div class="clearfix"></div>
+			</div> #}
+			<div id="anonDescription">This seller supercharged their listing using Rocket Listings! </div>
+				<div class="clearfix"></div>
+			</div>
+			{% endif %}
+			</div>
+		</div>		{% endcomment %}
+		<div class="l-footnote">
+			Created with <a href="http://www.rocketlistings.com" class="icon">Rocket Listings</a>. Blast off.
+		</div>
+	</div>		
+</div>
+<div class="listing-dash">
+	<div class="dash-title">
+		<h4>Listing Options</h4>
+	</div>
+	<div class="dash-content">
+		<p>Craigslist Embed HTML:</p>
+		<textarea class="cl-embed">{% include "listing_cl_embed.html" %}</textarea>
+	</div>
+</div>
+<div class="clearfix"></div>
+{% endblock %}

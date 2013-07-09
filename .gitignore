@@ -13,11 +13,11 @@ parts
 cache
 src
 uploads
-media/*
+media
 whoosh_index
 static_collected
 tmp
 .DS_Store
 *.sublime-*
 development.py
-css/*
+css
