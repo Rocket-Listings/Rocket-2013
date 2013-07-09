@@ -1,6 +1,2 @@
--r requirements-base.txt
-
-gunicorn==0.17.2
-pylibmc
-gevent
-django-postgrespool
+-r reqs/prod.txt
+pylibmc==1.2.3

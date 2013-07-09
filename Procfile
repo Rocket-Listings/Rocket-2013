@@ -1,1 +1,1 @@
-web: gunicorn -c ./settings/gunicorn.py settings.wsgi
+web: gunicorn -c gunicorn.py.ini settings.wsgi
