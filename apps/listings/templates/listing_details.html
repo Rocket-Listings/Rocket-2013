@@ -1,0 +1,57 @@
+{% extends 'listings_base.html' %}
+{% load thumbnail %}
+{% load static from staticfiles %}
+
+{% block js %}
+  <script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
+  <script type="text/javascript" src="{% static 'js/listings_reference.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/details.js' %}"></script>
+  <script>
+      filepicker.setKey('ATM8Oz2TyCtiJiHu6pP6Qz');
+  </script>
+  <script>
+    $(document).ready(function(){
+      $('.carousel').carousel({
+        interval: 10000
+      });
+    })
+  </script>
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+
+    <div class="span10">
+      {% for item in specifications %}
+        {{item.key.key}}:
+        {{item.name}}
+        <br>
+      {% endfor %}
+      {% include 'partials/listings_preview.html' %}
+
+      {% include 'partials/listings_edit.html' %}
+    </div>
+    
+
+
+    <div class="listing-dash span2 wrapper" data-spy="affix" data-offset-top="400" style='position:fixed;top:55px;right:55px;'>
+
+      <div class="dash-title">
+        <div class="btn-group" data-toggle="buttons-radio">
+          <button type="button" class="btn btn-primary edit_button">Edit</button>
+          <button type="button" class="btn btn-primary active preview_button">Preview</button>
+        </div>
+      </div>  
+      <div class="dash-content">
+        <p>
+          Choose whether to edit or preview your content by toggling the buttons above
+        </p>
+      </div>
+      <button type="button" style="margin-left:10px;" class="btn btn-primary submit" onclick="document.getElementById('primaryButton').click()">Submit Changes</button>
+    </div>
+
+  </div>
+
+  <div class="clearfix"></div>
+
+{% endblock %}
