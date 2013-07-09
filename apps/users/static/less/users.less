@@ -108,63 +108,61 @@
 }
 
 .profile-content {
-	.profile-header.row {
-		margin-left: 0px;
-	}
-	.profile-picture {
-	margin-bottom: 0px;
-	height: 210px;
-		img.thumbnail {
-			border-radius: 0px;
-		 	-webkit-border-radius: 0px;
-		 	-moz-border-radius: 0px;
-		 	-o-border-radius: 0px;
-		 	box-shadow: none;
-		 	-webkit-box-shadow: none;
-		 	-moz-box-shadow: none;
-		 	height: 200px
-		 	width: 200px;
+	.profile-header {
+		li {
+			margin: 0;
+		}
+		.profile-picture {
+		padding-left: 0px;
+		max-width: 210px;
+			img.thumbnail {
+				border-radius: 0px;
+			 	-webkit-border-radius: 0px;
+			 	-moz-border-radius: 0px;
+			 	-o-border-radius: 0px;
+			 	box-shadow: none;
+			 	-webkit-box-shadow: none;
+			 	-moz-box-shadow: none;
 			}
- 	}
- 	.subtitle {
- 		font-size: 20px;
- 	}
- 	.gray {
- 		color: #777;
- 	}
- 	.profile-info {
- 		text-align: left;
- 		border-right: solid 1px #DDD;
- 		padding-right: 30px;
- 		margin-left: 10px;
- 		min-height: 210px;
- 		.name-wrapper {
- 			height: 80px;
- 			ul {
- 				padding: 0;
- 				margin: 0;
- 				li {
- 					padding: 0;
- 					margin: 0;
- 				}
- 			}
- 		}
- 		.profile-bio {
- 			margin: 20px 0 0 0;
- 		}
- 		.edit-profile, .send-message {
- 			margin-top: 15px;
- 		}
- 	}
- 	.profile-stats {
- 		text-align: center;
- 		h3 {
- 			font-size: 20px;
- 		}
- 		h4 {
- 			color: #A6A6A6;
- 		}
- 	}
+	 	}
+	 	.subtitle {
+	 		font-size: 20px;
+	 	}
+	 	.gray {
+	 		color: #777;
+	 	}
+	 	.profile-info {
+	 		text-align: left;
+	 		min-height: 210px;
+	 		.name-wrapper {
+	 			height: 80px;
+	 			ul {
+	 				padding: 0;
+	 				margin: 0;
+	 				li {
+	 					padding: 0;
+	 					margin: 0;
+	 				}
+	 			}
+	 		}
+	 		.profile-bio {
+	 			margin: 20px 0 0 0;
+	 		}
+	 		.edit-profile, .send-message {
+	 			margin-top: 15px;
+	 		}
+	 	}
+	 	.profile-stats {
+	 		text-align: right;
+	 		float: right;
+	 		h3 {
+	 			font-size: 20px;
+	 		}
+	 		h4 {
+	 			color: #A6A6A6;
+	 		}
+	 	}
+	 }
 	div.separator {
 		height: 1px;
 		background-color: #DDD;
@@ -187,6 +185,7 @@
 				box-shadow: none;
 				-webkit-box-shadow: none;
 				-moz-box-shadow: none;
+				height: 250px;
 				.profile-listing-title {
 					text-align: left;
 					word-wrap: break-word;

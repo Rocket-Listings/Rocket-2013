@@ -3,16 +3,14 @@
 {% block title %}{{user.username}}{% endblock %}
 {% block content %}
 <div class="profile-content">
-	<div class="profile-header row">
-		<ul class="thumbnails profile-picture span3">
-			<li>
+	<ul class="profile-header inline clearfix row">
+		<li class="profile-picture span3 thumbnails">
 			{% if user.get_profile.propic %}
 				<img class="thumbnail" src="{{ user.get_profile.propic }}">
 			{% else %}
 				<img class="thumbnail" src=" {% static 'images/no-photo.png' %}">
 			{% endif %}
-			</li>
-		</ul>
+		</li>
 		<div class="profile-info span6">
 			{% if user.get_profile.name and not user.get_profile.nameprivate or request.user == user and user.get_profile.name %}
 			<div class="name-wrapper">
@@ -46,15 +44,15 @@
 				{% endif %}
 			</div>
 		</div>
-		<div class="profile-stats span3">
+		<li class="profile-stats span3">
 			<h3 class="listing-stat-header">Listings</h3>
 			<h4 class="green">{{ activelistings|length }}</h4>
 			{% if request.user == user %}
 				<h3 class="listing-stat-header">Listings (in progress)</h3>
-				<h4><a href="{% url 'listings.views.dashboard' %}">{{ draftlistings|length }}</a>
+				<h4><a href="{% url 'listings.views.dashboard' %}">{{ draftlistings|length }}</a></h4>
 			{% endif %}
-		</div>
-	</div>
+		</li>
+	</ul>
 	<div class="separator"></div>
 	<div class="profile-selling">
 		<ul class="thumbnails">
