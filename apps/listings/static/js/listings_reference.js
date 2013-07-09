@@ -1,19 +1,18 @@
 var counter = 0;
 var catChange = 0;
 $(document).ready(function(){
-
 	$('.l-description').text($('#id_description').val());
 	$('.title').text($('#id_title').val());
 	$('.l-location').text("(" + $('#id_location').val() + ")");
 	$('.l-price').text("$" + $('#id_price').val());
-
+ 	
+	
 	var prev = "";
 	function eventHandlers() {
 		$("a", ".tab-pane").click(handleClick);
 		$(".edit_button").click(handleEditClick);
 		$(".preview_button").click(handlePreviewClick);
 	}
-
 	function handleClick(e) {
 		var y = $(this).html();
 		function changeCat() {
@@ -24,7 +23,6 @@ $(document).ready(function(){
 				}
 			}
 		}
-
 		changeCat();
 		catChange = 1;
 
@@ -38,7 +36,9 @@ $(document).ready(function(){
  		}
  		string = val.split(" ");
  		first_word = string[0];
- 		console.log(first_word);
+ 		$('#final_category').attr('value', first_word);
+
+
 
 		$("a", ".tab-pane").addClass("unselected");
 		$("a", ".tab-pane").removeClass("selected");

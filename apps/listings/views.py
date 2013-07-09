@@ -1,4 +1,4 @@
-from listings.models import Listing, ListingPhoto, Buyer, Offer, Message, ListingCategory, ListingSpecKey
+from listings.models import Listing, ListingPhoto, Buyer, Offer, Message, ListingCategory, ListingSpecKey, ListingSpecValue
 from django.contrib.auth.models import User
 from django.conf import settings
 from datetime import datetime, timedelta
@@ -18,6 +18,7 @@ from django.core.mail import send_mail
 from django.core import serializers
 from django.http import HttpResponse, HttpResponseBadRequest
 import requests
+import re
 from bs4 import BeautifulSoup
 
 
@@ -55,8 +56,6 @@ def create(request):
 		return render(request, 'listing_create.html', {'form':form , 'categories':categories, 'specs':specs})
 
 	elif request.method == 'POST':
-		specs = ListingSpecKey.objects.all()
-
 		categories = ListingCategory.objects.all()
 		count = request.POST.get('final_count', 0)
 		count = int(count)
@@ -65,8 +64,9 @@ def create(request):
 		for x in range(0, count):
 			d["photo{0}".format(x)] = request.POST.get(str(x))
 
+		specCounter = 0
+
 		listing_form = ListingForm(request.POST)
-		print listing_form
 		if listing_form.is_valid():
 			listing = listing_form.save(commit=False)
 			listing.user = request.user
@@ -77,13 +77,21 @@ def create(request):
 				photo = ListingPhoto(**photoDict)
 				photo.clean()
 				photo.save()
+			specs = ListingSpecKey.objects.all()
+			cat = str(request.POST.get('final_cat'))
+			postReturn = str(request.POST)
+			matches = re.findall(r''+cat+'\w+', postReturn)
+			for match in matches:
+				print cat
+
+
 			if request.user.is_authenticated():
 				return redirect(listing)
 			else:
 				return redirect(listing)
 				# Do something for anonymous users.
 		else:
-			return render(request, 'listing_create.html', {'form': ListingForm(request.POST), 'categories':categories})
+			return render(request, 'listing_create.html', {'form': ListingForm(request.POST), 'categories':categories, 'specs':specs})
 
 def detail(request, listing_id):
 	if request.method == 'GET':
@@ -94,7 +102,8 @@ def detail(request, listing_id):
 		categories = ListingCategory.objects.all()
 		photos = listing.listingphoto_set.all()
 		specs = ListingSpecKey.objects.all()
-		return render(request, 'listing_details.html', {'listing':listing, 'form':form, 'categories':categories, 'photos':photos, 'specs':specs})
+		specifications = listing.listingspecvalue_set.all()
+		return render(request, 'listing_details.html', {'listing':listing, 'form':form, 'categories':categories, 'photos':photos, 'specs':specs, 'specifications':specifications})
 
 	elif request.method == 'POST':
 		listing = get_object_or_404(Listing, id=listing_id)

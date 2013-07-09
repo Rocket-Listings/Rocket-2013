@@ -22,6 +22,11 @@
   <div class="row">
 
     <div class="span10">
+      {% for item in specifications %}
+        {{item.key.key}}:
+        {{item.name}}
+        <br>
+      {% endfor %}
       {% include 'partials/listings_preview.html' %}
 
       {% include 'partials/listings_edit.html' %}
