@@ -1,5 +1,6 @@
-var counter = 0;
-var catChange = 0;
+var pictureCounter = 0;
+var categoryChange = 0;
+
 $(document).ready(function(){
 	$('.l-description').text($('#id_description').val());
 	$('.title').text($('#id_title').val());
@@ -97,38 +98,39 @@ function fileUpload(){
 		},
 		{location:"S3"},
 	function(InkBlobs){
-		var inky = InkBlobs;
-		photoLog(inky);
-		image(inky);
-		images(inky);
+		var filepickerObject = InkBlobs;
+		photoLog(filepickerObject);
+		editImage(filepickerObject);
+		previewImages(filepickerObject);
 		}
 	);
 }
 
-function photoLog(ink) {
+function photoLog(object) {
 	var html = [];
-	var number = ink.length + counter;
-	for (var i=counter; i<number; i++) {
-		html.push("<input type = 'hidden' name='", i, "' value='", ink[i-counter].url, "'>");
+	var length = object.length;
+	var number = length + pictureCounter;
+	for (var i=pictureCounter; i<number; i++) {
+		html.push("<input type = 'hidden' name='", i, "' value='", object[i-pictureCounter].url, "'>");
 	}
-	$('#picsyo').append(html.join(''));
-	counter= counter + ink.length;
-	$('#final_countdown').attr('value', counter);
+	$('#pictureData').append(html.join(''));
+	pictureCounter = pictureCounter + length;
+	$('#final_countdown').attr('value', pictureCounter);
 }
 
-function image(ink) {
+function editImage(object) {
 	var html = [];
-	for (var i=0; i<ink.length; i++) {
-		html.push("<img src ='", ink[i].url, "'>");
+	for (var i=0; i<object.length; i++) {
+		html.push("<img src ='", object[i].url, "'>");
 	}
 	$('#image').append(html.join(''));
 
 }
 
-function images(ink) {
+function previewImages(object) {
 	var html = [];
-	for (var i=0; i<ink.length; i++) {
-		html.push("<div class='item'><img src ='", ink[i].url, "'></div>");
+	for (var i=0; i<object.length; i++) {
+		html.push("<div class='item'><img src ='", object[i].url, "'></div>");
 	}
 	$('#images').append(html.join(''));
 
@@ -160,8 +162,4 @@ function validateForm() {
 		$(".preview-pane").hide();
 	}
 	pageLoad();
-
-	
-	
-		
 }

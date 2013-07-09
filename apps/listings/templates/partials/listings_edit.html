@@ -51,14 +51,14 @@
                     {% if spec_value.category.name == item.name %}
                       <tr>
                         <td>{{spec_value.key}}</td>
-                        <td><input name={{spec_value.category.name}}_{{spec_value.key}} id={{spec_value.category.name}}_{{spec_value.key}} type="text"></td>
+                        <td><input name={{spec_value.category.name.split.0}}_{{spec_value.key}} type="text"></td>
                       </tr>
                     {% endif %}
                   {% endfor %}
                 </table>
               </div>
             {% endfor %}
-            <input name="final_cat" id="final_category" value="">
+            <input class="hidden" name="final_cat" id="final_category" value="">
           </div>
           <br>
 
@@ -76,7 +76,7 @@
                       <option value="5" selected="selected" id="listingType">{{listing.listing_type}}</option>
                   </select>
               </li>
-                <div id="picsyo"></div>
+                <div id="pictureData"></div>
               <br>
               <button type="button" class="btn btn-primary" onclick='fileUpload()'>Upload Picture Here</button>
               <div id="image"></div>
