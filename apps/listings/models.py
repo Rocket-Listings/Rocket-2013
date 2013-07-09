@@ -24,14 +24,14 @@ class ListingCategory(models.Model):
 	name = models.CharField(max_length = 60)
 	CL_id = models.IntegerField(null = True)
 	is_owner = models.NullBooleanField()
-
+	description = models.CharField(max_length = 200)
+	
 	def __unicode__(self):
 		return self.name
 
 # Listing Types
 class ListingType(models.Model):
 	objects = GenericNameManager()
-
 	name = models.CharField(max_length = 60)
 	description = models.CharField(max_length = 200)
 

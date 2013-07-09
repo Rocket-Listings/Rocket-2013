@@ -99,19 +99,11 @@ class Migration(SchemaMigration):
         u'users.usercomment': {
             'Meta': {'object_name': 'UserComment'},
             'comment': ('django.db.models.fields.TextField', [], {}),
-<<<<<<< HEAD
-            'date_posted': ('django.db.models.fields.DateField', [], {}),
-            'email': ('django.db.models.fields.EmailField', [], {'max_length': '255'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'is_removed': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-=======
             'date_posted': ('django.db.models.fields.DateField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '255', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
->>>>>>> c8e33d528efdf03855faa30d545569ecae87db33
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         },
         u'users.userprofile': {
