@@ -38,9 +38,12 @@
 		</div>
 		{% include "partials/footer.html" %}
 		{% include "partials/modal_photo_upload.html" %}
+		{% include 'partials/comment_form.html.html' %}
 		{% endblock %}
 		{# CDN JS #}
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script src="http://malsup.github.com/jquery.form.js"></script> 
+
 		<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
 		{% block cdnjs %}{% endblock %}
 		{# for offline development #}

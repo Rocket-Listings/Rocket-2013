@@ -1,0 +1,96 @@
+<div class="edit" style="display:none">
+  <div class="listing-edit">
+    <div>
+      <div class="tabbable">  
+        <ul class="nav nav-tabs">  
+          <li class="active li1"><a href="#1" id = "tab1" data-toggle="tab">For Sale</a></li>  
+          <li class="li2"><a href="#2" id = "tab2" data-toggle="tab">Housing</a></li> 
+        </ul>  
+        <div class="tab-content">  
+          <div class="tab-pane active large" id="1" data-type="for_sale">
+            <table class="table">
+                <tr>
+                    {% for item in categories %}
+                      <td><a href="#">{{item}}</a></td>
+                      {% if forloop.counter == 36 %}
+                              </tr>
+                            </table>
+                          </div>
+                          <div class="tab-pane small" data-type="housing" id="2">
+                            <table class="table">
+                              <tr>
+                      {% else %}
+                        {% if forloop.counter|divisibleby:"7" %}
+                          </tr><tr>
+                        {% endif %}
+                      {% endif %}
+                    {% endfor %}
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      <form method="POST" action="">
+          {% csrf_token %}
+          <div class="l-header">
+              <h1 class="l-title">
+                  <fieldset>
+                      <input id="id_title" name="title" placeholder="Title" type="text" value="{{listing.title}}"/>
+                      <input id="id_price" name="price" type="text" placeholder="Price" value="{{listing.price}}"/>
+                      <input id="id_location" name="location" type="text" placeholder="Location" value="{{listing.location}}"/>
+                  </fieldset>
+              </h1>
+          </div>
+
+          <div class="spec_tables">
+            {% for item in categories %}
+              <div class="category_{{item}}" style="display:none">
+                <table border='1' class="table_{{item}}">
+                  {% for spec_value in specs %}
+                    {% if spec_value.category.name == item.name %}
+                      <tr>
+                        <td>{{spec_value.key}}</td>
+                        <td><input name={{spec_value.category.name}}_{{spec_value.key}} id={{spec_value.category.name}}_{{spec_value.key}} type="text"></td>
+                      </tr>
+                    {% endif %}
+                  {% endfor %}
+                </table>
+              </div>
+            {% endfor %}
+            <input name="final_cat" id="final_category" value="">
+          </div>
+          <br>
+
+          <ul class="form">
+              <li>
+                  <textarea cols="60" id="id_description" name="description" rows="10" placeholder="Description">{{listing.description}}</textarea>
+              </li>
+              <li>
+                <div class="hidden" style="display:none">
+                {{ form.category }}
+                </div>
+              </li>
+              <li>
+                  <select id="id_listing_type" name="listing_type" style="display:none">
+                      <option value="5" selected="selected" id="listingType">{{listing.listing_type}}</option>
+                  </select>
+              </li>
+                <div id="picsyo"></div>
+              <br>
+              <button type="button" class="btn btn-primary" onclick='fileUpload()'>Upload Picture Here</button>
+              <div id="image"></div>
+              <input type="hidden" name="final_count" id="final_countdown" value="0">
+              <li>
+                  <input class="btn" type="submit" value="Update" style="display:none" id="primaryButton"/>
+              </li>
+          </ul>
+      </form>
+    </div>
+    <div class="l-footnote" style ="margin-left:55px;">
+    Created with 
+    <a href="http://www.rocketlistings.com" class="icon"> Rocket Listings</a>
+    . Blast off. 
+  </div>
+  </div>
+</div>
