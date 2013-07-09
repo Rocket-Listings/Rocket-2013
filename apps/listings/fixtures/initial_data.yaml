@@ -473,26 +473,26 @@
     description: Are you an organization?
 
 - model: listings.ListingStatus
-  pk: null
+  pk: 1
   fields:
     name: Active
-    description: Are you an organization?
+    description: Listing is viewable and available
 
 - model: listings.ListingStatus
-  pk: null
+  pk: 2
   fields:
     name: Draft
-    description: Are you an organization?
+    description: Listing is not ready to be posted or is incomplete
 
 - model: listings.ListingStatus
-  pk: null
+  pk: 3
   fields:
     name: Sold
-    description: Are you an organization?
+    description: Listing has already been sold and is no longer available
 
 - model: listings.ListingStatus
-  pk: null
+  pk: 4
   fields:
     name: Deleted
-    description: Are you an organization?
+    description: Listing has been removed from user profile
 

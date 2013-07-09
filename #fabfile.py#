@@ -1,4 +1,4 @@
-from fabric.api import local,env
+`from fabric.api import local,env
 
 def resetdb(db=env.get('user')):
   local('dropdb -h localhost %s' % db)
