@@ -93,7 +93,8 @@ def detail(request, listing_id):
 		form = ListingForm(initial=defaults)
 		categories = ListingCategory.objects.all()
 		photos = listing.listingphoto_set.all()
-		return render(request, 'listing_details.html', {'listing':listing, 'form':form, 'categories':categories, 'photos':photos})
+		specs = ListingSpecKey.objects.all()
+		return render(request, 'listing_details.html', {'listing':listing, 'form':form, 'categories':categories, 'photos':photos, 'specs':specs})
 
 	elif request.method == 'POST':
 		listing = get_object_or_404(Listing, id=listing_id)

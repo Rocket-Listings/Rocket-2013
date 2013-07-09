@@ -31,6 +31,24 @@
 
       <div class="l-description l-entry" style="white-space: pre-wrap;"></div>
       <br>
+
+      <div class="spec_tables">
+        {% for item in categories %}
+          <div class="category_{{item}}" style="display:none">
+            <table border='1' class="table_preview_{{item}}">
+              {% for spec_value in specs %}
+                {% if spec_value.category.name == item.name %}
+                  <tr>
+                    <td>{{spec_value.key}}</td>
+                    <td><input type="text" disabled></td>
+                  </tr>
+                {% endif %}
+              {% endfor %}
+            </table>
+          </div>
+        {% endfor %}
+      </div>
+
       <div class="l-footnote">
         Created with 
         <a href="http://www.rocketlistings.com" class="icon">Rocket Listings</a>
