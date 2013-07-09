@@ -219,13 +219,7 @@ def ajax_message_thread(request, listing_id, buyer_id):
 
 # Photo upload
 
-if settings.PRODUCTION:
-	upload_backend = ProductionUploadBackend
-else:
-	upload_backend = DevelopmentUploadBackend
-
-
-import_uploader = AjaxFileUploader(backend=upload_backend)
+# import_uploader = AjaxFileUploader(backend=upload_backend)
 
 
 def autopost(request, listing_id):

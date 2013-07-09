@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, url
-from listings.views import import_uploader
+# from listings.views import import_uploader
 
 urlpatterns = patterns('listings.views',
 	url(r'^$', 'latest'),
@@ -12,7 +12,7 @@ urlpatterns = patterns('listings.views',
 	url(r'^(?P<listing_id>\d+)/update/$', 'update'),
 	url(r'^(?P<listing_id>\d+)/delete/$', 'delete'),
 	url(r'^(?P<listing_id>\d+)/delete_ajax/$', 'delete_ajax'),
-	url(r'^ajax-photo-upload/$', import_uploader, name="ajax_photo_upload"),
+	# url(r'^ajax-photo-upload/$', import_uploader, name="ajax_photo_upload"),
 
 	# moved here from users/urls.py
     url(r'^(?P<username>\w+)/dashboard/$', 'dashboard'),
