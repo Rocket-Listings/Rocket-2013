@@ -4,7 +4,6 @@
 *.rej
 .installed.cfg
 __minitage__*
-bin/*
 .env
 develop-eggs
 downloads
@@ -21,3 +20,4 @@ tmp
 .DS_Store
 *.sublime-*
 development.py
+css/*

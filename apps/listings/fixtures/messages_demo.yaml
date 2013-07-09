@@ -1,7 +1,7 @@
 # requires that initial_data.yaml be loaded already
 
 # password is 'test'
-- model: auth.user  
+- model: auth.user
   pk: null
   fields:
     email: chucknorris@gmail.com
@@ -18,10 +18,10 @@
   pk: null
   fields:
     title: 2000 Jeep Wrangler
-    description: Barely used. You should buy it. 
+    description: Barely used. You should buy it.
     price: 10000
     location: Bethesda, MD
-    category: [Cars and Trucks]
+    category: [cars and trucks]
     listing_type: [Private]
     user: [chucknorris]
 
@@ -53,7 +53,7 @@
     listing: [2000 Jeep Wrangler]
     buyer: [John Wayne]
     isSeller: True
-    content: Hmmm, that's a little low. But since you're John Wayne, I'll give it to you for $9500.
+    content: "Hmmm, that's a little low. But since you're John Wayne, I'll give it to you for $9500."
 
 - model: listings.Message
   pk: null
@@ -91,7 +91,7 @@
     listing: [2000 Jeep Wrangler]
     buyer: [Peter Parker]
     isSeller: False
-    content: That's a beautiful jeep, red is my favorite color. Do you know if it has ABS brakes? It would be great if I could come look at it sometime this weekend.
+    content: "That's a beautiful jeep, red is my favorite color. Do you know if it has ABS brakes? It would be great if I could come look at it sometime this weekend."
 
 - model: listings.Message
   pk: null
@@ -99,5 +99,5 @@
     listing: [2000 Jeep Wrangler]
     buyer: [Peter Parker]
     isSeller: True
-    content: Hi Peter, It does not have ABS breaks. I'm available for test drives most of Saturday afternoons, would that work for you?
+    content: "Hi Peter, It does not have ABS breaks. I'm available for test drives most of Saturday afternoons, would that work for you?"
 

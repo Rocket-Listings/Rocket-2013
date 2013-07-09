@@ -1,13 +1,26 @@
 {% extends "static_pages_base.html" %}
 {% load static from staticfiles %}
 
-{% block css %}<link type="text/css" rel="stylesheet" href="{% static 'css/static_pages.css' %}"/>{% endblock %}
-
-{% block js %}
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuRtB1F8XVtV22jQ3dkGQPqWCKQz4suJ0&sensor=false"></script>
-<script type="text/javascript" src="{% static 'js/static_pages.js' %}"></script>
-{% endblock %}
-
 {% block content %}
-	<h2>hello world!</h2>
+	{# <div class="container-fluid home-features"> #}
+		<div class="row">
+			<div class="span4">
+					<i class="icon-newspaper"></i>
+					<h4>One page to create a listing</h4>
+					<p class="home-description">Tired of seemingly endless pages to click through when you're creating a listing? So are we. That's why we put image upload, category selection, the listing creation form, a listing preview, and publish button on one page. From the minute you decide to list until it's sold, we want to make the process as fast and easy as possible.</p>
+			</div>
+			<div class="span4">
+					<i class="icon-share"></i>
+					<h4> One click to post to Craigslist </h4>
+					<p class="home-description"> Once you've created a listing, you don't need to leave our site to list it anywhere else. You can automagically post it to Craigslist and share it on Facebook and Twitter. We're working on creating autoposting to other places like Etsy and Ebay so that you can find the largest possible audience.</p>
+			</div>
+			<div class="span4">
+					<i class="icon-laptop"></i>
+					<h4> One dashboard to manage the sale</h4>
+					<p class="home-description">The hardest part of actually selling something is dealing with the deluge of emails after you list it. We made a dashboard where you can manage your listngs, keep track of buyers, and even send and receive emails. It's easy for emails to get lost in your inbox, so use the dashboard to keep track of everything.</p>
+			</div>
+		</div>
+	{# </div> #}
+
+	<a href="/how" class="learn-more">Learn More</a>
 {% endblock %}

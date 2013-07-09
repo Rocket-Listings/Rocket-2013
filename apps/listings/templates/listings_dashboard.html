@@ -1,28 +1,33 @@
-{% extends 'listings_base.html' %}
+{% extends 'marginless.html' %}
 {% load static from staticfiles %}
 
 {% block title %}{{ block.super }} Dashboard{% endblock %}
 
-
-{% block js %}
-
-	<script id="listing_buyers_table_hb" type="text/x-handlebars-template">
-		{% include 'partials/buyers_cards_hb.html' %}
-	</script>
-	<script id="buyer_messages_thread_hb" type="text/x-handlebars-template">
-		{% include 'partials/buyer_messages_hb.html' %}
-	</script>
-	<script src="{% static 'js/handlebars.js' %}" type="text/javascript"></script>
-	<script src="{% static 'js/listings_dashboard.js' %}" type="text/javascript"></script>	
-	{{ block.super }}
-
+{% block css %}
+<link type="text/less" media="all" rel="stylesheet" href="{% static 'less/listings.less' %}"/>
 {% endblock %}
 
+{% block js %}
+	<script src="{% static 'js/listings_dashboard.js' %}" type="text/javascript"></script>
+	{{ block.super }}
+{% endblock %}
 
 {% block content %}
-	
-	<h3>Listings Dashboard</h3>
-
-	{% include 'partials/listings_table.html' %}
-	<div id="listings"></div>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span4 offset4"><h3 class="dash-title text-center">Listings Dashboard</h3></div>
+			<div class="span2 offset2 text-right"><a class="dashboard-create-btn">Post to classifieds</a></div>
+		</div>
+	</div>
+	<div class="dashboard-panel row-fluid">
+		<div class="span7 listings-col">
+			{% include 'partials/listings_table.html' %}
+		</div>
+		<div class="span2 buyers-col">
+			{% include 'partials/buyers_cards.html' %}
+		</div>
+		<div class="span3 messages-col">
+			{% include 'partials/messages_panel.html' %}
+		</div>
+	</div>
 {% endblock %}

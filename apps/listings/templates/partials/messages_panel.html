@@ -1,0 +1,25 @@
+{% load static from staticfiles %}
+{# Requires the context variable 'messages' #}	
+
+<div class="dash-subtitle">Messages</div>
+<div class="messages-panel" >
+	{% for message in messages %}
+	<div class="message buyer-{{message.buyer.id}} hide">
+		{% if message.isSeller %}
+		{% if user.get_profile.name %}
+		<h6>{{ user.get_profile.name }}</h6>
+		{% else %}
+		<h6>{{ user.username }}</h6>		
+		{% endif %}
+		<p class="seller">{{message.content}}</p>
+		{% else %}
+		<h6>{{message.buyer.name}}</h6>
+		<p class="buyer">{{message.content}}</p>
+	   	{% endif %}
+   	</div>
+   	{% endfor %}
+</div>
+<form class="message-form hide">
+	<textarea rows="2" name='content' class="input-long" placeholder="  Message..." ></textarea>
+	<input type="submit" class="btn send-button"> {# needs to be enabled #}
+</form>
