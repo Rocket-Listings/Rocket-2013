@@ -88,20 +88,13 @@ $(function() {
 					insertNewValues(response[0].fields);
 				}
 				else {
-					var errors = $(".errors"),
-						dismissError = '<a href="#" class="close" data-dismiss="alert">&times;</a>';
-						//errors.html(dismissError);
-						errors.html("");
-						for (key in response) {
-							errors.append(" <strong class='capital'>" + key + ":</strong>" + response[key] + "<br>");
-						}
-						errors.show();
-					}
-					handleClickEvents();
+					showError(response);
 				}
-			});
-			return false;
-		})
+				handleClickEvents();
+			}
+		});
+		return false;
+	});
 	function insertNewValues(data) {
 		for (key in data) {
 			var tag = $("." + key.toString());
@@ -154,6 +147,50 @@ $(function() {
 
 	// PROFILE JS
 	// formatting
-$(".profile-listing-description").ellipsis();
+	$(".profile-listing-description").ellipsis();
+
+	// Handle the comment form
+	$(".comment-form").submit(function() {
+		var csrftoken = $.cookie('csrftoken');
+		$.ajax({
+			data: $(this).serialize(),
+			type: $(this).attr('method'),
+			url: $(this).attr('action'),
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader("X-CSRFToken", csrftoken);
+			},
+			success: function(response) {
+				if (response[0]) {
+					insertNewComment(response[0].fields);
+					$("input:not(input[type='submit']), textarea").val("");
+					$(".errors").hide();
+					$(".no-comment").hide();
+				}
+				else {
+					showError(response);
+				}
+			}
+		});
+		return false;
+	});
+
+	function insertNewComment(data) {
+		var newComment = '<tr><td><ul class="inline clearfix"><li><h4>' + data.title + '</h4></li>';
+			newComment += '<li><h6>By: ' + data.name + '</h6></li>';
+			newComment += '<li><h6 class="muted">' + data.date_posted + '</h6></li></ul>';
+			newComment += '<p style="padding-left: 10px">' + data.comment + '</p></td></tr>';
+		$(".comment-body").prepend(newComment);
+	}
+
+	function showError(response) {
+		var errors = $(".errors"),
+		dismissError = '<a href="#" class="close" data-dismiss="alert">&times;</a>';
+		//errors.html(dismissError);
+		errors.html("");
+		for (key in response) {
+			errors.append(" <strong class='capital'>" + key + ": </strong> " + response[key] + "<br>");
+		}
+		errors.show();
+	}
 });
 

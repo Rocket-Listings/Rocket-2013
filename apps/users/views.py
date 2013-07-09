@@ -41,20 +41,17 @@ def profile(request, username=None):
 	draft = ListingStatus(pk=2)
 	draftlistings = listings.filter(status=draft)
 	photos = ListingPhoto.objects.filter(listing=user)
-	# provide `url` and `thumbnail_url` for convenience.
 	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos)
-	user_comments = UserComment.objects.filter(user=user)
+	comments = UserComment.objects.filter(user=user).order_by('-date_posted')[:5]
 	if request.method == 'POST':
-		user_comment_form = CommentSubmitForm(request.POST)
-		if user_comment_form.is_valid():
-			# user_comment_form.name = form.cleaned_data['name']
-			# user_comment_form.email = form.cleaned_data['email']
-			# user_comment_form.comment = form.cleaned_data['comment']
-			user_comment = user_comment_form.save()
-			responseData = serializers.serialize("json", UserComment.objects.filter(user=user))
+		comment_form = CommentSubmitForm(request.POST, instance = UserComment(user=user))
+		if comment_form.is_valid():
+			comment = comment_form.save()
+			responseData = serializers.serialize("json", UserComment.objects.filter(pk=comment.pk));
 			return HttpResponse(responseData, content_type="application/json")
 		else:
-			errors = user_comment_form.errors
+			errors = comment_form.errors
 			return HttpResponse(simplejson.dumps(errors), content_type="application/json")
 	else:
 		return render(request, 'user_profile.html', {'user':user, 'activelistings':activelistings, 'draftlistings':draftlistings, 'photos':photos, 'user_comments':user_comments})
+
