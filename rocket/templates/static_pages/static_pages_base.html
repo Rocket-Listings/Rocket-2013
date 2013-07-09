@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
 {% load static from staticfiles %}
+{% load compress %}
 
 {% block css %}
+{% compress css %}
 <link rel="stylesheet" type="text/less" media="all" href="{% static 'static_pages/less/static_pages.less' %}"/>
+{% endcompress %}
 {% endblock %}
 
 {% block cdnjs %}
@@ -10,7 +13,9 @@
 {% endblock %}
 
 {% block js %}
+{% compress js %}
 <script type="text/javascript" src="{% static 'static_pages/js/static_pages.js' %}"></script>
+{% endcompress %}
 {% endblock %}
 
 {% block body %}
