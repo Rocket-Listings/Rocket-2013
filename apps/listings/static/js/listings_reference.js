@@ -44,11 +44,14 @@ $(document).ready(function(){
 		else {
 			is_housing = 0;
 		}
-		
-		string = val.split(" ");
-		val = string[0];
-		
-		$('#final_category').attr('value', val);
+
+ 		string = val.split(" ");
+ 		val = string[0];
+
+ 		$('#final_category').attr('value', val);
+
+ 		var specs = $('.table_' + val + ' input').length;
+
 		$("a", ".tab-pane").addClass("unselected");
 		$("a", ".tab-pane").removeClass("selected");
 		$(this).removeClass("unselected");
