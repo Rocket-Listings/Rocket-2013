@@ -136,16 +136,26 @@ def embed(request, listing_id):
 @login_required
 def update(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
+
+	profile = request.user.get_profile()
+	defaults = {'location':listing.location, 'category':listing.category, 'listing_type':profile.default_listing_type}
+	form = ListingForm(initial=defaults)
+	categories = ListingCategory.objects.all()
+	photos = listing.listingphoto_set.all()
+	specifications = listing.listingspecvalue_set.all()
+
+	specs = ListingSpecKey.objects.all()
+	categories = ListingCategory.objects.all()
 	if request.user == listing.user: # updating his own listing
 		if request.method == 'POST':
 			listing_form = ListingForm(request.POST, instance = listing)
 			if listing_form.is_valid():
 				listing = listing_form.save()
-				return redirect(listing)
+				return redirect(listing, {'specs': specs, 'categories': categories})
 			else:
-				return render(request, 'listing_update.html', {'form': listing_form})
+				return render(request, 'listing_update.html', {'form': listing_form, 'specs': specs , 'categories': categories})
 		else:
-			return render(request, 'listing_update.html', {'form':ListingForm(instance = listing),})
+			return render(request, 'listing_update.html', {'listing':listing, 'form':form, 'categories':categories, 'photos':photos, 'specs':specs, 'specifications':specifications})
 	else:
 		return render(request, '403.html')
 

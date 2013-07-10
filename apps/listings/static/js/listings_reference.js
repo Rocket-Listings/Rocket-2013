@@ -45,6 +45,7 @@ $(document).ready(function(){
 		}
 		string = val.split(" ");
 		val = string[0];
+		
 		$('#final_category').attr('value', val);
 		$("a", ".tab-pane").addClass("unselected");
 		$("a", ".tab-pane").removeClass("selected");
