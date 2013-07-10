@@ -1,4 +1,3 @@
-
 $(function() {
 	// USER MANAGEMENT JS
 	filepicker.setKey('ATM8Oz2TyCtiJiHu6pP6Qz');
@@ -64,7 +63,28 @@ $(function() {
 		function(FPError) {
 			console.log(FPError);
 		});
-	})
+	});
+	$(".get-location").click(function(e) {
+		e.preventDefault();
+		if (window.navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function (position) {
+				var lat 	 = position.coords.latitude,
+					lng 	 = position.coords.longitude,
+					latlng 	 = new google.maps.LatLng(lat, lng),
+					geocoder = new google.maps.Geocoder();
+				geocoder.geocode({'latLng': latlng}, function(results, status) {
+					if (status == google.maps.GeocoderStatus.OK) {
+						if (results[1]) {
+							$(".location").val(results[4].formatted_address);
+						}
+						else {console.log("No reverse geocode results.")}
+					}
+					else {console.log("Geocoder failed: " + status)}
+				});
+			},
+			function() {console.log("Geolocation not available.")});
+		}
+	});
 	$(".user-info-form").submit(function() {
 		var csrftoken = $.cookie('csrftoken');
 		$.ajax({
@@ -143,10 +163,11 @@ $(function() {
 		}
 	}
 
+	// Only handles click events for edit-all and edit
 	handleClickEvents();
 
 	// PROFILE JS
-	// formatting
+	// formatting (uses autoellipsis.js)
 	$(".profile-listing-description").ellipsis();
 
 	// Handle the comment form
@@ -182,10 +203,11 @@ $(function() {
 		$(".comment-body").prepend(newComment);
 	}
 
+	// Used for comment form and user info AJAX responses
 	function showError(response) {
 		var errors = $(".errors"),
 		dismissError = '<a href="#" class="close" data-dismiss="alert">&times;</a>';
-		//errors.html(dismissError);
+		//errors.html(dismissError);  // Add back in for a dismiss error button, but then need to recreate the ".errors" div
 		errors.html("");
 		for (key in response) {
 			errors.append(" <strong class='capital'>" + key + ": </strong> " + response[key] + "<br>");

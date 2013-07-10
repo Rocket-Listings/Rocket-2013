@@ -113,6 +113,7 @@
 						<td>Location:</td>
 						<td class="form-partial">
 							<input class="location" tabindex="4" id="id_location" name="location" type="text" value="{{ user.get_profile.location }}">
+							<a href="#" class="get-location">Get location</a>
 						</td>
 						<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
 					</tr>
@@ -218,5 +219,6 @@
 				</tbody>
 			</table>
 		</form>
+		<div id="fb-root"></div>
 	</div>
 {% endblock %}
