@@ -49,5 +49,5 @@ $(function(){
 	}).on('submit', function(event, id, filename) {
 		$('.finish-upload-button').addClass('disabled');
 		$(this).fineUploader('setParams', {'order':fileNum++, 'listingid':listingid});
-  });
+  	});
 });
