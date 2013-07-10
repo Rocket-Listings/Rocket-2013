@@ -53,5 +53,5 @@ def profile(request, username=None):
 			errors = comment_form.errors
 			return HttpResponse(simplejson.dumps(errors), content_type="application/json")
 	else:
-		return render(request, 'user_profile.html', {'user':user, 'activelistings':activelistings, 'draftlistings':draftlistings, 'photos':photos, 'user_comments':user_comments})
+		return render(request, 'user_profile.html', {'user':user, 'activelistings':activelistings, 'draftlistings':draftlistings, 'photos':photos, 'comments':comments})
 

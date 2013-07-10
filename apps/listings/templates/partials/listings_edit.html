@@ -9,40 +9,39 @@
         <div class="tab-content">  
           <div class="tab-pane active large" id="1" data-type="for_sale">
             <table class="table">
-                <tr>
-                    {% for item in categories %}
-                      <td><a href="#">{{item}}</a></td>
-                      {% if forloop.counter == 36 %}
-                              </tr>
-                            </table>
-                          </div>
-                          <div class="tab-pane small" data-type="housing" id="2">
-                            <table class="table">
-                              <tr>
-                      {% else %}
-                        {% if forloop.counter|divisibleby:"7" %}
-                          </tr><tr>
-                        {% endif %}
-                      {% endif %}
-                    {% endfor %}
-                </tr>
-              </table>
-            </div>
+              <tr>
+                {% for item in categories %}
+                  <td><a href="#">{{item}}</a></td>
+                  {% if forloop.counter == 36 %}
+                        </tr>
+                      </table>
+                    </div>
+                    <div class="tab-pane small" data-type="housing" id="2">
+                      <table class="table">
+                        <tr>
+                  {% else %}
+                    {% if forloop.counter|divisibleby:"7" %}
+                      </tr><tr>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              </tr>
+            </table>
           </div>
         </div>
+      </div>
 
       <form method="POST" action="">
-          {% csrf_token %}
-          <div class="l-header">
-              <h1 class="l-title">
-                  <fieldset>
-                      <input id="id_title" name="title" placeholder="Title" type="text" value="{{listing.title}}"/>
-                      <input id="id_price" name="price" type="text" placeholder="Price" value="{{listing.price}}"/>
-                      <input id="id_location" name="location" type="text" placeholder="Location" value="{{listing.location}}"/>
-                  </fieldset>
-              </h1>
-          </div>
-
+        {% csrf_token %}
+        <div class="l-header">
+          <h1 class="l-title">
+            <fieldset>
+              <input id="id_title" name="title" placeholder="Title" type="text" value="{{listing.title}}"/>
+              <input id="id_price" name="price" type="text" placeholder="Price" value="{{listing.price}}"/>
+              <input id="id_location" name="location" type="text" placeholder="Location" value="{{listing.location}}"/>
+            </fieldset>
+          </h1>
+        </div>
           <ul class="form">
               <li>
                   <textarea cols="60" id="id_description" name="description" rows="10" placeholder="Description">{{listing.description}}</textarea>
@@ -95,9 +94,9 @@
       </form>
     </div>
     <div class="l-footnote" style ="margin-left:55px;">
-    Created with 
-    <a href="http://www.rocketlistings.com" class="icon"> Rocket Listings</a>
-    . Blast off. 
-  </div>
+      Created with 
+      <a href="http://www.rocketlistings.com" class="icon"> Rocket Listings</a>
+      . Blast off. 
+    </div>
   </div>
 </div>

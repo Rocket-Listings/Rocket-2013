@@ -7,19 +7,23 @@ $(document).ready(function(){
 	$('.l-location').text("(" + $('#id_location').val() + ")");
 	$('.l-price').text("$" + $('#id_price').val());
  	
+ 	//this variable is to hold the result if the category housing swap or wanted or neither
+	var is_housing = 0;
 	
 	var prev = "";
+	var val = "";
 	function eventHandlers() {
 		$("a", ".tab-pane").click(handleClick);
 		$(".edit_button").click(handleEditClick);
 		$(".preview_button").click(handlePreviewClick);
 	}
 	function handleClick(e) {
-		var y = $(this).html();
+		prev = val;
+		val = $(this).html();
 		function changeCat() {
-			var x = document.getElementById("id_category");
-			for (var i=1; i<x.length; i++) {
-				if ( x.options[i].text == y) {
+			var id = document.getElementById("id_category");
+			for (var i=1; i<id.length; i++) {
+				if ( id.options[i].text == val) {
 					document.getElementById('id_category').value = i;
 				}
 			}
@@ -27,17 +31,20 @@ $(document).ready(function(){
 		changeCat();
 		catChange = 1;
 
-		var val = $(this).html();
-
-		if (val == 'apartment and housing' || val == 'rooms and shared' || val == 'sublets and temporary' 
-    	|| val == 'housing wanted' || val == 'housing swap' || val == 'vacation rentals' 
-    	|| val == 'parking and storage' || val == 'office and commercial' || val == 'real estate for sale') {
-
-			val = "housing";
- 		}
+		
+		if (val == "housing swap"){
+			is_housing = 1;
+		}
+		else if (val == "housing wanted"){
+			is_housing = 2;
+		}
+		else {
+			is_housing = 0;
+		}
+		
+		
  		string = val.split(" ");
- 		first_word = string[0];
- 		$('#final_category').attr('value', first_word);
+ 		val = string[0];
 
 
 
@@ -48,15 +55,21 @@ $(document).ready(function(){
 		$("#nameTitle").text($(this).html());
 		$("#listingType").text("Public");	
 		$("#id_pictures").text("True");
-		if (prev != first_word ){
+		if (prev != val || val == "housing"){
 			$('.category_' + prev, ".edit").hide();
-			$('.category_' + first_word, ".edit").show();
-			prev = first_word;
+			alert(".category_" + prev);
+
+			if (is_housing == 1) {
+				$(".edit .category_" + val + ":eq(0)").show();
+			}
+			else if (is_housing == 2) {
+				$(".edit .category_" + val + ":eq(1)").show();
+			}
+			else {
+				$('.category_' + val, ".edit").show();
+			}
 		}
-		else{
-		prev = first_word;
-		$('.category_' + first_word, ".edit").show();
-		}
+		
 	}
 
 	function handlePreviewClick(e) {
@@ -71,7 +84,16 @@ $(document).ready(function(){
   		$(".l-category").text(base_category + " > " + category);
 
   		$('.category_' + prev, ".preview-pane").hide();
-		$('.category_' + prev, ".preview-pane").show();
+		
+		if (is_housing == 1){
+			$(".preview-pane .category_" + val +":eq(0)").show();
+		}
+		else if (is_housing == 2) {
+			$(".preview-pane .category_" + val +":eq(1)").show();
+		}
+		else {
+			$('.category_' + val, ".preview-pane").show();
+		}
 
 		var specs = $('.table_' + prev + ' input').length;
 
