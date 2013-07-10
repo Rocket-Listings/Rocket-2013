@@ -21,13 +21,29 @@ class Migration(SchemaMigration):
             ('bio', self.gf('django.db.models.fields.TextField')(blank=True)),
             ('nameprivate', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('locationprivate', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('propic', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
         ))
         db.send_create_signal(u'users', ['UserProfile'])
+
+        # Adding model 'UserComment'
+        db.create_table(u'users_usercomment', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('date_posted', self.gf('django.db.models.fields.DateField')(auto_now_add=True, blank=True)),
+            ('comment', self.gf('django.db.models.fields.TextField')()),
+            ('email', self.gf('django.db.models.fields.EmailField')(max_length=255, blank=True)),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('title', self.gf('django.db.models.fields.CharField')(max_length=255)),
+        ))
+        db.send_create_signal(u'users', ['UserComment'])
 
 
     def backwards(self, orm):
         # Deleting model 'UserProfile'
         db.delete_table(u'users_userprofile')
+
+        # Deleting model 'UserComment'
+        db.delete_table(u'users_usercomment')
 
 
     models = {
@@ -80,6 +96,16 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '60'})
         },
+        u'users.usercomment': {
+            'Meta': {'object_name': 'UserComment'},
+            'comment': ('django.db.models.fields.TextField', [], {}),
+            'date_posted': ('django.db.models.fields.DateField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'email': ('django.db.models.fields.EmailField', [], {'max_length': '255', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
+        },
         u'users.userprofile': {
             'Meta': {'object_name': 'UserProfile'},
             'bio': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
@@ -92,6 +118,7 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
             'nameprivate': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'phone': ('django.db.models.fields.CharField', [], {'max_length': '50', 'blank': 'True'}),
+            'propic': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['auth.User']", 'unique': 'True'})
         }
     }

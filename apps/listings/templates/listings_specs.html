@@ -1,0 +1,988 @@
+{% load static from staticfiles %}
+
+
+
+{% block content %}
+
+	<div class="for sale" style="margin-bottom:10px;">
+		<div class="category_appliances" style = "display: none;">
+			<table border='1'>
+				<tr>
+					<td>Dimensions</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Brand</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Model</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Remote?</td>
+					<td>
+						<select id="A_remote" name="A_remote">
+							<option value selected="selected">-----</option>
+							<option value="1">Yes</option>
+							<option value="2">No</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Usage</td>
+					<td>
+						<select id='A_usage' name='A_usage'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Very Little</option>
+							<option value='2'>Little</option>
+							<option value='3'>Moderate</option>
+							<option value='4'>Used</option>
+							<option value='5'>Very Used</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="category_antiques" style = "display: none;">
+			<table border='1'>
+				<tr>
+					<td>Location Created</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Dimesions</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Year Created</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Utility</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+			</table>
+		</div>
+		<div class="category_bikes" style = "display: none;">
+			<table border='1'>
+				<tr>
+					<td>Color</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Gears</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Type of Bike</td>
+					<td>
+						<select id="T_Bike" name="Bike">
+							<option value selected="selected">-----</option>
+							<option value='1'>Mountain</option>
+							<option value='2'>Road</option>
+							<option value='3'>Race</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Wheel Dimensions</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Usage</td>
+					<td>
+						<select id='A_usage' name='A_usage'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Very Little</option>
+							<option value='2'>Little</option>
+							<option value='3'>Moderate</option>
+							<option value='4'>Used</option>					
+							<option value='5'>Very Used</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="category_boats" style = "display: none;">
+			<table border='1'>
+				<tr>
+					<td>Color</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Type</td>
+					<td>
+						<select id='Boat-type' name='Boat'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Machine Yacht</option>
+							<option value='2'>Sailing</option>
+							<option value='3'>Kayak</option>
+							<option value='4'>Canoe</option>
+						</select>					
+					</td>
+				</tr>
+				<tr>
+					<td>Dimesions</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Engine Size</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Sail Dimentions</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Max Speed</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Usage</td>
+					<td>
+						<select id='Boat_usage' name='Boat_usage'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Very Little</option>
+							<option value='2'>Little</option>
+							<option value='3'>Moderate</option>
+							<option value='4'>Used</option>					
+							<option value='5'>Very Used</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="category_books" style = "display: none;">
+			<table border='1'>
+				<tr>
+					<td>Genre</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Condition</td>
+					<td>
+						<select id='Book_Condition' name='Book_Condition'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Very Good</option>
+							<option value='2'>Good</option>
+							<option value='3'>Moderate</option>
+							<option value='4'>Used</option>					
+							<option value='5'>Bad</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Cover</td>
+					<td>
+						<select id='B_Cover' name='B_Cover'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Hard</option>
+							<option value='2'>Soft</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="category_business" style = "display: none;">
+			<table border='1'>
+				<tr>
+					<td>Type of Business</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Dimensions</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+			</table>
+		</div>
+		<div class="category_computer" style = "display: none;">
+			<table border='1'>
+				<tr>
+					<td>Brand</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Dimensions</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>RAM Size</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>HD capacity</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Processor Specs.</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Year Manufactured</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Condition</td>
+					<td>
+						<select id='Book_Condition' name='Book_Condition'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Very Good</option>
+							<option value='2'>Good</option>
+							<option value='3'>Moderate</option>
+							<option value='4'>Used</option>					
+							<option value='5'>Bad</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Microsoft Office?</td>
+					<td>
+						<select id='Office' name='M.Office'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Yes</option>
+							<option value='2'>No</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="category_free" style = "display: none;">
+			<table border='1'>
+				<tr>
+					<td>Dimensions</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Utility</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+
+			</table>
+		</div>
+		<div class="category_furniture" style = "display: none;">
+			<table border='1'>
+				<tr>
+					<td>Dimensions</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Years old</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Condition</td>
+					<td>
+						<select id='Book_Condition' name='Book_Condition'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Very Good</option>
+							<option value='2'>Good</option>
+							<option value='3'>Moderate</option>
+							<option value='4'>Used</option>					
+							<option value='5'>Bad</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Foldout?</td>
+					<td>
+						<select id='foldout' name='foldout'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Yes</option>
+							<option value='2'>No</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="category_jewelry" style = "display: none;">
+			<table border='1'>
+				<tr>
+					<td>Type of Accessory</td>
+					<td>
+						<select id='B_Cover' name='B_Cover'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Ring</option>
+							<option value='2'>Necklace</option>
+							<option value='3'>Watch</option>
+							<option value='4'>Bracelet</option>
+							<option value='5'>Ear-Rings</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class='category_rvs' style = "display: none;">
+			<table border='1'>
+				<tr>
+					<td>Dimensions</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Year Manufactured</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Condition</td>
+					<td>
+						<select id='Book_Condition' name='Book_Condition'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Very Good</option>
+							<option value='2'>Good</option>
+							<option value='3'>Moderate</option>
+							<option value='4'>Used</option>					
+							<option value='5'>Bad</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Milage</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+			</table>
+		</div>
+		<div class="category_sporting" style = "display: none;">
+			<table border='1'>
+				<tr>
+					<td>Which Sport</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Condition</td>
+					<td>
+						<select id='Book_Condition' name='Book_Condition'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Very Good</option>
+							<option value='2'>Good</option>
+							<option value='3'>Moderate</option>
+							<option value='4'>Used</option>					
+							<option value='5'>Bad</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class='category_tickets' style = "display: none;">
+			<table border='1'>
+				<tr>
+					<td>Event</td>
+					<td>
+						<select id='T_Event' name='T_Event'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Concert</option>
+							<option value='2'>Theater</option>
+							<option value='3'>Festival</option>
+							<option value='4'>Sport</option>
+						</select>					
+					</td>
+				</tr>
+				<tr>
+					<td>Location in Venue</td>
+					<td>
+						<select id='T_Event' name='T_Event'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Arena</option>
+							<option value='2'>Lower Bloeachers</option>
+							<option value='3'>Mid Bloeachers</option>
+							<option value='4'>Upper Bloeachers</option>	
+						</select>				
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="category_tools" style = "display: none;">
+			<table border='1'>
+				<tr>
+					<td>Utility</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Type</td>
+					<td>
+						<select id='Tool' name='Tool'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Power</option>
+							<option value='2'>Non-Power</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="category_auto_parts" style = "display: none;">
+			<table border='1'>
+				<tr>
+					<td>Model of Car</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Location on Car</td>
+					<td>
+						<select id='Tool' name='Tool'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Engine</option>
+							<option value='2'>Bumper</option>
+							<option value='3'>Mirror</option>
+							<option value='4'>Windshield</option>
+							<option value='5'>Wheel</option>
+							<option value='6'>General</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class='category_baby_and_kids' style = "display: none;">
+			<table border='1'>
+				<tr>
+					<td>Dimensions</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Utility</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Year Manufactured</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Condition</td>
+					<td>
+						<select id='Book_Condition' name='Book_Condition'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Very Good</option>
+							<option value='2'>Good</option>
+							<option value='3'>Moderate</option>
+							<option value='4'>Used</option>					
+							<option value='5'>Bad</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Gender</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+			</table>
+		</div>
+		<div class="category_cars_and_trucks" style = "display: none;">
+			<table border='1'>
+				<tr>
+					<td>Color</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Model</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Mileage</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Year</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Engine Specs.</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Condition</td>
+					<td>
+						<select id='Car_Condition' name='Car_Condition'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Very Good</option>
+							<option value='2'>Good</option>
+							<option value='3'>Moderate</option>
+							<option value='4'>Used</option>					
+							<option value='5'>Bad</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="category_cds_dvd_vhs" style = "display: none;">
+			<table border='1'>
+				<tr>
+					<td>Category</td>
+					<td>
+						<select id='Category' name='Category'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Adult</option>
+							<option value='2'>Documentary</option>
+							<option value='3'>Music</option>
+							<option value='4'>Action</option>					
+							<option value='5'>Kids</option>
+							<option value='6'>Comedy</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="category_cell_phones" style = "display: none;">
+			<table border='1'>
+				<tr>
+					<td>Type of phone</td>
+					<td>
+						<select id='P_type' name='P_type'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Smartphone</option>
+							<option value='2'>Non-Smartphone</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Charger?</td>
+					<td>
+						<select id='Charger' name='Charger'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Yes</option>
+							<option value='2'>No</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Phone Model</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Year</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Memory Capacity</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Color</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+			</table>
+		</div>
+		<div class="category_clothes_and_accessories" style = "display: none;">
+			<table border='1'>
+				<tr>
+					<td>Occasion</td>
+					<td>
+						<select id='Occasion' name='Occasion'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Party</option>
+							<option value='2'>Wedding</option>
+							<option value='3'>Beach</option>
+							<option value='4'>Formal</option>
+							<option value='5'>Informal</option>
+							<option value='6'>Hiking</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Gender</td>
+					<td>
+						<select id='Gender' name='Gender'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Male</option>
+							<option value='2'>Female</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Size</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Color</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Fabric</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+			</table>
+		</div>
+		<div class="category_electronics" style = "display: none;">
+			<table border='1'>
+				<tr>
+					<td>Brand</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Dimensions</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Memory capacity</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Condition</td>
+					<td>
+						<select id='Elec_Condition' name='Elec_Condition'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Very Good</option>
+							<option value='2'>Good</option>
+							<option value='3'>Moderate</option>
+							<option value='4'>Used</option>					
+							<option value='5'>Bad</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="category_farm_and_garden" style = "display: none;">
+			<table border='1'>
+				<tr>
+					<td>Dimensions</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Utility</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+			</table>
+		</div>
+		<div class="category_household" style = "display: none;">
+			<table border='1'>
+				<tr>
+					<td>Brand</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Material</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Dimensions</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Utility</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Condition</td>
+					<td>
+						<select id='HH_Condition' name='HH_Condition'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Very Good</option>
+							<option value='2'>Good</option>
+							<option value='3'>Moderate</option>
+							<option value='4'>Used</option>					
+							<option value='5'>Bad</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="category_motorcycles" style = "display: none;">
+			<table border='1'>
+				<tr>
+					<td>Model</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Year Manufactured</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Mileage</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Size(cloth/helmet)</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Wheel Dimensions</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Engine Specs.</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Condition</td>
+					<td>
+						<select id='Moto_Condition' name='Moto_Condition'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Very Good</option>
+							<option value='2'>Good</option>
+							<option value='3'>Moderate</option>
+							<option value='4'>Used</option>					
+							<option value='5'>Bad</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="category_music_instruments" style = "display: none;">
+			<table border='1'>
+				<tr>
+					<td>Year</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Material</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Dimensions</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Famous Artist?</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				<tr>
+					<td>Condition</td>
+					<td>
+						<select id='Music_Condition' name='Music_Condition'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Very Good</option>
+							<option value='2'>Good</option>
+							<option value='3'>Moderate</option>
+							<option value='4'>Used</option>					
+							<option value='5'>Bad</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="category_photo_and_video" style = "display: none;">
+			<table border='1'>
+				<tr>
+					<td>Brand</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Megapixels</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Frames Per Second</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Lens Specs</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>SLR?</td>
+					<td>
+						<select id='SLR' name='SLR'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Yes</option>
+							<option value='2'>No</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Digital?</td>
+					<td>
+						<select id='Digital' name='Digital'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Yes</option>
+							<option value='2'>No</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Condition</td>
+					<td>
+						<select id='HH_Condition' name='HH_Condition'>
+							<option value selected="selected">-----</option>
+							<option value='1'>Very Good</option>
+							<option value='2'>Good</option>
+							<option value='3'>Moderate</option>
+							<option value='4'>Used</option>					
+							<option value='5'>Bad</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="category_toys_and_games" style = "display: none;">
+			<table border='1'>
+				<tr>
+					<td>Age Oriented</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+				<tr>
+					<td>Type of Game</td>
+					<td><input type="text" placeholder="(Optional) ex.:Boardgame"></td>
+				</tr>
+			</table>
+		</div>
+		<div class="category_video_gaming" style = "display: none;">
+			<table border='1'>
+				<tr>
+					<td>Console</td>
+					<td><input type="text" placeholder="(Optional)"></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="category_housing" style = "display: none; margin-bottom:10px;">
+		<table border='1'>
+			<tr>
+				<td>Rooms</td>	
+				<td><input type="text" placeholder="(Optional)"></td>
+				<td></td>
+				<td>No. of Bathooms</td>	
+				<td><input type="text" placeholder="(Optional)"></td>
+			</tr>
+			<tr>
+				<td>Floor Number</td>	
+				<td><input type="text" placeholder="(Optional)"></td>
+				<td></td>
+				<td>Payment Plan</td>
+				<td>
+					<select id='Payment Plan' name='Payment Plan'>
+						<option value selected="selected">-----</option>
+						<option value='1'>Monthly</option>
+						<option value='2'>One Payment</option>
+						<option vlaue='3'>Weekly</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Type of Property</td>
+				<td>
+					<select id='Type of Property' name='Type of Property'>
+						<option value selected="selected">-----</option>
+						<option value='1'>House</option>
+						<option value='2'>Apartment</option>
+						<option value='3'>Condo</option>
+					</select>
+				</td>
+				<td></td>
+				<td>Wifi</td>
+				<td>
+					<select id='Wifi' name='Wifi'>
+						<option value selected="selected">-----</option>
+						<option value='1'>Yes</option>
+						<option value='2'>No</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Cable</td>
+				<td>
+					<select id='Cable' name='Cable'>
+						<option value selected="selected">-----</option>
+						<option value='1'>Yes</option>
+						<option value='2'>No</option>
+					</select>
+				</td>
+				<td></td>
+				<td>Television</td>
+				<td>
+					<select id='Television' name='Television'>
+						<option value selected="selected">-----</option>
+						<option value='1'>Yes</option>
+						<option value='2'>No</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Gym</td>
+				<td>
+					<select id='Gym' name='Gym'>
+						<option value selected="selected">-----</option>
+						<option value='1'>Yes</option>
+						<option value='2'>No</option>
+					</select>
+				</td>
+				<td></td>
+				<td>Laundry</td>
+				<td>
+					<select id='Laundry' name='Laundry'>
+						<option value selected="selected">-----</option>
+						<option value='1'>Yes</option>
+						<option value='2'>No</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>A/C</td>
+				<td>
+					<select id='ac' name='ac'>
+						<option value selected="selected">-----</option>
+						<option value='1'>Yes</option>
+						<option value='2'>No</option>
+					</select>
+				</td>
+				<td></td>
+				<td>Pets</td>
+				<td>
+					<select id='Pets' name='Pets'>
+						<option value selected="selected">-----</option>
+						<option value='1'>Yes</option>
+						<option value='2'>No</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Parking</td>
+				<td>
+					<select id='Parking' name='Parking'>
+						<option value selected="selected">-----</option>
+						<option value='1'>Yes</option>
+						<option value='2'>No</option>
+					</select>
+				</td>
+				<td></td>
+				<td>Fridge</td>
+				<td>
+					<select id='Fidge' name='Fidge'>
+						<option value selected="selected">-----</option>
+						<option value='1'>Yes</option>
+						<option value='2'>No</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Oven</td>
+				<td>
+					<select id='Oven' name='Oven'>
+						<option value selected="selected">-----</option>
+						<option value='1'>Yes</option>
+						<option value='2'>No</option>
+					</select>
+				</td>
+				<td></td>
+				<td>Stove</td>
+				<td>
+					<select id='Stove' name='Stove'>
+						<option value selected="selected">-----</option>
+						<option value='1'>Yes</option>
+						<option value='2'>No</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Microwave</td>
+				<td>
+					<select id='Microwave' name='Microwave'>
+						<option value selected="selected">-----</option>
+						<option value='1'>Yes</option>
+						<option value='2'>No</option>
+					</select>
+				</td>
+				<td></td>
+				<td>View</td>
+				<td>
+					<select id='View' name='View'>
+						<option value selected="selected">-----</option>
+						<option value='1'>Yes</option>
+						<option value='2'>No</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+
+{% endblock %}
+
+
+
+
+

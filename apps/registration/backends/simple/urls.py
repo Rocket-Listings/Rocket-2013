@@ -27,7 +27,7 @@ from registration.views import register
 
 
 urlpatterns = patterns('', 
-	url(r'^register/$', register, {'backend': 'registration.backends.simple.SimpleBackend', 'success_url' : '/users/info/'}, name='registration_register'), 
-	url(r'^register/closed/$', TemplateView.as_view(template_name='registration/registration_closed.html'), name='registration_disallowed'),
+	url(r'^register/$', register, {'backend': 'registration.backends.simple.SimpleBackend', 'success_url' : '/users/info/', 'template_name': 'rocket_registration/registration_form.html'}, name='registration_register'), 
+	url(r'^register/closed/$', TemplateView.as_view(template_name='rocket_registration/registration_closed.html'), name='registration_disallowed'),
 	(r'', include('registration.auth_urls')),
 )

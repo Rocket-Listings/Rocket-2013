@@ -1,0 +1,48 @@
+{% load static from staticfiles %}
+<div class="header">
+	<div class="container">
+		<div class="upper">
+			{% if user.is_authenticated %}
+			<div class = "logo">
+			<a href="{% url "listings.views.user_listings" user.username %}"><img class="logo" src="{% static 'img/text-logo.png' %}" width="250" height="60" alt="Rocket Listing"></a>
+			</div>
+				<div class = "login"><a href="{% url 'listings.views.create' %}">Post</a></div>
+				<div class = "navbar">
+					<ul class="nav nav-pills">
+							<li>
+							<a href="{% url "listings.views.user_listings" user.username %}">Listings <i class="icon-th-list icon-white" style = "margin-top: 6px; color: #E75547;"></i></a>
+							</li>
+							<li>
+								<a href="{% url "users.views.info" user.username %}">Account <i class="icon-user icon-white" style = "margin-top: 6px;"></i></a>
+							</li>
+							<li>
+								<a href="{% url "auth_logout" %}">Logout <i class="icon-off icon-white" style = "margin-top: 6px;"></i></a>
+							</li>
+					</ul>
+				</div>	
+			{% else %}
+			<div class = "logo">
+			<a href="{% url 'home' %}"><img class="logo" src="{% static 'img/text-logo.png' %}" width="250" height="60" alt="Rocket Listing"></a>
+			</div>
+				<div class = "login"><a href="{% url "auth_login" %}">LOGIN</a></div>
+				<div class = "navbar">	
+					<ul class="nav nav-pills">
+							<li>
+							<a href="{% url 'home' %}">HOME</a>
+							</li>
+							<li>
+								<a href="{% url 'features' %}">FEATURES</a>
+							</li>
+							<li>
+								<a href="{% url 'pricing' %}">PRICING</a>
+							</li>
+					</ul>
+					<a class="btn btn-danger" href="{% url "registration_register" %}" data-toggle="modal"> SIGN-UP</a>
+				</div>
+			{% endif %}
+		<div class="clearfix"></div>
+		</div>	
+	</div>
+</div>
+
+
