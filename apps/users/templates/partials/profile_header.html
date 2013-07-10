@@ -1,0 +1,58 @@
+{% load static from staticfiles %}
+
+<ul class="profile-header inline clearfix row">
+	<li class="profile-picture span3 thumbnails">
+		{% if user.get_profile.propic %}
+			<img class="thumbnail" src="{{ user.get_profile.propic }}">
+		{% else %}
+			<img class="thumbnail" src=" {% static 'images/no-photo.png' %}">
+		{% endif %}
+	</li>
+	<div class="profile-info span6">
+		{% if user.get_profile.name and not user.get_profile.nameprivate or request.user == user and user.get_profile.name %}
+		<div class="name-wrapper">
+			<ul class="inline">
+				<li><h3>{{user.get_profile.name}}</h3></li>
+				{% if not user.get_profile.locationprivate %}
+					<li><h6>&nbsp;&nbsp;&nbsp; {{user.get_profile.location}}</h6></li>
+				{% endif %}
+				{% if request.user == user %}
+				<li style="float:right;"><a class="btn btn-warning edit-profile" href="{% url 'users.views.info' %}">Update your profile</a></li>
+				{% endif %}
+			</ul>
+			<span class="subtitle gray">{{user.username}}</span>
+		</div>
+		{% else %}
+		<div class="name-wrapper">
+			<ul class="inline">
+				<li><h3>{{user.username}}</h3></li>
+				{% if not user.get_profile.locationprivate %}
+					<li><h6>&nbsp;&nbsp;&nbsp; {{user.get_profile.location}}</h6></li>
+				{% endif %}
+				{% if request.user == user %}
+				<li style="float:right;"><a class="btn btn-warning edit-profile" href="{% url 'users.views.info' %}">Update your profile</a></li>
+				{% endif %}
+			</ul>
+		</div>
+		{% endif %}
+		<div class="profile-bio">
+			{% if user.get_profile.bio %}
+				<p>{{user.get_profile.bio}}</p>
+			{% else %}
+				{% if request.user == user %}
+				<p>Looks like you don't have a bio! <a href="{% url 'users.views.info' %}">Update</a> your profile and add one.</p>
+				{% else %}
+				<p>Sorry, but {{user.username}} doesn't have a bio.</p>
+				{% endif %}
+			{% endif %}
+		</div>
+	</div>
+	<li class="profile-stats span3">
+		<h3 class="listing-stat-header">Listings</h3>
+		<h4 class="green">{{ activelistings|length }}</h4>
+		{% if request.user == user %}
+			<h3 class="listing-stat-header">Listings (in progress)</h3>
+			<h4><a href="{% url 'listings.views.dashboard' %}">{{ draftlistings|length }}</a></h4>
+		{% endif %}
+	</li>
+</ul>

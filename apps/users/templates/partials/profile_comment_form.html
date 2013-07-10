@@ -1,0 +1,16 @@
+{% if request.user != user %}
+<div class="separator"></div>
+<div class="comment-form-container">
+	<h4>Bought from {% if user.get_profile.name and not user.get_profile.nameprivate or user.get_profile.name and request.user == user %}{{user.get_profile.name}}{% else %}{{user.username}}{% endif %}? Give them some feedback!</h4>
+	<div class="errors alert alert-error hide"></div>
+	<form class="comment-form" action="" method="POST">
+		<ul class="inline clearfix">
+			<li><label for="title">Title:</label><input type="text" name="title"></li>
+			<li><label for="name">Name:</label><input type="text" name="name"></li>
+			<li><label for="email">Email: (optional)</label><input type="text" name="email"></li>
+		</ul>
+		<textarea class="comment-textarea" placeholder="Write your comment here..." name="comment" rows="5"></textarea><br>
+		<input class="btn btn-info comment-submit" type="submit" value="Submit">
+	</form>
+</div>
+{% endif %}
