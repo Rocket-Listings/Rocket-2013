@@ -30,6 +30,7 @@
 
 	</head>
 	<body>
+		<div id="fb-root"></div>
 		{% block body %}
 		<div class="wrap">
 			{% include "partials/header.html" %}
@@ -44,6 +45,7 @@
 		{# CDN JS #}
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 		<script src="http://malsup.github.com/jquery.form.js"></script> 
+		<script src="//connect.facebook.net/en_US/all.js"></script> 
 		<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
 		{# for offline development #}
 		{% comment %}

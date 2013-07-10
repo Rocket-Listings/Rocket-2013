@@ -3,123 +3,64 @@
 
 {% block title %}Features{% endblock %}
 {% block content %}
-
-	<div class="features-titles">One page to create a listing</div>
-	<div class="well">
-		<div class="row" >
-			<div class="features">
-				<div class="span4">
-						<div class = "img" style="background: center no-repeat url('{% static "static_pages/img/image-editor.png" %}'); background-size: 350px; height: 280px;"></div>
-						<h4>Upload high-res photos that you can reorder, resize, scale, and crop.</h4>
-						<p class ="how-descriptions">Photos are a huge part of your listing, so we want to make sure you have full control. Upload the highest-res photos you can and we'll dispaly them in all their glory. If there's any editing you need to do, you don't need to do it in image editing software.</p>
-				</div>
-				<div class="span4">
-						<div class = "img" style="background: center no-repeat url('{% static "static_pages/img/listing-form.png" %}'); background-size: 350px; height: 280px;"></div>
-						<h4>The entire listing creation process on one page</h4>
-						<p class ="how-descriptions">A lot of page loads can really slow down the process, so we put everything in one place. Pick a category, you can select your location or we can auto-include it, upload photos, and fill out the form. You can even toggle to preview mode as you go.</p>
-				</div>
-				<div class="span4">
-						<div class = "img" style="background: center no-repeat url('{% static "static_pages/img/listing-specs.png" %}'); background-size: 350px; height: 280px;"></div>
-						<h4>Based on the category, we give you the specifications you should include.</h4>
-						<p class ="how-descriptions">Everything you're selling has some specific stats that you should include like size, year it was made, number of owners, etc. We include custom specs for every category so you don't have to 1) figure out what to include and 2) fill out each one.</p>
-				</div>
-			</div>
+	<div class = "row how-row">
+		<div class = "span4 offset2">
+			<h4>More control of photos</h4>
+				<p>Photos are a huge part of your listing, so we want to make sure you have full control. Upload the highest-res photos you can and we'll display them in all their glory. If there's any editing you need to do, you don't need to do it in image editing software.</p>
+		</div>
+		<div class = "span4">
+			<img src="{% static 'static_pages/img/image-editor.png' %}"  width = "400px">
 		</div>
 	</div>
-	<div class="features-titles">One click to post to Craigslist and share</div>
-	<div class="well">
-		<div class="row" >
-			<div class="features">
-				<div class="span4">
-						<div class = "img" style="background: center no-repeat url('{% static "static_pages/img/cl-logo.png" %}'); background-size: 120px; height: 180px;"></div>
-						<h4>Your listing automatically gets posted to Craigslist so everyone can find it.</h4>
-					<p class ="how-descriptions">Everything you're selling has some specific stats that you should include like size, year it was made, number of owners, etc. We include custom specs for every category so you don't have to 1) figure out what to include and 2) fill out each one.</p>
-				</div>
-				<div class="span4">
-						<div class = "img" style="background: center no-repeat url('{% static "static_pages/img/twitter-logo.png" %}'); background-size: 120px; height: 180px;"></div>
-						<h4>You can create your listing on Craigslist using your Rocket Listings email.</h4>
-						<p class ="how-descriptions">Everything you're selling has some specific stats that you should include like size, year it was made, number of owners, etc. We include custom specs for every category so you don't have to 1) figure out what to include and 2) fill out each one.</p>
-				</div>
-				<div class="span4">
-						<div class = "img" style="background: center no-repeat url('{% static "static_pages/img/FaceBook-Logo.png" %}'); background-size: 120px; height: 180px;"></div>
-						<h4>We even have fancy previews when you share on Facebook or Twitter.</h4>
-						<p class ="how-descriptions">Everything you're selling has some specific stats that you should include like size, year it was made, number of owners, etc. We include custom specs for every category so you don't have to 1) figure out what to include and 2) fill out each one.</p>
-				</div>
-			</div>
+	<div class = "row how-row">
+		<div class ="span2 pull-right"></div> {# this displays in the opposite order because of pull-rights #}
+		<div class = "span4 pull-right">
+			<h4>Short and smart listing creation</h4>
+			<p>A lot of page loads can really slow down the process, so we put everything in one place. Pick a category, you can select your location or we can auto-include it, upload photos, and fill out the form (we give you important specs to include). You can even toggle to preview mode in the same window so you can what your listing will look like as you make changes.</p>
+		</div>
+		<div class = "span4 offset2">
+			<img src="{% static 'static_pages/img/placeholder.svg' %}"  width = "350px">
 		</div>
 	</div>
-	<div class="features-titles">One dashboard to manage the sale</div>
-		<div class="well">
-			<div class="row" >
-			<div class="features">
-				<div class="span4">
-						<div class = "img" style="background: center no-repeat url('{% static "static_pages/img/watermelon-cat.png" %}'); background-size: 350px; height: 220px;"></div>
-						<h4>Upload high-res photos that you can reorder, resize, scale, and crop.</h4>
-						<p class ="how-descriptions">Everything you're selling has some specific stats that you should include like size, year it was made, number of owners, etc. We include custom specs for every category so you don't have to 1) 	figure out what to include and 2) fill out each one.</p>
-				</div>
-				<div class="span4">
-						<div class = "img" style="background: center no-repeat url('{% static "static_pages/img/watermelon-cat.png" %}'); background-size: 350px; height: 220px;"></div>
-						<h4>Add photos, create and preview your listing, and publish it, all in one spot.</h4>
-						<p class ="how-descriptions">Everything you're selling has some specific stats that you should include like size, year it was made, number of owners, etc. We include custom specs for every category so you don't have to 1) figure out what to include and 2) fill out each one.</p>
-				</div>
-				<div class="span4">
-						<div class = "img" style="background: center no-repeat url('{% static "static_pages/img/watermelon-cat.png" %}'); background-size: 350px; height: 220px;"></div>
-						<h4>Based on the category, we give you the specifications you should include.</h4>
-						<p class ="how-descriptions">Everything you're selling has some specific stats that you should include like size, year it was made, number of owners, etc. We include custom specs for every category so you don't have to 1) figure out what to include and 2) fill out each one.</p>
-				</div>
-			</div>
+	<div class = "row how-row">
+		<div class = "span4 offset2">
+			<h4>One click to post to Craigslist and share</h4>
+				<p>Get that awesome listing out there! We can automagically post your listings to Craigslist, Facebook and Twitter. The listing looks like a regular listings on Craigslist and we made sure the preview looks great on Facebook. We're working on adding more sites like Ebay, Etsy, and Amazon.</p>
+		</div>
+		<div class = "span4">
+			<img src="{% static 'static_pages/img/placeholder.svg' %}"  width = "350px">
 		</div>
 	</div>
-
-
-<!--comment
-
-	<div class="well">
-		<div class="row">
-			<div class="span5">
-				<h4>Create all your listings with your new email and the magic starts.</h4>
-				<td>Select a category and location, upload photos, fill out details and publish in one page.</td>
-
-
-								<td>Insant toggle between drafting and preview mode so you can edit on the fly</td>
-
-								<td styl></td>
-			</div>
-			<div class="span7">
-				<div class="features-craigslistemail">{#<img src="images/craigslist-email.png" rel="homepage listing"/>#}</div>
-			</div>
+	<div class = "row how-row">
+		<div class ="span2 pull-right"></div> {# this displays in the opposite order because of pull-rights #}
+		<div class = "span4 pull-right">
+			<h4>The Dashboard: where the magic happens</h4>
+			<p>Keeping track of all the details and emails for one listing is hard, and gets exponentially more difficult if you have more than one. We put it all in one place so you can keep track of each and every listing easily and know what's going on. You can edit, re-post, delete, and mark an item as sold as well as sort your listings by date, category, title, and responses.</p>
+		</div>
+		<div class = "span4 offset2">
+			<img src="{% static 'static_pages/img/placeholder.svg' %}"  width = "350px">
 		</div>
 	</div>
-	<div class="well">
-		<div class="row">
-			<div class="span5">
-				<h4>All of those listings will be automatically added to your Rocket Listings dashboard. </h4>
-			</div>
-			<div class="span7">
-				<div class="features-manylistings">{#<img src="images/many-listings.png" rel="homepage listing"/>#}</div>
-			</div>
+	<div class = "row how-row">
+		<div class = "span4 offset2">
+			<h4>Respond to emails</h4>
+				<p>No more sifting through all your emails trying to find the ones related to each of your listing and no more headaches trying to remember who emailed what: it's all here. You can view all your messages related to each listing, keep track of how-row much each buyer offered, and respond right in the dashboard. When it's sold, you can even email everyone else at once to let them know.</p>
+		</div>
+		<div class = "span4">
+			<img src="{% static 'static_pages/img/placeholder.svg' %}"  width = "350px">
 		</div>
 	</div>
-	<div class ="well">
-		<div class="row">
-			<div class="span5">
-				<h4> Keep track of buyers, see your offers, and even handle emails through your dashboard. </h4>
-			</div>
-			<div class="span7">
-				<div class="features-messages">{#<img src="images/messages.png" rel="homepage listing"/>#}</div>
-			</div>
+	<div class = "row how-row">
+		<div class ="span2 pull-right"></div> {# this displays in the opposite order because of pull-rights #}
+		<div class = "span4 pull-right">
+			<h4>Seller profiles = Online trust</h4>
+			<p>Everyone feels more comfortable when they know who's on the other end, especially when you're meeting up to show-row and sell an item. We made optional seller profiles so that you can let buyers know you're a real person and worth buying from. </p>
+		</div>
+		<div class = "span4 offset2">
+			<img src="{% static 'static_pages/img/placeholder.svg' %}"  width = "350px">
 		</div>
 	</div>
-	<div class ="well">
-		<div class="row">
-			<div class="span5">
-				<h4> Still want emails? Get a daily or weekly wrap-up of all your activity. </h4>
-			</div>
-			<div class="span7">
-				<div class="features-wrapup">{#<img src="images/messages.png" rel="homepage listing"/>#}</div>
-			</div>
-		</div>
-	</div>
-	-->
+	<a class="btn btn-primary btn-signup" href="{% url "registration_register" %}" data-toggle="modal">Sign Up
+	</a>
 
 {% endblock %}

@@ -4,48 +4,27 @@
 {% block title %}Pricing{% endblock %}
 {% block content %}
 
-	<div class="container-fluid">
-		<div class="row-fluid">
-				<div class = "pricing-basic">
-					<div class="span6">
-						<div class = "well well-basic">
-							<div class = "pricing-title"> Basic </div>
-							<div class = "pricing-subtitle"> Free </div>
-							<h4 style = "text-align: left;"> Includes: </h4>
-							<div class = "pricing-list">
-								<ul>
-									<li>Your own <code> @rocketlistings.com</code> email</li>
-									<li>In-dashboard messaging to buyers</li>
-									<li>Daily wrap-up emails</li>
-									<li>Social media sharing</li>
-								</ul>
-							</div>
-
-							<a class="pricing-btn btn btn-primary" href="{% url "registration_register" %}" data-toggle="modal"> SIGN-UP</a>
-						</div>
-					</div>
-				</div>
-		    <div class = "pricing-pro">
-				<div class="span6">
-					<div class = "well well-pro">
-						<div class = "pricing-title" style = "color: #E75547"> Pro </div>
-						<div class = "pricing-subtitle"> $1 per listing </div>
-						<h4 style = "text-align: left;"> Includes: </h4>
-						<div class = "pricing-list" >
-							<ul>
-								<li>Everything in the basic plan</li>
-								<li>Auto-posting to Craigslist</li>
-								<li>Branded templates for your listings</li>
-								<li>You can tell people you're a pro user.</li>
-							</ul>
-						<div class = "pricing-subtitle pro"> We haven't opened up pro accounts yet.<br> <span style = "font-size: 12px; font-style : normal;">(You can still tell people you're a pro user.)</span></div>
-
-						</div>
-					</div>
-				</div>
-			</div>
+<div class="row row-pricing">	
+		<div class="span10 offset1">
+			<h3>Every listing you publish costs $1, but it's super easy to get free listings:</h3>
 		</div>
-	</div>
+</div>
+<div class="row row-pricing">	
+		<div class="span3 offset1">
+			<i class="icon-add-friend"></i>
+			<p>5 free listings for every friend you invite to Rocket.</p>
+		</div>
+		<div class="span4">
+			<i class="icon-chart"></i>
+			<p>1 free listing for every 10 hits your listings get on rocketlistings.com</p>
+			
+		</div>
+		<div class="span3">
+			<i class="icon-profile-info"></i>
+			<p class>5 free listings by completing your profile.</p>
+		</div>
+</div>
+<a class="btn btn-primary btn-signup" href="{% url "registration_register" %}" data-toggle="modal">Sign Up</a>
 
 
 {% endblock %}
