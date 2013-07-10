@@ -64,7 +64,7 @@ def create(request):
 			d["photo{0}".format(x)] = request.POST.get(str(x))
 
 		specCounter = 0
-
+		specs = ListingSpecKey.objects.all()
 		listing_form = ListingForm(request.POST)
 		if listing_form.is_valid():
 			listing = listing_form.save(commit=False)
@@ -76,7 +76,7 @@ def create(request):
 				photo = ListingPhoto(**photoDict)
 				photo.clean()
 				photo.save()
-			specs = ListingSpecKey.objects.all()
+			
 			cat = str(request.POST.get('final_cat'))
 			postReturn = str(request.POST)
 			matches = re.findall(r''+cat+'\w+', postReturn)
