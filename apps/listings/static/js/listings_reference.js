@@ -1,5 +1,5 @@
-var pictureCounter = 0;
-var categoryChange = 0;
+var pictureCounter = 0; /* Keeps track of the number of pictures */
+var categoryChange = 0; /* Checks to see if a category has been seleced for validation purposes*/
 
 $(document).ready(function(){
 	$('.l-description').text($('#id_description').val());
@@ -8,7 +8,7 @@ $(document).ready(function(){
 	$('.l-price').text("$" + $('#id_price').val());
 
 	//this variable is to hold the result if the category housing swap or wanted or neither
-	var is_housing = 0;
+	var is_housing = 0; /* Way to differetiate housing swap and housing wanted*/
 
 	var prev = "";
 	var val = "";
@@ -21,11 +21,14 @@ $(document).ready(function(){
 
 	function handleClick(e) {
 		prev = val;
-		val = $(this).html();
+		val = $(this).html(); /* val = the category selected in the tab */
+
+		/* function below gets the category selected in the tab section and selects the correct category in the form.category */
 		function changeCat() {
-			var id = document.getElementById("id_category");
+			var id = document.getElementById('id_category');
 			for (var i=1; i<id.length; i++) {
 				if ( id.options[i].text == val) {
+					/* Finds the value of the matching category and then selects the correct option value */
 					document.getElementById('id_category').value = i;
 				}
 			}

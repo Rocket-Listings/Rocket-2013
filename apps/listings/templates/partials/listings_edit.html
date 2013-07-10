@@ -1,12 +1,13 @@
 <div class="edit" style="display:none">
   <div class="listing-edit">
     <div>
+      <!-- Tab Table with categories filled from the database -->
       <div class="tabbable">  
         <ul class="nav nav-tabs">  
           <li class="active li1"><a href="#1" id = "tab1" data-toggle="tab">For Sale</a></li>  
           <li class="li2"><a href="#2" id = "tab2" data-toggle="tab">Housing</a></li> 
         </ul>  
-        <div class="tab-content">  
+        <div class="tab-content">
           <div class="tab-pane active large" id="1" data-type="for_sale">
             <table class="table">
               <tr>
@@ -30,11 +31,12 @@
           </div>
         </div>
       </div>
-
+      <!-- Post Method with all of the listing information -->
       <form method="POST" action="">
         {% csrf_token %}
         <div class="l-header">
           <h1 class="l-title">
+            <!-- Elements are either empty fields(create page) or load from the database (details page)-->
             <fieldset>
               <input id="id_title" name="title" placeholder="Title" type="text" value="{{listing.title}}"/>
               <input id="id_price" name="price" type="text" placeholder="Price" value="{{listing.price}}"/>
@@ -46,6 +48,7 @@
               <li>
                   <textarea cols="60" id="id_description" name="description" rows="10" placeholder="Description">{{listing.description}}</textarea>
               </li>
+              <!-- All of the specs tables are loaded from the database (needs to be cleaned up).  Loads every spec every time-->
               <div class="spec_tables">
                 {% for item in categories %}
                   <div class="category_{{item}}" style="display:none">
@@ -54,6 +57,7 @@
                         {% if spec_value.category.name == item.name %}
                           <tr>
                             <td>{{spec_value.key}}</td>
+                            <!-- input is firstname of category (e.g. arts in arts and crafts) _ specification (e.g. dimensions)-->
                             <td><input name={{spec_value.category.name.split.0}}_{{spec_value.key}} type="text"></td>
                           </tr>
                         {% endif %}
@@ -61,13 +65,15 @@
                     </table>
                   </div>
                 {% endfor %}
+                <!-- The final category is loaded in view.py to easily store category specs into the database -->
                 <input class="hidden" name="final_cat" id="final_category" value="">
               </div>
             </br>
 
               <li>
-                <div class="hidden" style="display:none">
-                {{ form.category }}
+                <div >
+                  <!-- Loads category form from the database-->
+                  {{ form.category }}
                 </div>
               </li>
               <li>
@@ -82,11 +88,18 @@
                   <option value="2">Draft</option>
                 </select>
               </li>
-              <div id="pictureData"></div>
               <br>
+
               <button type="button" class="btn btn-primary" onclick='fileUpload()'>Upload Picture Here</button>
+              <!-- inserts the picture urls into inputs so that they can be loaded into the database-->
+              <div id="pictureData"></div>
+
+              <!-- inserts the actual picture scr from filepicker -->
               <div id="image"></div>
+
+              <!-- Fills in the final picture count for easy use in the view.py-->
               <input type="hidden" name="final_count" id="final_countdown" value="0">
+
               <li>
                   <input class="btn" type="submit" value="Update" style="display:none" id="primaryButton"/>
               </li>
