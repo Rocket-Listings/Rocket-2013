@@ -8,11 +8,8 @@
 {% endcompress %}
 {% endblock %}
 
-{% block cdnjs %}
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuRtB1F8XVtV22jQ3dkGQPqWCKQz4suJ0&sensor=false"></script>
-{% endblock %}
-
 {% block js %}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuRtB1F8XVtV22jQ3dkGQPqWCKQz4suJ0&sensor=false"></script>
 {% compress js %}
 <script type="text/javascript" src="{% static 'static_pages/js/static_pages.js' %}"></script>
 {% endcompress %}

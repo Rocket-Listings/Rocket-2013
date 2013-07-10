@@ -42,7 +42,7 @@ def profile(request, username=None):
 	draftlistings = listings.filter(status=draft)
 	photos = ListingPhoto.objects.filter(listing=user)
 	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos)
-	comments = UserComment.objects.filter(user=user).order_by('-date_posted')[:5]
+	user_comments = UserComment.objects.filter(user=user).order_by('-date_posted')[:5]
 	if request.method == 'POST':
 		comment_form = CommentSubmitForm(request.POST, instance = UserComment(user=user))
 		if comment_form.is_valid():
