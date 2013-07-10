@@ -46,7 +46,7 @@ $(document).ready(function(){
  		string = val.split(" ");
  		val = string[0];
 
-
+ 		var specs = $('.table_' + val + ' input').length;
 
 		$("a", ".tab-pane").addClass("unselected");
 		$("a", ".tab-pane").removeClass("selected");
@@ -55,10 +55,8 @@ $(document).ready(function(){
 		$("#nameTitle").text($(this).html());
 		$("#listingType").text("Public");	
 		$("#id_pictures").text("True");
-		if (prev != val || val == "housing"){
-			$('.category_' + prev, ".edit").hide();
-			alert(".category_" + prev);
-
+		if ((prev != val || val == "housing") && specs != 0){
+			
 			if (is_housing == 1) {
 				$(".edit .category_" + val + ":eq(0)").show();
 			}
@@ -69,7 +67,8 @@ $(document).ready(function(){
 				$('.category_' + val, ".edit").show();
 			}
 		}
-		
+		$('.category_' + prev, ".preview-pane").hide();
+		$('.category_' + prev, ".edit").hide();		
 	}
 
 	function handlePreviewClick(e) {
@@ -83,24 +82,42 @@ $(document).ready(function(){
   		var base_category = $("li.active").text().toLowerCase().trim();
   		$(".l-category").text(base_category + " > " + category);
 
-  		$('.category_' + prev, ".preview-pane").hide();
-		
+  		
+
+  		for (var i=0;i<specs;i++){
+				var spec_value = $('.table_' + prev + ':eq(0) input:eq('+i+')').val();
+				$('.table_preview_' + prev + ':eq(0) input:eq('+i+')').val(spec_value);
+			}
+
 		if (is_housing == 1){
 			$(".preview-pane .category_" + val +":eq(0)").show();
+			var specs = $('.table_' + val + ':eq(0) input').length;
+
+			for (var i=0;i<specs;i++){
+				var spec_value = $('.table_' + val + ':eq(0) input:eq('+i+')').val();
+				$('.table_preview_' + val + ':eq(0) input:eq('+i+')').val(spec_value);
+			}
 		}
 		else if (is_housing == 2) {
 			$(".preview-pane .category_" + val +":eq(1)").show();
+			var specs = $('.table_' + val + ':eq(1) input').length;
+
+			for (var i=0;i<specs;i++){
+				var spec_value = $('.table_' + val + ':eq(1) input:eq('+i+')').val();
+				$('.table_preview_' + val + ':eq(1) input:eq('+i+')').val(spec_value);
+			}
 		}
 		else {
 			$('.category_' + val, ".preview-pane").show();
+			var specs = $('.table_' + val + ' input').length;
+
+			for (var i=0;i<specs;i++){
+				var spec_value = $('.table_' + val + ' input:eq('+i+')').val();
+				$('.table_preview_' + val + ' input:eq('+i+')').val(spec_value);
+			}
 		}
 
-		var specs = $('.table_' + prev + ' input').length;
-
-		for (var i=0;i<specs;i++){
-			var spec_value = $('.table_' + prev + ' input:eq('+i+')').val();
-			$('.table_preview_' + prev + ' input:eq('+i+')').val(spec_value);
-		}
+		
   	}
 
 	function handleEditClick(e) {
