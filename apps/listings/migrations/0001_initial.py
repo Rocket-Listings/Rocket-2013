@@ -14,6 +14,7 @@ class Migration(SchemaMigration):
             ('name', self.gf('django.db.models.fields.CharField')(max_length=60)),
             ('CL_id', self.gf('django.db.models.fields.IntegerField')(null=True)),
             ('is_owner', self.gf('django.db.models.fields.NullBooleanField')(null=True, blank=True)),
+            ('description', self.gf('django.db.models.fields.CharField')(max_length=200)),
         ))
         db.send_create_signal(u'listings', ['ListingCategory'])
 
@@ -49,14 +50,22 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'listings', ['Listing'])
 
-        # Adding model 'ListingSpec'
-        db.create_table(u'listings_listingspec', (
+        # Adding model 'ListingSpecKey'
+        db.create_table(u'listings_listingspeckey', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('key', self.gf('django.db.models.fields.CharField')(max_length=60)),
-            ('value', self.gf('django.db.models.fields.CharField')(max_length=60)),
+            ('key', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingCategory'])),
+        ))
+        db.send_create_signal(u'listings', ['ListingSpecKey'])
+
+        # Adding model 'ListingSpecValue'
+        db.create_table(u'listings_listingspecvalue', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('key', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingSpecKey'])),
             ('listing', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Listing'])),
         ))
-        db.send_create_signal(u'listings', ['ListingSpec'])
+        db.send_create_signal(u'listings', ['ListingSpecValue'])
 
         # Adding model 'ListingHighlight'
         db.create_table(u'listings_listinghighlight', (
@@ -70,8 +79,6 @@ class Migration(SchemaMigration):
         db.create_table(u'listings_listingphoto', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('url', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('upload_date', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, auto_now_add=True, blank=True)),
-            ('upload_ip', self.gf('django.db.models.fields.IPAddressField')(max_length=15)),
             ('order', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
             ('listing', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Listing'], null=True, blank=True)),
         ))
@@ -122,8 +129,11 @@ class Migration(SchemaMigration):
         # Deleting model 'Listing'
         db.delete_table(u'listings_listing')
 
-        # Deleting model 'ListingSpec'
-        db.delete_table(u'listings_listingspec')
+        # Deleting model 'ListingSpecKey'
+        db.delete_table(u'listings_listingspeckey')
+
+        # Deleting model 'ListingSpecValue'
+        db.delete_table(u'listings_listingspecvalue')
 
         # Deleting model 'ListingHighlight'
         db.delete_table(u'listings_listinghighlight')
@@ -203,6 +213,7 @@ class Migration(SchemaMigration):
         u'listings.listingcategory': {
             'CL_id': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
             'Meta': {'object_name': 'ListingCategory'},
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_owner': ('django.db.models.fields.NullBooleanField', [], {'null': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '60'})
@@ -218,16 +229,20 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.Listing']", 'null': 'True', 'blank': 'True'}),
             'order': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'upload_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'auto_now_add': 'True', 'blank': 'True'}),
-            'upload_ip': ('django.db.models.fields.IPAddressField', [], {'max_length': '15'}),
             'url': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
-        u'listings.listingspec': {
-            'Meta': {'object_name': 'ListingSpec'},
+        u'listings.listingspeckey': {
+            'Meta': {'object_name': 'ListingSpecKey'},
+            'category': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.ListingCategory']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'key': ('django.db.models.fields.CharField', [], {'max_length': '60'}),
+            'key': ('django.db.models.fields.CharField', [], {'max_length': '100'})
+        },
+        u'listings.listingspecvalue': {
+            'Meta': {'object_name': 'ListingSpecValue'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'key': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.ListingSpecKey']"}),
             'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.Listing']"}),
-            'value': ('django.db.models.fields.CharField', [], {'max_length': '60'})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
         u'listings.listingstatus': {
             'Meta': {'object_name': 'ListingStatus'},

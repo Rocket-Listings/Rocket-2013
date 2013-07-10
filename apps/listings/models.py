@@ -24,14 +24,14 @@ class ListingCategory(models.Model):
 	name = models.CharField(max_length = 60)
 	CL_id = models.IntegerField(null = True)
 	is_owner = models.NullBooleanField()
-
+	description = models.CharField(max_length = 200)
+	
 	def __unicode__(self):
 		return self.name
 
 # Listing Types
 class ListingType(models.Model):
 	objects = GenericNameManager()
-
 	name = models.CharField(max_length = 60)
 	description = models.CharField(max_length = 200)
 
@@ -76,13 +76,16 @@ class Listing(models.Model):
 		return reverse('listings.views.detail', args=[str(self.id)])
 
 # Listing Specification
-class ListingSpec(models.Model):
-	key = models.CharField(max_length = 60)
-	value = models.CharField(max_length = 60)
+class ListingSpecKey(models.Model):
+	key = models.CharField(max_length = 100)
+	category = models.ForeignKey(ListingCategory)
+
+
+class ListingSpecValue(models.Model):
+	name = models.CharField(max_length = 100)
+	key = models.ForeignKey(ListingSpecKey)
 	listing = models.ForeignKey(Listing)
 
-	def __unicode__(self):
-		return self.key + ", " + self.value
 
 # Listing Highlight
 class ListingHighlight(models.Model):
@@ -95,8 +98,6 @@ class ListingHighlight(models.Model):
 # Listing Photo
 class ListingPhoto(models.Model):
 	url = models.CharField(max_length=255)
-	upload_date = models.DateTimeField('date uploaded', auto_now_add=True, default=datetime.now)
-	upload_ip = models.IPAddressField()
 	order = models.IntegerField(null = True, blank=True)
 	listing = models.ForeignKey(Listing, null = True, blank=True)
 

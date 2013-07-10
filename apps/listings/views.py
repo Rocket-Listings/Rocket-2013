@@ -1,8 +1,8 @@
-from listings.models import Listing, ListingPhoto, Buyer, Offer, Message
+from listings.models import Listing, ListingPhoto, Buyer, Offer, Message, ListingCategory, ListingSpecKey, ListingSpecValue
 from django.contrib.auth.models import User
 from django.conf import settings
 from datetime import datetime, timedelta
-from listings.forms import ListingForm
+from listings.forms import ListingForm, ListingPics
 from django.contrib.auth.decorators import login_required
 from ajaxuploader.views import AjaxFileUploader
 from django.shortcuts import render, redirect, get_object_or_404
@@ -17,11 +17,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 from django.http import HttpResponse, HttpResponseBadRequest
 import requests
-from itertools import chain
+import re
 from bs4 import BeautifulSoup
-
-
-
+from operator import __add__
 # Moved here from users/views.py
 
 @login_required
@@ -38,50 +36,83 @@ def user_listings(request, username=None):
 def dashboard(request):
 	user = request.user
 	listings = Listing.objects.filter(user=user).order_by('-pub_date').all() # later on we can change how many are returned
-	if listings:
-		buyers = list(reduce(chain, (map(lambda l: l.buyer_set.all(), listings))))
-		messages = list(chain(reduce(chain, map(lambda b: list(b.message_set.all()), buyers))))
-	else:
-		buyers, messages = None, None
-	return render(request, 'listings_dashboard.html',  {'listings': listings, 'buyers': buyers, 'messages':messages,})
+	buyers = reduce(__add__, map(lambda l: list(l.buyer_set.all()), listings), [])
+	messages = reduce(__add__, map(lambda b: list(b.message_set.all()), buyers), [])
+	return render(request, 'listings_dashboard.html',  {'listings': listings, 'buyers': buyers, 'messages':messages})
 
 def latest(request):
 	listings = Listing.objects.all().order_by('-pub_date')[:10]
 	return render(request, 'listings_latest.html', {'listings': listings,})
 
-@login_required
+
 def create(request):
 	if request.method == 'GET':
 		profile = request.user.get_profile()
 		defaults = {'location':profile.location, 'category':profile.default_category, 'listing_type':profile.default_listing_type}
 		form = ListingForm(initial=defaults)
-		return render(request, 'listing_create.html', {'form':form})
+		categories = ListingCategory.objects.all()
+		specs = ListingSpecKey.objects.all()
+		return render(request, 'listing_create.html', {'form':form , 'categories':categories, 'specs':specs})
+
 	elif request.method == 'POST':
+		categories = ListingCategory.objects.all()
+		count = request.POST.get('final_count', 0)
+		count = int(count)
+		d={}
+
+		for x in range(0, count):
+			d["photo{0}".format(x)] = request.POST.get(str(x))
+
+		specCounter = 0
+
 		listing_form = ListingForm(request.POST)
 		if listing_form.is_valid():
 			listing = listing_form.save(commit=False)
 			listing.user = request.user
 			listing.save()
-			expire_time = datetime.now() - timedelta(minutes=settings.ROCKET_UNUSED_PHOTO_MINS)
-			ip = get_client_ip(request)
+			for x in range(0, count):
+				string = d["photo%d" %(x)]
+				photoDict = {'url': string, 'order': x, 'listing': listing}
+				photo = ListingPhoto(**photoDict)
+				photo.clean()
+				photo.save()
+			specs = ListingSpecKey.objects.all()
+			cat = str(request.POST.get('final_cat'))
+			postReturn = str(request.POST)
+			matches = re.findall(r''+cat+'\w+', postReturn)
+			for match in matches:
+				print cat
 
-			ListingPhoto.objects.filter(upload_ip=ip, upload_date__gt=expire_time, listing=None).update(listing=listing)
+
 			if request.user.is_authenticated():
 				return redirect(listing)
 			else:
 				return redirect(listing)
 				# Do something for anonymous users.
 		else:
-			return render(request, 'listing_create.html', {'form': ListingForm(request.POST),})
-
+			return render(request, 'listing_create.html', {'form': ListingForm(request.POST), 'categories':categories, 'specs':specs})
 
 def detail(request, listing_id):
-	listing = get_object_or_404(Listing, id=listing_id)
-	photos = ListingPhoto.objects.filter(listing=listing).order_by('order')
+	if request.method == 'GET':
+		listing = get_object_or_404(Listing, id=listing_id)
+		profile = request.user.get_profile()
+		defaults = {'location':listing.location, 'category':listing.category, 'listing_type':profile.default_listing_type}
+		form = ListingForm(initial=defaults)
+		categories = ListingCategory.objects.all()
+		photos = listing.listingphoto_set.all()
+		specs = ListingSpecKey.objects.all()
+		specifications = listing.listingspecvalue_set.all()
+		return render(request, 'listing_details.html', {'listing':listing, 'form':form, 'categories':categories, 'photos':photos, 'specs':specs, 'specifications':specifications})
 
-	# provide `url` and `thumbnail_url` for convenience.
-	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos)
-	return render(request, 'listing_detail.html', {'listing':listing, 'photos':photos})
+	elif request.method == 'POST':
+		listing = get_object_or_404(Listing, id=listing_id)
+		if request.user == listing.user: # updating his own listing
+			listing_form = ListingForm(request.POST, instance = listing)		
+			if listing_form.is_valid():
+				listing = listing_form.save()
+				return redirect(listing)
+			else:
+				return render(request, 'listing_update.html', {'form': listing_form})
 
 def embed(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
@@ -160,132 +191,10 @@ def message_thread_ajax(request, listing_id, buyer_id):
 
 # Photo upload
 
-if settings.PRODUCTION:
-	upload_backend = ProductionUploadBackend
-else:
-	upload_backend = DevelopmentUploadBackend
+# if not settings.DEBUG:
+# 	upload_backend = ProductionUploadBackend
+# else:
+# 	upload_backend = DevelopmentUploadBackend
 
 
-import_uploader = AjaxFileUploader(backend=upload_backend)
-
-
-def autopost(request, listing_id):
-
-	# Todo: implement sessions and location.
-	listing = get_object_or_404(Listing, id=listing_id)
-	photos = ListingPhoto.objects.filter(listing=listing).order_by('order')
-
-	try:
-		b = Buyer.objects.get(listing= listing, name= "Craigslist")
-	except ObjectDoesNotExist:
-		b = Buyer(listing = listing, name = "Craigslist", email = "robots@craigslist.org")
-		b.save()
-
-	r = requests.get('https://post.craigslist.org/c/brl?lang=en') #GET the url to post to
-	post_url = r.url.split('?')[0] #split out the query string
-
-#1st Post request at ?=type
-#############################
-	to_parse = BeautifulSoup(r.text) #instantiate the html parser
-	tag = to_parse.find('input', type= "hidden") #select the input tag w/ hashed key/value
-	hashed_key = tag.attrs['name']
-	hashed_value = tag.attrs['value']
-	payload = {'id': 'fso', hashed_key: hashed_value}#assemble payload. fs = for sale
-	#need to figure our how to make above statement based on listing rather than hard-coded
-	r = requests.post(post_url, data=payload)
-
-
-#2st Post request at ?=cat
-#############################
-	to_parse = BeautifulSoup(r.text) #instantiate the html parser
-	tag = to_parse.find('input', type= "hidden") #select the input tag w/ hashed key/value
-	hashed_key = tag.attrs['name']
-	hashed_value = tag.attrs['value']
-	payload = {'id': '145', hashed_key: hashed_value}#assemble payload. 145 = cars
-	#payload = {'id': listing.category.CL_id, hashed_key: hashed_value}
-	r = requests.post(post_url, data=payload)#POST and Redirect
-
-
-#3rd Post request at ?=edit
-#############################
-	to_parse = BeautifulSoup(r.text) #parse
-	payload_tuples = [('id2', '1916x831X1916x635X1920x1200'),
-		  		('browserinfo', '%7B%0A%09%22plugins%22%3A%20%22'),
-				('FromEMail',  request.user.username + '@rocketlistings.mailgun.org'), #enter your email here
-				('ConfirmEMail', request.user.username + '@rocketlistings.mailgun.org'),
-				('xstreet0', ''),
-				('xstreet1', ''),
-				('city', ''),
-				('region', ''),
-				('postal', ''),
-				('go', 'Continue')] #intial (staticish) payload data. Using a list of tuples b/c it is mutable but easily converted into a dict
-
-
-	#Still parsing
-	title_id = to_parse.find("span", text= "posting title:").next_sibling.contents[1].attrs['name']
-	payload_tuples += [(title_id, listing.title)]
-
-	price_id = to_parse.find("span", text= "price:").next_sibling.contents[1].attrs['name']
-	payload_tuples += [(price_id, listing.price)]
-
-	location_id = to_parse.find("span", text= "specific location:").next_sibling.contents[0].attrs['name']
-	payload_tuples += [(location_id, listing.location)]
-
-	anon_id = to_parse.find("label", title= "craigslist will anonymize your email address").contents[1].attrs['name']
-	payload_tuples += [(anon_id, 'C')]
-
-	description_id = to_parse.find("textarea", cols="80").attrs['name']
-	payload_tuples += [(description_id, listing.description)]
-
-	hashed_key = to_parse.find('input', type= "hidden").attrs['name']
-	hashed_value = to_parse.find('input', type= "hidden").attrs['value']
-
-	payload_tuples += [(hashed_key, hashed_value)]
-
-	payload = dict(payload_tuples) #assemble Payload
-
-	r = requests.post(post_url, data=payload) #POST and Redirect
-
-
-#4th Post request at ?=editimage
-#############################
-	to_parse = BeautifulSoup(r.text) # you should get the pattern by now :)
-
-	#Upload POST
-	payload_tuples = [('go', 'add image')]
-	hashed_key = to_parse.find('form', enctype="multipart/form-data").contents[1].attrs['name']
-	hashed_value = to_parse.find('form', enctype="multipart/form-data").contents[1].attrs['value']
-	payload_tuples += [(hashed_key, hashed_value)]
-	payload_tuples += [(to_parse.find('form', enctype="multipart/form-data").contents[1].contents[1].attrs['name'], 'add')]
-
-	payload = dict(payload_tuples)
-
-	for photo in photos:
-		r = requests.post(post_url, files = dict([('file', ('photo', open( 'media/' +photo.url, 'rb')))]), data=payload)
-		print "uploading photo" + photo.url
-
-
-	# submit POST
-	to_parse = BeautifulSoup(r.text)
-	payload_tuples = [('go', 'Done With Images')]
-	hashed_key = to_parse.find_all('form')[1].contents[1].attrs['name']
-	hashed_value = to_parse.find_all('form')[1].contents[1].attrs['value']
-	payload_tuples += [(hashed_key, hashed_value), (hashed_key, hashed_value)] #for some reason cl posts this twice
-	payload_tuples += [(to_parse.find_all('form')[1].contents[1].contents[1].attrs['name'], 'fin')]
-
-	payload = dict(payload_tuples)
-	r = requests.post(post_url, data=payload)
-
-#5th Post request at ?=preview
-#############################
-	to_parse = BeautifulSoup(r.text)
-
-	payload_tuples = [('go', 'Continue')]
-	payload_tuples += [(to_parse.find('section', id="previewButtons").contents[1].contents[1].attrs['name'], to_parse.find('section', id="previewButtons").contents[1].contents[1].attrs['value'])]
-	payload_tuples += [(to_parse.find('section', id="previewButtons").contents[1].contents[1].contents[1].attrs['name'], 'y')]
-
-	payload = dict(payload_tuples)
-	r = requests.post(post_url, data=payload)
-
-	return render(request, 'listings_autopost.html',  {'listing': listing, 'debug': r.text})
-
+# import_uploader = AjaxFileUploader(backend=upload_backend)

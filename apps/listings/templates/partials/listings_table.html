@@ -3,6 +3,19 @@
 
 {# Requires the context variable 'listings' #}
 
+<div id = "loadingModal" class="modal hide fade">
+  <div class="modal-header">
+    <h3>Autoposting...</h3>
+  </div>
+  <div class="modal-body">
+    <p>
+    	Please wait this should only take a few moments.
+    </p>
+  </div>
+  <div class="modal-footer">
+  </div>
+</div>
+
 <table class="table table-listings table-hover tablesorter">
 	<thead>
 		<tr>
@@ -31,11 +44,8 @@
 					<a href="{{ listing.get_absolute_url }}">Link</a>
 					<div class="btn-group">
 
-						<a class="btn" href="{% url 'listings.views.autopost' listing.id %}" data-toggle="tooltip" data-original-title="Autopost to Craigslist"><i class ="icon-share"></i></a>
-
-						<a class="btn" href="{% url 'listings.views.update' listing.id %}" data-container="body" data-toggle="tooltip" data-original-title="Edit Listing">
-							<i class="icon-edit"></i>
-						</a>
+						<a class="btn" href="{% url 'mail.views.autopost' listing.id %}" data-toggle="modal" data-target = "#loadingModal" data-original-title="Autopost to Craigslist"><i class ="icon-share"></i></a>
+						<a class="btn" href="{% url 'listings.views.update' listing.id %}" data-container="body" data-toggle="tooltip" data-original-title="Edit Listing"><i class="icon-edit"></i></a>
 
 						<!--delete button -->
 						<a class="deleteModal btn" href="#deleteModal" data-toggle="modal"><i class="icon-trash"></i> </a>
