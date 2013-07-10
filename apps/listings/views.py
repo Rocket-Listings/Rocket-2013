@@ -78,10 +78,20 @@ def create(request):
 				photo.save()
 			
 			cat = str(request.POST.get('final_cat'))
-			postReturn = str(request.POST)
-			matches = re.findall(r''+cat+'\w+', postReturn)
+			postRequest = str(request.POST)
+			matches = re.findall(r''+cat+'_\w+', postRequest)
 			for match in matches:
-				print cat
+				while (str(specs[specCounter].category).split()[0] != cat):
+					specCounter = specCounter + 1
+					if specCounter>300:
+						break
+				if str(specs[specCounter].category).split()[0] == cat:
+					infoSpec =  request.POST.get(match)
+					specDict = {'name': infoSpec, 'key': specs[specCounter], 'listing': listing}
+					specific = ListingSpecValue(**specDict)
+					specific.clean()
+					specific.save()
+					specCounter = specCounter + 1
 
 
 			if request.user.is_authenticated():
