@@ -1,8 +1,8 @@
-from listings.models import Listing, ListingPhoto, Buyer, Offer, Message
+from listings.models import Listing, ListingPhoto, Buyer, Offer, Message, ListingCategory, ListingSpecKey, ListingSpecValue
 from django.contrib.auth.models import User
 from django.conf import settings
 from datetime import datetime, timedelta
-from listings.forms import ListingForm
+from listings.forms import ListingForm, ListingPics
 from django.contrib.auth.decorators import login_required
 from ajaxuploader.views import AjaxFileUploader
 from django.shortcuts import render, redirect, get_object_or_404
@@ -17,6 +17,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 from django.http import HttpResponse, HttpResponseBadRequest
 import requests
+import re
 from bs4 import BeautifulSoup
 from operator import __add__
 # Moved here from users/views.py
@@ -43,39 +44,75 @@ def latest(request):
 	listings = Listing.objects.all().order_by('-pub_date')[:10]
 	return render(request, 'listings/listings_latest.html', {'listings': listings,})
 
-@login_required
+
 def create(request):
 	if request.method == 'GET':
 		profile = request.user.get_profile()
 		defaults = {'location':profile.location, 'category':profile.default_category, 'listing_type':profile.default_listing_type}
 		form = ListingForm(initial=defaults)
-		return render(request, 'listings/listing_create.html', {'form':form})
+		categories = ListingCategory.objects.all()
+		specs = ListingSpecKey.objects.all()
+		return render(request, 'listings/listing_create.html', {'form':form , 'categories':categories, 'specs':specs})
+
 	elif request.method == 'POST':
+		categories = ListingCategory.objects.all()
+		count = request.POST.get('final_count', 0)
+		count = int(count)
+		d={}
+
+		for x in range(0, count):
+			d["photo{0}".format(x)] = request.POST.get(str(x))
+
+		specCounter = 0
+
 		listing_form = ListingForm(request.POST)
 		if listing_form.is_valid():
 			listing = listing_form.save(commit=False)
 			listing.user = request.user
 			listing.save()
-			expire_time = datetime.now() - timedelta(minutes=settings.ROCKET_UNUSED_PHOTO_MINS)
-			ip = get_client_ip(request)
+			for x in range(0, count):
+				string = d["photo%d" %(x)]
+				photoDict = {'url': string, 'order': x, 'listing': listing}
+				photo = ListingPhoto(**photoDict)
+				photo.clean()
+				photo.save()
+			specs = ListingSpecKey.objects.all()
+			cat = str(request.POST.get('final_cat'))
+			postReturn = str(request.POST)
+			matches = re.findall(r''+cat+'\w+', postReturn)
+			for match in matches:
+				print cat
 
-			ListingPhoto.objects.filter(upload_ip=ip, upload_date__gt=expire_time, listing=None).update(listing=listing)
+
 			if request.user.is_authenticated():
 				return redirect(listing)
 			else:
 				return redirect(listing)
 				# Do something for anonymous users.
 		else:
-			return render(request, 'listings/listing_create.html', {'form': ListingForm(request.POST),})
-
+			return render(request, 'listings/listing_create.html', {'form': ListingForm(request.POST), 'categories':categories, 'specs':specs})
 
 def detail(request, listing_id):
-	listing = get_object_or_404(Listing, id=listing_id)
-	photos = ListingPhoto.objects.filter(listing=listing)
+	if request.method == 'GET':
+		listing = get_object_or_404(Listing, id=listing_id)
+		profile = request.user.get_profile()
+		defaults = {'location':listing.location, 'category':listing.category, 'listing_type':profile.default_listing_type}
+		form = ListingForm(initial=defaults)
+		categories = ListingCategory.objects.all()
+		photos = listing.listingphoto_set.all()
+		specs = ListingSpecKey.objects.all()
+		specifications = listing.listingspecvalue_set.all()
+		return render(request, 'listings/listing_details.html', {'listing':listing, 'form':form, 'categories':categories, 'photos':photos, 'specs':specs, 'specifications':specifications})
 
-	# provide `url` and `thumbnail_url` for convenience.
-	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos)
-	return render(request, 'listings/listing_detail.html', {'listing':listing, 'photos':photos})
+	elif request.method == 'POST':
+		listing = get_object_or_404(Listing, id=listing_id)
+		if request.user == listing.user: # updating his own listing
+			listing_form = ListingForm(request.POST, instance = listing)		
+			if listing_form.is_valid():
+				listing = listing_form.save()
+				return redirect(listing)
+			else:
+				return render(request, 'listings/listing_update.html', {'form': listing_form})
 
 def embed(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
@@ -154,10 +191,10 @@ def message_thread_ajax(request, listing_id, buyer_id):
 
 # Photo upload
 
-if not settings.DEBUG:
-	upload_backend = ProductionUploadBackend
-else:
-	upload_backend = DevelopmentUploadBackend
+# if not settings.DEBUG:
+# 	upload_backend = ProductionUploadBackend
+# else:
+# 	upload_backend = DevelopmentUploadBackend
 
 
-import_uploader = AjaxFileUploader(backend=upload_backend)
+# import_uploader = AjaxFileUploader(backend=upload_backend)
