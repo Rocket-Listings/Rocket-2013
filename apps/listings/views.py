@@ -50,21 +50,21 @@ def create(request):
 		profile = request.user.get_profile()
 		defaults = {'location':profile.location, 'category':profile.default_category, 'listing_type':profile.default_listing_type}
 		form = ListingForm(initial=defaults)
-		categories = ListingCategory.objects.all()
-		specs = ListingSpecKey.objects.all()
+		categories = ListingCategory.objects.all() #get all of the category information from database for tab view in listings_edit
+		specs = ListingSpecKey.objects.all() #get all of the specs information from database for table insertion
 		return render(request, 'listing_create.html', {'form':form , 'categories':categories, 'specs':specs})
 
 	elif request.method == 'POST':
-		categories = ListingCategory.objects.all()
-		count = request.POST.get('final_count', 0)
+		categories = ListingCategory.objects.all() #get categories if post request fails
+		count = request.POST.get('final_count', 0) # get the final count name tag which contains the final photo count
 		count = int(count)
-		d={}
+		d={} # empty dictionary
 
 		for x in range(0, count):
-			d["photo{0}".format(x)] = request.POST.get(str(x))
+			d["photo{0}".format(x)] = request.POST.get(str(x)) # add photos into dictionary with the format photo.x = url[x]
 
-		specCounter = 0
-		specs = ListingSpecKey.objects.all()
+		specCounter = 0 # begin the count to look through specs data
+		specs = ListingSpecKey.objects.all() # grab all of specs
 
 		listing_form = ListingForm(request.POST)
 
@@ -79,9 +79,10 @@ def create(request):
 				photo.clean()
 				photo.save()
 
-			cat = str(request.POST.get('final_cat'))
+
+			cat = str(request.POST.get('final_cat')) #get final category chosen
 			postRequest = str(request.POST)
-			matches = re.findall(r''+cat+'_\w+', postRequest)
+			matches = re.findall(r''+cat+'_\w+', postRequest) # find all category inputs matching the category
 			for match in matches:
 				while (str(specs[specCounter].category).split()[0] != cat):
 					specCounter = specCounter + 1
@@ -94,6 +95,7 @@ def create(request):
 					specific.clean()
 					specific.save()
 					specCounter = specCounter + 1
+
 
 			if request.user.is_authenticated():
 				return redirect(listing)

@@ -31,6 +31,9 @@
 
       <div class="l-description l-entry" style="white-space: pre-wrap;"></div>
       <br>
+      {% for item in specifications%}
+        {{item.key.key}}:{{item.name}}
+      {% endfor %}
 
       <div class="spec_tables">
         {% for item in categories %}

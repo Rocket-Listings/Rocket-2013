@@ -21,9 +21,9 @@ $(document).ready(function(){
 
 	function handleClick(e) {
 		prev = val;
-		val = $(this).html(); /* val = the category selected in the tab */
+		val = $(this).html();
+		/* val = the category selected in the tab */
 
-		/* function below gets the category selected in the tab section and selects the correct category in the form.category */
 		function changeCat() {
 			var id = document.getElementById('id_category');
 			for (var i=1; i<id.length; i++) {
@@ -33,10 +33,12 @@ $(document).ready(function(){
 				}
 			}
 		}
-
+		/* changes the option selected for listing*/
 		changeCat();
-		catChange = 1;
+		/* Set catCahnge to 1 to satisfy validation */
+		categoryChange = 1;
 
+		/* Housing swap and housing wanted share the same first name thus we need to differnetiate the two */
 		if (val == "housing swap"){
 			is_housing = 1;
 		}
@@ -46,19 +48,28 @@ $(document).ready(function(){
 		else {
 			is_housing = 0;
 		}
+
+		/* Split the into an array of words and set val equal to the first word*/
 		string = val.split(" ");
 		val = string[0];
+
+		/* Set final_category id to the first word of the category selected inorder to pass into the view.py */
 		$('#final_category').attr('value', val);
+		var specs = $('.table_' + val + ' input').length;
+
+
 		$("a", ".tab-pane").addClass("unselected");
 		$("a", ".tab-pane").removeClass("selected");
 		$(this).removeClass("unselected");
 		$(this).addClass("selected");
 		$("#nameTitle").text($(this).html());
 		$("#listingType").text("Public");
-		$("#id_pictures").text("True");
-		if (prev != val || val == "housing"){
-			$('.category_' + prev, ".edit").hide();
 
+		$('.category_' + prev, ".preview-pane").hide();
+		$('.category_' + prev, ".edit").hide();	
+		
+		if ((prev != val || val == "housing") && specs != 0){
+			
 			if (is_housing == 1) {
 				$(".edit .category_" + val + ":eq(0)").show();
 			}
@@ -69,6 +80,9 @@ $(document).ready(function(){
 				$('.category_' + val, ".edit").show();
 			}
 		}
+
+			
+
 	}
 
 	function handlePreviewClick(e) {
@@ -86,20 +100,33 @@ $(document).ready(function(){
 
 		if (is_housing == 1){
 			$(".preview-pane .category_" + val +":eq(0)").show();
+			var specs = $('.table_' + val + ':eq(0) input').length;
+
+			for (var i=0;i<specs;i++){
+				var spec_value = $('.table_' + val + ':eq(0) input:eq('+i+')').val();
+				$('.table_preview_' + val + ':eq(0) input:eq('+i+')').val(spec_value);
+			}
 		}
 		else if (is_housing == 2) {
 			$(".preview-pane .category_" + val +":eq(1)").show();
+			var specs = $('.table_' + val + ':eq(1) input').length;
+
+			for (var i=0;i<specs;i++){
+				var spec_value = $('.table_' + val + ':eq(1) input:eq('+i+')').val();
+				$('.table_preview_' + val + ':eq(1) input:eq('+i+')').val(spec_value);
+			}
 		}
 		else {
 			$('.category_' + val, ".preview-pane").show();
+			var specs = $('.table_' + val + ' input').length;
+
+			for (var i=0;i<specs;i++){
+				var spec_value = $('.table_' + val + ' input:eq('+i+')').val();
+				$('.table_preview_' + val + ' input:eq('+i+')').val(spec_value);
+			}
 		}
 
-		var specs = $('.table_' + prev + ' input').length;
-
-		for (var i=0;i<specs;i++){
-			var spec_value = $('.table_' + prev + ' input:eq('+i+')').val();
-			$('.table_preview_' + prev + ' input:eq('+i+')').val(spec_value);
-		}
+		
   	}
 
 	function handleEditClick(e) {
@@ -112,6 +139,7 @@ $(document).ready(function(){
 });
 
 function fileUpload(){
+	/* function needs more work inorder to better save photos in s3 */
 	filepicker.pickAndStore({
 		services: ['COMPUTER','URL'],
 		mimetype:"image/*",
@@ -120,46 +148,51 @@ function fileUpload(){
 		{location:"S3"},
 	function(InkBlobs){
 		var filepickerObject = InkBlobs;
-		photoLog(filepickerObject);
-		editImage(filepickerObject);
-		previewImages(filepickerObject);
+		photoLog(filepickerObject); /* Logs photos for storing in database */
+		editImage(filepickerObject); /* Preview images on edit page */
 		}
 	);
 }
 
 function photoLog(object) {
+	/* creat a blank html object where all of the picture urls are going to go*/
 	var html = [];
+
+	/* finds the number of photos in the upload object */
 	var length = object.length;
+
+	/* If someone uploads to the database more than once without a page load we need to make sure the url is put in the correct index */
 	var number = length + pictureCounter;
+
 	for (var i=pictureCounter; i<number; i++) {
+		/* push an input with the name (the index of the image uploaded) and the value being the url */
 		html.push("<input type = 'hidden' name='", i, "' value='", object[i-pictureCounter].url, "'>");
 	}
+	/* push the html to pictureData so the view.py can retrieve the information */
 	$('#pictureData').append(html.join(''));
+
+	/* increment counter in case someone decides to add more pictures */
 	pictureCounter = pictureCounter + length;
+
+	/* Set or increment the final_countdown id to keep track of the number of pictures uploaded */
 	$('#final_countdown').attr('value', pictureCounter);
 }
 
 function editImage(object) {
+	/* creat a blank html object where all of the picture urls are going to go*/
 	var html = [];
 	for (var i=0; i<object.length; i++) {
+		/* push images with the source equal to the picture urls */
 		html.push("<img src ='", object[i].url, "'>");
 	}
+	/* push the html to image so user can view image */
 	$('#image').append(html.join(''));
-
-}
-
-function previewImages(object) {
-	var html = [];
-	for (var i=0; i<object.length; i++) {
-		html.push("<div class='item'><img src ='", object[i].url, "'></div>");
-	}
-	$('#images').append(html.join(''));
 
 }
 
 
 function validateForm() {
-	if (catChange===0) {
+	if (categoryChange===0) {
 		alert("Please select a Category");
 	}
 	else if (document.getElementById('id_title').value==="") {
