@@ -10,7 +10,9 @@
 {% endblock %}
 
 {% block css %}
+{% compress css %}
 <link rel="stylesheet" type="text/less" media="all" href="{% static 'less/static_pages.less' %}"/>
+{% endcompress %}
 {% endblock %}
 
 {% block body %}
