@@ -22,6 +22,7 @@ $(document).ready(function(){
 	function handleClick(e) {
 		prev = val;
 		val = $(this).html();
+
 		function changeCat() {
 			var id = document.getElementById("id_category");
 			for (var i=1; i<id.length; i++) {
@@ -43,6 +44,7 @@ $(document).ready(function(){
 		else {
 			is_housing = 0;
 		}
+		
 		string = val.split(" ");
 		val = string[0];
 		
@@ -53,10 +55,12 @@ $(document).ready(function(){
 		$(this).addClass("selected");
 		$("#nameTitle").text($(this).html());
 		$("#listingType").text("Public");
-		$("#id_pictures").text("True");
-		if (prev != val || val == "housing"){
-			$('.category_' + prev, ".edit").hide();
 
+		$('.category_' + prev, ".preview-pane").hide();
+		$('.category_' + prev, ".edit").hide();	
+		
+		if ((prev != val || val == "housing") && specs != 0){
+			
 			if (is_housing == 1) {
 				$(".edit .category_" + val + ":eq(0)").show();
 			}
@@ -67,6 +71,9 @@ $(document).ready(function(){
 				$('.category_' + val, ".edit").show();
 			}
 		}
+
+			
+
 	}
 
 	function handlePreviewClick(e) {
@@ -84,20 +91,33 @@ $(document).ready(function(){
 
 		if (is_housing == 1){
 			$(".preview-pane .category_" + val +":eq(0)").show();
+			var specs = $('.table_' + val + ':eq(0) input').length;
+
+			for (var i=0;i<specs;i++){
+				var spec_value = $('.table_' + val + ':eq(0) input:eq('+i+')').val();
+				$('.table_preview_' + val + ':eq(0) input:eq('+i+')').val(spec_value);
+			}
 		}
 		else if (is_housing == 2) {
 			$(".preview-pane .category_" + val +":eq(1)").show();
+			var specs = $('.table_' + val + ':eq(1) input').length;
+
+			for (var i=0;i<specs;i++){
+				var spec_value = $('.table_' + val + ':eq(1) input:eq('+i+')').val();
+				$('.table_preview_' + val + ':eq(1) input:eq('+i+')').val(spec_value);
+			}
 		}
 		else {
 			$('.category_' + val, ".preview-pane").show();
+			var specs = $('.table_' + val + ' input').length;
+
+			for (var i=0;i<specs;i++){
+				var spec_value = $('.table_' + val + ' input:eq('+i+')').val();
+				$('.table_preview_' + val + ' input:eq('+i+')').val(spec_value);
+			}
 		}
 
-		var specs = $('.table_' + prev + ' input').length;
-
-		for (var i=0;i<specs;i++){
-			var spec_value = $('.table_' + prev + ' input:eq('+i+')').val();
-			$('.table_preview_' + prev + ' input:eq('+i+')').val(spec_value);
-		}
+		
   	}
 
 	function handleEditClick(e) {

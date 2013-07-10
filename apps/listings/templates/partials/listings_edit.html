@@ -42,18 +42,21 @@
             </fieldset>
           </h1>
         </div>
+
           <ul class="form">
               <li>
                   <textarea cols="60" id="id_description" name="description" rows="10" placeholder="Description">{{listing.description}}</textarea>
               </li>
+
               <div class="spec_tables">
                 {% for item in categories %}
                   <div class="category_{{item}}" style="display:none">
                     <table border='1' class="table_{{item}}">
+                      <th colspan='2'><h4>Optional Specifications</h4></th>
                       {% for spec_value in specs %}
                         {% if spec_value.category.name == item.name %}
                           <tr>
-                            <td>{{spec_value.key}}</td>
+                            <td>{{spec_value.key}}:</td>
                             <td><input name={{spec_value.category.name.split.0}}_{{spec_value.key}} type="text"></td>
                           </tr>
                         {% endif %}
@@ -61,8 +64,10 @@
                     </table>
                   </div>
                 {% endfor %}
-                <input class="hidden" name="final_cat" id="final_category" value="">
               </div>
+                
+              <input class="hidden" name="final_cat" id="final_category" value="">
+              
             </br>
 
               <li>
