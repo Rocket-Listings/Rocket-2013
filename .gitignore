@@ -19,5 +19,4 @@ static_collected
 tmp
 .DS_Store
 *.sublime-*
-development.py
 css
