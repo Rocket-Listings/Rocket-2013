@@ -57,7 +57,6 @@ $(document).ready(function(){
 		$('#final_category').attr('value', val);
 		var specs = $('.table_' + val + ' input').length;
 
-
 		$("a", ".tab-pane").addClass("unselected");
 		$("a", ".tab-pane").removeClass("selected");
 		$(this).removeClass("unselected");
