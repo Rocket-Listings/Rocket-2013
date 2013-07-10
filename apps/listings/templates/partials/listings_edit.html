@@ -43,40 +43,47 @@
               </h1>
           </div>
 
-          <div class="spec_tables">
-            {% for item in categories %}
-              <div class="category_{{item}}" style="display:none">
-                <table border='1' class="table_{{item}}">
-                  {% for spec_value in specs %}
-                    {% if spec_value.category.name == item.name %}
-                      <tr>
-                        <td>{{spec_value.key}}</td>
-                        <td><input name={{spec_value.category.name.split.0}}_{{spec_value.key}} type="text"></td>
-                      </tr>
-                    {% endif %}
-                  {% endfor %}
-                </table>
-              </div>
-            {% endfor %}
-            <input class="hidden" name="final_cat" id="final_category" value="">
-          </div>
-          <br>
-
           <ul class="form">
               <li>
                   <textarea cols="60" id="id_description" name="description" rows="10" placeholder="Description">{{listing.description}}</textarea>
               </li>
+              <div class="spec_tables">
+                {% for item in categories %}
+                  <div class="category_{{item}}" style="display:none">
+                    <table border='1' class="table_{{item}}">
+                      {% for spec_value in specs %}
+                        {% if spec_value.category.name == item.name %}
+                          <tr>
+                            <td>{{spec_value.key}}</td>
+                            <td><input name={{spec_value.category.name.split.0}}_{{spec_value.key}} type="text"></td>
+                          </tr>
+                        {% endif %}
+                      {% endfor %}
+                    </table>
+                  </div>
+                {% endfor %}
+                <input class="hidden" name="final_cat" id="final_category" value="">
+              </div>
+            </br>
+
               <li>
                 <div class="hidden" style="display:none">
                 {{ form.category }}
                 </div>
               </li>
               <li>
-                  <select id="id_listing_type" name="listing_type" style="display:none">
-                      <option value="5" selected="selected" id="listingType">{{listing.listing_type}}</option>
-                  </select>
+                <select id="id_listing_type" name="listing_type">
+                  <option value="1">Private</option>
+                  <option value="2" selected="selected">Public</option>
+                </select>
               </li>
-                <div id="pictureData"></div>
+              <li>
+                <select id="id_status" name="status">
+                  <option value="1" selected="selected">Active</option>
+                  <option value="2">Draft</option>
+                </select>
+              </li>
+              <div id="pictureData"></div>
               <br>
               <button type="button" class="btn btn-primary" onclick='fileUpload()'>Upload Picture Here</button>
               <div id="image"></div>
