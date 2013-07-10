@@ -6,20 +6,23 @@ $(document).ready(function(){
 	$('.title').text($('#id_title').val());
 	$('.l-location').text("(" + $('#id_location').val() + ")");
 	$('.l-price').text("$" + $('#id_price').val());
- 	
- 	//this variable is to hold the result if the category housing swap or wanted or neither
+
+	//this variable is to hold the result if the category housing swap or wanted or neither
 	var is_housing = 0;
-	
+
 	var prev = "";
 	var val = "";
+
 	function eventHandlers() {
 		$("a", ".tab-pane").click(handleClick);
 		$(".edit_button").click(handleEditClick);
 		$(".preview_button").click(handlePreviewClick);
 	}
+
 	function handleClick(e) {
 		prev = val;
 		val = $(this).html();
+
 		function changeCat() {
 			var id = document.getElementById("id_category");
 			for (var i=1; i<id.length; i++) {
@@ -28,10 +31,10 @@ $(document).ready(function(){
 				}
 			}
 		}
+
 		changeCat();
 		catChange = 1;
 
-		
 		if (val == "housing swap"){
 			is_housing = 1;
 		}
@@ -41,20 +44,27 @@ $(document).ready(function(){
 		else {
 			is_housing = 0;
 		}
+
 		
 		
  		string = val.split(" ");
  		val = string[0];
 
+ 		$('#final_category').attr('value', val);
+
  		var specs = $('.table_' + val + ' input').length;
+
 
 		$("a", ".tab-pane").addClass("unselected");
 		$("a", ".tab-pane").removeClass("selected");
 		$(this).removeClass("unselected");
 		$(this).addClass("selected");
 		$("#nameTitle").text($(this).html());
-		$("#listingType").text("Public");	
-		$("#id_pictures").text("True");
+		$("#listingType").text("Public");
+
+		$('.category_' + prev, ".preview-pane").hide();
+		$('.category_' + prev, ".edit").hide();	
+		
 		if ((prev != val || val == "housing") && specs != 0){
 			
 			if (is_housing == 1) {
@@ -67,8 +77,9 @@ $(document).ready(function(){
 				$('.category_' + val, ".edit").show();
 			}
 		}
-		$('.category_' + prev, ".preview-pane").hide();
-		$('.category_' + prev, ".edit").hide();		
+
+			
+
 	}
 
 	function handlePreviewClick(e) {
@@ -79,15 +90,10 @@ $(document).ready(function(){
 		$('.l-location').text("(" + $('#id_location').val() + ")");
 		$('.l-price').text("$" + $('#id_price').val());
 		var category = $(".hidden > select option:selected").html();
-  		var base_category = $("li.active").text().toLowerCase().trim();
-  		$(".l-category").text(base_category + " > " + category);
+		var base_category = $("li.active").text().toLowerCase().trim();
+		$(".l-category").text(base_category + " > " + category);
 
-  		
-
-  		for (var i=0;i<specs;i++){
-				var spec_value = $('.table_' + prev + ':eq(0) input:eq('+i+')').val();
-				$('.table_preview_' + prev + ':eq(0) input:eq('+i+')').val(spec_value);
-			}
+		$('.category_' + prev, ".preview-pane").hide();
 
 		if (is_housing == 1){
 			$(".preview-pane .category_" + val +":eq(0)").show();

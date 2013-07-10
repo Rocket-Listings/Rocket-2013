@@ -43,55 +43,59 @@
           </h1>
         </div>
 
-        <div class="spec_tables">
-          {% for item in categories %}
-            <div class="category_{{item}}" style="display:none">
-              <table border='1' class="table_{{item}}">
-                <th colspan='2'><h4>Optional Specifications</h4></th>
-                {% for spec_value in specs %}
-                  {% if spec_value.category.name == item.name %}
-                    <tr>
-                      <td>{{spec_value.key}}:</td>
-                      <td><input name={{spec_value.category.name}}_{{spec_value.key}} id={{spec_value.category.name}}_{{spec_value.key}} type="text"></td>
-                    </tr>
-                  {% endif %}
+          <ul class="form">
+              <li>
+                  <textarea cols="60" id="id_description" name="description" rows="10" placeholder="Description">{{listing.description}}</textarea>
+              </li>
+
+              <div class="spec_tables">
+                {% for item in categories %}
+                  <div class="category_{{item}}" style="display:none">
+                    <table border='1' class="table_{{item}}">
+                      <th colspan='2'><h4>Optional Specifications</h4></th>
+                      {% for spec_value in specs %}
+                        {% if spec_value.category.name == item.name %}
+                          <tr>
+                            <td>{{spec_value.key}}:</td>
+                            <td><input name={{spec_value.category.name.split.0}}_{{spec_value.key}} type="text"></td>
+                          </tr>
+                        {% endif %}
+                      {% endfor %}
+                    </table>
+                  </div>
                 {% endfor %}
-              </table>
-            </div>
-          {% endfor %}
-        </div>
-
-        <br>
-
-        <ul class="form">
-          <li>
-            <textarea cols="60" id="id_description" name="description" rows="10" placeholder="Description">{{listing.description}}
-              </textarea>    
-          </li>
+              </div>
+                
+              <input class="hidden" name="final_cat" id="final_category" value="">
               
-          <li>
-            <div class="hidden" style="display:none">
-              {{ form.category }}
-            </div>
-          </li>
-          
-          <li>
-            <select id="id_listing_type" name="listing_type" style="display:none">
-              <option value="5" selected="selected" id="listingType">{{listing.listing_type}}</option>
-            </select>
-          </li>
-      
-          <div id="picsyo"></div>
-          <br>
-          <button type="button" class="btn btn-primary" onclick='fileUpload()'>Upload Picture Here</button>
-          <div id="image"></div>
-          <input type="hidden" name="final_count" id="final_countdown" value="0"/>
-      
-          <li>
-            <input class="btn" type="submit" value="Update" style="display:none" id="primaryButton"/>
-          </li>
-        </ul>
+            </br>
 
+              <li>
+                <div class="hidden" style="display:none">
+                {{ form.category }}
+                </div>
+              </li>
+              <li>
+                <select id="id_listing_type" name="listing_type">
+                  <option value="1">Private</option>
+                  <option value="2" selected="selected">Public</option>
+                </select>
+              </li>
+              <li>
+                <select id="id_status" name="status">
+                  <option value="1" selected="selected">Active</option>
+                  <option value="2">Draft</option>
+                </select>
+              </li>
+              <div id="pictureData"></div>
+              <br>
+              <button type="button" class="btn btn-primary" onclick='fileUpload()'>Upload Picture Here</button>
+              <div id="image"></div>
+              <input type="hidden" name="final_count" id="final_countdown" value="0">
+              <li>
+                  <input class="btn" type="submit" value="Update" style="display:none" id="primaryButton"/>
+              </li>
+          </ul>
       </form>
     </div>
     <div class="l-footnote" style ="margin-left:55px;">

@@ -4,7 +4,7 @@ from listings.models import Listing, ListingCategory, ListingType, ListingPhoto
 class ListingForm(ModelForm):
 	class Meta:
 		model = Listing
-		exclude = ('pub_date','user', 'CL_link', 'status')
+		exclude = ('pub_date','user', 'CL_link')
 
 class ListingPics(ModelForm):
 	class Meta:

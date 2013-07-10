@@ -65,7 +65,9 @@ def create(request):
 
 		specCounter = 0
 		specs = ListingSpecKey.objects.all()
+
 		listing_form = ListingForm(request.POST)
+
 		if listing_form.is_valid():
 			listing = listing_form.save(commit=False)
 			listing.user = request.user
@@ -76,7 +78,7 @@ def create(request):
 				photo = ListingPhoto(**photoDict)
 				photo.clean()
 				photo.save()
-			
+
 			cat = str(request.POST.get('final_cat'))
 			postRequest = str(request.POST)
 			matches = re.findall(r''+cat+'_\w+', postRequest)
@@ -92,7 +94,6 @@ def create(request):
 					specific.clean()
 					specific.save()
 					specCounter = specCounter + 1
-
 
 			if request.user.is_authenticated():
 				return redirect(listing)
