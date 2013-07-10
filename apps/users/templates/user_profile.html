@@ -2,10 +2,12 @@
 {% load static from staticfiles %}
 {% block title %}{{user.username}}{% endblock %}
 {% block content %}
+<div id="fb-root"></div>
 <div class="profile-content">
 	<div class="profile-header row">
 		<ul class="thumbnails profile-picture span3">
 			<li>
+			{% comment %} Handles the profile picture {% endcomment %}
 			{% if user.get_profile.propic %}
 				<img class="thumbnail" src="{{ user.get_profile.propic }}">
 			{% else %}
@@ -13,6 +15,7 @@
 			{% endif %}
 			</li>
 		</ul>
+		{% comment %} Displays apropriate information for the user {% endcomment %}
 		<div class="profile-info span6">
 			{% if user.get_profile.name and not user.get_profile.nameprivate or request.user == user and user.get_profile.name %}
 				<div class="name-wrapper">
@@ -22,6 +25,7 @@
 							<li><h6>&nbsp;&nbsp;&nbsp; {{user.get_profile.location}}</h6></li>
 						{% endif %}
 						{% if request.user == user %}
+							{% comment %} update profile button {% endcomment %}
 							<li style="float:right;"><a class="btn btn-warning edit-profile" href="{% url 'users.views.info' %}">Update your profile</a></li>
 						{% endif %}
 					</ul>
@@ -35,12 +39,14 @@
 							<li><h6>&nbsp;&nbsp;&nbsp; {{user.get_profile.location}}</h6></li>
 						{% endif %}
 						{% if request.user == user %}
+							{% comment %} update profile button {% endcomment %}
 							<li style="float:right;"><a class="btn btn-warning edit-profile" href="{% url 'users.views.info' %}">Update your profile</a></li>
+
 						{% endif %}
 					</ul>
 				</div>
 			{% endif %}
-			
+			{% comment %} Profile bio display {% endcomment %}
 			<div class="profile-bio">
 				{% if user.get_profile.bio %}
 					<p>{{user.get_profile.bio}}</p>
@@ -53,6 +59,7 @@
 				{% endif %}
 			</div>
 		</div>
+		{% comment %} Top right stats box {% endcomment %}
 		<div class="profile-stats span3">
 			<h3 class="listing-stat-header">Listings</h3>
 			<h4 class="green">{{ activelistings|length }}</h4>
@@ -65,6 +72,7 @@
 	<div class="separator"></div>
 	{% if activelistings or request.user = user %}
 	<div class="profile-selling">
+		{% comment %} Listing Thumbnails {% endcomment %}
 		<ul class="thumbnails">
 			{% for listing in activelistings|slice:":6" %}
 			<li class="span2">
@@ -83,6 +91,7 @@
 			</li>
 			{% endfor %}
 			{% if activelistings|length == 0 %}
+			{% comment %} Listing prompt if user has no listings and is looking at his own page {% endcomment %}
 			<li class="span2">
 				<a class="thumbnail" href="/listings/create">
 					<img src="{% static 'images/sail.jpg' %}">
@@ -94,6 +103,7 @@
 		</ul>
 	</div>
 	{% endif %}
+	{% comment %} Comment header {% endcomment %}
 	<div class="separator"></div>
 	<div class="comment-container">
 		<ul class="inline clearfix">
@@ -105,6 +115,7 @@
 					{% endif %}
 			{% endif %}
 		</ul>
+		{% comment %} Comment display {% endcomment %}
 		<table class="table table-striped">
 			<tbody class="comment-body">
 			{% if comments %}
@@ -119,7 +130,7 @@
 						<p style="padding-left: 10px">{{comment.comment}}</p>
 					</td></tr>
 				{% endfor %}
-			{% elif request.user == user %}
+			{% elif request.user == user %} {% comment %} if no comments then this happens {% endcomment %}
 				<tr><td>
 					<h5 class="no-comment">No one has commented on your skills as a seller. Go sell some stuff and get some feedback!</h5>
 				</td></tr>
@@ -131,6 +142,7 @@
 			</tbody>
 		</table>
 	</div>
+	{% comment %} Comment Form {% endcomment %}
 	{% if request.user != user %}
 	<div class="separator"></div>
 	<div class="comment-form-container">
