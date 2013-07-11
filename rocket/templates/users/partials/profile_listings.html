@@ -11,7 +11,7 @@
 					<img src="photo.url">
 					{% endfor %}
 				{% else %}
-					<img src="{% static 'images/sail.jpg' %}">
+					<img src="{% static 'users/img/sail.jpg' %}">
 				{% endif %}
 				<h4 class="profile-listing-title">{{listing.title}}</h4>
 				<h4 class="profile-listing-price">${{listing.price}}</h4>
@@ -22,7 +22,7 @@
 		{% else %}
 		<li class="span2">
 			<a class="thumbnail" href="/listings/create">
-				<img src="{% static 'images/sail.jpg' %}">
+				<img src="{% static 'users/img/sail.jpg' %}">
 				<h4 style="text-align: left">Go ahead, make a listing!</h4>
 				<p style="padding: 0">Just click here to get started.</p>
 			</a>
