@@ -1,3 +1,17 @@
+# Load in the site
+- model: sites.site
+  pk: 1
+  fields:
+    domain: 'localhost:8000'
+    name: 'Rocket Listings Dev'
+
+- model: sites.site
+  pk: 2
+  fields:
+    domain: 'rocketlistings.com'
+    name: 'Rocket Listings Prod'
+
+
 # - model: listings.ListingCategory
 #   pk: null
 #   fields:
