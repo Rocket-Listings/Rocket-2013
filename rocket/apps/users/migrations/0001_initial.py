@@ -86,6 +86,7 @@ class Migration(SchemaMigration):
         u'listings.listingcategory': {
             'CL_id': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
             'Meta': {'object_name': 'ListingCategory'},
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_owner': ('django.db.models.fields.NullBooleanField', [], {'null': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '60'})

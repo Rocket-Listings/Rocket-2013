@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+
+{% block css %}
+<link type="text/less" media="all" rel="stylesheet" href="{% static 'less/listings.less' %}"/>
+{% endblock %}
+
+{% block js %}
+{# <script src="{% static 'js/ZeroClipboard.js' %}" type="text/javascript"></p0script> #}
+<script src="{% static 'js/jquery.tablesorter.js' %}"></script>
+<script src="{% static 'js/jquery.tablesorter.min.js' %}"></script>
+<script src="{% static 'js/listings.js' %}" type="text/javascript">
+</script>
+<script src="{% static 'js/listings_reference.js' %}" type="text/javascript">
+</script>
+{% endblock %}
+
+{% block cdnjs %}
+<script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
+{% endblock %}
