@@ -1,0 +1,63 @@
+<svg xmlns:x="http://ns.adobe.com/Extensibility/1.0/" xmlns:i="http://ns.adobe.com/AdobeIllustrator/10.0/" xmlns:graph="http://ns.adobe.com/Graphs/1.0/" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Your_Icon" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+<switch>
+	<foreignObject requiredExtensions="http://ns.adobe.com/AdobeIllustrator/10.0/" x="0" y="0" width="1" height="1">
+		</foreignObject>
+	<g i:extraneous="self">
+		<g>
+			<path d="M88.546,2v95.798H17.979V2H88.546 M90.546,0H15.979v99.798h74.567V0L90.546,0z"/>
+		</g>
+		<g>
+			<path d="M25.088,26.931l0.025-6.753c0.003-0.779,0.643-1.414,1.421-1.41l9.418,0.038c0.779,0.003,1.414,0.643,1.411,1.422     L37.337,27"/>
+			<path d="M31.288,8.096c-2.718-0.011-4.93,2.183-4.941,4.901c-0.011,2.717,2.183,4.93,4.901,4.941     c2.718,0.011,4.931-2.183,4.941-4.9C36.2,10.319,34.006,8.107,31.288,8.096z M31.228,16.961     c-1.542-0.006-2.786-1.261-2.779-2.803l5.583,0.023C34.024,15.724,32.77,16.968,31.228,16.961z"/>
+		</g>
+		<rect x="21" y="5.133" fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" width="20.729" height="21.431"/>
+		<g>
+			<rect x="47.917" y="31.091" width="37.61" height="2"/>
+		</g>
+		<g>
+			<rect x="47.917" y="36.303" width="37.61" height="2"/>
+		</g>
+		<g>
+			<rect x="47.917" y="41.515" width="37.61" height="2"/>
+		</g>
+		<g>
+			<rect x="47.917" y="46.728" width="37.61" height="2"/>
+		</g>
+		<g>
+			<rect x="47.917" y="51.939" width="37.61" height="2"/>
+		</g>
+		<g>
+			<rect x="47.917" y="57.151" width="37.61" height="2"/>
+		</g>
+		<g>
+			<rect x="47.917" y="62.363" width="37.61" height="2"/>
+		</g>
+		<g>
+			<rect x="47.917" y="67.576" width="37.61" height="2"/>
+		</g>
+		<g>
+			<rect x="47.917" y="72.788" width="37.61" height="2"/>
+		</g>
+		<g>
+			<rect x="47.917" y="78" width="37.61" height="2"/>
+		</g>
+		<g>
+			<rect x="20" y="31.091" width="23" height="2"/>
+		</g>
+		<g>
+			<rect x="20" y="36.303" width="23" height="2"/>
+		</g>
+		<g>
+			<rect x="20" y="41.515" width="23" height="2"/>
+		</g>
+		<g>
+			<rect x="20" y="90.146" width="65.527" height="2"/>
+		</g>
+		<g>
+			<rect x="14.712" y="61.014" transform="matrix(0.707 0.7072 -0.7072 0.707 57.3235 9.8955)" width="4.015" height="26.226"/>
+			<polygon points="28.927,64.691 26.088,61.851 27.974,59.967 32.398,58.383 30.813,62.805    "/>
+			<rect x="3.951" y="84.278" transform="matrix(0.7071 0.7071 -0.7071 0.7071 61.8785 20.6941)" width="4.016" height="1.525"/>
+		</g>
+	</g>
+</switch>
+</svg>

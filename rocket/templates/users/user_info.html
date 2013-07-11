@@ -1,0 +1,225 @@
+{% extends 'users/users_base.html' %}
+{% block title %}Account Info{% endblock %}
+{% load static from staticfiles %}
+
+{% block content %}
+	<div id="fb-root"></div>
+	{% if user.get_profile.name %}
+	<h3 class="name">{{ user.get_profile.name }}'s info</h3>
+	{% else %}
+	<h3 class="name">{{user.username}}'s info</h3>
+	{% endif %}
+	<div class="user-profile-table-group">
+		<div class="errors alert alert-error hide"></div>
+		<form class="user-info-form form-horizontal" action="" method="POST">
+			<div style="margin-bottom: 5px">
+				<span class="h4"><strong>User Info</strong></span>
+				<span class="edit-all-wrapper">
+					<a class="btn btn-info edit-all" href="#">Edit all</a>
+					<input class="btn btn-info save-all hide" type="submit" value="Save all">
+				</span>
+				<span class="view-profile-wrapper"><a class="btn btn-warning view-profile" href="{% url 'users.views.profile' user.username %}">View your profile</a></span>
+			</div>
+			<table class="table table-hover user-profile-table">
+				<tbody>
+					<tr class="uneditable">
+						<td>Username:</td>
+						<td class="username"><code class="text-info">{{ user.username }}</code></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Name:</td> {% comment %} displays current name setting {% endcomment %}
+						{% if user.get_profile.name %}
+						<td class="name">{{ user.get_profile.name }}</td>
+						{% else %}
+						<td class="name muted">Add a name to your profile</td> {% comment %} if empty {% endcomment %}
+						{% endif %}
+						<td><a class="edit active" href="#">Edit</a><span class="edit muted inactive hide">Edit</span></td>
+					</tr>
+					<tr class="in-edit hide"> {% comment %} editable field for name {% endcomment %}
+						<td>Name:</td>
+						<td class="form-partial">
+							<input class="name" tabindex="1" name="name" type="text" value="{{ user.get_profile.name }}">
+						</td>
+						<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
+					</tr>
+					<tr class="uneditable">
+						<td>Profile Picture:</td> {% comment %} display small version of current profile picture {% endcomment %}
+						{% if user.get_profile.propic %}
+						<td class="propic"><img src="{{user.get_profile.propic}}" height="100px" width="100px"><input class="propic-url" type="hidden" name="propic" value="{{user.get_profile.propic}}"></td>
+						{% else %}
+						<td class="propic"><img src="{% static 'users/img/no-photo.png' %}" height="100px" width="100px"><input class="propic-url" type="hidden" name="propic" value=""></td>
+						{% endif %}
+						<td><a class="change-propic active" href="#">Change Picture</a><span class='change-propic muted inactive hide'>Change Picture</span></td>
+					</tr>
+					<tr class="uneditable">
+						<td>Password:</td> {% comment %} displays hash of password, can edit from another page {% endcomment %}
+						<td>&#149;&#149;&#149;&#149;&#149;&#149;&#149;&#149;</td>
+						<td><a class="change-password active" href="/users/password/change/">Change password</a><span class='change-password muted inactive hide'>Change password</span></td>
+					</tr>
+					<tr>
+						<td>Email:</td> {% comment %} displays current email setting {% endcomment %}
+						<td class="email">{{ user.get_profile.email }}</td>
+						<td><a class="edit active" href="#">Edit</a><span class="edit muted inactive hide">Edit</span></td>
+					</tr>
+					<tr class="in-edit hide field-wrapper"> 
+						<td>Email:</td> {% comment %} editable field for email {% endcomment %}
+						<td class="form-partial">
+							<input class="email" tabindex="2" name="email" type="text" value="{{ user.get_profile.email }}">
+						</td>
+						<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
+					</tr>
+					<tr>
+						<td>Phone:</td> {% comment %} displays current phone setting {% endcomment %}
+						{% if user.get_profile.phone %}
+						<td class="phone">{{ user.get_profile.phone }}</td>
+						{% else %}
+						<td class="phone muted">Add a phone number to your profile</td> {% comment %} if empty {% endcomment %}
+						{% endif %}
+						<td><a class="edit active" href="#">Edit</a><span class="edit muted inactive hide">Edit</span></td>
+					</tr>
+					<tr class="in-edit hide">
+						<td>Phone:</td> {% comment %} editable field for phone number {% endcomment %}
+						<td class="form-partial">
+							<input class="phone" tabindex="3" name="phone" type="text" value="{{ user.get_profile.phone }}">
+						</td>
+						<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
+					</tr>
+					<tr>
+						<td>Seller Blurb:</td> {% comment %} displays first line of seller blurb {% endcomment %}
+						{% if user.get_profile.bio %}
+						<td class="bio">{{ user.get_profile.bio }}</td>
+						{% else %}
+						<td class="bio muted">Add a bio to your profile</td> {% comment %} if empty {% endcomment %}
+						{% endif %}
+						<td><a class="edit active" href="#">Edit</a><span class="edit muted inactive hide">Edit</span></td>
+					</tr>
+					<tr class="in-edit hide">
+						<td>Seller Blurb:</td> {% comment %} editable field for seller bio {% endcomment %}
+						<td class="form-partial">
+							<textarea class="bio" tabindex="4" name="bio" rows="3">{{ user.get_profile.bio }}</textarea>
+						</td>
+						<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
+					</tr>
+					<tr>
+						<td>Location:</td> {% comment %} displays your default location {% endcomment %}
+						{% if user.get_profile.location %}
+						<td class="location">{{ user.get_profile.location }}</td>
+						{% else %}
+						<td class="location muted">Add a default location for your listings</td> {% comment %} if empty {% endcomment %}
+						{% endif %}
+						<td><a class="edit active" href="#">Edit</a><span class="edit muted inactive hide">Edit</span></td>
+					</tr>
+					<tr class="in-edit hide"> {% comment %} editable location field {% endcomment %}
+						<td>Location:</td>
+						<td class="form-partial">
+							<input class="location" tabindex="4" id="id_location" name="location" type="text" value="{{ user.get_profile.location }}">
+							<a href="#" class="get-location">Get location</a>
+						</td>
+						<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
+					</tr>
+				</tbody>
+			</table>
+			<h4>Listings</h4> {% comment %} --------- LISTINGS SETTINGS TABLE  ---------{% endcomment %}
+			<table class="table table-hover user-profile-table">
+				<tbody>
+					<tr class="uneditable">
+						<td>Rocket Email:</td> {% comment %} displays autognerrated email address {% endcomment %}
+						<td><code class="text-info">{{user.username}}@rocketlistings.mailgun.org</code></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Default Listing Type:</td> {% comment %} display default listing type public/private {% endcomment %}
+						{% if user.get_profile.default_listing_type.name  %}
+						<td class="default_listing_type">{{ user.get_profile.default_listing_type.name }}</td>
+						{% else %}
+						<td class="default_listings_type muted">Add a default listing type</td> {% comment %} if empty {% endcomment %}
+						{% endif %}
+						<td><a class="edit active" href="#">Edit</a><span class="edit muted inactive hide">Edit</span></td>
+					</tr>
+					<tr class="in-edit hide">
+						<td>Default Listing Type:</td> {% comment %} edit default display setting public/private {% endcomment %}
+						<td class="form-partial">
+							<select tabindex="6" name="default_listing_type.name">
+								<option class="" selected="true">{{ user.get_profile.default_listing_type.name }}</option>
+							</select>
+						</td>
+						<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
+					</tr>
+					<tr>
+						<td>Default Category:</td> {% comment %} display listing category setting {% endcomment %}
+						{% if user.get_profile.default_category.name  %}
+						<td class="default_category">{{ user.get_profile.default_category.name  }}</td>
+						{% else %}
+						<td class="default_category muted">Add a default category for your listings</td> {% comment %} if empty {% endcomment %}
+						{% endif %}
+						<td><a class="edit active" href="#">Edit</a><span class="edit muted inactive hide">Edit</span></td>
+					</tr>
+					<tr class="in-edit hide">
+						<td>Default Category:</td> {% comment %} editable default listing category {% endcomment %}
+						<td class="form-partial">
+							<select tabindex="5" name="default_category">
+								<option class="" selected="true">{{ user.get_profile.default_category.name }}</option>
+							</select>
+						</td>
+						<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
+					</tr>
+				</tbody>
+			</table>
+			<h4>Privacy</h4>
+			<table class="table table-hover user-profile-table">
+				<tbody>
+					<tr>
+						<td>Name:</td>	{% comment %} Privacy setting for Name {% endcomment %}
+						{% if user.get_profile.nameprivate %}
+						<td class="nameprivate">Private</td>
+						{% else %}
+						<td class="nameprivate">Public</td>
+						{% endif %}
+						<td><a class="edit active" href="#">Edit</a><span class="edit muted inactive hide">Edit</span></td>
+					</tr>
+					<tr class="in-edit hide">
+						<td>Name:</td> {% comment %} Editable Name privacy {% endcomment %}
+						<td class="form-partial">
+							<select tabindex="7" name="nameprivate">
+								{% if user.get_profile.nameprivate %}
+								<option value="False">Public</option>
+								<option value="True" selected="true">Private</option>
+								{% else %}
+								<option value="False" selected="true">Public</option>
+								<option value="True">Private</option>
+								{% endif %}
+							</select>
+						</td>
+						<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
+					</tr>
+					<tr>
+						<td>Location:</td> {% comment %} Location privacy setting {% endcomment %}
+						{% if user.get_profile.locationprivate %}
+						<td class="locationprivate">Private</td>
+						{% else %}
+						<td class="locationprivate">Public</td>
+						{% endif %}
+						<td><a class="edit active" href="#">Edit</a><span class="edit muted inactive hide">Edit</span></td>
+					</tr>
+					<tr class="in-edit hide">
+						<td>Location:</td>{% comment %} Editable Location privacy {% endcomment %}
+						<td class="form-partial">
+							<select tabindex="10" name="locationprivate">
+								{% if user.get_profile.locationprivate %}
+								<option value="False">Public</option>
+								<option value="True" selected="true">Private</option>
+								{% else %}
+								<option value="False" selected="true">Public</option>
+								<option value="True">Private</option>
+								{% endif %}
+							</select>
+						</td>
+						<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+	<fb:login-button show-faces="false" width="200" max-rows="1" autologoutlink="true"></fb:login-button>
+	</div>
+{% endblock %}

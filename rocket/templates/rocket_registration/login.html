@@ -1,0 +1,21 @@
+{% extends 'users/users_base.html' %}
+
+{% block content %}
+<div class = "login-form">
+	<form action="{% url 'auth_login' %}" method="POST">
+	{% if next %}
+	<p class="text-success message" style="display:none;">Don't worry, your photos were saved. After logging in you'll be taken to finish your listing.</p>
+	{% endif%}
+	{% csrf_token %}
+		<ul class="form">
+			{{ form.as_ul }}
+			<p> <input class="btn btn-primary btn-large" type="submit" value="Login"/></p>
+		</ul>
+		<input type="hidden" name="next" value="{{ next }}" />
+		<div class = "login-help">
+			<a href="{% url 'auth_password_reset' %}">Forgot your password?</a><br/>
+			<a href="{% url 'registration_register' %}{% if next %}?next={{next}}{% endif%}">Create an account</a>
+		</div>
+	</form>
+</div>
+{% endblock %}

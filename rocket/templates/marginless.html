@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+{% load compress %}
+
+
+{% block bootstrap %}
+{% compress css %}
+<link type="text/css" rel="stylesheet" href="{% static 'rocket/vendorcss/bootstrap-gutterless.css' %}"/>
+{% endcompress %}
+{% endblock %}
+
+{% block body %}
+	<div class="wrap-fixed">
+		{% include "partials/header.html" %}
+  	{% block content %}<h3>Error 404</h3>{% endblock %}
+  </div>
+	{% include "partials/footer_fixed.html" %}
+	{% include "listings/partials/modal_photo_upload.html" %}
+	</div>
+{% endblock %}

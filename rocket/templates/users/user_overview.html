@@ -1,0 +1,44 @@
+{% extends 'marginless.html' %}
+{% load static from staticfiles %}
+{% load compress %}
+
+{% block title %}{{ block.super }} Dashboard{% endblock %}
+{% block css %}
+{% compress css %}
+<link type="text/less" rel="stylesheet" href="{% static 'listings/less/listings.less' %}"/>
+{% endcompress %}
+{% endblock %}
+
+{% block js %}
+	{% compress js %}
+	<script id="listing_buyers_table_hb" type="text/x-handlebars-template">
+		{% include 'listings/partials/buyers_cards_hb.html' %}
+	</script>
+	<script id="buyer_messages_thread_hb" type="text/x-handlebars-template">
+		{% include 'listings/partials/buyer_messages_hb.html' %}
+	</script>
+	<script src="{% static 'rocket/js/handlebars.js' %}" type="text/javascript"></script>
+	<script src="{% static 'listings/js/listings_dashboard.js' %}" type="text/javascript"></script>	
+	{% endcompress %}
+{% endblock %}
+
+
+{% block content %}
+	<h3>Listings Dashboard</h3>
+	<div class = "container-fluid">
+		<div class = "row-fluid">
+			<div class = "span6">
+				{% include 'listings/partials/listings_table.html' %}
+			</div>
+			<div class = "span2">
+				<p> buyer info</p>
+			</div>
+			<div class = "span4">
+				<p>messages</p>
+			</div>
+		</div>
+	</div>
+
+	<!--<div id="listings"></div>-->
+
+{% endblock %}
