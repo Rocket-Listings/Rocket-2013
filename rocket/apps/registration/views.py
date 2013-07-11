@@ -10,6 +10,8 @@ from django.template import RequestContext
 from django.contrib.auth.models import User
 from users.models import UserProfile
 from users.forms import UserProfileForm
+from django.contrib.auth import views as auth_views
+from django.contrib.auth.forms import AuthenticationForm
 
 from registration.backends import get_backend
 

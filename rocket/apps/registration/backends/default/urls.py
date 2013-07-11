@@ -21,13 +21,15 @@ up your own URL patterns for these views instead.
 from django.conf.urls.defaults import *
 from django.views.generic import TemplateView
 
+from django.contrib.auth.views import login
+
 from registration.views import activate
 from registration.views import register
 
 
 urlpatterns = patterns('',
                        url(r'^activate/complete/$',
-                          TemplateView.as_view(template_name='rocket_registration/activation_complete.html'),
+                          login, {'template_name': 'rocket_registration/login.html', 'extra_context': {'on_activate': True}},
                           name='registration_activation_complete'),
                        # Activation keys get matched by \w+ instead of the more specific
                        # [a-fA-F0-9]{40} because a bad activation key should still get to the view;
@@ -35,7 +37,7 @@ urlpatterns = patterns('',
                        # confusing 404.
                        url(r'^activate/(?P<activation_key>\w+)/$',
                            activate,
-                           {'backend': 'registration.backends.default.DefaultBackend', 'template_name': 'rocket_registration/activate.html'},
+                           {'backend': 'registration.backends.default.DefaultBackend', 'template_name': 'rocket_registration/activate'},
                            name='registration_activate'),
                        url(r'^register/$',
                            register,

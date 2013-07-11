@@ -6,6 +6,9 @@
 	{% if next %}
 	<p class="text-success message" style="display:none;">Don't worry, your photos were saved. After logging in you'll be taken to finish your listing.</p>
 	{% endif%}
+	{% if on_activate %}
+	<h4>Your account has been activated. Log in:</h4>
+	{% endif %}
 	{% csrf_token %}
 		<ul class="form">
 			{{ form.as_ul }}
