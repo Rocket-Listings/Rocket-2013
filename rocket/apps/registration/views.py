@@ -189,8 +189,6 @@ def register(request, backend, success_url=None, form_class=None,
             form = form_class(data=request.POST, files=request.FILES)
             if form.is_valid():
                 new_user = backend.register(request, **form.cleaned_data)
-                user_profile_form = UserProfileForm(request.POST, instance=request.user.get_profile())
-                user_profile_form.save()
                 if request.GET.get('next',''):
                     success_url = request.GET.get('next','')
                     return redirect(success_url)
