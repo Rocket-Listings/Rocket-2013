@@ -40,7 +40,7 @@ def profile(request, username=None):
 	draftlistings = allListings.filter(status=ListingStatus(pk=2))
 	photos = ListingPhoto.objects.filter(listing=user)
 	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos)
-	user_comments = UserComment.objects.filter(user=user).order_by('-date_posted')[:5]
+	comments = UserComment.objects.filter(user=user).order_by('-date_posted')[:5]
 	if request.method == 'POST':
 		comment_form = CommentSubmitForm(request.POST, instance = UserComment(user=user))
 		if comment_form.is_valid():
@@ -51,4 +51,4 @@ def profile(request, username=None):
 			errors = comment_form.errors
 			return HttpResponse(simplejson.dumps(errors), content_type="application/json")
 	else:
-		return render(request, 'user_profile.html', {'user':user, 'activelistings':activelistings, 'draftlistings':draftlistings, 'photos':photos, 'comments':comments})
+		return render(request, 'users/user_profile.html', {'user':user, 'activelistings':activelistings, 'draftlistings':draftlistings, 'photos':photos, 'comments':comments})
