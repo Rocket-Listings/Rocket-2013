@@ -12,9 +12,7 @@ class Migration(SchemaMigration):
         db.create_table(u'listings_listingcategory', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=60)),
-            ('CL_id', self.gf('django.db.models.fields.IntegerField')(null=True)),
-            ('is_owner', self.gf('django.db.models.fields.NullBooleanField')(null=True, blank=True)),
-            ('description', self.gf('django.db.models.fields.CharField')(max_length=200)),
+            ('category', self.gf('django.db.models.fields.CharField')(max_length=200)),
         ))
         db.send_create_signal(u'listings', ['ListingCategory'])
 
@@ -211,11 +209,9 @@ class Migration(SchemaMigration):
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         },
         u'listings.listingcategory': {
-            'CL_id': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
             'Meta': {'object_name': 'ListingCategory'},
-            'description': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+            'category': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'is_owner': ('django.db.models.fields.NullBooleanField', [], {'null': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '60'})
         },
         u'listings.listinghighlight': {

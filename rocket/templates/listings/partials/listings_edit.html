@@ -1,0 +1,119 @@
+<div class="edit" style="display:none">
+  <div class="listing-edit">
+    <div>
+      <!-- Tab Table with categories filled from the database -->
+      <div class="tabbable">  
+        <ul class="nav nav-tabs">  
+          <li class="active li1"><a href="#1" id = "tab1" data-toggle="tab">For Sale</a></li>  
+          <li class="li2"><a href="#2" id = "tab2" data-toggle="tab">Housing</a></li> 
+        </ul>  
+        <div class="tab-content">
+          <div class="tab-pane active large" id="1" data-type="for_sale">
+            <table class="table">
+              <tr>
+                {% for item in categories %}
+                  <td><a href="#">{{item}}</a></td>
+                  {% if forloop.counter == 36 %}
+                        </tr>
+                      </table>
+                    </div>
+                    <div class="tab-pane small" data-type="housing" id="2">
+                      <table class="table">
+                        <tr>
+                  {% else %}
+                    {% if forloop.counter|divisibleby:"7" %}
+                      </tr><tr>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- Post Method with all of the listing information -->
+      <form method="POST" action="">
+        {% csrf_token %}
+        <div class="l-header">
+          <h1 class="l-title">
+            <!-- Elements are either empty fields(create page) or load from the database (details page)-->
+            <fieldset>
+              <input id="id_title" name="title" placeholder="Title" type="text" value="{{listing.title}}"/>
+              <input id="id_price" name="price" type="text" placeholder="Price" value="{{listing.price}}"/>
+              <input id="id_location" name="location" type="text" placeholder="Location" value="{{listing.location}}"/>
+            </fieldset>
+          </h1>
+        </div>
+
+          <ul class="form">
+              <li>
+                  <textarea cols="60" id="id_description" name="description" rows="10" placeholder="Description">{{listing.description}}</textarea>
+              </li>
+              <!-- All of the specs tables are loaded from the database (needs to be cleaned up).  Loads every spec every time-->
+              <div class="spec_tables">
+                {% for item in categories %}
+                  <div class="category_{{item}}" style="display:none">
+                    <table border='1' class="table_{{item}}">
+                      <th colspan='2'><h4>Optional Specifications</h4></th>
+                      {% for spec_value in specs %}
+                        {% if spec_value.category.name == item.name %}
+                          <tr>
+                            <td>{{spec_value.key}}:</td>
+                            <!-- input is firstname of category (e.g. arts in arts and crafts) _ specification (e.g. dimensions)-->
+                            <td><input name={{spec_value.category.name.split.0}}_{{spec_value.key}} type="text"></td>
+                          </tr>
+                        {% endif %}
+                      {% endfor %}
+                    </table>
+                  </div>
+                {% endfor %}
+              </div>
+
+              <!-- The final category is loaded in view.py to easily store category specs into the database -->
+              <input class="hidden" name="final_cat" id="final_category" value="">
+              
+              </br>
+
+              <li>
+                <div class="hidden">
+                  <!-- Loads category form from the database-->
+                  {{ form.category }}
+                </div>
+              </li>
+              <li>
+                <select id="id_listing_type" name="listing_type">
+                  <option value="1">Private</option>
+                  <option value="2" selected="selected">Public</option>
+                </select>
+              </li>
+              <li>
+                <select id="id_status" name="status">
+                  <option value="1" selected="selected">Active</option>
+                  <option value="2">Draft</option>
+                </select>
+              </li>
+              <br>
+
+              <button type="button" class="btn btn-primary" onclick='fileUpload()'>Upload Picture Here</button>
+              <!-- inserts the picture urls into inputs so that they can be loaded into the database-->
+              <div id="pictureData"></div>
+
+              <!-- inserts the actual picture scr from filepicker -->
+              <div id="image"></div>
+
+              <!-- Fills in the final picture count for easy use in the view.py-->
+              <input type="hidden" name="final_count" id="final_countdown" value="0">
+
+              <li>
+                  <input class="btn" type="submit" value="Update" style="display:none" id="primaryButton"/>
+              </li>
+          </ul>
+      </form>
+    </div>
+    <div class="l-footnote" style ="margin-left:55px;">
+      Created with 
+      <a href="http://www.rocketlistings.com" class="icon"> Rocket Listings</a>
+      . Blast off. 
+    </div>
+  </div>
+</div>
