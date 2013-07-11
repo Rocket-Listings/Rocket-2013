@@ -10,4 +10,5 @@ urlpatterns = patterns('',
 	url(r'^pricing/$', TemplateView.as_view(template_name='static_pages/pricing.html'), name='pricing'),
 	url(r'^how/$', TemplateView.as_view(template_name='static_pages/how.html'), name='how'),
 	url(r'^who/$', TemplateView.as_view(template_name='static_pages/who.html'), name='who'),
+	url(r'^why/$', TemplateView.as_view(template_name='static_pages/why.html'), name='why'),
 )
