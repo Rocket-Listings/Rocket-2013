@@ -175,10 +175,12 @@ THIRD_PARTY_APPS = (
 
 	# static file management
 	'compressor',
+
+  # form-atting hahaaa
+  'crispy_forms',
 )
 
 LOCAL_APPS = (
-	'ajaxuploader',
 	'listings',
 	'mail',
 	'registration',

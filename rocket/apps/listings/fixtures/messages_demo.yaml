@@ -24,6 +24,7 @@
     category: [cars and trucks]
     listing_type: [Private]
     user: [chucknorris]
+    listing_type: 'O'
 
 - model: listings.Buyer
   pk: null

@@ -1,4 +1,4 @@
-{% extends 'listings_base.html' %}
+{% extends 'listings/base.html' %}
 {% load thumbnail %}
 {% load static from staticfiles %}
 {% load compress %}
@@ -29,8 +29,8 @@
         {{item.name}}
         <br>
       {% endfor %}
-      {% include 'partials/listings_preview.html' %}
-      {% include 'partials/listings_edit.html' %}
+      {% include 'listings/partials/listings_preview.html' %}
+      {% include 'listings/partials/listings_edit.html' %}
     </div>
     
 
