@@ -52,7 +52,7 @@ def create(request):
 		form = ListingForm(initial=defaults)
 		categories = ListingCategory.objects.all() #get all of the category information from database for tab view in listings_edit
 		specs = ListingSpecKey.objects.all() #get all of the specs information from database for table insertion
-		return render(request, 'listing_create.html', {'form':form , 'categories':categories, 'specs':specs})
+		return render(request, 'listings/listing_create.html', {'form':form , 'categories':categories, 'specs':specs})
 
 	elif request.method == 'POST':
 		categories = ListingCategory.objects.all() #get categories if post request fails

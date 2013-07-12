@@ -16,29 +16,29 @@
   </div>
 </div>
 
-<table class="table table-listings table-hover tablesorter">
+<table class="table table-listings table-hover sortable" id="myTable">
 	<thead>
 		<tr>
-			<th class="sortable">Title</th>
-			<th class="sortable">Price</th>
+			<th><a href="#">Title</a></th>
+			<th><a href="#">Price</a></th>
 			{# <th class="sortable">Location</th> #}
-			<th class="sortable">Category</th>
-			<th class="sortable" style ="text-align: center;">Date Listed</th>
-			<th style="text-align: center;">Manage</th>
+			<th><a href="#">Category</a></th>
+			<th style ="text-align: center;"><a href="#">Date Listed</a></th>
+			<th style="text-align: center;" class="sorttable_nosort">Manage</th>
 		</tr>
 	</thead>
-	<tbody>
+	<tbody class="listing_table">
 		{% for listing in listings %}
 		<tr data-listing-id="{{ listing.id }}" >
 			<td>
-				<a href="{{ listing.get_absolute_url }}">
+				<a class="bargle" href="{{ listing.get_absolute_url }}">
 					{{ listing.title }}
 				</a>
 			</td>
 			<td>${{ listing.price }}</td>
 			{# <td>{{ listing.location }}</td> #}
 			<td>{{ listing.category.name }}</td>
-			<td>{{ listing.pub_date|date:"m-d-y P" }}</td>
+			<td>{{ listing.pub_date|date:"m/d/y P" }}</td>
 			<td>
 				<div class="btn-toolbar" style="text-align: center;">
 					<a href="{{ listing.get_absolute_url }}">Link</a>
@@ -48,7 +48,7 @@
 						<a class="btn share_optn" title="Autopost to Craigslist" href="{% url 'mail.views.autopost' listing.id %}" data-toggle="modal" data-target = "#loadingModal" data-original-title="Autopost to Craigslist"><i class ="icon-share"></i></a>
 
 						<!--edit button -->
-						<a class="btn edit_optn" title="Edit Listing" href="{% url 'listings.views.update' listing.id %}" data-container="body" data-toggle="tooltip" data-original-title="Edit Listing"><i class="icon-edit"></i></a>
+						<a class="btn edit_optn" title="Edit Listing" href="{% url 'listings.views.detail' listing.id %}" data-container="body" data-toggle="tooltip" data-original-title="Edit Listing"><i class="icon-edit"></i></a>
 
 						<!--delete button -->
 						<a class="deleteModal btn trash_optn" title="Delete listing" href="#deleteModal" data-toggle="modal"><i class="icon-trash"></i> </a>
@@ -78,8 +78,9 @@
 				{% else %}
 				<td class="centered-td"> N/A </td>
 			</td>
-		</tr>
+		
 			{% endcomment %}
+		</tr>
 	{% endfor %}
 	</tbody>
 </table>
