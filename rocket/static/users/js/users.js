@@ -53,7 +53,7 @@ $(function() {
 				path: '/propics/' + $(".username").text() + '.png'
 			},
 			function(NewBlob) {
-				$(".propic-url").val(NewBlob.url);
+				$(".propic-url").val("https://s3.amazonaws.com/test_filepicker/" + NewBlob.key);
 				$(".user-info-form").submit();
 			},
 			function(FPError) {
