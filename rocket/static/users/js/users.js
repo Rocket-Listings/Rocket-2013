@@ -38,7 +38,7 @@ $(function() {
 		filepicker.pick({
 			mimetype: "image/*",
 			multiple: false,
-			services: ['COMPUTER', 'URL']
+			services: ['COMPUTER', 'URL', 'FACEBOOK', 'DROPBOX']
 		},
 		function(InkBlob) {
 			filepicker.convert(InkBlob, {

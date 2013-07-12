@@ -57,3 +57,12 @@ def profile(request, username=None):
 			return HttpResponse(simplejson.dumps(errors), content_type="application/json")
 	else:
 		return render(request, 'users/user_profile.html', {'user':user, 'activelistings':activelistings, 'draftlistings':draftlistings, 'photos':photos, 'comments':comments})
+
+def delete_account(request):
+	user = request.user
+	if user.is_authenticated():
+		user_to_delete = User.objects.get(username=user)
+		user_to_delete.delete()
+		return redirect('/')
+	else:
+		return redirect('/users/login')
