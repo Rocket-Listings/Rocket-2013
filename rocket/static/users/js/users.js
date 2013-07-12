@@ -58,6 +58,11 @@ $(function() {
 			},
 			function(FPError) {
 				console.log(FPError);
+			},
+			function(percent) {
+				if (percent != 100) {
+					$(".loading-overlay").show();
+				}
 			});
 		},
 		function(FPError) {
@@ -95,7 +100,7 @@ $(function() {
 				xhr.setRequestHeader("X-CSRFToken", csrftoken);
 			},
 			success: function(response) {
-				if (response.name) {
+				if (response.profile) {
 					$(".in-edit").hide();
 					$(".edit").parent().parent().show();
 					$(".inactive").hide();
@@ -156,9 +161,8 @@ $(function() {
 				}
 			}
 			if (key.toString() === "propic") {
-				$(".loading").show();
-				$(".propic > img").attr("src", data[key]);
-				$(".loading").hide();
+				$(".propic > div.propic-loading-wrapper > img").attr("src", data[key]);
+				$(".loading-overlay").hide();
 			}
 		}
 	}
@@ -168,7 +172,7 @@ $(function() {
 
 	// PROFILE JS
 	// formatting (uses autoellipsis.js)
-	$(".profile-listing-description").ellipsis();
+	//$(".profile-listing-description").ellipsis();
 
 	// Handle the comment form
 	$(".comment-form").submit(function() {

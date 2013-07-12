@@ -39,16 +39,28 @@
 					<tr class="in-edit hide"> {% comment %} editable field for name {% endcomment %}
 						<td>Name:</td>
 						<td class="form-partial">
-							<input class="name" tabindex="1" name="name" type="text" value="{{ user.get_profile.name }}">
+							<input class="name" tabindex="1" name="name" type="text" autocomplete="off" value="{{ user.get_profile.name }}">
 						</td>
 						<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
 					</tr>
 					<tr class="uneditable">
 						<td>Profile Picture:</td> {% comment %} display small version of current profile picture {% endcomment %}
 						{% if user.get_profile.propic %}
-						<td class="propic"><img src="{{user.get_profile.propic}}" height="100px" width="100px"><input class="propic-url" type="hidden" name="propic" value="{{user.get_profile.propic}}"></td>
+						<td class="propic">
+							<div class="propic-loading-wrapper">
+								<img src="{{user.get_profile.propic}}" height="100px" width="100px">
+								<span class="loading-overlay hide"><img src="{% static 'users/img/100px_loading.gif' %}"></span>
+							</div>
+							<input class="propic-url" type="hidden" name="propic" value="{{user.get_profile.propic}}">
+						</td>
 						{% else %}
-						<td class="propic"><img src="{% static 'users/img/no-photo.png' %}" height="100px" width="100px"><input class="propic-url" type="hidden" name="propic" value=""></td>
+						<td class="propic">
+							<div class="propic-loading-wrapper">
+								<img src="{% static 'users/img/no-photo.png' %}" height="100px" width="100px">
+								<span class="loading-overlay hide"><img src="{% static 'users/img/100px_loading.gif' %}"></span>
+							</div>
+							<input class="propic-url" type="hidden" name="propic" value="">
+						</td>
 						{% endif %}
 						<td><a class="change-propic active" href="#">Change Picture</a><span class='change-propic muted inactive hide'>Change Picture</span></td>
 					</tr>
@@ -65,7 +77,7 @@
 					<tr class="in-edit hide field-wrapper"> 
 						<td>Email:</td> {% comment %} editable field for email {% endcomment %}
 						<td class="form-partial">
-							<input class="email" tabindex="2" name="email" type="text" value="{{ user.email }}">
+							<input class="email" tabindex="2" name="email" type="text" autocomplete="off" value="{{ user.email }}">
 						</td>
 						<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
 					</tr>
@@ -81,7 +93,7 @@
 					<tr class="in-edit hide">
 						<td>Phone:</td> {% comment %} editable field for phone number {% endcomment %}
 						<td class="form-partial">
-							<input class="phone" tabindex="3" name="phone" type="text" value="{{ user.get_profile.phone }}">
+							<input class="phone" tabindex="3" name="phone" type="text" autocomplete="off" value="{{ user.get_profile.phone }}">
 						</td>
 						<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
 					</tr>
@@ -97,7 +109,7 @@
 					<tr class="in-edit hide">
 						<td>Seller Blurb:</td> {% comment %} editable field for seller bio {% endcomment %}
 						<td class="form-partial">
-							<textarea class="bio" tabindex="4" name="bio" rows="3">{{ user.get_profile.bio }}</textarea>
+							<textarea class="bio" tabindex="4" name="bio" autocomplete="off" rows="3">{{ user.get_profile.bio }}</textarea>
 						</td>
 						<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
 					</tr>
@@ -113,7 +125,7 @@
 					<tr class="in-edit hide"> {% comment %} editable location field {% endcomment %}
 						<td>Location:</td>
 						<td class="form-partial">
-							<input class="location" tabindex="4" id="id_location" name="location" type="text" value="{{ user.get_profile.location }}">
+							<input class="location" tabindex="4" id="id_location" autocomplete="off" name="location" type="text" value="{{ user.get_profile.location }}">
 							<a href="#" class="get-location">Get location</a>
 						</td>
 						<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>

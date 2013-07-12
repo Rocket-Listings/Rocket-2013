@@ -17,6 +17,7 @@ from django.utils import simplejson as json
 def overview(request, username=None):
 	return info(request, username)
 
+@login_required
 def info(request):
 	user = request.user
 	profile = user.get_profile()
@@ -27,7 +28,8 @@ def info(request):
 			user_profile = user_profile_form.save()
 			responseData = {}
 			for key, value in user_profile_form.cleaned_data.iteritems():
-				responseData[key] = value			
+				responseData[key] = value
+			responseData['profile'] = True		
 			return HttpResponse(json.dumps(responseData), content_type="application/json")
 		else:
 			errors = user_profile_form.errors

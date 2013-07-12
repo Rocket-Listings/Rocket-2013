@@ -43,6 +43,22 @@
 					img.propic {
 						border: 1px solid #999;
 					}
+					div.propic-loading-wrapper {
+						position: relative;
+						float: left;
+						height: 100px;
+						width: 100px;
+						.loading-overlay {
+							background-color: rgba(255, 255, 255, .8);
+							filter: alpha(opacity=50);
+							-moz-opacity: 0.5;
+							-khtml-opacity: 0.5;
+							opacity: 0.5;
+							position: absolute;
+							top: 0;
+							left: 0;
+						}
+					}
 					.get-location {
 						float: none;
 						vertical-align: middle;
