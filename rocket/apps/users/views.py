@@ -12,7 +12,7 @@ from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.core import serializers
 from django.http import HttpResponse, HttpRequest
-from django.utils import simplejson
+from django.utils import simplejson as json
 
 def overview(request, username=None):
 	return info(request, username)
@@ -22,16 +22,19 @@ def info(request):
 	profile = user.get_profile()
 	if request.method == 'POST':
 		user_profile_form = UserProfileForm(request.POST, instance=profile)
-		if user_profile_form.is_valid():
+		if user_profile_form.is_valid():	
+			User.objects.filter(username = user).update(email=user_profile_form.cleaned_data['email'])
 			user_profile = user_profile_form.save()
-			User.objects.filter(username = user).update(email=request.POST['email'])
-			responseData = serializers.serialize("json", UserProfile.objects.filter(user=user))
-			return HttpResponse(responseData, content_type="application/json")
+			responseData = {}
+			for key, value in user_profile_form.cleaned_data.iteritems():
+				responseData[key] = value			
+			return HttpResponse(json.dumps(responseData), content_type="application/json")
 		else:
 			errors = user_profile_form.errors
-			return HttpResponse(simplejson.dumps(errors), content_type="application/json")
+			return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
 		return render(request, 'users/user_info.html', {'user': user})
+
 
 def profile(request, username=None):
 	user = User.objects.get(username=username)

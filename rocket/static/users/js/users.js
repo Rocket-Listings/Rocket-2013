@@ -95,7 +95,7 @@ $(function() {
 				xhr.setRequestHeader("X-CSRFToken", csrftoken);
 			},
 			success: function(response) {
-				if (response[0]) {
+				if (response.name) {
 					$(".in-edit").hide();
 					$(".edit").parent().parent().show();
 					$(".inactive").hide();
@@ -105,7 +105,7 @@ $(function() {
 					$(".edit-all").show();
 					$(".errors").hide();
 					$(".partial-submit").replaceWith("<input class='btn btn-info partial-submit' type='submit' value='Save'>");
-					insertNewValues(response[0].fields);
+					insertNewValues(response);
 				}
 				else {
 					showError(response);

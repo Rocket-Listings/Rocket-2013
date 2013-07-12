@@ -59,13 +59,13 @@
 					</tr>
 					<tr>
 						<td>Email:</td> {% comment %} displays current email setting {% endcomment %}
-						<td class="email">{{ user.get_profile.email }}</td>
+						<td class="email">{{ user.email }}</td>
 						<td><a class="edit active" href="#">Edit</a><span class="edit muted inactive hide">Edit</span></td>
 					</tr>
 					<tr class="in-edit hide field-wrapper"> 
 						<td>Email:</td> {% comment %} editable field for email {% endcomment %}
 						<td class="form-partial">
-							<input class="email" tabindex="2" name="email" type="text" value="{{ user.get_profile.email }}">
+							<input class="email" tabindex="2" name="email" type="text" value="{{ user.email }}">
 						</td>
 						<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
 					</tr>
