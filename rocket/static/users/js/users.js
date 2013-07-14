@@ -38,7 +38,7 @@ $(function() {
 		filepicker.pick({
 			mimetype: "image/*",
 			multiple: false,
-			services: ['COMPUTER', 'URL']
+			services: ['COMPUTER', 'URL', 'FACEBOOK', 'DROPBOX']
 		},
 		function(InkBlob) {
 			filepicker.convert(InkBlob, {
@@ -53,11 +53,16 @@ $(function() {
 				path: '/propics/' + $(".username").text() + '.png'
 			},
 			function(NewBlob) {
-				$(".propic-url").val(NewBlob.url);
+				$(".propic-url").val("https://s3.amazonaws.com/test_filepicker/" + NewBlob.key);
 				$(".user-info-form").submit();
 			},
 			function(FPError) {
 				console.log(FPError);
+			},
+			function(percent) {
+				if (percent != 100) {
+					$(".loading-overlay").show();
+				}
 			});
 		},
 		function(FPError) {
@@ -95,7 +100,7 @@ $(function() {
 				xhr.setRequestHeader("X-CSRFToken", csrftoken);
 			},
 			success: function(response) {
-				if (response[0]) {
+				if (response.profile) {
 					$(".in-edit").hide();
 					$(".edit").parent().parent().show();
 					$(".inactive").hide();
@@ -105,7 +110,7 @@ $(function() {
 					$(".edit-all").show();
 					$(".errors").hide();
 					$(".partial-submit").replaceWith("<input class='btn btn-info partial-submit' type='submit' value='Save'>");
-					insertNewValues(response[0].fields);
+					insertNewValues(response);
 				}
 				else {
 					showError(response);
@@ -156,9 +161,8 @@ $(function() {
 				}
 			}
 			if (key.toString() === "propic") {
-				$(".loading").show();
-				$(".propic > img").attr("src", data[key]);
-				$(".loading").hide();
+				$(".propic > div.propic-loading-wrapper > img").attr("src", data[key]);
+				$(".loading-overlay").hide();
 			}
 		}
 	}
@@ -168,7 +172,7 @@ $(function() {
 
 	// PROFILE JS
 	// formatting (uses autoellipsis.js)
-	$(".profile-listing-description").ellipsis();
+	//$(".profile-listing-description").ellipsis();
 
 	// Handle the comment form
 	$(".comment-form").submit(function() {
