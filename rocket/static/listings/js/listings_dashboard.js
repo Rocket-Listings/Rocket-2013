@@ -2,7 +2,7 @@ $(function() {
 
 	$('.table-listings tbody tr').click(function(event) {
 		var listingRow = $(this);
-		listingRow.addClass('highlight').siblings().removeClass('highlight');
+
 		var id = listingRow.data('listing-id');
 		$(".message").hide();
 		$(".buyer-card").hide();
