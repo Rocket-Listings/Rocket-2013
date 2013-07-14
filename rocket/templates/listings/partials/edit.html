@@ -2,9 +2,9 @@
 
 <div class="edit">
   <form method="POST" class="bootstrap">
-    {% csrf_token %}
 
     {# Category selection #}
+    <input id="cat-input" type="hidden" name="cat">
     <ul class="nav nav-tabs">
       {% for group in cat_groups %}
       <li {% if forloop.first %}class="active"{% endif %}><a href="#{{ group }}" data-toggle="tab">{{ group }}</a></li>
@@ -14,15 +14,13 @@
       {% for group in cat_groups %}
       <div class="tab-pane{% if forloop.first %} active{% endif %}" id="{{ group }}">
         {% for cat in cats %}{% if cat.group == group %}
-        <a class="cat" id="cat-{{ cat }}">{{ cat }}</a>
+        <a class="cat {{ group }}" id="cat-{{ cat.id }}" data-id="{{ cat.id }}">{{ cat }}</a>
         {% endif %}{% endfor %}
       </div>
       {% endfor %}
     </div>
-    <input id="category-input" type="hidden" name="category">
 
     {{ form|crispy }}
-    <input type="submit" value="Post to Craigslist" class="btn"/>
   </form>
     {% comment %}
     {% csrf_token %}

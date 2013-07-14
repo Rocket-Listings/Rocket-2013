@@ -2,11 +2,11 @@ $(function() {
   /* Listing Form */
   $('.tab-pane .cat').click(function(e) {
     e = $(this);
-    var cat = $('#category-input');
+    var cat = $('#cat-input');
     if (cat.val()) // if cat input is set
       $('.tab-pane .cat#cat-' + cat.val()).removeClass('selected');
     e.addClass('selected');
-    cat.val(e.html());
+    cat.val(e.data('id'));
   });
 
 
