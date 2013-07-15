@@ -70,4 +70,29 @@ $(function() {
 	function noLocation(error) { 
 		console.log( "Maps error: " + error.code); 
 	}
+
+	$('.nav').click(function(event) {
+		var id = $(this).attr('id');
+		console.log(id);
+		$('.partials').hide();
+		$('.' + id).show()
+
+	});
+
+
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
