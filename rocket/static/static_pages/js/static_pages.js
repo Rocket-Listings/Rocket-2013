@@ -72,11 +72,13 @@ $(function() {
 	}
 
 	$('.nav').click(function(event) {
+		event.preventDefault();
 		var id = $(this).attr('id');
-		console.log(id);
 		$('.partials').hide();
 		$('.' + id).show()
-
+		var url = $(this).attr("href");
+		history.pushState({page:url}, url, url);
+		
 	});
 
 
