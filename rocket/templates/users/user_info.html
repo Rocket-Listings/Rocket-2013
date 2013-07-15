@@ -3,7 +3,6 @@
 {% load static from staticfiles %}
 
 {% block content %}
-	<div id="fb-root"></div>
 	{% if user.get_profile.name %}
 	<h3 class="name">{{ user.get_profile.name }}'s info</h3>
 	{% else %}
@@ -231,8 +230,23 @@
 					</tr>
 				</tbody>
 			</table>
+			<h4>Connections</h4>
+			<table class="table table-hover user-profile-table">
+				<tbody>
+					<tr>
+						<td>Facebook:</td>
+						<td><button class="btn btn-primary btn-info facebook-connect">Connect to Facebook</button></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Twitter</td>
+						<td>Fill out info with twitter</td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+
 		</form>
-		{% comment %}<fb:login-button show-faces="false" width="200" max-rows="1" autologoutlink="true"></fb:login-button>{% endcomment %}
 		<a class="delete-account-modaltrigger btn btn-danger" role="button" data-toggle="modal" href="#delete-account-modal">Delete account</a>
 	</div>
 
