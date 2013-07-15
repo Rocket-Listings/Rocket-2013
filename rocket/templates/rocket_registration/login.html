@@ -6,9 +6,9 @@
 		{% if form.errors %}
 		<div class="row">
 			<div class='span6 alert alert-error'>
-				{% for field in form %}
-					{% for error in field.errors %}
-					<strong>{{field.label}}:</strong> {{ error|escape }}<br>
+				{% for field, errors in form.errors.items %}
+					{% for error in errors %}
+						{{error}}
 					{% endfor %}
 				{% endfor %}
 			</div>
