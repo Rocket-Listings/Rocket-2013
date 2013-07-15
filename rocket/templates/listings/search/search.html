@@ -1,8 +1,17 @@
 {% extends 'base.html' %}
+{% load static from staticfiles %}
+{% load humanize %}
+{% load compress %}
+
+{% block js %}
+    {% compress js %}
+        <script src="{% static 'listings/js/sorttable.js' %}" type="text/javascript"></script>
+    {% endcompress %}
+{% endblock %}
 
 {% block content %}
     <h2>Search</h2>
-
+    
     <form method="get" action=".">
         <table>
             {{ form.as_table }}
@@ -16,15 +25,39 @@
 
         {% if query %}
             <h3>Results</h3>
-
+            <table class="table table-listings table-hover sortable">
+                <thead>
+                    <tr>
+                        <th><a href="#">Title</a></th>
+                        <th><a href="#">Price</a></th>
+                        {# <th class="sortable">Location</th> #}
+                        <th><a href="#">Category</a></th>
+                        <th><a href="#">Date Listed</a></th>
+                    </tr>
+                </thead>
+                <tbody class="listing_table">
             {% for result in page.object_list %}
-                <p>
-                    <a href="{{ result.object.get_absolute_url }}">{{ result.object.title }}</a>
-                </p>
+                <tr data-listing-id="{{ result.object.id }}" >
+                    <td>
+                        <a class="bargle" href="{{ result.object.get_absolute_url }}">
+                            {{ result.object.title }}
+                        </a>
+                    </td>
+                    <td>${{ result.object.price }}</td>
+                    {# <td>{{ result.object.location }}</td> #}
+                    <td>{{ result.object.category.name }}</td>
+                    <td><p class="hide">{{ result.object.pub_date|date:"m/d/y P" }}</p>{{ result.object.pub_date|naturaltime }}</td>
+                    <td>
+                        <div class="btn-toolbar" style="text-align: center;">
+                            <a href="{{ result.object.get_absolute_url }}">Link</a>
+                        </div>
+                    </td>
+                </tr>
             {% empty %}
                 <p>No results found.</p>
             {% endfor %}
-
+                    </tbody>
+                </table>
             {% if page.has_previous or page.has_next %}
                 <div>
                     {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
@@ -36,4 +69,4 @@
             {# Show some example queries to run, maybe query syntax, something else? #}
         {% endif %}
     </form>
-{% endblock %}
+{% endblock %} 
