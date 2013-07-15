@@ -1,8 +1,9 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
 # from listings.views import import_uploader
 
 urlpatterns = patterns('listings.views',
-	url(r'^$', 'latest'),
+	url(r'^$',include('haystack.urls')),
+	#url(r'^$', 'latest'),
 	url(r'^create/$', 'create'),
 	url(r'^(?P<listing_id>\d+)/$', 'detail'),
 	url(r'^(?P<listing_id>\d+)/update/$', 'update'),

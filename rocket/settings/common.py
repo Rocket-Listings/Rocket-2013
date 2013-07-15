@@ -276,6 +276,6 @@ ROCKET_UNUSED_PHOTO_MINS = 10
 HAYSTACK_CONNECTIONS = {
 		'default': {
 				'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-				'PATH': join(abspath(__file__), 'whoosh_index'),
+				'PATH': join(dirname(__file__), 'whoosh_index'),
 		}
 }
