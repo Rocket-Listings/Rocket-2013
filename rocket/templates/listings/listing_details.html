@@ -1,4 +1,4 @@
-{% extends 'listings_base.html' %}
+{% extends 'listings/listings_base.html' %}
 {% load thumbnail %}
 {% load static from staticfiles %}
 
@@ -22,9 +22,9 @@
 
     <div class="span10">
 
-      {% include 'partials/listings_preview.html' %}
+      {% include 'listings/partials/listings_preview.html' %}
 
-      {% include 'partials/listings_edit.html' %}
+      {% include 'listings/partials/listings_edit.html' %}
     </div>
     
 
