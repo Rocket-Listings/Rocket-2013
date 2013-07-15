@@ -171,11 +171,13 @@ $(function() {
 
 	// FACEBOOK ACTIONS
 
-	$('.facebook-login').click(function() {
-		FB.login(function(response) {
+	$('[data-toggle="tooltip"]').tooltip();
+
+	$('.fb-login').click(function() {
+		FB.login(function (response) {
 			if (response.status === 'connected') {
-				$('.facebook-login').hide();
-				$('.facebook-logout').show();
+				$('.fb-login').hide();
+				$('.fb-logout').show();
 			}
 			else if (response.status === 'not_authorized') {
 				console.log("User did not authorize app.");
@@ -186,12 +188,43 @@ $(function() {
 		}, {perms:'email,user_location'});
 	});
 
-	$('.facebook-logout').click(function() {
+	$('.fb-logout').click(function() {
 		FB.logout(function(response) {
-			$('.facebook-logout').hide();
-			$('.facebook-login').show();
+			$('.fb-logout').hide();
+			$('.fb-login').show();
 		});
 	});
+
+	$('.fb-complete').click(function() {
+		FB.getLoginStatus(function (response) {
+			if (response.status === 'connected') {
+				fbProfileFill();
+			}
+			else {
+				FB.login(function (response) {
+					if (response.status === connected) {
+						fbProfileFill();
+					}
+					else {
+						console.log('User cancelled login action.');
+					}
+				}, {perms:'email,user_location'});
+			}
+		});
+	});
+
+	function fbProfileFill() {
+		FB.api('/me', function (response) {
+			$('input.name').val(response.name);
+			$('input.location').val(response.location.name);
+			FB.api('/me/picture?width=200&height=200&type=square', function (response) {
+				if (!response.data.is_silhouette) {
+					$('input.propic-url').val(response.data.url);
+					$('.save-all').click();
+				}
+			});
+		});
+	}
 
 	// Only handles click events for edit-all and edit
 	handleClickEvents();
@@ -257,8 +290,8 @@ window.fbAsyncInit = function() {
 
   	FB.getLoginStatus(function (response) {
   		if (response.status === 'connected') {
-  			$('.facebook-login').hide();
-			$('.facebook-logout').show();
+  			$('.fb-login').hide();
+			$('.fb-logout').show();
   		}
   		else {}
   	});
