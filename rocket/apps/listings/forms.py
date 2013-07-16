@@ -13,19 +13,6 @@ class ListingForm(forms.ModelForm):
       'category': forms.HiddenInput
     }
 
-  def __init__(self, *args, **kwargs):
-    self.helper = FormHelper()
-    self.helper.form_tag = False
-    self.helper.add_input(Submit('submit', 'Post to Craigslist'))
-    self.helper.layout = Layout(
-      Fieldset('Fieldset', 'title', 'price'),
-      'description',
-      InlineRadios('listing_type'),
-      'location'
-    )
-
-    super(ListingForm, self).__init__(*args, **kwargs)
-
 
 class ListingPics(forms.ModelForm):
   class Meta:

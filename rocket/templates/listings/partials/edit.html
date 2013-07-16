@@ -1,9 +1,5 @@
-{% load crispy_forms_tags %}
-
 <div class="edit">
   <form method="POST">
-
-    {# Category selection #}
     <ul class="nav nav-tabs">
       {% for group in cat_groups %}
       <li {% if forloop.first %}class="active"{% endif %}><a href="#{{ group }}" data-toggle="tab">{{ group }}</a></li>
@@ -18,8 +14,24 @@
       </div>
       {% endfor %}
     </div>
-    {# {{ form.as_p }} #}
-    {{ form|crispy }}
+
+    {# Include the hidden fields #}
+    {% for hidden in form.hidden_fields %}
+    {{ hidden }}
+    {% endfor %}
+    
+    {# Include the visible fields #}
+    {% for field in form.visible_fields %}
+        {% if field.errors %}
+        <div class="alert alert-error">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+         {{ field.errors }}
+        </div>
+        {% endif %}
+        {{ field.label_tag }}
+        {{ field }}
+    {% endfor %}
+    <input type="submit" value="Post to Craigslist" />
   </form>
     {% comment %}
     {% csrf_token %}
