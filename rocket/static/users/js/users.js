@@ -189,10 +189,9 @@ $(function() {
 	});
 
 	$('.fb-logout').click(function() {
-		FB.logout(function(response) {
-			$('.fb-logout').hide();
-			$('.fb-login').show();
-		});
+		FB.api({ method: 'Auth.revokeAuthorization' });
+		$('.fb-logout').hide();
+		$('.fb-login').show();
 	});
 
 	$('.fb-complete').click(function() {
@@ -202,7 +201,7 @@ $(function() {
 			}
 			else {
 				FB.login(function (response) {
-					if (response.status === connected) {
+					if (response.status === 'connected') {
 						fbProfileFill();
 					}
 					else {
