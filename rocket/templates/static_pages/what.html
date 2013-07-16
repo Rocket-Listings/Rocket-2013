@@ -1,0 +1,17 @@
+{% extends "static_pages/static_pages_base.html" %}
+{% load static from staticfiles %}
+
+{% block content %}
+<div class="partials what" style="display: true">
+	{% include 'static_pages/partials/what.html' %}
+</div>
+<div class="partials how" style="display: none">
+	{% include 'static_pages/partials/how.html' %}
+</div>
+<div class="partials why" style="display: none">
+	{% include 'static_pages/partials/why.html' %}
+</div>
+<div class="partials pricing" style="display: none">
+	{% include 'static_pages/partials/pricing.html' %}
+</div>	
+{% endblock %}
