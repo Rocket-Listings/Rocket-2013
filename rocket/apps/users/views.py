@@ -11,8 +11,10 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.core import serializers
-from django.http import HttpResponse, HttpRequest
+from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
 from django.utils import simplejson as json
+from django.conf import settings
+from twython import Twython
 
 def overview(request, username=None):
 	return info(request, username)
@@ -21,6 +23,14 @@ def overview(request, username=None):
 def info(request):
 	user = request.user
 	profile = user.get_profile()
+	if request.GET.get('oauth_verifier', ""):
+		oauth_verifier = request.GET.get('oauth_verifier', "")
+		OAUTH_TOKEN = request.session.get('OAUTH_TOKEN')
+		OAUTH_TOKEN_SECRET = request.session.get('OAUTH_TOKEN_SECRET')
+		twitter = Twython(settings.TWITTER_KEY, settings.TWITTER_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
+		twitter_auth_keys = twitter.get_authorized_tokens(oauth_verifier)
+		UserProfile.objects.filter(user=user).update(OAUTH_TOKEN=twitter_auth_keys['oauth_token'])
+		UserProfile.objects.filter(user=user).update(OAUTH_TOKEN_SECRET=twitter_auth_keys['oauth_token_secret'])
 	if request.method == 'POST':
 		user_profile_form = UserProfileForm(request.POST, instance=profile)
 		if user_profile_form.is_valid():	
@@ -66,3 +76,10 @@ def delete_account(request):
 		return redirect('/')
 	else:
 		return redirect('/users/login')
+
+def obtain_twitter_auth_url(request):
+	twitter = Twython(settings.TWITTER_KEY, settings.TWITTER_SECRET)
+	auth = twitter.get_authentication_tokens(callback_url='http://local.rocketlistings.com:8000/users/info')
+	request.session['OAUTH_TOKEN'] = auth['oauth_token']
+	request.session['OAUTH_TOKEN_SECRET'] = auth['oauth_token_secret']
+	return HttpResponseRedirect(auth['auth_url'])

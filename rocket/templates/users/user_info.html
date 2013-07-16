@@ -6,7 +6,7 @@
 	{% if user.get_profile.name %}
 	<h3 class="name">{{ user.get_profile.name }}'s info</h3>
 	{% else %}
-	<h3 class="name">{{user.username}}'s info</h3>
+	<h3 class="name"><a href="#">{{user.username}}</a></h3>
 	{% endif %}
 	<div class="user-profile-table-group">
 		<div class="errors alert alert-error hide"></div>
@@ -27,15 +27,15 @@
 						<td></td>
 					</tr>
 					<tr>
-						<td>Name:</td> {% comment %} displays current name setting {% endcomment %}
+						<td>Name:</td>
 						{% if user.get_profile.name %}
 						<td class="name">{{ user.get_profile.name }}</td>
 						{% else %}
-						<td class="name muted">Add a name to your profile</td> {% comment %} if empty {% endcomment %}
+						<td class="name muted">Add a name to your profile</td>
 						{% endif %}
 						<td><a class="edit active" href="#">Edit</a><span class="edit muted inactive hide">Edit</span></td>
 					</tr>
-					<tr class="in-edit hide"> {% comment %} editable field for name {% endcomment %}
+					<tr class="in-edit hide">
 						<td>Name:</td>
 						<td class="form-partial">
 							<input class="name" tabindex="1" name="name" type="text" autocomplete="off" value="{{ user.get_profile.name }}">
@@ -43,7 +43,7 @@
 						<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
 					</tr>
 					<tr class="uneditable">
-						<td>Profile Picture:</td> {% comment %} display small version of current profile picture {% endcomment %}
+						<td>Profile Picture:</td>
 						{% if user.get_profile.propic %}
 						<td class="propic">
 							<div class="propic-loading-wrapper">
@@ -64,28 +64,28 @@
 						<td><a class="change-propic active" href="#">Change Picture</a><span class='change-propic muted inactive hide'>Change Picture</span></td>
 					</tr>
 					<tr class="uneditable">
-						<td>Password:</td> {% comment %} displays hash of password, can edit from another page {% endcomment %}
+						<td>Password:</td>
 						<td>&#149;&#149;&#149;&#149;&#149;&#149;&#149;&#149;</td>
 						<td><a class="change-password active" href="/users/password/change/">Change password</a><span class='change-password muted inactive hide'>Change password</span></td>
 					</tr>
 					<tr>
-						<td>Email:</td> {% comment %} displays current email setting {% endcomment %}
+						<td>Email:</td>
 						<td class="email">{{ user.email }}</td>
 						<td><a class="edit active" href="#">Edit</a><span class="edit muted inactive hide">Edit</span></td>
 					</tr>
 					<tr class="in-edit hide field-wrapper"> 
-						<td>Email:</td> {% comment %} editable field for email {% endcomment %}
+						<td>Email:</td>
 						<td class="form-partial">
 							<input class="email" tabindex="2" name="email" type="text" autocomplete="off" value="{{ user.email }}">
 						</td>
 						<td class="form-partial"><input class="btn btn-info partial-submit" type="submit" value="Save"></td>
 					</tr>
 					<tr>
-						<td>Phone:</td> {% comment %} displays current phone setting {% endcomment %}
+						<td>Phone:</td>
 						{% if user.get_profile.phone %}
 						<td class="phone">{{ user.get_profile.phone }}</td>
 						{% else %}
-						<td class="phone muted">Add a phone number to your profile</td> {% comment %} if empty {% endcomment %}
+						<td class="phone muted">Add a phone number to your profile</td>
 						{% endif %}
 						<td><a class="edit active" href="#">Edit</a><span class="edit muted inactive hide">Edit</span></td>
 					</tr>
@@ -244,8 +244,8 @@
 					<tr>
 						<td>Twitter:</td>
 						<td>
-							<button class="btn btn-primary btn-twitter">Connect to Twitter</button>
-							<button class="btn btn-primary btn-twitter hide">Disconnect from Twitter</button>
+							<a class="btn btn-primary btn-twitter" href="{% url 'obtain_twitter_auth_url' %}">Connect to Twitter</a>
+							<a class="btn btn-primary btn-twitter hide">Disconnect from Twitter</a>
 						</td>
 						<td><a class="twitter-complete" data-toggle="tooltip" title="This will erase any info already in your profile." href="#">Complete my profile with Twitter</a></td>
 					</tr>

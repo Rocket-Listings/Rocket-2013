@@ -17,6 +17,8 @@ class UserProfile(models.Model):
 	nameprivate = models.BooleanField(blank=False, null=False)
 	locationprivate = models.BooleanField(blank=False, null=False)
 	propic = models.CharField(max_length=200, blank=True)
+	OAUTH_TOKEN = models.CharField(max_length=200, blank=True)
+	OAUTH_TOKEN_SECRET = models.CharField(max_length=200, blank=True)
 
 	def get_absolute_url(self):
 		return reverse('users.views.info')
