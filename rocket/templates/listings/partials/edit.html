@@ -1,9 +1,10 @@
 {% load crispy_forms_tags %}
 
 <div class="edit">
-  <form method="POST" class="bootstrap">
+  <form method="POST">
 
     {# Category selection #}
+    {% comment %}
     <input id="cat-input" type="hidden" name="cat">
     <ul class="nav nav-tabs">
       {% for group in cat_groups %}
@@ -19,7 +20,8 @@
       </div>
       {% endfor %}
     </div>
-
+{% endcomment %}
+    {# {{ form.as_p }} #}
     {{ form|crispy }}
   </form>
     {% comment %}

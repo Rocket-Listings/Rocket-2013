@@ -18,6 +18,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': normpath(join(DJANGO_ROOT, 'default.db')),
         'USER': '',
+        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'PASSWORD': '',
         'HOST': '',
         'PORT': '',
