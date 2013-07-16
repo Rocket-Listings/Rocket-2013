@@ -20,6 +20,8 @@ import requests
 import re
 from bs4 import BeautifulSoup
 from operator import __add__
+from django.core.context_processors import csrf
+from django.shortcuts import render_to_response
 # Moved here from users/views.py
 
 @login_required
@@ -225,7 +227,7 @@ def search_listings(request):
 	else:
 		search_text = ''
 
-	listings = listing.objects.filter(title__contains=search_text)
+	listings = Listing.objects.filter(title__contains=search_text)
 
 	return render_to_response('listings/partials/ajax_search.html', {'listings' : listings})
 
