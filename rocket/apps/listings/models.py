@@ -67,6 +67,7 @@ class Listing(models.Model):
 	def get_absolute_url(self):
 		return reverse('listings.views.detail', args=[str(self.id)])
 
+
 # Listing Specification
 class ListingSpecKey(models.Model):
 	key = models.CharField(max_length = 100)

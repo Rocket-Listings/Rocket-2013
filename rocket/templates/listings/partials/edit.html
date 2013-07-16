@@ -4,8 +4,6 @@
   <form method="POST">
 
     {# Category selection #}
-    {% comment %}
-    <input id="cat-input" type="hidden" name="cat">
     <ul class="nav nav-tabs">
       {% for group in cat_groups %}
       <li {% if forloop.first %}class="active"{% endif %}><a href="#{{ group }}" data-toggle="tab">{{ group }}</a></li>
@@ -20,7 +18,6 @@
       </div>
       {% endfor %}
     </div>
-{% endcomment %}
     {# {{ form.as_p }} #}
     {{ form|crispy }}
   </form>

@@ -54,10 +54,13 @@ def create(request):
 			specs = ListingSpecKey.objects.all()
 			cat_groups = map(lambda d: d['group'], cats.values('group').distinct())
 			cache.set_many({'cats': list(cats), 'specs': list(specs), 'cat_groups': cat_groups}, None) # cache forever
+
+		# repackage for rendering.. not totally efficient
 		return render(request, 'listings/create.html', { 'form': form , 'cats': cats, 'specs': specs, 'cat_groups': cat_groups })
 
-	# elif request.method == 'POST':
-	# 	categories = ListingCategory.objects.all() #get categories if post request fails
+	elif request.method == 'POST':
+		listing_form = ListingForm(request.POST)
+		# categories = ListingCategory.objects.all() #get categories if post request fails
 	# 	count = request.POST.get('final_count', 0) # get the final count name tag which contains the final photo count
 	# 	count = int(count)
 	# 	d={} # empty dictionary
@@ -68,7 +71,7 @@ def create(request):
 	# 	specCounter = 0 # begin the count to look through specs data
 	# 	specs = ListingSpecKey.objects.all() # grab all of specs
 
-	# 	listing_form = ListingForm(request.POST)
+
 
 	# 	if listing_form.is_valid():
 	# 		listing = listing_form.save(commit=False)

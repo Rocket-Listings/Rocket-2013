@@ -2,7 +2,7 @@ $(function() {
   /* Listing Form */
   $('.tab-pane .cat').click(function(e) {
     e = $(this);
-    var cat = $('#cat-input');
+    var cat = $('#id_category');
     if (cat.val()) // if cat input is set
       $('.tab-pane .cat#cat-' + cat.val()).removeClass('selected');
     e.addClass('selected');
