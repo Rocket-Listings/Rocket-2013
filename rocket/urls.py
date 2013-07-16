@@ -13,6 +13,5 @@ urlpatterns = patterns('',
 	url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 	url(r'^users/', include('users.urls')),
 	url(r'^admin/', include(admin.site.urls)),
-	url(r'^search/', include('haystack.urls')),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # urlpatterns += staticfiles_urlpatterns()

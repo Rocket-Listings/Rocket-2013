@@ -2,7 +2,8 @@ from django.conf.urls import patterns, url, include
 # from listings.views import import_uploader
 
 urlpatterns = patterns('listings.views',
-	url(r'^$',include('haystack.urls')),
+	url(r'^search/$','search'),
+	url(r'^search/listings/$','search_listings'),
 	#url(r'^$', 'latest'),
 	url(r'^create/$', 'create'),
 	url(r'^(?P<listing_id>\d+)/$', 'detail'),

@@ -1,5 +1,35 @@
-{% extends 'listings/listings_base.html' %}
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+{% load humanize %}
+{% load compress %}
+
+{% block js %}
+    {% compress js %}
+        <script src="{% static 'listings/js/sorttable.js' %}" type="text/javascript"></script>
+    {% endcompress %}
+    <script src="{% static 'listings/js/ajax.js' %}" type="text/javascript"></script>
+{% endblock %}
 
 {% block content %}
-{% include 'listings/partials/listings_table.html' %}
+
+	<div class="container hero-unit">
+		<h3>Search Listings by Title</h3>
+		{% csrf_token %}
+		<input type="text" class="search_text"/>
+	</div>
+
+	<table class="table table-listings table-hover sortable">
+		<thead>
+			<tr>
+				<th><a href="#">Title</a></th>
+				<th><a href="#">Price</a></th>
+				<th><a href="#">Category</a></th>
+				<th><a href="#">Date Listed</a></th>
+			</tr>
+		</thead>
+		<tbody class="listing_table">
+		
+		
+		</tbody>
+	</table>
 {% endblock %}

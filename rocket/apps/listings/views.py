@@ -212,6 +212,23 @@ def message_thread_ajax(request, listing_id, buyer_id):
 	# else:
 		# return HttpResponseBadRequest("Sorry please submit a good request")
 
+def search(request):
+	c = {}
+	c.update(csrf(request))
+
+	return render_to_response("listings/search_test.html",c)
+
+
+def search_listings(request):
+	if request.method == "POST":
+		search_text = request.POST['search_text']
+	else:
+		search_text = ''
+
+	listings = listing.objects.filter(title__contains=search_text)
+
+	return render_to_response('listings/partials/ajax_search.html', {'listings' : listings})
+
 # Photo upload
 
 # if not settings.DEBUG:
