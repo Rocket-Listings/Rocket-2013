@@ -8,10 +8,10 @@
 	<div class="header-menu-bar">
 		<div class="header-menu">
 			<div class="edge"></div>
-			<div class="item1"><a href = "/">What</a></div>
-			<div class="item2"><a href="/how">How</a></div>
-			<div class="item3"><a href="/why">Why</a></div>
-			<div class="item4"><a href="/pricing">Pricing</a></div>
+			<div class="item1 nav" id="what" href="/what">What</div>
+			<div class="item2 nav" id="how" href="/how">How</div>
+			<div class="item3 nav" id="why" href="/why">Why</div>
+			<div class="item4 nav" id="pricing" href="/pricing">Pricing</div>
 			<div class="edge"></div>
 		</div> 
 	</div>
@@ -26,7 +26,7 @@
 		</div>
 	</div>
 	<div class="header-signup">
-		<a href="users/register" class="btn start-submit">sign-up</a>
-		<a href="users/login" class="btn start-submit">login</a>
+		<a href="{% url "registration_register" %}" class="btn start-submit">sign-up</a>
+		<a href="{% url 'auth_login' %}" class="btn start-submit">login</a>
 	</div>
 </div>
