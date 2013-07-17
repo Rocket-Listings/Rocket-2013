@@ -1,77 +1,63 @@
 {% load static from staticfiles %}
 
 $(function() {
-	// USER MANAGEMENT JS
+	// SETTINGS JS
 	filepicker.setKey('ATM8Oz2TyCtiJiHu6pP6Qz');
-	function handleClickEvents() {
-		$(".edit").click(function(e) {
-			e.preventDefault();
-			// Crazy selectors to hide the normal view and show/focus the right input
-			$(this).parent().parent().hide();
-			$(this).parent().parent().next().show();
-			if ($(this).parent().parent().next().find("input")[1]) {
-				$(this).parent().parent().next().find("input")[0].focus();
-			}
-			else if ($(this).parent().parent().next().find("select")[0]) {
-				$(this).parent().parent().next().find("select")[0].focus();
-			}
-			else {
-				$(this).parent().parent().next().find("textarea")[0].focus();
-			}
-			$(".active").hide();
-			$(".inactive").show();
-			$("table").removeClass("table-hover");
-		});
-		$(".edit-all").click(function(e) {
-			e.preventDefault();
-			$(".active").hide();
-			$(".inactive").show();
-			$(".partial-submit").hide();
-			$(".edit-all").hide();
-			$(".save-all").show();
-			$(".edit").parent().parent().hide();
-			$(".partial-submit").replaceWith("<span class='muted partial-submit'>Edit</span>");
-			$(".in-edit").show();
-			$("table").removeClass("table-hover");
-		});
-	}
-	$(".change-propic").click(function(e) {
+
+	$(".edit").click(function (e) {
+		e.preventDefault();
+		var field = $(this).parent().prev().children().filter(":first");
+		field.focus().val(field.val());
+	});
+	$("input, textarea, select").focus(function () {
+		$(this).parent().parent().addClass("selected");
+	})
+	.blur(function () {
+		$(this).parent().parent().removeClass("selected");
+	})
+	.keydown(function (e) {
+		var keyCode = (e.keyCode ? e.keyCode : e.which);
+		if (keyCode === 27) {
+			$(this).blur();
+		}
+	});
+	$(".change-propic").click(function (e) {
 		e.preventDefault();
 		filepicker.pick({
 			mimetype: "image/*",
 			multiple: false,
 			services: ['COMPUTER', 'URL', 'FACEBOOK', 'DROPBOX']
 		},
-		function(InkBlob) {
+		function (InkBlob) {
 			filepicker.convert(InkBlob, {
-				width: 200, 
-				height: 200,
-				format: 'png',
-				fit: 'crop',
-				align: 'faces'
+				width  : 200, 
+				height : 200,
+				format : 'png',
+				fit    : 'crop',
+				align  : 'faces'
 			},
 			{
 				location: 'S3',
 				path: '/propics/' + $(".username").text() + '.png'
 			},
-			function(NewBlob) {
+			function (NewBlob) {
 				$(".propic-url").val("https://s3.amazonaws.com/test_filepicker/" + NewBlob.key);
 				$(".user-info-form").submit();
 			},
-			function(FPError) {
+			function (FPError) {
 				console.log(FPError);
 			},
-			function(percent) {
+			function (percent) {
 				if (percent != 100) {
 					$(".loading-overlay").show();
 				}
 			});
 		},
-		function(FPError) {
+		function (FPError) {
 			console.log(FPError);
 		});
 	});
-	$(".get-location").click(function(e) {
+	$(".get-location").click(function (e) {
 		e.preventDefault();
 		if (window.navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(function (position) {
@@ -82,7 +68,13 @@ $(function() {
 				geocoder.geocode({'latLng': latlng}, function(results, status) {
 					if (status == google.maps.GeocoderStatus.OK) {
 						if (results[1]) {
-							$(".location").val(results[4].formatted_address);
+							for (var i = 0; i < results.length; i++) {
+								if (results[i].types[0] === "locality") {
+									var city = results[i].address_components[0].short_name;
+									var state = results[i].address_components[2].short_name;
+									$("input[name='location']").val(city + ", " + state);
+								}
+							}
 						}
 						else {console.log("No reverse geocode results.")}
 					}
@@ -92,34 +84,27 @@ $(function() {
 			function() {console.log("Geolocation not available.")});
 		}
 	});
-	$(".user-info-form").submit(function() {
-		var csrftoken = $.cookie('csrftoken');
-		$.ajax({
-			data: $(this).serialize(),
-			type: $(this).attr('method'),
-			url: $(this).attr('action'),
-			beforeSend: function(xhr) {
-				xhr.setRequestHeader("X-CSRFToken", csrftoken);
-			},
-			success: function(response) {
-				if (response.profile) {
-					$(".in-edit").hide();
-					$(".edit").parent().parent().show();
-					$(".inactive").hide();
-					$(".active").show();
-					$("table").addClass("table-hover");
-					$(".save-all").hide();
-					$(".edit-all").show();
-					$(".errors").hide();
-					$(".partial-submit").replaceWith("<input class='btn btn-info partial-submit' type='submit' value='Save'>");
-					insertNewValues(response);
+	$("form").submit(function() {
+		if (!$("save-all").hasClass("disabled")) {
+			var csrftoken = $.cookie('csrftoken');
+			$.ajax({
+				data: $(this).serialize(),
+				type: $(this).attr('method'),
+				url: $(this).attr('action'),
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader("X-CSRFToken", csrftoken);
+				},
+				success: function(response) {
+					if (response.profile) {
+						$(".errors").hide();
+						insertNewValues(response);
+					}
+					else {
+						showError(response);
+					}
 				}
-				else {
-					showError(response);
-				}
-				handleClickEvents();
-			}
-		});
+			});
+		}
 		return false;
 	});
 	function insertNewValues(data) {
@@ -170,31 +155,7 @@ $(function() {
 	}
 
 	// FACEBOOK ACTIONS
-
-	$('[data-toggle="tooltip"]').tooltip();
-
-	$('.fb-login').click(function() {
-		FB.login(function (response) {
-			if (response.status === 'connected') {
-				$('.fb-login').hide();
-				$('.fb-logout').show();
-			}
-			else if (response.status === 'not_authorized') {
-				console.log("User did not authorize app.");
-			}
-			else {
-				console.log("User is not logged into Facebook");
-			}
-		}, {perms:'email,user_location'});
-	});
-
-	$('.fb-logout').click(function() {
-		FB.api({ method: 'Auth.revokeAuthorization' });
-		$('.fb-logout').hide();
-		$('.fb-login').show();
-	});
-
-	$('.fb-complete').click(function() {
+	$('.btn-fb').click(function() {
 		FB.getLoginStatus(function (response) {
 			if (response.status === 'connected') {
 				fbProfileFill();
@@ -214,19 +175,17 @@ $(function() {
 
 	function fbProfileFill() {
 		FB.api('/me', function (response) {
-			$('input.name').val(response.name);
-			$('input.location').val(response.location.name);
+			$("input[name='name']").val(response.name);
+			$("input[name='email']").val(response.email);
+			$("input[name='location']").val(response.location.name);
 			FB.api('/me/picture?width=200&height=200&type=square', function (response) {
 				if (!response.data.is_silhouette) {
-					$('input.propic-url').val(response.data.url);
-					$('.save-all').click();
+					$("input[name='propic-url']").val(response.data.url);
+					$('form').submit();
 				}
 			});
 		});
 	}
-
-	// Only handles click events for edit-all and edit
-	handleClickEvents();
 
 	// PROFILE JS
 
@@ -267,7 +226,6 @@ $(function() {
 	function showError(response) {
 		var errors = $(".errors"),
 		dismissError = '<a href="#" class="close" data-dismiss="alert">&times;</a>';
-		//errors.html(dismissError);  // Add back in for a dismiss error button, but then need to recreate the ".errors" div
 		errors.html("");
 		for (key in response) {
 			errors.append(" <strong class='capital'>" + key + ": </strong> " + response[key] + "<br>");
@@ -277,7 +235,6 @@ $(function() {
 });
 
 //  FACEBOOK INIT CODE
-
 window.fbAsyncInit = function() {
   	FB.init({
     	appId      : '279057228903179', // App ID
@@ -286,17 +243,9 @@ window.fbAsyncInit = function() {
     	cookie     : true, // enable cookies to allow the server to access the session
     	xfbml      : true  // parse XFBML
   	});
-
-  	FB.getLoginStatus(function (response) {
-  		if (response.status === 'connected') {
-  			$('.fb-login').hide();
-			$('.fb-logout').show();
-  		}
-  		else {}
-  	});
 };
 
-// Load the FACEBOOK SDK asynchronously
+// Load the Facebook SDK asynchronously
 (function(d){
 	var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
 	if (d.getElementById(id)) {return;}

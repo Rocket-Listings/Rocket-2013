@@ -36,7 +36,7 @@
 								<img class="propic" src="{{user.get_profile.propic}}" height="100px" width="100px">
 								<span class="loading-overlay hide"><img src="{% static 'users/img/100px_loading.gif' %}"></span>
 							</div>
-							<input class="propic-url" type="hidden" name="propic" value="{{user.get_profile.propic}}">
+							<input type="hidden" name="propic-url" value="{{user.get_profile.propic}}">
 						</td>
 						{% else %}
 						<td>
@@ -44,7 +44,7 @@
 								<img class="propic" src="{% static 'users/img/no-photo.png' %}" height="100px" width="100px">
 								<span class="loading-overlay hide"><img src="{% static 'users/img/100px_loading.gif' %}"></span>
 							</div>
-							<input class="propic-url" type="hidden" name="propic" value="">
+							<input type="hidden" name="propic-url" value="">
 						</td>
 						{% endif %}
 						<td><a class="change-propic active" href="#">Change Picture</a></td>
@@ -93,29 +93,29 @@
 					</tr>
 					<tr class="editable">
 						<td>Default Listing Type:</td>
-						<td class="partial-input select">
+						<td class="select">
 							<select tabindex="6" name="default_listing_type.name">
-								<option class="" selected="true">{{ user.get_profile.default_listing_type.name }}-------</option>
+								<option class="" selected="true">{{ user.get_profile.default_listing_type.name }}</option>
 							</select>
 						</td>
-						<td><a class="edit active" href="#">Edit</a></td>
+						<td></td>
 					</tr>
 					<tr class="editable">
 						<td>Default Category:</td>
-						<td class="partial-input select">
-							<select tabindex="5" name="default_category">
-								<option class="" selected="true">{{ user.get_profile.default_category.name }}-------</option>
+						<td class="select">
+							<select tabindex="7" name="default_category">
+								<option class="" selected="true">{{ user.get_profile.default_category.name }}</option>
 							</select>
 						</td>
-						<td><a class="edit active" href="#">Edit</a></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td class="subheader"><h4>Privacy</h4></td>
 					</tr>
 					<tr class="editable">
 						<td>Name:</td>
-						<td class="partial-input select">
-							<select tabindex="7" name="nameprivate">
+						<td class="select">
+							<select tabindex="8" name="nameprivate">
 								{% if user.get_profile.nameprivate %}
 								<option value="False">Public</option>
 								<option value="True" selected="true">Private</option>
@@ -125,12 +125,12 @@
 								{% endif %}
 							</select>
 						</td>
-						<td><a class="edit active" href="#">Edit</a></td>
+						<td></td>
 					</tr>
 					<tr class="editable">
 						<td>Location:</td>
-						<td class="partial-input select">
-							<select tabindex="10" name="locationprivate">
+						<td class="select">
+							<select tabindex="9" name="locationprivate">
 								{% if user.get_profile.locationprivate %}
 								<option value="False">Public</option>
 								<option value="True" selected="true">Private</option>
@@ -140,7 +140,7 @@
 								{% endif %}
 							</select>
 						</td>
-						<td><a class="edit active" href="#">Edit</a></td>
+						<td></td>
 					</tr>
 
 					<tr>

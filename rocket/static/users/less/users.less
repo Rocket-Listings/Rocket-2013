@@ -7,11 +7,16 @@
 	table {
 		width: auto !important;
 		tr {
+			&.selected {
+				background-color: #EDEDED;
+				td {
+					background-color: rgba(255, 255, 255, 0);
+				}
+			}
 			td {
-				input, textarea, select {
+				input, textarea, select{
 					border: none !important;
 					background-color: rgba(255, 255, 255, 0) !important;
-					-webkit-appearance: none;
 					&[name='bio'] {
 						width: 290px;
 						max-width: 290px;
@@ -23,14 +28,23 @@
 						cursor: auto;
 					}
 				}
+				select {
+					-webkit-appearance: none !important;
+					-moz-appearance: none !important;
+					background-image: url('/static/users/img/chevron-down.png') !important;
+					background-repeat: no-repeat;
+					padding-left: 30px;
+					margin-top: -1px;
+					vertical-align: middle;
+					&:focus {
+						border: 1px #3a87ad solid;
+					}
+				}
 				&.partial-input {
 					padding: 4px 5px 0 1px;
 				}
 				&.select {
-					padding: 0;
-				}
-				select {
-					margin: -1px 0 0 0;
+					padding: 0px;
 				}
 				&:nth-child(1), &:nth-child(3){
 					text-align: right;
