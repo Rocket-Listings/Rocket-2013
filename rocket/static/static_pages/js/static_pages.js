@@ -10,7 +10,7 @@ $(document).ready(function() {
 });
 
 $(function() {
-	/* Handle events */
+	/* 
 	function handleEvents() {
 		var autoValidate = null;
 		$(".start-signup").submit(function(e) {
@@ -52,7 +52,7 @@ $(function() {
 	}
 
 	handleEvents();
-
+	 */
 	google.maps.visualRefresh = true;
 	var mapOptions = {
 		center: new google.maps.LatLng(44.5, -72.8), // burlington coords
