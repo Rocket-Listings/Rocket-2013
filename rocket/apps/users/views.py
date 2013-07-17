@@ -25,12 +25,16 @@ def info(request):
 	profile = user.get_profile()
 	if request.GET.get('oauth_verifier', ""):
 		oauth_verifier = request.GET.get('oauth_verifier', "")
-		OAUTH_TOKEN = request.session.get('OAUTH_TOKEN')
-		OAUTH_TOKEN_SECRET = request.session.get('OAUTH_TOKEN_SECRET')
-		twitter = Twython(settings.TWITTER_KEY, settings.TWITTER_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
-		twitter_auth_keys = twitter.get_authorized_tokens(oauth_verifier)
-		UserProfile.objects.filter(user=user).update(OAUTH_TOKEN=twitter_auth_keys['oauth_token'])
-		UserProfile.objects.filter(user=user).update(OAUTH_TOKEN_SECRET=twitter_auth_keys['oauth_token_secret'])
+		_OAUTH_TOKEN = request.session.get('OAUTH_TOKEN')
+		_OAUTH_TOKEN_SECRET = request.session.get('OAUTH_TOKEN_SECRET')
+		_twitter = Twython(settings.TWITTER_KEY, settings.TWITTER_SECRET, _OAUTH_TOKEN, _OAUTH_TOKEN_SECRET)
+		twitter_auth_keys = _twitter.get_authorized_tokens(oauth_verifier)
+		OAUTH_TOKEN = UserProfile.objects.filter(user=user).update(OAUTH_TOKEN=twitter_auth_keys['oauth_token'])
+		OAUTH_TOKEN_SECRET = UserProfile.objects.filter(user=user).update(OAUTH_TOKEN_SECRET=twitter_auth_keys['oauth_token_secret'])
+		# twitter = Twython(settings.TWITTER_KEY, settings.TWITTER_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
+		# userid = twitter.verify_credentials()
+		# print userid
+		return redirect('/users/info')
 	if request.method == 'POST':
 		user_profile_form = UserProfileForm(request.POST, instance=profile)
 		if user_profile_form.is_valid():	
