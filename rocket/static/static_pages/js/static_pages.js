@@ -1,6 +1,12 @@
 
 $(document).ready(function() {
-	$('#what').addClass('nav-highlight');
+	var pathname = window.location.pathname;
+	var url = pathname.replace(/(\/)/g,"");
+	if (url.length==""){
+		$("#what").addClass('nav-highlight');	
+	}else{
+	$("#" + url).addClass('nav-highlight');
+}
 });
 
 $(function() {
