@@ -6,7 +6,7 @@
 	{% if user.get_profile.name %}
 	<h3><a class="name-header" href="{% url 'users.views.profile' user.username %}">{{ user.get_profile.name }}</a></h3>
 	{% else %}
-	<h3 ><a class="name-header" href="{% url 'users.views.profile' user.username %}">{{user.username}}</a></h3>
+	<h3><a class="name-header" href="{% url 'users.views.profile' user.username %}">{{user.username}}</a></h3>
 	{% endif %}
 
 	<div class="content-wrapper">
@@ -18,7 +18,7 @@
 				<tbody>
 					<tr class="uneditable">
 						<td>Username:</td>
-						<td><code class="rocket-code">{{ user.username }}</code></td>
+						<td><code class="username rocket-code">{{ user.username }}</code></td>
 						<td></td>
 					</tr>
 					<tr class="editable">
@@ -36,7 +36,7 @@
 								<img class="propic" src="{{user.get_profile.propic}}" height="100px" width="100px">
 								<span class="loading-overlay hide"><img src="{% static 'users/img/100px_loading.gif' %}"></span>
 							</div>
-							<input type="hidden" name="propic-url" value="{{user.get_profile.propic}}">
+							<input class="propic-url" type="hidden" name="propic" value="{{user.get_profile.propic}}">
 						</td>
 						{% else %}
 						<td>
@@ -44,7 +44,7 @@
 								<img class="propic" src="{% static 'users/img/no-photo.png' %}" height="100px" width="100px">
 								<span class="loading-overlay hide"><img src="{% static 'users/img/100px_loading.gif' %}"></span>
 							</div>
-							<input type="hidden" name="propic-url" value="">
+							<input class="propic-url" type="hidden" name="propic" value="">
 						</td>
 						{% endif %}
 						<td><a class="change-propic active" href="#">Change Picture</a></td>
@@ -142,21 +142,12 @@
 						</td>
 						<td></td>
 					</tr>
-
-					<tr>
-						<td class="subheader"><h4>Complete your profile</h4></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td>
-							<a class="btn btn-primary btn-fb">Facebook</a>
-							<a class="btn btn-primary btn-twitter" href="{% url 'obtain_twitter_auth_url' %}">Twitter</a>
-						</td>
-						<td></td>
-					</tr>
 				</tbody>
 			</table>
-
+			<h4 class="btns-social">Autofill your profile with: 
+				<a class="btn btn-primary btn-fb">Facebook</a>
+				<a class="btn btn-primary btn-twitter" href="{% url 'obtain_twitter_auth_url' %}">Twitter</a>
+			</h4>
 			<a class="delete-account-modaltrigger btn btn-danger" role="button" data-toggle="modal" href="#delete-account-modal">Delete account</a>
 			<input class="btn btn-info save-all disabled" type="submit" value="Save all">
 		</form>

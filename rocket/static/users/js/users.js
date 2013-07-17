@@ -2,8 +2,9 @@
 
 $(function() {
 	// SETTINGS JS
+	var initialInput = getInput('input');
+	var initialSelect = getInput('select');
 	filepicker.setKey('ATM8Oz2TyCtiJiHu6pP6Qz');
-
 	$(".edit").click(function (e) {
 		e.preventDefault();
 		var field = $(this).parent().prev().children().filter(":first");
@@ -19,6 +20,24 @@ $(function() {
 		var keyCode = (e.keyCode ? e.keyCode : e.which);
 		if (keyCode === 27) {
 			$(this).blur();
+		}
+	});
+	$("input:not(input[type='submit']), textarea").keyup(function() {
+		var save = $(".save-all");
+		if (inputChanged(getInput('input'))) {
+			save.removeClass("disabled");
+		}
+		else {
+			save.addClass("disabled");
+		}
+	});
+	$("select").change(function() {
+		var save = $(".save-all");
+		if (inputChanged(getInput('select'))) {
+			save.removeClass("disabled");
+		}
+		else {
+			save.addClass("disabled");
 		}
 	});
 	$(".change-propic").click(function (e) {
@@ -73,6 +92,7 @@ $(function() {
 									var city = results[i].address_components[0].short_name;
 									var state = results[i].address_components[2].short_name;
 									$("input[name='location']").val(city + ", " + state);
+									$("form").submit();
 								}
 							}
 						}
@@ -97,6 +117,10 @@ $(function() {
 				success: function(response) {
 					if (response.profile) {
 						$(".errors").hide();
+						$(".save-all").addClass("disabled");
+						$("input, textarea, select").blur();
+						initialInput = getInput('input');
+						initialSelect = getInput('select');
 						insertNewValues(response);
 					}
 					else {
@@ -108,50 +132,45 @@ $(function() {
 		return false;
 	});
 	function insertNewValues(data) {
-		for (key in data) {
-			var tag = $("." + key.toString());
-			if ((key !== "nameprivate") && (key !== "locationprivate")  && (key !== "propic")) {
-				if (tag.is("td")) {
-					var tdTag = $("td." + key.toString());
-					tdTag.html(data[key]);
-					if (tdTag.hasClass("muted")) tdTag.removeClass("muted");
-					if ((data[key] === "") || (data[key] === null)) {
-						tdTag.addClass("muted");
-						if (tdTag.hasClass("name")) tdTag.html("Add a name to your profile");
-						if (tdTag.hasClass("phone")) tdTag.html("Add a phone number to your profile");
-						if (tdTag.hasClass("bio")) tdTag.html("Add a bio to your profile");
-						if (tdTag.hasClass("location")) tdTag.html("Add a default location for your listings");
-						if (tdTag.hasClass("default_category")) tdTag.html("Add a default category for your listings");
-						if (tdTag.hasClass("default_listing_type")) tdTag.html("Add a default listing type");
-					}
-				}
-			}
-			if (tag.is("input") && !tag.is("option")) {
-				tag.val(data[key]);
-			}
-			if (tag.is("textarea")) {
-				$("textarea.bio").html(data[key]);
-			}
-			if (key.toString() === "nameprivate") {
-				if (data[key] === true) tag.html("Private");
-				else tag.html("Public");
-			}
-			if (key.toString() === "locationprivate") {
-				if (data[key] === true) tag.html("Private");
-				else tag.html("Public");
-			}
-			if (key.toString() === "name") {
-				if (data[key] !== "") $("h3.name").html(data[key] + "'s info");
-				else {
-					var username = $(".username > code").html();
-					$("h3.name").html(username + "'s info").removeClass("muted");
-				}
-			}
-			if (key.toString() === "propic") {
-				$(".propic > div.propic-loading-wrapper > img").attr("src", data[key]);
-				$(".loading-overlay").hide();
+		$("input[name='name']").val(data['name']);
+		$("input[name='email']").val(data['email']);
+		$("input[name='phone']").val(data['phone']);
+		$("input[name='location']").val(data['location']);
+		$("input[name='bio']").html(data['bio']);
+		$("select[name='nameprivate']").val(data['nameprivate']);
+		$("select[name='locationprivate']").val(data['locationprivate']);
+		if (data['name'] !== "") {
+			$(".name-header").html(data['name']);
+		}
+		else {
+			$(".name-header").html($(".username").html());
+		}
+		$("img.propic").attr("src", data['propic']);
+		$(".loading-overlay").hide();
+	}
+	function getInput (type) {
+		var input  = $("input:not(input[type='submit']), textarea"),
+			select = $("select"),
+			returnedValues = [];
+		if (type === 'input') {
+			for (var i = 0; i < input.length; i++) {
+				returnedValues[i] = input[i].value;
 			}
 		}
+		else {
+			for (var i = 0; i < select.length; i++) {
+				returnedValues[i] = select[i].value;
+			}
+		}
+		return returnedValues;
+	}
+	function inputChanged (newInput) {
+		for (var i = 0; i < initialInput.length; i++) {
+			if (newInput[i] !== initialInput[i]) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	// FACEBOOK ACTIONS
@@ -180,7 +199,7 @@ $(function() {
 			$("input[name='location']").val(response.location.name);
 			FB.api('/me/picture?width=200&height=200&type=square', function (response) {
 				if (!response.data.is_silhouette) {
-					$("input[name='propic-url']").val(response.data.url);
+					$(".propic-url").val(response.data.url);
 					$('form').submit();
 				}
 			});

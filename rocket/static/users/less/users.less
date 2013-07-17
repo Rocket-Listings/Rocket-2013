@@ -84,26 +84,30 @@
 					float: none;
 					vertical-align: middle;
 				}
-				.btn-fb {
-					background-color: @fb-blue;
-					margin: -5px 0;
-					&:hover {
-						background-color: darken(@fb-blue, 5%);
-					}
-				}
-
-				.btn-twitter {
-					background-color: @twitter-blue;
-					margin: -5px 0;
-					&:hover {
-						background-color: darken(@twitter-blue, 5%);
-					}
-				}
 			}
 		}
 	}
 	.save-all {
 		float: right;
+	}
+	.btns-social {
+		margin-bottom: 20px;
+		.btn-fb {
+			font-weight: normal;
+			background-color: @fb-blue;
+			margin: -5px 0;
+			&:hover {
+				background-color: darken(@fb-blue, 5%);
+			}
+		}
+		.btn-twitter {
+			font-weight: normal;
+			background-color: @twitter-blue;
+			margin: -5px 0;
+			&:hover {
+				background-color: darken(@twitter-blue, 5%);
+			}
+		}
 	}
 	float: left;
 }
