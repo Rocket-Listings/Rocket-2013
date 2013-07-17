@@ -137,8 +137,22 @@ $(function() {
 		$("input[name='phone']").val(data['phone']);
 		$("input[name='location']").val(data['location']);
 		$("input[name='bio']").html(data['bio']);
-		$("select[name='nameprivate']").val(data['nameprivate']);
-		$("select[name='locationprivate']").val(data['locationprivate']);
+		if (data['nameprivate'] === true) {
+			$("select['nameprivate']").children().filter("option[value='True']").attr('selected', 'true');
+			$("select['nameprivate']").children().filter("option[value='False']").attr('selected', 'false');
+		}
+		else {
+			$("select['nameprivate']").children().filter("option[value='True']").attr('selected', 'false');
+			$("select['nameprivate']").children().filter("option[value='False']").attr('selected', 'true');
+		}
+		if (data['locationprivate'] === true) {
+			$("select['locationprivate']").children().filter("option[value='True']").attr('selected', 'true');
+			$("select['locationprivate']").children().filter("option[value='False']").attr('selected', 'false');
+		}
+		else {
+			$("select['locationprivate']").children().filter("option[value='True']").attr('selected', 'false');
+			$("select['locationprivate']").children().filter("option[value='False']").attr('selected', 'true');
+		}
 		if (data['name'] !== "") {
 			$(".name-header").html(data['name']);
 		}
