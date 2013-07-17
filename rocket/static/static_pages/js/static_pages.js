@@ -1,3 +1,8 @@
+
+$(document).ready(function() {
+	$('#what').addClass('nav-highlight');
+});
+
 $(function() {
 	/* Handle events */
 	function handleEvents() {
@@ -72,24 +77,17 @@ $(function() {
 	}
 
 	$('.nav').click(function(event) {
-		event.preventDefault();
-		var id = $(this).attr('id');
-		$('.partials').hide();
-		$('.' + id).show()
-		var url = $(this).attr("href");
-		history.pushState({page:url}, url, url);
-		
+			event.preventDefault();			//don't use as normal hyperlinks
+			var id = $(this).attr('id');	//find and show relevant partial
+			$('.partials').hide();
+			$('.' + id).show()
+			$('#' + id).addClass('nav-highlight').siblings().removeClass('nav-highlight'); //add/remove nav highlighting
+			var url = $(this).attr("href");	//update url without changing pages
+			history.pushState({page:url}, url, url);
+
 	});
 
-
 });
-
-
-
-
-
-
-
 
 
 
