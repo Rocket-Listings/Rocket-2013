@@ -3,12 +3,26 @@
 {% block content %}
 <div class = "login-form">
 	<form action="{% url 'auth_login' %}" method="POST">
-	{% if next %}
-	<p class="text-success message" style="display:none;">Don't worry, your photos were saved. After logging in you'll be taken to finish your listing.</p>
-	{% endif%}
-	{% csrf_token %}
+		{% if form.errors %}
+		<div class="row">
+			<div class='span6 alert alert-error'>
+				{% for field in form %}
+					{% for error in field.errors %}
+					<strong>{{field.label}}:</strong> {{ error|escape }}<br>
+					{% endfor %}
+				{% endfor %}
+			</div>
+		</div>
+		{% endif %}
+		{% if next %}
+		<p class="text-success message" style="display:none;">Don't worry, your photos were saved. After logging in you'll be taken to finish your listing.</p>
+		{% endif%}
+		{% csrf_token %}
 		<ul class="form">
-			{{ form.as_ul }}
+			{% for field in form %}
+				{{ field.label }}:<br>
+				{{ field }}<br>
+			{% endfor %}
 			<p> <input class="btn btn-primary btn-large" type="submit" value="Login"/></p>
 		</ul>
 		<input type="hidden" name="next" value="{{ next }}" />

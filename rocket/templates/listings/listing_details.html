@@ -1,10 +1,10 @@
-{% extends 'listings_base.html' %}
+{% extends 'listings/listings_base.html' %}
 {% load thumbnail %}
 {% load static from staticfiles %}
 
 {% block js %}
-  <script type="text/javascript" src="{% static 'js/listings_reference.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/details.js' %}"></script>
+  <script type="text/javascript" src="{% static 'listings/js/listings_reference.js' %}"></script>
+  <script type="text/javascript" src="{% static 'listings/js/details.js' %}"></script>
   <script>
       filepicker.setKey('ATM8Oz2TyCtiJiHu6pP6Qz');
   </script>
@@ -21,13 +21,9 @@
   <div class="row">
 
     <div class="span10">
-
-      {% include 'partials/listings_preview.html' %}
-
-      {% include 'partials/listings_edit.html' %}
+      {% include 'listings/partials/listings_preview.html' %}
+      {% include 'listings/partials/listings_edit.html' %}
     </div>
-    
-
 
     <div class="listing-dash span2 wrapper" data-spy="affix" data-offset-top="400" style='position:fixed;top:55px;right:55px;'>
 

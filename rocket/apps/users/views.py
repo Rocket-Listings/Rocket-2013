@@ -12,26 +12,31 @@ from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.core import serializers
 from django.http import HttpResponse, HttpRequest
-from django.utils import simplejson
+from django.utils import simplejson as json
 
 def overview(request, username=None):
 	return info(request, username)
 
+@login_required
 def info(request):
 	user = request.user
 	profile = user.get_profile()
 	if request.method == 'POST':
 		user_profile_form = UserProfileForm(request.POST, instance=profile)
-		if user_profile_form.is_valid():
+		if user_profile_form.is_valid():	
+			User.objects.filter(username = user).update(email=user_profile_form.cleaned_data['email'])
 			user_profile = user_profile_form.save()
-			User.objects.filter(username = user).update(email=request.POST['email'])
-			responseData = serializers.serialize("json", UserProfile.objects.filter(user=user))
-			return HttpResponse(responseData, content_type="application/json")
+			responseData = {}
+			for key, value in user_profile_form.cleaned_data.iteritems():
+				responseData[key] = value
+			responseData['profile'] = True		
+			return HttpResponse(json.dumps(responseData), content_type="application/json")
 		else:
 			errors = user_profile_form.errors
-			return HttpResponse(simplejson.dumps(errors), content_type="application/json")
+			return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
 		return render(request, 'users/user_info.html', {'user': user})
+
 
 def profile(request, username=None):
 	user = User.objects.get(username=username)
@@ -40,7 +45,7 @@ def profile(request, username=None):
 	draftlistings = allListings.filter(status=ListingStatus(pk=2))
 	photos = ListingPhoto.objects.filter(listing=user)
 	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos)
-	user_comments = UserComment.objects.filter(user=user).order_by('-date_posted')[:5]
+	comments = UserComment.objects.filter(user=user).order_by('-date_posted')[:5]
 	if request.method == 'POST':
 		comment_form = CommentSubmitForm(request.POST, instance = UserComment(user=user))
 		if comment_form.is_valid():
@@ -51,4 +56,13 @@ def profile(request, username=None):
 			errors = comment_form.errors
 			return HttpResponse(simplejson.dumps(errors), content_type="application/json")
 	else:
-		return render(request, 'user_profile.html', {'user':user, 'activelistings':activelistings, 'draftlistings':draftlistings, 'photos':photos, 'comments':comments})
+		return render(request, 'users/user_profile.html', {'user':user, 'activelistings':activelistings, 'draftlistings':draftlistings, 'photos':photos, 'comments':comments})
+
+def delete_account(request):
+	user = request.user
+	if user.is_authenticated():
+		user_to_delete = User.objects.get(username=user)
+		user_to_delete.delete()
+		return redirect('/')
+	else:
+		return redirect('/users/login')

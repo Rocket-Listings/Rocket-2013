@@ -2,6 +2,8 @@ var pictureCounter = 0; /* Keeps track of the number of pictures */
 var categoryChange = 0; /* Checks to see if a category has been seleced for validation purposes*/
 
 $(document).ready(function(){
+	$(".edit").show();
+  	$(".preview-pane").hide();
 	$('.l-description').text($('#id_description').val());
 	$('.title').text($('#id_title').val());
 	$('.l-location').text("(" + $('#id_location').val() + ")");
@@ -116,7 +118,7 @@ $(document).ready(function(){
 			}
 		}
 		else {
-			$('.category_' + val, ".preview-pane").show();
+			$(".preview-pane .category_" + val).show();
 			var specs = $('.table_' + val + ' input').length;
 
 			for (var i=0;i<specs;i++){
