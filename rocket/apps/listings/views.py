@@ -22,6 +22,7 @@ from bs4 import BeautifulSoup
 from operator import __add__
 from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
+from haystack.query import SearchQuerySet
 # Moved here from users/views.py
 
 @login_required
@@ -36,6 +37,8 @@ def user_listings(request, username=None):
 
 @login_required
 def dashboard(request):
+	sqs = SearchQuerySet().all()
+	print sqs
 	user = request.user
 	listings = Listing.objects.filter(user=user).order_by('-pub_date').all() # later on we can change how many are returned
 	buyers = reduce(__add__, map(lambda l: list(l.buyer_set.all()), listings), [])
@@ -227,7 +230,7 @@ def search_listings(request):
 	else:
 		search_text = ''
 
-	listings = Listing.objects.filter(title__contains=search_text)
+	listings = SearchQuerySet().filter(content=search_text).result_class(Listing)
 
 	return render_to_response('listings/partials/ajax_search.html', {'listings' : listings})
 

@@ -3,7 +3,7 @@ from django.conf.urls import patterns, url, include
 
 urlpatterns = patterns('listings.views',
 	url(r'^search/$','search'),
-	url(r'^search/ajax/$','search_listings'),
+	url(r'^search/ajax','search_listings'),
 	#url(r'^$', 'latest'),
 	url(r'^create/$', 'create'),
 	url(r'^(?P<listing_id>\d+)/$', 'detail'),
