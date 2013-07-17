@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 
 # serving up static pages with RequestContext variables
 urlpatterns = patterns('',
-    url(r'^$', TemplateView.as_view(template_name='static_pages/what.html'), name='what'),
+    url(r'^$', TemplateView.as_view(template_name='static_pages/what.html'), name='home'),
     url(r'^what/$', TemplateView.as_view(template_name='static_pages/what.html'), name='what'),
 	url(r'^help/$', TemplateView.as_view(template_name='static_pages/help.html'), name='help'),
 	url(r'^contact/$', TemplateView.as_view(template_name='static_pages/contact.html'), name='contact'),
