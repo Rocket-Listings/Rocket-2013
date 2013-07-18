@@ -21,6 +21,9 @@
 						width: 290px;
 						max-width: 290px;
 					}
+					&[name='twitter_handle'] {
+						padding-left: 2px !important;
+					}
 					&:hover {
 						cursor: pointer;
 					}
@@ -64,6 +67,25 @@
 					font-size: 10pt;
 					color: #3a87ad;
 				}
+				span.at, span.twitter-handle {
+					color: #555;
+					float: none;
+					vertical-align: middle;
+					&.muted {
+						color: #999 !important;
+					}
+				}
+				span.twitter-handle {
+					padding-left: 2px;
+				}
+				.btn-twitter {
+					font-weight: normal;
+					background-color: @twitter-blue;
+					margin: -5px -5px -5px 0;
+					&:hover {
+						background-color: darken(@twitter-blue, 5%);
+					}
+				}
 				div.propic-loading-wrapper {
 					position: relative;
 					float: left;
@@ -89,25 +111,7 @@
 	}
 	.save-all {
 		float: right;
-	}
-	.btns-social {
-		margin-bottom: 20px;
-		.btn-fb {
-			font-weight: normal;
-			background-color: @fb-blue;
-			margin: -5px 0;
-			&:hover {
-				background-color: darken(@fb-blue, 5%);
-			}
-		}
-		.btn-twitter {
-			font-weight: normal;
-			background-color: @twitter-blue;
-			margin: -5px 0;
-			&:hover {
-				background-color: darken(@twitter-blue, 5%);
-			}
-		}
+		margin-top: -5px;
 	}
 	float: left;
 }

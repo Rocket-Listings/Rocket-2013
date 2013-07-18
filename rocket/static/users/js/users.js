@@ -1,10 +1,15 @@
 {% load static from staticfiles %}
 
 $(function() {
-	// SETTINGS JS
+
+	// INIT
+	filepicker.setKey('ATM8Oz2TyCtiJiHu6pP6Qz');
 	var initialInput = getInput('input');
 	var initialSelect = getInput('select');
-	filepicker.setKey('ATM8Oz2TyCtiJiHu6pP6Qz');
+	if ($("input[name='location']").val() === "") getLocation();
+	muteTwitterAt();
+
+	// BINDINGS
 	$(".edit").click(function (e) {
 		e.preventDefault();
 		var field = $(this).parent().prev().children().filter(":first");
@@ -39,6 +44,15 @@ $(function() {
 		else {
 			save.addClass("disabled");
 		}
+	});
+	$(".verify-twitter").click(function () {
+		$.oauthpopup({
+			path: '/users/twitter/',
+			callback: function () {
+				getTwitterHandle();
+				$(".at").removeClass("muted");
+			}
+		});
 	});
 	$(".change-propic").click(function (e) {
 		e.preventDefault();
@@ -76,36 +90,9 @@ $(function() {
 			console.log(FPError);
 		});
 	});
-	$(".get-location").click(function (e) {
-		e.preventDefault();
-		if (window.navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(function (position) {
-				var lat 	 = position.coords.latitude,
-					lng 	 = position.coords.longitude,
-					latlng 	 = new google.maps.LatLng(lat, lng),
-					geocoder = new google.maps.Geocoder();
-				geocoder.geocode({'latLng': latlng}, function(results, status) {
-					if (status == google.maps.GeocoderStatus.OK) {
-						if (results[1]) {
-							for (var i = 0; i < results.length; i++) {
-								if (results[i].types[0] === "locality") {
-									var city = results[i].address_components[0].short_name;
-									var state = results[i].address_components[2].short_name;
-									$("input[name='location']").val(city + ", " + state);
-									$("form").submit();
-								}
-							}
-						}
-						else {console.log("No reverse geocode results.")}
-					}
-					else {console.log("Geocoder failed: " + status)}
-				});
-			},
-			function() {console.log("Geolocation not available.")});
-		}
-	});
 	$("form").submit(function() {
-		if (!$("save-all").hasClass("disabled")) {
+		if (!$(".save-all").hasClass("disabled")) {
+			console.log("submitting");
 			var csrftoken = $.cookie('csrftoken');
 			$.ajax({
 				data: $(this).serialize(),
@@ -131,27 +118,30 @@ $(function() {
 		}
 		return false;
 	});
+
+	// HELPER FUNCTIONS
 	function insertNewValues(data) {
 		$("input[name='name']").val(data['name']);
 		$("input[name='email']").val(data['email']);
 		$("input[name='phone']").val(data['phone']);
 		$("input[name='location']").val(data['location']);
 		$("input[name='bio']").html(data['bio']);
+		console.log(data['nameprivate']);
 		if (data['nameprivate'] === true) {
-			$("select['nameprivate']").children().filter("option[value='True']").attr('selected', 'true');
-			$("select['nameprivate']").children().filter("option[value='False']").attr('selected', 'false');
+			$("select[name='nameprivate']").children().filter("option[value='True']").attr('selected', 'true');
+			$("select[name='nameprivate']").children().filter("option[value='False']").removeAttr('selected');
 		}
 		else {
-			$("select['nameprivate']").children().filter("option[value='True']").attr('selected', 'false');
-			$("select['nameprivate']").children().filter("option[value='False']").attr('selected', 'true');
+			$("select[name='nameprivate']").children().filter("option[value='True']").removeAttr('selected');
+			$("select[name='nameprivate']").children().filter("option[value='False']").attr('selected', 'true');
 		}
 		if (data['locationprivate'] === true) {
-			$("select['locationprivate']").children().filter("option[value='True']").attr('selected', 'true');
-			$("select['locationprivate']").children().filter("option[value='False']").attr('selected', 'false');
+			$("select[name='locationprivate']").children().filter("option[value='True']").attr('selected', 'true');
+			$("select[name='locationprivate']").children().filter("option[value='False']").removeAttr('selected');
 		}
 		else {
-			$("select['locationprivate']").children().filter("option[value='True']").attr('selected', 'false');
-			$("select['locationprivate']").children().filter("option[value='False']").attr('selected', 'true');
+			$("select[name='locationprivate']").children().filter("option[value='True']").removeAttr('selected');
+			$("select[name='locationprivate']").children().filter("option[value='False']").attr('selected', 'true');
 		}
 		if (data['name'] !== "") {
 			$(".name-header").html(data['name']);
@@ -186,8 +176,53 @@ $(function() {
 		}
 		return false;
 	}
+	function getLocation() {
+		if (window.navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function (position) {
+				var lat 	 = position.coords.latitude,
+					lng 	 = position.coords.longitude,
+					latlng 	 = new google.maps.LatLng(lat, lng),
+					geocoder = new google.maps.Geocoder();
+				geocoder.geocode({'latLng': latlng}, function(results, status) {
+					if (status == google.maps.GeocoderStatus.OK) {
+						if (results[1]) {
+							for (var i = 0; i < results.length; i++) {
+								if (results[i].types[0] === "locality") {
+									var city = results[i].address_components[0].short_name;
+									var state = results[i].address_components[2].short_name;
+									$("input[name='location']").val(city + ", " + state);
+									$("form").submit();
+								}
+							}
+						}
+						else {console.log("No reverse geocode results.")}
+					}
+					else {console.log("Geocoder failed: " + status)}
+				});
+			},
+			function() {console.log("Geolocation not available.")});
+		}
+	}
+	function muteTwitterAt() {
+		if ($(".twitter-handle").html() !== "") {
+			$(".at").removeClass("muted");
+		}
+		else {
+			$(".at").addClass("muted");
+		}
+	}
+	function getTwitterHandle() {
+		$.ajax({
+			type: 'GET',
+			url: '{% url "get_twitter_handle" %}',
+			success: function(response) {
+				 console.log(response);
+				$(".twitter-handle").html(response);
+			}
+		});
+	}
 
-	// FACEBOOK ACTIONS
+	// FACEBOOK BINDINGS
 	$('.btn-fb').click(function() {
 		FB.getLoginStatus(function (response) {
 			if (response.status === 'connected') {
@@ -286,3 +321,31 @@ window.fbAsyncInit = function() {
 	js.src = "//connect.facebook.net/en_US/all.js";
 	ref.parentNode.insertBefore(js, ref);
 }(document));
+
+// Twitter OAUTH popup (@nobuf)
+(function($){
+    $.oauthpopup = function(options)
+    {
+        if (!options || !options.path) {
+            throw new Error("options.path must not be empty");
+        }
+        options = $.extend({
+            windowName: 'Twitter'
+          , windowOptions: 'location=0,status=0,width=800,height=400'
+          , callback: function(){ window.location.reload(); }
+        }, options);
+
+        var oauthWindow   = window.open(options.path, options.windowName, options.windowOptions);
+        var oauthInterval = window.setInterval(function(){
+            if (oauthWindow.closed) {
+                window.clearInterval(oauthInterval);
+                options.callback();
+            }
+        }, 1000);
+    };
+
+    $.fn.oauthpopup = function(options) {
+        $this = $(this);
+        $this.click($.oauthpopup.bind(this, options));
+    };
+})(jQuery);
