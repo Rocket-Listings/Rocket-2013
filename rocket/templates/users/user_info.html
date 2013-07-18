@@ -38,11 +38,11 @@
 					<tr class="uneditable">
 						<td>Twitter Handle:</td>
 						<td>
-							<span class="at muted">@</span><span class="twitter-handle">{{ user.get_profile.twitter_handle }}</span>
+							<span class="at {% if not user.get_profile.twitter_handle %}muted{% endif %}">@</span><span class="twitter-handle">{{ user.get_profile.twitter_handle }}</span>
 						</td>
 						<td>
-							<span></span>
-							<a class="verify-twitter" href="#">Verify with Twitter</a>
+							<a class="verify-twitter {% if user.get_profile.twitter_handle %}hide{% endif %}" href="#">Verify with Twitter</a>
+							<a class="disconnect-twitter {% if not user.get_profile.twitter_handle %}hide{% endif %}" href="#">Disconnect Twitter</a>
 						</td>
 					</tr>
 					<tr class="uneditable">
@@ -69,7 +69,7 @@
 					<tr class="uneditable">
 						<td>Password:</td>
 						<td>&#149;&#149;&#149;&#149;&#149;&#149;&#149;&#149;</td>
-						<td><a class="change-password active" href="/users/password/change/">Change password</a></td>
+						<td><a class="change-password active" href="/users/password/change/">Change Password</a></td>
 					</tr>
 					<tr class="editable">
 						<td>Phone:</td>

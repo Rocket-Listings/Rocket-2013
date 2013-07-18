@@ -7,7 +7,6 @@ $(function() {
 	var initialInput = getInput('input');
 	var initialSelect = getInput('select');
 	if ($("input[name='location']").val() === "") getLocation();
-	muteTwitterAt();
 
 	// BINDINGS
 	$(".edit").click(function (e) {
@@ -45,14 +44,21 @@ $(function() {
 			save.addClass("disabled");
 		}
 	});
-	$(".verify-twitter").click(function () {
+	$(".verify-twitter").click(function (e) {
+		e.preventDefault();
 		$.oauthpopup({
 			path: '/users/twitter/',
 			callback: function () {
 				getTwitterHandle();
 				$(".at").removeClass("muted");
+				$(".verify-twitter").hide();
+				$(".disconnect-twitter").show();
 			}
 		});
+	});
+	$(".disconnect-twitter").click(function (e) {
+		e.preventDefault();
+		disconnectTwitter();
 	});
 	$(".change-propic").click(function (e) {
 		e.preventDefault();
@@ -203,21 +209,25 @@ $(function() {
 			function() {console.log("Geolocation not available.")});
 		}
 	}
-	function muteTwitterAt() {
-		if ($(".twitter-handle").html() !== "") {
-			$(".at").removeClass("muted");
-		}
-		else {
-			$(".at").addClass("muted");
-		}
-	}
 	function getTwitterHandle() {
 		$.ajax({
 			type: 'GET',
 			url: '{% url "get_twitter_handle" %}',
-			success: function(response) {
-				 console.log(response);
+			success: function (response) {
 				$(".twitter-handle").html(response);
+			}
+		});
+	}
+	function disconnectTwitter() {
+		$.ajax({
+			type: 'GET',
+			url: '{% url "disconnect_twitter" %}',
+			success: function (response) {
+				if (response === "success")
+				$(".twitter-handle").html("");
+				$(".verify-twitter").show();
+				$(".disconnect-twitter").hide();
+				$(".at").addClass("muted");
 			}
 		});
 	}
