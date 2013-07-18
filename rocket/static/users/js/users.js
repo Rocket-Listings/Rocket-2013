@@ -49,12 +49,14 @@ $(function() {
 		$.oauthpopup({
 			path: '/users/twitter/',
 			callback: function () {
-				if (haveOAUTH()) {
-					getTwitterHandle();
-					$(".at").removeClass("muted");
-					$(".verify-twitter").hide();
-					$(".disconnect-twitter").show();
-				}
+				getTwitterHandle(function (response) {
+					if (response !== "no_oauth_token_or_key") {
+						$(".twitter-handle").html(response);
+						$(".at").removeClass("muted");
+						$(".verify-twitter").hide();
+						$(".disconnect-twitter").show();
+					}
+				});
 			}
 		});
 	});
@@ -211,13 +213,11 @@ $(function() {
 			function() {console.log("Geolocation not available.")});
 		}
 	}
-	function getTwitterHandle() {
+	function getTwitterHandle (callback) {
 		$.ajax({
 			type: 'GET',
 			url: '{% url "get_twitter_handle" %}',
-			success: function (response) {
-				$(".twitter-handle").html(response);
-			}
+			success: callback
 		});
 	}
 	function disconnectTwitter() {
@@ -231,18 +231,6 @@ $(function() {
 				$(".disconnect-twitter").hide();
 				$(".at").addClass("muted");
 			}
-		});
-	}
-	function twitterConnected() {
-		return $.ajax({
-			type: 'GET',
-			url: '{% url "twitter_connected" %}',
-		});
-	}
-	function haveOAUTH() {
-		return $.ajax({
-			type: 'GET',
-			url: '{% url "have_oauth" %}',
 		});
 	}
 
