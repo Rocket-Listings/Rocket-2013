@@ -84,54 +84,54 @@
 
 // 	}
 
-// 	function handlePreviewClick(e) {
-// 		$(".edit").hide();
-// 		$(".preview-pane").show();
-// 		$('.l-description').text($('#id_description').val());
-// 		$('.title').text($('#id_title').val());
-// 		$('.l-location').text("(" + $('#id_location').val() + ")");
-// 		$('.l-price').text("$" + $('#id_price').val());
-// 		var category = $(".hidden > select option:selected").html();
-// 		var base_category = $("li.active").text().toLowerCase().trim();
-// 		$(".l-category").text(base_category + " > " + category);
+	// function handlePreviewClick(e) {
+	// 	$(".edit").hide();
+	// 	$(".preview-pane").show();
+	// 	$('.l-description').text($('#id_description').val());
+	// 	$('.title').text($('#id_title').val());
+	// 	$('.l-location').text("(" + $('#id_location').val() + ")");
+	// 	$('.l-price').text("$" + $('#id_price').val());
+	// 	var category = $(".hidden > select option:selected").html();
+	// 	var base_category = $("li.active").text().toLowerCase().trim();
+	// 	$(".l-category").text(base_category + " > " + category);
 
-// 		$('.category_' + prev, ".preview-pane").hide();
+	// 	$('.category_' + prev, ".preview-pane").hide();
 
-// 		if (is_housing == 1){
-// 			$(".preview-pane .category_" + val +":eq(0)").show();
-// 			var specs = $('.table_' + val + ':eq(0) input').length;
+	// 	if (is_housing == 1){
+	// 		$(".preview-pane .category_" + val +":eq(0)").show();
+	// 		var specs = $('.table_' + val + ':eq(0) input').length;
 
-// 			for (var i=0;i<specs;i++){
-// 				var spec_value = $('.table_' + val + ':eq(0) input:eq('+i+')').val();
-// 				$('.table_preview_' + val + ':eq(0) input:eq('+i+')').val(spec_value);
-// 			}
-// 		}
-// 		else if (is_housing == 2) {
-// 			$(".preview-pane .category_" + val +":eq(1)").show();
-// 			var specs = $('.table_' + val + ':eq(1) input').length;
+	// 		for (var i=0;i<specs;i++){
+	// 			var spec_value = $('.table_' + val + ':eq(0) input:eq('+i+')').val();
+	// 			$('.table_preview_' + val + ':eq(0) input:eq('+i+')').val(spec_value);
+	// 		}
+	// 	}
+	// 	else if (is_housing == 2) {
+	// 		$(".preview-pane .category_" + val +":eq(1)").show();
+	// 		var specs = $('.table_' + val + ':eq(1) input').length;
 
-// 			for (var i=0;i<specs;i++){
-// 				var spec_value = $('.table_' + val + ':eq(1) input:eq('+i+')').val();
-// 				$('.table_preview_' + val + ':eq(1) input:eq('+i+')').val(spec_value);
-// 			}
-// 		}
-// 		else {
-// 			$('.category_' + val, ".preview-pane").show();
-// 			var specs = $('.table_' + val + ' input').length;
+	// 		for (var i=0;i<specs;i++){
+	// 			var spec_value = $('.table_' + val + ':eq(1) input:eq('+i+')').val();
+	// 			$('.table_preview_' + val + ':eq(1) input:eq('+i+')').val(spec_value);
+	// 		}
+	// 	}
+	// 	else {
+	// 		$('.category_' + val, ".preview-pane").show();
+	// 		var specs = $('.table_' + val + ' input').length;
 
-// 			for (var i=0;i<specs;i++){
-// 				var spec_value = $('.table_' + val + ' input:eq('+i+')').val();
-// 				$('.table_preview_' + val + ' input:eq('+i+')').val(spec_value);
-// 			}
-// 		}
+	// 		for (var i=0;i<specs;i++){
+	// 			var spec_value = $('.table_' + val + ' input:eq('+i+')').val();
+	// 			$('.table_preview_' + val + ' input:eq('+i+')').val(spec_value);
+	// 		}
+	// 	}
 
 		
 //   	}
 
-// 	function handleEditClick(e) {
-// 		$(".edit").show();
-// 		$(".preview-pane").hide();
-// 	}
+	// function handleEditClick(e) {
+	// 	$(".edit").show();
+	// 	$(".preview-pane").hide();
+	// }
 
 
 	// eventHandlers();

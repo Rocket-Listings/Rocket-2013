@@ -65,7 +65,7 @@ class Listing(models.Model):
 		return self.title
 
 	def get_absolute_url(self):
-		return reverse('listings.views.detail', args=[str(self.id)])
+		return reverse('listings.views.detail', args=[self.id])
 
 
 # Listing Specification

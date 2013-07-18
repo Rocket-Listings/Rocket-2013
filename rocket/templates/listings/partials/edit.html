@@ -1,24 +1,26 @@
-<div class="edit">
+<div class="edit">  
   <form method="POST">
+    {% csrf_token %}
+    {# Include the hidden fields #}
+    {% for hidden in form.hidden_fields %}
+    {{ hidden }}
+    {% endfor %}
     <ul class="nav nav-tabs">
       {% for group in cat_groups %}
-      <li {% if forloop.first %}class="active"{% endif %}><a href="#{{ group }}" data-toggle="tab">{{ group }}</a></li>
+      <li{% if forloop.first %} class="active"{% endif %}>
+        <a href="#{{ group }}" data-toggle="tab">{{ group }}</a>
+      </li>
       {% endfor %}
     </ul>
     <div class="tab-content">
       {% for group in cat_groups %}
       <div class="tab-pane{% if forloop.first %} active{% endif %}" id="{{ group }}">
         {% for cat in cats %}{% if cat.group == group %}
-        <a class="cat {{ group }}" id="cat-{{ cat.id }}" data-id="{{ cat.id }}">{{ cat }}</a>
+        <a class="cat {{ group }}" data-id="{{ cat.id }}">{{ cat }}</a>
         {% endif %}{% endfor %}
       </div>
       {% endfor %}
     </div>
-
-    {# Include the hidden fields #}
-    {% for hidden in form.hidden_fields %}
-    {{ hidden }}
-    {% endfor %}
     
     {# Include the visible fields #}
     {% for field in form.visible_fields %}
@@ -31,6 +33,18 @@
         {{ field.label_tag }}
         {{ field }}
     {% endfor %}
+
+    <p>Specifications</p>
+    <table class="specs-table">
+        <tbody>
+            {% for spec in spec_keys %}
+            <tr class="hide" data-cat="{{ spec.category_id }}">
+                <td class="spec-key">{{ spec.key }}</td>
+                <td class="spec-value"><input type="text" name="specs[{{ spec.id }}]"/>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     <input type="submit" value="Post to Craigslist" />
   </form>
     {% comment %}
@@ -110,9 +124,3 @@
     </ul>
     {% endcomment %}
 </div>
-<div class="l-footnote" style ="margin-left:55px;">
-  Created with 
-  <a href="http://www.rocketlistings.com" class="icon"> Rocket Listings</a>
-  . Blast off. 
-</div>
-

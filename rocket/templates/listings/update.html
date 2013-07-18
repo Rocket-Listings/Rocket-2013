@@ -1,12 +1,10 @@
-{% extends 'listings/base.html' %}
+{% comment %} {% extends 'listings/base.html' %}
 {% load thumbnail %}
 {% load static from staticfiles %}
 {% load compress %}
 
 {% block js %}
   {% compress js %}
-  <script type="text/javascript" src="{% static 'listings/js/listings_reference.js' %}"></script>
-  <script type="text/javascript" src="{% static 'listings/js/update.js' %}"></script>
   <script>
       filepicker.setKey('ATM8Oz2TyCtiJiHu6pP6Qz');
   </script>
@@ -55,4 +53,5 @@
 
   <div class="clearfix"></div>
 
-{% endblock %}
+{% endblock %} 
+{% endcomment %}

@@ -1,0 +1,25 @@
+{% extends 'listings/base.html' %}
+{% load compress %}
+{% load static from staticfiles %}
+
+{% block js %}
+  {{ block.super }}
+  {% compress js %}
+  <script>
+    $(document).ready(function(){
+      $('.carousel').carousel({
+        interval: 10000
+      });
+    })
+  </script>
+  {% endcompress %}
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="span10">
+      {% include 'listings/partials/preview.html' %}
+    </div>
+    <div class="span2"></div>
+  </div>
+{% endblock %}
