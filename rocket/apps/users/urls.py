@@ -12,5 +12,7 @@ urlpatterns = patterns('',
     url(r'^twitter/close/$', TemplateView.as_view(template_name='users/close.html')),
     url(r'^twitter/handle/$', 'users.views.get_twitter_handle', name='get_twitter_handle'),
     url(r'^twitter/disconnect/$', 'users.views.disconnect_twitter', name='disconnect_twitter'),
+    url(r'^twitter/connected/$', 'users.views.twitter_connected', name='twitter_connected'),
+    url(r'^twitter/oauth/$', 'users.views.have_oauth', name='have_oauth'),
     url(r'^(?P<username>\w+)/$', 'users.views.profile', name='user_profile'),
 )

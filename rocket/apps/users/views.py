@@ -115,3 +115,25 @@ def disconnect_twitter(request):
 		return HttpResponse(json.dumps("success"), content_type='application/json')
 	else:
 		return redirect('/users/login')
+
+@login_required
+def twitter_connected(request):
+	if request.is_ajax():
+		if UserProfile.objects.filter(user=request.user).values("twitter_handle")[0]['twitter_handle'] != "":
+			response = True
+		else:
+			response = False
+		return HttpResponse(json.dumps(response), content_type='application/json')
+	else:
+		return HttpResponseForbidden()
+
+@login_required
+def have_oauth(request):
+	if request.is_ajax():
+		if UserProfile.objects.filter(user=request.user).values("OAUTH_TOKEN")[0]['OAUTH_TOKEN'] != "":
+			response = True
+		else:
+			response = False
+		return HttpResponse(json.dumps(response), content_type='application/json')
+	else:
+		return HttpResponseForbidden()

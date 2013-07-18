@@ -49,10 +49,12 @@ $(function() {
 		$.oauthpopup({
 			path: '/users/twitter/',
 			callback: function () {
-				getTwitterHandle();
-				$(".at").removeClass("muted");
-				$(".verify-twitter").hide();
-				$(".disconnect-twitter").show();
+				if (haveOAUTH()) {
+					getTwitterHandle();
+					$(".at").removeClass("muted");
+					$(".verify-twitter").hide();
+					$(".disconnect-twitter").show();
+				}
 			}
 		});
 	});
@@ -229,6 +231,18 @@ $(function() {
 				$(".disconnect-twitter").hide();
 				$(".at").addClass("muted");
 			}
+		});
+	}
+	function twitterConnected() {
+		return $.ajax({
+			type: 'GET',
+			url: '{% url "twitter_connected" %}',
+		});
+	}
+	function haveOAUTH() {
+		return $.ajax({
+			type: 'GET',
+			url: '{% url "have_oauth" %}',
 		});
 	}
 
