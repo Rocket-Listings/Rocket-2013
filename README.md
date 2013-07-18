@@ -18,6 +18,12 @@ Additionally you'll need to `git pull`, `pip install -r requirements.txt` and `r
 
 The FB app key and secret are in users.js with the FB init code.  The Twitter app keys and secrets are in settings/development.py and settings/production.py, respectively.  We are using [Twython](https://github.com/ryanmcgrath/twython) for Twitter integration.  Docs can be found [here](https://twython.readthedocs.org/en/latest/).
 
+All Twitter requests start like this:
+
+    OAUTH_TOKEN = UserProfile.objects.filter(user=request.user).values("OAUTH_TOKEN")[0]['OAUTH_TOKEN']
+	OAUTH_TOKEN_SECRET = UserProfile.objects.filter(user=request.user).values("OAUTH_TOKEN_SECRET")[0]['OAUTH_TOKEN_SECRET']
+	twitter = Twython(settings.TWITTER_KEY, settings.TWITTER_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
+
 ### Getting django compressor working
 
 I just installed a django plugin called Django-Compressor which makes development/deploy with less stylesheets a lot easier. For every pageload it checks if any .less files have changed, and if so recompiles them using the `lessc` command line program. That program is acutally just a node package, so for better or for worse we're now dependent on node and its package manager. This means that you don't need to use the less.app to compile your stylesheets anymore, everything happens automatically. The following commands make sure that you have django-compressor, node and less installed, and that your path to the `lessc` command is set up correctly. I also added `fabric` functionality which makes it easier to go through the process of a db reset.

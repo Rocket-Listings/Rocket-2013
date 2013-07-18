@@ -21,6 +21,7 @@ class Migration(SchemaMigration):
             ('nameprivate', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('locationprivate', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('propic', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
+            ('twitter_handle', self.gf('django.db.models.fields.CharField')(max_length=20, blank=True)),
             ('OAUTH_TOKEN', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
             ('OAUTH_TOKEN_SECRET', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
         ))
@@ -120,6 +121,7 @@ class Migration(SchemaMigration):
             'nameprivate': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'phone': ('django.db.models.fields.CharField', [], {'max_length': '50', 'blank': 'True'}),
             'propic': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
+            'twitter_handle': ('django.db.models.fields.CharField', [], {'max_length': '20', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['auth.User']", 'unique': 'True'})
         }
     }

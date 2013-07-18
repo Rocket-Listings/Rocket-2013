@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, url, include
 from registration.views import register
+from django.views.generic import TemplateView
 
 
 urlpatterns = patterns('',
@@ -7,5 +8,8 @@ urlpatterns = patterns('',
     url(r'^info/$', 'users.views.info', name='user_info'), # this url makes registration redirect work
     url(r'^delete/$', 'users.views.delete_account', name='delete_account'),
     url(r'^twitter/$', 'users.views.obtain_twitter_auth_url', name='obtain_twitter_auth_url'),
+    url(r'^twitter/callback/$', 'users.views.verify_twitter', name='verify_twitter'),
+    url(r'^twitter/close/$', TemplateView.as_view(template_name='users/close.html')),
+    url(r'^twitter/handle/$', 'users.views.get_twitter_handle', name='get_twitter_handle'),
     url(r'^(?P<username>\w+)/$', 'users.views.profile', name='user_profile'),
 )

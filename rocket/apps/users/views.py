@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.core import serializers
-from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
+from django.http import HttpResponse, HttpRequest, HttpResponseRedirect, HttpResponseForbidden
 from django.utils import simplejson as json
 from django.conf import settings
 from twython import Twython
@@ -23,18 +23,6 @@ def overview(request, username=None):
 def info(request):
 	user = request.user
 	profile = user.get_profile()
-	if request.GET.get('oauth_verifier', ""):
-		oauth_verifier = request.GET.get('oauth_verifier', "")
-		_OAUTH_TOKEN = request.session.get('OAUTH_TOKEN')
-		_OAUTH_TOKEN_SECRET = request.session.get('OAUTH_TOKEN_SECRET')
-		_twitter = Twython(settings.TWITTER_KEY, settings.TWITTER_SECRET, _OAUTH_TOKEN, _OAUTH_TOKEN_SECRET)
-		twitter_auth_keys = _twitter.get_authorized_tokens(oauth_verifier)
-		OAUTH_TOKEN = UserProfile.objects.filter(user=user).update(OAUTH_TOKEN=twitter_auth_keys['oauth_token'])
-		OAUTH_TOKEN_SECRET = UserProfile.objects.filter(user=user).update(OAUTH_TOKEN_SECRET=twitter_auth_keys['oauth_token_secret'])
-		# twitter = Twython(settings.TWITTER_KEY, settings.TWITTER_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
-		# userid = twitter.verify_credentials()
-		# print userid
-		return redirect('/users/info')
 	if request.method == 'POST':
 		user_profile_form = UserProfileForm(request.POST, instance=profile)
 		if user_profile_form.is_valid():	
@@ -50,7 +38,6 @@ def info(request):
 			return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
 		return render(request, 'users/user_info.html', {'user': user})
-
 
 def profile(request, username=None):
 	user = User.objects.get(username=username)
@@ -68,7 +55,7 @@ def profile(request, username=None):
 			return HttpResponse(responseData, content_type="application/json")
 		else:
 			errors = comment_form.errors
-			return HttpResponse(simplejson.dumps(errors), content_type="application/json")
+			return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
 		return render(request, 'users/user_profile.html', {'user':user, 'activelistings':activelistings, 'draftlistings':draftlistings, 'photos':photos, 'comments':comments})
 
@@ -81,9 +68,37 @@ def delete_account(request):
 	else:
 		return redirect('/users/login')
 
+@login_required
 def obtain_twitter_auth_url(request):
 	twitter = Twython(settings.TWITTER_KEY, settings.TWITTER_SECRET)
-	auth = twitter.get_authentication_tokens(callback_url='http://local.rocketlistings.com:8000/users/info')
+	auth = twitter.get_authentication_tokens(callback_url='http://local.rocketlistings.com:8000/users/twitter/callback')
 	request.session['OAUTH_TOKEN'] = auth['oauth_token']
 	request.session['OAUTH_TOKEN_SECRET'] = auth['oauth_token_secret']
 	return HttpResponseRedirect(auth['auth_url'])
+
+def verify_twitter(request):
+	if request.GET.get("oauth_verifier"):
+		user = request.user
+		oauth_verifier = request.GET.get('oauth_verifier', "")
+		_OAUTH_TOKEN = request.session.get('OAUTH_TOKEN') #handshake token
+		_OAUTH_TOKEN_SECRET = request.session.get('OAUTH_TOKEN_SECRET') #handshake secret
+		_twitter = Twython(settings.TWITTER_KEY, settings.TWITTER_SECRET, _OAUTH_TOKEN, _OAUTH_TOKEN_SECRET)
+		twitter_auth_keys = _twitter.get_authorized_tokens(oauth_verifier)
+		
+		OAUTH_TOKEN = UserProfile.objects.filter(user=user).update(OAUTH_TOKEN=twitter_auth_keys['oauth_token']) #real token
+		OAUTH_TOKEN_SECRET = UserProfile.objects.filter(user=user).update(OAUTH_TOKEN_SECRET=twitter_auth_keys['oauth_token_secret']) #real secret
+
+		return redirect('/users/twitter/close')
+	else:
+		return HttpResponseForbidden()
+
+def get_twitter_handle(request):
+	if request.is_ajax():
+		OAUTH_TOKEN = UserProfile.objects.filter(user=request.user).values("OAUTH_TOKEN")[0]['OAUTH_TOKEN']
+		OAUTH_TOKEN_SECRET = UserProfile.objects.filter(user=request.user).values("OAUTH_TOKEN_SECRET")[0]['OAUTH_TOKEN_SECRET']
+		twitter = Twython(settings.TWITTER_KEY, settings.TWITTER_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
+		handle = twitter.verify_credentials()['screen_name']
+		UserProfile.objects.filter(user=request.user).update(twitter_handle=handle)
+		return HttpResponse(json.dumps(handle), content_type='application/json')
+	else:
+		return HttpResponseForbidden()
