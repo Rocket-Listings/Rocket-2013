@@ -2,13 +2,13 @@
 
 {% block content %}
 <div class = "login-form">
-	<form action="{% url 'auth_login' %}" method="POST">
+	<form class="fixed-width-form" action="{% url 'auth_login' %}" method="POST">
 		{% if form.errors %}
 		<div class="row">
 			<div class='span6 alert alert-error'>
-				{% for field in form %}
-					{% for error in field.errors %}
-					<strong>{{field.label}}:</strong> {{ error|escape }}<br>
+				{% for field, errors in form.errors.items %}
+					{% for error in errors %}
+						{{error}}
 					{% endfor %}
 				{% endfor %}
 			</div>
@@ -23,7 +23,7 @@
 				{{ field.label }}:<br>
 				{{ field }}<br>
 			{% endfor %}
-			<p> <input class="btn btn-primary btn-large" type="submit" value="Login"/></p>
+			<p><input class="btn btn-primary" type="submit" value="Login"/></p>
 		</ul>
 		<input type="hidden" name="next" value="{{ next }}" />
 		<div class = "login-help">

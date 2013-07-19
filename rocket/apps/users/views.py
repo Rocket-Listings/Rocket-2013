@@ -11,8 +11,10 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.core import serializers
-from django.http import HttpResponse, HttpRequest
+from django.http import HttpResponse, HttpRequest, HttpResponseRedirect, HttpResponseForbidden
 from django.utils import simplejson as json
+from django.conf import settings
+from twython import Twython
 
 def overview(request, username=None):
 	return info(request, username)
@@ -23,20 +25,23 @@ def info(request):
 	profile = user.get_profile()
 	if request.method == 'POST':
 		user_profile_form = UserProfileForm(request.POST, instance=profile)
-		if user_profile_form.is_valid():	
-			User.objects.filter(username = user).update(email=user_profile_form.cleaned_data['email'])
+		if user_profile_form.is_valid():
+			userObject = User.objects.get(username=user)
+			userObject.email = user_profile_form.cleaned_data['email']
+			userObject.save()
 			user_profile = user_profile_form.save()
 			responseData = {}
 			for key, value in user_profile_form.cleaned_data.iteritems():
-				responseData[key] = value
-			responseData['profile'] = True		
+				if key != "default_listing_type" and key != "default_category":
+					responseData[key] = value
+			responseData['profile'] = True
 			return HttpResponse(json.dumps(responseData), content_type="application/json")
 		else:
 			errors = user_profile_form.errors
 			return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
-		return render(request, 'users/user_info.html', {'user': user})
-
+		user_profile_form = UserProfileForm(instance=profile)
+		return render(request, 'users/user_info.html', {'user': user, 'form': user_profile_form})
 
 def profile(request, username=None):
 	user = User.objects.get(username=username)
@@ -54,7 +59,7 @@ def profile(request, username=None):
 			return HttpResponse(responseData, content_type="application/json")
 		else:
 			errors = comment_form.errors
-			return HttpResponse(simplejson.dumps(errors), content_type="application/json")
+			return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
 		return render(request, 'users/user_profile.html', {'user':user, 'activelistings':activelistings, 'draftlistings':draftlistings, 'photos':photos, 'comments':comments})
 
@@ -66,3 +71,80 @@ def delete_account(request):
 		return redirect('/')
 	else:
 		return redirect('/users/login')
+
+@login_required
+def obtain_twitter_auth_url(request):
+	twitter = Twython(settings.TWITTER_KEY, settings.TWITTER_SECRET)
+	auth = twitter.get_authentication_tokens(callback_url='http://local.rocketlistings.com:8000/users/twitter/callback')
+	request.session['OAUTH_TOKEN'] = auth['oauth_token']
+	request.session['OAUTH_TOKEN_SECRET'] = auth['oauth_token_secret']
+	return HttpResponseRedirect(auth['auth_url'])
+
+@login_required
+def verify_twitter(request):
+	if request.GET.get("oauth_verifier"):
+		user = request.user
+		oauth_verifier = request.GET.get('oauth_verifier', "")
+		_OAUTH_TOKEN = request.session.get('OAUTH_TOKEN') #handshake token
+		_OAUTH_TOKEN_SECRET = request.session.get('OAUTH_TOKEN_SECRET') #handshake secret
+		_twitter = Twython(settings.TWITTER_KEY, settings.TWITTER_SECRET, _OAUTH_TOKEN, _OAUTH_TOKEN_SECRET)
+		twitter_auth_keys = _twitter.get_authorized_tokens(oauth_verifier)
+		profile = UserProfile.objects.get(user=user)
+		profile.OAUTH_TOKEN = twitter_auth_keys['oauth_token'] #real token
+		profile.OAUTH_TOKEN_SECRET = twitter_auth_keys['oauth_token_secret'] #real secret
+		profile.save()
+		return redirect('/users/twitter/close')
+	elif request.GET.get("denied"):
+		return redirect('/users/twitter/close')
+	else:
+		return HttpResponseForbidden()
+
+@login_required
+def get_twitter_handle(request):
+	if request.is_ajax():
+		OAUTH_TOKEN = UserProfile.objects.get(user=request.user).OAUTH_TOKEN
+		OAUTH_TOKEN_SECRET = UserProfile.objects.get(user=request.user).OAUTH_TOKEN_SECRET
+		if OAUTH_TOKEN != "":
+			twitter = Twython(settings.TWITTER_KEY, settings.TWITTER_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
+			handle = twitter.verify_credentials()['screen_name']
+			profile = UserProfile.objects.get(user=request.user)
+			profile.twitter_handle = handle
+			profile.save()
+			return HttpResponse(json.dumps(handle), content_type='application/json')
+		else:
+			return HttpResponse(json.dumps("no_oauth_token_or_key"), content_type='application/json')
+	else:
+		return HttpResponseForbidden()
+
+def disconnect_twitter(request):
+	if request.is_ajax():
+		profile = UserProfile.objects.get(user=request.user)
+		profile.OAUTH_TOKEN = ""
+		profile.OAUTH_TOKEN_SECRET = ""
+		profile.twitter_handle = ""
+		profile.save()
+		return HttpResponse(json.dumps("success"), content_type='application/json')
+	else:
+		return redirect('/users/login')
+
+@login_required
+def twitter_connected(request):
+	if request.is_ajax():
+		if UserProfile.objects.get(user=request.user).twitter_handle != "":
+			response = True
+		else:
+			response = False
+		return HttpResponse(json.dumps(response), content_type='application/json')
+	else:
+		return HttpResponseForbidden()
+
+@login_required
+def have_oauth(request):
+	if request.is_ajax():
+		if UserProfile.objects.get(user=request.user).OAUTH_TOKEN != "":
+			response = True
+		else:
+			response = False
+		return HttpResponse(json.dumps(response), content_type='application/json')
+	else:
+		return HttpResponseForbidden()

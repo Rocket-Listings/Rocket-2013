@@ -10,7 +10,7 @@ class UserProfileForm(ModelForm):
 	email = forms.EmailField(max_length=75, required=True)
 	class Meta:
 		model = UserProfile
-		exclude = ('user')
+		exclude = ('user', 'twitter_handle', 'OAUTH_TOKEN', 'OAUTH_TOKEN_SECRET')
 		fields = ('name', 'phone', 'location', 'bio', 'default_category', 'default_listing_type', 'nameprivate', 'locationprivate', 'propic')
 
 	def clean(self):

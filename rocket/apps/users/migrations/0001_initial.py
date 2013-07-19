@@ -16,12 +16,14 @@ class Migration(SchemaMigration):
             ('location', self.gf('django.db.models.fields.CharField')(max_length=255, blank=True)),
             ('default_category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingCategory'], null=True, blank=True)),
             ('default_listing_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingType'], null=True, blank=True)),
-            ('email', self.gf('django.db.models.fields.EmailField')(max_length=255)),
             ('phone', self.gf('django.db.models.fields.CharField')(max_length=50, blank=True)),
             ('bio', self.gf('django.db.models.fields.TextField')(blank=True)),
             ('nameprivate', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('locationprivate', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('propic', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
+            ('twitter_handle', self.gf('django.db.models.fields.CharField')(max_length=20, blank=True)),
+            ('OAUTH_TOKEN', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
+            ('OAUTH_TOKEN_SECRET', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
         ))
         db.send_create_signal(u'users', ['UserProfile'])
 
@@ -84,11 +86,9 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
         u'listings.listingcategory': {
-            'CL_id': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
             'Meta': {'object_name': 'ListingCategory'},
             'description': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'is_owner': ('django.db.models.fields.NullBooleanField', [], {'null': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '60'})
         },
         u'listings.listingtype': {
@@ -109,10 +109,11 @@ class Migration(SchemaMigration):
         },
         u'users.userprofile': {
             'Meta': {'object_name': 'UserProfile'},
+            'OAUTH_TOKEN': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
+            'OAUTH_TOKEN_SECRET': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
             'bio': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'default_category': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.ListingCategory']", 'null': 'True', 'blank': 'True'}),
             'default_listing_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.ListingType']", 'null': 'True', 'blank': 'True'}),
-            'email': ('django.db.models.fields.EmailField', [], {'max_length': '255'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'location': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
             'locationprivate': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
@@ -120,6 +121,7 @@ class Migration(SchemaMigration):
             'nameprivate': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'phone': ('django.db.models.fields.CharField', [], {'max_length': '50', 'blank': 'True'}),
             'propic': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
+            'twitter_handle': ('django.db.models.fields.CharField', [], {'max_length': '20', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['auth.User']", 'unique': 'True'})
         }
     }
