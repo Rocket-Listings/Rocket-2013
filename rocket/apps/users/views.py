@@ -32,14 +32,16 @@ def info(request):
 			user_profile = user_profile_form.save()
 			responseData = {}
 			for key, value in user_profile_form.cleaned_data.iteritems():
-				responseData[key] = value
-			responseData['profile'] = True		
+				if key != "default_listing_type" and key != "default_category":
+					responseData[key] = value
+			responseData['profile'] = True
 			return HttpResponse(json.dumps(responseData), content_type="application/json")
 		else:
 			errors = user_profile_form.errors
 			return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
-		return render(request, 'users/user_info.html', {'user': user})
+		user_profile_form = UserProfileForm(instance=profile)
+		return render(request, 'users/user_info.html', {'user': user, 'form': user_profile_form})
 
 def profile(request, username=None):
 	user = User.objects.get(username=username)

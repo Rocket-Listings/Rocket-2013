@@ -103,18 +103,14 @@
 					<tr class="editable">
 						<td>Default Listing Type:</td>
 						<td class="select">
-							<select tabindex="6" name="default_listing_type.name">
-								<option class="" selected="true">{{ user.get_profile.default_listing_type.name }}</option>
-							</select>
+							{{ form.default_listing_type }}
 						</td>
 						<td></td>
 					</tr>
 					<tr class="editable">
 						<td>Default Category:</td>
 						<td class="select">
-							<select tabindex="7" name="default_category">
-								<option class="" selected="true">{{ user.get_profile.default_category.name }}</option>
-							</select>
+							{{ form.default_category }}
 						</td>
 						<td></td>
 					</tr>
