@@ -85,6 +85,7 @@ $(function() {
 			},
 			function (NewBlob) {
 				$(".propic-url").val("https://s3.amazonaws.com/static.rocketlistings.com/" + NewBlob.key);
+				$(".save-all").addClass("propic-enable");
 				$(".settings-form").submit();
 			},
 			function (FPError) {
@@ -101,7 +102,7 @@ $(function() {
 		});
 	});
 	$("form.settings-form").submit(function() {
-		if ((!$(".save-all").hasClass("disabled")) || ($(".propic-url").val() !== initialInput[2])) {
+		if ((!$(".save-all").hasClass("disabled")) || ($(".save-all").hasClass("propic-enable"))) {
 			var csrftoken = $.cookie('csrftoken');
 			$.ajax({
 				data: $(this).serialize(),
@@ -114,6 +115,7 @@ $(function() {
 					if (response.profile) {
 						$(".errors").hide();
 						$(".save-all").addClass("disabled");
+						$(".save-all").removeClass("propic-enable");
 						$("input, textarea, select").blur();
 						initialInput = getInput('input');
 						initialSelect = getInput('select');
@@ -152,7 +154,7 @@ $(function() {
 		else {
 			$(".name-header").html($(".username").html());
 		}
-		$("img.propic").attr("src", data['propic']);
+		$("img.propic").attr("src", data['propic'] + "?" + new Date().getTime());
 		$(".loading-overlay").hide();
 	}
 	function getInput (type) {
