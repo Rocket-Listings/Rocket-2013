@@ -17,7 +17,7 @@
 					<li><h6>&nbsp;&nbsp;&nbsp; {{user.get_profile.location}}</h6></li>
 				{% endif %}
 				{% if request.user == user %}
-				<li style="float:right;"><a class="btn btn-warning edit-profile" href="{% url 'users.views.info' %}">Update your profile</a></li>
+				<li style="float:right;"><a class="btn btn-primary edit-profile" href="{% url 'users.views.info' %}">Edit profile</a></li>
 				{% endif %}
 			</ul>
 			<span class="subtitle gray">{{user.username}}</span>

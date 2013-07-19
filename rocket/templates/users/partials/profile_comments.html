@@ -1,33 +1,21 @@
-<div class="comment-container">
-	<ul class="inline clearfix">
-		<li><h4>Buyer Feedback</h4></li>
-		{% if comments|length > 5 %}
-		<li><h5 class="gray most-recent-statement">Only showing the most recent comments. <a href="#">See all feedback</a></h5></li>
-		{% endif %}
-	</ul>
-	<table class="table table-striped">
-		<tbody class="comment-body">
-		{% if comments %}
-			{% for comment in comments|slice:":5" %}
-				<tr><td>
-					<ul class="inline clearfix">
-						<li><h4 id="title">{{comment.title}}</h4></li>
-						<li><h6 id="name">By: {{comment.name}}</h6></li>
-						<li><h6 id="email">{{comment.email}}</h6></li>
-						<li><h6 class="muted">{{comment.date_posted}}</h6></li>
-					</ul>
-					<p style="padding-left: 10px">{{comment.comment}}</p>
-				</td></tr>
-			{% endfor %}
-		{% elif request.user == user %}
-			<tr><td>
-				<h5 class="no-comment">No one has commented on your skills as a seller. Go sell some stuff and get some feedback!</h5>
-			</td></tr>
-		{% else %}
-			<tr><td>
-				<h5 class="no-comment">Sorry but {{user.username}} doesn't have any feedback.</h5>
-			</td></tr>
-		{% endif %}
-		</tbody>
-	</table>
+<div class="comments">
+	<h4>Buyer Feedback</h4>
+	{% if comments|length > 5 %}
+		<h5 class="gray most-recent-statement">Only showing the most recent comments. <a href="#">See all feedback</a></h5>
+	{% endif %}
+
+
+	{% if comments %}
+		{% for comment in comments|slice:":5" %}
+					<h4>{{comment.title}}</h4>
+					<h6>By: {{comment.name}}</h6>
+					<h6>{{comment.email}}</h6>
+					<h6 class="muted">{{comment.date_posted}}</h6>
+					<p>{{comment.comment}}</p>
+		{% endfor %}
+	{% elif request.user == user %}
+			<h5>No one has commented on your skills as a seller, so next time you sell something make sure you ask the buyer for some feedback.</h5>
+	{% else %}
+			<h5>Sorry but {{user.username}} doesn't have any feedback.</h5>
+	{% endif %}
 </div>

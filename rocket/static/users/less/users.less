@@ -159,13 +159,14 @@
 }
 
 .profile-content {
-	.profile-header {
-		li {
-			margin: 0;
-		}
+	margin-top: 30px;
+
+
+	.profile-header {	
+
 		.profile-picture {
+		text-align: center;
 		padding-left: 0px;
-		max-width: 210px;
 			img.thumbnail {
 				border-radius: 0px;
 			 	-webkit-border-radius: 0px;
@@ -174,37 +175,44 @@
 			 	box-shadow: none;
 			 	-webkit-box-shadow: none;
 			 	-moz-box-shadow: none;
-			}
-	 	}
-	 	.subtitle {
-	 		font-size: 20px;
-	 	}
-	 	.gray {
-	 		color: #777;
-	 	}
-	 	.profile-info {
+				}
+		a{
+			line-height: 40px;
+		}
+	 		}
+
+	 	.row-top{
+	 		margin-top: 20px;
+
+	 	h3{
 	 		text-align: left;
-	 		min-height: 210px;
-	 		.name-wrapper {
-	 			height: 80px;
-	 			ul {
-	 				padding: 0;
-	 				margin: 0;
-	 				li {
-	 					padding: 0;
-	 					margin: 0;
-	 				}
-	 			}
+	 		line-height: 30px;
+	 		margin: 0px;
+
+
 	 		}
-	 		.profile-bio {
-	 			margin: 20px 0 0 0;
+
+	 	h5{
+	 		text-align: left;
+	 		line-height: 33px;
+	 		margin: 0px;
 	 		}
-	 		.edit-profile, .send-message {
-	 			margin-top: 15px;
+
+	 	}
+
+	 	.row-middle{
+	 		h4{
+	 			margin: 0;
 	 		}
 	 	}
+
+	 	.row-bottom{
+	 		margin-top: 20px;
+	 	}
+
+
 	 	.profile-stats {
-	 		text-align: right;
+	 		text-align: middle;
 	 		float: right;
 	 		h3 {
 	 			font-size: 20px;
@@ -214,6 +222,49 @@
 	 		}
 	 	}
 	 }
+
+	 .comments {
+		margin-top: 25px;
+		
+		h4 {
+			font-size: 17px;
+		}
+		h6 {
+			font-style: italic;
+		}
+
+		p{
+			padding-left: 10px
+		}
+		.feedback-heading {
+			text-decoration: underline;
+		}
+		.most-recent-statement{
+			font-size: 12px;
+			font-style: italic;
+		}
+		
+	}
+	.comment-form-container {
+		form > textarea {
+			margin-left: 5px;
+		}
+		.errors, .comment-textarea {
+			@media all and (min-width: 675px) {
+				width: 675px;
+			}
+			@media all and (min-width: 440px) and (max-width: 675px) {
+				width: 440px;
+			}
+			@media all and (max-width: 439px) and (min-width: 220px) {
+				width: 205px;
+			}
+		}
+		.comment-submit {
+			margin-left: 5px;
+		}
+	}
+
 	div.separator {
 		height: 1px;
 		background-color: #DDD;
@@ -256,50 +307,6 @@
 					max-height: 60px;
 				}
 			}
-		}
-	}
-	.comment-container {
-		margin-top: -10px;
-		#title {
-			font-size: 17px;
-		}
-		#name {
-			font-style: italic;
-		}
-		.feedback-heading {
-			text-decoration: underline;
-		}
-		.most-recent-statement{
-			font-size: 12px;
-			font-style: italic;
-		}
-		td {
-			border-top: none;
-		}
-		ul.inline > li {
-			padding-left: 0px;
-		}
-		ul {
-			margin-bottom: 0px;
-		}
-	}
-	.comment-form-container {
-		form > textarea {
-			margin-left: 5px;
-		}
-		.errors, .comment-textarea {
-			@media all and (min-width: 675px) {
-				width: 675px;
-			}
-			@media all and (min-width: 440px) and (max-width: 675px) {
-				width: 440px;
-			}
-			@media all and (max-width: 439px) and (min-width: 220px) {
-				width: 205px;
-			}
-		}
-		.comment-submit {
-			margin-left: 5px;
 		}
 	}
 }
