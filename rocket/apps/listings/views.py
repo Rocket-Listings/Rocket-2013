@@ -1,3 +1,4 @@
+import json
 from listings.models import Listing, ListingPhoto, Buyer, Offer, Message, ListingCategory, ListingSpecKey, ListingSpecValue
 from django.contrib.auth.models import User
 from django.conf import settings
@@ -23,6 +24,8 @@ from operator import __add__
 from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
 from haystack.query import SearchQuerySet
+from haystack.inputs import AutoQuery
+from django.core.urlresolvers import reverse
 # Moved here from users/views.py
 
 @login_required
@@ -230,7 +233,10 @@ def search_listings(request):
 	else:
 		search_text = ''
 
-	listings = SearchQuerySet().filter(content=search_text).result_class(Listing)
+	listings = SearchQuerySet().filter(content__contains=search_text)
+
+	for listing in listings:
+		listing.url_id = reverse('listings.views.detail', args=[str(listing.url_id)])
 
 	return render_to_response('listings/partials/ajax_search.html', {'listings' : listings})
 
