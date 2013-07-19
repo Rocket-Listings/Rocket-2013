@@ -84,8 +84,8 @@ $(function() {
 				path: '/propics/' + $(".username").text() + '.png'
 			},
 			function (NewBlob) {
-				$(".propic-url").val("https://s3.amazonaws.com/test_filepicker/" + NewBlob.key);
-				$(".user-info-form").submit();
+				$(".propic-url").val("https://s3.amazonaws.com/static.rocketlistings.com/" + NewBlob.key);
+				$(".settings-form").submit();
 			},
 			function (FPError) {
 				console.log(FPError);
@@ -101,7 +101,7 @@ $(function() {
 		});
 	});
 	$("form.settings-form").submit(function() {
-		if (!$(".save-all").hasClass("disabled")) {
+		if ((!$(".save-all").hasClass("disabled")) || ($(".propic-url").val() !== initialInput[2])) {
 			var csrftoken = $.cookie('csrftoken');
 			$.ajax({
 				data: $(this).serialize(),
@@ -130,11 +130,6 @@ $(function() {
 
 	// HELPER FUNCTIONS
 	function insertNewValues(data) {
-		$("input[name='name']").val(data['name']);
-		$("input[name='email']").val(data['email']);
-		$("input[name='phone']").val(data['phone']);
-		$("input[name='location']").val(data['location']);
-		$("input[name='bio']").html(data['bio']);
 		if (data['nameprivate'] === true) {
 			$("select[name='nameprivate']").children().filter("option[value='True']").attr('selected', 'true');
 			$("select[name='nameprivate']").children().filter("option[value='False']").removeAttr('selected');
