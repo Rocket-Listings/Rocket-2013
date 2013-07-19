@@ -100,9 +100,8 @@ $(function() {
 			console.log(FPError);
 		});
 	});
-	$("form").submit(function() {
+	$("form.settings-form").submit(function() {
 		if (!$(".save-all").hasClass("disabled")) {
-			console.log("submitting");
 			var csrftoken = $.cookie('csrftoken');
 			$.ajax({
 				data: $(this).serialize(),
@@ -136,7 +135,6 @@ $(function() {
 		$("input[name='phone']").val(data['phone']);
 		$("input[name='location']").val(data['location']);
 		$("input[name='bio']").html(data['bio']);
-		console.log(data['nameprivate']);
 		if (data['nameprivate'] === true) {
 			$("select[name='nameprivate']").children().filter("option[value='True']").attr('selected', 'true');
 			$("select[name='nameprivate']").children().filter("option[value='False']").removeAttr('selected');

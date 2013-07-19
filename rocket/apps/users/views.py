@@ -25,8 +25,10 @@ def info(request):
 	profile = user.get_profile()
 	if request.method == 'POST':
 		user_profile_form = UserProfileForm(request.POST, instance=profile)
-		if user_profile_form.is_valid():	
-			User.objects.get(username = user).email = user_profile_form.cleaned_data['email']
+		if user_profile_form.is_valid():
+			userObject = User.objects.get(username=user)
+			userObject.email = user_profile_form.cleaned_data['email']
+			userObject.save()
 			user_profile = user_profile_form.save()
 			responseData = {}
 			for key, value in user_profile_form.cleaned_data.iteritems():
@@ -85,9 +87,10 @@ def verify_twitter(request):
 		_OAUTH_TOKEN_SECRET = request.session.get('OAUTH_TOKEN_SECRET') #handshake secret
 		_twitter = Twython(settings.TWITTER_KEY, settings.TWITTER_SECRET, _OAUTH_TOKEN, _OAUTH_TOKEN_SECRET)
 		twitter_auth_keys = _twitter.get_authorized_tokens(oauth_verifier)
-		UserProfile.objects.get(user=user).OAUTH_TOKEN = twitter_auth_keys['oauth_token'] #real token
-		UserProfile.objects.get(user=user).OAUTH_TOKEN_SECRET = twitter_auth_keys['oauth_token_secret'] #real secret
-
+		profile = UserProfile.objects.get(user=user)
+		profile.OAUTH_TOKEN = twitter_auth_keys['oauth_token'] #real token
+		profile.OAUTH_TOKEN_SECRET = twitter_auth_keys['oauth_token_secret'] #real secret
+		profile.save()
 		return redirect('/users/twitter/close')
 	elif request.GET.get("denied"):
 		return redirect('/users/twitter/close')
@@ -102,7 +105,9 @@ def get_twitter_handle(request):
 		if OAUTH_TOKEN != "":
 			twitter = Twython(settings.TWITTER_KEY, settings.TWITTER_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
 			handle = twitter.verify_credentials()['screen_name']
-			UserProfile.objects.get(user=request.user).twitter_handle = handle
+			profile = UserProfile.objects.get(user=request.user)
+			profile.twitter_handle = handle
+			profile.save()
 			return HttpResponse(json.dumps(handle), content_type='application/json')
 		else:
 			return HttpResponse(json.dumps("no_oauth_token_or_key"), content_type='application/json')
@@ -111,9 +116,11 @@ def get_twitter_handle(request):
 
 def disconnect_twitter(request):
 	if request.is_ajax():
-		UserProfile.objects.get(user=request.user).OAUTH_TOKEN = ""
-		UserProfile.objects.get(user=request.user).OAUTH_TOKEN_SECRET = ""
-		UserProfile.objects.get(user=request.user).twitter_handle = ""
+		profile = UserProfile.objects.get(user=request.user)
+		profile.OAUTH_TOKEN = ""
+		profile.OAUTH_TOKEN_SECRET = ""
+		profile.twitter_handle = ""
+		profile.save()
 		return HttpResponse(json.dumps("success"), content_type='application/json')
 	else:
 		return redirect('/users/login')
