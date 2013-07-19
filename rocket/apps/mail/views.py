@@ -220,10 +220,12 @@ def autopost(request, listing_id):
 	to_parse = BeautifulSoup(r.text)
 
 	payload_tuples = [('go', 'Continue')]
+	print to_parse.find('section', id="previewButtons").prettify()
 	payload_tuples += [(to_parse.find('section', id="previewButtons").contents[1].contents[1].attrs['name'], to_parse.find('section', id="previewButtons").contents[1].contents[1].attrs['value'])]
-	payload_tuples += [(to_parse.find('section', id="previewButtons").contents[1].contents[1].attrs['name'], 'y')]
+	payload_tuples += [(to_parse.find('section', id="previewButtons").contents[1].contents[1].find_next_sibling("input").attrs['name'], 'y')]
 
 	payload = dict(payload_tuples)
 	r = requests.post(post_url, data=payload)
+
 
 	return render(request, 'listings/listings_autopost.html')
