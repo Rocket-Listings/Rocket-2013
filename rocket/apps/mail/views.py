@@ -161,16 +161,16 @@ def autopost(request, listing_id):
 
 
 	#Still parsing
-	title_id = to_parse.find("span", text= "posting title:").next_sibling.contents[1].attrs['name']
+	title_id = to_parse.find("span", text="posting title:").find_next_sibling("input").attrs['name']
 	payload_tuples += [(title_id, listing.title)] 
 
-	price_id = to_parse.find("span", text= "price:").next_sibling.contents[1].attrs['name']
+	price_id = to_parse.find("span", text="price:").find_next_sibling("input").attrs['name']
 	payload_tuples += [(price_id, listing.price)]
 
-	location_id = to_parse.find("span", text= "specific location:").next_sibling.contents[0].attrs['name']
+	location_id = to_parse.find("span", text="specific location:").find_next_sibling("input").attrs['name']
 	payload_tuples += [(location_id, listing.location)]
 
-	anon_id = to_parse.find("label", title= "craigslist will anonymize your email address").contents[1].attrs['name']
+	anon_id = to_parse.find("label", title="craigslist will anonymize your email address").contents[1].attrs['name']
 	payload_tuples += [(anon_id, 'C')]
 
 	description_id = to_parse.find("textarea", cols="80").attrs['name']
@@ -195,7 +195,7 @@ def autopost(request, listing_id):
 	hashed_key = to_parse.find('form', enctype="multipart/form-data").contents[1].attrs['name']
 	hashed_value = to_parse.find('form', enctype="multipart/form-data").contents[1].attrs['value']
 	payload_tuples += [(hashed_key, hashed_value)]
-	payload_tuples += [(to_parse.find('form', enctype="multipart/form-data").contents[1].contents[1].attrs['name'], 'add')]
+	payload_tuples += [(to_parse.find('form', enctype="multipart/form-data").contents[1].find_next_sibling("input").attrs['name'], 'add')]
 
 	payload = dict(payload_tuples)
 
@@ -210,7 +210,7 @@ def autopost(request, listing_id):
 	hashed_key = to_parse.find_all('form')[1].contents[1].attrs['name']
 	hashed_value = to_parse.find_all('form')[1].contents[1].attrs['value']
 	payload_tuples += [(hashed_key, hashed_value), (hashed_key, hashed_value)] #for some reason cl posts this twice
-	payload_tuples += [(to_parse.find_all('form')[1].contents[1].contents[1].attrs['name'], 'fin')]
+	payload_tuples += [(to_parse.find_all('form')[1].contents[1].find_next_sibling("input").attrs['name'], 'fin')]
 
 	payload = dict(payload_tuples)
 	r = requests.post(post_url, data=payload)
@@ -221,9 +221,9 @@ def autopost(request, listing_id):
 
 	payload_tuples = [('go', 'Continue')]
 	payload_tuples += [(to_parse.find('section', id="previewButtons").contents[1].contents[1].attrs['name'], to_parse.find('section', id="previewButtons").contents[1].contents[1].attrs['value'])]
-	payload_tuples += [(to_parse.find('section', id="previewButtons").contents[1].contents[1].contents[1].attrs['name'], 'y')]
+	payload_tuples += [(to_parse.find('section', id="previewButtons").contents[1].contents[1].attrs['name'], 'y')]
 
 	payload = dict(payload_tuples)
 	r = requests.post(post_url, data=payload)
 
-	return render(request, 'listings_autopost.html')
+	return render(request, 'listings/listings_autopost.html')
