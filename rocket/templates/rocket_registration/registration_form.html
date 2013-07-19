@@ -12,3 +12,9 @@
 	</form>
 </div>
 {% endblock %}
+
+{% block js %}
+<script>
+	$("div.register-form input").attr('autocomplete', 'off');
+</script>
+{% endblock %}
