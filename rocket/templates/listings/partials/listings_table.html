@@ -3,7 +3,7 @@
 {% load humanize %}
 {# Requires the context variable 'listings' #}
 
-<div id = "loadingModal" class="modal hide fade">
+<div id = "loadingModal" class="modal hide fade" data-backdrop="static">
   <div class="modal-header">
     <h3>Autoposting...</h3>
   </div>
@@ -13,6 +13,7 @@
     </p>
   </div>
   <div class="modal-footer">
+  	<button class="autopost-close btn btn-info disabled" data-dismiss="" aria-hidden="true">Close</button>
   </div>
 </div>
 
