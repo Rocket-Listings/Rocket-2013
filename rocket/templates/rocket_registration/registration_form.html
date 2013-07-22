@@ -7,6 +7,14 @@
 		<fieldset>
 		{% csrf_token %} 
 			{{ form.as_p }}
+			<div class="seller-type-group">
+				<span class="seller-type-label">Are you a</span>
+				<div class="btn-group" data-toggle-name="default_seller_type" data-toggle="buttons-radio">
+					<button type="button" value="P" class="btn" data-toggle="button">Person</button>
+	  				<button type="button" value="B" class="btn" data-toggle="button">Business</button>
+				</div>
+			</div>
+			<input name="default_seller_type" type="hidden" value="{% if seller_type == 'P' %}P{% else %}B{% endif %}"/>
 			<p><input class="btn btn-primary" type="submit" value="Create Account"/></p>
 		</fieldset>
 	</form>
@@ -16,5 +24,22 @@
 {% block js %}
 <script>
 	$("div.register-form input").attr('autocomplete', 'off');
+
+	$('div.btn-group[data-toggle-name="default_seller_type"]').each(function(){
+	    var group   = $(this);
+	    var form    = group.parents('form').eq(0);
+	    var name    = group.attr('data-toggle-name');
+	    var hidden  = $('input[name="' + name + '"]', form);
+	    $('button', group).each(function(){
+	      var button = $(this);
+	      button.click(function(){
+	      	  console.log(hidden, $(this).val());
+	          hidden.val($(this).val());
+	      });
+	      if(button.val() == hidden.val()) {
+	        button.addClass('active');
+	      }
+	    });
+	  });
 </script>
 {% endblock %}

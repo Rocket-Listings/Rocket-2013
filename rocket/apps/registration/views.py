@@ -12,7 +12,6 @@ from users.models import UserProfile
 from users.forms import UserProfileForm
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.forms import AuthenticationForm
-
 from registration.backends import get_backend
 
 
@@ -185,22 +184,24 @@ def register(request, backend, success_url=None, form_class=None,
         return redirect(disallowed_url)
     if form_class is None:
         form_class = backend.get_form_class(request)
+        seller_type = "P"
 
     if request.method == 'POST':
-        if not request.POST.get('email_only', False):
-            form = form_class(data=request.POST, files=request.FILES)
-            if form.is_valid():
-                new_user = backend.register(request, **form.cleaned_data)
-                if request.GET.get('next',''):
-                    success_url = request.GET.get('next','')
-                    return redirect(success_url)
-                elif success_url is None:
-                    to, args, kwargs = backend.post_registration_redirect(request, new_user)
-                    return redirect(to, *args, **kwargs)
-                else:
-                    return redirect(success_url)
-        else:
-            form = form_class(initial=request.POST)#{ email: request.POST.email })
+        form = form_class(data=request.POST, files=request.FILES)
+        seller_type = request.POST.get("default_seller_type", "P")
+        if form.is_valid():
+            new_user = backend.register(request, **form.cleaned_data)
+            profile = UserProfile.objects.get(user=new_user)
+            profile.default_seller_type = request.POST.get('default_seller_type', "P")
+            profile.save()
+            if request.GET.get('next',''):
+                success_url = request.GET.get('next','')
+                return redirect(success_url)
+            elif success_url is None:
+                to, args, kwargs = backend.post_registration_redirect(request, new_user)
+                return redirect(to, *args, **kwargs)
+            else:
+                return redirect(success_url)
     else:
         form = form_class()
     
@@ -211,5 +212,5 @@ def register(request, backend, success_url=None, form_class=None,
         context[key] = callable(value) and value() or value
 
     return render_to_response(template_name,
-                              {'form': form},
+                              {'form': form, 'seller_type': seller_type},
                               context_instance=context)

@@ -1,26 +1,23 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from listings.models import ListingCategory, ListingType, GenericNameManager
+from listings.models import ListingCategory, ListingType
 from django.db.models.signals import post_save
 # import django_filepicker
 
-class SellerType(models.Model):
-	objects = GenericNameManager()
-	name = models.CharField(max_length=20)
-	description = models.CharField(max_length=200)
-	
-	def __unicode__(self):
-		return self.name
-
 # User Profile
 class UserProfile(models.Model):
+	SELLER_TYPE_CHOICES = (
+		('P', 'Person'),
+		('B', 'Business')
+	)
+
 	user = models.OneToOneField(User)
 	name = models.CharField(max_length=100, blank=True)
 	location = models.CharField(max_length=255, blank=True)
 	default_category = models.ForeignKey(ListingCategory, null=True, blank=True)
 	default_listing_type = models.ForeignKey(ListingType, null=True, blank=True)
-	default_seller_type = models.ForeignKey(SellerType, null=True, blank=True)
+	default_seller_type = models.CharField(max_length=1, choices=SELLER_TYPE_CHOICES, default='P')
 	phone = models.CharField(max_length=50, blank=True)
 	bio = models.TextField(blank=True)
 	nameprivate = models.BooleanField(blank=False, null=False)

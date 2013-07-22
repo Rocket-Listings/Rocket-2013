@@ -8,14 +8,6 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'SellerType'
-        db.create_table(u'users_sellertype', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=20)),
-            ('description', self.gf('django.db.models.fields.CharField')(max_length=200)),
-        ))
-        db.send_create_signal(u'users', ['SellerType'])
-
         # Adding model 'UserProfile'
         db.create_table(u'users_userprofile', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -24,7 +16,7 @@ class Migration(SchemaMigration):
             ('location', self.gf('django.db.models.fields.CharField')(max_length=255, blank=True)),
             ('default_category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingCategory'], null=True, blank=True)),
             ('default_listing_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingType'], null=True, blank=True)),
-            ('default_seller_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['users.SellerType'], null=True, blank=True)),
+            ('default_seller_type', self.gf('django.db.models.fields.CharField')(default='P', max_length=1)),
             ('phone', self.gf('django.db.models.fields.CharField')(max_length=50, blank=True)),
             ('bio', self.gf('django.db.models.fields.TextField')(blank=True)),
             ('nameprivate', self.gf('django.db.models.fields.BooleanField')(default=False)),
@@ -50,9 +42,6 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        # Deleting model 'SellerType'
-        db.delete_table(u'users_sellertype')
-
         # Deleting model 'UserProfile'
         db.delete_table(u'users_userprofile')
 
@@ -109,12 +98,6 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '60'})
         },
-        u'users.sellertype': {
-            'Meta': {'object_name': 'SellerType'},
-            'description': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '20'})
-        },
         u'users.usercomment': {
             'Meta': {'object_name': 'UserComment'},
             'comment': ('django.db.models.fields.TextField', [], {}),
@@ -132,7 +115,7 @@ class Migration(SchemaMigration):
             'bio': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'default_category': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.ListingCategory']", 'null': 'True', 'blank': 'True'}),
             'default_listing_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.ListingType']", 'null': 'True', 'blank': 'True'}),
-            'default_seller_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['users.SellerType']", 'null': 'True', 'blank': 'True'}),
+            'default_seller_type': ('django.db.models.fields.CharField', [], {'default': "'P'", 'max_length': '1'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'location': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
             'locationprivate': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
