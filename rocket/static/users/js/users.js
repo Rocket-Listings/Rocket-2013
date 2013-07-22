@@ -1,71 +1,178 @@
+{% load static from staticfiles %}
+
 $(function() {
-	// USER MANAGEMENT JS
+
+	// INIT
 	filepicker.setKey('ATM8Oz2TyCtiJiHu6pP6Qz');
-	function handleClickEvents() {
-		$(".edit").click(function(e) {
-			e.preventDefault();
-			// Crazy selectors to hide the normal view and show/focus the right input
-			$(this).parent().parent().hide();
-			$(this).parent().parent().next().show();
-			if ($(this).parent().parent().next().find("input")[1]) {
-				$(this).parent().parent().next().find("input")[0].focus();
-			}
-			else if ($(this).parent().parent().next().find("select")[0]) {
-				$(this).parent().parent().next().find("select")[0].focus();
-			}
-			else {
-				$(this).parent().parent().next().find("textarea")[0].focus();
-			}
-			$(".active").hide();
-			$(".inactive").show();
-			$("table").removeClass("table-hover");
+	var initialInput = getInput('input');
+	var initialSelect = getInput('select');
+	if ($("input[name='location']").val() === "") getLocation();
+
+	// BINDINGS
+	$(".edit").click(function (e) {
+		e.preventDefault();
+		var field = $(this).parent().prev().children().filter(":first");
+		field.focus().val(field.val());
+	});
+	$("input, textarea, select").focus(function () {
+		$(this).parent().parent().addClass("selected");
+	})
+	.blur(function () {
+		$(this).parent().parent().removeClass("selected");
+	})
+	.keydown(function (e) {
+		var keyCode = (e.keyCode ? e.keyCode : e.which);
+		if (keyCode === 27) {
+			$(this).blur();
+		}
+	});
+	$("input:not(input[type='submit']), textarea").keyup(function() {
+		var save = $(".save-all");
+		if (inputChanged(getInput('input'))) {
+			save.removeClass("disabled");
+		}
+		else {
+			save.addClass("disabled");
+		}
+	});
+	$("select").change(function() {
+		var save = $(".save-all");
+		if (inputChanged(getInput('select'))) {
+			save.removeClass("disabled");
+		}
+		else {
+			save.addClass("disabled");
+		}
+	});
+	$(".verify-twitter").click(function (e) {
+		e.preventDefault();
+		$.oauthpopup({
+			path: '/users/twitter/',
+			callback: getTwitterHandle
 		});
-		$(".edit-all").click(function(e) {
-			e.preventDefault();
-			$(".active").hide();
-			$(".inactive").show();
-			$(".partial-submit").hide();
-			$(".edit-all").hide();
-			$(".save-all").show();
-			$(".edit").parent().parent().hide();
-			$(".partial-submit").replaceWith("<span class='muted partial-submit'>Edit</span>");
-			$(".in-edit").show();
-			$("table").removeClass("table-hover");
-		});
-	}
-	$(".change-propic").click(function(e) {
+	});
+	$(".disconnect-twitter").click(function (e) {
+		e.preventDefault();
+		disconnectTwitter();
+	});
+	$(".change-propic").click(function (e) {
 		e.preventDefault();
 		filepicker.pick({
 			mimetype: "image/*",
 			multiple: false,
-			services: ['COMPUTER', 'URL']
+			services: ['COMPUTER', 'URL', 'FACEBOOK', 'DROPBOX']
 		},
-		function(InkBlob) {
+		function (InkBlob) {
 			filepicker.convert(InkBlob, {
-				width: 200, 
-				height: 200,
-				format: 'png',
-				fit: 'crop',
-				align: 'faces'
+				width  : 200, 
+				height : 200,
+				format : 'png',
+				fit    : 'crop',
+				align  : 'faces'
 			},
 			{
 				location: 'S3',
 				path: '/propics/' + $(".username").text() + '.png'
 			},
-			function(NewBlob) {
-				$(".propic-url").val(NewBlob.url);
-				$(".user-info-form").submit();
+			function (NewBlob) {
+				$(".propic-url").val("https://s3.amazonaws.com/static.rocketlistings.com/" + NewBlob.key);
+				$(".save-all").addClass("propic-enable");
+				$(".settings-form").submit();
 			},
-			function(FPError) {
+			function (FPError) {
 				console.log(FPError);
+			},
+			function (percent) {
+				if (percent != 100) {
+					$(".loading-overlay").show();
+				}
 			});
 		},
-		function(FPError) {
+		function (FPError) {
 			console.log(FPError);
 		});
 	});
-	$(".get-location").click(function(e) {
-		e.preventDefault();
+	$("form.settings-form").submit(function() {
+		if ((!$(".save-all").hasClass("disabled")) || ($(".save-all").hasClass("propic-enable"))) {
+			var csrftoken = $.cookie('csrftoken');
+			$.ajax({
+				data: $(this).serialize(),
+				type: $(this).attr('method'),
+				url: $(this).attr('action'),
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader("X-CSRFToken", csrftoken);
+				},
+				success: function(response) {
+					if (response.profile) {
+						$(".errors").hide();
+						$(".save-all").addClass("disabled");
+						$(".save-all").removeClass("propic-enable");
+						$("input, textarea, select").blur();
+						initialInput = getInput('input');
+						initialSelect = getInput('select');
+						insertNewValues(response);
+					}
+					else {
+						showError(response);
+					}
+				}
+			});
+		}
+		return false;
+	});
+
+	// HELPER FUNCTIONS
+	function insertNewValues(data) {
+		if (data['nameprivate'] === true) {
+			$("select[name='nameprivate']").children().filter("option[value='True']").attr('selected', 'true');
+			$("select[name='nameprivate']").children().filter("option[value='False']").removeAttr('selected');
+		}
+		else {
+			$("select[name='nameprivate']").children().filter("option[value='True']").removeAttr('selected');
+			$("select[name='nameprivate']").children().filter("option[value='False']").attr('selected', 'true');
+		}
+		if (data['locationprivate'] === true) {
+			$("select[name='locationprivate']").children().filter("option[value='True']").attr('selected', 'true');
+			$("select[name='locationprivate']").children().filter("option[value='False']").removeAttr('selected');
+		}
+		else {
+			$("select[name='locationprivate']").children().filter("option[value='True']").removeAttr('selected');
+			$("select[name='locationprivate']").children().filter("option[value='False']").attr('selected', 'true');
+		}
+		if (data['name'] !== "") {
+			$(".name-header").html(data['name']);
+		}
+		else {
+			$(".name-header").html($(".username").html());
+		}
+		$("img.propic").attr("src", data['propic'] + "?" + new Date().getTime());
+		$(".loading-overlay").hide();
+	}
+	function getInput (type) {
+		var input  = $("input:not(input[type='submit']), textarea"),
+			select = $("select"),
+			returnedValues = [];
+		if (type === 'input') {
+			for (var i = 0; i < input.length; i++) {
+				returnedValues[i] = input[i].value;
+			}
+		}
+		else {
+			for (var i = 0; i < select.length; i++) {
+				returnedValues[i] = select[i].value;
+			}
+		}
+		return returnedValues;
+	}
+	function inputChanged (newInput) {
+		for (var i = 0; i < initialInput.length; i++) {
+			if (newInput[i] !== initialInput[i]) {
+				return true;
+			}
+		}
+		return false;
+	}
+	function getLocation() {
 		if (window.navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(function (position) {
 				var lat 	 = position.coords.latitude,
@@ -75,7 +182,14 @@ $(function() {
 				geocoder.geocode({'latLng': latlng}, function(results, status) {
 					if (status == google.maps.GeocoderStatus.OK) {
 						if (results[1]) {
-							$(".location").val(results[4].formatted_address);
+							for (var i = 0; i < results.length; i++) {
+								if (results[i].types[0] === "locality") {
+									var city = results[i].address_components[0].short_name;
+									var state = results[i].address_components[2].short_name;
+									$("input[name='location']").val(city + ", " + state);
+									$("form").submit();
+								}
+							}
 						}
 						else {console.log("No reverse geocode results.")}
 					}
@@ -84,91 +198,70 @@ $(function() {
 			},
 			function() {console.log("Geolocation not available.")});
 		}
-	});
-	$(".user-info-form").submit(function() {
-		var csrftoken = $.cookie('csrftoken');
+	}
+	function getTwitterHandle () {
 		$.ajax({
-			data: $(this).serialize(),
-			type: $(this).attr('method'),
-			url: $(this).attr('action'),
-			beforeSend: function(xhr) {
-				xhr.setRequestHeader("X-CSRFToken", csrftoken);
-			},
-			success: function(response) {
-				if (response[0]) {
-					$(".in-edit").hide();
-					$(".edit").parent().parent().show();
-					$(".inactive").hide();
-					$(".active").show();
-					$("table").addClass("table-hover");
-					$(".save-all").hide();
-					$(".edit-all").show();
-					$(".errors").hide();
-					$(".partial-submit").replaceWith("<input class='btn btn-info partial-submit' type='submit' value='Save'>");
-					insertNewValues(response[0].fields);
+			type: 'GET',
+			url: '{% url "get_twitter_handle" %}',
+			success: function (response) {
+				if (response !== "no_oauth_token_or_key") {
+					$(".twitter-handle").html(response);
+					$(".at").removeClass("muted");
+					$(".verify-twitter").hide();
+					$(".disconnect-twitter").show();
 				}
-				else {
-					showError(response);
-				}
-				handleClickEvents();
 			}
 		});
-		return false;
-	});
-	function insertNewValues(data) {
-		for (key in data) {
-			var tag = $("." + key.toString());
-			if ((key !== "nameprivate") && (key !== "locationprivate")  && (key !== "propic")) {
-				if (tag.is("td")) {
-					var tdTag = $("td." + key.toString());
-					tdTag.html(data[key]);
-					if (tdTag.hasClass("muted")) tdTag.removeClass("muted");
-					if ((data[key] === "") || (data[key] === null)) {
-						tdTag.addClass("muted");
-						if (tdTag.hasClass("name")) tdTag.html("Add a name to your profile");
-						if (tdTag.hasClass("phone")) tdTag.html("Add a phone number to your profile");
-						if (tdTag.hasClass("bio")) tdTag.html("Add a bio to your profile");
-						if (tdTag.hasClass("location")) tdTag.html("Add a default location for your listings");
-						if (tdTag.hasClass("default_category")) tdTag.html("Add a default category for your listings");
-						if (tdTag.hasClass("default_listing_type")) tdTag.html("Add a default listing type");
-					}
+	}
+	function disconnectTwitter() {
+		$.ajax({
+			type: 'GET',
+			url: '{% url "disconnect_twitter" %}',
+			success: function (response) {
+				if (response === "success") {
+					$(".twitter-handle").html("");
+					$(".verify-twitter").show();
+					$(".disconnect-twitter").hide();
+					$(".at").addClass("muted");
 				}
 			}
-			if (tag.is("input") && !tag.is("option")) {
-				tag.val(data[key]);
-			}
-			if (tag.is("textarea")) {
-				$("textarea.bio").html(data[key]);
-			}
-			if (key.toString() === "nameprivate") {
-				if (data[key] === true) tag.html("Private");
-				else tag.html("Public");
-			}
-			if (key.toString() === "locationprivate") {
-				if (data[key] === true) tag.html("Private");
-				else tag.html("Public");
-			}
-			if (key.toString() === "name") {
-				if (data[key] !== "") $("h3.name").html(data[key] + "'s info");
-				else {
-					var username = $(".username > code").html();
-					$("h3.name").html(username + "'s info").removeClass("muted");
-				}
-			}
-			if (key.toString() === "propic") {
-				$(".loading").show();
-				$(".propic > img").attr("src", data[key]);
-				$(".loading").hide();
-			}
-		}
+		});
 	}
 
-	// Only handles click events for edit-all and edit
-	handleClickEvents();
+	// FACEBOOK BINDINGS
+	$('.btn-fb').click(function() {
+		FB.getLoginStatus(function (response) {
+			if (response.status === 'connected') {
+				fbProfileFill();
+			}
+			else {
+				FB.login(function (response) {
+					if (response.status === 'connected') {
+						fbProfileFill();
+					}
+					else {
+						console.log('User cancelled login action.');
+					}
+				}, {perms:'email,user_location'});
+			}
+		});
+	});
+
+	function fbProfileFill() {
+		FB.api('/me', function (response) {
+			$("input[name='name']").val(response.name);
+			$("input[name='email']").val(response.email);
+			$("input[name='location']").val(response.location.name);
+			FB.api('/me/picture?width=200&height=200&type=square', function (response) {
+				if (!response.data.is_silhouette) {
+					$(".propic-url").val(response.data.url);
+					$('form').submit();
+				}
+			});
+		});
+	}
 
 	// PROFILE JS
-	// formatting (uses autoellipsis.js)
-	$(".profile-listing-description").ellipsis();
 
 	// Handle the comment form
 	$(".comment-form").submit(function() {
@@ -207,72 +300,58 @@ $(function() {
 	function showError(response) {
 		var errors = $(".errors"),
 		dismissError = '<a href="#" class="close" data-dismiss="alert">&times;</a>';
-		//errors.html(dismissError);  // Add back in for a dismiss error button, but then need to recreate the ".errors" div
 		errors.html("");
 		for (key in response) {
 			errors.append(" <strong class='capital'>" + key + ": </strong> " + response[key] + "<br>");
 		}
 		errors.show();
 	}
-  	window.fbAsyncInit = function() {
+});
+
+//  FACEBOOK INIT CODE
+window.fbAsyncInit = function() {
   	FB.init({
     	appId      : '279057228903179', // App ID
-    	// channelUrl : 'file://localhost/Users/olindavis/Rocket-Listings-Django/apps/users/templates/channel.html', // Channel File
+    	channelUrl : '{% static "/users/channel.html" %}', // Channel File
     	status     : true, // check login status
     	cookie     : true, // enable cookies to allow the server to access the session
     	xfbml      : true  // parse XFBML
   	});
+};
 
-  	// Here we subscribe to the auth.authResponseChange JavaScript event. This event is fired
-  	// for any authentication related change, such as login, logout or session refresh. This means that
-  	// whenever someone who was previously logged out tries to log in again, the correct case below 
-  	// will be handled. 
-  	FB.Event.subscribe('auth.authResponseChange', function(response) {
-  		// Here we specify what we do with the response anytime this event occurs. 
-    	if (response.status === 'connected') {
-      	// The response object is returned with a status field that lets the app know the current
-      	// login status of the person. In this case, we're handling the situation where they 
-      	// have logged in to the app.
-      	testAPI();
-    	} else if (response.status === 'not_authorized') {
-      		// In this case, the person is logged into Facebook, but not into the app, so we call
-      		// FB.login() to prompt them to do so. 
-      		// In real-life usage, you wouldn't want to immediately prompt someone to login 
-      		// like this, for two reasons:
-      		// (1) JavaScript created popup windows are blocked by most browsers unless they 
-      		// result from direct interaction from people using the app (such as a mouse click)
-      		// (2) it is a bad experience to be continually prompted to login upon page load.
-      	FB.login();
-    	} else {
-      		// In this case, the person is not logged into Facebook, so we call the login() 
-      		// function to prompt them to do so. Note that at this stage there is no indication
-      		// of whether they are logged into the app. If they aren't then they'll see the Login
-      		// dialog right after they log in to Facebook. 
-      		// The same caveats as above apply to the FB.login() call here.
-      	FB.login();
-    	}
-  	});
-  	};
+// Load the Facebook SDK asynchronously
+(function(d){
+	var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+	if (d.getElementById(id)) {return;}
+	js = d.createElement('script'); js.id = id; js.async = true;
+	js.src = "//connect.facebook.net/en_US/all.js";
+	ref.parentNode.insertBefore(js, ref);
+}(document));
 
-  	// Load the SDK asynchronously
-  	(function(d){
-   		var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-   		if (d.getElementById(id)) {return;}
-   		js = d.createElement('script'); js.id = id; js.async = true;
-   		js.src = "//connect.facebook.net/en_US/all.js";
-   		ref.parentNode.insertBefore(js, ref);
-  	}(document));
+// Twitter OAUTH popup (@nobuf)
+(function($){
+    $.oauthpopup = function(options)
+    {
+        if (!options || !options.path) {
+            throw new Error("options.path must not be empty");
+        }
+        options = $.extend({
+            windowName: 'Twitter'
+          , windowOptions: 'location=0,status=0,width=800,height=400'
+          , callback: function(){ window.location.reload(); }
+        }, options);
 
-  	// Here we run a very simple test of the Graph API after login is successful. 
-  	// This testAPI() function is only called in those cases. 
-  	function testAPI() {
-    	console.log('Welcome!  Fetching your information.... ');
-    	FB.api('/me', function(response) {
-    		console.log('Good to see you, ' + response.name + '.');
-    	});
-  	}
-  	function collect_facebook_info() {
-  		
-  	}
-});
+        var oauthWindow   = window.open(options.path, options.windowName, options.windowOptions);
+        var oauthInterval = window.setInterval(function(){
+            if (oauthWindow.closed) {
+                window.clearInterval(oauthInterval);
+                options.callback();
+            }
+        }, 1000);
+    };
 
+    $.fn.oauthpopup = function(options) {
+        $this = $(this);
+        $this.click($.oauthpopup.bind(this, options));
+    };
+})(jQuery);

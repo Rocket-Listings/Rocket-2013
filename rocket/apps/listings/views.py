@@ -172,6 +172,7 @@ def update(request, listing_id):
 @login_required
 def delete(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
+	print(listing_id)
 	if request.user == listing.user:
 		listing.delete()
 		return redirect('listings.views.user_listings', username = request.user.username)

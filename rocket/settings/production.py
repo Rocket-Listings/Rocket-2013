@@ -119,3 +119,10 @@ EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
 MAILGUN_ACCESS_KEY = 'key-9flqj538z-my-qcnpc74c2wit4vibl-3'
 
 MAILGUN_SERVER_NAME = 'rocketlistings.mailgun.org'
+
+
+# TWITTER CONFIG PRODUCTION KEYS
+
+TWITTER_KEY = 'bZMfei7vpcVLbGJa2IdXw'
+
+TWITTER_SECRET = 'aGGBdl6LaFlF6gJkv1n2QRYarpVAYe3NSCjF0hg1L4'

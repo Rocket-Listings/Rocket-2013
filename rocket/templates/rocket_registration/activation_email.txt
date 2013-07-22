@@ -1,10 +1,10 @@
 Hey there!
 
-Thanks for registering with Rocket Listings, in order to activate your account you'll need to click the link below:
+Thanks for registering with Rocket Listings. Copy and paste the link below into your browser to activate your account:
 
-<a href="{% url 'registration_activate' activation_key %}">{% url 'registration_activate' activation_key %}</a>
+http://{{site}}{% url 'registration_activate' activation_key %}
 
-Try to activate your account within {{ expiration_days }} or this link will expire.
+This link expires in {{expiration_days}} days.
 
 Thanks,
 

@@ -2,12 +2,16 @@ from django.forms import ModelForm
 from users.models import UserProfile, UserComment, User
 from django.forms.models import inlineformset_factory
 from django import forms
+from django.contrib.auth.models import User
+from django.forms.util import ErrorList
+from django.core.validators import validate_email
 
 class UserProfileForm(ModelForm):
+	email = forms.EmailField(max_length=75, required=True)
 	class Meta:
 		model = UserProfile
-		exclude = ('user')
-		fields = ('name', 'email', 'phone', 'location', 'bio', 'default_category', 'default_listing_type', 'nameprivate', 'locationprivate', 'propic')
+		exclude = ('user', 'twitter_handle', 'OAUTH_TOKEN', 'OAUTH_TOKEN_SECRET')
+		fields = ('name', 'phone', 'location', 'bio', 'default_category', 'default_listing_type', 'default_seller_type', 'nameprivate', 'locationprivate', 'propic')
 
 	def clean(self):
 		for field in self.cleaned_data:

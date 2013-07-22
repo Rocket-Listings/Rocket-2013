@@ -261,6 +261,8 @@ AUTH_PROFILE_MODULE = 'users.UserProfile'
 
 ACCOUNT_ACTIVATION_DAYS = 7
 
+DEFAULT_FROM_EMAIL = 'webmaster@localhost:8000'
+
 LOGIN_URL = '/users/login/' # references users/urls.py name
 
 LOGOUT_URL = '/users/logout/' #references users/urls.py name
