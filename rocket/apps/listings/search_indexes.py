@@ -10,7 +10,7 @@ class ListingIndex(indexes.SearchIndex, indexes.Indexable):
 	url_id = indexes.CharField(model_attr='id')
 	category = indexes.CharField(model_attr='category')
 	identification = indexes.CharField(model_attr='id')
-	price = indexes.CharField(model_attr='price')
+	price = indexes.IntegerField(model_attr='price')
 	content_auto = indexes.NgramField(model_attr='title')
 
 	def get_model(self):

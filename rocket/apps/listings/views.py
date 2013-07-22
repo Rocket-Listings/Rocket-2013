@@ -40,8 +40,6 @@ def user_listings(request, username=None):
 
 @login_required
 def dashboard(request):
-	sqs = SearchQuerySet().all()
-	print sqs
 	user = request.user
 	listings = Listing.objects.filter(user=user).order_by('-pub_date').all() # later on we can change how many are returned
 	buyers = reduce(__add__, map(lambda l: list(l.buyer_set.all()), listings), [])
@@ -238,9 +236,6 @@ def search_listings(request):
 		listings = SearchQuerySet().all()
 	else:
 		listings = SearchQuerySet().autocomplete(content_auto=search_text)
-
-
-	print "Posted"
 
 	for listing in listings:
 		listing.url_id = reverse('listings.views.detail', args=[str(listing.url_id)])

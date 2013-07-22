@@ -1,3 +1,7 @@
+$(window).load(function(){
+	searchAjax();
+});
+
 $(document).ready(function(){
 	var timeout;
 	$('.search_text').keyup(function(e){
@@ -15,8 +19,6 @@ $(document).ready(function(){
 			timeout = setTimeout(searchAjax, 2000);
 		}
 	});
-
-	
 });
 
 function searchSuccess(data, textStatus, jqXHR)
