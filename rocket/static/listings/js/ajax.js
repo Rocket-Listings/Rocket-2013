@@ -1,29 +1,22 @@
 $(document).ready(function(){
 	var timeout;
-	$('.search_text').keypress(function(){
+	$('.search_text').keyup(function(e){
+
 		if (timeout) {
 			clearTimeout(timeout);
 			timeout = null;
 		}
-			
-		timeout = setTimeout(searchAjax, 2000)
-	});
 
-	$(document).keyup(function(e) {
-    	if(e.which == 13) {
+		if(e.which == 13) {
     		timeout = null;
-        	searchAjax();
+    		searchAjax();
     	}
+    	else {
+			timeout = setTimeout(searchAjax, 2000);
+		}
 	});
 
-	$(document).keyup(function(e) {
-    	if(e.which == 20) {
-    		clearTimeout(timeout);
-    		timeout = null;
-    	}
-
-    	timeout = setTimeout(searchAjax, 2000)
-	});
+	
 });
 
 function searchSuccess(data, textStatus, jqXHR)

@@ -233,7 +233,13 @@ def search_listings(request):
 	else:
 		search_text = ''
 
-	listings = SearchQuerySet().filter(content__contains=search_text)
+	if search_text == "" or search_text ==" ":
+		listings = SearchQuerySet().all()
+	else:
+		listings = SearchQuerySet().autocomplete(content_auto=search_text)
+
+
+	print "Posted"
 
 	for listing in listings:
 		listing.url_id = reverse('listings.views.detail', args=[str(listing.url_id)])
