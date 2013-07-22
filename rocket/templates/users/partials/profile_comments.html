@@ -1,21 +1,15 @@
-<div class="comments">
-	<h4>Buyer Feedback</h4>
-	{% if comments|length > 5 %}
-		<h5 class="gray most-recent-statement">Only showing the most recent comments. <a href="#">See all feedback</a></h5>
-	{% endif %}
 
-
-	{% if comments %}
-		{% for comment in comments|slice:":5" %}
-					<h4>{{comment.title}}</h4>
-					<h6>By: {{comment.name}}</h6>
-					<h6>{{comment.email}}</h6>
-					<h6 class="muted">{{comment.date_posted}}</h6>
-					<p>{{comment.comment}}</p>
-		{% endfor %}
-	{% elif request.user == user %}
-			<h5>No one has commented on your skills as a seller, so next time you sell something make sure you ask the buyer for some feedback.</h5>
-	{% else %}
-			<h5>Sorry but {{user.username}} doesn't have any feedback.</h5>
-	{% endif %}
-</div>
+<h4>Seller Reviews</h4>
+{% if comments %}
+	{% for comment in comments|slice:":5" %}
+				<h5>{{comment.title}}</h5>
+				<h6>By: {{comment.name}}</h6>
+				<h6>{{comment.email}}</h6>
+				<h6 class="muted">{{comment.date_posted}}</h6>
+				<p>{{comment.comment}}</p>
+	{% endfor %}
+{% elif request.user == user %}
+		<h5>No one has commented on your skills as a seller, so next time you sell something make sure you ask the buyer for some feedback.</h5>
+{% else %}
+		<p class="muted">Sorry, but {{user.username}} doesn't have any feedback from buyers...yet</p>
+{% endif %}

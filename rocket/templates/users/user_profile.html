@@ -3,17 +3,13 @@
 {% block content %}
 <div class="profile-content">
 	<div class="row">
-		<div class="span6">
+		<div class="span6 span-left">
 	{% include "users/partials/profile_header.html" %}
+	{% include "users/partials/profile_listings.html" %}
 		</div>
-		<div class="span6">
+		<div class="span5 comments">
 			{% include "users/partials/profile_comments.html" %}
 			{% include "users/partials/profile_comment_form.html" %}
-		</div>
-	</div>
-	<div class="row">
-		<div class="span12">
-			{% include "users/partials/profile_listings.html" %}
 		</div>
 	</div>
 </div>

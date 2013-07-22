@@ -1,32 +1,47 @@
 {% load static from staticfiles %}
-
-<div class="profile-selling">
-	<ul class="thumbnails">
-		{% if activelistings %}
-		{% for listing in activelistings|slice:":6" %}
-		<li class="span2">
-			<a class="thumbnail" href="{{ listing.get_absolute_url }}">
-				{% if photos %}
-					{% for photo in photos|slice:":1" %}
-					<img src="photo.url">
-					{% endfor %}
+	<div class="profile-selling">
+		<h4>Listings</h4>
+		<ul class="thumbnails">
+			{% if activelistings %}
+			{% for listing in activelistings|slice:":6" %}
+			<li class="span2">
+				<a class="thumbnail" href="{{ listing.get_absolute_url }}">
+					{% if photos %}
+						{% for photo in photos|slice:":1" %}
+						<img src="photo.url">
+						{% endfor %}
+					{% else %}
+						<img src="{% static 'users/img/sail.jpg' %}">
+					{% endif %}
+					<h4 class="profile-listing-title">{{listing.title}}</h4>
+					<h4 class="profile-listing-price">${{listing.price}}</h4>
+					<p class="profile-listing-description">{{listing.description}}</p>
+				</a>
+			</li>
+			{% endfor %}
+			{% else %}
+				{% if request.user == user  %}
+					<li class="span2">
+						<a class="thumbnail" href="/listings/create">
+							<img src="{% static 'users/img/sail.jpg' %}">
+							<h4 style="text-align: left">Go ahead, make a listing!</h4>
+							<p style="padding: 0">Just click here to get started.</p>
+						</a>
+					</li>
 				{% else %}
-					<img src="{% static 'users/img/sail.jpg' %}">
-				{% endif %}
-				<h4 class="profile-listing-title">{{listing.title}}</h4>
-				<h4 class="profile-listing-price">${{listing.price}}</h4>
-				<p class="profile-listing-description">{{listing.description}}</p>
-			</a>
-		</li>
-		{% endfor %}
-		{% else %}
-		<li class="span2">
-			<a class="thumbnail" href="/listings/create">
-				<img src="{% static 'users/img/sail.jpg' %}">
-				<h4 style="text-align: left">Go ahead, make a listing!</h4>
-				<p style="padding: 0">Just click here to get started.</p>
-			</a>
-		</li>
+					<p> Sorry, {{user.username}} hasn't created any listings yet. </p>
+				{% endif %}		
+			{% endif %}
+		</ul>
+	</div>
+
+
+<!--	<li class="profile-stats span3">
+		<h3 class="listing-stat-header">Listings</h3>
+		<h4 class="green">{{ activelistings|length }}</h4>
+		{% if request.user == user %}
+			<h3 class="listing-stat-header">Listings (in progress)</h3>
+			<h4><a href="{% url 'listings.views.dashboard' %}">{{ draftlistings|length }}</a></h4>
 		{% endif %}
-	</ul>
-</div>
+	</li>
+-->

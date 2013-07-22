@@ -15,6 +15,7 @@ from django.http import HttpResponse, HttpRequest, HttpResponseRedirect, HttpRes
 from django.utils import simplejson as json
 from django.conf import settings
 from twython import Twython
+from djangoratings.views import AddRatingView
 
 def overview(request, username=None):
 	return info(request, username)
@@ -148,3 +149,5 @@ def have_oauth(request):
 		return HttpResponse(json.dumps(response), content_type='application/json')
 	else:
 		return HttpResponseForbidden()
+
+
