@@ -1,0 +1,11 @@
+- model: users.SellerType
+  pk: null
+  fields:
+    name: 'owner'
+    description: ''
+
+- model: users.SellerType
+  pk: null
+  fields:
+    name: 'dealer'
+    description: ''
