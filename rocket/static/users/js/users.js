@@ -266,6 +266,7 @@ $(function() {
 	// Handle the comment form
 	$(".comment-form").submit(function() {
 		var csrftoken = $.cookie('csrftoken');
+		console.log(csrftoken);
 		$.ajax({
 			data: $(this).serialize(),
 			type: $(this).attr('method'),
@@ -289,11 +290,10 @@ $(function() {
 	});
 
 	function insertNewComment(data) {
-		var newComment = '<tr><td><ul class="inline clearfix"><li><h4>' + data.title + '</h4></li>';
-			newComment += '<li><h6>By: ' + data.name + '</h6></li>';
-			newComment += '<li><h6 class="muted">' + data.date_posted + '</h6></li></ul>';
-			newComment += '<p style="padding-left: 10px">' + data.comment + '</p></td></tr>';
-		$(".comment-body").prepend(newComment);
+		var newComment = '<div class="each-comment"><h5>' + data.title + '</h5>';
+			newComment += '<h6>By: ' + data.name + ' on ' + data.date_posted  + '</h6>';
+			newComment += '<p>' + data.comment + '</p></div>';
+		$(".comment-body").append(newComment);
 	}
 
 	// Used for comment form and user info AJAX responses

@@ -1,11 +1,11 @@
 {% load static from staticfiles %}
 	<div class="profile-selling">
-		<h4>Listings</h4>
-		<ul class="thumbnails">
+		<h4>Listings by {{user.username}} </h4>
+		<h5>Lifetime Listings Created: {{ listings|length }} </h5>	
 			{% if listings %}
-			{% for listing in listings|slice:":3" %}
 			<div class="row">
-				<div class="span2">
+					{% for listing in listings %}
+					<div class="span2">
 					<a class="thumbnail" href="{{ listing.get_absolute_url }}">
 						{% if photos %}
 							{% for photo in photos|slice:":1" %}
@@ -19,8 +19,10 @@
 						<p>{{listing.description}}</p>
 					</a>
 				</div>
+					{% endfor %}
+				
 			</div>
-			{% endfor %}
+			
 			{% else %}
 				{% if request.user == user  %}
 				<p> You haven't created any listings yet, <a href="/listings/create"> click here</a> to get started.</p>
@@ -28,16 +30,5 @@
 					<p> Sorry, {{user.username}} hasn't created any listings yet. </p>
 				{% endif %}		
 			{% endif %}
-		</ul>
 	</div>
 
-
-<!--	<li class="profile-stats span3">
-		<h3 class="listing-stat-header">Listings</h3>
-		<h4 class="green">{{ activelistings|length }}</h4>
-		{% if request.user == user %}
-			<h3 class="listing-stat-header">Listings (in progress)</h3>
-			<h4><a href="{% url 'listings.views.dashboard' %}">{{ draftlistings|length }}</a></h4>
-		{% endif %}
-	</li>
--->

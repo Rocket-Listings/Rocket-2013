@@ -162,67 +162,50 @@
 	margin-top: 30px;
 
 	.span-left{
-	border-right: 1px solid #DDD;
+		border-right: 1px solid #DDD;
+		padding-right: 20px;
 
 		.profile-header {	
 			margin-right: -1px;
 
 			.profile-picture {
-			text-align: center;
-			padding-left: 0px;
-				img.thumbnail {
-					border-radius: 0px;
-				 	-webkit-border-radius: 0px;
-				 	-moz-border-radius: 0px;
-				 	-o-border-radius: 0px;
-				 	box-shadow: none;
-				 	-webkit-box-shadow: none;
-				 	-moz-box-shadow: none;
+				text-align: center;
+				padding-left: 0px;
+					
+					img.thumbnail {
+						border-radius: 0px;
+					 	-webkit-border-radius: 0px;
+					 	-moz-border-radius: 0px;
+					 	-o-border-radius: 0px;
+					 	box-shadow: none;
+					 	-webkit-box-shadow: none;
+					 	-moz-box-shadow: none;
 					}
-			a{
-				line-height: 40px;
-			}
-		 		}
+				a{
+					line-height: 40px;
+				}
+		 	}
 
-		 	.row-top{
 		 		
 		 	h3{
 		 		text-align: left;
 		 		line-height: 30px;
 		 		margin: 0px;
-		 		}
+		 	}
 
 		 	h5{
 		 		text-align: left;
 		 		line-height: 33px;
 		 		margin: 0px;
-		 		}
 		 	}
 
-		 	.row-middle{
-		 		h4{
-		 			margin: 0;
-		 		}
+		 	h4{
+		 		margin: 0;
 		 	}
 
-		 	.row-bottom{
+		 	p{
 		 		margin-top: 20px;
-
-		 		p{
 		 		padding-right: 20px;
-		 		}
-		 	}
-
-
-		 	.profile-stats {
-		 		text-align: middle;
-		 		float: right;
-		 		h3 {
-		 			font-size: 20px;
-		 		}
-		 		h4 {
-		 			color: #A6A6A6;
-		 		}
 		 	}
 		}
 	}
@@ -230,27 +213,38 @@
 	 .comments {
 
 	 	h4{
-	 		margin: 0;
-	 		line-height: 30px;
+	 		text-align: center;
 	 	}
 
-		h6 {
-			font-style: italic;
-		}
+	 		.each-comment{
+	 			border-bottom: 1px solid #DDD;
+	
+			 	h4{
+			 		margin: 0;
+			 		line-height: 30px;
+			 	}
 
-		p{
-			padding-top: 5px;
-		}
+				h6 {
+					font-style: italic;
+				}
+
+				p{
+					padding-top: 5px;
+				}
+			}
 	}
+
 	.comment-form-container {
 		margin-top: 15px;
 
 		form{
 			margin-left: -5px;
 		}
+
 		form > textarea {
 			margin-left: 5px;
 		}
+		
 		.errors, .comment-textarea {
 			@media all and (min-width:1200px) {
 				width: 440px;
@@ -266,10 +260,12 @@
 		li input{
 			width: 128px;
 		}
+		
 		.comment-submit {
 			margin-left: 5px;
 		}
 	}
+	
 	.profile-selling {
 
 		h4{
@@ -280,44 +276,39 @@
 
 		p{
 			text-align: center;
-			
-
 		}
 
-		ul.thumbnails {
-			margin: 10px 0 0 0px;
-			display: table-layout;
-			li {
-				margin-bottom: 0px;
+
+		a.thumbnail {
+			margin-bottom: 20px;
+			color: #000;
+			text-decoration: none;
+			border-radius: 0px;
+			-webkit-border-radius: 0px;
+			-moz-border-radius: 0px;
+			-o-border-radius: 0px;
+			box-shadow: none;
+			-webkit-box-shadow: none;
+			-moz-box-shadow: none;
+			
+			h5{
+				text-align: left;
+				word-wrap: break-word;
+				white-space: pre-line;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				padding-left: 5px;
+				padding-right: 5px;
 			}
-			a.thumbnail {
-				color: #000;
-				text-decoration: none;
-				border-radius: 0px;
-				-webkit-border-radius: 0px;
-				-moz-border-radius: 0px;
-				-o-border-radius: 0px;
-				box-shadow: none;
-				-webkit-box-shadow: none;
-				-moz-box-shadow: none;
-				h5{
-					text-align: left;
-					word-wrap: break-word;
-					white-space: pre-line;
-					overflow: hidden;
-					white-space: nowrap;
-					text-overflow: ellipsis;
-				}
-				.profile-listing-price {
-					text-align: left;
-					color: #4cbb17;
-					letter-spacing: 1px;
-				}
-				p {
-					text-align: left;
-					overflow: hidden;
-					max-height: 60px;
-				}
+			
+			p {
+				padding-left: 5px;
+				padding-right: 5px;
+				text-align: left;
+				overflow: hidden;
+				min-height: 40px;
+				max-height: 40px;
 			}
 		}
 	}
