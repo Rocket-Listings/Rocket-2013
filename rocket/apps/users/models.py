@@ -7,11 +7,17 @@ from django.db.models.signals import post_save
 
 # User Profile
 class UserProfile(models.Model):
+	SELLER_TYPE_CHOICES = (
+		('P', 'Person'),
+		('B', 'Business')
+	)
+
 	user = models.OneToOneField(User)
 	name = models.CharField(max_length=100, blank=True)
 	location = models.CharField(max_length=255, blank=True)
 	default_category = models.ForeignKey(ListingCategory, null=True, blank=True)
 	default_listing_type = models.ForeignKey(ListingType, null=True, blank=True)
+	default_seller_type = models.CharField(max_length=1, choices=SELLER_TYPE_CHOICES, default='P')
 	phone = models.CharField(max_length=50, blank=True)
 	bio = models.TextField(blank=True)
 	nameprivate = models.BooleanField(blank=False, null=False)
@@ -47,5 +53,6 @@ class UserComment(models.Model):
 
 	def __unicode__(self):
 		return self.user.username
+
 
 #User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
