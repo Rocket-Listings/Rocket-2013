@@ -15,6 +15,7 @@ from django.http import HttpResponse, HttpRequest, HttpResponseRedirect, HttpRes
 from django.utils import simplejson as json
 from django.conf import settings
 from twython import Twython
+from djangoratings.views import AddRatingView
 
 def overview(request, username=None):
 	return info(request, username)
@@ -46,8 +47,8 @@ def info(request):
 def profile(request, username=None):
 	user = User.objects.get(username=username)
 	allListings = Listing.objects.filter(user=user).order_by('-pub_date')
-	activelistings = allListings.filter(status=ListingStatus(pk=1))
-	draftlistings = allListings.filter(status=ListingStatus(pk=2))
+	# activelistings = allListings.filter(status=ListingStatus(pk=1))
+	# draftlistings = allListings.filter(status=ListingStatus(pk=2))
 	photos = ListingPhoto.objects.filter(listing=user)
 	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos)
 	comments = UserComment.objects.filter(user=user).order_by('-date_posted')[:5]
@@ -61,7 +62,7 @@ def profile(request, username=None):
 			errors = comment_form.errors
 			return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
-		return render(request, 'users/user_profile.html', {'user':user, 'activelistings':activelistings, 'draftlistings':draftlistings, 'photos':photos, 'comments':comments})
+		return render(request, 'users/user_profile.html', {'user':user, 'listings':allListings, 'photos':photos, 'comments':comments}) #'activelistings':activelistings, 'draftlistings':draftlistings,
 
 def delete_account(request):
 	user = request.user
@@ -148,3 +149,5 @@ def have_oauth(request):
 		return HttpResponse(json.dumps(response), content_type='application/json')
 	else:
 		return HttpResponseForbidden()
+
+

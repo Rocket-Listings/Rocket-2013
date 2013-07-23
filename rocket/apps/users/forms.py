@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from django.forms.util import ErrorList
 from django.core.validators import validate_email
 
+
+
 class UserProfileForm(ModelForm):
 	email = forms.EmailField(max_length=75, required=True)
 	class Meta:
@@ -22,7 +24,7 @@ class UserProfileForm(ModelForm):
 class CommentSubmitForm(ModelForm):
 	class Meta:
 		model = UserComment
-		fields = ('name','email','comment', 'title')	
+		fields = ('email','comment', 'title',)
 		exclude = ('user', 'is_removed', 'date_posted')
 
 	def clean(self):

@@ -175,6 +175,9 @@ THIRD_PARTY_APPS = (
 
 	# static file management
 	'compressor',
+
+  # ratings module
+  'djangoratings'
 )
 
 LOCAL_APPS = (
