@@ -34,4 +34,15 @@ $(function() {
 		$('.trash_optn').tooltip();
 	});
 
+	// AUTOPOST
+	$(".share_optn").click(function (e) {
+		e.preventDefault();
+		$.ajax({
+			type: 'GET',
+			url: $(this).attr('href'),
+			success: function (response) {
+			}
+		});
+		return false;
+	});
 });
