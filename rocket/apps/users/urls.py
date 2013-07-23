@@ -14,5 +14,6 @@ urlpatterns = patterns('',
     url(r'^twitter/disconnect/$', 'users.views.disconnect_twitter', name='disconnect_twitter'),
     url(r'^twitter/connected/$', 'users.views.twitter_connected', name='twitter_connected'),
     url(r'^twitter/oauth/$', 'users.views.have_oauth', name='have_oauth'),
+    url(r'^facebook/$', 'users.views.fb_profile', name='fb_profile'),
     url(r'^(?P<username>\w+)/$', 'users.views.profile', name='user_profile'),
 )

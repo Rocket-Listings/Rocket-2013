@@ -2,7 +2,7 @@ from listings.models import Listing, ListingPhoto, Buyer, Offer, Message, Listin
 import datetime
 #from users.models import UserProfile
 from users.forms import UserProfileForm, CommentSubmitForm
-from users.models import UserProfile, UserComment
+from users.models import UserProfile, UserComment, ProfileFB
 from django.forms.models import inlineformset_factory
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
@@ -151,3 +151,18 @@ def have_oauth(request):
 		return HttpResponseForbidden()
 
 
+@login_required
+def fb_profile(request):
+	if request.method == 'POST':
+		if request.is_ajax():
+			fb = ProfileFB(profile=request.user)
+			fb.username = request.POST.get('username', "")
+			fb.name = request.POST.get('name', "")
+			fb.link = request.POST.get('link', "")
+			fb.picture = request.POST.get('picture', "")
+			fb.save()
+			return HttpResponse(json.dumps(request.POST.get('name', "")))
+		else:
+			return HttpResponseForbidden
+	else:
+		return HttpResponseForbidden
