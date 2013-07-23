@@ -1,13 +1,15 @@
-from celery import task
+from celery.task import task
 from listings.models import Listing, Buyer, ListingPhoto
 from bs4 import BeautifulSoup
 import requests
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
+from celery.signals import task_sent
+from celery.signals import task_success
 
 
-@task()
-def autopost_task(request, listing_id):
+@task(name='tasks.autopost_task')
+def autopost_task(username, listing_id):
 
 	# Todo: implement sessions and location.
 	listing = get_object_or_404(Listing, id=listing_id)
@@ -49,8 +51,8 @@ def autopost_task(request, listing_id):
 	to_parse = BeautifulSoup(r.text) #parse
 	payload_tuples = [('id2', '1916x831X1916x635X1920x1200'), 
 		  		('browserinfo', '%7B%0A%09%22plugins%22%3A%20%22'),
-				('FromEMail',  request.user.username + '@rocketlistings.mailgun.org'), #enter your email here
-				('ConfirmEMail', request.user.username + '@rocketlistings.mailgun.org'),
+				('FromEMail',  username + '@rocketlistings.mailgun.org'), #enter your email here
+				('ConfirmEMail', username + '@rocketlistings.mailgun.org'),
 				('xstreet0', ''),
 				('xstreet1', ''),
 				('city', ''),
@@ -125,4 +127,8 @@ def autopost_task(request, listing_id):
 	payload = dict(payload_tuples)
 	r = requests.post(post_url, data=payload)
 
-	return render(request, 'listings/listings_autopost.html')
+	return Listing.objects.get(pk=listing_id).title
+
+@task_success.connect
+def autopost_success_handler(sender=None, result=None, args=None, kwargs=None, **kwds):
+	print result

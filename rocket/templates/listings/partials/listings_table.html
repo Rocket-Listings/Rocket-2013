@@ -3,20 +3,6 @@
 {% load humanize %}
 {# Requires the context variable 'listings' #}
 
-<div id = "loadingModal" class="modal hide fade" data-backdrop="static">
-  <div class="modal-header">
-    <h3>Autoposting...</h3>
-  </div>
-  <div class="modal-body">
-    <p>
-    	Please wait this should only take a few moments.
-    </p>
-  </div>
-  <div class="modal-footer">
-  	<button class="autopost-close btn btn-info disabled" data-dismiss="" aria-hidden="true">Close</button>
-  </div>
-</div>
-
 <table class="table table-listings table-hover sortable">
 	<thead>
 		<tr>
@@ -46,7 +32,7 @@
 					<div class="btn-group">
 
 						<!--autopost button -->
-						<a class="btn share_optn" title="Autopost to Craigslist" href="{% url 'mail.views.autopost' listing.id %}" data-toggle="modal" data-target = "#loadingModal" data-original-title="Autopost to Craigslist"><i class ="icon-share"></i></a>
+						<a class="btn share_optn" title="Autopost to Craigslist" href="{% url 'mail.views.autopost' listing.id %}" data-original-title="Autopost to Craigslist"><i class ="icon-share"></i></a>
 
 						<!--edit button -->
 						<a class="btn edit_optn" title="Edit Listing" href="{% url 'listings.views.detail' listing.id %}" data-container="body" data-toggle="tooltip" data-original-title="Edit Listing"><i class="icon-edit"></i></a>

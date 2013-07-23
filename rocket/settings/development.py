@@ -34,7 +34,8 @@ CACHES = {
 }
 
 # See: http://docs.celeryq.org/en/latest/configuration.html#celery-always-eager
-CELERY_ALWAYS_EAGER = True
+# Setting CELERY_ALWAYS_EAGER = True makes the tasks blocking, just run celeryd instead
+CELERY_ALWAYS_EAGER = False
 
 # See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
 INSTALLED_APPS += (
@@ -80,3 +81,5 @@ BROKER_URL = environ.get('RABBITMQ_URL') or environ.get('CLOUDAMQP_URL')
 
 # See: http://docs.celeryproject.org/en/latest/configuration.html#celery-result-backend
 CELERY_RESULT_BACKEND = 'amqp'
+
+CELERY_IMPORTS = ('mail.tasks',)

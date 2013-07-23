@@ -4,7 +4,7 @@ _Last updated: 7/22/13
 
 ### Celery
 
-Celery is a distributed task queue.  We can user it for many things including scheduling routine periodic work, and running tasks in the background.  You can read more about it [here](http://docs.celeryproject.org/en/latest/getting-started/introduction.html).
+Celery is a distributed task queue.  We can use it for many things including scheduling routine work and running tasks in the background.  You can read more about it [here](http://docs.celeryproject.org/en/latest/getting-started/introduction.html).
 
 Right now we are using RabbitMQ as a broker. To install:
 
@@ -13,6 +13,12 @@ Right now we are using RabbitMQ as a broker. To install:
 In a separate command line tab:
     
     $ rabbitmq-server
+
+And in yet another tab:
+
+    $ ./manage.py celeryd
+
+Note: `./manage.py celeryd --loglevel=DEBUG` is often helpful if you're having problems.
 
 ### Using Facebook and Twitter
 

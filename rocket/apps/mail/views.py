@@ -108,6 +108,7 @@ def on_incoming_buyer_message(request):
 		return HttpResponse('Unauthorized')
 
 def autopost(request, listing_id):
-	autopost_task.delay(request, listing_id)
-	print "success"
-	return HttpResponse('OK')
+	username = User.objects.get(username=request.user).username
+	result = autopost_task.delay(username, listing_id)
+	print result.get()
+	return HttpResponse()
