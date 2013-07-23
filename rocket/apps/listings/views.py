@@ -78,8 +78,8 @@ def create(request):
 		if listing_form.is_valid():
 			listing = listing_form.save(commit=False)
 			listing.user = request.user
-			connections['default'].get_unified_index().get_index(Listing).update_object(listing)
 			listing.save()
+			connections['default'].get_unified_index().get_index(Listing).update_object(listing)
 			for x in range(0, count):
 				string = d["photo%d" %(x)]
 				photoDict = {'url': string, 'order': x, 'listing': listing}
@@ -130,9 +130,9 @@ def detail(request, listing_id):
 		if request.user == listing.user: # updating his own listing
 			listing_form = ListingForm(request.POST, instance = listing)		
 			if listing_form.is_valid():
-				connections['default'].get_unified_index().get_index(Listing).update_object(listing)
 				listing = listing_form.save()
-				
+				connections['default'].get_unified_index().get_index(Listing).update_object(listing)
+
 
 				return redirect(listing)
 			else:
