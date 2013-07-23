@@ -18,13 +18,12 @@ $(function() {
 	});
 
 	$('.buyer-card').click(function(event){
-		alert("bog");
 		var buyerCard = $(this);
 		$('.buyer-card').removeClass('highlight');
 		buyerCard.addClass('highlight');
 		var id = buyerCard.data('buyer-id');
 		$(".message").hide();
-		$('.buyer-'  + id).show();
+		$('.buyer-' + id).show();
 	});
 
 	$('.table-listings tbody tr').first().click();
