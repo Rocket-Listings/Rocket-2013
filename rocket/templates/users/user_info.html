@@ -35,16 +35,7 @@
 						</td>
 						<td><a class="edit active" href="#">Edit</a></td>
 					</tr>
-					<tr class="uneditable">
-						<td>Twitter Handle:</td>
-						<td>
-							<span class="at {% if not user.get_profile.twitter_handle %}muted{% endif %}">@</span><span class="twitter-handle">{{ user.get_profile.twitter_handle }}</span>
-						</td>
-						<td>
-							<a class="verify-twitter {% if user.get_profile.twitter_handle %}hide{% endif %}" href="#">Verify with Twitter</a>
-							<a class="disconnect-twitter {% if not user.get_profile.twitter_handle %}hide{% endif %}" href="#">Disconnect Twitter</a>
-						</td>
-					</tr>
+					
 					<tr class="uneditable">
 						<td>Profile Picture:</td>
 						{% if user.get_profile.propic %}
@@ -91,6 +82,37 @@
 							<textarea tabindex="5" name="bio" autocomplete="off" rows="3" placeholder="Click to write your bio">{{ user.get_profile.bio }}</textarea>
 						</td>
 						<td><a class="edit active" href="#">Edit</a></td>
+					</tr>
+					<tr>
+						<td class="subheader"><h4>Identity </h4></td>
+					</tr>
+					<tr class="uneditable">
+						<td>Twitter:</td>
+						<td>
+							<span class="at {% if user.get_profile.twitter_handle %}">@</span>{% endif %}<span class="twitter-handle">{{ user.get_profile.twitter_handle }}</span>
+						</td>
+						<td>
+							<a class="verify-twitter {% if user.get_profile.twitter_handle %}hide{% endif %}" href="#">Connect</a>
+							<a class="disconnect-twitter {% if not user.get_profile.twitter_handle %}hide{% endif %}" href="#">Disconnect</a>
+						</td>
+					</tr>
+					<tr class="uneditable">
+						<td>Facebook</td>
+						<td>
+							
+						</td>
+						<td>
+							
+						</td>
+					</tr>
+					<tr class="uneditable">
+						<td>LinkedIn</td>
+						<td>
+							
+						</td>
+						<td>
+							
+						</td>
 					</tr>
 					<tr>
 						<td class="subheader"><h4>Listings</h4></td>
