@@ -13,7 +13,7 @@ class UserProfileForm(ModelForm):
 	class Meta:
 		model = UserProfile
 		exclude = ('user', 'twitter_handle', 'OAUTH_TOKEN', 'OAUTH_TOKEN_SECRET')
-		fields = ('name', 'phone', 'location', 'bio', 'default_category', 'default_listing_type', 'nameprivate', 'locationprivate', 'propic')
+		fields = ('name', 'phone', 'location', 'bio', 'default_category', 'default_listing_type', 'propic')
 
 	def clean(self):
 		for field in self.cleaned_data:

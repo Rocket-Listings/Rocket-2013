@@ -4,9 +4,19 @@
 {% if comments %}
 	{% for comment in comments|slice:":5" %}
 		<div class="each-comment">
-				<h5>{{comment.title}}</h5>
-				<h6>{{comment.date_posted}}</h6>
-				<p>{{comment.comment}}</p>
+			<div class="row">
+				<div class="span6">
+					<h5>{{comment.title}}</h5>
+				</div>
+				<div class="span2">
+					<h6>{{comment.date_posted}}</h6>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span7">
+					<p>{{comment.comment}}</p>
+				</div>
+			</div>
 		</div>
 	{% endfor %}
 {% elif request.user == user %}

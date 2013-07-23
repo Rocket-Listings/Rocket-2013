@@ -13,9 +13,11 @@
 						{% else %}
 							<img src="{% static 'users/img/sail.jpg' %}">
 						{% endif %}
-						<h5>{{listing.title}} - ${{listing.price}}</h5>
-						<p>{{listing.description}}</p>
-						
+						<div class="overlay">
+							<h4>{{listing.title}}</h4>
+							<h5> ${{listing.price}}</h5>
+						</div>
+						<div class="clearfix"></div>
 					</a>
 				</div>
 					{% endfor %}

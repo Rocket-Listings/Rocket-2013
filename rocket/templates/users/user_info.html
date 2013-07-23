@@ -114,39 +114,7 @@
 						</td>
 						<td></td>
 					</tr>
-					<tr>
-						<td class="subheader"><h4>Privacy</h4></td>
-					</tr>
-					<tr class="editable">
-						<td>Name:</td>
-						<td class="select">
-							<select tabindex="8" name="nameprivate">
-								{% if user.get_profile.nameprivate %}
-								<option value="False">Public</option>
-								<option value="True" selected="true">Private</option>
-								{% else %}
-								<option value="False" selected="true">Public</option>
-								<option value="True">Private</option>
-								{% endif %}
-							</select>
-						</td>
-						<td></td>
-					</tr>
-					<tr class="editable">
-						<td>Location:</td>
-						<td class="select">
-							<select tabindex="9" name="locationprivate">
-								{% if user.get_profile.locationprivate %}
-								<option value="False">Public</option>
-								<option value="True" selected="true">Private</option>
-								{% else %}
-								<option value="False" selected="true">Public</option>
-								<option value="True">Private</option>
-								{% endif %}
-							</select>
-						</td>
-						<td></td>
-					</tr>
+					
 				</tbody>
 			</table>
 			<a class="delete-account-modaltrigger text-error" role="button" data-toggle="modal" href="#delete-account-modal">Delete account</a>

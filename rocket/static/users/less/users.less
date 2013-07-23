@@ -220,8 +220,6 @@
 
 	 	h4{
 	 		text-align: left;	 		
-	 		padding-bottom: 20px;
-	 		border-bottom: 1px dashed #DDD;
 	 	}
 
 	 		.each-comment{
@@ -277,15 +275,16 @@
 }
 
 	.seller-stats{
+		margin-bottom: 45px;
 		h4{
 			margin: 0;
 			line-height: 30px;
 			text-align: left;
-			margin-bottom: 10px;
+			margin-bottom: 15px;
 		}
 	}
 	.profile-selling {
-		margin-top: 30px;
+
 
 		h4{
 			text-align: left;
@@ -310,25 +309,55 @@
 			-moz-box-shadow: none;
 			width: 270px;
 			padding: 0px;
+			position: relative;
+			.overlay{
+				background: rgba(0, 0, 0, 0.55);
+				position: absolute;
+				bottom: 0px;
+				width: 100%;
 			
-			h5{
+			h4{
+				float: left;
+				font-weight: 200;
+				font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+				color: #DDD;
+				line-height: 30px;
+				text-align: center;
 				text-align: left;
 				word-wrap: break-word;
 				white-space: pre-line;
 				overflow: hidden;
 				white-space: nowrap;
 				text-overflow: ellipsis;
-				padding-left: 10px;
-				padding-right: 10px;
+				padding-left: 15px;	
+				margin: 0;
+				font-size: 15px;
 			}
 			
-			p {
+			h5{
+				color: #DDD;
+				float: right;
+				font-weight: 200;
+				padding-right: 15px;
+				margin: 0;
+				line-height: 30px;
+				font-size: 13px;
+			}
+		}
+			
+			/*p {
+				font-weight: 200;
+				font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+				color: #DDD;	
+				background: rgba(0, 0, 0, 0.7);
+				position: absolute;
+				bottom: 0px;
 				padding-left: 10px;
 				padding-right: 10px;
 				text-align: left;
 				overflow: hidden;
 				max-height: 60px;
-			}
+			} */
 		}
 	}
 }

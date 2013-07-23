@@ -16,8 +16,6 @@ class UserProfile(models.Model):
 	phone = models.CharField(max_length=50, blank=True)
 	bio = models.TextField(blank=True)
 	rating = RatingField(range=5)
-	nameprivate = models.BooleanField(blank=False, null=False)
-	locationprivate = models.BooleanField(blank=False, null=False)
 	propic = models.CharField(max_length=200, blank=True)
 	twitter_handle = models.CharField(max_length=20, blank=True)
 	OAUTH_TOKEN = models.CharField(max_length=200, blank=True)
