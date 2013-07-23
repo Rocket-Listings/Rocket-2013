@@ -99,10 +99,11 @@
 					<tr class="uneditable">
 						<td>Facebook</td>
 						<td>
-							
+							<span class="fb-name">{{ fb.name }}</span>
 						</td>
 						<td>
-							
+							<a class="connect-fb {% if fb.name %}hide{% endif %}" href="#">Connect</a>
+							<a class="disconnect-fb {% if not fb.name %}hide{% endif %}" href="#">Disconnect</a>	
 						</td>
 					</tr>
 					<tr class="uneditable">

@@ -39,6 +39,17 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'users', ['UserComment'])
 
+        # Adding model 'ProfileFB'
+        db.create_table(u'users_profilefb', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('profile', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['users.UserProfile'], unique=True)),
+            ('username', self.gf('django.db.models.fields.CharField')(max_length=50, blank=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
+            ('link', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
+            ('picture', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
+        ))
+        db.send_create_signal(u'users', ['ProfileFB'])
+
 
     def backwards(self, orm):
         # Deleting model 'UserProfile'
@@ -46,6 +57,9 @@ class Migration(SchemaMigration):
 
         # Deleting model 'UserComment'
         db.delete_table(u'users_usercomment')
+
+        # Deleting model 'ProfileFB'
+        db.delete_table(u'users_profilefb')
 
 
     models = {
@@ -96,6 +110,15 @@ class Migration(SchemaMigration):
             'description': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '60'})
+        },
+        u'users.profilefb': {
+            'Meta': {'object_name': 'ProfileFB'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'link': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
+            'picture': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
+            'profile': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['users.UserProfile']", 'unique': 'True'}),
+            'username': ('django.db.models.fields.CharField', [], {'max_length': '50', 'blank': 'True'})
         },
         u'users.usercomment': {
             'Meta': {'object_name': 'UserComment'},

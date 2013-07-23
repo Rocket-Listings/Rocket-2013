@@ -229,15 +229,15 @@ $(function() {
 	}
 
 	// FACEBOOK BINDINGS
-	$('.btn-fb').click(function() {
+	$('.connect-fb').click(function() {
 		FB.getLoginStatus(function (response) {
 			if (response.status === 'connected') {
-				fbProfileFill();
+				fbProfile();
 			}
 			else {
 				FB.login(function (response) {
 					if (response.status === 'connected') {
-						fbProfileFill();
+						fbProfile();
 					}
 					else {
 						console.log('User cancelled login action.');
@@ -247,17 +247,51 @@ $(function() {
 		});
 	});
 
-	function fbProfileFill() {
+	$(".disconnect-fb").click(function() {
+		FB.api({ method: 'Auth.revokeAuthorization' });
+		$.ajax({
+			type: 'GET',
+			url: '{% url "disconnect_fb" %}',
+			success: function(response) {
+				$(".fb-name").text("");
+				$(".disconnect-fb").hide();
+				$(".connect-fb").show();
+			}
+		});
+	});
+
+	function fbProfile() {
+		data = {}
 		FB.api('/me', function (response) {
-			$("input[name='name']").val(response.name);
-			$("input[name='email']").val(response.email);
-			$("input[name='location']").val(response.location.name);
+			data['username'] = response.username,
+			data['name'] = response.name,
+			data['link'] = response.link
 			FB.api('/me/picture?width=200&height=200&type=square', function (response) {
 				if (!response.data.is_silhouette) {
-					$(".propic-url").val(response.data.url);
-					$('form').submit();
+					data['picture'] = response.data.url;
 				}
+				else {
+					data['picture'] = "";
+				}
+				fbPostData(data)
 			});
+		});
+	}
+
+	function fbPostData(data) {
+		var csrftoken = $.cookie('csrftoken');
+		$.ajax({
+			data: data,
+			type: 'POST',
+			url: '{% url "fb_profile" %}',
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader("X-CSRFToken", csrftoken);
+			},
+			success: function(response) {
+				$(".fb-name").text(response);
+				$(".connect-fb").hide();
+				$(".disconnect-fb").show();
+			}
 		});
 	}
 
@@ -315,7 +349,7 @@ window.fbAsyncInit = function() {
     	channelUrl : '{% static "/users/channel.html" %}', // Channel File
     	status     : true, // check login status
     	cookie     : true, // enable cookies to allow the server to access the session
-    	xfbml      : true  // parse XFBML
+    	xfbml      : false  // parse XFBML
   	});
 };
 
