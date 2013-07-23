@@ -3,64 +3,17 @@
 
 {% block title %}Features{% endblock %}
 {% block content %}
-	<div class = "row how-row">
-		<div class = "span4 offset2">
-			<h4>More control of photos</h4>
-				<p>Photos are a huge part of your listing, so we want to make sure you have full control. Upload the highest-res photos you can and we'll display them in all their glory. If there's any editing you need to do, you don't need to do it in image editing software.</p>
-		</div>
-		<div class = "span4">
-			<img src="{% static 'static_pages/img/image-editor.png' %}"  width = "400px">
-		</div>
-	</div>
-	<div class = "row how-row">
-		<div class ="span2 pull-right"></div> {# this displays in the opposite order because of pull-rights #}
-		<div class = "span4 pull-right">
-			<h4>Short and smart listing creation</h4>
-			<p>A lot of page loads can really slow down the process, so we put everything in one place. Pick a category, you can select your location or we can auto-include it, upload photos, and fill out the form (we give you important specs to include). You can even toggle to preview mode in the same window so you can what your listing will look like as you make changes.</p>
-		</div>
-		<div class = "span4 offset2">
-			<img src="{% static 'static_pages/img/placeholder.svg' %}"  width = "350px">
-		</div>
-	</div>
-	<div class = "row how-row">
-		<div class = "span4 offset2">
-			<h4>One click to post to Craigslist and share</h4>
-				<p>Get that awesome listing out there! We can automagically post your listings to Craigslist, Facebook and Twitter. The listing looks like a regular listings on Craigslist and we made sure the preview looks great on Facebook. We're working on adding more sites like Ebay, Etsy, and Amazon.</p>
-		</div>
-		<div class = "span4">
-			<img src="{% static 'static_pages/img/placeholder.svg' %}"  width = "350px">
-		</div>
-	</div>
-	<div class = "row how-row">
-		<div class ="span2 pull-right"></div> {# this displays in the opposite order because of pull-rights #}
-		<div class = "span4 pull-right">
-			<h4>The Dashboard: where the magic happens</h4>
-			<p>Keeping track of all the details and emails for one listing is hard, and gets exponentially more difficult if you have more than one. We put it all in one place so you can keep track of each and every listing easily and know what's going on. You can edit, re-post, delete, and mark an item as sold as well as sort your listings by date, category, title, and responses.</p>
-		</div>
-		<div class = "span4 offset2">
-			<img src="{% static 'static_pages/img/placeholder.svg' %}"  width = "350px">
-		</div>
-	</div>
-	<div class = "row how-row">
-		<div class = "span4 offset2">
-			<h4>Respond to emails</h4>
-				<p>No more sifting through all your emails trying to find the ones related to each of your listing and no more headaches trying to remember who emailed what: it's all here. You can view all your messages related to each listing, keep track of how-row much each buyer offered, and respond right in the dashboard. When it's sold, you can even email everyone else at once to let them know.</p>
-		</div>
-		<div class = "span4">
-			<img src="{% static 'static_pages/img/placeholder.svg' %}"  width = "350px">
-		</div>
-	</div>
-	<div class = "row how-row">
-		<div class ="span2 pull-right"></div> {# this displays in the opposite order because of pull-rights #}
-		<div class = "span4 pull-right">
-			<h4>Seller profiles = Online trust</h4>
-			<p>Everyone feels more comfortable when they know who's on the other end, especially when you're meeting up to show-row and sell an item. We made optional seller profiles so that you can let buyers know you're a real person and worth buying from. </p>
-		</div>
-		<div class = "span4 offset2">
-			<img src="{% static 'static_pages/img/placeholder.svg' %}"  width = "350px">
-		</div>
-	</div>
-	<a class="btn btn-primary btn-signup" href="{% url "registration_register" %}" data-toggle="modal">Sign Up
-	</a>
+<div class="partials what" style="display: none">
+	{% include 'static_pages/partials/what.html' %}
+</div>
+<div class="partials how" style="display: true">
+	{% include 'static_pages/partials/how.html' %}
+</div>
+<div class="partials why" style="display: none">
+	{% include 'static_pages/partials/why.html' %}
+</div>
+<div class="partials pricing" style="display: none">
+	{% include 'static_pages/partials/pricing.html' %}
+</div>	
 
 {% endblock %}

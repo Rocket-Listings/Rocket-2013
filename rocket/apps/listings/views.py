@@ -37,6 +37,7 @@ def dashboard(request):
     return render(request, 'listings/dashboard.html',  {'listings': listings, 'buyers': buyers, 'messages':messages})
 
 @login_required
+<<<<<<< HEAD
 def create(request, pane='edit'):
     if request.method == 'GET':
         profile = request.user.get_profile()

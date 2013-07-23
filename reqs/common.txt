@@ -23,4 +23,8 @@ django-mailgun
 boto
 django-storages==1.1.6
 
+
+dj-database-url==0.2.1
 django-pagination
+
+twython

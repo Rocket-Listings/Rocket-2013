@@ -80,8 +80,6 @@
 // 			}
 // 		}
 
-			
-
 // 	}
 
 	// function handlePreviewClick(e) {
@@ -124,8 +122,6 @@
 	// 			$('.table_preview_' + val + ' input:eq('+i+')').val(spec_value);
 	// 		}
 	// 	}
-
-		
 //   	}
 
 	// function handleEditClick(e) {

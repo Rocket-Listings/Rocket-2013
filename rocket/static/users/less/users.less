@@ -1,70 +1,117 @@
 @import "../../rocket/less/base.less";
 
-.user-profile-table-group{
-	.user-profile-table {
-		tbody {
-			tr {
+@fb-blue: #3B5998;
+@twitter-blue: #4099FF;
+
+.content-wrapper {
+	table {
+		width: auto !important;
+		tr {
+			&.selected {
+				background-color: #EDEDED;
 				td {
-					a {
-						float: right;
-					}
-					span {
-						float: right;
-					}
-					&:nth-child(1) {
-						text-align: right;
-						width: 150px;
-					}
-					&:nth-child(2) {
-						width: 300px;
-					}
-					&.bio {
-						max-width: 300px;
-						white-space: nowrap;
-						overflow: hidden;
-						text-overflow: ellipsis;
-					}
-					&.form-partial {
-						input.btn {
-							float: right;
-						}
-						padding: 3px 5px 0 1px;
-					}
-					code {
-						font-size: 10pt;
-					}
-					span.partial-submit {
-						margin: 5px 3px 0 0;
-					}
-					textarea {
+					background-color: rgba(255, 255, 255, 0);
+				}
+			}
+			td {
+				input, textarea, select{
+					border: none !important;
+					background-color: rgba(255, 255, 255, 0) !important;
+					&[name='bio'] {
 						width: 290px;
 						max-width: 290px;
 					}
-					img.propic {
-						border: 1px solid #999;
+					&[name='twitter_handle'] {
+						padding-left: 2px !important;
 					}
-					.get-location {
-						float: none;
-						vertical-align: middle;
+					&:hover {
+						cursor: pointer;
+					}
+					&:focus {
+						cursor: auto;
 					}
 				}
-				&.in-edit {
-					background-color: #ededed;
+				select {
+					-webkit-appearance: none !important;
+					-moz-appearance: none !important;
+					background-image: url('/static/users/img/chevron-down.png') !important;
+					background-repeat: no-repeat;
+					padding-left: 30px;
+					margin-top: -1px;
+					vertical-align: middle;
+					&:focus {
+						border: 1px #3a87ad solid;
+					}
+				}
+				&.partial-input {
+					padding: 4px 5px 0 1px;
+				}
+				&.select {
+					padding: 0px;
+				}
+				&:nth-child(1), &:nth-child(3){
+					text-align: right;
+				}
+				&:nth-child(2) {
+					text-align: left;
+				}
+				&.subheader {
+					text-align: left !important;
+					border-top: none !important;
+					padding: 0 0 0 5px;
+					&:hover {
+						background-color: rgba(255, 255, 255, 0) !important;
+					}
+				}
+				code {
+					font-size: 10pt;
+					color: #3a87ad;
+				}
+				span.at, span.twitter-handle {
+					color: #555;
+					float: none;
+					vertical-align: middle;
+					&.muted {
+						color: #999 !important;
+					}
+				}
+				span.twitter-handle {
+					padding-left: 2px;
+				}
+				.btn-twitter {
+					font-weight: normal;
+					background-color: @twitter-blue;
+					margin: -5px -5px -5px 0;
+					&:hover {
+						background-color: darken(@twitter-blue, 5%);
+					}
+				}
+				div.propic-wrapper {
+					position: relative;
+					float: left;
+					height: 100px;
+					width: 100px;
+					.loading-overlay {
+						background-color: rgba(255, 255, 255, .8);
+						filter: alpha(opacity=70);
+						-moz-opacity: 0.7;
+						-khtml-opacity: 0.7;
+						opacity: 0.7;
+						position: absolute;
+						top: 0;
+						left: 0;
+					}
+				}
+				.get-location {
+					float: none;
+					vertical-align: middle;
 				}
 			}
 		}
 	}
-	span.edit-all-wrapper {
+	.save-all {
 		float: right;
-		margin: -5px 5px 0 0;
-	}
-	span.view-profile-wrapper {
-		float: right;
-		margin: -5px 5px 0 0;
-	}
-	span.h4 {
-		width: 200px;
-		font-size: 14pt;
+		margin-top: -5px;
 	}
 	float: left;
 }
@@ -278,6 +325,8 @@
     float: right;
 }
 
+
+
 // #comment-form-container, #comment-form {
 // 	display:none;
 // }
@@ -423,7 +472,7 @@ width: 236px;
 	}
 
 	input, textarea, select {
-		width: 200px;
+		//width: 200px;
 	}
 } 
 

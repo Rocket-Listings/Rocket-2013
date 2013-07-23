@@ -52,3 +52,8 @@ DEBUG_TOOLBAR_CONFIG = { 'INTERCEPT_REDIRECTS': False }
 
 # COMPRESS_OFFLINE = True
 COMPRESS_DEBUG_TOGGLE = 'debug'
+
+# TWITTER CONFIG DEV KEYS
+
+TWITTER_KEY = 'ozuyeg1uriTqpgEGNxfXPA'
+TWITTER_SECRET = '4zZjutoXBLs8mfxMHZtGKf1nLNGhABWBz44alSg58' # should move twitter creds to evironment variables

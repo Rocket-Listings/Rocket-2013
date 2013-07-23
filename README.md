@@ -1,6 +1,28 @@
 # Rocket Listings - Django
 
-_Last updated: 7/3/13_
+_Last updated: 7/16/13_
+
+### Using Facebook and Twitter
+
+Facebook and Twitter are now connected, but due to url requirements, we have to access them from a "real" url rather than `localhost` or `127.0.0.1`.  Right now, they're set up to run at `http://local.rocketlistings.com:8000`.  To make this possible:
+
+    sudo nano /etc/hosts
+
+Add this line to the list:
+
+    127.0.0.1       local.rocketlistings.com
+
+Now access the site at `local.rocketlistings.com:8000`
+
+Additionally you'll need to `git pull`, `pip install -r requirements.txt` and `resetdb` to get everything to work.
+
+The FB app key and secret are in users.js with the FB init code.  The Twitter app keys and secrets are in settings/development.py and settings/production.py, respectively.  We are using [Twython](https://github.com/ryanmcgrath/twython) for Twitter integration.  Docs can be found [here](https://twython.readthedocs.org/en/latest/).
+
+All Twitter requests start like this:
+
+    OAUTH_TOKEN = UserProfile.objects.filter(user=request.user).values("OAUTH_TOKEN")[0]['OAUTH_TOKEN']
+	OAUTH_TOKEN_SECRET = UserProfile.objects.filter(user=request.user).values("OAUTH_TOKEN_SECRET")[0]['OAUTH_TOKEN_SECRET']
+	twitter = Twython(settings.TWITTER_KEY, settings.TWITTER_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
 
 ### Getting django compressor working
 

@@ -137,12 +137,13 @@ body {
 .wrap {
 	min-height: 100%;
 	height: auto !important;
+	height: 100%;
 	/* Negative indent footer by it's height */
 	margin: 0 auto -@footer-height;
 }
 
 /* Set the fixed height of the footer here */
-.push, .footer, .footer-fixed {
+.push, .footer {
 	height: @footer-height;
 }
 
@@ -176,5 +177,32 @@ select:focus {
 @media (max-width: 767px) {
 	body {
 		padding:0;
+	}
+}
+
+form.fixed-width-form {
+	input:not(input[type='submit']) {
+		height: 20px !important;
+		width: 200px !important;
+		padding: 4px 6px;
+		margin: 0 !important;
+	}
+	input[type='submit'] {
+		height: 30px !important;
+		width: 220px !important;
+	}
+}
+
+.seller-type-group {
+	margin-bottom: 20px;
+}
+
+.seller-type-label {
+	padding-right: 1px;
+}
+
+div[data-toggle-name="default_seller_type"] {
+    button {
+		width: 110px;
 	}
 }

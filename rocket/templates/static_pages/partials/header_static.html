@@ -1,18 +1,19 @@
 {% load static from staticfiles %}
+
 <div class="header">
 	<h1 class="flag">rocket</h1>
-	<div class="container login-link-container"><a class="login-link" href="{% url 'auth_login' %}">login</a></div>
+	
 	<div id="header-map"></div>
 	<div id="header-map-overlay"></div>
 	<div class="header-menu-bar">
 		<div class="header-menu">
 			<div class="edge"></div>
-			<div class="item1"><a href = "/">What</a></div>
-			<div class="item2"><a href="/how">How</a></div>
-			<div class="item3"><a href="/why">Why</a></div>
-			<div class="item4"><a href="/pricing">Pricing</a></div>
+			<div class="item1 nav" id="what" href="/what">What</div>
+			<div class="item2 nav" id="how" href="/how">How</div>
+			<div class="item3 nav" id="why" href="/why">Why</div>
+			<div class="item4 nav" id="pricing" href="/pricing">Pricing</div>
 			<div class="edge"></div>
-		</div>
+		</div> 
 	</div>
 	<div class="hook">
 		<div class="container">
@@ -25,17 +26,7 @@
 		</div>
 	</div>
 	<div class="header-signup">
-		<form class="form-inline start-signup" action="/users/register/" method="POST">
-			{% csrf_token %}
-			<div class="header-signup-field-wrap">
-				<input class="input-block-level start-email" autocomplete="off" type="text" name="email" placeholder="Email"/>
-				<input type="hidden" name="username" class="username" value=""/>
-				<input type="hidden" name="email_only" value="true"/>
-			</div>
-			<div class="header-signup-button-wrap">
-				<button type="submit" class="btn start-submit">post to classifieds</button>
-			</div>
-			<div class="clearfix"></div>
-		</form>
+		<a href="{% url "registration_register" %}" class="btn start-submit">sign-up</a>
+		<a href="{% url 'auth_login' %}" class="btn start-submit">login</a>
 	</div>
 </div>
