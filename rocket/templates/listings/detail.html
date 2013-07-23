@@ -21,17 +21,22 @@
 
 {% block content %}
   <div class="row">
-    <div class="span10">
-      {% include 'listings/partials/preview.html' %}
-      {% include 'listings/partials/edit.html' %}
-    </div>
-    {# <div class="listing-dash span2 wrapper" data-spy="affix" data-offset-top="400" style='position:fixed;top:55px;right:55px;'> #}
-    <div class="listing-dash span2" data-spy="affix" data-offset-top="400">
-      <div class="btn-group" data-toggle="buttons-radio">
-        <button type="button" class="btn btn-primary edit_button">Edit</button>
-        <button type="button" class="btn btn-primary active preview_button">Preview</button>
+    <div id="listing-detail" class="span9 tab-content">
+      <div class="tab-pane active" id="edit">
+        {% include 'listings/partials/edit.html' %}
       </div>
-      <button type="button" class="btn btn-primary submit">Submit Changes</button>
+      <div class="tab-pane" id="preview"> 
+        {% include 'listings/partials/preview.html' %}
+      </div>
+    </div>
+    <div class="span3"  style="padding-top:38px">
+      <div class="detail-sidebar" data-spy="affix" data-offset-top="82">
+        <div class="btn-group" data-toggle="buttons-radio">
+          <a class="btn btn-primary active" data-toggle="tab" href="#edit">Edit</a>
+          <a class="btn btn-primary" data-toggle="tab" href="#preview">Preview</a>
+        </div>
+        {# <button type="button" class="btn btn-primary submit">Submit Changes</button> #}
+      </div>
     </div>
   </div>
 {% endblock %}

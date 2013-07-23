@@ -46,7 +46,7 @@ class Migration(SchemaMigration):
         # Adding model 'ListingSpecKey'
         db.create_table(u'listings_listingspeckey', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('key', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
             ('category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingCategory'])),
         ))
         db.send_create_signal(u'listings', ['ListingSpecKey'])
@@ -54,7 +54,7 @@ class Migration(SchemaMigration):
         # Adding model 'ListingSpecValue'
         db.create_table(u'listings_listingspecvalue', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('value', self.gf('django.db.models.fields.CharField')(max_length=100)),
             ('key', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingSpecKey'])),
             ('listing', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Listing'])),
         ))
@@ -209,14 +209,14 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'ListingSpecKey'},
             'category': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.ListingCategory']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'key': ('django.db.models.fields.CharField', [], {'max_length': '100'})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
         u'listings.listingspecvalue': {
             'Meta': {'object_name': 'ListingSpecValue'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'key': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.ListingSpecKey']"}),
             'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.Listing']"}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
+            'value': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
         u'listings.listingstatus': {
             'Meta': {'object_name': 'ListingStatus'},

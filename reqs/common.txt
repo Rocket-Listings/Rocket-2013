@@ -1,7 +1,7 @@
 Django>=1.5.0
 
 django-celery==3.0.17
-django-compressor==1.3
+django-compressor
 
 Fabric==1.6.1
 South==0.8.1

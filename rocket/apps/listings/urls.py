@@ -7,9 +7,8 @@ urlpatterns = patterns('listings.views',
 
 	url(r'^/update/$', 'update', name='update'),	
 
-	url(r'^(?P<listing_id>\d+)/$', 'detail', name='detail'),
-	url(r'^(?P<listing_id>\d+)/$', 'detail', {'pane': 'edit' }, name='edit'),
-
+	url(r'^(?P<listing_id>\d+)/$', 'detail', {'pane': 'preview'}, name='detail'),
+	url(r'^(?P<listing_id>\d+)/edit/$', 'detail', {'pane': 'edit' }, name='edit'),
 
 	url(r'^(?P<listing_id>\d+)/delete/$', 'delete'),
 	# url(r'^(?P<listing_id>\d+)/delete_ajax/$', 'delete_ajax'),

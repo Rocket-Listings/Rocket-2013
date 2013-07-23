@@ -3,7 +3,7 @@ from listings import utils
 from django.contrib.auth.models import User
 from django.conf import settings
 from datetime import datetime, timedelta
-from listings.forms import ListingForm, ListingPics
+from listings.forms import ListingForm, ListingPics, SpecForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET, require_POST 
 from django.shortcuts import render, redirect, get_object_or_404
@@ -16,6 +16,7 @@ from django.core import serializers
 from django.http import HttpResponse, HttpResponseBadRequest
 from operator import __add__ as combine
 from django.http import Http404
+from django.forms.models import inlineformset_factory
 
 # @login_required
 # def user_listings(request, username=None):
@@ -55,25 +56,37 @@ def create(request, pane='edit'):
 
 @login_required
 @require_POST
-def update(request, listing_id=None):
+def update(request, listing_id=None): # not directly addressed by a route, allows DRY listing saving
     if listing_id:
         listing = get_object_or_404(Listing, id=listing_id)
+        specs = listing.listingspecvalue_set.select_related()
+
         if request.user != listing.user:
             raise Http404
-        form = ListingForm(request.POST, instance=listing)
-    else: 
-        form = ListingForm(request.POST)
+        # spec_form
+        listing_form = ListingForm(request.POST, instance=listing)
+        spec_form = SpecForm(request.POST, initial=specs) # SpecForm is not a real form
+    else:
+        listing_form = ListingForm(request.POST)
+        spec_form = SpecForm(request.POST)
 
-    if form.is_valid():
-        listing = form.save(commit=False)
+    if listing_form.is_valid() and spec_form.is_valid():
+
+        listing = listing_form.save(commit=False)
         listing.user = request.user
         listing.save()
+        for name, value in spec_form.cleaned_data.items():
+            print name
+            spec_id = int(name.replace('spec-',''))
+            ListingSpecValue.objects.create(value=value, key_id=spec_id, listing_id=listing.id)
         return redirect(listing)
-    else: # preserving validation errors
-        cxt.update({
-            'form': form,
-            'pane': pane
-        })
+    else:
+        # preserving validation errors
+        cxt = {
+            'form': listing_form,
+            'spec_form': spec_form,
+            'pane': 'edit',
+        }
         cxt.update(utils.get_listing_vars())
         return render(request, 'listings/detail.html', cxt)
 
@@ -81,13 +94,18 @@ def update(request, listing_id=None):
 def detail(request, listing_id, pane='view'):
     if request.method == 'GET':
         listing = get_object_or_404(Listing, id=listing_id)
+        specs_set = listing.listingspecvalue_set.select_related().all()
+        specs = {}
+        for spec in specs_set:
+            specs[spec.key.id] = spec
         cxt = {
             'listing': listing,
             'photos': listing.listingphoto_set.all(),
-            'specs': listing.listingspecvalue_set.select_related().all(),
+            'specs': specs,
         }
         if listing.user == request.user:
             form = ListingForm(instance=listing)
+            spec_form = SpecForm(initial=specs)
             cxt.update(utils.get_listing_vars())
             cxt.update({
                 'form': form,
@@ -98,33 +116,6 @@ def detail(request, listing_id, pane='view'):
             return render(request, 'listings/detail_public.html', cxt)
     else: # POST
         return update(request, listing_id)
-
-
-# @login_required
-# def update(request, listing_id):
-#   listing = get_object_or_404(Listing, id=listing_id)
-
-#   profile = request.user.get_profile()
-#   defaults = {'location':listing.location, 'category':listing.category, 'listing_type':profile.default_listing_type}
-#   form = ListingForm(initial=defaults)
-#   categories = ListingCategory.objects.all()
-#   photos = listing.listingphoto_set.all()
-#   specifications = listing.listingspecvalue_set.all()
-
-#   specs = ListingSpecKey.objects.all()
-#   categories = ListingCategory.objects.all()
-#   if request.user == listing.user: # updating his own listing
-#       if request.method == 'POST':
-#           listing_form = ListingForm(request.POST, instance = listing)
-#           if listing_form.is_valid():
-#               listing = listing_form.save()
-#               return redirect(listing, {'specs': specs, 'categories': categories})
-#           else:
-#               return render(request, 'listings/update.html', {'form': listing_form, 'specs': specs , 'categories': categories})
-#       else:
-#           return render(request, 'listings/update.html', {'listing':listing, 'form':form, 'categories':categories, 'photos':photos, 'specs':specs, 'specifications':specifications})
-#   else:
-#       return render(request, 'static_pages/403.html')
 
 def embed(request, listing_id):
     listing = get_object_or_404(Listing, id=listing_id)

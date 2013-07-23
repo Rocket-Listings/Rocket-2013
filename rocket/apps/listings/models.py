@@ -70,12 +70,12 @@ class Listing(models.Model):
 
 # Listing Specification
 class ListingSpecKey(models.Model):
-	key = models.CharField(max_length = 100)
+	name = models.CharField(max_length = 100)
 	category = models.ForeignKey(ListingCategory)
 
 
 class ListingSpecValue(models.Model):
-	name = models.CharField(max_length = 100)
+	value = models.CharField(max_length = 100)
 	key = models.ForeignKey(ListingSpecKey)
 	listing = models.ForeignKey(Listing)
 

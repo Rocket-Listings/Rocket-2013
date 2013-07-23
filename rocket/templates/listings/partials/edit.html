@@ -1,126 +1,88 @@
-<div class="edit">  
-  <form method="POST">
-    {% csrf_token %}
-    {# Include the hidden fields #}
-    {% for hidden in form.hidden_fields %}
-    {{ hidden }}
+{% load specval %}
+<form method="POST" class="listing-form form-horizontal">
+  {% csrf_token %}
+  {# Hidden fields  #}
+  {% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
+
+  {# Errors at the top #}
+  {% for field, errors in form.errors.items %}
+    <div class="alert alert-error alert-block">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4>Oops, a few errors</h4>
+      <ul class="errors">
+        {% for error in errors %}
+          <li><strong>{{ field }}</strong>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endfor %}
+
+  {# Category Select #}
+  <ul class="nav nav-tabs">
+    {% for group in cats %}
+    <li{% if forloop.first %} class="active"{% endif %}>
+      <a href="#{{ group.groupname }}" data-toggle="tab">{{ group.groupname }}</a>
+    </li>
     {% endfor %}
-    <ul class="nav nav-tabs">
-      {% for group in cat_groups %}
-      <li{% if forloop.first %} class="active"{% endif %}>
-        <a href="#{{ group }}" data-toggle="tab">{{ group }}</a>
-      </li>
-      {% endfor %}
-    </ul>
-    <div class="tab-content">
-      {% for group in cat_groups %}
-      <div class="tab-pane{% if forloop.first %} active{% endif %}" id="{{ group }}">
-        {% for cat in cats %}{% if cat.group == group %}
-        <a class="cat {{ group }}" data-id="{{ cat.id }}">{{ cat }}</a>
-        {% endif %}{% endfor %}
-      </div>
+  </ul>
+  <div class="tab-content">
+    {% for group in cats %}
+    <div class="tab-pane{% if forloop.first %} active{% endif %}" id="{{ group.groupname }}">
+      {% for cat in group.groupcats %}
+      <a class="cat {{ group.groupname }}" data-id="{{ cat.id }}">{{ cat }}</a>
       {% endfor %}
     </div>
-    
-    {# Include the visible fields #}
-    {% for field in form.visible_fields %}
-        {% if field.errors %}
-        <div class="alert alert-error">
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-         {{ field.errors }}
+    {% endfor %}
+  </div>
+
+  {# First form row #}
+  <div class="row">
+    {# Title #}
+    <div class="span6">
+      <div class="row">
+        <div class="span4">
+          <label>{{ form.title.label }}</label>
+          <input class="title input-block-level" maxlength="200" name="title" type="text" placeholder="e.g. 2000 Jeep Wrangler 4.0L" value="{{ form.title.value }}">
         </div>
-        {% endif %}
-        {{ field.label_tag }}
-        {{ field }}
-    {% endfor %}
-
-    <p>Specifications</p>
-    <table class="specs-table">
-        <tbody>
-            {% for spec in spec_keys %}
-            <tr class="hide" data-cat="{{ spec.category_id }}">
-                <td class="spec-key">{{ spec.key }}</td>
-                <td class="spec-value"><input type="text" name="specs[{{ spec.id }}]"/>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <input type="submit" value="Post to Craigslist" />
-  </form>
-    {% comment %}
-    {% csrf_token %}
-    <div class="l-header">
-      <h1 class="l-title">
-        <!-- Elements are either empty fields(create page) or load from the database (details page)-->
-        <fieldset>
-          <input id="id_title" name="title" placeholder="Title" type="text" value="{{listing.title}}"/>
-          <input id="id_price" name="price" type="text" placeholder="Price" value="{{listing.price}}"/>
-          <input id="id_location" name="location" type="text" placeholder="Location" value="{{listing.location}}"/>
-        </fieldset>
-      </h1>
+        <div class="span2">
+          <label>{{ form.price.label }}</label>
+          <div class="input-prepend gridfix">
+            <span class="add-on">$</span>
+            <input class="price input-block-level" name="price" type="text" value="{{ form.price.value }}">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span6">
+          <label>{{ form.description.label }}</label>
+          <textarea class="span6 description" placeholder="Describe your item" cols="40" name="description" rows="10">{{ form.description.value }}</textarea>
+        </div>
+      </div>
     </div>
-    <ul class="form">
-    <li>
-    <textarea cols="60" id="id_description" name="description" rows="10" placeholder="Description">{{listing.description}}</textarea>
-    </li>
-    <!-- All of the specs tables are loaded from the database (needs to be cleaned up).  Loads every spec every time-->
-    <div class="spec_tables">
-    {% for item in categories %}
-    <div class="category_{{item}}" style="display:none">
-    <table border='1' class="table_{{item}}">
-    <th colspan='2'><h4>Optional Specifications</h4></th>
-    {% for spec_value in specs %}
-    {% if spec_value.category.name == item.name %}
-    <tr>
-    <td>{{spec_value.key}}:</td>
-    <!-- input is firstname of category (e.g. arts in arts and crafts) _ specification (e.g. dimensions)-->
-    <td><input name={{spec_value.category.name.split.0}}_{{spec_value.key}} type="text"></td>
-    </tr>
-    {% endif %}
-    {% endfor %}
-    </table>
+    <div class="span3">
+      <label>Location</label>
+      <img src="http://placehold.it/370x390"/>
     </div>
-    {% endfor %}
+  </div>
+  <div class="hide">
+    <input id="id_location" maxlength="200" name="location" type="text" value="Bethesda, MD">
+  </div>
+  <div class="row">
+    <div class="span10">
+      <h4>Specifications</h4>
+      <div class="specs-form">
+          {% for spec_key in spec_keys %}
+          <div class="control-group hide" data-cat="{{ spec_key.category_id }}">
+              <label class="control-label" for="spec-{{ spec_key.id }}">{{ spec_key.name }}</label>
+              <div class="controls">
+                <input type="text" disabled="disabled" name="spec-{{ spec_key.id }}" value="{{ specs|specval:spec_key.id }}"/>
+              </div>
+          </div>
+          {% endfor %}
+      </div>
     </div>
-
-    <!-- The final category is loaded in view.py to easily store category specs into the database -->
-    <input class="hidden" name="final_cat" id="final_category" value="">
-
-    </br>
-
-    <li>
-    <div class="hidden">
-    <!-- Loads category form from the database-->
-    {{ form.category }}
-    </div>
-    </li>
-    <li>
-    <select id="id_listing_type" name="listing_type">
-    <option value="1">Private</option>
-    <option value="2" selected="selected">Public</option>
-    </select>
-    </li>
-    <li>
-    <select id="id_status" name="status">
-    <option value="1" selected="selected">Active</option>
-    <option value="2">Draft</option>
-    </select>
-    </li>
-    <br>
-
-    <button type="button" class="btn btn-primary" onclick='fileUpload()'>Upload Picture Here</button>
-    <!-- inserts the picture urls into inputs so that they can be loaded into the database-->
-    <div id="pictureData"></div>
-
-    <!-- inserts the actual picture scr from filepicker -->
-    <div id="image"></div>
-
-    <!-- Fills in the final picture count for easy use in the view.py-->
-    <input type="hidden" name="final_count" id="final_countdown" value="0">
-
-    <li>
-    <input class="btn" type="submit" value="Update" style="display:none" id="primaryButton"/>
-    </li>
-    </ul>
-    {% endcomment %}
-</div>
+  </div>
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">Post to Craigslist</button>
+  </div>
+</form>

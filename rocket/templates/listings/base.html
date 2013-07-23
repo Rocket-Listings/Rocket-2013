@@ -9,9 +9,16 @@
 {% endblock %}
 
 {% block js %}
-{% compress js %}
-{# <script src="{% static 'js/ZeroClipboard.js' %}" type="text/javascript"></p0script> #}
-<script src="{% static 'rocket/js/jquery.tablesorter.js' %}"></script>
-<script src="{% static 'listings/js/listings.js' %}" type="text/javascript"></script>
-{% endcompress %}
+    {# <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js" type="text/javascript"></script> #}
+    <script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
+    {# can't compress for some reason #}
+
+    <script src="{% static 'rocket/js/underscore.min.js' %}"></script>    
+    <script src="{% static 'rocket/js/backbone.min.js' %}"></script>
+    <script src="{% static 'rocket/js/mustache.js' %}"></script>
+    {% compress js %}
+        {# <script src="{% static 'js/ZeroClipboard.js' %}" type="text/javascript"></script> #}
+        <script src="{% static 'rocket/js/jquery.tablesorter.js' %}"></script>
+        <script src="{% static 'listings/js/listings.js' %}" type="text/javascript"></script>
+    {% endcompress %}
 {% endblock %}

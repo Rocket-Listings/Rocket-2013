@@ -172,9 +172,6 @@ THIRD_PARTY_APPS = (
 
 	# pagination template tags
 	'pagination',
-
-	# static file management
-	'compressor',
 )
 
 LOCAL_APPS = (
@@ -248,12 +245,6 @@ COMPRESS_CSS_FILTERS = [
 COMPRESS_JS_FILTERS = [
   'compressor.filters.template.TemplateFilter',
 ]
-
-
-COMPRESS_PRECOMPILERS = (
-    ('text/less', 'lessc {infile} {outfile}'),
-)
-
 
 ############# USER ACCOUNTS CONFIG
 AUTH_PROFILE_MODULE = 'users.UserProfile'
