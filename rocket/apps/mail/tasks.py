@@ -127,8 +127,10 @@ def autopost_task(username, listing_id):
 	payload = dict(payload_tuples)
 	r = requests.post(post_url, data=payload)
 
-	return Listing.objects.get(pk=listing_id).title
+	return Listing.objects.get(pk=listing_id).pk
 
 @task_success.connect
 def autopost_success_handler(sender=None, result=None, args=None, kwargs=None, **kwds):
-	print result
+	listing = Listing.objects.get(pk=result)
+	listing.status_id = 3
+	listing.save()

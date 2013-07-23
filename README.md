@@ -1,6 +1,6 @@
 # Rocket Listings - Django
 
-_Last updated: 7/22/13
+_Last updated: 7/22/13_
 
 ### Celery
 
