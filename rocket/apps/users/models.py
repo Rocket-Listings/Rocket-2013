@@ -44,7 +44,6 @@ class UserComment(models.Model):
 	comment = models.TextField(blank=False)
 	email = models.EmailField(max_length=255, blank=False) # email of commenter
 	user = models.ForeignKey(User) # contains user foreignkey
-	name = models.CharField(max_length=100, blank=False)
 	title = models.CharField(max_length=255, blank=False)
 	
 

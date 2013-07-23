@@ -5,7 +5,7 @@
 	{% for comment in comments|slice:":5" %}
 		<div class="each-comment">
 				<h5>{{comment.title}}</h5>
-				<h6>By: {{comment.name}} on {{comment.date_posted}}</h6>
+				<h6>{{comment.date_posted}}</h6>
 				<p>{{comment.comment}}</p>
 		</div>
 	{% endfor %}

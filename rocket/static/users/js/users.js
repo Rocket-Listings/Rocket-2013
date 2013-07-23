@@ -291,7 +291,7 @@ $(function() {
 
 	function insertNewComment(data) {
 		var newComment = '<div class="each-comment"><h5>' + data.title + '</h5>';
-			newComment += '<h6>By: ' + data.name + ' on ' + data.date_posted  + '</h6>';
+			newComment += '<h6>' + data.date_posted  + '</h6>';
 			newComment += '<p>' + data.comment + '</p></div>';
 		$(".comment-body").append(newComment);
 	}

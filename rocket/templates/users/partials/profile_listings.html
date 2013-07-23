@@ -1,7 +1,6 @@
 {% load static from staticfiles %}
 	<div class="profile-selling">
-		<h4>Listings by {{user.username}} </h4>
-		<h5>Lifetime Listings Created: {{ listings|length }} </h5>	
+		<h4>Listings </h4>
 			{% if listings %}
 			<div class="row">
 					{% for listing in listings %}
@@ -14,9 +13,9 @@
 						{% else %}
 							<img src="{% static 'users/img/sail.jpg' %}">
 						{% endif %}
-						<h5>{{listing.title}}</h5>
-						<h5>${{listing.price}}</h5>
+						<h5>{{listing.title}} - ${{listing.price}}</h5>
 						<p>{{listing.description}}</p>
+						
 					</a>
 				</div>
 					{% endfor %}

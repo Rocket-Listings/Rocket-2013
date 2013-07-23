@@ -11,13 +11,13 @@
 					<a href="{% url 'users.views.info' %}">Edit profile</a>
 		{% endif %}
 	</div>
-	<div class="span4">
+	<div class="span5">
 		<div class="row">
 			{% if user.get_profile.name and not user.get_profile.nameprivate or request.user == user and user.get_profile.name %}
 				<div class="span2">
 						<h3>{{user.get_profile.name}}</h3>
 				</div>
-				<div class="span2">
+				<div class="span3">
 					{% if not user.get_profile.locationprivate %}
 						<h5>{{user.get_profile.location}}</h5>
 					{% endif %}
@@ -30,7 +30,12 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="span4">
+			<div class="span2">
+				<h4 class="text-success">user rating{{user.rating}}</h4>	
+			</div>
+		</div>
+		<div class="row">
+			<div class="span5">
 				{% if user.get_profile.bio %}
 					<p>{{user.get_profile.bio}}</p>
 				{% else %}

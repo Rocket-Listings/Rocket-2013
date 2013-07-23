@@ -162,15 +162,18 @@
 	margin-top: 30px;
 
 	.span-left{
-		border-right: 1px solid #DDD;
-		padding-right: 20px;
+		//border-right: 1px solid #DDD;
+		margin-right: -1px;
 
 		.profile-header {	
 			margin-right: -1px;
+			border-bottom: 1px solid #DDD;
+			padding-bottom: 10px;
 
 			.profile-picture {
 				text-align: center;
 				padding-left: 0px;
+				margin-bottom: 10px;
 					
 					img.thumbnail {
 						border-radius: 0px;
@@ -180,6 +183,8 @@
 					 	box-shadow: none;
 					 	-webkit-box-shadow: none;
 					 	-moz-box-shadow: none;
+					 	padding: 0;
+					 	border: none;
 					}
 				a{
 					line-height: 40px;
@@ -194,9 +199,10 @@
 		 	}
 
 		 	h5{
-		 		text-align: left;
+		 		float: right;
 		 		line-height: 33px;
 		 		margin: 0px;
+		 		padding-right: 20px;
 		 	}
 
 		 	h4{
@@ -208,16 +214,18 @@
 		 		padding-right: 20px;
 		 	}
 		}
-	}
 
 	 .comments {
+	 	margin-top: 30px;
 
 	 	h4{
-	 		text-align: center;
+	 		text-align: left;	 		
+	 		padding-bottom: 20px;
+	 		border-bottom: 1px dashed #DDD;
 	 	}
 
 	 		.each-comment{
-	 			border-bottom: 1px solid #DDD;
+	 			border-bottom: 1px dashed #DDD;
 	
 			 	h4{
 			 		margin: 0;
@@ -229,7 +237,8 @@
 				}
 
 				p{
-					padding-top: 5px;
+					
+					padding: 5px 5px 0 0;
 				}
 			}
 	}
@@ -258,19 +267,28 @@
 		}
 
 		li input{
-			width: 128px;
+			width: 206px;
 		}
 		
 		.comment-submit {
 			margin-left: 5px;
 		}
 	}
-	
+}
+
+	.seller-stats{
+		h4{
+			margin: 0;
+			line-height: 30px;
+			text-align: left;
+			margin-bottom: 10px;
+		}
+	}
 	.profile-selling {
+		margin-top: 30px;
 
 		h4{
-			margin-top: 35px;
-			text-align: center;
+			text-align: left;
 			margin-bottom: 15px;
 		}
 
@@ -290,6 +308,8 @@
 			box-shadow: none;
 			-webkit-box-shadow: none;
 			-moz-box-shadow: none;
+			width: 270px;
+			padding: 0px;
 			
 			h5{
 				text-align: left;
@@ -298,17 +318,16 @@
 				overflow: hidden;
 				white-space: nowrap;
 				text-overflow: ellipsis;
-				padding-left: 5px;
-				padding-right: 5px;
+				padding-left: 10px;
+				padding-right: 10px;
 			}
 			
 			p {
-				padding-left: 5px;
-				padding-right: 5px;
+				padding-left: 10px;
+				padding-right: 10px;
 				text-align: left;
 				overflow: hidden;
-				min-height: 40px;
-				max-height: 40px;
+				max-height: 60px;
 			}
 		}
 	}
