@@ -89,7 +89,7 @@
 					<tr class="uneditable">
 						<td>Twitter:</td>
 						<td>
-							<span class="at {% if user.get_profile.twitter_handle %}">@</span>{% endif %}<span class="twitter-handle">{{ user.get_profile.twitter_handle }}</span>
+							<span class="at {% if not user.get_profile.twitter_handle %}muted{% endif %}">@</span><span class="twitter-handle">{{ user.get_profile.twitter_handle }}</span>
 						</td>
 						<td>
 							<a class="verify-twitter {% if user.get_profile.twitter_handle %}hide{% endif %}" href="#">Connect</a>

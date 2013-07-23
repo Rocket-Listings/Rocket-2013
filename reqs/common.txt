@@ -27,3 +27,5 @@ dj-database-url==0.2.1
 django-pagination
 
 twython
+
+django-ratings
