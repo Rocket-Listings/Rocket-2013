@@ -4,6 +4,16 @@ $(window).load(function(){
 
 $(document).ready(function(){
 	var timeout;
+
+	function eventHandlers() {
+		$("#search_button").click(handleClick);
+	}
+
+	function handleClick(e) {
+		timeout = null;
+		searchAjax();
+	}
+
 	$('.search_text').keyup(function(e){
 
 		if (timeout) {
@@ -19,6 +29,8 @@ $(document).ready(function(){
 			timeout = setTimeout(searchAjax, 2000);
 		}
 	});
+
+	eventHandlers();
 });
 
 function searchSuccess(data, textStatus, jqXHR)

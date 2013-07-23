@@ -26,6 +26,7 @@ from django.shortcuts import render_to_response
 from haystack.query import SearchQuerySet
 from haystack.inputs import AutoQuery
 from django.core.urlresolvers import reverse
+from haystack import connections
 # Moved here from users/views.py
 
 @login_required
@@ -77,6 +78,7 @@ def create(request):
 		if listing_form.is_valid():
 			listing = listing_form.save(commit=False)
 			listing.user = request.user
+			connections['default'].get_unified_index().get_index(Listing).update_object(listing)
 			listing.save()
 			for x in range(0, count):
 				string = d["photo%d" %(x)]
@@ -128,7 +130,10 @@ def detail(request, listing_id):
 		if request.user == listing.user: # updating his own listing
 			listing_form = ListingForm(request.POST, instance = listing)		
 			if listing_form.is_valid():
+				connections['default'].get_unified_index().get_index(Listing).update_object(listing)
 				listing = listing_form.save()
+				
+
 				return redirect(listing)
 			else:
 				return render(request, 'listings/listing_update.html', {'form': listing_form})
@@ -170,8 +175,10 @@ def update(request, listing_id):
 @login_required
 def delete(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
+
 	print(listing_id)
 	if request.user == listing.user:
+		connections['default'].get_unified_index().get_index(Listing).remove_object(listing)
 		listing.delete()
 		return redirect('listings.views.user_listings', username = request.user.username)
 
@@ -184,6 +191,7 @@ def delete_ajax(request, listing_id):
 		response['success'] = False
 		response['reason'] = 'Cannot find listing.'
 	if request.user == listing.user:
+		connections['default'].get_unified_index().get_index(Listing).remove_object(listing)
 		listing.delete()
 		response['success']= True
 	else:
