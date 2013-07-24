@@ -72,8 +72,10 @@ def on_incoming_admin_message(request):
 		user = get_object_or_404(User, username= request.POST.get('recipient').split('@')[0])
 		listing = user.listing_set.get(title__exact= request.POST.get('subject', '').partition('"')[2].partition('"')[0])
 		email = user.email
-		send_mail( request.POST.get('subject', '') , request.POST.get('body-plain', ''), 'rocket@rocketlistings.mailgun.org', [email], fail_silently=False)
-		message = Message(listing = listing, content = request.POST.get('body-plain', ''), buyer = listing.buyer_set.get(name__exact = "Craigslist"))
+		send_mail( request.POST.get('subject', '') , request.POST.get('body-html', ''), 'rocket@rocketlistings.mailgun.org', [email], fail_silently=False)
+		to_parse = BeautifulSoup(request.POST.get('body-html', ''))
+		cleaned_content = "Click this link to activate and manage your post on Craigslist: " + to_parse.find('a').contents[0]
+		message = Message(listing = listing, content = cleaned_content, buyer = listing.buyer_set.get(name__exact = "Craigslist"))
 		message.save()
 
 	if verify(request.POST.get('token', ''), request.POST.get('timestamp', ''), request.POST.get('signature', '')):
