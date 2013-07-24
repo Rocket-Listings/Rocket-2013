@@ -289,6 +289,7 @@ $(function() {
 				xhr.setRequestHeader("X-CSRFToken", csrftoken);
 			},
 			success: function(response) {
+				console.log(response);
 				$(".fb-name").text(response);
 				$(".connect-fb").hide();
 				$(".disconnect-fb").show();
