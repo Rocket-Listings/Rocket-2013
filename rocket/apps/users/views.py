@@ -162,7 +162,7 @@ def fb_profile(request):
 			fb.link = request.POST.get('link', "")
 			fb.picture = request.POST.get('picture', "")
 			fb.save()
-			return HttpResponse(json.dumps(fb.name))
+			return HttpResponse(fb.name)
 		else:
 			return HttpResponseForbidden
 	else:
