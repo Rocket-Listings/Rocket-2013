@@ -236,6 +236,7 @@ $(function() {
 			}
 			else {
 				FB.login(function (response) {
+					console.log(response);
 					if (response.status === 'connected') {
 						fbProfile();
 					}

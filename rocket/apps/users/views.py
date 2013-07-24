@@ -53,6 +53,7 @@ def profile(request, username=None):
 	photos = ListingPhoto.objects.filter(listing=user)
 	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos)
 	comments = UserComment.objects.filter(user=user).order_by('-date_posted')[:5]
+	fbProfile = ProfileFB.objects.get(profile=user.get_profile())
 	if request.method == 'POST':
 		comment_form = CommentSubmitForm(request.POST, instance = UserComment(user=user))
 		if comment_form.is_valid():
@@ -63,7 +64,7 @@ def profile(request, username=None):
 			errors = comment_form.errors
 			return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
-		return render(request, 'users/user_profile.html', {'user':user, 'listings':allListings, 'photos':photos, 'comments':comments}) #'activelistings':activelistings, 'draftlistings':draftlistings,
+		return render(request, 'users/user_profile.html', {'user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile}) #'activelistings':activelistings, 'draftlistings':draftlistings,
 
 def delete_account(request):
 	user = request.user
