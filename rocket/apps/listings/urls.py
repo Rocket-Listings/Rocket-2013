@@ -18,4 +18,6 @@ urlpatterns = patterns('listings.views',
 	#api patterns TODO: respond differently based on HTTP_ACCEPT header, but keep urls the same
 	url(r'^(?P<listing_id>\d+)/api/buyers/$', 'listing_buyers_ajax'),
 	url(r'^(?P<listing_id>\d+)/api/messages/(?P<buyer_id>\d+)/$', 'message_thread_ajax'),
+
+	url(r'^(?P<listing_id>\d+)/status/$', 'status'),
 )

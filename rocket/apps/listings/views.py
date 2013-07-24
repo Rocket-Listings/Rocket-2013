@@ -222,3 +222,7 @@ def message_thread_ajax(request, listing_id, buyer_id):
 
 
 # import_uploader = AjaxFileUploader(backend=upload_backend)
+
+def status(request, listing_id):
+	listing = get_object_or_404(Listing, id=listing_id)
+	return HttpResponse(listing.status)

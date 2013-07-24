@@ -37,12 +37,32 @@ $(function() {
 	// AUTOPOST
 	$(".share_optn").click(function (e) {
 		e.preventDefault();
-		$.ajax({
-			type: 'GET',
-			url: $(this).attr('href'),
-			success: function (response) {
-			}
-		});
+		if (!$(this).hasClass("disabled")) {
+			$.ajax({
+				type: 'GET',
+				url: $(this).attr('href'),
+				success: function (response) {
+				}
+			});
+		}
+		$(this).addClass("disabled");
+		checkStatus($(this).attr("id"));
 		return false;
 	});
+
+	function checkStatus(listingid) {
+		var timer = setInterval(function () {
+			$.ajax({
+				type: 'GET',
+				url: '/listings/' + listingid + '/status',
+				success: function (response) {
+					if (response === "Active") {
+						clearInterval(timer);
+						$("tr[data-listing-id='" + listingid + "'] td.listing-status").html(response);
+						$("a#" + listingid).removeClass("disabled");
+					}
+				}
+			});
+		}, 3000);
+	}
 });
