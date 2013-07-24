@@ -2,7 +2,7 @@ from listings.models import Listing, ListingPhoto, Buyer, Offer, Message, Listin
 import datetime
 #from users.models import UserProfile
 from users.forms import UserProfileForm, CommentSubmitForm
-from users.models import UserProfile, UserComment
+from users.models import UserProfile, UserComment, ProfileFB
 from django.forms.models import inlineformset_factory
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
@@ -24,6 +24,7 @@ def overview(request, username=None):
 def info(request):
 	user = request.user
 	profile = user.get_profile()
+	fbProfile = ProfileFB.objects.get(profile=profile)
 	if request.method == 'POST':
 		user_profile_form = UserProfileForm(request.POST, instance=profile)
 		if user_profile_form.is_valid():
@@ -42,7 +43,7 @@ def info(request):
 			return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
 		user_profile_form = UserProfileForm(instance=profile)
-		return render(request, 'users/user_info.html', {'user': user, 'form': user_profile_form})
+		return render(request, 'users/user_info.html', {'user': user, 'form': user_profile_form, 'fb': fbProfile})
 
 def profile(request, username=None):
 	user = User.objects.get(username=username)
@@ -151,3 +152,27 @@ def have_oauth(request):
 		return HttpResponseForbidden()
 
 
+@login_required
+def fb_profile(request):
+	if request.method == 'POST':
+		if request.is_ajax():
+			fb = ProfileFB.objects.get(profile=request.user)
+			fb.username = request.POST.get('username', "")
+			fb.name = request.POST.get('name', "")
+			fb.link = request.POST.get('link', "")
+			fb.picture = request.POST.get('picture', "")
+			fb.save()
+			return HttpResponse(json.dumps(fb.name))
+		else:
+			return HttpResponseForbidden
+	else:
+		return HttpResponseForbidden
+
+def disconnect_fb(request):
+	if request.is_ajax():
+		fb = ProfileFB.objects.get(profile=request.user)
+		fb.username, fb.name, fb.link, fb.picture = "", "", "", ""
+		fb.save()
+		return HttpResponse("success")
+	else:
+		return redirect('/users/login')

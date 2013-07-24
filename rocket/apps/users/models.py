@@ -8,11 +8,17 @@ from djangoratings.fields import RatingField
 
 # User Profile
 class UserProfile(models.Model):
+	SELLER_TYPE_CHOICES = (
+		('P', 'Person'),
+		('B', 'Business')
+	)
+
 	user = models.OneToOneField(User)
 	name = models.CharField(max_length=100, blank=True)
 	location = models.CharField(max_length=255, blank=True)
 	default_category = models.ForeignKey(ListingCategory, null=True, blank=True)
 	default_listing_type = models.ForeignKey(ListingType, null=True, blank=True)
+	default_seller_type = models.CharField(max_length=1, choices=SELLER_TYPE_CHOICES, default='P')
 	phone = models.CharField(max_length=50, blank=True)
 	bio = models.TextField(blank=True)
 	rating = RatingField(range=5)
@@ -31,7 +37,8 @@ class UserProfile(models.Model):
 # Handles user profile creation if not already created
 def create_user_profile(sender, instance, created, **kwargs):  
     if created:  
-    	UserProfile.objects.create(user=instance)
+    	profile = UserProfile.objects.create(user=instance)
+    	ProfileFB.objects.create(profile=profile)
 
 post_save.connect(create_user_profile, sender=User)
 
@@ -48,4 +55,15 @@ class UserComment(models.Model):
 	def __unicode__(self):
 		return self.user.username
 
+
 #User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
+
+class ProfileFB(models.Model):
+	profile = models.OneToOneField(UserProfile)
+	username = models.CharField(max_length=50, blank=True)
+	name = models.CharField(max_length=100, blank=True)
+	link = models.CharField(max_length=100, blank=True)
+	picture = models.CharField(max_length=200, blank=True)
+
+	def __unicode__(self):
+		return self.username

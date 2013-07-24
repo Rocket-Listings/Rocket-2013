@@ -31,7 +31,7 @@
 		{% for listing in listings %}
 		<tr data-listing-id="{{ listing.id }}" >
 			<td>
-				<a class="bargle" href="{{ listing.get_absolute_url }}">
+				<a href="{{ listing.get_absolute_url }}">
 					{{ listing.title }}
 				</a>
 			</td>
