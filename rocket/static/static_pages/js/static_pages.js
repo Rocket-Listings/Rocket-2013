@@ -55,7 +55,7 @@ $(function() {
 	 */
 	google.maps.visualRefresh = true;
 	var mapOptions = {
-		center: new google.maps.LatLng(44.5, -72.8), // burlington coords
+		center: new google.maps.LatLng(49.5, 60.8), // burlington coords 44.5, -72.8
 		zoom: 10,
 		mapTypeId: google.maps.MapTypeId.ROADMAP,
 		disableDefaultUI: true,
@@ -69,18 +69,40 @@ $(function() {
 	var map = new google.maps.Map(document.getElementById("header-map"), mapOptions);
 	$("#header-map-overlay").css('visibility', 'visible');
 
-	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(gotLocation, noLocation);
-	} else {
-		console.log("Error: Old or non-compliant browser.");
+	// if (navigator.geolocation) {
+	// 	navigator.geolocation.getCurrentPosition(gotLocation, noLocation);
+	// } else {
+	// 	console.log("Error: Old or non-compliant browser.");
+	// }
+
+	function getIP() {
+		$.ajax({
+			method: 'GET',
+			url: 'http://jsonip.appspot.com/',
+			success: function (response) {
+				getLocation(response.ip);
+			}
+		});
 	}
 
-	function gotLocation(pos) {
-		map.panTo(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude + 0.4));
+	function getLocation(ip) {
+		$.ajax({
+			method: 'GET',
+			url: 'http://freegeoip.net/json/' + ip,
+			success: function (response) {
+				gotLocation(response.latitude, response.longitude);
+			}
+		})
+	}
+
+	function gotLocation(lat, lng) {
+		map.panTo(new google.maps.LatLng(lat, lng + 0.4));
 	}
 	function noLocation(error) { 
 		console.log( "Maps error: " + error.code); 
 	}
+
+	getIP();
 
 	$('.nav').click(function(event) {
 			event.preventDefault();			//don't use as normal hyperlinks

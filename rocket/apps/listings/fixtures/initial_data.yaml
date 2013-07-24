@@ -488,23 +488,29 @@
 - model: listings.ListingStatus
   pk: 1
   fields:
-    name: Active
-    description: Listing is viewable and available
-
-- model: listings.ListingStatus
-  pk: 2
-  fields:
     name: Draft
     description: Listing is not ready to be posted or is incomplete
 
 - model: listings.ListingStatus
+  pk: 2
+  fields:
+    name: Pending
+    description: Listing is complete but not posted to Craigslist
+
+- model: listings.ListingStatus
   pk: 3
+  fields:
+    name: Active
+    description: Listing has been posted on Craigslist
+
+- model: listings.ListingStatus
+  pk: 4
   fields:
     name: Sold
     description: Listing has already been sold and is no longer available
 
 - model: listings.ListingStatus
-  pk: 4
+  pk: 5
   fields:
     name: Deleted
     description: Listing has been removed from user profile

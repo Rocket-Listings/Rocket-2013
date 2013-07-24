@@ -3,20 +3,6 @@
 {% load humanize %}
 {# Requires the context variable 'listings' #}
 
-<div id = "loadingModal" class="modal hide fade" data-backdrop="static">
-  <div class="modal-header">
-    <h3>Autoposting...</h3>
-  </div>
-  <div class="modal-body">
-    <p>
-    	Please wait this should only take a few moments.
-    </p>
-  </div>
-  <div class="modal-footer">
-  	<button class="autopost-close btn btn-info disabled" data-dismiss="" aria-hidden="true">Close</button>
-  </div>
-</div>
-
 <table class="table table-listings table-hover sortable">
 	<thead>
 		<tr>
@@ -25,6 +11,7 @@
 			{# <th class="sortable">Location</th> #}
 			<th><a href="#">Category</a></th>
 			<th><a href="#">Date Listed</a></th>
+			<th><a href="#">Status</a></th>
 			<th class="sorttable_nosort">Manage</th>
 		</tr>
 	</thead>
@@ -32,7 +19,7 @@
 		{% for listing in listings %}
 		<tr data-listing-id="{{ listing.id }}" >
 			<td>
-				<a class="bargle" href="{{ listing.get_absolute_url }}">
+				<a href="{{ listing.get_absolute_url }}">
 					{{ listing.title }}
 				</a>
 			</td>
@@ -40,13 +27,14 @@
 			{# <td>{{ listing.location }}</td> #}
 			<td>{{ listing.category.name }}</td>
 			<td><p class="hide">{{ listing.pub_date|date:"m/d/y P" }}</p>{{ listing.pub_date|naturaltime }}</td>
+			<td class="listing-status">{{ listing.status }}</td>
 			<td>
 				<div class="btn-toolbar" style="text-align: center;">
 					<a href="{{ listing.get_absolute_url }}">Link</a>
 					<div class="btn-group">
 
 						<!--autopost button -->
-						<a class="btn share_optn" title="Autopost to Craigslist" href="{% url 'mail.views.autopost' listing.id %}" data-toggle="modal" data-target = "#loadingModal" data-original-title="Autopost to Craigslist"><i class ="icon-share"></i></a>
+						<a class="btn share_optn" id="{{ listing.id }}" title="Autopost to Craigslist" href="{% url 'mail.views.autopost' listing.id %}" data-original-title="Autopost to Craigslist"><i class ="icon-share"></i></a>
 
 						<!--edit button -->
 						<a class="btn edit_optn" title="Edit Listing" href="{% url 'listings.views.detail' listing.id %}" data-container="body" data-toggle="tooltip" data-original-title="Edit Listing"><i class="icon-edit"></i></a>
