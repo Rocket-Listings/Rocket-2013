@@ -26,7 +26,7 @@ $(document).ready(function(){
     		searchAjax();
     	}
     	else {
-			timeout = setTimeout(searchAjax, 2000);
+			timeout = setTimeout(searchAjax, 1000);
 		}
 	});
 

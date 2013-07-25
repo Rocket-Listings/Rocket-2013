@@ -3,14 +3,14 @@
 
 {% if listings.count > 0 %}
 	{% for listing in listings %}
-		<tr data-listing-id="{{ listing.identification }}" >
+		<tr data-listing-id="{{ listing.identification }}">
 			<td>
 				<a class="bargle" href="{{ listing.url_id }}">{{ listing.title }}</a>
 			</td>
 			<td>${{ listing.price }}</td>
 			{# <td>{{ listing.location }}</td> #}
 			<td>{{ listing.category }}</td>
-			<td><p class="hide">{{ listing.pub_date|date:"m/d/y P" }}</p>{{ listing.pub_date|naturaltime }}</td>
+			<td><p style=" float:right" class="hide">{{ listing.pub_date|date:"m/d/y P" }}</p>{{ listing.pub_date|naturaltime }}</td>
 		</tr>
 	{% endfor %}
 {% else %}
