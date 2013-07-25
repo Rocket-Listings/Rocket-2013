@@ -21,7 +21,6 @@ class UserProfile(models.Model):
 	default_seller_type = models.CharField(max_length=1, choices=SELLER_TYPE_CHOICES, default='P')
 	phone = models.CharField(max_length=50, blank=True)
 	bio = models.TextField(blank=True)
-	rating = RatingField(range=5)
 	propic = models.CharField(max_length=200, blank=True)
 	twitter_handle = models.CharField(max_length=20, blank=True)
 	OAUTH_TOKEN = models.CharField(max_length=200, blank=True)
