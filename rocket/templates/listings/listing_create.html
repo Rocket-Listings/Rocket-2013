@@ -39,6 +39,13 @@
       </div>
     </div>
     <div class="span10">
+      {% if first_time == 1 %}
+        <div class="alert alert-info">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <h4>Welcome</h4>
+          Its your first time, check dis shit out
+        </div>
+      {% endif %}
     	{% include 'listings/partials/listings_edit.html' %}
     	{% include 'listings/partials/listings_preview.html' %}
     </div>

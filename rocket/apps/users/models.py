@@ -65,3 +65,7 @@ class ProfileFB(models.Model):
 
 	def __unicode__(self):
 		return self.username
+
+class FirstVisit(models.Model):
+	url = models.URLField()
+	user = models.ForeignKey('auth.User')

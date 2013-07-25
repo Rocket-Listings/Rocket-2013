@@ -20,6 +20,13 @@
 
 {% block content %}
 	<div class="container-fluid">
+		{% if first_time == 1 %}
+			<div class="alert alert-info">
+  				<button type="button" class="close" data-dismiss="alert">&times;</button>
+  				<h4>Welcome</h4>
+  				Its your first time, check dis shit out
+			</div>
+		{% endif %}
 		<div class="row-fluid">
 			<div  class="span4"> 
 				<input id="search_bar" type="search" class="dashboard-input light-table-filter" data-table="order-table" placeholder="Type to Search Listings"/>
