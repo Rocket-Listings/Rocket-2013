@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+{% load humanize %}
+{% load compress %}
+
+{% block js %}
+    {% compress js %}
+        <script src="{% static 'listings/js/sorttable.js' %}" type="text/javascript"></script>
+    {% endcompress %}
+    <script src="{% static 'listings/js/ajax.js' %}" type="text/javascript"></script>
+{% endblock %}
+
+{% block css %}
+{% compress css %}
+<link type="text/less" media="all" rel="stylesheet" href="{% static 'listings/less/listings.less' %}"/>
+{% endcompress %}
+{% endblock %}
+
+{% block content %}
+
+	<div class="search_box">
+		<h3>Search Listings</h3>
+		{% csrf_token %}
+		<div class="input-append">
+			<input type="text" class="search_text span2 search-query"/>
+			<button id="search_button" class="btn btn-primary">Search</button>
+		</div>
+	</div>
+
+	<table class="table table-listings table-hover sortable">
+		<thead>
+			<tr>
+				<th><a href="#">Title</a><i class="icon-blank"></i></th>
+				<th class="sorttable_numeric"><a href="#">Price</a><i class="icon-blank"></i></th>
+				<th><a href="#">Category</a><i class="icon-blank"></i></th>
+				<th><a href="#">Date Listed</a><i class="icon-blank"></i></th>
+			</tr>
+		</thead>
+		<tbody class="listing_table">
+		
+		
+		</tbody>
+	</table>
+{% endblock %}

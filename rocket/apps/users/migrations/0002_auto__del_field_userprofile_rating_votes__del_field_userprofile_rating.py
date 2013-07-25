@@ -8,58 +8,23 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'UserProfile'
-        db.create_table(u'users_userprofile', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
-            ('location', self.gf('django.db.models.fields.CharField')(max_length=255, blank=True)),
-            ('default_category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingCategory'], null=True, blank=True)),
-            ('default_listing_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingType'], null=True, blank=True)),
-            ('default_seller_type', self.gf('django.db.models.fields.CharField')(default='P', max_length=1)),
-            ('phone', self.gf('django.db.models.fields.CharField')(max_length=50, blank=True)),
-            ('bio', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('propic', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
-            ('twitter_handle', self.gf('django.db.models.fields.CharField')(max_length=20, blank=True)),
-            ('OAUTH_TOKEN', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
-            ('OAUTH_TOKEN_SECRET', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
-            ('rating_votes', self.gf('django.db.models.fields.PositiveIntegerField')(default=0, blank=True)),
-            ('rating_score', self.gf('django.db.models.fields.IntegerField')(default=0, blank=True)),
-        ))
-        db.send_create_signal(u'users', ['UserProfile'])
+        # Deleting field 'UserProfile.rating_votes'
+        db.delete_column(u'users_userprofile', 'rating_votes')
 
-        # Adding model 'UserComment'
-        db.create_table(u'users_usercomment', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('date_posted', self.gf('django.db.models.fields.DateField')(auto_now_add=True, blank=True)),
-            ('comment', self.gf('django.db.models.fields.TextField')()),
-            ('email', self.gf('django.db.models.fields.EmailField')(max_length=255)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=255)),
-        ))
-        db.send_create_signal(u'users', ['UserComment'])
-
-        # Adding model 'ProfileFB'
-        db.create_table(u'users_profilefb', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('profile', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['users.UserProfile'], unique=True)),
-            ('username', self.gf('django.db.models.fields.CharField')(max_length=50, blank=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
-            ('link', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
-            ('picture', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
-        ))
-        db.send_create_signal(u'users', ['ProfileFB'])
+        # Deleting field 'UserProfile.rating_score'
+        db.delete_column(u'users_userprofile', 'rating_score')
 
 
     def backwards(self, orm):
-        # Deleting model 'UserProfile'
-        db.delete_table(u'users_userprofile')
+        # Adding field 'UserProfile.rating_votes'
+        db.add_column(u'users_userprofile', 'rating_votes',
+                      self.gf('django.db.models.fields.PositiveIntegerField')(default=0, blank=True),
+                      keep_default=False)
 
-        # Deleting model 'UserComment'
-        db.delete_table(u'users_usercomment')
-
-        # Deleting model 'ProfileFB'
-        db.delete_table(u'users_profilefb')
+        # Adding field 'UserProfile.rating_score'
+        db.add_column(u'users_userprofile', 'rating_score',
+                      self.gf('django.db.models.fields.IntegerField')(default=0, blank=True),
+                      keep_default=False)
 
 
     models = {
@@ -142,8 +107,6 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
             'phone': ('django.db.models.fields.CharField', [], {'max_length': '50', 'blank': 'True'}),
             'propic': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
-            'rating_score': ('django.db.models.fields.IntegerField', [], {'default': '0', 'blank': 'True'}),
-            'rating_votes': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0', 'blank': 'True'}),
             'twitter_handle': ('django.db.models.fields.CharField', [], {'max_length': '20', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['auth.User']", 'unique': 'True'})
         }

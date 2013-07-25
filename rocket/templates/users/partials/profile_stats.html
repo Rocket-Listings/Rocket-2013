@@ -1,0 +1,22 @@
+{% load humanize %}
+<div class="seller-stats">
+	<h4>Lifetime Stats</h4>
+	<table class="table table-striped table-stats">
+		<tr>
+			<th>Listings Created:</th>
+			<td> {{listings|length }}</td>
+		</tr>
+		<tr>
+			<th>Date Joined:</th>
+			<td>{{user.date_joined|naturaltime}}</td>
+		</tr>
+		<tr>
+			<th>Listing Views:</th>
+			<td></td>
+		</tr>
+		<tr>
+			<th>Profile Views:</th>
+			<td></td>
+		</tr>
+	</table>
+</div>

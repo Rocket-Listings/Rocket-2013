@@ -4,8 +4,8 @@
 <div class="navbar">
 	<div class="navbar-inner">
 		<div class="container">
-			{% if user.is_authenticated %}
-			<a class="navbar-logo" href="{% url 'listings.views.user_listings' user.username %}">
+			{% if request.user.is_authenticated %}
+			<a class="navbar-logo" href="{% url 'listings.views.dashboard' %}">
 			{% else %}
 			<a class="navbar-logo" href="{% url 'home' %}">
 			{% endif %}
@@ -15,7 +15,7 @@
 				<div class="accent accent4"></div>
 				<span class="logo-text">rocket</span>
 			</a>
-			{% if user.is_authenticated %}
+			{% if request.user.is_authenticated%}
 			<ul class="nav pull-right">
 				<li class="{% active 'dashboard' %}">
 					<a href="{% url 'listings.views.dashboard' %}">
