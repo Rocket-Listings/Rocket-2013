@@ -27,13 +27,6 @@ $(function() {
 	});
 
 	$('.table-listings tbody tr').first().click();
-	$(document).ready(function(){
-		$('.share_optn').tooltip({
-  			container: 'body'
-			});
-		$('.edit_optn').tooltip();
-		$('.trash_optn').tooltip();
-	});
 
 	// AUTOPOST
 	$(".share_optn").click(function (e) {

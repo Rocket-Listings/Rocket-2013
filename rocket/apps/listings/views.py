@@ -1,3 +1,4 @@
+import json
 from listings.models import Listing, ListingPhoto, Buyer, Offer, Message, ListingCategory, ListingSpecKey, ListingSpecValue
 from django.contrib.auth.models import User
 from django.conf import settings
@@ -20,6 +21,12 @@ import requests
 import re
 from bs4 import BeautifulSoup
 from operator import __add__
+from django.core.context_processors import csrf
+from django.shortcuts import render_to_response
+from haystack.query import SearchQuerySet
+from haystack.inputs import AutoQuery
+from django.core.urlresolvers import reverse
+from haystack import connections
 # Moved here from users/views.py
 
 @login_required
@@ -72,6 +79,7 @@ def create(request):
 			listing = listing_form.save(commit=False)
 			listing.user = request.user
 			listing.save()
+			connections['default'].get_unified_index().get_index(Listing).update_object(listing)
 			for x in range(0, count):
 				string = d["photo%d" %(x)]
 				photoDict = {'url': string, 'order': x, 'listing': listing}
@@ -123,6 +131,9 @@ def detail(request, listing_id):
 			listing_form = ListingForm(request.POST, instance = listing)		
 			if listing_form.is_valid():
 				listing = listing_form.save()
+				connections['default'].get_unified_index().get_index(Listing).update_object(listing)
+
+
 				return redirect(listing)
 			else:
 				return render(request, 'listings/listing_update.html', {'form': listing_form})
@@ -164,8 +175,10 @@ def update(request, listing_id):
 @login_required
 def delete(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
+
 	print(listing_id)
 	if request.user == listing.user:
+		connections['default'].get_unified_index().get_index(Listing).remove_object(listing)
 		listing.delete()
 		return redirect('listings.views.user_listings', username = request.user.username)
 
@@ -178,6 +191,7 @@ def delete_ajax(request, listing_id):
 		response['success'] = False
 		response['reason'] = 'Cannot find listing.'
 	if request.user == listing.user:
+		connections['default'].get_unified_index().get_index(Listing).remove_object(listing)
 		listing.delete()
 		response['success']= True
 	else:
@@ -212,6 +226,29 @@ def message_thread_ajax(request, listing_id, buyer_id):
 	return HttpResponse(serializers.serialize("json", messages), mimetype='application/json')
 	# else:
 		# return HttpResponseBadRequest("Sorry please submit a good request")
+
+def search(request):
+	c = {}
+	c.update(csrf(request))
+
+	return render_to_response("listings/search_test.html",c)
+
+
+def search_listings(request):
+	if request.method == "POST":
+		search_text = request.POST['search_text']
+	else:
+		search_text = ''
+
+	if search_text == "" or search_text ==" ":
+		listings = SearchQuerySet().all()
+	else:
+		listings = SearchQuerySet().autocomplete(content_auto=search_text)
+
+	for listing in listings:
+		listing.url_id = reverse('listings.views.detail', args=[str(listing.url_id)])
+
+	return render_to_response('listings/partials/ajax_search.html', {'listings' : listings})
 
 # Photo upload
 
