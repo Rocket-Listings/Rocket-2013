@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from listings.models import ListingCategory, ListingType
 from django.db.models.signals import post_save
-from djangoratings.fields import RatingField
 # import django_filepicker
 
 # User Profile
