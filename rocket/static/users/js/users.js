@@ -299,6 +299,30 @@ $(function() {
 
 	// PROFILE JS
 
+	$("rating-form").submit(function(){
+		var csrftoken = $.cookie('csrftoken');
+		console.log(csrftoken);
+		$.ajax({
+			data: $(this).serialize(),
+			type: $(this).attr('method'),
+			url: $(this).attr('action'),
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader("X-CSRFToken", csrftoken);
+			},
+			success: function(response) {
+				if (response[0]) {
+					insertNewComment(response[0].fields);
+					$("input:not(input[type='submit']), textarea").val("");
+				}
+				else {
+					showError(response);
+				}
+			}
+		});
+		return false;
+	});
+	});	
+
 	// Handle the comment form
 	$(".comment-form").submit(function() {
 		var csrftoken = $.cookie('csrftoken');

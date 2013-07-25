@@ -1,5 +1,6 @@
 {% extends 'users/users_base.html' %}
 {% load static from staticfiles %}
+{% load ratings %}
 {% block content %}
 <div class="profile-content">
 	<div class="row">
@@ -66,7 +67,22 @@
 						</div>	
 					</div>
 				</div>
-		
+			<div class ="row ratings">
+				<div class="span4">
+					<h5> Rate your experience buying from {{user.username}}:<h5> 
+				</div>
+				<div class="span4">
+					<form class="rating-form">
+						<div class="btn-group rating-group" data-toggle="buttons-radio">
+							<button type="button" class="btn btn-primary" id="1">Bad</button>
+							<button type="button" class="btn btn-primary" id="2">Fine</button>
+							<button type="button" class="btn btn-primary" id="3">Good</button>
+						</div>
+					 <input class="btn btn-info rating-submit" type="submit" value="Submit">
+					</form>
+				</div>		
+	
+			</div>
 			<div class="comments">	
 				{% include "users/partials/profile_comments.html" %}
 				{% include "users/partials/profile_comment_form.html" %}
