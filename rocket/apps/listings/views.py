@@ -37,7 +37,6 @@ def dashboard(request):
     return render(request, 'listings/dashboard.html',  {'listings': listings, 'buyers': buyers, 'messages':messages})
 
 @login_required
-<<<<<<< HEAD
 def create(request, pane='edit'):
     if request.method == 'GET':
         profile = request.user.get_profile()
@@ -77,7 +76,6 @@ def update(request, listing_id=None): # not directly addressed by a route, allow
         listing.user = request.user
         listing.save()
         for name, value in spec_form.cleaned_data.items():
-            print name
             spec_id = int(name.replace('spec-',''))
             ListingSpecValue.objects.create(value=value, key_id=spec_id, listing_id=listing.id)
         return redirect(listing)
@@ -91,14 +89,14 @@ def update(request, listing_id=None): # not directly addressed by a route, allow
         cxt.update(utils.get_listing_vars())
         return render(request, 'listings/detail.html', cxt)
 
-# detail is for the user looking at his own listing
+
 def detail(request, listing_id, pane='view'):
     if request.method == 'GET':
         listing = get_object_or_404(Listing, id=listing_id)
         specs_set = listing.listingspecvalue_set.select_related().all()
         specs = {}
         for spec in specs_set:
-            specs[spec.key.id] = spec
+            specs[spec.key_id] = spec
         cxt = {
             'listing': listing,
             'photos': listing.listingphoto_set.all(),

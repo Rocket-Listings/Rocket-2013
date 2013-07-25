@@ -9,8 +9,7 @@ if (!String.prototype.format) {
 }
 
 // serialize for backbone
-$.fn.serializeObject = function()
-{
+$.fn.serializeObject = function() {
     var o = {};
     var a = this.serializeArray();
     $.each(a, function() {
@@ -28,6 +27,7 @@ $.fn.serializeObject = function()
 
 $(function() {
 
+  // Backbone listing preview stuff
   var Listing = Backbone.Model.extend({
     initialize: function() {}
   });
@@ -61,9 +61,9 @@ $(function() {
       this.$('#preview-view').html(this.template(this.model.toJSON()));
     }
   });
-
   var ListingView = new ListingView;
 
+  // Category Selection Stuff
   function selectCategory(next_id) {
     var cat_input = $('#id_category');
     var prev_id = cat_input.val();
@@ -83,15 +83,68 @@ $(function() {
     $('.nav-tabs a[href="#{0}"]'.format(cat.parent('.tab-pane').attr('id'))).tab('show');
 
     var next_specs = $('.specs-form > div[data-cat="{0}"]'.format(next_id));
-    next_specs.find('input').removeAttr('disabled');
-    next_specs.show();
+    if (next_specs.length) {
+      next_specs.find('input').removeAttr('disabled');
+      next_specs.show();
+      $('#spec-fieldset').show();
+    } else {
+      $('#spec-fieldset').hide();
+    }
   }
-  // set initial/current value
+  // set initial/current category value
   selectCategory($('#id_category').val());
   $('.tab-pane .cat').click(function(e) {
     selectCategory($(this).data('id'))
   });
 
+
+  // file picker options and callbacks
+  var fpConfig = {
+    picker_options: {
+      mimetype:"image/*",
+      multiple: true,
+      container: 'fp-container',
+      services: ['COMPUTER', 'URL', 'FACEBOOK', 'DROPBOX']
+    },
+    store_options: {
+      location:"S3",
+      path: '/propics/',
+      access: 'public'
+    },
+    onSuccess: function(InkBlobs) {
+      // $('#result').text("Done, see result below");
+      var view = { imgs: [] };
+      for (var i = 0; i<InkBlobs.length; i++) {
+        var blob = InkBlobs[i];
+        view.imgs.push({
+          order: i,
+          url: "https://s3.amazonaws.com/static.rocketlistings.com/" + blob.key
+        });
+      }
+      console.log(view);
+      var output = Mustache.render($('#thumbnail-template').html(), view);
+      $('#first').html(output);  
+      // $('.progress').hide();
+    },
+    onError: function(type, message) {
+      console.log('('+type+') '+ message);
+    }
+  }
+  // Make drag and drop photo upload pane
+  // $('#dragdrop').click(function(e) {
+    // e.preventDefault();
+  filepicker.pickAndStore(fpConfig.picker_options, 
+                            fpConfig.store_options, 
+                            fpConfig.onSuccess, 
+                            fpConfig.onError);
+  // });
+  // filepicker.makeDropPane($('#dragdrop'), $.extend({
+  //   onSuccess: fpConfig.onSuccess,
+  //   onError: fpConfig.onError,
+  //   onProgress: fpConfig.onProgress,
+  //   dragEnter: fpConfig.dragEnter,
+  //   dragLeave: fpConfig.dragLeave
+  // }, fpConfig.picker_options, fpConfig.store_options));
 
   /* Listings table */
   $('.table-listings').tablesorter({ cssHeader: 'table-header'});
@@ -99,37 +152,31 @@ $(function() {
 
 
   /* Listing detail photo slideshow */
-  var photoId = parseInt((window.location.hash || "").substring(1));
-  if(photoId) {
-    if($($('.l-thumbnails img')[photoId]).attr('data-id') == photoId) {
-      fillStage($($('.l-thumbnails img')[photoId]));
-    } else {
-      $('.l-thumbnails img').each(function(index, element) {
-        if($(element).attr('data-id') == photoId){
-          fillStage($(element));
-          return false; // break iteration
-        }
-      });
-    }
-  }
+  // var photoId = parseInt((window.location.hash || "").substring(1));
+  // if(photoId) {
+  //   if($($('.l-thumbnails img')[photoId]).attr('data-id') == photoId) {
+  //     fillStage($($('.l-thumbnails img')[photoId]));
+  //   } else {
+  //     $('.l-thumbnails img').each(function(index, element) {
+  //       if($(element).attr('data-id') == photoId){
+  //         fillStage($(element));
+  //         return false; // break iteration
+  //       }
+  //     });
+  //   }
+  // }
 
-  $('.l-thumbnails img').click(function(event){
-    fillStage($(event.target));
-  });
+  // $('.l-thumbnails img').click(function(event){
+  //   fillStage($(event.target));
+  // });
 
-  function fillStage(image) {
-    $(".l-stage img").attr('src', image.attr('data-full'));
-    id = image.attr('data-id');
-    window.location.hash = image.attr('data-id');
-  }
+  // function fillStage(image) {
+  //   $(".l-stage img").attr('src', image.attr('data-full'));
+  //   id = image.attr('data-id');
+  //   window.location.hash = image.attr('data-id');
+  // }
 
-  var cl_embed = $('.cl-embed');
-  if(cl_embed) {
-    cl_embed.click(function(e) {
-      cl_embed.select();
-    });
-  }
-
+  filepicker.setKey('ATM8Oz2TyCtiJiHu6pP6Qz');
   function fileUpload(){
   /* function needs more work inorder to better save photos in s3 */
     filepicker.pickAndStore({

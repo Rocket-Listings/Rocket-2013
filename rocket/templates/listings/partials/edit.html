@@ -3,6 +3,7 @@
   {% csrf_token %}
   {# Hidden fields  #}
   {% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
+  <input type="hidden" id="id_location" maxlength="200" name="location" value="Bethesda, MD">
 
   {# Errors at the top #}
   {% for field, errors in form.errors.items %}
@@ -36,52 +37,63 @@
   </div>
 
   {# First form row #}
+  <fieldset><legend>Listing Info</legend>
   <div class="row">
-    {# Title #}
-    <div class="span6">
-      <div class="row">
-        <div class="span4">
-          <label>{{ form.title.label }}</label>
-          <input class="title input-block-level" maxlength="200" name="title" type="text" placeholder="e.g. 2000 Jeep Wrangler 4.0L" value="{{ form.title.value }}">
+      {# Title #}
+      <div class="span6">
+        <div class="row">
+          <div class="span4">
+            <label>{{ form.title.label }}</label>
+            <input class="title input-block-level" maxlength="200" name="title" type="text" placeholder="e.g. 2000 Jeep Wrangler 4.0L" value="{{ form.title.value|default:"" }}">
+          </div>
+          <div class="span2">
+            <label>{{ form.price.label }}</label>
+            <div class="input-prepend gridfix">
+              <span class="add-on">$</span>
+              <input class="price input-block-level" name="price" type="text" value="{{ form.price.value|default:"" }}">
+            </div>
+          </div>
         </div>
-        <div class="span2">
-          <label>{{ form.price.label }}</label>
-          <div class="input-prepend gridfix">
-            <span class="add-on">$</span>
-            <input class="price input-block-level" name="price" type="text" value="{{ form.price.value }}">
+        <div class="row">
+          <div class="span6">
+            <label>{{ form.description.label }}</label>
+            <textarea class="span6 description" placeholder="Describe your item" cols="40" name="description" rows="10">{{ form.description.value|default:"" }}</textarea>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="span6">
-          <label>{{ form.description.label }}</label>
-          <textarea class="span6 description" placeholder="Describe your item" cols="40" name="description" rows="10">{{ form.description.value }}</textarea>
+      <div class="span3">
+        <label>Location</label>
+        <img src="http://placehold.it/370x390"/>
+      </div>
+    </div>
+  </fieldset>
+  <fieldset id="spec-fieldset" class="hide"><legend>Specifications</legend>
+    <div class="specs-form">
+        {% for spec_key in spec_keys %}
+        <div class="control-group hide" data-cat="{{ spec_key.category_id }}">
+            <label class="control-label" for="spec-{{ spec_key.id }}">{{ spec_key.name }}</label>
+            <div class="controls">
+              <input type="text" disabled="disabled" name="spec-{{ spec_key.id }}" value="{{ specs|specval:spec_key.id }}"/>
+            </div>
         </div>
-      </div>
+        {% endfor %}
     </div>
-    <div class="span3">
-      <label>Location</label>
-      <img src="http://placehold.it/370x390"/>
-    </div>
-  </div>
-  <div class="hide">
-    <input id="id_location" maxlength="200" name="location" type="text" value="Bethesda, MD">
-  </div>
-  <div class="row">
-    <div class="span10">
-      <h4>Specifications</h4>
-      <div class="specs-form">
-          {% for spec_key in spec_keys %}
-          <div class="control-group hide" data-cat="{{ spec_key.category_id }}">
-              <label class="control-label" for="spec-{{ spec_key.id }}">{{ spec_key.name }}</label>
-              <div class="controls">
-                <input type="text" disabled="disabled" name="spec-{{ spec_key.id }}" value="{{ specs|specval:spec_key.id }}"/>
-              </div>
+  </fieldset>
+  <fieldset><legend>Photo Upload</legend>
+    <iframe id="fp-container"></iframe>
+      {% verbatim %}
+      <script id="thumbnail-template" type="text/template">
+        {{#photos}}
+        <li class="span2">
+          <div class="thumbnail">
+            <img src="{{ u }}" data-order="{{ order }}"/>
           </div>
-          {% endfor %}
-      </div>
-    </div>
-  </div>
+        </li>
+        {{/photos}}
+      </script>
+    {% endverbatim %}
+    <ul id="photos" class="thumbnails"></ul>
+  </fieldset>
   <div class="form-actions">
     <button type="submit" class="btn btn-primary">Post to Craigslist</button>
   </div>

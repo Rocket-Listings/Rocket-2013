@@ -5,12 +5,12 @@ from django.conf import settings
 numeric_test = re.compile("^\d+$")
 register = template.Library()
 
-def specval(specs, arg):
+def specval(specs, key):
     """Returns the spec value associated with the id"""
-    spec = specs.get(arg, None)
-    if spec:
-        return spec.value
-    else:
-        return ""
+    if specs and key in specs:
+        spec = specs.get(key, None)
+        if spec:
+            return spec.value
+    return ""
 
 register.filter('specval', specval)

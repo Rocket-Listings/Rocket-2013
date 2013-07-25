@@ -22,18 +22,18 @@
 {% block content %}
   <div class="row">
     <div id="listing-detail" class="span9 tab-content">
-      <div class="tab-pane active" id="edit">
+      <div class="tab-pane{% if pane == 'edit' %} active{% endif %}" id="edit">
         {% include 'listings/partials/edit.html' %}
       </div>
-      <div class="tab-pane" id="preview"> 
+      <div class="tab-pane{% if pane == 'preview' %}active{% endif %}" id="preview"> 
         {% include 'listings/partials/preview.html' %}
       </div>
     </div>
-    <div class="span3"  style="padding-top:38px">
-      <div class="detail-sidebar" data-spy="affix" data-offset-top="82">
+    <div class="span3 detail-sidebar">
+      <div data-spy="affix" data-offset-top="82">
         <div class="btn-group" data-toggle="buttons-radio">
-          <a class="btn btn-primary active" data-toggle="tab" href="#edit">Edit</a>
-          <a class="btn btn-primary" data-toggle="tab" href="#preview">Preview</a>
+          <a class="btn btn-primary{% if pane == 'edit' %} active{% endif %}" data-toggle="tab" href="#edit">Edit</a>
+          <a class="btn btn-primary{% if pane == 'preview' %} preview{% endif %}" data-toggle="tab" href="#preview">Preview</a>
         </div>
         {# <button type="button" class="btn btn-primary submit">Submit Changes</button> #}
       </div>
