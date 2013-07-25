@@ -1,4 +1,5 @@
 {% load specval %}
+{# <h2>Create a Listing</h2> #}
 <form method="POST" class="listing-form form-horizontal">
   {% csrf_token %}
   {# Hidden fields  #}
@@ -17,21 +18,28 @@
       </ul>
     </div>
   {% endfor %}
-
   {# Category Select #}
   <ul class="nav nav-tabs">
-    {% for group in cats %}
-    <li{% if forloop.first %} class="active"{% endif %}>
-      <a href="#{{ group.groupname }}" data-toggle="tab">{{ group.groupname }}</a>
+    <li class="active">
+      <a href="#forsale" data-toggle="tab">For Sale</a>
     </li>
-    {% endfor %}
+    <li>
+      <a href="#housing" data-toggle="tab">Housing</a>
+    </li>
   </ul>
   <div class="tab-content">
-    {% for group in cats %}
-    <div class="tab-pane{% if forloop.first %} active{% endif %}" id="{{ group.groupname }}">
-      {% for cat in group.groupcats %}
-      <a class="cat {{ group.groupname }}" data-id="{{ cat.id }}">{{ cat }}</a>
-      {% endfor %}
+    {% for group, cat_list in cats.items %}
+    <div class="tab-pane{% if group == "forsale" %} active{% endif %}" id="{{ group }}">
+      <div class="row">
+        <div class="span2">
+        {% for cat in cat_list %}
+            <a class="cat {{ group }}" data-id="{{ cat.id }}">{{ cat.name }}</a>
+          {% if group == "forsale" and forloop.counter|divisibleby:9 or group == "housing" and forloop.counter|divisibleby:3 %}
+            </div><div class="span2">
+          {% endif %}
+        {% endfor %}
+        </div>
+      </div>
     </div>
     {% endfor %}
   </div>
@@ -79,20 +87,20 @@
         {% endfor %}
     </div>
   </fieldset>
-  <fieldset><legend>Photo Upload</legend>
+  <fieldset><legend>Photo Upload <a id="upload-more" class="btn pull-right hide">Upload more</a></legend>
     <iframe id="fp-container"></iframe>
+    <ul id="photos" class="thumbnails"></ul>
       {% verbatim %}
       <script id="thumbnail-template" type="text/template">
-        {{#photos}}
+        {{#imgs}}
         <li class="span2">
           <div class="thumbnail">
-            <img src="{{ u }}" data-order="{{ order }}"/>
+            <img src="{{ url }}" data-order="{{ order }}"/>
           </div>
         </li>
-        {{/photos}}
+        {{/imgs}}
       </script>
     {% endverbatim %}
-    <ul id="photos" class="thumbnails"></ul>
   </fieldset>
   <div class="form-actions">
     <button type="submit" class="btn btn-primary">Post to Craigslist</button>

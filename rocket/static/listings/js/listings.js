@@ -49,7 +49,6 @@ $(function() {
     },
 
     changed: function(evt) {
-      console.log('changed');
       var changed = $(evt.currentTarget)
       var obj = {};
       obj[changed.attr('name')] = changed.val();
@@ -112,7 +111,6 @@ $(function() {
       access: 'public'
     },
     onSuccess: function(InkBlobs) {
-      // $('#result').text("Done, see result below");
       var view = { imgs: [] };
       for (var i = 0; i<InkBlobs.length; i++) {
         var blob = InkBlobs[i];
@@ -121,13 +119,17 @@ $(function() {
           url: "https://s3.amazonaws.com/static.rocketlistings.com/" + blob.key
         });
       }
-      console.log(view);
       var output = Mustache.render($('#thumbnail-template').html(), view);
-      $('#first').html(output);  
-      // $('.progress').hide();
+      $('#fp-container').hide();
+      $('#upload-more').show();
+      $('#photos').html(output);  
     },
     onError: function(type, message) {
       console.log('('+type+') '+ message);
+    },
+    uploadMore: function(e) {
+      e.preventDefault();
+      $('#fp-container').toggle();
     }
   }
   // Make drag and drop photo upload pane
@@ -137,6 +139,7 @@ $(function() {
                             fpConfig.store_options, 
                             fpConfig.onSuccess, 
                             fpConfig.onError);
+  $('#upload-more').click(fpConfig.uploadMore);
   // });
   // filepicker.makeDropPane($('#dragdrop'), $.extend({
   //   onSuccess: fpConfig.onSuccess,
