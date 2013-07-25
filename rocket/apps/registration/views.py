@@ -193,7 +193,7 @@ def register(request, backend, success_url=None, form_class=None,
         form = form_class(data=request.POST, files=request.FILES)
         seller_type_input = request.POST.get("default_seller_type", "P")
         if form.is_valid():
-            seller_type = forms.RegexField(regex=r'^PB$', max_length=1)
+            seller_type = forms.RegexField(regex=r'^P|B$', max_length=1)
             try:
                 seller_type.clean(seller_type_input)
             except ValidationError as e:
