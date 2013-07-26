@@ -5,6 +5,7 @@
 
 
 
+
 .l-well{
 	padding: 2px;
 	background-color: white;
@@ -212,8 +213,13 @@
 
 .dashboard-panel {
 	position:absolute;
-	top:126px;
+	//top:126px;
+	top: 115px;
 	bottom:0;
+
+	&.first-visit {
+		top: 150px;
+	}
 
 	.table-listings thead tr th:first-child, .table-listings tbody tr td:first-child {
 		padding-left: 40px;
@@ -643,16 +649,8 @@ input-append {
 	margin-top: 10px;
 }
 
-#search_bar {
-	margin-left: 40px;
-}
-
 .dashboard-create-btn {
 	margin-left: 100px;
-}
-
-.dashboard-input {
-	margin-top: 15px;
 }
 
 .btn-group a{
@@ -693,4 +691,8 @@ input-append {
 
 .icon-blank	{
 	background-image: url('../img/white-icon.png');
+}
+
+.padding-40-left {
+	padding-left:40px;
 }

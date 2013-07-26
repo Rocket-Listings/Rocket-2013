@@ -20,24 +20,28 @@
 
 {% block content %}
 	<div class="container-fluid">
-		{% if first_time == 1 %}
-			<div class="alert alert-info">
-  				<button type="button" class="close" data-dismiss="alert">&times;</button>
-  				<h4>Welcome</h4>
-  				Its your first time, check dis shit out
-			</div>
-		{% endif %}
 		<div class="row-fluid">
-			<div  class="span4"> 
-				<input id="search_bar" type="search" class="dashboard-input light-table-filter" data-table="order-table" placeholder="Type to Search Listings"/>
+			<div class="span3 row-fluid padding-40-left">
+				{# <div class="row-fluid"> #}
+					<h4 class="span5">Listings Dashboard</h4>
+					<div class="span5">
+						<input type="search" class="input-span-block dashboard-input light-table-filter" data-table="order-table" placeholder="Type to Search Listings"/>
+					</div>
+				{# </div> #}
 			</div>
-			<div class="span4" id="dashboard-title"><h3 class="text-center">Listings Dashboard</h3></div>
-			<div class="span4">
+			<div class="span6">
+				<div class="alert alert-info text-left">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					{# <h4>Welcome</h4> #}
+					Its your first time, check dis shit out
+				</div>
+			</div>
+			<div class="span3">
 				<a class="dashboard-input dashboard-create-btn btn btn-primary" href="/listings/create/">Create a Listing</a>
 			</div>
 		</div>
 	</div>
-	<div class="dashboard-panel row-fluid">
+	<div class="dashboard-panel row-fluid first-visit">
 		<div class="span8 listings-col">
 			{% include 'listings/partials/listings_table.html' %}
 		</div>

@@ -17,6 +17,10 @@ $(function() {
 		}
 	});
 
+	$('.close').click(function(event){
+		$('.dashboard-panel').removeClass("first-visit");
+	});
+
 	$('.buyer-card').click(function(event){
 		var buyerCard = $(this);
 		$('.buyer-card').removeClass('highlight');
