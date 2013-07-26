@@ -15,6 +15,7 @@ urlpatterns = patterns('listings.views',
 	# url(r'^ajax-photo-upload/$', import_uploader, name="ajax_photo_upload"),
 
 	url(r'^dashboard/$', 'dashboard', name='dashboard'),
+	url(r'^dashboard/data/$','dashboard_data'),
   	url(r'^(?P<username>\w+)/$', 'user_listings', name='user_listings'),
 
 	#api patterns TODO: respond differently based on HTTP_ACCEPT header, but keep urls the same
