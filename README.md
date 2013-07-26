@@ -1,6 +1,24 @@
 # Rocket Listings - Django
 
-_Last updated: 7/16/13_
+_Last updated: 7/22/13_
+
+### Celery
+
+Celery is a distributed task queue.  We can use it for many things including scheduling routine work and running tasks in the background.  You can read more about it [here](http://docs.celeryproject.org/en/latest/getting-started/introduction.html).
+
+Right now we are using RabbitMQ as a broker. To install:
+
+    $ brew install rabbitmq
+
+In a separate command line tab:
+    
+    $ rabbitmq-server
+
+And in yet another tab:
+
+    $ ./manage.py celeryd
+
+Note: `./manage.py celeryd --loglevel=DEBUG` is often helpful if you're having problems.
 
 ### Using Facebook and Twitter
 
@@ -20,8 +38,8 @@ The FB app key and secret are in users.js with the FB init code.  The Twitter ap
 
 All Twitter requests start like this:
 
-    OAUTH_TOKEN = UserProfile.objects.filter(user=request.user).values("OAUTH_TOKEN")[0]['OAUTH_TOKEN']
-	OAUTH_TOKEN_SECRET = UserProfile.objects.filter(user=request.user).values("OAUTH_TOKEN_SECRET")[0]['OAUTH_TOKEN_SECRET']
+    OAUTH_TOKEN = UserProfile.objects.get(user=request.user).OAUTH_TOKEN
+	OAUTH_TOKEN_SECRET = UserProfile.objects.get(user=request.user).OAUTH_TOKEN_SECRET
 	twitter = Twython(settings.TWITTER_KEY, settings.TWITTER_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
 
 ### Getting django compressor working

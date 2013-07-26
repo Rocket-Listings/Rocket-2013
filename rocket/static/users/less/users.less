@@ -3,6 +3,16 @@
 @fb-blue: #3B5998;
 @twitter-blue: #4099FF;
 
+a {
+	color: @craigslistBlue;
+}
+
+.btn-info.disabled{
+	background-color: @craigslistBlue;	
+	opacity: 1;
+}
+
+
 .content-wrapper {
 	table {
 		width: auto !important;
@@ -65,7 +75,7 @@
 				}
 				code {
 					font-size: 10pt;
-					color: #3a87ad;
+					color: @craigslistBlue;
 				}
 				span.at, span.twitter-handle {
 					color: #555;
@@ -159,147 +169,214 @@
 }
 
 .profile-content {
-	.profile-header {
-		li {
-			margin: 0;
+	margin-top: 30px;
+
+	.span-left{
+		//border-right: 1px solid #DDD;
+		margin-right: -1px;
+
+		.profile-header {	
+			margin-right: -1px;
+			border-bottom: 1px solid #DDD;
+			padding-bottom: 10px;
+
+			.profile-picture {
+				text-align: center;
+				padding-left: 0px;
+				margin-bottom: 20px;
+					
+					img.thumbnail {
+						border-radius: 0px;
+					 	-webkit-border-radius: 0px;
+					 	-moz-border-radius: 0px;
+					 	-o-border-radius: 0px;
+					 	box-shadow: none;
+					 	-webkit-box-shadow: none;
+					 	-moz-box-shadow: none;
+					 	padding: 0;
+					 	border: none;
+					}
+				a{
+					line-height: 40px;
+				}
+		 	}
+
+		 		
+		 	h3{
+		 		text-align: left;
+		 		line-height: 30px;
+		 		margin: 0px;
+		 	}
+
+		 	h5{
+		 		float: right;
+		 		line-height: 33px;
+		 		margin: 0px;
+		 		padding-right: 20px;
+		 	}
+
+		 	h4{
+		 		margin: 0;
+		 	}
+
+		 	p{
+		 		margin-top: 20px;
+		 		padding-right: 20px;
+		 	}
+
+		 	.fb-row{
+		 		img{
+		 		padding: 0 7px 3px 3px;
+
+		 		}
+		 	}
 		}
-		.profile-picture {
-		padding-left: 0px;
-		max-width: 210px;
-			img.thumbnail {
-				border-radius: 0px;
-			 	-webkit-border-radius: 0px;
-			 	-moz-border-radius: 0px;
-			 	-o-border-radius: 0px;
-			 	box-shadow: none;
-			 	-webkit-box-shadow: none;
-			 	-moz-box-shadow: none;
-			}
+
+	 .comments {
+	 	margin-top: 30px;
+
+	 	h4{
+	 		text-align: left;	 		
 	 	}
-	 	.subtitle {
-	 		font-size: 20px;
-	 	}
-	 	.gray {
-	 		color: #777;
-	 	}
-	 	.profile-info {
-	 		text-align: left;
-	 		min-height: 210px;
-	 		.name-wrapper {
-	 			height: 80px;
-	 			ul {
-	 				padding: 0;
-	 				margin: 0;
-	 				li {
-	 					padding: 0;
-	 					margin: 0;
-	 				}
-	 			}
-	 		}
-	 		.profile-bio {
-	 			margin: 20px 0 0 0;
-	 		}
-	 		.edit-profile, .send-message {
-	 			margin-top: 15px;
-	 		}
-	 	}
-	 	.profile-stats {
-	 		text-align: right;
-	 		float: right;
-	 		h3 {
-	 			font-size: 20px;
-	 		}
-	 		h4 {
-	 			color: #A6A6A6;
-	 		}
-	 	}
-	 }
-	div.separator {
-		height: 1px;
-		background-color: #DDD;
-		margin: 20px 0;
-	}
-	.profile-selling {
-		ul.thumbnails {
-			margin: 10px 0 0 -30px;
-			display: table-layout;
-			li {
-				margin-bottom: 0px;
-			}
-			a.thumbnail {
-				color: #000;
-				text-decoration: none;
-				border-radius: 0px;
-				-webkit-border-radius: 0px;
-				-moz-border-radius: 0px;
-				-o-border-radius: 0px;
-				box-shadow: none;
-				-webkit-box-shadow: none;
-				-moz-box-shadow: none;
-				height: 250px;
-				.profile-listing-title {
-					text-align: left;
-					word-wrap: break-word;
-					white-space: pre-line;
-					overflow: hidden;
-					white-space: nowrap;
-					text-overflow: ellipsis;
+
+	 		.each-comment{
+	 			border-bottom: 1px dashed #DDD;
+	
+			 	h4{
+			 		margin: 0;
+			 		line-height: 30px;
+			 	}
+
+				h6 {
+					font-style: italic;
 				}
-				.profile-listing-price {
-					text-align: left;
-					color: #4cbb17;
-					letter-spacing: 1px;
-				}
-				p {
-					text-align: left;
-					overflow: hidden;
-					max-height: 60px;
+
+				p{
+					
+					padding: 5px 5px 0 0;
 				}
 			}
-		}
 	}
-	.comment-container {
-		margin-top: -10px;
-		#title {
-			font-size: 17px;
-		}
-		#name {
-			font-style: italic;
-		}
-		.feedback-heading {
-			text-decoration: underline;
-		}
-		.most-recent-statement{
-			font-size: 12px;
-			font-style: italic;
-		}
-		td {
-			border-top: none;
-		}
-		ul.inline > li {
-			padding-left: 0px;
-		}
-		ul {
-			margin-bottom: 0px;
-		}
-	}
+
 	.comment-form-container {
+		margin-top: 15px;
+
+		form{
+			margin-left: -5px;
+		}
+
 		form > textarea {
 			margin-left: 5px;
 		}
+		
 		.errors, .comment-textarea {
-			@media all and (min-width: 675px) {
-				width: 675px;
-			}
-			@media all and (min-width: 440px) and (max-width: 675px) {
+			@media all and (min-width:1200px) {
 				width: 440px;
 			}
-			@media all and (max-width: 439px) and (min-width: 220px) {
-				width: 205px;
+			@media all and (min-width: 980px) and (max-width: 1199px) {
+				width: 350px;
+			}
+			@media all and (max-width: 439px) and (min-width: 979px) {
+				width: 260px;
 			}
 		}
+
+		li input{
+			width: 206px;
+		}
+		
 		.comment-submit {
 			margin-left: 5px;
+		}
+	}
+}
+
+	.seller-stats{
+		margin-bottom: 45px;
+		h4{
+			margin: 0;
+			line-height: 30px;
+			text-align: left;
+			margin-bottom: 15px;
+		}
+	}
+	.profile-selling {
+
+
+		h4{
+			text-align: left;
+			margin-bottom: 15px;
+		}
+
+		p{
+			text-align: center;
+		}
+
+
+		a.thumbnail {
+			margin-bottom: 20px;
+			color: #000;
+			text-decoration: none;
+			border-radius: 0px;
+			-webkit-border-radius: 0px;
+			-moz-border-radius: 0px;
+			-o-border-radius: 0px;
+			box-shadow: none;
+			-webkit-box-shadow: none;
+			-moz-box-shadow: none;
+			width: 270px;
+			padding: 0px;
+			position: relative;
+			.overlay{
+				background: rgba(0, 0, 0, 0.55);
+				position: absolute;
+				bottom: 0px;
+				width: 100%;
+			
+			h4{
+				float: left;
+				font-weight: 200;
+				font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+				color: #DDD;
+				line-height: 30px;
+				text-align: center;
+				text-align: left;
+				word-wrap: break-word;
+				white-space: pre-line;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				padding-left: 15px;	
+				margin: 0;
+				font-size: 15px;
+				width: 70%;
+			}
+
+			
+			h5{
+				color: #DDD;
+				float: right;
+				font-weight: 200;
+				padding-right: 15px;
+				margin: 0;
+				line-height: 30px;
+				font-size: 13px;
+			}
+		}
+			
+			/*p {
+				font-weight: 200;
+				font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+				color: #DDD;	
+				background: rgba(0, 0, 0, 0.7);
+				position: absolute;
+				bottom: 0px;
+				padding-left: 10px;
+				padding-right: 10px;
+				text-align: left;
+				overflow: hidden;
+				max-height: 60px;
+			} */
 		}
 	}
 }

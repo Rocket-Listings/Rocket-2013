@@ -20,8 +20,6 @@ class UserProfile(models.Model):
 	default_seller_type = models.CharField(max_length=1, choices=SELLER_TYPE_CHOICES, default='P')
 	phone = models.CharField(max_length=50, blank=True)
 	bio = models.TextField(blank=True)
-	nameprivate = models.BooleanField(blank=False, null=False)
-	locationprivate = models.BooleanField(blank=False, null=False)
 	propic = models.CharField(max_length=200, blank=True)
 	twitter_handle = models.CharField(max_length=20, blank=True)
 	OAUTH_TOKEN = models.CharField(max_length=200, blank=True)
@@ -37,7 +35,8 @@ class UserProfile(models.Model):
 # Handles user profile creation if not already created
 def create_user_profile(sender, instance, created, **kwargs):  
     if created:  
-    	UserProfile.objects.create(user=instance)
+    	profile = UserProfile.objects.create(user=instance)
+    	ProfileFB.objects.create(profile=profile)
 
 post_save.connect(create_user_profile, sender=User)
 
@@ -46,13 +45,27 @@ post_save.connect(create_user_profile, sender=User)
 class UserComment(models.Model): 
 	date_posted = models.DateField(auto_now=False, auto_now_add=True)
 	comment = models.TextField(blank=False)
-	email = models.EmailField(max_length=255, blank=True) # email of commenter
+	email = models.EmailField(max_length=255, blank=False) # email of commenter
 	user = models.ForeignKey(User) # contains user foreignkey
-	name = models.CharField(max_length=100, blank=False)
 	title = models.CharField(max_length=255, blank=False)
+	
 
 	def __unicode__(self):
 		return self.user.username
 
 
 #User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
+
+class ProfileFB(models.Model):
+	profile = models.OneToOneField(UserProfile)
+	username = models.CharField(max_length=50, blank=True)
+	name = models.CharField(max_length=100, blank=True)
+	link = models.CharField(max_length=100, blank=True)
+	picture = models.CharField(max_length=200, blank=True)
+
+	def __unicode__(self):
+		return self.username
+
+class FirstVisit(models.Model):
+	template_path = models.CharField(max_length=100, blank=True)
+	user = models.ForeignKey('auth.User')

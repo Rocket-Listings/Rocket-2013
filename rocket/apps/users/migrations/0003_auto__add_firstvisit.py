@@ -8,58 +8,18 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'UserProfile'
-        db.create_table(u'users_userprofile', (
+        # Adding model 'FirstVisit'
+        db.create_table(u'users_firstvisit', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
-            ('location', self.gf('django.db.models.fields.CharField')(max_length=255, blank=True)),
-            ('default_category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingCategory'], null=True, blank=True)),
-            ('default_listing_type', self.gf('django.db.models.fields.CharField')(max_length=1, null=True, blank=True)),
-            ('default_seller_type', self.gf('django.db.models.fields.CharField')(default='P', max_length=1)),
-            ('phone', self.gf('django.db.models.fields.CharField')(max_length=50, blank=True)),
-            ('bio', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('propic', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
-            ('twitter_handle', self.gf('django.db.models.fields.CharField')(max_length=20, blank=True)),
-            ('OAUTH_TOKEN', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
-            ('OAUTH_TOKEN_SECRET', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
-            ('rating_votes', self.gf('django.db.models.fields.PositiveIntegerField')(default=0, blank=True)),
-            ('rating_score', self.gf('django.db.models.fields.IntegerField')(default=0, blank=True)),
-        ))
-        db.send_create_signal(u'users', ['UserProfile'])
-
-        # Adding model 'UserComment'
-        db.create_table(u'users_usercomment', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('date_posted', self.gf('django.db.models.fields.DateField')(auto_now_add=True, blank=True)),
-            ('comment', self.gf('django.db.models.fields.TextField')()),
-            ('email', self.gf('django.db.models.fields.EmailField')(max_length=255)),
+            ('template_path', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=255)),
         ))
-        db.send_create_signal(u'users', ['UserComment'])
-
-        # Adding model 'ProfileFB'
-        db.create_table(u'users_profilefb', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('profile', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['users.UserProfile'], unique=True)),
-            ('username', self.gf('django.db.models.fields.CharField')(max_length=50, blank=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
-            ('link', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
-            ('picture', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
-        ))
-        db.send_create_signal(u'users', ['ProfileFB'])
+        db.send_create_signal(u'users', ['FirstVisit'])
 
 
     def backwards(self, orm):
-        # Deleting model 'UserProfile'
-        db.delete_table(u'users_userprofile')
-
-        # Deleting model 'UserComment'
-        db.delete_table(u'users_usercomment')
-
-        # Deleting model 'ProfileFB'
-        db.delete_table(u'users_profilefb')
+        # Deleting model 'FirstVisit'
+        db.delete_table(u'users_firstvisit')
 
 
     models = {
@@ -101,12 +61,21 @@ class Migration(SchemaMigration):
         },
         u'listings.listingcategory': {
             'Meta': {'object_name': 'ListingCategory'},
-            'cl_dealer_id': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
-            'cl_owner_id': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
             'description': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'group': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '60'})
+        },
+        u'listings.listingtype': {
+            'Meta': {'object_name': 'ListingType'},
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '60'})
+        },
+        u'users.firstvisit': {
+            'Meta': {'object_name': 'FirstVisit'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'template_path': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         },
         u'users.profilefb': {
             'Meta': {'object_name': 'ProfileFB'},
@@ -132,15 +101,13 @@ class Migration(SchemaMigration):
             'OAUTH_TOKEN_SECRET': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
             'bio': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'default_category': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.ListingCategory']", 'null': 'True', 'blank': 'True'}),
-            'default_listing_type': ('django.db.models.fields.CharField', [], {'max_length': '1', 'null': 'True', 'blank': 'True'}),
+            'default_listing_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.ListingType']", 'null': 'True', 'blank': 'True'}),
             'default_seller_type': ('django.db.models.fields.CharField', [], {'default': "'P'", 'max_length': '1'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'location': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
             'phone': ('django.db.models.fields.CharField', [], {'max_length': '50', 'blank': 'True'}),
             'propic': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
-            'rating_score': ('django.db.models.fields.IntegerField', [], {'default': '0', 'blank': 'True'}),
-            'rating_votes': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0', 'blank': 'True'}),
             'twitter_handle': ('django.db.models.fields.CharField', [], {'max_length': '20', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['auth.User']", 'unique': 'True'})
         }

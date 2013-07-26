@@ -14,14 +14,20 @@
 - model: listings.ListingStatus
   pk: null
   fields:
-    name: Active
-    description: Listing is viewable and available
+    name: Draft
+    description: Listing is not ready to be posted or is incomplete
 
 - model: listings.ListingStatus
   pk: null
   fields:
-    name: Draft
-    description: Listing is not ready to be posted or is incomplete
+    name: Pending
+    description: Listing is complete but not posted to Craigslist
+
+- model: listings.ListingStatus
+  pk: null
+  fields:
+    name: Active
+    description: Listing has been posted on Craigslist
 
 - model: listings.ListingStatus
   pk: null

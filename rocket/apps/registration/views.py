@@ -13,6 +13,9 @@ from users.forms import UserProfileForm
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.forms import AuthenticationForm
 from registration.backends import get_backend
+from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
+from django import forms
+from django.forms.util import ErrorList
 
 
 def activate(request, backend,
@@ -188,20 +191,26 @@ def register(request, backend, success_url=None, form_class=None,
 
     if request.method == 'POST':
         form = form_class(data=request.POST, files=request.FILES)
-        seller_type = request.POST.get("default_seller_type", "P")
+        seller_type_input = request.POST.get("default_seller_type", "P")
         if form.is_valid():
-            new_user = backend.register(request, **form.cleaned_data)
-            profile = UserProfile.objects.get(user=new_user)
-            profile.default_seller_type = request.POST.get('default_seller_type', "P")
-            profile.save()
-            if request.GET.get('next',''):
-                success_url = request.GET.get('next','')
-                return redirect(success_url)
-            elif success_url is None:
-                to, args, kwargs = backend.post_registration_redirect(request, new_user)
-                return redirect(to, *args, **kwargs)
+            seller_type = forms.RegexField(regex=r'^P|B$', max_length=1)
+            try:
+                seller_type.clean(seller_type_input)
+            except ValidationError as e:
+                form._errors["Seller Type"] = ErrorList([u"Please choose a valid seller type."])
             else:
-                return redirect(success_url)
+                new_user = backend.register(request, **form.cleaned_data)
+                profile = UserProfile.objects.get(user=new_user)
+                profile.default_seller_type = seller_type
+                profile.save()
+                if request.GET.get('next',''):
+                    success_url = request.GET.get('next','')
+                    return redirect(success_url)
+                elif success_url is None:
+                    to, args, kwargs = backend.post_registration_redirect(request, new_user)
+                    return redirect(to, *args, **kwargs)
+                else:
+                    return redirect(success_url)
     else:
         form = form_class()
     
