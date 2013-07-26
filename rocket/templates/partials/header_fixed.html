@@ -16,7 +16,7 @@
 					<span class="logo-text">rocket</span>
 				</a>
 			{% if user.is_authenticated %}
-			<ul class="nav pull-right">
+			<ul class="nav pull-right marginless-nav-padding">
 				<li class="{% active 'dashboard' %}">
 					<a href="{% url 'dashboard' %}">
 						Listings<span> </span><i class="icon-th-list"></i>
@@ -42,5 +42,6 @@
 				</li>
 			</ul>
 			{% endif %}
+		</div>
 	</div>
 </div>
