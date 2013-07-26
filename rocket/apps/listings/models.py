@@ -22,19 +22,11 @@ class GenericNameManager(models.Manager):
 class ListingCategory(models.Model):
 	objects = GenericNameManager()
 	name = models.CharField(max_length = 60)
-	#CL_id = models.IntegerField(null = True)
-	#is_owner = models.NullBooleanField()
+	cl_owner_id = models.IntegerField(null = True)
+	cl_dealer_id = models.IntegerField(null = True)
 	description = models.CharField(max_length = 200)
+	group = models.CharField(max_length=10, choices=(('forsale', 'For Sale'),('housing', 'Housing')))
 	
-	def __unicode__(self):
-		return self.name
-
-# Listing Types
-class ListingType(models.Model):
-	objects = GenericNameManager()
-	name = models.CharField(max_length = 60)
-	description = models.CharField(max_length = 200)
-
 	def __unicode__(self):
 		return self.name
 
@@ -48,7 +40,7 @@ class ListingStatus(models.Model):
 	def __unicode__(self):
 		return self.name
 
-# Listing Objects
+# Listing
 class Listing(models.Model):
 	# also for natural key handling
 	objects = ListingManager()
@@ -56,13 +48,13 @@ class Listing(models.Model):
 	title = models.CharField(max_length=200, help_text="Be specific, direct, and include all the important details in your title.")
 	description = models.TextField(help_text="Make sure you include all the important facts (color, dimensions, build year, etc.), as well as when you bought it, why you're selling it and details on any defects or problems.")
 	pub_date = models.DateTimeField('date published', auto_now_add=True, default=datetime.now)
+	listing_type = models.CharField(max_length=1, choices=(('O', 'Owner'),('D', 'Dealer')), default='O')
 	price = models.IntegerField()
 	location = models.CharField(max_length=200)
 	category = models.ForeignKey(ListingCategory)
-	listing_type = models.ForeignKey(ListingType)
 	status = models.ForeignKey(ListingStatus, null = True) # TODO want to be able to listings by this
 	user = models.ForeignKey(User)
-	CL_link = models.URLField(null = True, blank = True)
+	CL_link = models.URLField(null=True, blank=True)
 
 
 	def max_offer(self):
@@ -73,31 +65,24 @@ class Listing(models.Model):
 		return self.title
 
 	def get_absolute_url(self):
-		return reverse('listings.views.detail', args=[str(self.id)])
+		return reverse('edit', args=[self.id])
+
 
 # Listing Specification
 class ListingSpecKey(models.Model):
-	key = models.CharField(max_length = 100)
+	name = models.CharField(max_length = 100)
 	category = models.ForeignKey(ListingCategory)
 
 
 class ListingSpecValue(models.Model):
-	name = models.CharField(max_length = 100)
+	value = models.CharField(max_length = 100)
 	key = models.ForeignKey(ListingSpecKey)
 	listing = models.ForeignKey(Listing)
 
-
-# Listing Highlight
-class ListingHighlight(models.Model):
-	value = models.CharField(max_length = 60)
-	listing = models.ForeignKey(Listing)
-
-	def __unicode__(self):
-		return self.value
-
 # Listing Photo
 class ListingPhoto(models.Model):
-	url = models.CharField(max_length=255)
+	url = models.CharField(max_length=255) # ink url
+	key = models.CharField(max_length=255) # s3 path
 	order = models.IntegerField(null = True, blank=True)
 	listing = models.ForeignKey(Listing, null = True, blank=True)
 

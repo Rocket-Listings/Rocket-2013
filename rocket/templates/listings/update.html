@@ -1,12 +1,12 @@
-{% extends 'listings/listings_base.html' %}
+{% comment %} {% extends 'listings/base.html' %}
 {% load thumbnail %}
 {% load static from staticfiles %}
+{% load compress %}
 
 {% block js %}
-  <script type="text/javascript" src="{% static 'listings/js/listings_reference.js' %}"></script>
-  <script type="text/javascript" src="{% static 'listings/js/details.js' %}"></script>
+  {% compress js %}
   <script>
-      filepicker.setKey('ATM8Oz2TyCtiJiHu6pP6Qz');
+      filepicker.setKey('ATM8Oz2TyCtiJiHu6pP6Qz');
   </script>
   <script>
     $(document).ready(function(){
@@ -15,22 +15,30 @@
       });
     })
   </script>
+  {% endcompress %}
 {% endblock %}
 
 {% block content %}
   <div class="row">
 
     <div class="span10">
+      {% for item in specifications %}
+        {{item.key.key}}:
+        {{item.name}}
+        <br>
+      {% endfor %}
       {% include 'listings/partials/listings_preview.html' %}
       {% include 'listings/partials/listings_edit.html' %}
     </div>
+    
+
 
     <div class="listing-dash span2 wrapper" data-spy="affix" data-offset-top="400" style='position:fixed;top:55px;right:55px;'>
 
       <div class="dash-title">
         <div class="btn-group" data-toggle="buttons-radio">
-          <button type="button" class="btn btn-primary edit_button">Edit</button>
-          <button type="button" class="btn btn-primary active preview_button">Preview</button>
+          <button type="button" class="btn btn-primary active edit_button">Edit</button>
+          <button type="button" class="btn btn-primary preview_button">Preview</button>
         </div>
       </div>  
       <div class="dash-content">
@@ -45,4 +53,5 @@
 
   <div class="clearfix"></div>
 
-{% endblock %}
+{% endblock %} 
+{% endcomment %}

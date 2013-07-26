@@ -20,6 +20,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': normpath(join(DJANGO_ROOT, 'default.db')),
         'USER': '',
+        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'PASSWORD': '',
         'HOST': '',
         'PORT': '',
@@ -52,11 +53,13 @@ MIDDLEWARE_CLASSES += (
 
 DEBUG_TOOLBAR_CONFIG = { 'INTERCEPT_REDIRECTS': False }
 
+# COMPRESS_OFFLINE = True
+COMPRESS_DEBUG_TOGGLE = 'debug'
+
 # TWITTER CONFIG DEV KEYS
 
 TWITTER_KEY = 'ozuyeg1uriTqpgEGNxfXPA'
-
-TWITTER_SECRET = '4zZjutoXBLs8mfxMHZtGKf1nLNGhABWBz44alSg58'
+TWITTER_SECRET = '4zZjutoXBLs8mfxMHZtGKf1nLNGhABWBz44alSg58' # should move twitter creds to evironment variables
 
 # See: http://docs.celeryproject.org/en/latest/configuration.html#broker-transport
 # BROKER_TRANSPORT = 'amqplib'
