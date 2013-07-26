@@ -30,18 +30,20 @@
 				{# </div> #}
 			</div>
 			<div class="span6">
+				{%if first_visit %}
 				<div class="alert alert-info text-left">
 					<button type="button" class="close" data-dismiss="alert">&times;</button>
 					{# <h4>Welcome</h4> #}
 					Its your first time, check dis shit out
 				</div>
+				{% endif %}
 			</div>
 			<div class="span3">
 				<a class="dashboard-input dashboard-create-btn btn btn-primary" href="/listings/create/">Create a Listing</a>
 			</div>
 		</div>
 	</div>
-	<div class="dashboard-panel row-fluid first-visit">
+	<div class="dashboard-panel row-fluid {% if first_visit %}first-visit{% endif %}">
 		<div class="span8 listings-col">
 			{% include 'listings/partials/listings_table.html' %}
 		</div>
