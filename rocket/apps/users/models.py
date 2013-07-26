@@ -67,5 +67,5 @@ class ProfileFB(models.Model):
 		return self.username
 
 class FirstVisit(models.Model):
-	url = models.URLField()
+	template_path = models.CharField(max_length=100, blank=True)
 	user = models.ForeignKey('auth.User')
