@@ -81,7 +81,8 @@ class ListingSpecValue(models.Model):
 
 # Listing Photo
 class ListingPhoto(models.Model):
-	url = models.CharField(max_length=255)
+	url = models.CharField(max_length=255) # ink url
+	key = models.CharField(max_length=255) # s3 path
 	order = models.IntegerField(null = True, blank=True)
 	listing = models.ForeignKey(Listing, null = True, blank=True)
 

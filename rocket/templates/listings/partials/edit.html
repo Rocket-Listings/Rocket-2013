@@ -1,11 +1,24 @@
 {% load specval %}
-{# <h2>Create a Listing</h2> #}
+<h2>{{ form.title.value|default:"Create a Listing" }}</h2>
+{# {{ formset.as_p }} #}
+
+{% for hidden in formset.hidden_fields %}
+  {{ hidden }}
+{% endfor %}
+{% comment %}
+{% for form in formset %}
+{% for field in form %}
+  {{ field }}
+{% endfor %}
+{% endfor %}
+{% endcomment %}
 <form method="POST" class="listing-form form-horizontal">
   {% csrf_token %}
   {# Hidden fields  #}
   {% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
   <input type="hidden" id="id_location" maxlength="200" name="location" value="Bethesda, MD">
 
+  {% comment %}
   {# Errors at the top #}
   {% for field, errors in form.errors.items %}
     <div class="alert alert-error alert-block">
@@ -18,31 +31,45 @@
       </ul>
     </div>
   {% endfor %}
-  {# Category Select #}
-  <ul class="nav nav-tabs">
-    <li class="active">
-      <a href="#forsale" data-toggle="tab">For Sale</a>
-    </li>
-    <li>
-      <a href="#housing" data-toggle="tab">Housing</a>
-    </li>
+  {% comment %}
+
+  {% comment %}
+  {% for group, cat_list in cats.items %}
+  <h2>{{ group }}</h2>
+  <ul>
+  {% for cat in cat_list %}
+  <li>{{ cat }}</li>
+  {% endfor %}
   </ul>
-  <div class="tab-content">
-    {% for group, cat_list in cats.items %}
-    <div class="tab-pane{% if group == "forsale" %} active{% endif %}" id="{{ group }}">
-      <div class="row">
-        <div class="span2">
-        {% for cat in cat_list %}
-            <a class="cat {{ group }}" data-id="{{ cat.id }}">{{ cat.name }}</a>
-          {% if group == "forsale" and forloop.counter|divisibleby:9 or group == "housing" and forloop.counter|divisibleby:3 %}
-            </div><div class="span2">
-          {% endif %}
-        {% endfor %}
+  {% endfor %}
+  {% endcomment %}
+  {# Category Select #}
+  <fieldset><legend>Category{% if form.category.errors %}<p class="text-error">{{ form.category.errors }}</p>{% endif %}</legend>
+    <ul class="nav nav-tabs">
+      <li class="active">
+        <a href="#forsale" data-toggle="tab">For Sale</a>
+      </li>
+      <li>
+        <a href="#housing" data-toggle="tab">Housing</a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      {% for group, cat_list in cats.items %}
+      <div class="tab-pane{% if group == "forsale" %} active{% endif %}" id="{{ group }}">
+        <div class="row">
+          <div class="span2">
+          {% for cat in cat_list %}
+              <a class="cat {{ group }}" data-id="{{ cat.id }}">{{ cat.name }}</a>
+            {% if group == "forsale" and forloop.counter|divisibleby:9 or group == "housing" and forloop.counter|divisibleby:3 %}
+              </div><div class="span2">
+            {% endif %}
+          {% endfor %}
+          </div>
         </div>
       </div>
+      {% endfor %}
     </div>
-    {% endfor %}
-  </div>
+  </fieldset>
 
   {# First form row #}
   <fieldset><legend>Listing Info</legend>
@@ -87,19 +114,35 @@
         {% endfor %}
     </div>
   </fieldset>
-  <fieldset><legend>Photo Upload <a id="upload-more" class="btn pull-right hide">Upload more</a></legend>
-    <iframe id="fp-container"></iframe>
-    <ul id="photos" class="thumbnails"></ul>
-      {% verbatim %}
-      <script id="thumbnail-template" type="text/template">
-        {{#imgs}}
-        <li class="span2">
-          <div class="thumbnail">
-            <img src="{{ url }}" data-order="{{ order }}"/>
-          </div>
-        </li>
-        {{/imgs}}
-      </script>
+  <fieldset>
+    <legend>Photo Upload<small class="photo-view">Drag to reorder</small>
+      <a class="btn pull-right hide photo-view toggle-view">Upload more</a>
+      <a class="btn pull-right hide upload-view toggle-view">Arrange photos</a>      
+    </legend>
+    <ul id="photos" class="thumbnails sortable photo-view"></ul>
+    <iframe class="upload-view" id="fp-container"></iframe>
+    
+    <input id="id_listingphoto_set-TOTAL_FORMS" name="listingphoto_set-TOTAL_FORMS" type="hidden" />
+    <input id="id_listingphoto_set-INITIAL_FORMS" name="listingphoto_set-INITIAL_FORMS" type="hidden" value="0" />
+    <input id="id_listingphoto_set-MAX_NUM_FORMS" name="listingphoto_set-MAX_NUM_FORMS" type="hidden" value="1000" />    
+
+    {% verbatim %}
+    <script id="thumbnail-template" type="text/template">
+      {{#imgs}}
+      <li class="span2" draggable="true">
+        <div class="thumbnail" draggable="true">
+          <img src="{{ src }}" draggable="true">
+        </div>
+
+        <input class="listingphoto_set-key" id="id_listingphoto_set-{{ index }}-key" name="listingphoto_set-{{ index }}-key" type="hidden" value="{{ key }}"/>
+        <input class="listingphoto_set-url" id="id_listingphoto_set-{{ index }}-url" name="listingphoto_set-{{ index }}-url" type="hidden" value="{{ url }}"/>        
+        <input class="listingphoto_set-order" id="id_listingphoto_set-{{ index }}-order" name="listingphoto_set-{{ index }}-order" type="hidden" value="{{ index }}"/>
+        <input class="listingphoto_set-delete hide" id="id_listingphoto_set-{{ index }}-DELETE" name="listingphoto_set-{{ index }}-DELETE" type="checkbox" />
+        <input class="listingphoto_set-listing" id="id_listingphoto_set-{{ index }}-listing" name="listingphoto_set-{{ index }}-listing" type="hidden"{% endverbatim %}{% if form.instance %} value="{{ form.instance.id }}" {% endif %}{% verbatim %}/>
+        <input class="listingphoto_set-id" id="id_listingphoto_set-{{ index }}-id" name="listingphoto_set-{{ index }}-id" type="hidden" />
+      </li>
+      {{/imgs}}
+    </script>
     {% endverbatim %}
   </fieldset>
   <div class="form-actions">

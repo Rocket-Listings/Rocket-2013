@@ -148,6 +148,9 @@
   }
 }
 
+#listing-detail {
+  overflow-x: hidden;
+}
 .listing-form {
   input, .tab-content, textarea {
     margin-bottom: 20px;
@@ -173,20 +176,16 @@
 
     &:hover {
         cursor: pointer;
-        color: #08c;
-        background: lighten(#08c, 50%);
-        text-decoration: none;
+        // color: #08c;
+        // background: lighten(#08c, 50%);
+        // text-decoration: none;
+        text-decoration: underline;
     }
     &.selected {
-      color: white;
-      background: #08c; 
-    }
-
-    &.forsale {  
-      // width: 149px;
-    }
-    &.housing {
-      // width: 160px;
+      color: black;
+      text-decoration: underline;      
+      // color: white;
+      // background: #08c; 
     }
   }
 
@@ -214,12 +213,44 @@
 
   #fp-container {
     border: none;
-    height: 412px;
-    width: 100%; 
+    min-height: 412px;
+    width: 108%; 
     position: relative; 
     left: -30px;
   }
+  
+  .sortable .sortable-dragging {
+    // background: blue;
+    cursor: pointer;
+  }
+  .sortable .sortable-placeholder {
+    float: left;
+    width: 160px;
+    min-height: 160px;
+    margin-left: 30px;
+    margin-bottom: 20px;
+    border: 1px dashed #ddd;
+  }
+
+  .thumbnail:hover {
+    cursor: pointer;
+    // width: 200px;
+
+  }
+
+  .photo-view {
+    display: none;
+  }
+
+  #photos {
+    height: 412px;
+  }
+
+  fieldset small {
+    margin-left: 12px;
+  }
 }
+
 
 .detail-sidebar {
   padding-top:38px;

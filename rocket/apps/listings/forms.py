@@ -1,9 +1,11 @@
 from django import forms
+from django.forms.models import modelformset_factory
 from listings.models import Listing, ListingCategory, ListingPhoto, ListingSpecKey, ListingSpecValue
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Fieldset, ButtonHolder, Layout
 from crispy_forms.bootstrap import InlineRadios
 from listings import utils
+from django.forms.models import inlineformset_factory
 
 class ListingForm(forms.ModelForm):
     class Meta:
@@ -28,6 +30,4 @@ class SpecForm(forms.Form):
     #         print name, value
     #     return self.cleaned_data
 
-class ListingPics(forms.ModelForm):
-    class Meta:
-        model = ListingPhoto
+ListingPhotoFormSet = inlineformset_factory(Listing, ListingPhoto)

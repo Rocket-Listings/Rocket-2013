@@ -1,4 +1,3 @@
-// enable formatting strings
 if (!String.prototype.format) {
   String.prototype.format = function() {
     var args = arguments;
@@ -111,35 +110,46 @@ $(function() {
       access: 'public'
     },
     onSuccess: function(InkBlobs) {
+      $('#id_listingphoto_set-TOTAL_FORMS').val(InkBlobs.length);
       var view = { imgs: [] };
       for (var i = 0; i<InkBlobs.length; i++) {
         var blob = InkBlobs[i];
         view.imgs.push({
-          order: i,
-          url: "https://s3.amazonaws.com/static.rocketlistings.com/" + blob.key
+          index: i,
+          url: blob.url,
+          key: blob.key,
+          src: "https://s3.amazonaws.com/static.rocketlistings.com/" + blob.key
         });
       }
       var output = Mustache.render($('#thumbnail-template').html(), view);
-      $('#fp-container').hide();
-      $('#upload-more').show();
-      $('#photos').html(output);  
+      $('#photos').html(output);
+      this.bindSortable();
+      $('.photo-view').fadeIn();
+      $('.upload-view').hide();
     },
     onError: function(type, message) {
       console.log('('+type+') '+ message);
     },
-    uploadMore: function(e) {
+    toggleView: function(e) {
       e.preventDefault();
-      $('#fp-container').toggle();
+      console.log('hello');
+      $('.upload-view').toggle();
+      $('.photo-view').toggle();      
+    },
+    bindSortable: function() {
+      $('.sortable').sortable().bind('sortupdate', function() {
+        $('.sortable li').each(function(index, item) {
+          $(this).find('.listingphoto_set-order:first').val(index);
+        });
+      });
     }
   }
   // Make drag and drop photo upload pane
   // $('#dragdrop').click(function(e) {
     // e.preventDefault();
-  filepicker.pickAndStore(fpConfig.picker_options, 
-                            fpConfig.store_options, 
-                            fpConfig.onSuccess, 
-                            fpConfig.onError);
-  $('#upload-more').click(fpConfig.uploadMore);
+  filepicker.pickAndStore(fpConfig.picker_options, fpConfig.store_options, $.proxy(fpConfig.onSuccess, fpConfig), fpConfig.onError);
+  $('.toggle-view').click(fpConfig.toggleView);
+  fpConfig.bindSortable();
   // });
   // filepicker.makeDropPane($('#dragdrop'), $.extend({
   //   onSuccess: fpConfig.onSuccess,
@@ -151,7 +161,6 @@ $(function() {
 
   /* Listings table */
   $('.table-listings').tablesorter({ cssHeader: 'table-header'});
-  $('.table-listings').tooltip({ selector: "a[data-toggle=tooltip]" });
 
 
   /* Listing detail photo slideshow */
@@ -178,21 +187,4 @@ $(function() {
   //   id = image.attr('data-id');
   //   window.location.hash = image.attr('data-id');
   // }
-
-  filepicker.setKey('ATM8Oz2TyCtiJiHu6pP6Qz');
-  function fileUpload(){
-  /* function needs more work inorder to better save photos in s3 */
-    filepicker.pickAndStore({
-      services: ['COMPUTER','URL'],
-      mimetype:"image/*",
-      multiple: "true"
-      },
-      {location:"S3"},
-    function(InkBlobs){
-      var filepickerObject = InkBlobs;
-      photoLog(filepickerObject); /* Logs photos for storing in database */
-      editImage(filepickerObject); /* Preview images on edit page */
-      }
-    );
-  }
 });

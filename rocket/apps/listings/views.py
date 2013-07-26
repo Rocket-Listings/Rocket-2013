@@ -3,7 +3,7 @@ from listings import utils
 from django.contrib.auth.models import User
 from django.conf import settings
 from datetime import datetime, timedelta
-from listings.forms import ListingForm, ListingPics, SpecForm
+from listings.forms import ListingForm, SpecForm, ListingPhotoFormSet
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET, require_POST 
 from django.shortcuts import render, redirect, get_object_or_404
@@ -16,7 +16,6 @@ from django.core import serializers
 from django.http import HttpResponse, HttpResponseBadRequest
 from operator import __add__ as combine
 from django.http import Http404
-from django.forms.models import inlineformset_factory
 
 # @login_required
 # def user_listings(request, username=None):
@@ -47,7 +46,8 @@ def create(request, pane='edit'):
         }
         cxt = {
             'form': ListingForm(initial=defaults),
-            'pane': pane
+            'pane': pane,
+            'photo_formset': ListingPhotoFormSet(prefix="listingphoto_set")
         }
         cxt.update(utils.get_listing_vars())
         return render(request, 'listings/detail.html', cxt)
@@ -66,18 +66,21 @@ def update(request, listing_id=None): # not directly addressed by a route, allow
         # spec_form
         listing_form = ListingForm(request.POST, instance=listing)
         spec_form = SpecForm(request.POST, initial=specs) # SpecForm is not a real form
+        photo_formset = ListingPhotoFormSet(request.POST, prefix="listingphoto_set")
     else:
         listing_form = ListingForm(request.POST)
         spec_form = SpecForm(request.POST)
+        photo_formset = ListingPhotoFormSet(request.POST, prefix="listingphoto_set")
 
-    if listing_form.is_valid() and spec_form.is_valid():
-
+    if listing_form.is_valid() and spec_form.is_valid() and photo_formset.is_valid():
         listing = listing_form.save(commit=False)
         listing.user = request.user
         listing.save()
         for name, value in spec_form.cleaned_data.items():
             spec_id = int(name.replace('spec-',''))
             ListingSpecValue.objects.create(value=value, key_id=spec_id, listing_id=listing.id)
+        photo_formset.save()
+
         return redirect(listing)
     else:
         # preserving validation errors

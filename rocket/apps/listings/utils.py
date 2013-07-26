@@ -7,8 +7,8 @@ def get_listing_vars():
             cats_queryset = ListingCategory.objects.all()
             cat_groups = set(cats_queryset.values_list('group', flat=True))
             cats = {}
-            for group in cat_groups:             
-                cats[group] = sorted(list(cats_queryset.filter(group=group)))
+            for group in cat_groups:
+                cats[group] = list(cats_queryset.filter(group=group))
 
             cache_dict = {
                 'cats': cats,
