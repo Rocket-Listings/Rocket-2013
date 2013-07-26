@@ -299,33 +299,12 @@ $(function() {
 
 	// PROFILE JS
 
-	$("rating-form").submit(function(){
-		var csrftoken = $.cookie('csrftoken');
-		console.log(csrftoken);
-		$.ajax({
-			data: $(this).serialize(),
-			type: $(this).attr('method'),
-			url: $(this).attr('action'),
-			beforeSend: function(xhr) {
-				xhr.setRequestHeader("X-CSRFToken", csrftoken);
-			},
-			success: function(response) {
-				if (response[0]) {
-					insertNewComment(response[0].fields);
-					$("input:not(input[type='submit']), textarea").val("");
-				}
-				else {
-					showError(response);
-				}
-			}
-		});
-		return false;
-	});
-	});	
+
 
 	// Handle the comment form
 	$(".comment-form").submit(function() {
 		var csrftoken = $.cookie('csrftoken');
+		console.log('comment form');
 		console.log(csrftoken);
 		$.ajax({
 			data: $(this).serialize(),
@@ -336,6 +315,7 @@ $(function() {
 			},
 			success: function(response) {
 				if (response[0]) {
+					console.log(response)
 					insertNewComment(response[0].fields);
 					$("input:not(input[type='submit']), textarea").val("");
 					$(".errors").hide();
@@ -350,11 +330,17 @@ $(function() {
 	});
 
 	function insertNewComment(data) {
-		var newComment = '<div class="each-comment"><h5>' + data.title + '</h5>';
-			newComment += '<h6>' + data.date_posted  + '</h6>';
-			newComment += '<p>' + data.comment + '</p></div>';
+		var newComment = '<div class="each-comment"><div class="row"><div class="span6"><h5>' + data.title + '</h5></div>';
+			newComment += '<div class="span2"><h6>' + data.date_posted  + '</h6></div></div>';
+			newComment += '<div class="row"><div class="span7"><p>' + data.comment + '</p></div></div></div>';
 		$(".comment-body").append(newComment);
 	}
+
+
+
+				
+				
+
 
 	// Used for comment form and user info AJAX responses
 	function showError(response) {

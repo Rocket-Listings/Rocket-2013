@@ -5,10 +5,26 @@
 	<form action="" class="comment-form" method="POST">
 		<ul class="inline clearfix">
 			<li><label for="title"></label><input placeholder="Title" type="text" name="title"></li>
-			<li><label for="email"></label><input placeholder="Email (hidden)" type="text" name="email"></li>
+			<li><label for="email"></label><input placeholder="Email (hidden)" type="text" name="email"></li>	
+			
+		</ul>
+		<ul class="inline clearfix">
+			<div class="row">
+				<div class="span2">
+					<h5> Rate the seller </h5>			
+				</div>
+				<div class="span3">
+					<div class="btn-group" data-toggle="buttons-radio" name="rating">
+  						<button type="button" class="btn btn-primary" value="1">Scammer</button>
+  						<button type="button" class="btn btn-primary" value="2">Jerk</button>
+  						<button type="button" class="btn btn-primary" value="3">Good Egg</button>
+  						<button type="button" class="btn btn-primary" value="4">Paragon</button>
+					</div>
+				</div>
 		</ul>
 		<textarea class="comment-textarea" placeholder="Give {{user.username}} some feedback here" name="comment" rows="3"></textarea><br>
 		<input class="btn btn-info comment-submit" type="submit" value="Submit">
+		
 	</form>
 </div>
 {% endif %}

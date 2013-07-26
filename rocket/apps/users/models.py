@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from listings.models import ListingCategory, ListingType
 from django.db.models.signals import post_save
-from djangoratings.fields import RatingField
+
 # import django_filepicker
 
 # User Profile
@@ -21,7 +21,6 @@ class UserProfile(models.Model):
 	default_seller_type = models.CharField(max_length=1, choices=SELLER_TYPE_CHOICES, default='P')
 	phone = models.CharField(max_length=50, blank=True)
 	bio = models.TextField(blank=True)
-	rating = RatingField(range=3)
 	propic = models.CharField(max_length=200, blank=True)
 	twitter_handle = models.CharField(max_length=20, blank=True)
 	OAUTH_TOKEN = models.CharField(max_length=200, blank=True)
@@ -55,6 +54,13 @@ class UserComment(models.Model):
 	def __unicode__(self):
 		return self.user.username
 
+class UserRating(models.Model): 
+	date_posted = models.DateField(auto_now=False, auto_now_add=True)
+	rating = models.IntegerField(default=50)
+	user = models.ForeignKey(User) # contains user foreignkey
+	
+	def __unicode__(self):
+		return self.user.username
 
 #User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 
