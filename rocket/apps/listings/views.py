@@ -27,7 +27,7 @@ from haystack.query import SearchQuerySet
 from haystack.inputs import AutoQuery
 from django.core.urlresolvers import reverse
 from haystack import connections
-from users.decorators import first_visit
+from users.decorators import first_visit, view_count
 from django.template.response import TemplateResponse
 # Moved here from users/views.py
 
@@ -40,6 +40,7 @@ def user_listings(request, username=None):
 	buyers = Buyer.objects.filter(listing__user=user)
 	messages = Message.objects.filter(listing__user=user)
 	return TemplateResponse(request, 'listings/listings_dashboard.html', {'listings': listings, 'buyers': buyers, 'messages':messages})
+
 
 @first_visit
 @login_required

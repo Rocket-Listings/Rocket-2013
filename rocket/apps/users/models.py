@@ -69,3 +69,12 @@ class ProfileFB(models.Model):
 class FirstVisit(models.Model):
 	template_path = models.CharField(max_length=100, blank=True)
 	user = models.ForeignKey('auth.User')
+
+class ViewCount(models.Model):
+	url = models.URLField()
+	count = models.IntegerField(default=0)
+
+	def increment(self):
+		self.count += 1
+		self.save()
+
