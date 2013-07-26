@@ -5,7 +5,8 @@ from users.forms import UserProfileForm, CommentSubmitForm
 from users.models import UserProfile, UserComment, ProfileFB
 from django.forms.models import inlineformset_factory
 from django.contrib.auth.models import User
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect
+from django.template.response import TemplateResponse
 from django.contrib.auth.decorators import login_required
 #from forms import UserProfileForm
 from django.core.exceptions import PermissionDenied
@@ -15,10 +16,12 @@ from django.http import HttpResponse, HttpRequest, HttpResponseRedirect, HttpRes
 from django.utils import simplejson as json
 from django.conf import settings
 from twython import Twython
+from users.decorators import first_visit
 
 def overview(request, username=None):
 	return info(request, username)
 
+@first_visit
 @login_required
 def info(request):
 	user = request.user
@@ -42,8 +45,9 @@ def info(request):
 			return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
 		user_profile_form = UserProfileForm(instance=profile)
-		return render(request, 'users/user_info.html', {'user': user, 'form': user_profile_form, 'fb': fbProfile})
+		return TemplateResponse(request, 'users/user_info.html', {'user': user, 'form': user_profile_form, 'fb': fbProfile})
 
+@first_visit
 def profile(request, username=None):
 	user = User.objects.get(username=username)
 	allListings = Listing.objects.filter(user=user).order_by('-pub_date')
@@ -63,7 +67,7 @@ def profile(request, username=None):
 			errors = comment_form.errors
 			return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
-		return render(request, 'users/user_profile.html', {'user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile}) #'activelistings':activelistings, 'draftlistings':draftlistings,
+		return TemplateResponse(request, 'users/user_profile.html', {'user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile}) #'activelistings':activelistings, 'draftlistings':draftlistings,
 
 def delete_account(request):
 	user = request.user
