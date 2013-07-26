@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from listings.models import ListingCategory, ListingType
+from listings.models import ListingCategory, ListingType, Listing
 from django.db.models.signals import post_save
 # import django_filepicker
 

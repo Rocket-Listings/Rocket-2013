@@ -46,7 +46,8 @@ def dashboard(request):
 	listings = Listing.objects.filter(user=user).order_by('-pub_date').all() # later on we can change how many are returned
 	buyers = reduce(__add__, map(lambda l: list(l.buyer_set.all()), listings), [])
 	messages = reduce(__add__, map(lambda b: list(b.message_set.all()), buyers), [])
-	return render(request, 'listings/listings_dashboard.html',  {'listings': listings, 'buyers': buyers, 'messages':messages})
+	latest_ids = map(lambda set: max(map(lambda i: i.id, set)), [listings, buyers, messages])
+	return render(request, 'listings/listings_dashboard.html',  {'listings': listings, 'buyers': buyers, 'messages':messages, 'latest': latest_ids})
 
 def latest(request):
 	listings = Listing.objects.all().order_by('-pub_date')[:10]
@@ -272,6 +273,7 @@ def dashboard_data(request):
 	listings = Listing.objects.filter(user=user).order_by('-pub_date').all()
 	buyers = reduce(__add__, map(lambda l: list(l.buyer_set.all()), listings), [])
 	messages = reduce(__add__, map(lambda b: list(b.message_set.all()), buyers), [])
+	latest_ids = map(lambda set: max(map(lambda i: i.id, set)), [listings, buyers, messages])
 
 	listings_data = map(lambda l: {
 		'title': l.title, 
@@ -294,8 +296,5 @@ def dashboard_data(request):
 		'content': m.content,
 		'date': naturaltime(m.date)}, [m for m in messages if m.id > ids[2]])
 
-	json = {'listings': listings_data, 'buyers': buyers_data, 'messages': messages_data}
+	json = {'listings': listings_data, 'buyers': buyers_data, 'messages': messages_data, 'latest': latest_ids}
 	return HttpResponse(simplejson.dumps(json), content_type="application/json")
-
-def isNewBuyer(b, id):
-	if (b.listing.id > id): return b
