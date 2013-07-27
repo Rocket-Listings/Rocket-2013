@@ -16,7 +16,12 @@
 				<span class="logo-text">rocket</span>
 			</a>
 			{% if user.is_authenticated %}
-			<ul class="nav pull-right marginless-nav-padding">
+			<ul class="nav pull-right nav-to-edge">
+                <li class="{% active 'create' %}">
+                    <a href="/listings/create/">
+                        <span class="hidden-phone">Create a Listing</span><i class="icon-plus"></i>
+                    </a>
+                </li>
                 <li class="{% active 'dashboard' %}">
                     <a href="{% url 'listings.views.dashboard' %}">
                         <span class="hidden-phone">Dashboard</span><i class="icon-th-list"></i>
@@ -28,7 +33,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'auth_logout' %}">
+                    <a href="{% url 'auth_logout' %}" class="logout-padding">
                         <span class="hidden-phone">Logout</span><i class="icon-off"></i>
                     </a>
                 </li>
