@@ -268,65 +268,82 @@ a {
 		p{
 			width: 100px;
 			margin-right: 5px;
-			padding-left: 5px;
+			margin-bottom: 0;
+			padding-left: 10px;
+			padding-top: 5px;
 			font-family: inherit;
-			font-weight: bold;
 			line-height: 20px;
 			color: inherit;
 			text-rendering: optimizelegibility;
-			font-size: 15px;
+			font-size: 14px;
+			color: #878787;
+
 		}
 
-		.btn-purple{
-		background-color: rgba(62, 0, 126, 0.8);
+		.btn-red{
+		background-color: rgba(188, 0, 0, 0.7);
 		color: #fff;
 
 		&:hover {
-			background-color: rgba(62, 0, 126, 1);
+			background-color: rgba(188, 0, 0, 1);
 			}
 		}
-		.btn-purple.active{
-			background-color: rgba(62, 0, 126, 1);
+		.btn-red.active{
+			background-color: rgba(188, 0, 0, 1);
 			}	
 
-		.btn-lightpurple{
-		background-color: rgba(62, 0, 126, 0.6);
-		color: #fff;
-
-		&:hover {
-			background-color: rgba(62, 0, 126, 0.9);
-			}
-		}
-
-		.btn-lightpurple.active{
-			background-color: rgba(62, 0, 126, 0.9);
-			}
-
-		.btn-lightblue{
-		background-color: rgba(63, 114, 255, 0.8);
-		color: #fff;
-
-		&:hover {
-			background-color: rgba(63, 114, 255, 1);
-			}
-		}
-
-		.btn-lightblue.active{
-			background-color: rgba(63, 114, 255, 1);
-			}
-
-		.btn-blue{
-			background-color: rgba(30, 100, 255, 0.8);
+		.btn-lightred{
+			background-color: rgba(188, 0, 0, 0.6);
+			text-shadow: none;
 			color: #fff;
 
 		&:hover {
-			background-color: rgba(30, 100, 255, 1);
+			background-color: rgba(188, 0, 0, 0.9);
+			
 			}
 		}
 
-		.btn-blue.active{
-			background-color: rgba(30, 114, 255, 1);
-			}				
+		.btn-lightred.active{
+			background-color: rgba(188, 0, 0, 0.9);
+			
+			}
+
+		.btn-lightgreen{
+		background-color: rgba(0, 140, 0, 0.6);
+		color: #fff;
+		text-shadow: none;
+
+		&:hover {
+			background-color: rgba(0, 140, 0, 0.9);
+			}
+		}
+
+		.btn-lightgreen.active{
+			background-color: rgba(0, 140, 0, 0.9);
+			}
+
+		.btn-green{
+			background-color: rgba(0, 140, 0, 0.7);
+			color: #fff;
+			text-shadow: none;
+
+		&:hover {
+			background-color: rgba(0, 140, 0, 1);
+			}
+		}
+
+		.btn-green.active{
+			background-color: rgba(0, 140, 0, 1);
+			}	
+
+		.btn-group{
+			padding-left: 9px;
+			margin-bottom: 10px;
+			button{
+				width: 88px;
+			}
+		}
+			
 
 		form{
 			margin-left: -5px;
@@ -355,11 +372,6 @@ a {
 		.comment-submit {
 			margin-left: 5px;
 		}
-		.btn-group{
-		button{
-			width: 100px;
-			}
-		}
 	}
 
 		
@@ -378,12 +390,22 @@ a {
 
 
 	.seller-stats{
-		margin-bottom: 45px;
 		h4{
 			margin: 0;
 			line-height: 30px;
 			text-align: left;
 			margin-bottom: 15px;
+		}
+
+		.table-stats{
+			th{
+				width: 115px;
+			}
+
+			td{
+				text-align: center;
+				width: 140px;
+			}
 		}
 	}
 	.profile-selling {
