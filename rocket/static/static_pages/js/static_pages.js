@@ -88,7 +88,7 @@ $(function() {
 	function getLocation(ip) {
 		$.ajax({
 			method: 'GET',
-			url: 'http://freegeoip.net/json/' + ip,
+			url: 'https://freegeoip.net/json/' + ip,
 			success: function (response) {
 				gotLocation(response.latitude, response.longitude);
 			}

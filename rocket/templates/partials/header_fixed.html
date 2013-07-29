@@ -4,43 +4,49 @@
 <div class="navbar">
 	<div class="navbar-inner">
 		<div class="container-fluid">
-				{% if user.is_authenticated %}
-				<a class="navbar-logo" href="{% url 'dashboard' %}">
-				{% else %}
-				<a class="navbar-logo" href="{% url 'home' %}">
-				{% endif %}
-					<div class="accent accent1"></div>
-					<div class="accent accent2"></div>
-					<div class="accent accent3"></div>
-					<div class="accent accent4"></div>
-					<span class="logo-text">rocket</span>
-				</a>
 			{% if user.is_authenticated %}
-			<ul class="nav pull-right">
-				<li class="{% active 'dashboard' %}">
-					<a href="{% url 'dashboard' %}">
-						Listings<span> </span><i class="icon-th-list"></i>
-					</a>
-				</li>
-				<li class="{% active 'user_info' %}">
-					<a href="{% url 'users.views.info' %}">
-						Account<span> </span><i class="icon-user"></i>
-					</a>
-				</li>
-				<li>
-					<a href="{% url 'auth_logout' %}">
-						Logout<span> </span><i class="icon-off"></i>
-					</a>
-				</li>
-			</ul>
+			<a class="navbar-logo" href="{% url 'dashboard' %}">
 			{% else %}
-			<ul class="nav pull-right">
-				<li>
-					<a href="{% url 'auth_login' %}">
-						login<span> </span><i class="icon-off"></i>
-					</a>
-				</li>
-			</ul>
+			<a class="navbar-logo" href="{% url 'home' %}">
 			{% endif %}
+				<div class="accent accent1"></div>
+				<div class="accent accent2"></div>
+				<div class="accent accent3"></div>
+				<div class="accent accent4"></div>
+				<span class="logo-text">rocket</span>
+			</a>
+			{% if user.is_authenticated %}
+			<ul class="nav pull-right nav-to-edge">
+                <li class="{% active 'create' %}">
+                    <a href="/listings/create/">
+                        <span class="hidden-phone">Create a Listing</span><i class="icon-plus"></i>
+                    </a>
+                </li>
+                <li class="{% active 'dashboard' %}">
+                    <a href="{% url 'listings.views.dashboard' %}">
+                        <span class="hidden-phone">Dashboard</span><i class="icon-th-list"></i>
+                    </a>
+                </li>
+                <li class="{% active 'user_profile' %}">
+                    <a href="{% url 'user_profile' user.username %}">
+                        <span class="hidden-phone">Profile</span><i class="icon-user"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'auth_logout' %}" class="logout-padding">
+                        <span class="hidden-phone">Logout</span><i class="icon-off"></i>
+                    </a>
+                </li>
+            </ul>
+            {% else %}
+            <ul class="nav pull-right">
+                <li>
+                    <a href="{% url 'auth_login' %}">
+                        <span class="hidden-phone">login</span><i class="icon-off"></i>
+                    </a>
+                </li>
+            </ul>
+			{% endif %}
+		</div>
 	</div>
 </div>

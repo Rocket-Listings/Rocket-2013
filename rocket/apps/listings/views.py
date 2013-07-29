@@ -21,20 +21,12 @@ from haystack.query import SearchQuerySet
 from haystack.inputs import AutoQuery
 from django.core.urlresolvers import reverse
 from haystack import connections
-from users.decorators import first_visit
+from users.decorators import first_visit, view_count
 from django.template.response import TemplateResponse
 
 
-# @login_required
-# def user_listings(request, username=None):
-#   user = request.user # if no username parameter is passed, defaults to the currently logged in user.
-#   if username:
-#       user = get_object_or_404(User, username=username)
-#   listings = Listing.objects.filter(user=user).order_by('-pub_date')[:10]
-#   buyers = Buyer.objects.filter(listing__user=user)
-#   messages = Message.objects.filter(listing__user=user)
-#   return TemplateResponse(request, 'listings/dashboard.html', {'listings': listings, 'buyers': buyers, 'messages':messages,})
 
+@first_visit
 @login_required
 def dashboard(request):
 	user = request.user
@@ -42,6 +34,7 @@ def dashboard(request):
 	buyers = reduce(combine, map(lambda l: list(l.buyer_set.all()), listings), [])
 	messages = reduce(combine, map(lambda b: list(b.message_set.all()), buyers), [])
 	return TemplateResponse(request, 'listings/dashboard.html',  {'listings': listings, 'buyers': buyers, 'messages':messages})
+
 
 # @login_required
 # def user_listings(request, username=None):
@@ -53,6 +46,7 @@ def dashboard(request):
 # 	messages = Message.objects.filter(listing__user=user)
 # 	return TemplateResponse(request, 'listings/listings_dashboard.html', {'listings': listings, 'buyers': buyers, 'messages':messages})
 
+@view_count
 @first_visit
 @login_required
 def create(request, pane='edit'):
@@ -111,10 +105,12 @@ def update(request, listing_id=None): # not directly addressed by a route, allow
 		cxt.update(utils.get_listing_vars())
 		return TemplateResponse(request, 'listings/detail.html', cxt)
 
-
-def detail(request, listing_id, pane='view'):
+@view_count
+def detail(request, listing_id, pane=None):
+	listing = get_object_or_404(Listing, id=listing_id)
+	request.user.skip_count = listing.user.get_username() == request.user.get_username()
+	
 	if request.method == 'GET':
-		listing = get_object_or_404(Listing, id=listing_id)
 		specs_set = listing.listingspecvalue_set.select_related().all()
 		specs = {}
 		for spec in specs_set:

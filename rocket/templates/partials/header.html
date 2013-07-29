@@ -17,9 +17,14 @@
 			</a>
 			{% if request.user.is_authenticated%}
 			<ul class="nav pull-right">
+				<li class="{% active 'create' %}">
+                    <a href="/listings/create/">
+                        <span class="hidden-phone">Create a Listing</span><i class="icon-plus"></i>
+                    </a>
+                </li>
 				<li class="{% active 'dashboard' %}">
 					<a href="{% url 'listings.views.dashboard' %}">
-						<span class="hidden-phone">Listings</span><i class="icon-th-list"></i>
+						<span class="hidden-phone">Dashboard</span><i class="icon-th-list"></i>
 					</a>
 				</li>
 				<li class="{% active 'user_profile' %}">
