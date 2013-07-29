@@ -35,6 +35,7 @@ from django.template.response import TemplateResponse
 #   messages = Message.objects.filter(listing__user=user)
 #   return TemplateResponse(request, 'listings/dashboard.html', {'listings': listings, 'buyers': buyers, 'messages':messages,})
 
+@first_visit
 @login_required
 def dashboard(request):
 	user = request.user
