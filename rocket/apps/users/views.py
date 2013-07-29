@@ -16,7 +16,8 @@ from django.http import HttpResponse, HttpRequest, HttpResponseRedirect, HttpRes
 from django.utils import simplejson as json
 from django.conf import settings
 from twython import Twython
-from users.decorators import first_visit
+from users.decorators import first_visit, view_count
+from utils import get_view_count
 
 def overview(request, username=None):
 	return info(request, username)
@@ -47,9 +48,11 @@ def info(request):
 		user_profile_form = UserProfileForm(instance=profile)
 		return TemplateResponse(request, 'users/user_info.html', {'user': user, 'form': user_profile_form, 'fb': fbProfile})
 
+@view_count
 @first_visit
 def profile(request, username=None):
 	user = User.objects.get(username=username)
+	request.user.skip_count = user.get_username() == request.user.get_username()
 	allListings = Listing.objects.filter(user=user).order_by('-pub_date')
 	# activelistings = allListings.filter(status=ListingStatus(pk=1))
 	# draftlistings = allListings.filter(status=ListingStatus(pk=2))
