@@ -43,17 +43,17 @@
 							<a class="deleteModal btn trash_optn" title="Delete listing" href="#deleteModal_{{listing.id}}" data-toggle="modal"><i class="icon-remove"></i></a>
 
 							<!-- delete listing modal -->
-							<div id="deleteModal_{{listing.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
+							<div id="deleteModal_{{listing.id}}" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-									<h3 style="color:black" id="myModalLabel">Delete listing?</h3>
+									<h3 id="myModalLabel">Delete listing?</h3>
 								</div>
 								<div class="modal-body">
-									<h5 style="color: black">If you delete the listing, it will no longer appear on Rocket Listings or <br> Craigslist. You can restore the listing by going to your deleted listings panel.</h5>Got here
+									<h5>If you delete the listing, it will no longer appear on Rocket Listings or Craigslist. You can restore the listing by going to your deleted listings panel.</h5>
 								</div>
 								<div id="dashboard-modal" class="modal-footer">
 									<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-									<a class="btn btn-primary" href="{% url 'listings.views.delete' listing.id %}" data-container="body">Confirm</a>
+									<a class="btn btn-primary btn-danger" href="{% url 'listings.views.delete' listing.id %}" data-container="body">Delete</a>
 								</div>
 							</div>
 						</div>
