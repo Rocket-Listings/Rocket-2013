@@ -7,13 +7,13 @@
     {% compress js %}
         <script src="{% static 'listings/js/sorttable.js' %}" type="text/javascript"></script>
     {% endcompress %}
-        <script src="{% static 'listings/js/ajax.js' %}" type="text/javascript"></script>
+        <script src="{% static 'listings/js/search.js' %}" type="text/javascript"></script>
 {% endblock %}
 
 {% block content %}
     <h2>Search</h2>
     
-    <form id="form" method="get" action=".">
+    <form class="search-form" method="GET">
         {% csrf_token %}
         <table>
             {{ form.as_table }}
@@ -41,7 +41,7 @@
             {% for result in page.object_list %}
                 <tr data-listing-id="{{ result.object.id }}" >
                     <td>
-                        <a class="bargle" href="{{ result.object.get_absolute_url }}">
+                        <a href="{{ result.object.get_absolute_url }}">
                             {{ result.object.title }}
                         </a>
                     </td>

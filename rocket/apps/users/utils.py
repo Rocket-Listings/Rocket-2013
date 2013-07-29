@@ -1,3 +1,5 @@
+#We put this file in the users folder but we could put it anywhere we want there
+
 from models import ViewCount
 
 def get_view_count(obj):

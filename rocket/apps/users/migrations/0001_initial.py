@@ -15,7 +15,7 @@ class Migration(SchemaMigration):
             ('name', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
             ('location', self.gf('django.db.models.fields.CharField')(max_length=255, blank=True)),
             ('default_category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingCategory'], null=True, blank=True)),
-            ('default_listing_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingType'], null=True, blank=True)),
+            ('default_listing_type', self.gf('django.db.models.fields.CharField')(max_length=1, null=True, blank=True)),
             ('default_seller_type', self.gf('django.db.models.fields.CharField')(default='P', max_length=1)),
             ('phone', self.gf('django.db.models.fields.CharField')(max_length=50, blank=True)),
             ('bio', self.gf('django.db.models.fields.TextField')(blank=True)),
@@ -56,6 +56,14 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'users', ['FirstVisit'])
 
+        # Adding model 'ViewCount'
+        db.create_table(u'users_viewcount', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('url', self.gf('django.db.models.fields.URLField')(max_length=200)),
+            ('count', self.gf('django.db.models.fields.IntegerField')(default=0)),
+        ))
+        db.send_create_signal(u'users', ['ViewCount'])
+
 
     def backwards(self, orm):
         # Deleting model 'UserProfile'
@@ -69,6 +77,9 @@ class Migration(SchemaMigration):
 
         # Deleting model 'FirstVisit'
         db.delete_table(u'users_firstvisit')
+
+        # Deleting model 'ViewCount'
+        db.delete_table(u'users_viewcount')
 
 
     models = {
@@ -110,13 +121,10 @@ class Migration(SchemaMigration):
         },
         u'listings.listingcategory': {
             'Meta': {'object_name': 'ListingCategory'},
+            'cl_dealer_id': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
+            'cl_owner_id': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
             'description': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '60'})
-        },
-        u'listings.listingtype': {
-            'Meta': {'object_name': 'ListingType'},
-            'description': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+            'group': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '60'})
         },
@@ -150,7 +158,7 @@ class Migration(SchemaMigration):
             'OAUTH_TOKEN_SECRET': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
             'bio': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'default_category': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.ListingCategory']", 'null': 'True', 'blank': 'True'}),
-            'default_listing_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.ListingType']", 'null': 'True', 'blank': 'True'}),
+            'default_listing_type': ('django.db.models.fields.CharField', [], {'max_length': '1', 'null': 'True', 'blank': 'True'}),
             'default_seller_type': ('django.db.models.fields.CharField', [], {'default': "'P'", 'max_length': '1'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'location': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
@@ -159,6 +167,12 @@ class Migration(SchemaMigration):
             'propic': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
             'twitter_handle': ('django.db.models.fields.CharField', [], {'max_length': '20', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['auth.User']", 'unique': 'True'})
+        },
+        u'users.viewcount': {
+            'Meta': {'object_name': 'ViewCount'},
+            'count': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'url': ('django.db.models.fields.URLField', [], {'max_length': '200'})
         }
     }
 

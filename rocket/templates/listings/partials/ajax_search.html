@@ -5,7 +5,7 @@
 	{% for listing in listings %}
 		<tr data-listing-id="{{ listing.identification }}">
 			<td>
-				<a class="bargle" href="{{ listing.url_id }}">{{ listing.title }}</a>
+				<a href="{{ listing.url_id }}">{{ listing.title }}</a>
 			</td>
 			<td>${{ listing.price }}</td>
 			{# <td>{{ listing.location }}</td> #}
