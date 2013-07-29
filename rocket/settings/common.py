@@ -172,14 +172,9 @@ THIRD_PARTY_APPS = (
 
 	# pagination template tags
 	'pagination',
-
-	# static file management
-	'compressor',
-
 )
 
 LOCAL_APPS = (
-	'ajaxuploader',
 	'listings',
 	'mail',
 	'registration',
@@ -244,18 +239,14 @@ COMPRESS_PRECOMPILERS = (
 COMPRESS_CSS_FILTERS = [
   'compressor.filters.css_default.CssAbsoluteFilter',
   'compressor.filters.template.TemplateFilter',
+  'compressor.filters.cssmin.CSSMinFilter',
 ]
 
 # See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_JS_FILTERS
 COMPRESS_JS_FILTERS = [
-  'compressor.filters.template.TemplateFilter',
+  # 'compressor.filters.template.TemplateFilter',
+  'compressor.filters.jsmin.JSMinFilter',
 ]
-
-
-COMPRESS_PRECOMPILERS = (
-    ('text/less', 'lessc {infile} {outfile}'),
-)
-
 
 ############# USER ACCOUNTS CONFIG
 AUTH_PROFILE_MODULE = 'users.UserProfile'
@@ -279,6 +270,6 @@ ROCKET_UNUSED_PHOTO_MINS = 10
 HAYSTACK_CONNECTIONS = {
 		'default': {
 				'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-				'PATH': join(abspath(__file__), 'whoosh_index'),
+				'PATH': join(dirname(__file__), 'whoosh_index'),
 		}
 }

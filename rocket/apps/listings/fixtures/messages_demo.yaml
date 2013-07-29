@@ -24,6 +24,7 @@
     category: [cars and trucks]
     listing_type: [Private]
     user: [chucknorris]
+    listing_type: 'O'
 
 - model: listings.Buyer
   pk: null
@@ -101,3 +102,211 @@
     isSeller: True
     content: "Hi Peter, It does not have ABS breaks. I'm available for test drives most of Saturday afternoons, would that work for you?"
 
+- model: listings.Listing
+  pk: null
+  fields:
+    title: Gi pants
+    description: Well used. A collectors item if you will.
+    price: 120
+    location: Bethesda, MD
+    category: [clothes and accessories]
+    listing_type: [Private]
+    user: [chucknorris]
+
+- model: listings.Listing
+  pk: null
+  fields:
+    title: Nintendo 64
+    description: I heard the kids were all into these sorts of things but it wasn't my thing. Who wants it?
+    price: 30
+    location: Bethesda, MD
+    category: [video gaming]
+    listing_type: [Private]
+    user: [chucknorris]
+
+- model: listings.Listing
+  pk: null
+  fields:
+    title: bunch of Boxes
+    description: I have a bunch of boxes from various places I need to get rid of
+    price: 0
+    location: Bethesda, MD
+    category: [free]
+    listing_type: [Private]
+    user: [chucknorris]
+
+- model: listings.Listing
+  pk: null
+  fields:
+    title: Dodge Charger 2011
+    description: Used slightly willing to take lower bids. The price I name is what I think it is worth
+    price: 3000
+    location: Bethesda, MD
+    category: [cars and trucks]
+    listing_type: [Private]
+    user: [chucknorris]
+
+- model: listings.Listing
+  pk: null
+  fields:
+    title: Les Miserables Opera CD
+    description: One of the best operas or musicals or whatever that I have listended to.
+    price: 25
+    location: Bethesda, MD
+    category: [cds dvd vhs]
+    listing_type: [Private]
+    user: [chucknorris]
+
+- model: listings.Listing
+  pk: null
+  fields:
+    title: Fig newtons
+    description: Only had one of the box. Really good but they aren't my deal.
+    price: 3
+    location: Bethesda, MD
+    category: [general]
+    listing_type: [Private]
+    user: [chucknorris]
+
+- model: listings.Listing
+  pk: null
+  fields:
+    title: Lessons in Remedial Kickass
+    description: I teach you the basics of martial arts. cost is a per month charge. Learn from the best.
+    price: 100
+    location: Bethesda, MD
+    category: [general]
+    listing_type: [Private]
+    user: [chucknorris]
+
+- model: listings.Listing
+  pk: null
+  fields:
+    title: yoga ball
+    description: Someone thought I actually needed this. Hah
+    price: 20
+    location: Bethesda, MD
+    category: [household]
+    listing_type: [Private]
+    user: [chucknorris]
+
+- model: listings.Listing
+  pk: null
+  fields:
+    title: busted workbench
+    description: free scrap wood for all purposes
+    price: 0
+    location: Bethesda, MD
+    category: [free]
+    listing_type: [Private]
+    user: [chucknorris]
+
+- model: listings.Listing
+  pk: null
+  fields:
+    title: Knife
+    description: You think you have knives. Those aren't knives. This is a knife.
+    price: 35
+    location: Bethesda, MD
+    category: [general]
+    listing_type: [Private]
+    user: [chucknorris]
+
+- model: listings.Listing
+  pk: null
+  fields:
+    title: Archer Season 1
+    description: dvd of all episodes of archer season 2. Really funny
+    price: 30
+    location: Bethesda, MD
+    category: [cds dvd vhs]
+    listing_type: [Private]
+    user: [chucknorris]
+
+- model: listings.Listing
+  pk: null
+  fields:
+    title: Coupon to Wings over Burlington
+    description: I love this place. Too bad these are fake since they don't have coupons
+    price: 0
+    location: Bethesda, MD
+    category: [free]
+    listing_type: [Private]
+    user: [chucknorris]
+
+- model: listings.Listing
+  pk: null
+  fields:
+    title: Headphones
+    description: broke these while I was in a fight. Useful for parts
+    price: 10
+    location: Bethesda, MD
+    category: [electronics]
+    listing_type: [Private]
+    user: [chucknorris]
+
+- model: listings.Listing
+  pk: null
+  fields:
+    title: football
+    description: My son said he didn't want it anymore and I don't either. 
+    price: 10
+    location: Bethesda, MD
+    category: [sporting]
+    listing_type: [Private]
+    user: [chucknorris]
+
+- model: listings.Listing
+  pk: null
+  fields:
+    title: Macbook pro laptop
+    description: really good computer but not fully updated to the most recent operating system.
+    price: 200
+    location: Bethesda, MD
+    category: [computer]
+    listing_type: [Private]
+    user: [chucknorris]
+
+- model: listings.Listing
+  pk: null
+  fields:
+    title: Apples and Grapes
+    description: You want 'em? take 'em.
+    price: 0
+    location: Bethesda, MD
+    category: [free]
+    listing_type: [Private]
+    user: [chucknorris]
+
+- model: listings.Listing
+  pk: null
+  fields:
+    title: Nike sneakers
+    description: Not used. They were my size and on sale but didn't fit me in the end.
+    price: 100
+    location: Bethesda, MD
+    category: [clothes and accessories]
+    listing_type: [Private]
+    user: [chucknorris]
+
+- model: listings.Listing
+  pk: null
+  fields:
+    title: adrenaline shot
+    description: About to die? Need to start your heart again? Use one of these
+    price: 100
+    location: Bethesda, MD
+    category: [general]
+    listing_type: [Private]
+    user: [chucknorris]
+
+- model: listings.Listing
+  pk: null
+  fields:
+    title: Jack Daniels
+    description: Good stuff. Unopened bottle. Used as a prop on epic meal time.
+    price: 30
+    location: Bethesda, MD
+    category: [general]
+    listing_type: [Private]
+    user: [chucknorris]

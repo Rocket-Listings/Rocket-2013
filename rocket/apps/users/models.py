@@ -1,9 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from listings.models import ListingCategory, ListingType
+from listings.models import ListingCategory
 from django.db.models.signals import post_save
-from djangoratings.fields import RatingField
 # import django_filepicker
 
 # User Profile
@@ -17,7 +16,7 @@ class UserProfile(models.Model):
 	name = models.CharField(max_length=100, blank=True)
 	location = models.CharField(max_length=255, blank=True)
 	default_category = models.ForeignKey(ListingCategory, null=True, blank=True)
-	default_listing_type = models.ForeignKey(ListingType, null=True, blank=True)
+	default_listing_type = models.CharField(max_length=1, choices=(('O', 'Owner'),('D', 'Dealer')), null=True, blank=True)
 	default_seller_type = models.CharField(max_length=1, choices=SELLER_TYPE_CHOICES, default='P')
 	phone = models.CharField(max_length=50, blank=True)
 	bio = models.TextField(blank=True)
@@ -28,7 +27,7 @@ class UserProfile(models.Model):
 
 	def get_absolute_url(self):
 		return reverse('users.views.info')
-		return reverse('users.views.info', args=[self.user.username])
+		# return reverse('users.views.info', args=[self.user.username])
 
 	def __unicode__(self):
 		return self.user.username
@@ -66,3 +65,7 @@ class ProfileFB(models.Model):
 
 	def __unicode__(self):
 		return self.username
+
+class FirstVisit(models.Model):
+	template_path = models.CharField(max_length=100, blank=True)
+	user = models.ForeignKey('auth.User')

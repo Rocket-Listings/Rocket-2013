@@ -17,6 +17,10 @@ $(function() {
 		}
 	});
 
+	$('.close').click(function(event){
+		$('.dashboard-panel').removeClass("first-visit");
+	});
+
 	$('.buyer-card').click(function(event){
 		var buyerCard = $(this);
 		$('.buyer-card').removeClass('highlight');
@@ -27,13 +31,6 @@ $(function() {
 	});
 
 	$('.table-listings tbody tr').first().click();
-	$(document).ready(function(){
-		$('.share_optn').tooltip({
-  			container: 'body'
-			});
-		$('.edit_optn').tooltip();
-		$('.trash_optn').tooltip();
-	});
 
 	// AUTOPOST
 	$(".share_optn").click(function (e) {
