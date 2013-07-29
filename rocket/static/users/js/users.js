@@ -334,6 +334,8 @@ $(function() {
 			newComment += '<div class="span2"><h6>' + data.date_posted  + '</h6></div></div>';
 			newComment += '<div class="row"><div class="span7"><p>' + data.comment + '</p></div></div></div>';
 		$(".comment-body").append(newComment);
+		$(".comment-form-container").hide();
+		$(".comment-thanks").show();
 	}
 
 
