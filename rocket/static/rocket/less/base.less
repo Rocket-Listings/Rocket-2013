@@ -23,37 +23,27 @@ a {
 
 .navbar {
 
+	min-height: 0px;
 	border:none;
 	// border-bottom: 1px solid #ededed;
-	.navbar-inner {
-		border: none;
-		background: @menu0;
-		height: @navbar-height;
-		min-height: @navbar-height;
-	}
 
-	.container {
-		height: @navbar-height;
-	}
+	ul.navbar-nav{
+		float: right;
 
-	// for marginless nav ONLY
-	.nav-to-edge {
-		margin-right: -20px !important;
-	}
-	.logout-padding {
-		padding-right: 40px !important;
-	}
-	//
+		li{
+			height: @navbar-height;
 
-	.nav>li>a, .nav>li.active>a {
-		padding: 7px 15px 7px;
+			a{
+				height: @navbar-height;
+				padding-top: 10px;
+				padding-right: 10px;
 
-		span {
-			margin-right: 5px !important;
-		}
-		// line-height: 36px;
-		&:hover {
-			text-decoration: underline;
+				.glyphicon{
+					vertical-align: middle;
+				}
+			}
+
+
 		}
 	}
 }
