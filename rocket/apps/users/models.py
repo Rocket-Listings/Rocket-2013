@@ -26,8 +26,8 @@ class UserProfile(models.Model):
 	OAUTH_TOKEN_SECRET = models.CharField(max_length=200, blank=True)
 
 	def get_absolute_url(self):
-		return reverse('users.views.info')
-		return reverse('users.views.info', args=[self.user.username])
+		return reverse('users.views.profile')
+		return reverse('users.views.profile', args=[self.user.username])
 
 	def __unicode__(self):
 		return self.user.username

@@ -117,7 +117,7 @@ def create(request):
 		else:
 			return TemplateResponse(request, 'listings/listing_create.html', {'form': ListingForm(request.POST), 'categories':categories, 'specs':specs})
 
-
+@view_count
 def detail(request, listing_id):
 	if request.method == 'GET':
 		listing = get_object_or_404(Listing, id=listing_id)
