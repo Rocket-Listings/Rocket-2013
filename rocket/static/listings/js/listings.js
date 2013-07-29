@@ -132,7 +132,6 @@ $(function() {
     },
     toggleView: function(e) {
       e.preventDefault();
-      console.log('hello');
       $('.upload-view').toggle();
       $('.photo-view').toggle();      
     },
