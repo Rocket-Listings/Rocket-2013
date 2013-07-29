@@ -5,7 +5,7 @@
 	<form class="fixed-width-form" action="{% url 'auth_login' %}" method="POST">
 		{% if form.errors %}
 		<div class="row">
-			<div class='span6 alert alert-error'>
+			<div class='col-lg-6 alert alert-error'>
 				{% for field, errors in form.errors.items %}
 					{% for error in errors %}
 						{{error}}

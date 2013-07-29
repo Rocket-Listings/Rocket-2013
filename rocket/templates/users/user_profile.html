@@ -3,7 +3,7 @@
 {% block content %}
 <div class="profile-content">
 	<div class="row">
-		<div class="span8 span-left">
+		<div class="col-lg-8 span-left">
 			{% if first_visit %}
 				<div class="alert alert-info">
   					<button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -12,7 +12,7 @@
 				</div>
 			{% endif %}
 				<div class="row profile-header">
-					<div class="span2 profile-picture">
+					<div class="col-lg-2 profile-picture">
 						{% if user.get_profile.propic %}
 							<img class="thumbnail" src="{{ user.get_profile.propic }}" width="150px">
 						{% else %}
@@ -22,30 +22,30 @@
 									<a href="{% url 'users.views.info' %}">Edit profile</a>
 						{% endif %}
 					</div>
-					<div class="span5">
+					<div class="col-lg-5">
 						<div class="row">
 							{% if user.get_profile.name %}
-								<div class="span2">
+								<div class="col-lg-2">
 										<h3>{{user.get_profile.name}}</h3>
 								</div>
-								<div class="span3">
+								<div class="col-lg-3">
 										<h5>{{user.get_profile.location}}</h5>
 								</div>
 							{% endif %}
 						</div>
 						<div class="row">
-							<div class="span2">
+							<div class="col-lg-2">
 								<h4 class="muted">{{user.username}}</h4>	
 							</div>
 							{% if not user.get_profile.name %}
-							<div class="span3">
+							<div class="col-lg-3">
 									<h5>{{user.get_profile.location}}</h5>
 							</div>
 							{% endif %}
 						</div>
 						{% if user.get_profile.twitter_handle %}
 						<div class="row twitter-row">
-							<div class="span2">
+							<div class="col-lg-2">
 								<img src="{% static 'users/img/twitter-bird-blue-on-white.png' %}" width="25px">
 								<a href="https://twitter.com/@{{user.get_profile.twitter_handle}}"> @{{user.get_profile.twitter_handle}} </a>	
 							</div>
@@ -53,13 +53,13 @@
 						{% endif %}
 						{% if fb.name %}
 						<div class="row fb-row">
-							<div class="span2">
+							<div class="col-lg-2">
 								<img src="{% static 'users/img/FB-f-Logo__blue_29.png' %}" width="15px"><a href="{{fb.link}}"> {{fb.name}} </a>	
 							</div>
 						</div>
 						{% endif %}
 						<div class="row">
-							<div class="span5">
+							<div class="col-lg-5">
 								{% if user.get_profile.bio %}
 									<p>{{user.get_profile.bio}}</p>
 								{% else %}
@@ -79,14 +79,14 @@
 				{% include "users/partials/profile_comment_form.html" %}
 			</div>
 		</div>
-		<div class="span3">
+		<div class="col-lg-3">
 			{% include "users/partials/profile_stats.html" %}
 				<div class="profile-selling">
 					<h4>Listings </h4>
 						{% if listings %}
 						<div class="row">
 								{% for listing in listings %}
-								<div class="span2">
+								<div class="col-lg-2">
 								<a class="thumbnail" href="{{ listing.get_absolute_url }}">
 									{% if photos %}
 										{% for photo in photos|slice:":1" %}

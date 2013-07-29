@@ -57,11 +57,11 @@
       {% for group, cat_list in cats.items %}
       <div class="tab-pane{% if group == "forsale" %} active{% endif %}" id="{{ group }}">
         <div class="row">
-          <div class="span2">
+          <div class="col-lg-2">
           {% for cat in cat_list %}
               <a class="cat {{ group }}" data-id="{{ cat.id }}">{{ cat.name }}</a>
             {% if group == "forsale" and forloop.counter|divisibleby:9 or group == "housing" and forloop.counter|divisibleby:3 %}
-              </div><div class="span2">
+              </div><div class="col-lg-2">
             {% endif %}
           {% endfor %}
           </div>
@@ -75,13 +75,13 @@
   <fieldset><legend>Listing Info</legend>
   <div class="row">
       {# Title #}
-      <div class="span6">
+      <div class="col-lg-6">
         <div class="row">
-          <div class="span4">
+          <div class="col-lg-4">
             <label>{{ form.title.label }}</label>
             <input class="title input-block-level" maxlength="200" name="title" type="text" placeholder="e.g. 2000 Jeep Wrangler 4.0L" value="{{ form.title.value|default:"" }}">
           </div>
-          <div class="span2">
+          <div class="col-lg-2">
             <label>{{ form.price.label }}</label>
             <div class="input-prepend gridfix">
               <span class="add-on">$</span>
@@ -90,13 +90,13 @@
           </div>
         </div>
         <div class="row">
-          <div class="span6">
+          <div class="col-lg-6">
             <label>{{ form.description.label }}</label>
-            <textarea class="span6 description" placeholder="Describe your item" cols="40" name="description" rows="10">{{ form.description.value|default:"" }}</textarea>
+            <textarea class="col-lg-6 description" placeholder="Describe your item" cols="40" name="description" rows="10">{{ form.description.value|default:"" }}</textarea>
           </div>
         </div>
       </div>
-      <div class="span3">
+      <div class="col-lg-3">
         <label>Location</label>
         <img src="http://placehold.it/370x390"/>
       </div>
@@ -129,7 +129,7 @@
     {% verbatim %}
     <script id="thumbnail-template" type="text/template">
       {{#imgs}}
-      <li class="span2" draggable="true">
+      <li class="col-lg-2" draggable="true">
         <div class="thumbnail" draggable="true">
           <img src="{{ src }}" draggable="true">
         </div>

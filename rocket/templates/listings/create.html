@@ -17,14 +17,14 @@
 
 {% block content %}
 <div class="row"> 
-  <div class="span2">
+  <div class="col-lg-2">
     <div class="btn-group" data-toggle="buttons-radio">
       <button type="button" class="edit-btn btn btn-primary active edit_button">Edit</button>
       <button type="button" class="preview-btn btn btn-primary preview_button">Preview</button>
     </div>
     <button type="button" style="margin-left:10px;" class="btn btn-primary" onclick="validateForm()">Submit Changes</button>
   </div>
-  <div class="span10">
+  <div class="col-lg-10">
    {% include 'listings/partials/edit.html' %}
    {# {% include 'listings/partials/preview.html' %} #}
  </div>

@@ -21,15 +21,15 @@
 {% block content %}
 	<div class="container-fluid">
 		<div class="row-fluid">
-			<div class="span4 row-fluid padding-40-left">
+			<div class="col-lg-4 row-fluid padding-40-left">
 				{# <div class="row-fluid"> #}
-					<h4 class="span6">Listings<br>Dashboard</h4>
-					<div class="span6">
+					<h4 class="col-lg-6">Listings<br>Dashboard</h4>
+					<div class="col-lg-6">
 						<input type="search" class="input-span-block dashboard-input light-table-filter" data-table="order-table" placeholder="Type to search"/>
 					</div>
 				{# </div> #}
 			</div>
-			<div class="span5">
+			<div class="col-lg-5">
 				{% if first_visit %}
 				<div class="alert alert-info text-left">
 					<button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -38,19 +38,19 @@
 				</div>
 				{% endif %}
 			</div>
-			<div class="span3">
+			<div class="col-lg-3">
 				<a class="dashboard-input dashboard-create-btn btn btn-primary" href="/listings/create/">Create a Listing</a>
 			</div>
 		</div>
 	</div>
 	<div class="dashboard-panel row-fluid {% if first_visit %}first-visit{% endif %}">
-		<div class="span8 listings-col">
+		<div class="col-lg-8 listings-col">
 			{% include 'listings/partials/listings_table.html' %}
 		</div>
-		<div class="span2 buyers-col">
+		<div class="col-lg-2 buyers-col">
 			{% include 'listings/partials/buyer_cards.html' %}
 		</div>
-		<div class="span2 messages-col">
+		<div class="col-lg-2 messages-col">
 			{% include 'listings/partials/messages_panel.html' %}
 		</div>
 	</div>
