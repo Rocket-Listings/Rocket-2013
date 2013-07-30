@@ -28,21 +28,21 @@
 					<li class="{% active 'dashboard' %}">
 
 						<a href="{% url 'listings.views.dashboard' %}">
-							<span class="hidden-sm">Dashboard</span>
+							Dashboard
 							<span class="glyphicon glyphicon-list"></span>
 						</a>
 						
 					</li>
 					<li class="{% active 'user_profile' %}">
 						<a href="{% url 'user_profile' user.username %}">
-							<span class="hidden-sm">Profile</span>
+							Profile
 							<span class="glyphicon glyphicon-user "></span>
 						</a>
 						
 					</li>
 					<li>
 						<a href="{% url 'auth_logout' %}">
-							<span class="hidden-sm">Logout</span>
+							Logout
 							<span class="glyphicon glyphicon-off "></span>
 						</a>
 						
