@@ -21,7 +21,7 @@ from users.decorators import first_visit
 def overview(request, username=None):
 	return info(request, username)
 
-@first_visit
+#@first_visit
 @login_required
 def info(request):
 	user = request.user
@@ -47,7 +47,7 @@ def info(request):
 		user_profile_form = UserProfileForm(instance=profile)
 		return TemplateResponse(request, 'users/user_info.html', {'user': user, 'form': user_profile_form, 'fb': fbProfile})
 
-@first_visit
+#@first_visit
 def profile(request, username=None):
 	user = User.objects.get(username=username)
 	allListings = Listing.objects.filter(user=user).order_by('-pub_date')
