@@ -29,6 +29,7 @@ def info(request):
 	fbProfile = ProfileFB.objects.get(profile=profile)
 	if request.method == 'POST':
 		user_profile_form = UserProfileForm(request.POST, instance=profile)
+		print user_profile_form
 		if user_profile_form.is_valid():
 			userObject = User.objects.get(username=user)
 			userObject.email = user_profile_form.cleaned_data['email']
