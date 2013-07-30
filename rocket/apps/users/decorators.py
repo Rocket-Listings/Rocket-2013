@@ -5,7 +5,7 @@ def first_visit(view_func):
 	def _wrapped_visit_func(request, *args, **kwargs):
 		response = view_func(request, *args, **kwargs)
  		
- 		if hasattr(request.user,'name') and hasattr(response,'template_name'):
+ 		if request.user.is_authenticated() and hasattr(response,'template_name'):
 			if not FirstVisit.objects.filter(user=request.user.id, template_path=response.template_name).exists():
 				response.context_data.update({'first_visit': True})
 				FirstVisit.objects.create(user=request.user, template_path=response.template_name)
@@ -22,7 +22,7 @@ def view_count(view_func):
 views a certain page of another user. It will not add to the page views if the owner of the page visits the page.
 To use this functionality, you need to include set the property of request.user.skip_count to a boolean. 
 The way it has been done is that if request.user is equal to the owner of the page being visited skip_count is set to True
-otherwise it is set to false. Check also if the user is logged in else it won't have a skip_count attribute.
+otherwise it is set to false. Check also if the user is logged in with a request.user.is_authenticated().
 Also the decorator needs to be called at the beginning of the function.
 """
 	def _wrapped_visit_func(request, *args, **kwargs):

@@ -53,7 +53,7 @@ def info(request):
 def profile(request, username=None):
 	user = User.objects.get(username=username)
 	
-	if hasattr(request.user,'name'):
+	if request.user.is_authenticated():
 		request.user.skip_count = user.get_username() == request.user.get_username()
 		
 	allListings = Listing.objects.filter(user=user).order_by('-pub_date')
