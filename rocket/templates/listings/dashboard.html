@@ -19,39 +19,31 @@
 {% endblock %}
 
 {% block content %}
-	<div class="container-fluid">
-		<div class="row-fluid">
-			<div class="col-lg-4 row-fluid padding-40-left">
-				{# <div class="row-fluid"> #}
-					<h4 class="col-lg-6">Listings<br>Dashboard</h4>
-					<div class="col-lg-6">
-						<input type="search" class="input-span-block dashboard-input light-table-filter" data-table="order-table" placeholder="Type to search"/>
-					</div>
-				{# </div> #}
-			</div>
-			<div class="col-lg-5">
-				{% if first_visit %}
-				<div class="alert alert-info text-left">
-					<button type="button" class="close" data-dismiss="alert">&times;</button>
-					{# <h4>Welcome</h4> #}
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ac sem ornare, varius arcu ut, interdum velit. Fusce vulputate posuere tempor. Cras consectetur ut massa quis pellentesque.
-				</div>
-				{% endif %}
-			</div>
-			<div class="col-lg-3">
-				<a class="dashboard-input dashboard-create-btn btn btn-primary" href="/listings/create/">Create a Listing</a>
-			</div>
-		</div>
+{% if first_visit %}
+<div class="alert alert-info col-lg-6 col-offset-3 clearfix">
+	<button type="button" class="close" data-dismiss="alert">&times;</button>
+	<h4>Listings Dashboard</h4>
+	This is your Listings Dashboard.  Here you can easily review and manage all of your listings, buyers, and messages.
+</div>
+{% endif %}
+<div class="dashboard-header col-lg-12 col-lg-fixed">
+	<div class="col-lg-2 dashboard-title"><div class="h4">Listings<br>Dashboard</div></div>
+	<div class="col-lg-3 dashboard-search">
+		<input type="search" class="form-control light-table-filter" data-table="order-table" placeholder="Type to search"/>
 	</div>
-	<div class="dashboard-panel row-fluid {% if first_visit %}first-visit{% endif %}">
-		<div class="col-lg-8 listings-col">
-			{% include 'listings/partials/listings_table.html' %}
-		</div>
-		<div class="col-lg-2 buyers-col">
-			{% include 'listings/partials/buyer_cards.html' %}
-		</div>
-		<div class="col-lg-2 messages-col">
-			{% include 'listings/partials/messages_panel.html' %}
-		</div>
+	<div class="dashboard-create">
+		<a class="btn btn-primary">Create a Listing</a>
 	</div>
+</div>
+<div class="dashboard-panel {% if first_visit %}first-visit{% endif %}">
+	<div class="col-lg-8 listings-col col-lg-fixed">
+		{% include 'listings/partials/listings_table.html' %}
+	</div>
+	<div class="col-lg-2 buyers-col col-lg-fixed">
+		{% include 'listings/partials/buyer_cards.html' %}
+	</div>
+	<div class="col-lg-2 messages-col col-lg-fixed">
+		{% include 'listings/partials/messages_panel.html' %}
+	</div>
+</div>
 {% endblock %}
