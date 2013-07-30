@@ -50,19 +50,12 @@ def info(request):
 	else:
 		user_profile_form = UserProfileForm(instance=profile)
 		return TemplateResponse(request, 'users/user_info.html', {'user': user, 'form': user_profile_form, 'fb': fbProfile})
-
-<<<<<<< HEAD
-#@first_visit
-def profile(request, username=None):
-	user = User.objects.get(username=username)
 	
-=======
 @view_count
 @first_visit
 def profile(request, username=None):
 	user = User.objects.get(username=username)
 	request.user.skip_count = user.get_username() == request.user.get_username()
->>>>>>> master
 	allListings = Listing.objects.filter(user=user).order_by('-pub_date')
 	# activelistings = allListings.filter(status=ListingStatus(pk=1))
 	# draftlistings = allListings.filter(status=ListingStatus(pk=2))
@@ -95,7 +88,6 @@ def profile(request, username=None):
 		# 	errors = comment_form.errors
 		# 	return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
-		print user.username
 		return TemplateResponse(request, 'users/user_profile.html', {'url_user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile, 'rating':rating}) #'activelistings':activelistings, 'draftlistings':draftlistings,
 
 def delete_account(request):

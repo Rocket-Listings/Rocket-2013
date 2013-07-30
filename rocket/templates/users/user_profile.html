@@ -1,10 +1,6 @@
 {% extends 'users/users_base.html' %}
 {% load static from staticfiles %}
-
-
-
 {% block content %}
-{{url_user}}
 <div class="profile-content">
 	<div class="row">
 		<div class="col-lg-8 span-left">
@@ -91,7 +87,7 @@
 					<h4>Listings </h4>
 						{% if listings %}
 						<div class="row">
-								{% for listing in listings %}
+								{% for listing in listings|slice:":5" %}
 								<div class="col-lg-12">
 								<a class="thumbnail" href="{{ listing.get_absolute_url }}">
 									{% if photos %}
