@@ -50,12 +50,12 @@ def info(request):
 #@first_visit
 def profile(request, username=None):
 	user = User.objects.get(username=username)
-	allListings = Listing.objects.filter(user=user).order_by('-pub_date')
+	allListings = Listing.objects.filter(user=user).order_by('-pub_date')[:5]
 	# activelistings = allListings.filter(status=ListingStatus(pk=1))
 	# draftlistings = allListings.filter(status=ListingStatus(pk=2))
 	photos = ListingPhoto.objects.filter(listing=user)
 	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos)
-	comments = UserComment.objects.filter(user=user).order_by('-date_posted')[:5]
+	comments = UserComment.objects.filter(user=user).order_by('-date_posted')
 	fbProfile = ProfileFB.objects.get(profile=user.get_profile())
 	if request.method == 'POST':
 		comment_form = CommentSubmitForm(request.POST, instance = UserComment(user=user))

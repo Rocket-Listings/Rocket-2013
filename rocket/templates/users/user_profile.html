@@ -20,7 +20,7 @@
 						{% else %}
 							<img class="thumbnail" src=" {% static 'users/img/no-photo.png' %}" width="150px">
 						{% endif %}
-						{% if request.user == user %}
+						{% if request.user.is_authenticated %}
 									<a href="{% url 'users.views.info' %}">Edit profile</a>
 						{% endif %}
 					</div>
@@ -65,7 +65,7 @@
 								{% if user.get_profile.bio %}
 									<p>{{user.get_profile.bio}}</p>
 								{% else %}
-									{% if request.user == user %}
+									{% if request.user.is_authenticated %}
 										<p>Looks like you don't have a bio! <a href="{% url 'users.views.info' %}">Update</a> your profile and add one.</p>
 									{% else %}
 										<p>Sorry, but {{user.username}} doesn't have a bio.</p>
