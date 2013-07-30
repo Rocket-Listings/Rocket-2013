@@ -64,6 +64,7 @@ class Migration(SchemaMigration):
         db.create_table(u'listings_listingphoto', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('url', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('key', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('order', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
             ('listing', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Listing'], null=True, blank=True)),
         ))
@@ -201,6 +202,7 @@ class Migration(SchemaMigration):
         u'listings.listingphoto': {
             'Meta': {'object_name': 'ListingPhoto'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'key': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.Listing']", 'null': 'True', 'blank': 'True'}),
             'order': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'url': ('django.db.models.fields.CharField', [], {'max_length': '255'})
