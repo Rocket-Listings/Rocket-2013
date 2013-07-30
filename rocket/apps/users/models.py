@@ -3,10 +3,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from listings.models import ListingCategory
 from django.db.models.signals import post_save
-<<<<<<< HEAD
-=======
 
->>>>>>> feature/userrep
 # import django_filepicker
 
 # User Profile

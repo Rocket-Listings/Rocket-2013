@@ -84,8 +84,7 @@ def profile(request, username=None):
 		# 	errors = comment_form.errors
 		# 	return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
-		return render(request, 'users/user_profile.html', {'user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile, 'rating':rating}) #'activelistings':activelistings, 'draftlistings':draftlistings,
-
+		return TemplateResponse(request, 'users/user_profile.html', {'user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile, 'rating':rating}) #'activelistings':activelistings, 'draftlistings':draftlistings,
 
 def delete_account(request):
 	user = request.user
