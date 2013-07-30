@@ -48,6 +48,22 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'users', ['ProfileFB'])
 
+        # Adding model 'FirstVisit'
+        db.create_table(u'users_firstvisit', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('template_path', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+        ))
+        db.send_create_signal(u'users', ['FirstVisit'])
+
+        # Adding model 'ViewCount'
+        db.create_table(u'users_viewcount', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('url', self.gf('django.db.models.fields.URLField')(max_length=200)),
+            ('count', self.gf('django.db.models.fields.IntegerField')(default=0)),
+        ))
+        db.send_create_signal(u'users', ['ViewCount'])
+
 
     def backwards(self, orm):
         # Deleting model 'UserProfile'
@@ -58,6 +74,12 @@ class Migration(SchemaMigration):
 
         # Deleting model 'ProfileFB'
         db.delete_table(u'users_profilefb')
+
+        # Deleting model 'FirstVisit'
+        db.delete_table(u'users_firstvisit')
+
+        # Deleting model 'ViewCount'
+        db.delete_table(u'users_viewcount')
 
 
     models = {
@@ -106,6 +128,12 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '60'})
         },
+        u'users.firstvisit': {
+            'Meta': {'object_name': 'FirstVisit'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'template_path': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
+        },
         u'users.profilefb': {
             'Meta': {'object_name': 'ProfileFB'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -139,6 +167,12 @@ class Migration(SchemaMigration):
             'propic': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
             'twitter_handle': ('django.db.models.fields.CharField', [], {'max_length': '20', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['auth.User']", 'unique': 'True'})
+        },
+        u'users.viewcount': {
+            'Meta': {'object_name': 'ViewCount'},
+            'count': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'url': ('django.db.models.fields.URLField', [], {'max_length': '200'})
         }
     }
 

@@ -27,8 +27,7 @@ class UserProfile(models.Model):
 	OAUTH_TOKEN_SECRET = models.CharField(max_length=200, blank=True)
 
 	def get_absolute_url(self):
-		return reverse('users.views.info')
-		# return reverse('users.views.info', args=[self.user.username])
+		return reverse('users.views.profile')
 
 	def __unicode__(self):
 		return self.user.username
@@ -77,4 +76,14 @@ class ProfileFB(models.Model):
 class FirstVisit(models.Model):
 	template_path = models.CharField(max_length=100, blank=True)
 	user = models.ForeignKey('auth.User')
+
+
+class ViewCount(models.Model):
+	url = models.URLField()
+	count = models.IntegerField(default=0)
+
+	def increment(self):
+		self.count += 1
+		self.save()
+
 

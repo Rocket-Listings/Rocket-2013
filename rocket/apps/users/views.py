@@ -18,6 +18,8 @@ from django.conf import settings
 from twython import Twython
 from users.decorators import first_visit
 from django.db.models import Avg
+from users.decorators import first_visit, view_count
+from utils import get_view_count
 
 
 def overview(request, username=None):
@@ -49,10 +51,18 @@ def info(request):
 		user_profile_form = UserProfileForm(instance=profile)
 		return TemplateResponse(request, 'users/user_info.html', {'user': user, 'form': user_profile_form, 'fb': fbProfile})
 
+<<<<<<< HEAD
 #@first_visit
 def profile(request, username=None):
 	user = User.objects.get(username=username)
 	
+=======
+@view_count
+@first_visit
+def profile(request, username=None):
+	user = User.objects.get(username=username)
+	request.user.skip_count = user.get_username() == request.user.get_username()
+>>>>>>> master
 	allListings = Listing.objects.filter(user=user).order_by('-pub_date')
 	# activelistings = allListings.filter(status=ListingStatus(pk=1))
 	# draftlistings = allListings.filter(status=ListingStatus(pk=2))
