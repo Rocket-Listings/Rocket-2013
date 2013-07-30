@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from users.models import UserProfile, UserComment, User
+from users.models import UserProfile, UserComment, User, UserRating
 from django.forms.models import inlineformset_factory
 from django import forms
 from django.contrib.auth.models import User
@@ -26,6 +26,18 @@ class CommentSubmitForm(ModelForm):
 		model = UserComment
 		fields = ('email','comment', 'title',)
 		exclude = ('user', 'is_removed', 'date_posted')
+
+	def clean(self):
+		for field in self.cleaned_data:
+			if isinstance(self.cleaned_data[field], basestring):
+				self.cleaned_data[field] = self.cleaned_data[field].strip()
+		return self.cleaned_data
+
+class UserRatingForm(ModelForm):
+	class Meta:
+		model = UserRating
+		fields = ('rating',)
+		exclude=('user', 'date_posted')
 
 	def clean(self):
 		for field in self.cleaned_data:

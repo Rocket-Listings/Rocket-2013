@@ -1,5 +1,8 @@
 {% extends 'users/users_base.html' %}
 {% load static from staticfiles %}
+
+
+
 {% block content %}
 <div class="profile-content">
 	<div class="row">
@@ -75,7 +78,7 @@
 						</div>	
 					</div>
 				</div>
-		
+
 			<div class="comments">	
 				{% include "users/partials/profile_comments.html" %}
 				{% include "users/partials/profile_comment_form.html" %}
@@ -116,8 +119,6 @@
 							{% endif %}		
 						{% endif %}
 				</div>
-
-
 		</div>
 	</div>
 </div>

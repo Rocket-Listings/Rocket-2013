@@ -23,8 +23,6 @@ class Migration(SchemaMigration):
             ('twitter_handle', self.gf('django.db.models.fields.CharField')(max_length=20, blank=True)),
             ('OAUTH_TOKEN', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
             ('OAUTH_TOKEN_SECRET', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
-            ('rating_votes', self.gf('django.db.models.fields.PositiveIntegerField')(default=0, blank=True)),
-            ('rating_score', self.gf('django.db.models.fields.IntegerField')(default=0, blank=True)),
         ))
         db.send_create_signal(u'users', ['UserProfile'])
 
@@ -139,8 +137,6 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
             'phone': ('django.db.models.fields.CharField', [], {'max_length': '50', 'blank': 'True'}),
             'propic': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
-            'rating_score': ('django.db.models.fields.IntegerField', [], {'default': '0', 'blank': 'True'}),
-            'rating_votes': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0', 'blank': 'True'}),
             'twitter_handle': ('django.db.models.fields.CharField', [], {'max_length': '20', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['auth.User']", 'unique': 'True'})
         }

@@ -1,8 +1,8 @@
 from listings.models import Listing, ListingPhoto, Buyer, Offer, Message, ListingStatus
 import datetime
 #from users.models import UserProfile
-from users.forms import UserProfileForm, CommentSubmitForm
-from users.models import UserProfile, UserComment, ProfileFB
+from users.forms import UserProfileForm, CommentSubmitForm, UserRatingForm
+from users.models import UserProfile, UserComment, ProfileFB, UserRating 
 from django.forms.models import inlineformset_factory
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect
@@ -17,6 +17,8 @@ from django.utils import simplejson as json
 from django.conf import settings
 from twython import Twython
 from users.decorators import first_visit
+from django.db.models import Avg
+
 
 def overview(request, username=None):
 	return info(request, username)
@@ -55,19 +57,35 @@ def profile(request, username=None):
 	# draftlistings = allListings.filter(status=ListingStatus(pk=2))
 	photos = ListingPhoto.objects.filter(listing=user)
 	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos)
-	comments = UserComment.objects.filter(user=user).order_by('-date_posted')
+	ratings = UserRating.objects.filter(user=user)
+	rating = ratings.aggregate(Avg('rating')).values()[0]
+	comments = UserComment.objects.filter(user=user).order_by('-date_posted') 
 	fbProfile = ProfileFB.objects.get(profile=user.get_profile())
 	if request.method == 'POST':
 		comment_form = CommentSubmitForm(request.POST, instance = UserComment(user=user))
-		if comment_form.is_valid():
+		rating_form = UserRatingForm(request.POST, instance = UserRating(user=user))
+		if rating_form.is_valid() and comment_form.is_valid():
+			rating = rating_form.save()
 			comment = comment_form.save()
+			print "comment form save"
 			responseData = serializers.serialize("json", UserComment.objects.filter(pk=comment.pk));
 			return HttpResponse(responseData, content_type="application/json")
 		else:
 			errors = comment_form.errors
 			return HttpResponse(json.dumps(errors), content_type="application/json")
+
+
+		# comment_form = CommentSubmitForm(request.POST, instance = UserComment(user=user))
+		# if comment_form.is_valid():
+		# 	comment = comment_form.save()
+		# 	responseData = serializers.serialize("json", UserComment.objects.filter(pk=comment.pk));
+		# 	return HttpResponse(responseData, content_type="application/json")
+		# else:
+		# 	errors = comment_form.errors
+		# 	return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
-		return TemplateResponse(request, 'users/user_profile.html', {'user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile}) #'activelistings':activelistings, 'draftlistings':draftlistings,
+		return render(request, 'users/user_profile.html', {'user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile, 'rating':rating}) #'activelistings':activelistings, 'draftlistings':draftlistings,
+
 
 def delete_account(request):
 	user = request.user

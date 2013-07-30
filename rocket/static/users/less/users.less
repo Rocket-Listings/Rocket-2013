@@ -183,7 +183,7 @@ a {
 			.profile-picture {
 				text-align: center;
 				padding-left: 0px;
-				margin-bottom: 20px;
+				margin-bottom: 30px;
 					
 					img.thumbnail {
 						border-radius: 0px;
@@ -217,10 +217,11 @@ a {
 
 		 	h4{
 		 		margin: 0;
+		 		line-height: 30px;
 		 	}
 
 		 	p{
-		 		margin-top: 20px;
+		 		margin-top: 10px;
 		 		padding-right: 20px;
 		 	}
 
@@ -254,12 +255,99 @@ a {
 				p{
 					
 					padding: 5px 5px 0 0;
+
+
+
 				}
 			}
 	}
 
 	.comment-form-container {
 		margin-top: 15px;
+
+		p{
+			margin-right: 5px;
+			margin-bottom: 0;
+			padding-left: 10px;
+			padding-top: 5px;
+			font-family: inherit;
+			line-height: 20px;
+			color: inherit;
+			text-rendering: optimizelegibility;
+			font-size: 14px;
+			color: #878787;
+
+		}
+
+		.btn-red{
+		background-color: rgba(188, 0, 0, 0.7);
+		color: #fff;
+
+		&:hover {
+			background-color: rgba(188, 0, 0, 1);
+			}
+		}
+		.btn-red.active{
+			background-color: rgba(188, 0, 0, 1);
+			}	
+
+		.btn-lightred{
+			background-color: rgba(188, 0, 0, 0.6);
+			text-shadow: none;
+			color: #fff;
+
+		&:hover {
+			background-color: rgba(188, 0, 0, 0.9);
+			
+			}
+		}
+
+		.btn-lightred.active{
+			background-color: rgba(188, 0, 0, 0.9);
+			
+			}
+
+		.btn-lightgreen{
+		background-color: rgba(0, 140, 0, 0.6);
+		color: #fff;
+		text-shadow: none;
+
+		&:hover {
+			background-color: rgba(0, 140, 0, 0.9);
+			}
+		}
+
+		.btn-lightgreen.active{
+			background-color: rgba(0, 140, 0, 0.9);
+			}
+
+		.btn-green{
+			background-color: rgba(0, 140, 0, 0.7);
+			color: #fff;
+			text-shadow: none;
+
+		&:hover {
+			background-color: rgba(0, 140, 0, 1);
+			}
+		}
+
+		.btn-green.active{
+			background-color: rgba(0, 140, 0, 1);
+			}	
+
+		.rating-span{
+			margin-left: 0px;
+		}
+
+		.btn-group{
+			padding-left: 10px;
+			margin-bottom: 10px;
+			
+			button{
+				width: 95px;
+			}
+		}
+			
 
 		form{
 			margin-left: -5px;
@@ -289,15 +377,43 @@ a {
 			margin-left: 5px;
 		}
 	}
-}
+
+	.comment-thanks{
+		display: none;
+	}
+
+		
+	.ratings{
+		margin-top: 30px;
+
+		.slider{
+			width: 225px;
+		}
+
+		input{
+			margin-left: 30px;
+		}
+}	}
+
+
 
 	.seller-stats{
-		margin-bottom: 45px;
 		h4{
 			margin: 0;
 			line-height: 30px;
 			text-align: left;
-			margin-bottom: 15px;
+			margin-bottom: 10px;
+		}
+
+		.table-stats{
+			th{
+				width: 115px;
+			}
+
+			td{
+				text-align: center;
+				width: 140px;
+			}
 		}
 	}
 	.profile-selling {
@@ -488,56 +604,6 @@ a {
 	font-weight: bold;
 }
 
-#slider-code {
-height: 125px;
-overflow:hidden;
-}
-
-#slider-code .viewport {
-	float: left;
-	width: 240px;
-	height: 125px;
-	overflow: hidden;
-	position: relative;
-}
-#slider1 .buttons {
-	background:url("users/static/images/buttons.png") no-repeat scroll 0 0 transparent;
-	display: block;
-	margin: 30px 10px 0 0;
-	background-position: 0 -38px;
-	text-indent: -999em;
-	float: left;
-	width: 39px;
-	height: 37px;
-	overflow: hidden;
-	position: relative;
-}
-
-
-#slider-code .next {
-margin: 30px 0 0 10px;
-}
-
-#slider-code .disable {
-visibility: hidden;
-}
-
-#slider-code .overview {
-list-style: none;
-padding: 0;
-margin: 0;
-left: 0;
-top: 0;
-}
-
-#slider-code .overview li {
-float: left;
-margin: 0 20px 0 0;
-padding: 1px;
-height: 121px;
-border: 1px solid #dcdcdc;
-width: 236px;
-}
 
 .form {
 	margin:0;

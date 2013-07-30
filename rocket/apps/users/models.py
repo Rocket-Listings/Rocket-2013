@@ -3,6 +3,10 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from listings.models import ListingCategory
 from django.db.models.signals import post_save
+<<<<<<< HEAD
+=======
+
+>>>>>>> feature/userrep
 # import django_filepicker
 
 # User Profile
@@ -53,6 +57,13 @@ class UserComment(models.Model):
 	def __unicode__(self):
 		return self.user.username
 
+class UserRating(models.Model): 
+	date_posted = models.DateField(auto_now=False, auto_now_add=True)
+	rating = models.IntegerField(default=50)
+	user = models.ForeignKey(User) # contains user foreignkey
+	
+	def __unicode__(self):
+		return self.user.username
 
 #User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 
@@ -69,3 +80,4 @@ class ProfileFB(models.Model):
 class FirstVisit(models.Model):
 	template_path = models.CharField(max_length=100, blank=True)
 	user = models.ForeignKey('auth.User')
+
