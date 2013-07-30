@@ -1,5 +1,3 @@
-{% load static from staticfiles %}
-
 $(function() {
 
 	// INIT
@@ -202,7 +200,7 @@ $(function() {
 	function getTwitterHandle () {
 		$.ajax({
 			type: 'GET',
-			url: '{% url "get_twitter_handle" %}',
+			url: 'users/twitter/handle/',
 			success: function (response) {
 				if (response !== "no_oauth_token_or_key") {
 					$(".twitter-handle").html(response);
@@ -216,7 +214,7 @@ $(function() {
 	function disconnectTwitter() {
 		$.ajax({
 			type: 'GET',
-			url: '{% url "disconnect_twitter" %}',
+			url: 'users/twitter/disconnect/',
 			success: function (response) {
 				if (response === "success") {
 					$(".twitter-handle").html("");
@@ -252,7 +250,7 @@ $(function() {
 		FB.api({ method: 'Auth.revokeAuthorization' });
 		$.ajax({
 			type: 'GET',
-			url: '{% url "disconnect_fb" %}',
+			url: 'users/facebook/disconnect/',
 			success: function(response) {
 				$(".fb-name").text("");
 				$(".disconnect-fb").hide();
@@ -284,7 +282,7 @@ $(function() {
 		$.ajax({
 			data: data,
 			type: 'POST',
-			url: '{% url "fb_profile" %}',
+			url: 'users/facebook/',
 			beforeSend: function(xhr) {
 				xhr.setRequestHeader("X-CSRFToken", csrftoken);
 			},
