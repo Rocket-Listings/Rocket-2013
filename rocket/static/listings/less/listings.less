@@ -3,15 +3,23 @@
 /*  Doing this weird convention '.l-<CLASS>' because we don't want other outside class definitions to affect these.
   For instance, if our title was simply '.title', then maybe a '.title' rule from base.less might take into effect. */
 
+.dashboard-header {
+  .dashboard-title {
+    padding-left: 40px !important;
+  }
+  .dashboard-create {
+    float: right;
+    padding-right: 40px;
+  }
+}
+
 .dashboard-panel {
   position:absolute;
   top:126px;
   bottom:0;
-
   .table-listings thead tr th:first-child, .table-listings tbody tr td:first-child {
     padding-left: 40px;
   }
-
   .listings-col {
     height: 100%;
     margin:0;
@@ -368,10 +376,10 @@
 // 	text-decoration:none;
 // }
 
-.dashboard-create-btn {
-	float:right;
-	margin-right: 40px;
-}
+// .dashboard-create-btn {
+// 	float:right;
+// 	margin-right: 40px;
+// }
 
 // .table-listings-compact td{
 // 	padding:0px;

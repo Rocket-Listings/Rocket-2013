@@ -191,17 +191,17 @@ def register(request, backend, success_url=None, form_class=None,
 
     if request.method == 'POST':
         form = form_class(data=request.POST, files=request.FILES)
-        seller_type_input = request.POST.get("default_seller_type", "P")
+        seller_type = request.POST.get("default_seller_type", "P")
         if form.is_valid():
-            seller_type = forms.RegexField(regex=r'^P|B$', max_length=1)
+            seller_type_field = forms.RegexField(regex=r'^P|B$', max_length=1)
             try:
-                seller_type.clean(seller_type_input)
+                seller_type_save = seller_type_field.clean(seller_type)
             except ValidationError as e:
-                form._errors["Seller Type"] = ErrorList([u"Please choose a valid seller type."])
+                form._errors["default_seller_type"] = ErrorList([u"Please choose a valid seller type."])
             else:
                 new_user = backend.register(request, **form.cleaned_data)
                 profile = UserProfile.objects.get(user=new_user)
-                profile.default_seller_type = seller_type
+                profile.default_seller_type = seller_type_save
                 profile.save()
                 if request.GET.get('next',''):
                     success_url = request.GET.get('next','')

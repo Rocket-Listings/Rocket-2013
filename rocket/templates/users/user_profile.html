@@ -20,7 +20,7 @@
 						{% else %}
 							<img class="thumbnail" src=" {% static 'users/img/no-photo.png' %}" width="150px">
 						{% endif %}
-						{% if request.url_user.is_authenticated %}
+						{% if request.user.is_authenticated %}
 									<a href="{% url 'users.views.info' %}">Edit profile</a>
 						{% endif %}
 					</div>
@@ -41,7 +41,7 @@
 							</div>
 							{% if not url_user.get_profile.name %}
 							<div class="col-lg-4">
-									<h5>{{url_user.get_profile.location}}</h5>
+									<h5>{{user.get_profile.location}}</h5>
 							</div>
 							{% endif %}
 						</div>

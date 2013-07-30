@@ -22,32 +22,30 @@ a {
 }
 
 .navbar {
-
 	min-height: 0px;
 	border:none;
 	// border-bottom: 1px solid #ededed;
-
-	ul.navbar-nav{
+	ul.navbar-nav {
 		float: right;
-
-		li{
+		> .active > a  {
+			color: #333 !important;
+		}
+		li {
 			height: @navbar-height;
-
-			a{
+			a {
 				height: @navbar-height;
 				padding-top: 10px;
 				padding-right: 10px;
-
 				.glyphicon{
 					vertical-align: middle;	
 				}
 
 				.glyphicon-edit{
 					color: @craigslistBlue;
+					float: none;
+					vertical-align: middle;
 				}
 			}
-
-
 		}
 	}
 }
@@ -114,11 +112,15 @@ a {
 	}
 }
 
+/* MARGINLESS STYLES */
 /* fixed footer */
 .footer-fixed {
 	position:fixed;
 	bottom:0;
 	width: 100%;
+	p {
+		margin-left: 40px !important;
+	}
 }
 
 .wrap-fixed {
@@ -127,6 +129,20 @@ a {
 	height: ~"-webkit-calc(100% - @{footer-height})";
 	height: ~"-moz-calc(100% - @{footer-height})";
 	height: ~"calc(100% - @{footer-height})";
+}
+
+.navbar-fixed {
+	padding: 0 !important;
+	.navbar-logo {
+		padding-left: 5px;
+	}
+	.button-to-edge {
+		padding-right: 40px !important;
+	}
+}
+
+.col-lg-fixed {
+	padding: 0 !important;
 }
 
 .full-height {
@@ -174,7 +190,7 @@ body {
 	-moz-border-radius: 0px !important;
 	border-radius: 0px !important;
 	border-collapse: collapse !important;
-	background-image: none !important;
+	// background-image: none !important;
 }
 
 select:focus {
@@ -187,30 +203,18 @@ select:focus {
 	}
 }
 
-/*form.fixed-width-form {
-	input:not(input[type='submit']) {
-		height: 20px !important;
-		width: 200px !important;
-		padding: 4px 6px;
-		margin: 0 !important;
-	}
+// Make submit button on forms the same size as inputs
+form.fixed-width-form {
 	input[type='submit'] {
-		height: 30px !important;
-		width: 220px !important;
+		height: 38px !important;
+		width: 100% !important;
+		margin-bottom: 10px;
 	}
-}*/
-
-.seller-type-group {
-	margin-bottom: 20px;
-}
-
-.seller-type-label {
-	padding-right: 1px;
 }
 
 div[data-toggle-name="default_seller_type"] {
     button {
-		width: 110px;
+		width: 50%;
 	}
 }
 
