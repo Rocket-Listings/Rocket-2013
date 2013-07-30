@@ -52,7 +52,8 @@ def info(request):
 #@first_visit
 def profile(request, username=None):
 	user = User.objects.get(username=username)
-	allListings = Listing.objects.filter(user=user).order_by('-pub_date')[:5]
+	
+	allListings = Listing.objects.filter(user=user).order_by('-pub_date')
 	# activelistings = allListings.filter(status=ListingStatus(pk=1))
 	# draftlistings = allListings.filter(status=ListingStatus(pk=2))
 	photos = ListingPhoto.objects.filter(listing=user)
@@ -84,7 +85,8 @@ def profile(request, username=None):
 		# 	errors = comment_form.errors
 		# 	return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
-		return TemplateResponse(request, 'users/user_profile.html', {'user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile, 'rating':rating}) #'activelistings':activelistings, 'draftlistings':draftlistings,
+		print user.username
+		return TemplateResponse(request, 'users/user_profile.html', {'url_user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile, 'rating':rating}) #'activelistings':activelistings, 'draftlistings':draftlistings,
 
 def delete_account(request):
 	user = request.user
