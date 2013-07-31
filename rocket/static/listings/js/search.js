@@ -1,9 +1,9 @@
 $(function(){
   var timeout;
-  $(".search-form").submit(e) {
+  $(".search-form").submit(e,function(){
     e.preventDefault();
     search();
-  }
+  });
 
   $('.search_text').keyup(function(e){
     clearTimeout(timeout);

@@ -151,11 +151,11 @@ def delete(request, listing_id):
 		listing.delete()
 		return redirect('listings.views.dashboard')
 
-# from django.core.context_processors import csrf
+from django.core.context_processors import csrf
 def search(request):
-	#c = {}
-	#c.update(csrf(request))
-	return TemplateResponse("listings/search_test.html")
+	c = {}
+	c.update(csrf(request))
+	return TemplateResponse(request,"listings/search.html",c)
 
 @require_POST
 def search_ajax(request):
