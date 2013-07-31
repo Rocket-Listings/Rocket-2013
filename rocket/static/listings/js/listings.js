@@ -160,7 +160,7 @@ $(function() {
   // }, fpConfig.picker_options, fpConfig.store_options));
 
   /* Listings table */
-  $('.table-listings').tablesorter({ cssHeader: 'table-header'});
+  $('.listings-table').tablesorter({ cssHeader: 'table-header'});
 
 
   /* Listing detail photo slideshow */

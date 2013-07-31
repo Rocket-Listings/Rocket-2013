@@ -1,436 +1,403 @@
 @import "../../rocket/less/base.less";
 
-/*  Doing this weird convention '.l-<CLASS>' because we don't want other outside class definitions to affect these.
-  For instance, if our title was simply '.title', then maybe a '.title' rule from base.less might take into effect. */
+/*    Doing this weird convention '.l-<CLASS>' because we don't want other outside class definitions to affect these.
+    For instance, if our title was simply '.title', then maybe a '.title' rule from base.less might take into effect. */
 
+
+// DASHBOARD HEADER
 .dashboard-header {
-  .dashboard-title {
-    padding-left: 40px !important;
-  }
-  .dashboard-create {
-    float: right;
-    padding-right: 40px;
-  }
+    .dashboard-title {
+        padding-left: 40px !important;
+    }
+    .dashboard-create {
+        float: right;
+        padding-right: 40px;
+    }
 }
 
+// DASHBOARD SKELETON
 .dashboard-panel {
-  position: absolute;
-  top: 126px;
-  bottom: 0;
-  margin: 0 !important;
-  padding: 0 !important;
-  &.first-visit {
-    top: 250px !important;
-  }
-  .table-listings thead tr th:first-child, .table-listings tbody tr td:first-child {
-    padding-left: 40px;
-  }
-  .listings-col {
-    height: 100%;
-    // margin:0;
-    border-right: 1px solid #dddddd;
-  }
-  .buyers-col {
-    height: 100%;
-    border-right: 1px solid #dddddd;
-    background: #FCFCFC;
+    position: absolute;
+    top: 126px;
+    bottom: 0;
+    padding: 0 !important;
+    &.first-visit {
+        top: 250px !important;
+    }
+    .listings-col {
+        height: 100%;
+        border-right: 1px solid #DDDDDD;
+        .listings-table {
+            td:first-child, th:first-child {
+                padding-left: 40px !important;
+            }
+            tr {
+                &.highlight {
+                    background-color: #8CA8C8 !important;
+                    color: #FFFFFF;
+                    a { color: #FFFFFF; }
+
+                }
+                &:hover {
+                    background: #F5F5F5;
+                    &.highlight {
+                        background: inherit;
+                    }
+                    > td, > th {
+                        background: none;
+                    }
+                }
+            }
+            a {
+                text-decoration: underline;
+            }
+        }
+    }
+    .buyers-col {
+        height: 100%;
+        border-right: 1px solid #DDDDDD;
+    }
+    .messages-col {
+        .messages-panel {
+            margin-right: 40px;
+        }
+        height: 100%;
+    }
     .dash-subtitle {
-      background: white;
+        padding: 8px;
+        font-weight: bold;
+        line-height: 20px;
+        text-rendering: optimizelegibility;
+        text-align: center;
     }
-  }
-  .messages-col {
-    // .dash-subtitle {
-    //   padding-right: 48px;
-    // }
-    .messages-panel {
-      margin-right: 40px;
+}
+
+.listings-table {
+    tbody tr:hover {
+        cursor:pointer;
     }
 
-    height: 100%;
-  }
+    td {
+        float: none;
+        vertical-align: middle;
+    }
 }
 
-// Making bootstrap table-hover work with highlight
-.table-hover tbody tr:hover > td, .table-hover tbody tr:hover > th {
-  background: none;
-}
-.table-hover tbody tr:hover {
-  background: #f5f5f5;
-}
-.table-hover tbody tr.highlight:hover {
-  background: inherit;
-}
-
-// .table-hover tbody {
-//   tr:hover {
-//     background-color: #F5F5F5;
-//     > td, > th {
-//       background-color: none;
-//     }
-//   }
-//   tr.highlight {
-//     &.hover {
-//       background-color: inherit;
-//     }
-//   }
+// DEPRECATED
+// .dash-title {
+//     margin: 25px 0;
 // }
 
-.table-listings {
-  a {
-    text-decoration: underline;
-  }
-
-  tr.highlight {
-    background-color: #8CA8C8 !important; /* overriding specificity problems */
-    color: white;
-
-    a {
-      color: white;
-    }
-
-    .btn-group a{
-      color:black;
-    }
-
-    #dashboard-modal a {
-      text-decoration: none;
-      color:white;
-    }
-  }
-
-  tbody tr:hover {
-    cursor:pointer;
-  }
-
-  td {
-    vertical-align: middle;
-  }
-}
-
-.dash-title {
-  margin:25px 0;
-}
-
-.dash-subtitle {
-  padding: 8px;
-  font-family: inherit;
-  font-weight: bold;
-  line-height: 20px;
-  color: inherit;
-  text-rendering: optimizelegibility;
-  text-align: center;
-}
-
-.dash-subtitle, .table-listings thead {
-  border-bottom: 1px solid #dddddd;
+.dash-subtitle, .listings-table thead {
+    border-bottom: 1px solid #dddddd;
 }
 .buyer-card {
-  margin-bottom: 0 !important;
-  border-bottom: 1px solid #dddddd;;
-  &:hover {
-    cursor: pointer;
-    background: #f5f5f5;
-  }
+    margin-bottom: 0 !important;
+    border-bottom: 1px solid #dddddd;;
+    &:hover {
+        cursor: pointer;
+        background: #f5f5f5;
+    }
 
-  &.highlight {
-    background-color: #8CA8C8 !important;
-    color: white;
-  }
-  tr {
-    border-style: none;
-  }
+    &.highlight {
+        background-color: #8CA8C8 !important;
+        color: white;
+    }
+    tr {
+        border-style: none;
+    }
 
-  td {
-    border-style: none;
-  }
+    td {
+        border-style: none;
+    }
 }
 
 .message-form {
-  background-color: #b2bec3;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-
-  textarea {
+    background-color: #b2bec3;
+    width: 100%;
     margin: 0;
     padding: 0;
-    width: 100%;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    border-bottom: none;
-    resize:vertical;
-  }
 
-  input.send-button {
-    width: 100%;
-  }
+    textarea {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        border-bottom: none;
+        resize:vertical;
+    }
+
+    input.send-button {
+        width: 100%;
+    }
 
 }
 
 .message {
-  padding: 0 10px;
-  margin: 0;
-  color:#333;
+    padding: 0 10px;
+    margin: 0;
+    color:#333;
 
-  &.buyer {
-    margin-left:30px;
-  }
-  /* Right Bubble  */
-  &.left {
-    margin-right:30px;
-    background-color:rgba(67,80,86,0.1);
-  }
+    &.buyer {
+        margin-left:30px;
+    }
+    /* Right Bubble    */
+    &.left {
+        margin-right:30px;
+        background-color:rgba(67,80,86,0.1);
+    }
 }
 
 #listing-detail {
-  overflow-x: hidden;
+    overflow-x: hidden;
 }
 .listing-form {
-  input, .tab-content, textarea {
-    margin-bottom: 20px;
-  }
-  
-  .tab-content {
-    // height: 434px;
-    border-right: 1px solid #ddd;
-    border-left: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;    
-    // padding: 12px;
-  }
+    input, .tab-content, textarea {
+        margin-bottom: 20px;
+    }
+    
+    .tab-content {
+        // height: 434px;
+        border-right: 1px solid #ddd;
+        border-left: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;        
+        // padding: 12px;
+    }
 
-  .nav {
-    margin-bottom: 0px;
-  }
+    .nav {
+        margin-bottom: 0px;
+    }
 
-  .tab-pane .cat {
-    // float: left;
-    display: block;
-    padding: 8px 0 8px 8px;
-    margin-bottom: 0;
+    .tab-pane .cat {
+        // float: left;
+        display: block;
+        padding: 8px 0 8px 8px;
+        margin-bottom: 0;
 
-    &:hover {
+        &:hover {
+                cursor: pointer;
+                // color: #08c;
+                // background: lighten(#08c, 50%);
+                // text-decoration: none;
+                text-decoration: underline;
+        }
+        &.selected {
+            color: black;
+            text-decoration: underline;            
+            // color: white;
+            // background: #08c; 
+        }
+    }
+
+    .title {
+        // display: block;
+    }
+    
+
+    .input-prepend.gridfix {
+        display: block;
+        position: relative;
+        height: 30px;
+        input {
+            position: absolute;
+            right: 0px;
+            left: 27px;
+            width: auto !important;
+        }
+        .add-on {
+            position: absolute;
+            // width: 30px;
+            left: 0px;
+        }
+    }
+
+    #fp-container {
+        border: none;
+        min-height: 412px;
+        width: 108%; 
+        position: relative; 
+        left: -30px;
+    }
+    
+    .sortable .sortable-dragging {
+        // background: blue;
         cursor: pointer;
-        // color: #08c;
-        // background: lighten(#08c, 50%);
-        // text-decoration: none;
-        text-decoration: underline;
     }
-    &.selected {
-      color: black;
-      text-decoration: underline;      
-      // color: white;
-      // background: #08c; 
+    .sortable .sortable-placeholder {
+        float: left;
+        width: 160px;
+        min-height: 160px;
+        margin-left: 30px;
+        margin-bottom: 20px;
+        border: 1px dashed #ddd;
     }
-  }
 
-  .title {
-    // display: block;
-  }
-  
+    .thumbnail:hover {
+        cursor: pointer;
+        // width: 200px;
 
-  .input-prepend.gridfix {
-    display: block;
-    position: relative;
-    height: 30px;
-    input {
-      position: absolute;
-      right: 0px;
-      left: 27px;
-      width: auto !important;
     }
-    .add-on {
-      position: absolute;
-      // width: 30px;
-      left: 0px;
+
+    .photo-view {
+        display: none;
     }
-  }
 
-  #fp-container {
-    border: none;
-    min-height: 412px;
-    width: 108%; 
-    position: relative; 
-    left: -30px;
-  }
-  
-  .sortable .sortable-dragging {
-    // background: blue;
-    cursor: pointer;
-  }
-  .sortable .sortable-placeholder {
-    float: left;
-    width: 160px;
-    min-height: 160px;
-    margin-left: 30px;
-    margin-bottom: 20px;
-    border: 1px dashed #ddd;
-  }
+    #photos {
+        height: 412px;
+    }
 
-  .thumbnail:hover {
-    cursor: pointer;
-    // width: 200px;
-
-  }
-
-  .photo-view {
-    display: none;
-  }
-
-  #photos {
-    height: 412px;
-  }
-
-  fieldset small {
-    margin-left: 12px;
-  }
+    fieldset small {
+        margin-left: 12px;
+    }
 }
 
 
 .detail-sidebar {
-  padding-top:38px;
-  > div {
-    top: 10px;
-  }
+    padding-top:38px;
+    > div {
+        top: 10px;
+    }
 }
 
-//  .messages-pane{
-//  	background-color: white;
-//  	height: 50px;
-//  	width: 600px;
-//  	overflow: auto;
-//  }
+//    .messages-pane{
+//            background-color: white;
+//            height: 50px;
+//            width: 600px;
+//            overflow: auto;
+//    }
 
-//  h1, h2, h3, h4, h5, h6{
-//  	margin: 5px 0;
-//  }
+//    h1, h2, h3, h4, h5, h6{
+//            margin: 5px 0;
+//    }
 
-//  .btn-send{
-//  	margin-top: 10px;
-//  }
+//    .btn-send{
+//            margin-top: 10px;
+//    }
 
-//  .table th,
-//  .table td {
-//    border-top: none;
-//  }
+//    .table th,
+//    .table td {
+//        border-top: none;
+//    }
 
-//  td {
-//  	margin: 0px;
-//  	padding: 0px;
-//  }
+//    td {
+//            margin: 0px;
+//            padding: 0px;
+//    }
 
-//  #1 table {
-//  	height: 220px;
-//  }
+//    #1 table {
+//            height: 220px;
+//    }
 
-//  #2 table {
-//  	height: 50px;
-//  }
+//    #2 table {
+//            height: 50px;
+//    }
 
-//  .tab-content {
-//  	height:250px;
-//  	width:900px;
-//  }
+//    .tab-content {
+//            height:250px;
+//            width:900px;
+//    }
 
-//  .nav {
+//    .nav {
 
-//  	margin-bottom: 0px;
-//  }
+//            margin-bottom: 0px;
+//    }
 
-//  .large {
-//  	border-bottom: 1px solid #d2dadd;
-//  	border-left: 1px solid #d2dadd;
-//  	border-right: 1px solid #d2dadd;
-//  }
+//    .large {
+//            border-bottom: 1px solid #d2dadd;
+//            border-left: 1px solid #d2dadd;
+//            border-right: 1px solid #d2dadd;
+//    }
 
-//  .small {
-//  	border-bottom: 1px solid #d2dadd;
-//  	border-left: 1px solid #d2dadd;
-//  	border-right: 1px solid #d2dadd;
-//  }
+//    .small {
+//            border-bottom: 1px solid #d2dadd;
+//            border-left: 1px solid #d2dadd;
+//            border-right: 1px solid #d2dadd;
+//    }
 
-//  .selected {
-//  	color: black;
-// 	text-decoration: underline;
-//  }
+//    .selected {
+//            color: black;
+//    text-decoration: underline;
+//    }
 
-//  .unselected {
-//  	color: #0088cc;
-//  	text-decoration: none;
-//  }
+//    .unselected {
+//            color: #0088cc;
+//            text-decoration: none;
+//    }
 
-//  .spec_tables td {
-//  	padding: 2px;
-//  }
+//    .spec_tables td {
+//            padding: 2px;
+//    }
 
 // .spec_tables input {
-//  	margin-bottom: -1px;
-//  }
+//            margin-bottom: -1px;
+//    }
 
-//  .table-listings th:nth-child(6) {
-//  	text-align: center;
-//  }
+//    .listings-table th:nth-child(6) {
+//            text-align: center;
+//    }
 
 // .search_box {
-// 	background-color: #eee;
-// 	height: 150px;
-// 	padding-left: 20px;
-// 	padding-top: 10px;
-// 	border-radius: 5px;
+//    background-color: #eee;
+//    height: 150px;
+//    padding-left: 20px;
+//    padding-top: 10px;
+//    border-radius: 5px;
 // }
 
 // .search_box h3 {
-// 	margin-bottom: 20px;	
+//    margin-bottom: 20px;        
 // }
 
 // input-append {
-// 	margin-top: 10px;
+//    margin-top: 10px;
 // }
 
 // .dashboard-create-btn {
-// 	margin-left: 100px;
+//    margin-left: 100px;
 // }
 
 // .btn-group a{
-// 	text-decoration:none;
+//    text-decoration:none;
 // }
 
 // .dashboard-create-btn {
-// 	float:right;
-// 	margin-right: 40px;
+//    float:right;
+//    margin-right: 40px;
 // }
 
-// .table-listings-compact td{
-// 	padding:0px;
+// .listings-table-compact td{
+//    padding:0px;
 // }
 
 // #dashboard-modal a {
-// 	text-decoration: none;
-// 	color:white;
+//    text-decoration: none;
+//    color:white;
 // }
 
 // .btn-toolbar {
-// 	// float:right;
-// 	padding-right: 9px;
+//    // float:right;
+//    padding-right: 9px;
 // }
 
 // .manage {
-// 	float:right;
-// 	margin-right: 34px;
+//    float:right;
+//    margin-right: 34px;
 // }
 
-// .table-listings .modal-header {
-// 	text-align: center;
+// .listings-table .modal-header {
+//    text-align: center;
 // }
 
-// .table-listings .modal-body {
-// 	text-align: center;
+// .listings-table .modal-body {
+//    text-align: center;
 // }
 
-.icon-blank	{
-	background-image: url('../img/white-icon.png');
+.icon-blank {
+        background-image: url('../img/white-icon.png');
 }
 
 .padding-40-left {
-	padding-left:40px;
+        padding-left:40px;
 }
