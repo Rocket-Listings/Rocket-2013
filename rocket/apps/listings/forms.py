@@ -27,4 +27,4 @@ class SpecForm(forms.Form):
     #         print name, value
     #     return self.cleaned_data
 
-ListingPhotoFormSet = inlineformset_factory(Listing, ListingPhoto)
+ListingPhotoFormSet = inlineformset_factory(Listing, ListingPhoto, extra=0)

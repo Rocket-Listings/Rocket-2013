@@ -72,19 +72,15 @@ def create(request, pane='edit'):
 def update(request, listing_id=None): # not directly addressed by a route, allows DRY listing saving
 	if listing_id:
 		listing = get_object_or_404(Listing, id=listing_id)
-		specs = listing.listingspecvalue_set.select_related()
-
 		if request.user != listing.user:
 			raise Http404
-		# spec_form
-		listing_form = ListingForm(request.POST, instance=listing)
-		spec_form = SpecForm(request.POST, initial=specs) # SpecForm is not a real form
-		photo_formset = ListingPhotoFormSet(request.POST, prefix="listingphoto_set")
 	else:
-		listing_form = ListingForm(request.POST)
-		spec_form = SpecForm(request.POST)
-		photo_formset = ListingPhotoFormSet(request.POST, prefix="listingphoto_set")
+		listing = Listing()
 
+	listing_form = ListingForm(request.POST, instance=listing)
+	specs = listing.listingspecvalue_set.select_related()
+	spec_form = SpecForm(request.POST, initial=specs) # SpecForm is not a real form
+	photo_formset = ListingPhotoFormSet(request.POST, instance=listing, prefix="listingphoto_set")
 	if listing_form.is_valid() and spec_form.is_valid() and photo_formset.is_valid():
 		listing = listing_form.save(commit=False)
 		listing.user = request.user
@@ -93,43 +89,53 @@ def update(request, listing_id=None): # not directly addressed by a route, allow
 			spec_id = int(name.replace('spec-',''))
 			ListingSpecValue.objects.create(value=value, key_id=spec_id, listing_id=listing.id)
 		photo_formset.save()
-
 		return redirect(listing)
 	else:
+		print photo_formset.errors
 		# preserving validation errors
 		cxt = {
 			'form': listing_form,
 			'spec_form': spec_form,
 			'pane': 'edit',
+			'photo_formset': photo_formset
 		}
 		cxt.update(utils.get_listing_vars())
 		return TemplateResponse(request, 'listings/detail.html', cxt)
 
 @view_count
-def detail(request, listing_id, pane=None):
+def detail(request, listing_id, pane='preview'):
 	listing = get_object_or_404(Listing, id=listing_id)
-	request.user.skip_count = listing.user.get_username() == request.user.get_username()
+	request.user.skip_count = bool(listing.user.get_username() == request.user.get_username())
 	
 	if request.method == 'GET':
-		specs_set = listing.listingspecvalue_set.select_related().all()
-		specs = {}
-		for spec in specs_set:
-			specs[spec.key_id] = spec
-		cxt = {
-			'listing': listing,
-			'photos': listing.listingphoto_set.all(),
-			'specs': specs,
-		}
 		if listing.user == request.user:
 			form = ListingForm(instance=listing)
+			
+			# prep specs
+			specs_set = listing.listingspecvalue_set.select_related().all()
+			specs = {}
+			for spec in specs_set:
+				specs[spec.key_id] = spec
 			spec_form = SpecForm(initial=specs)
-			cxt.update(utils.get_listing_vars())
-			cxt.update({
+
+			photo_formset = ListingPhotoFormSet(instance=listing, prefix="listingphoto_set")
+
+			cxt = {
 				'form': form,
+				'spec_form': spec_form,
+				'photo_formset': photo_formset,
 				'pane': pane
-			})
+			}
+			cxt.update(utils.get_listing_vars())
 			return TemplateResponse(request, 'listings/detail.html', cxt)
 		else:
+			specs = listing.listingspecvalue_set.select_related().all()
+			photos = listing.listingphoto_set.all()
+			cxt = {
+				'listing': listing,
+				'photos': photos,
+				'specs': specs,
+			}
 			return TemplateResponse(request, 'listings/detail_public.html', cxt)
 	else: # POST
 		return update(request, listing_id)

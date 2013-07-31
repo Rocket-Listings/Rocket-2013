@@ -106,39 +106,63 @@ $(function() {
     },
     store_options: {
       location:"S3",
-      path: '/propics/',
+      path: '/photos/',
       access: 'public'
     },
     onSuccess: function(InkBlobs) {
-      $('#id_listingphoto_set-TOTAL_FORMS').val(InkBlobs.length);
-      var view = { imgs: [] };
-      for (var i = 0; i<InkBlobs.length; i++) {
-        var blob = InkBlobs[i];
-        view.imgs.push({
-          index: i,
+      // update management form
+      var totalForms = parseInt($('#id_listingphoto_set-TOTAL_FORMS').val());
+      var initialForms = parseInt($('#id_listingphoto_set-INITIAL_FORMS').val());
+      $('#id_listingphoto_set-TOTAL_FORMS').val(totalForms + InkBlobs.length);
+
+      // prepare view context variables
+      var view = { photos: [] };
+      $.each(InkBlobs, function(index, blob) {
+        view.photos.push({
+          index: initialForms + index,
           url: blob.url,
           key: blob.key,
           src: "https://s3.amazonaws.com/static.rocketlistings.com/" + blob.key
         });
-      }
-      var output = Mustache.render($('#thumbnail-template').html(), view);
-      $('#photos').html(output);
+      });
+
+      // user interface first
+      var thumbnail = Mustache.render($('#thumbnail-template').html(), view);
+      $('#photos').append(thumbnail);
       this.bindSortable();
       $('.photo-view').fadeIn();
       $('.upload-view').hide();
+
+      // then formset stuff
+      var photoFormTemplate = $('#photo-form-template').html().replace(/__prefix__/g, "{{ index }}");
+      var photoForm = Mustache.render(photoFormTemplate, view);
+      var formset = $('#photo_formset');
+      formset.append(photoForm);
+
+      // manual labor to insert values
+      $.each(view.photos, function(index, photo) {
+        formset.find('#id_listingphoto_set-{0}-url'.format(photo.index)).val(photo.url);
+        formset.find('#id_listingphoto_set-{0}-key'.format(photo.index)).val(photo.key);
+        formset.find('#id_listingphoto_set-{0}-order'.format(photo.index)).val(photo.index);               
+      });
+
     },
     onError: function(type, message) {
       console.log('('+type+') '+ message);
     },
     toggleView: function(e) {
-      e.preventDefault();
+      if (e) 
+        e.preventDefault();
+
       $('.upload-view').toggle();
       $('.photo-view').toggle();      
     },
     bindSortable: function() {
       $('.sortable').sortable().bind('sortupdate', function() {
+        var formset = $('#photo_formset');
         $('.sortable li').each(function(index, item) {
-          $(this).find('.listingphoto_set-order:first').val(index);
+          var id = $(item).data('id');
+          formset.find('#id_listingphoto_set-{0}-order'.format(id)).val(index);
         });
       });
     }

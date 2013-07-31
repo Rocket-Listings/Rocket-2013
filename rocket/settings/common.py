@@ -4,6 +4,7 @@ from datetime import timedelta
 from sys import path
 from os.path import abspath, basename, dirname, join, normpath
 from djcelery import setup_loader
+from os import environ
 
 
 # Absolute filesystem path to the Django project directory:
@@ -87,6 +88,10 @@ STATICFILES_FINDERS = (
   'compressor.finders.CompressorFinder',
 )
 
+AWS_STORAGE_BUCKET_NAME = environ.get('AWS_STORAGE_BUCKET_NAME', 'static.rocketlistings.com')
+
+S3_URL = 'https://s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
+
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 SECRET_KEY = '59%5@qdw12&amp;d)47=3=$ar4bv4vcgk)*-_f2=qr9(n9jy%z%1j!'
 
@@ -105,6 +110,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
   'django.core.context_processors.tz',
   'django.contrib.messages.context_processors.messages',
   'django.core.context_processors.request',
+  "listings.context_processors.s3_url",
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
@@ -166,9 +172,6 @@ THIRD_PARTY_APPS = (
 
 	# thumbnails
 	'sorl.thumbnail',
-
-	# s3 storage
-	'storages',
 
 	# pagination template tags
 	'pagination',
