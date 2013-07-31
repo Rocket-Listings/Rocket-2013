@@ -19,9 +19,7 @@
   <input type="hidden" id="id_location" maxlength="200" name="location" value="Bethesda, MD">
   {# Category Select #}
   <fieldset>
-    <legend>
-      Category
-    </legend>
+    <legend>Category</legend>
     {% for error in form.category.errors %}
     <div class="alert alert-danger">
       <p>{{ error }}</p>
@@ -37,7 +35,7 @@
     </ul>
     <div class="tab-content">
       {% for group, cat_list in cats.items %}
-      <div class="tab-pane{% if group == "forsale" %} active{% endif %}" id="{{ group }}">
+      <div class="tab-pane cat-pane {% if group == "forsale" %} active{% endif %}" id="{{ group }}">
         <div class="row">
           <div class="col-lg-2 col-4">
           {% for cat in cat_list %}
@@ -85,11 +83,11 @@
   </fieldset>
   <fieldset id="spec-fieldset" class=""><legend>Location &amp; Specs</legend>
     <div class="row">
-      <div class="col-lg-3">
+      <div class="col-lg-6">
         <label>{{ form.location.label }}</label>
-        <img src="http://placehold.it/195x200"/>
+        <img src="http://placehold.it/420x200"/>
       </div>
-      <div class="specs-form col-lg-9">
+      <div class="specs-form col-lg-6">
         <p id="no-specs">No specification fields available for this category.</p>
         {% for spec_key in spec_keys %}
         <div class="form-group" data-cat="{{ spec_key.category_id }}">
