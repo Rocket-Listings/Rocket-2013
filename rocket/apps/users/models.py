@@ -27,13 +27,16 @@ class UserProfile(models.Model):
 	OAUTH_TOKEN_SECRET = models.CharField(max_length=200, blank=True)
 
 	def get_absolute_url(self):
-		return reverse('users.views.profile')
+		return reverse('users.views.profile', args=[self.user])
 
 	def __unicode__(self):
 		return self.user.username
 
 	def get_view_count(self):
-		return ViewCount.objects.get_or_create(url=self.get_absolute_url())[0].count
+		
+		return ViewCount.objects.get_or_create(url=UserProfile.get_absolute_url(self))[0].count
+		#sreturn reverse('users.views.profile')
+		#return ViewCount.objects.get_or_create(url=self.get_absolute_url)[0].count
 
 # Handles user profile creation if not already created
 def create_user_profile(sender, instance, created, **kwargs):  
