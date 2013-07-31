@@ -56,9 +56,9 @@ def info(request):
 @first_visit
 def profile(request, username=None):
 	user = User.objects.get(username=username)
-	
+
 	if request.user.is_authenticated():
-		request.user.skip_count = user.get_username() == request.user.get_username()
+		request.user.is_owner = user.get_username() == request.user.get_username()
 		
 	allListings = Listing.objects.filter(user=user).order_by('-pub_date')
 	# activelistings = allListings.filter(status=ListingStatus(pk=1))
