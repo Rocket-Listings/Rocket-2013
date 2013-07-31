@@ -2,28 +2,23 @@
 <div class="comment-form-container">
 
 	<div class="errors alert alert-error hide"></div>
-	<form action="" class="comment-form" method="POST">
-		<ul class="inline clearfix">
-			<li><label for="title"></label><input placeholder="Title" type="text" name="title"></li>
-			<li><label for="email"></label><input placeholder="Email (hidden)" type="text" name="email"></li>	
-			
-		</ul>
-		<ul class="inline clearfix">
-			<div class="row">
-				<div class="span1">
+	<form action="" class="comment-form form inline" method="POST">
+			<label for="title"></label><input placeholder="Title" type="text" name="title">
+			<label for="email"></label><input placeholder="Email (hidden)" type="text" name="email">
+			<div class="row rating-span">
+				<div class="col-lg-1">
 					<p>Rating: </p>	
 				</div>
-				<div class="span4 rating-span">
-					<div class="btn-group" data-toggle="buttons-radio" name="rating">
-  						<button type="button" class="btn btn-info btn-red" data-toggle="button"><input name="rating" value="0" type="hidden">Scammer</button>
-  						<button type="button" class="btn btn-lightred"><input name="rating" value="4" type="hidden">Headache</button>
-  						<button type="button" class="btn btn-lightgreen"><input name="rating" value="6" type="hidden">Reliable</button>
-  						<button type="button" class="btn btn-green"><input name="rating" value="10" type="hidden">Superstar</button>
+				<div class="col-lg-8">
+					<div class="btn-group" data-toggle="buttons" name="rating">
+  						<button type="button" class="btn btn-danger"><input type="radio" name="rating" value="0" type="hidden">Scammer</button>
+  						<button type="button" class="btn btn-warning"><input name="rating" type="radio" value="4" type="hidden">Frustrating</button>
+  						<button type="button" class="btn btn-info"><input name="rating" type="radio" value="6" type="hidden">Fine</button>
+  						<button type="button" class="btn btn-primary"><input name="rating" type="radio" value="10" type="hidden">Reliable</button>
 					</div>
 				</div>
 			</div>
-		</ul>
-		<textarea class="comment-textarea" placeholder="Give {{user.username}} some feedback here" name="comment" rows="3"></textarea><br>
+		<textarea class="comment-textarea" placeholder="Give {{url_user.username}} some feedback here" name="comment" rows="3"></textarea>
 		<input class="btn comment-submit" type="submit" value="Submit">
 		
 	</form>

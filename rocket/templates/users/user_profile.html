@@ -65,7 +65,7 @@
 								{% if url_user.get_profile.bio %}
 									<p>{{url_user.get_profile.bio}}</p>
 								{% else %}
-									{% if request.url_user.is_authenticated %}
+									{% if request.user.is_authenticated %}
 										<p>Looks like you don't have a bio! <a href="{% url 'users.views.info' %}">Update</a> your profile and add one.</p>
 									{% else %}
 										<p>Sorry, but {{url_user.username}} doesn't have a bio.</p>
@@ -109,7 +109,7 @@
 						</div>
 						
 						{% else %}
-							{% if request.user == user  %}
+							{% if request.user.is_authenticated %}
 							<p> You haven't created any listings yet, <a href="/listings/create"> click here</a> to get started.</p>
 							{% else %}
 								<p> Sorry, {{url_user.username}} hasn't created any listings yet. </p>
