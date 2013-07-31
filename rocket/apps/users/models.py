@@ -23,8 +23,8 @@ class UserProfile(models.Model):
 	bio = models.TextField(blank=True)
 	propic = models.CharField(max_length=200, blank=True)
 	twitter_handle = models.CharField(max_length=20, blank=True)
-	OAUTH_TOKEN = models.CharField(max_length=200, blank=True)
-	OAUTH_TOKEN_SECRET = models.CharField(max_length=200, blank=True)
+	TWITTER_OAUTH_TOKEN = models.CharField(max_length=200, blank=True)
+	TWITTER_OAUTH_TOKEN_SECRET = models.CharField(max_length=200, blank=True)
 
 	def get_absolute_url(self):
 		return reverse('users.views.profile')
