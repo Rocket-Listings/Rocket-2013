@@ -102,7 +102,6 @@ $(function() {
 				},
 				success: function(response) {
 					if (response.profile) {
-						console.log(response);
 						$(".errors").hide();
 						$(".save-all").addClass("disabled");
 						$(".save-all").removeClass("propic-enable");
@@ -280,10 +279,18 @@ $(function() {
 	}
 
 	// PROFILE JS
+
+	$("div.btn-group[data-toggle-name='comment_rating'] button").click(function () {
+		var button = $(this),
+			hidden = $("input[name='rating']");
+		$("div.btn-group[data-toggle-name='comment_rating'] button").removeClass("active");
+		$(this).addClass("active");
+		hidden.val(button.val());
+	});
+
 	// Handle the comment form
 	$(".comment-form").submit(function() {
 		var csrftoken = getCookie('csrftoken');
-		console.log(csrftoken);
 		$.ajax({
 			data: $(this).serialize(),
 			type: $(this).attr('method'),
@@ -291,10 +298,9 @@ $(function() {
 			beforeSend: function(xhr) {
 				xhr.setRequestHeader("X-CSRFToken", csrftoken);
 			},
-			success: function(response) {
-				if (response[0]) {
-					console.log(response)
-					insertNewComment(response[0].fields);
+			success: function (response) {
+				if (response.new_comment) {
+					insertNewComment(response);
 					$("input:not(input[type='submit']), textarea").val("");
 					$(".errors").hide();
 					$(".no-comment").hide();
@@ -318,13 +324,15 @@ $(function() {
 
 	// Used for comment form and user info AJAX responses
 	function showError(response) {
-		var errors = $(".errors"),
+		var errorWrapper = $(".error-wrapper"),
+			errorString = "",
 			dismissError = '<a href="#" class="close" data-dismiss="alert">&times;</a>';
-		errors.html("");
+		errorString = '<div class="errors alert alert-danger">' + dismissError;
 		for (key in response) {
-			errors.append(" <strong class='capital'>" + key + ": </strong> " + response[key] + "<br>");
+			errorString += "<strong class='capital'>" + key + ": </strong> " + response[key] + "<br>";
 		}
-		errors.show();
+		errorString += "</div>";
+		errorWrapper.html(errorString);
 	}
 
 	// Get cookie for csrf token

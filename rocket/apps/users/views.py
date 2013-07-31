@@ -9,7 +9,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
 from django.contrib.auth.decorators import login_required
 #from forms import UserProfileForm
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ValidationError
 from django.core.mail import send_mail
 from django.core import serializers
 from django.http import HttpResponse, HttpRequest, HttpResponseRedirect, HttpResponseForbidden
@@ -20,12 +20,13 @@ from users.decorators import first_visit
 from django.db.models import Avg
 from users.decorators import first_visit, view_count
 from utils import get_view_count
+from cgi import escape
 
 
 def overview(request, username=None):
 	return info(request, username)
 
-#@first_visit
+@first_visit
 @login_required
 def info(request):
 	user = request.user
@@ -42,7 +43,7 @@ def info(request):
 			responseData = {}
 			for key, value in user_profile_form.cleaned_data.iteritems():
 				if key != "default_listing_type" and key != "default_category":
-					responseData[key] = value
+					responseData[key] = escape(value)
 			responseData['profile'] = True
 			return HttpResponse(json.dumps(responseData), content_type="application/json")
 		else:
@@ -75,11 +76,17 @@ def profile(request, username=None):
 		if rating_form.is_valid() and comment_form.is_valid():
 			rating = rating_form.save()
 			comment = comment_form.save()
-			print "comment form save"
-			responseData = serializers.serialize("json", UserComment.objects.filter(pk=comment.pk));
-			return HttpResponse(responseData, content_type="application/json")
+			responseData = {}
+			for key, value in comment_form.cleaned_data.iteritems():
+				responseData[key] = escape(value)
+			for key, value in rating_form.cleaned_data.iteritems():
+				responseData[key] = value
+			responseData['new_comment'] = True
+			responseData['date_posted'] = datetime.date.today().strftime("%B %d, %Y")
+			return HttpResponse(json.dumps(responseData), content_type="application/json")
 		else:
 			errors = comment_form.errors
+			errors.update(rating_form.errors)
 			return HttpResponse(json.dumps(errors), content_type="application/json")
 
 
