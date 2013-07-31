@@ -32,6 +32,9 @@ class UserProfile(models.Model):
 	def __unicode__(self):
 		return self.user.username
 
+	def get_view_count(self):
+		return ViewCount.objects.get_or_create(url=self.get_absolute_url())[0].count
+
 # Handles user profile creation if not already created
 def create_user_profile(sender, instance, created, **kwargs):  
     if created:  
