@@ -168,8 +168,14 @@
   overflow-x: hidden;
 }
 .listing-form {
-  input, .tab-content, textarea {
-    margin-bottom: 20px;
+
+  fieldset small {
+    font-size: 60%;
+    margin-left: 15px;
+  }
+
+  fieldset {
+    margin-top: 30px;
   }
   
   .tab-content {
@@ -182,6 +188,9 @@
 
   .nav {
     margin-bottom: 0px;
+  }
+  .cat-pane {
+    padding: 8px;
   }
 
   .tab-pane .cat {
@@ -241,29 +250,28 @@
   }
   .sortable .sortable-placeholder {
     float: left;
-    width: 160px;
-    min-height: 160px;
-    margin-left: 30px;
-    margin-bottom: 20px;
+    width: 120px;
+    min-height: 90px;
+    margin-left: 15px;
+    margin-right: 15px;    
+    // margin-bottom: 15px;
     border: 1px dashed #ddd;
   }
 
   .thumbnail:hover {
     cursor: pointer;
     // width: 200px;
-
-  }
-
-  .photo-view {
-    display: none;
   }
 
   #photos {
-    height: 412px;
+    min-height: 200px;
   }
 
-  fieldset small {
-    margin-left: 12px;
+  #spec-fieldset {
+    margin-bottom: 20px;
+  }
+  .specs-form > div {
+    display: none;
   }
 }
 
@@ -274,139 +282,6 @@
     top: 10px;
   }
 }
-
-//  .messages-pane{
-//  	background-color: white;
-//  	height: 50px;
-//  	width: 600px;
-//  	overflow: auto;
-//  }
-
-//  h1, h2, h3, h4, h5, h6{
-//  	margin: 5px 0;
-//  }
-
-//  .btn-send{
-//  	margin-top: 10px;
-//  }
-
-//  .table th,
-//  .table td {
-//    border-top: none;
-//  }
-
-//  td {
-//  	margin: 0px;
-//  	padding: 0px;
-//  }
-
-//  #1 table {
-//  	height: 220px;
-//  }
-
-//  #2 table {
-//  	height: 50px;
-//  }
-
-//  .tab-content {
-//  	height:250px;
-//  	width:900px;
-//  }
-
-//  .nav {
-
-//  	margin-bottom: 0px;
-//  }
-
-//  .large {
-//  	border-bottom: 1px solid #d2dadd;
-//  	border-left: 1px solid #d2dadd;
-//  	border-right: 1px solid #d2dadd;
-//  }
-
-//  .small {
-//  	border-bottom: 1px solid #d2dadd;
-//  	border-left: 1px solid #d2dadd;
-//  	border-right: 1px solid #d2dadd;
-//  }
-
-//  .selected {
-//  	color: black;
-// 	text-decoration: underline;
-//  }
-
-//  .unselected {
-//  	color: #0088cc;
-//  	text-decoration: none;
-//  }
-
-//  .spec_tables td {
-//  	padding: 2px;
-//  }
-
-// .spec_tables input {
-//  	margin-bottom: -1px;
-//  }
-
-//  .table-listings th:nth-child(6) {
-//  	text-align: center;
-//  }
-
-// .search_box {
-// 	background-color: #eee;
-// 	height: 150px;
-// 	padding-left: 20px;
-// 	padding-top: 10px;
-// 	border-radius: 5px;
-// }
-
-// .search_box h3 {
-// 	margin-bottom: 20px;	
-// }
-
-// input-append {
-// 	margin-top: 10px;
-// }
-
-// .dashboard-create-btn {
-// 	margin-left: 100px;
-// }
-
-// .btn-group a{
-// 	text-decoration:none;
-// }
-
-// .dashboard-create-btn {
-// 	float:right;
-// 	margin-right: 40px;
-// }
-
-// .table-listings-compact td{
-// 	padding:0px;
-// }
-
-// #dashboard-modal a {
-// 	text-decoration: none;
-// 	color:white;
-// }
-
-// .btn-toolbar {
-// 	// float:right;
-// 	padding-right: 9px;
-// }
-
-// .manage {
-// 	float:right;
-// 	margin-right: 34px;
-// }
-
-// .table-listings .modal-header {
-// 	text-align: center;
-// }
-
-// .table-listings .modal-body {
-// 	text-align: center;
-// }
 
 .icon-blank	{
 	background-image: url('../img/white-icon.png');
