@@ -1,7 +1,4 @@
-{% load static from staticfiles %}
-
 $(function() {
-
 	// INIT
 	filepicker.setKey('ATM8Oz2TyCtiJiHu6pP6Qz');
 	var initialInput = getInput('input');
@@ -83,8 +80,9 @@ $(function() {
 				console.log(FPError);
 			},
 			function (percent) {
+				console.log(percent);
 				if (percent != 100) {
-					$(".loading-overlay").show();
+					$(".loading-overlay").removeClass("hide");
 				}
 			});
 		},
@@ -94,7 +92,7 @@ $(function() {
 	});
 	$("form.settings-form").submit(function() {
 		if ((!$(".save-all").hasClass("disabled")) || ($(".save-all").hasClass("propic-enable"))) {
-			var csrftoken = $.cookie('csrftoken');
+			var csrftoken = getCookie('csrftoken');
 			$.ajax({
 				data: $(this).serialize(),
 				type: $(this).attr('method'),
@@ -104,6 +102,7 @@ $(function() {
 				},
 				success: function(response) {
 					if (response.profile) {
+						console.log(response);
 						$(".errors").hide();
 						$(".save-all").addClass("disabled");
 						$(".save-all").removeClass("propic-enable");
@@ -123,30 +122,14 @@ $(function() {
 
 	// HELPER FUNCTIONS
 	function insertNewValues(data) {
-		if (data['nameprivate'] === true) {
-			$("select[name='nameprivate']").children().filter("option[value='True']").attr('selected', 'true');
-			$("select[name='nameprivate']").children().filter("option[value='False']").removeAttr('selected');
-		}
-		else {
-			$("select[name='nameprivate']").children().filter("option[value='True']").removeAttr('selected');
-			$("select[name='nameprivate']").children().filter("option[value='False']").attr('selected', 'true');
-		}
-		if (data['locationprivate'] === true) {
-			$("select[name='locationprivate']").children().filter("option[value='True']").attr('selected', 'true');
-			$("select[name='locationprivate']").children().filter("option[value='False']").removeAttr('selected');
-		}
-		else {
-			$("select[name='locationprivate']").children().filter("option[value='True']").removeAttr('selected');
-			$("select[name='locationprivate']").children().filter("option[value='False']").attr('selected', 'true');
-		}
 		if (data['name'] !== "") {
 			$(".name-header").html(data['name']);
 		}
 		else {
 			$(".name-header").html($(".username").html());
 		}
-		$("img.propic").attr("src", data['propic'] + "?" + new Date().getTime());
-		$(".loading-overlay").hide();
+		if ($("input[name='propic']").val() !== "") $("img.propic").attr("src", data['propic'] + "?" + new Date().getTime());
+		$(".loading-overlay").addClass("hide");
 	}
 	function getInput (type) {
 		var input  = $("input:not(input[type='submit']), textarea"),
@@ -187,7 +170,7 @@ $(function() {
 									var city = results[i].address_components[0].short_name;
 									var state = results[i].address_components[2].short_name;
 									$("input[name='location']").val(city + ", " + state);
-									$("form").submit();
+									//$("form").submit();
 								}
 							}
 						}
@@ -202,7 +185,7 @@ $(function() {
 	function getTwitterHandle () {
 		$.ajax({
 			type: 'GET',
-			url: '{% url "get_twitter_handle" %}',
+			url: 'users/twitter/handle/',
 			success: function (response) {
 				if (response !== "no_oauth_token_or_key") {
 					$(".twitter-handle").html(response);
@@ -216,7 +199,7 @@ $(function() {
 	function disconnectTwitter() {
 		$.ajax({
 			type: 'GET',
-			url: '{% url "disconnect_twitter" %}',
+			url: 'users/twitter/disconnect/',
 			success: function (response) {
 				if (response === "success") {
 					$(".twitter-handle").html("");
@@ -252,7 +235,7 @@ $(function() {
 		FB.api({ method: 'Auth.revokeAuthorization' });
 		$.ajax({
 			type: 'GET',
-			url: '{% url "disconnect_fb" %}',
+			url: 'users/facebook/disconnect/',
 			success: function(response) {
 				$(".fb-name").text("");
 				$(".disconnect-fb").hide();
@@ -280,11 +263,11 @@ $(function() {
 	}
 
 	function fbPostData(data) {
-		var csrftoken = $.cookie('csrftoken');
+		var csrftoken = getCookie('csrftoken');
 		$.ajax({
 			data: data,
 			type: 'POST',
-			url: '{% url "fb_profile" %}',
+			url: 'users/facebook/',
 			beforeSend: function(xhr) {
 				xhr.setRequestHeader("X-CSRFToken", csrftoken);
 			},
@@ -304,7 +287,6 @@ $(function() {
 	// Handle the comment form
 	$(".comment-form").submit(function() {
 		var csrftoken = $.cookie('csrftoken');
-		console.log('comment form');
 		console.log(csrftoken);
 		$.ajax({
 			data: $(this).serialize(),
@@ -347,12 +329,28 @@ $(function() {
 	// Used for comment form and user info AJAX responses
 	function showError(response) {
 		var errors = $(".errors"),
-		dismissError = '<a href="#" class="close" data-dismiss="alert">&times;</a>';
+			dismissError = '<a href="#" class="close" data-dismiss="alert">&times;</a>';
 		errors.html("");
 		for (key in response) {
 			errors.append(" <strong class='capital'>" + key + ": </strong> " + response[key] + "<br>");
 		}
 		errors.show();
+	}
+
+	// Get cookie for csrf token
+	function getCookie(name) {
+	    var cookieValue = null;
+	    if (document.cookie && document.cookie != '') {
+	        var cookies = document.cookie.split(';');
+	        for (var i = 0; i < cookies.length; i++) {
+	            var cookie = jQuery.trim(cookies[i]);
+	            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+	                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+	                break;
+	            }
+	        }
+	    }
+	    return cookieValue;
 	}
 });
 

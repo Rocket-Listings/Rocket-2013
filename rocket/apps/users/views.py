@@ -33,6 +33,7 @@ def info(request):
 	fbProfile = ProfileFB.objects.get(profile=profile)
 	if request.method == 'POST':
 		user_profile_form = UserProfileForm(request.POST, instance=profile)
+		print user_profile_form
 		if user_profile_form.is_valid():
 			userObject = User.objects.get(username=user)
 			userObject.email = user_profile_form.cleaned_data['email']
@@ -50,7 +51,7 @@ def info(request):
 	else:
 		user_profile_form = UserProfileForm(instance=profile)
 		return TemplateResponse(request, 'users/user_info.html', {'user': user, 'form': user_profile_form, 'fb': fbProfile})
-	
+
 @view_count
 @first_visit
 def profile(request, username=None):

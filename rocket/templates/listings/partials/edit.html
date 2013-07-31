@@ -77,22 +77,22 @@
       {# Title #}
       <div class="col-lg-6">
         <div class="row">
-          <div class="col-lg-4">
+          <div class="col-lg-8">
             <label>{{ form.title.label }}</label>
-            <input class="title input-block-level" maxlength="200" name="title" type="text" placeholder="e.g. 2000 Jeep Wrangler 4.0L" value="{{ form.title.value|default:"" }}">
+            <input class="form-control title input-block-level" maxlength="200" name="title" type="text" placeholder="e.g. 2000 Jeep Wrangler 4.0L" value="{{ form.title.value|default:"" }}">
           </div>
-          <div class="col-lg-2">
+          <div class="col-lg-4">
             <label>{{ form.price.label }}</label>
-            <div class="input-prepend gridfix">
-              <span class="add-on">$</span>
-              <input class="price input-block-level" name="price" type="text" value="{{ form.price.value|default:"" }}">
+            <div class="input-group gridfix">
+              <span class="input-group-addon">$</span>
+              <input class="form-control price input-block-level" name="price" type="text" value="{{ form.price.value|default:"" }}">
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-6">
+          <div class="col-lg-12">
             <label>{{ form.description.label }}</label>
-            <textarea class="col-lg-6 description" placeholder="Describe your item" cols="40" name="description" rows="10">{{ form.description.value|default:"" }}</textarea>
+            <textarea class="form-control col-lg-6 description" placeholder="Describe your item" cols="40" name="description" rows="10">{{ form.description.value|default:"" }}</textarea>
           </div>
         </div>
       </div>
@@ -108,7 +108,7 @@
         <div class="control-group hide" data-cat="{{ spec_key.category_id }}">
             <label class="control-label" for="spec-{{ spec_key.id }}">{{ spec_key.name }}</label>
             <div class="controls">
-              <input type="text" disabled="disabled" name="spec-{{ spec_key.id }}" value="{{ specs|specval:spec_key.id }}"/>
+              <input class="form-control" type="text" disabled="disabled" name="spec-{{ spec_key.id }}" value="{{ specs|specval:spec_key.id }}"/>
             </div>
         </div>
         {% endfor %}

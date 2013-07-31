@@ -2,8 +2,9 @@
 {% load active from navigation %}
 
 <div class="navbar">
+	<div class="container">
 		<div class="row">
-			<div class="col-lg-5 col-offset-1">
+			<div class="col-lg-6">
 				{% if request.user.is_authenticated %}
 					<a class="navbar-logo" href="{% url 'listings.views.dashboard' %}">
 				{% else %}
@@ -17,7 +18,7 @@
 					</a>
 			</div>
 			{% if request.user.is_authenticated %}
-			<div class="col-lg-5">
+			<div class="col-lg-6">
 				<ul class="nav navbar-nav">
 					<li class="{% active 'create' %}">
 	                    <a href="/listings/create/">
@@ -49,6 +50,7 @@
 					</li>
 				</ul>
 			</div>
+<<<<<<< HEAD
 			</div>
 				{% else %}
 				<div class="col-lg-5">
@@ -61,9 +63,23 @@
 						</li>
 					</ul>
 				</div>
+=======
+			{% else %}
+			<div class="col-lg-6">
+				<ul class="nav navbar-nav">
+					<li>
+						<a href="{% url 'auth_login' %}">
+							<span class="hidden-phone">login</span>
+							<span class="glyphicon glyphicon-off"></span>
+						</a>
+					</li>
+				</ul>
+>>>>>>> cb2a55f1808996d95092006acebc6f122e723458
 			</div>
 			{% endif %}	
 		</div>
+	</div>
+</div>
 
 
 
