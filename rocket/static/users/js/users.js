@@ -185,13 +185,13 @@ $(function() {
 	function getTwitterHandle () {
 		$.ajax({
 			type: 'GET',
-			url: 'users/twitter/handle/',
+			url: '/users/twitter/handle/',
 			success: function (response) {
 				if (response !== "no_oauth_token_or_key") {
 					$(".twitter-handle").html(response);
 					$(".at").removeClass("muted");
-					$(".verify-twitter").hide();
-					$(".disconnect-twitter").show();
+					$(".verify-twitter").addClass("hide");
+					$(".disconnect-twitter").removeClass("hide");
 				}
 			}
 		});
@@ -199,12 +199,12 @@ $(function() {
 	function disconnectTwitter() {
 		$.ajax({
 			type: 'GET',
-			url: 'users/twitter/disconnect/',
+			url: '/users/twitter/disconnect/',
 			success: function (response) {
 				if (response === "success") {
 					$(".twitter-handle").html("");
-					$(".verify-twitter").show();
-					$(".disconnect-twitter").hide();
+					$(".verify-twitter").removeClass("hide");
+					$(".disconnect-twitter").addClass("hide");
 					$(".at").addClass("muted");
 				}
 			}
@@ -235,11 +235,11 @@ $(function() {
 		FB.api({ method: 'Auth.revokeAuthorization' });
 		$.ajax({
 			type: 'GET',
-			url: 'users/facebook/disconnect/',
+			url: '/users/facebook/disconnect/',
 			success: function(response) {
 				$(".fb-name").text("");
-				$(".disconnect-fb").hide();
-				$(".connect-fb").show();
+				$(".disconnect-fb").addClass("hide");
+				$(".connect-fb").removeClass("hide");
 			}
 		});
 	});
@@ -267,26 +267,22 @@ $(function() {
 		$.ajax({
 			data: data,
 			type: 'POST',
-			url: 'users/facebook/',
+			url: '/users/facebook/',
 			beforeSend: function(xhr) {
 				xhr.setRequestHeader("X-CSRFToken", csrftoken);
 			},
 			success: function(response) {
-				console.log(response);
 				$(".fb-name").text(response);
-				$(".connect-fb").hide();
-				$(".disconnect-fb").show();
+				$(".connect-fb").addClass("hide");
+				$(".disconnect-fb").removeClass("hide");
 			}
 		});
 	}
 
 	// PROFILE JS
-
-
-
 	// Handle the comment form
 	$(".comment-form").submit(function() {
-		var csrftoken = $.cookie('csrftoken');
+		var csrftoken = getCookie('csrftoken');
 		console.log(csrftoken);
 		$.ajax({
 			data: $(this).serialize(),
@@ -319,12 +315,6 @@ $(function() {
 		$(".comment-form-container").hide();
 		$(".comment-thanks").show();
 	}
-
-
-
-				
-				
-
 
 	// Used for comment form and user info AJAX responses
 	function showError(response) {
