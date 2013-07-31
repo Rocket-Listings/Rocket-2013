@@ -32,9 +32,6 @@ def view_count(view_func):
 		
 		if not (hasattr(request.user,'skip_count') and request.user.skip_count):
 			view_count.increment()
-
-		print view_count.count
-
 		return response
 
 	return _wrapped_visit_func

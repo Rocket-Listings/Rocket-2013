@@ -7,10 +7,9 @@ from django.forms.models import inlineformset_factory
 class ListingForm(forms.ModelForm):
     class Meta:
         model = Listing
-        exclude = ('pub_date', 'user', 'CL_link', 'status')
+        exclude = ('pub_date', 'user', 'CL_link', 'status', 'listing_type')
         widgets = {
             'category': forms.HiddenInput,
-            'listing_type': forms.HiddenInput,
             # 'listing_type': forms.HiddenInput  
         }
 
@@ -27,4 +26,4 @@ class SpecForm(forms.Form):
     #         print name, value
     #     return self.cleaned_data
 
-ListingPhotoFormSet = inlineformset_factory(Listing, ListingPhoto, extra=0)
+ListingPhotoFormSet = inlineformset_factory(Listing, ListingPhoto, extra=0, can_order=True, can_delete=True, exclude=('order'))

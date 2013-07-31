@@ -23,7 +23,7 @@
       Category
     </legend>
     {% for error in form.category.errors %}
-    <div class="bs-callout bs-callout-danger">
+    <div class="alert alert-danger">
       <p>{{ error }}</p>
     </div>
     {% endfor %}
@@ -57,7 +57,7 @@
   <fieldset><legend>Listing Info</legend>
     {# Title #}
     <div class="row">
-      <div class="col-sm-9 form-group{% if form.title.errrors %} has-error {% endif %}">
+      <div class="col-sm-9 form-group{% if form.title.errors %} has-error {% endif %}">
         
         <label class="control-label">{{ form.title.label }}</label>
         <input class="title form-control" maxlength="200" name="title" type="text" placeholder="2000 Jeep Wrangler 4.0L" value="{{ form.title.value|default:"" }}">
@@ -66,7 +66,7 @@
           <span class="help-block">{{ error }}</span>
         {% endfor %}
       </div>
-      <div class="col-sm-3 form-group {% if form.price.errrors %} has-error {% endif %}">
+      <div class="col-sm-3 form-group {% if form.price.errors %} has-error {% endif %}">
         <label class="control-label">{{ form.price.label }}</label>
         <div class="input-group">
           <span class="input-group-addon">$</span>
@@ -76,9 +76,9 @@
       </div>
     </div>
     <div class="row">
-      <div class="form-group col-lg-12">
+      <div class="form-group col-lg-12{% if form.description.errors %} has-error {% endif %}">
         <label class="control-label">{{ form.description.label }}</label>
-        <textarea class="description form-control" placeholder="The best car ever." cols="40" name="description" rows="10">{{ form.description.value|default:"" }}</textarea>
+        <textarea class="description form-control" placeholder="The best car ever." name="description" rows="5">{{ form.description.value|default:"" }}</textarea>
         {% for error in form.price.errors %}<span class="help-block">{{ error }}</span>{% endfor %}
       </div>
     </div>
@@ -86,16 +86,13 @@
   <fieldset id="spec-fieldset" class=""><legend>Location &amp; Specs</legend>
     <div class="row">
       <div class="col-lg-3">
-        <label>
-          {{ form.location.label }} 
-          {% for error in form.location.errors %}<p class="text-warning">{{ error}}</p>{% endfor %}
-        </label>
+        <label>{{ form.location.label }}</label>
         <img src="http://placehold.it/195x200"/>
       </div>
       <div class="specs-form col-lg-9">
         <p id="no-specs">No specification fields available for this category.</p>
         {% for spec_key in spec_keys %}
-        <div class="form-group hide" data-cat="{{ spec_key.category_id }}">
+        <div class="form-group" data-cat="{{ spec_key.category_id }}">
             <label class="control-label" for="spec-{{ spec_key.id }}">{{ spec_key.name }}</label>
             <input class="form-control" type="text" disabled="disabled" name="spec-{{ spec_key.id }}" value="{{ specs|specval:spec_key.id }}"/>
         </div>
@@ -104,33 +101,33 @@
     </div>
   </fieldset>
   <fieldset>
-    <legend>Photo Upload<small class="photo-view">Drag to reorder</small>
-      <a class="btn pull-right photo-view toggle-view">Upload more</a>
-      <a class="btn pull-right upload-view hide toggle-view">Arrange photos</a>      
+    <legend>Photo Upload<small class="photo-view text-muted">Drag to reorder</small>
+      <a class="btn btn-small btn-default pull-right photo-view toggle-view">Upload more</a>
+      <a class="btn btn-small btn-default pull-right upload-view toggle-view" style="display: none;">Arrange photos</a>      
     </legend>
-      {% for dict in photo_formset.errors %}
-      {% for error in dict.values %}
-        <div class="alert alert-warning alert-block">
-        {{ error }}
-        </div>  
-      {% endfor %}
-      {% endfor %}
-    <ul id="photos" class="thumbnails sortable photo-view">
-      {# Django template #}
-      {% for form in photo_formset.forms %}
-        <li class="span2" data-id="{{ forloop.counter }}" draggable="true">
-          <div class="thumbnail">
+    {% for dict in photo_formset.errors %}
+    {% for error in dict.values %}
+      <div class="alert alert-warning alert-block">
+      {{ error }}
+      </div>  
+    {% endfor %}
+    {% endfor %}
+    <div id="photos" class="row sortable photo-view">
+      {% for form in photo_formset %}
+        <div class="col-lg-2" data-id="{{ forloop.counter0 }}" draggable="true">
+          <a class="thumbnail">
             <img src="{{ S3_URL }}{{ form.key.value }}">
-          </div>
-        </li>
+          </a>
+        </div>
       {% endfor %}
-    </ul>
-    <div id="photo_formset" class="">
+    </div>
+    <div id="photo_formset" class="hide">
       {{ photo_formset.management_form }}
       {% for form in photo_formset %}
       {% for field in form %}      
         {{ field }} 
       {% endfor %}
+      <br/>
       {% endfor %}      
     </div>
     <iframe class="upload-view" id="fp-container"></iframe>
@@ -139,11 +136,12 @@
     {% verbatim %}
     <script id="thumbnail-template" type="text/template">
       {{#photos}}
-      <li class="col-lg-2" draggable="true" data-id="{{ index }}">
-        <div class="thumbnail">
+      <div class="col-lg-2" data-id="{{ index }}" draggable="true">
+        <a class="thumbnail">
           <img src="{{ src }}">
-        </div>
-      </li>{{/photos}}
+        </a>
+      </div>
+      {{/photos}}
     </script>
     {% endverbatim %}
 
@@ -152,6 +150,7 @@
       {{#photos}}
       {% endverbatim %}
       {% for field in photo_formset.empty_form %}{{ field }}{% endfor %}
+      <br/>
       {% verbatim %}
       {{/photos}}
       {% endverbatim %}

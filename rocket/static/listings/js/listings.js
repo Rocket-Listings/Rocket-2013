@@ -143,7 +143,7 @@ $(function() {
       $.each(view.photos, function(index, photo) {
         formset.find('#id_listingphoto_set-{0}-url'.format(photo.index)).val(photo.url);
         formset.find('#id_listingphoto_set-{0}-key'.format(photo.index)).val(photo.key);
-        formset.find('#id_listingphoto_set-{0}-order'.format(photo.index)).val(photo.index);               
+        formset.find('#id_listingphoto_set-{0}-ORDER'.format(photo.index)).val(photo.index);               
       });
 
     },
@@ -160,9 +160,9 @@ $(function() {
     bindSortable: function() {
       $('.sortable').sortable().bind('sortupdate', function() {
         var formset = $('#photo_formset');
-        $('.sortable li').each(function(index, item) {
+        $('.sortable div').each(function(index, item) {
           var id = $(item).data('id');
-          formset.find('#id_listingphoto_set-{0}-order'.format(id)).val(index);
+          formset.find('#id_listingphoto_set-{0}-ORDER'.format(id)).val(index);
         });
       });
     }
@@ -173,14 +173,6 @@ $(function() {
   filepicker.pickAndStore(fpConfig.picker_options, fpConfig.store_options, $.proxy(fpConfig.onSuccess, fpConfig), fpConfig.onError);
   $('.toggle-view').click(fpConfig.toggleView);
   fpConfig.bindSortable();
-  // });
-  // filepicker.makeDropPane($('#dragdrop'), $.extend({
-  //   onSuccess: fpConfig.onSuccess,
-  //   onError: fpConfig.onError,
-  //   onProgress: fpConfig.onProgress,
-  //   dragEnter: fpConfig.dragEnter,
-  //   dragLeave: fpConfig.dragLeave
-  // }, fpConfig.picker_options, fpConfig.store_options));
 
   /* Listings table */
   $('.table-listings').tablesorter({ cssHeader: 'table-header'});

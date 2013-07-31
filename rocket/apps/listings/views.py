@@ -79,18 +79,31 @@ def update(request, listing_id=None): # not directly addressed by a route, allow
 
 	listing_form = ListingForm(request.POST, instance=listing)
 	specs = listing.listingspecvalue_set.select_related()
-	spec_form = SpecForm(request.POST, initial=specs) # SpecForm is not a real form
+	spec_form = SpecForm(request.POST, initial=specs)
 	photo_formset = ListingPhotoFormSet(request.POST, instance=listing, prefix="listingphoto_set")
+
 	if listing_form.is_valid() and spec_form.is_valid() and photo_formset.is_valid():
 		listing = listing_form.save(commit=False)
 		listing.user = request.user
 		listing.save()
+
 		for name, value in spec_form.cleaned_data.items():
-			spec_id = int(name.replace('spec-',''))
-			ListingSpecValue.objects.create(value=value, key_id=spec_id, listing_id=listing.id)
-		photo_formset.save()
+			if value:
+				spec_id = int(name.replace('spec-',''))
+				ListingSpecValue.objects.create(value=value, key_id=spec_id, listing_id=listing.id)
+
+		# for form in photo_formset.marked_for_delete:
+			# form.instance.delete()
+
+		photo_formset.save(commit=False)
+		for form in photo_formset.ordered_forms:
+			form.instance.order = form.cleaned_data['ORDER']
+			form.instance.save()
+		# photo_formset.save()
+
 		return redirect(listing)
 	else:
+		print listing_form.errors
 		print photo_formset.errors
 		# preserving validation errors
 		cxt = {
@@ -106,30 +119,27 @@ def update(request, listing_id=None): # not directly addressed by a route, allow
 def detail(request, listing_id, pane='preview'):
 	listing = get_object_or_404(Listing, id=listing_id)
 	request.user.skip_count = listing.user == request.user
-	
+
+	# prep specs
+	specs_set = listing.listingspecvalue_set.select_related().all()
+	specs = {}
+	for spec in specs_set:
+		specs[spec.key_id] = spec
+
 	if request.method == 'GET':
 		if listing.user == request.user:
 			form = ListingForm(instance=listing)
-			
-			# prep specs
-			specs_set = listing.listingspecvalue_set.select_related().all()
-			specs = {}
-			for spec in specs_set:
-				specs[spec.key_id] = spec
-			spec_form = SpecForm(initial=specs)
-
 			photo_formset = ListingPhotoFormSet(instance=listing, prefix="listingphoto_set")
 
 			cxt = {
 				'form': form,
-				'spec_form': spec_form,
+				'specs': specs,
 				'photo_formset': photo_formset,
 				'pane': pane
 			}
 			cxt.update(utils.get_listing_vars())
 			return TemplateResponse(request, 'listings/detail.html', cxt)
 		else:
-			specs = listing.listingspecvalue_set.select_related().all()
 			photos = listing.listingphoto_set.all()
 			cxt = {
 				'listing': listing,
