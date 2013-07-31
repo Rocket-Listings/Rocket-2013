@@ -121,10 +121,15 @@ def verify_twitter(request):
 		_twitter = Twython(settings.TWITTER_KEY, settings.TWITTER_SECRET, _OAUTH_TOKEN, _OAUTH_TOKEN_SECRET)
 		twitter_auth_keys = _twitter.get_authorized_tokens(oauth_verifier)
 		profile = UserProfile.objects.get(user=user)
-		profile.OAUTH_TOKEN = twitter_auth_keys['oauth_token'] #real token
-		profile.OAUTH_TOKEN_SECRET = twitter_auth_keys['oauth_token_secret'] #real secret
-		profile.save()
-		return redirect('/users/twitter/close')
+		profile.TWITTER_OAUTH_TOKEN = twitter_auth_keys['oauth_token'] #real token
+		profile.TWITTER_OAUTH_TOKEN_SECRET = twitter_auth_keys['oauth_token_secret'] #real secret
+		try:
+			profile.full_clean()
+		except ValidationError:
+			return HttpResponseForbidden()
+		else:
+			profile.save()
+			return redirect('/users/twitter/close')
 	elif request.GET.get("denied"):
 		return redirect('/users/twitter/close')
 	else:
@@ -133,10 +138,10 @@ def verify_twitter(request):
 @login_required
 def get_twitter_handle(request):
 	if request.is_ajax():
-		OAUTH_TOKEN = UserProfile.objects.get(user=request.user).OAUTH_TOKEN
-		OAUTH_TOKEN_SECRET = UserProfile.objects.get(user=request.user).OAUTH_TOKEN_SECRET
-		if OAUTH_TOKEN != "":
-			twitter = Twython(settings.TWITTER_KEY, settings.TWITTER_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
+		TWITTER_OAUTH_TOKEN = UserProfile.objects.get(user=request.user).TWITTER_OAUTH_TOKEN
+		TWITTER_OAUTH_TOKEN_SECRET = UserProfile.objects.get(user=request.user).TWITTER_OAUTH_TOKEN_SECRET
+		if TWITTER_OAUTH_TOKEN != "":
+			twitter = Twython(settings.TWITTER_KEY, settings.TWITTER_SECRET, TWITTER_OAUTH_TOKEN, TWITTER_OAUTH_TOKEN_SECRET)
 			handle = twitter.verify_credentials()['screen_name']
 			profile = UserProfile.objects.get(user=request.user)
 			profile.twitter_handle = handle
@@ -150,8 +155,8 @@ def get_twitter_handle(request):
 def disconnect_twitter(request):
 	if request.is_ajax():
 		profile = UserProfile.objects.get(user=request.user)
-		profile.OAUTH_TOKEN = ""
-		profile.OAUTH_TOKEN_SECRET = ""
+		profile.TWITTER_OAUTH_TOKEN = ""
+		profile.TWITTER_OAUTH_TOKEN_SECRET = ""
 		profile.twitter_handle = ""
 		profile.save()
 		return HttpResponse(json.dumps("success"), content_type='application/json')
@@ -190,8 +195,13 @@ def fb_profile(request):
 			fb.name = request.POST.get('name', "")
 			fb.link = request.POST.get('link', "")
 			fb.picture = request.POST.get('picture', "")
-			fb.save()
-			return HttpResponse(fb.name)
+			try:
+				fb.full_clean()
+			except ValidationError:
+				return HttpResponseForbidden()
+			else:
+				fb.save()
+				return HttpResponse(fb.name)
 		else:
 			return HttpResponseForbidden
 	else:
