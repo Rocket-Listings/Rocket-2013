@@ -97,9 +97,9 @@ sorttable = {
             sorttable.reverse(this.sorttable_tbody);
             this.className = this.className.replace('sorttable_sorted',
                                                     'sorttable_sorted_reverse');
-            $(this).children("i").removeClass("icon-chevron-down");
-          
-            $(this).children("i").addClass("icon-chevron-up");
+            $(this).children("i").removeClass("icon-blank");
+            $(this).children("i").removeClass("glyphicon-chevron-down");
+            $(this).children("i").addClass("glyphicon-chevron-up");
             return;
           }
           if (this.className.search(/\bsorttable_sorted_reverse\b/) != -1) {
@@ -108,9 +108,9 @@ sorttable = {
             sorttable.reverse(this.sorttable_tbody);
             this.className = this.className.replace('sorttable_sorted_reverse',
                                                     'sorttable_sorted');
-            $(this).children("i").removeClass("icon-chevron-up");
-            
-            $(this).children("i").addClass("icon-chevron-down");
+            $(this).children("i").removeClass("icon-blank");
+            $(this).children("i").removeClass("glyphicon-chevron-up");
+            $(this).children("i").addClass("glyphicon-chevron-down");
             return;
           }
 
@@ -123,16 +123,20 @@ sorttable = {
             }
           });
           
-          $('th i').removeClass("icon-chevron-down");
-          $('th i').removeClass("icon-chevron-up");
           $('th i').addClass("icon-blank");
+          $('th i').removeClass("glyphicon-chevron-down");
+          $('th i').removeClass("glyphicon-chevron-up");
+          $('th i').removeClass("glyphicon");
 
 
           this.className += ' sorttable_sorted';
           sortfwdind = document.createElement('span');
           sortfwdind.id = "sorttable_sortfwdind";
           sortfwdind.innerHTML = stIsIE ? '&nbsp<font face="webdings">6</font>' : '&nbsp;&#x25BE;';
-          $(this).children("i").addClass("icon-chevron-down");
+
+          $(this).children("i").removeClass("icon-blank");
+          $(this).children("i").addClass("glyphicon-chevron-down");
+          $(this).children("i").addClass("glyphicon");
           $(this).children("i").removeClass("icon-blank");
 
           // build an array to sort. This is a Schwartzian transform thing,

@@ -21,9 +21,9 @@
 	<div class="search_box">
 		<h3>Search Listings</h3>
 		{% csrf_token %}
-		<div class="input-append">
-			<input type="text" class="search_text col-lg-2 search-query"/>
-			<button id="search_button" class="btn btn-primary">Search</button>
+		<div class="input-group">
+			<input type="text" class="search_text form-control"/>
+			<span class="input-group-btn"><button id="search_button" class="btn btn-default">Search</button></span>
 		</div>
 	</div>
 
@@ -33,6 +33,7 @@
 				<th><a href="#">Title</a><i class="icon-blank"></i></th>
 				<th class="sorttable_numeric"><a href="#">Price</a><i class="icon-blank"></i></th>
 				<th><a href="#">Category</a><i class="icon-blank"></i></th>
+				<th><a href="#">Creator</a><i class="icon-blank"></i></th>
 				<th><a href="#">Date Listed</a><i class="icon-blank"></i></th>
 			</tr>
 		</thead>

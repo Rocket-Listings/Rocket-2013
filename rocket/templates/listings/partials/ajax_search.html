@@ -10,11 +10,12 @@
 			<td>${{ listing.price }}</td>
 			{# <td>{{ listing.location }}</td> #}
 			<td>{{ listing.category }}</td>
+			<td>{{listing.user}}</td>
 			<td><p style=" float:right" class="hide">{{ listing.pub_date|date:"m/d/y P" }}</p>{{ listing.pub_date|naturaltime }}</td>
 		</tr>
 	{% endfor %}
 {% else %}
 	<tr>
-		<td colspan="4">No results</td>
+		<td colspan="5">No results</td>
 	</tr>
 {% endif %}

@@ -159,6 +159,7 @@ def search(request):
 
 @require_POST
 def search_ajax(request):
+	
 	search_text = request.POST.get('search_text', '').strip()
 
 	if search_text:
@@ -167,7 +168,7 @@ def search_ajax(request):
 		listings = SearchQuerySet().all()
 
 	for listing in listings:
-		listing.url_id = reverse(listing) # 'listings.views.detail', args=[str(listing.url_id)])
+		listing.url_id = reverse('listings.views.detail', args=[str(listing.url_id)])
 
 	return TemplateResponse(request, 'listings/partials/ajax_search.html', {'listings' : listings})
 
