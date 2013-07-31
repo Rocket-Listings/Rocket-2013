@@ -105,7 +105,7 @@ def update(request, listing_id=None): # not directly addressed by a route, allow
 @view_count
 def detail(request, listing_id, pane='preview'):
 	listing = get_object_or_404(Listing, id=listing_id)
-	request.user.skip_count = bool(listing.user.get_username() == request.user.get_username())
+	request.user.skip_count = listing.user == request.user
 	
 	if request.method == 'GET':
 		if listing.user == request.user:

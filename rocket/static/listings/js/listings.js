@@ -84,9 +84,9 @@ $(function() {
     if (next_specs.length) {
       next_specs.find('input').removeAttr('disabled');
       next_specs.show();
-      $('#spec-fieldset').show();
+      $('#no-specs').hide();
     } else {
-      $('#spec-fieldset').hide();
+      $('#no-specs').show();
     }
   }
   // set initial/current category value

@@ -175,6 +175,11 @@ THIRD_PARTY_APPS = (
 
 	# pagination template tags
 	'pagination',
+
+	# static file management
+	'compressor',
+
+
 )
 
 LOCAL_APPS = (

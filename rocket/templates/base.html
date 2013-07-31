@@ -9,7 +9,8 @@
 		<title>{% block pagetitle %}rocket{% endblock %}</title>
 
 		<link rel="shortcut icon" type="image/x-icon" href="{% static 'rocket/img/favicon.ico' %}">
-
+		<link href='http://fonts.googleapis.com/css?family=Radley:400,400italic' rel='stylesheet' type='text/css'>
+		
 		{% block bootstrap %}
 		{# CDN #}
 		{# <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet"> #}
@@ -17,7 +18,7 @@
 		{# Offline/s3 #}
 		{% compress css %}
 		<link rel="stylesheet" type="text/css" href="{% static 'rocket/vendorcss/bootstrap.min.css' %}">
-		<link rel="stylesheet" type="text/css" href="{% static 'rocket/vendorcss/bootstrap-responsive.min.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'rocket/vendorcss/bootstrap-glyphicons.css' %}">
 		{% endcompress %}
 		{% endblock %}
 
