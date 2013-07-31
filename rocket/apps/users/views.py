@@ -80,7 +80,7 @@ def profile(request, username=None):
 			for key, value in comment_form.cleaned_data.iteritems():
 				responseData[key] = escape(value)
 			for key, value in rating_form.cleaned_data.iteritems():
-				responseData[key] = value
+				responseData[key] = escape(str(value))
 			responseData['new_comment'] = True
 			responseData['date_posted'] = datetime.date.today().strftime("%B %d, %Y")
 			return HttpResponse(json.dumps(responseData), content_type="application/json")
