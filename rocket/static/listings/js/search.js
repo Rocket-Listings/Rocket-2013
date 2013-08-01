@@ -1,48 +1,31 @@
-$(window).load(function(){
-  search();
-});
+$(function(){
 
-$(document).ready(function(){
-  var timeout;
+  var search_timeout;
+  var form = $('#search-form');
 
-  function eventHandlers() {
-    $("#search_button").click(handleClick);
-  }
-
-  function handleClick(e) {
-    timeout = null;
+  $("#search-form").submit(function(e) {
+    e.preventDefault();
+    clearTimeout(search_timeout);
     search();
-  }
-
-  $('.search_text').keyup(function(e){
-
-    if (timeout) {
-      clearTimeout(timeout);
-      timeout = null;
-    }
-
-    if(e.which == 13) {
-        timeout = null;
-        search();
-      }
-      else {
-      timeout = setTimeout(search, 1000);
-    }
   });
 
-  eventHandlers();
-});
+  $('#search_input').keyup(function(e) {
+    clearTimeout(search_timeout);
+    search_timeout = setTimeout(search, 300);
+  });
 
   function search() {
+    history.pushState({}, "Rocket Search", "?" + form.serialize());
     $.ajax({
-      type: "POST",
+      type: "GET",
       url:"ajax/",
-      data: {
-        "search_text" : $(".search_text").val(),
-        "csrfmiddlewaretoken" : $("input[name=csrfmiddlewaretoken]").val()
-      },
+      data: form.serializeArray(),
       success:function(data, textStatus, jqXHR) {
         $(".listing_table").html(data);
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus);
       }
     });
   }
+});

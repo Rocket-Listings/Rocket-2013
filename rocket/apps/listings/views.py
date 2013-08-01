@@ -151,26 +151,20 @@ def delete(request, listing_id):
 		listing.delete()
 		return redirect('listings.views.dashboard')
 
-from django.core.context_processors import csrf
+@require_GET
 def search(request):
-	c = {}
-	c.update(csrf(request))
-	return TemplateResponse(request,"listings/search.html",c)
+	search_text = request.GET.get('search', '')
+	listings = SearchQuerySet().filter(content=search_text)[:20]	
+	cxt = { 'listings': listings }
+	return TemplateResponse(request, "listings/search.html", cxt)
 
-@require_POST
 def search_ajax(request):
-	
-	search_text = request.POST.get('search_text', '').strip()
-
-	if search_text:
-		listings = SearchQuerySet().autocomplete(content_auto=search_text)
-	else:
-		listings = SearchQuerySet().all()
-
-	for listing in listings:
-		listing.url_id = reverse('listings.views.detail', args=[str(listing.url_id)])
-
-	return TemplateResponse(request, 'listings/partials/ajax_search.html', {'listings' : listings})
+	search_text = request.REQUEST.get('search', '').strip()
+	listings = SearchQuerySet().filter(content=search_text)[:20]
+	cxt = { 'listings': listings }
+	# for listing in listings:
+		# listing.url_id = reverse('listings.views.detail', args=[str(listing.url_id)])
+	return TemplateResponse(request, 'listings/partials/ajax_search.html', cxt)
 
 # Photo upload
 
