@@ -20,7 +20,7 @@ from django.http import Http404
 from haystack.query import SearchQuerySet
 from haystack.inputs import AutoQuery
 from django.core.urlresolvers import reverse
-from haystack import connections
+import haystack
 from users.decorators import first_visit, view_count
 from django.template.response import TemplateResponse
 
@@ -85,7 +85,9 @@ def update(request, listing_id=None): # not directly addressed by a route, allow
 	if listing_form.is_valid() and spec_form.is_valid() and photo_formset.is_valid():
 		listing = listing_form.save(commit=False)
 		listing.user = request.user
-		listing.save()
+		listing.save()	
+		# update search index
+		haystack.connections['default'].get_unified_index().get_index(Listing).update_object(listing)
 
 		for name, value in spec_form.cleaned_data.items():
 			if value:
@@ -99,7 +101,6 @@ def update(request, listing_id=None): # not directly addressed by a route, allow
 		for form in photo_formset.ordered_forms:
 			form.instance.order = form.cleaned_data['ORDER']
 			form.instance.save()
-		# photo_formset.save()
 
 		return redirect(listing)
 	else:
@@ -162,6 +163,8 @@ def embed(request, listing_id):
 def delete(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
 	if request.user == listing.user:
+		# remove listing from haystack index
+		haystack.connections['default'].get_unified_index().get_index(Listing).remove_object(listing)
 		listing.delete()
 		return redirect('listings.views.dashboard')
 
