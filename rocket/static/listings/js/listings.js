@@ -7,11 +7,30 @@ if (!String.prototype.format) {
   };
 }
 
+// serialize for backbone
+$.fn.serializeObject = function() {
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};
+
 $(function() {
 
   // Backbone listing preview stuff
   var Listing = Backbone.Model.extend({
-    initialize: function() {}
+    initialize: function() {
+
+    }
   });
 
   var ListingView = Backbone.View.extend({
@@ -19,13 +38,15 @@ $(function() {
     el: '#listing-detail',
     template: Mustache.compile($('#preview-template').html()),
     events: {
-      "change input":  "changed",
-      "change textarea":  "changed",
+      // "change input": "changed",
+      "keydown input": "changed",
+      "keyup input": "changed",      
+      "change textarea": "changed",
       "change select": "changed"
     },
 
     initialize: function() {
-      this.model = new Listing(this.$('.listing-form:first').serializeArray());
+      this.model = new Listing(this.$('.listing-form:first').serializeObject());
       this.render();
       _.bindAll(this, 'changed', 'render');
     },
@@ -40,6 +61,7 @@ $(function() {
 
     render: function() {
       this.$('#preview-view').html(this.template(this.model.toJSON()));
+      this.$('.listing-title').text(this.model.get('title'));
     }
   });
   var ListingView = new ListingView;

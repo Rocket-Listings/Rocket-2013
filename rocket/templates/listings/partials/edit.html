@@ -1,6 +1,6 @@
 {% load specval %}
 
-<h2>{{ form.title.value|default:"Create a Listing" }}</h2>
+<h3 class="listing-title">{{ form.title.value|default:"Create a Listing" }}</h3>
 {# {{ formset.as_p }} #}
 
 {% for hidden in formset.hidden_fields %}
@@ -15,7 +15,7 @@
 
 <form method="POST" class="listing-form">
   {% csrf_token %}
-  {# Hidden fields  #}
+  {# Hidden fields #}
   {% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
   <input type="hidden" id="id_location" maxlength="200" name="location" value="Bethesda, MD">
   {# Category Select #}
