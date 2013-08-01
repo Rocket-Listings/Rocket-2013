@@ -21,6 +21,7 @@ from django.db.models import Avg
 from users.decorators import first_visit, view_count
 from utils import get_view_count
 from cgi import escape
+import hashlib, urllib
 
 
 def overview(request, username=None):
@@ -97,7 +98,10 @@ def profile(request, username=None):
 		# 	errors = comment_form.errors
 		# 	return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
-		return TemplateResponse(request, 'users/user_profile.html', {'url_user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile, 'rating':rating}) #'activelistings':activelistings, 'draftlistings':draftlistings,
+		gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(user.email.lower()).hexdigest() + "?"
+
+		print gravatar_url
+		return TemplateResponse(request, 'users/user_profile.html', {'url_user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile, 'rating':rating, 'gravatar_url':gravatar_url}) #'activelistings':activelistings, 'draftlistings':draftlistings,
 
 def delete_account(request):
 	user = request.user

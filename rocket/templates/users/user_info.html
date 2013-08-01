@@ -1,7 +1,8 @@
 {% extends 'users/users_base.html' %}
 {% block title %}Account Info{% endblock %}
 {% load static from staticfiles %}
-
+{% load compress %}
+	
 {% block content %}
 	{% if user.get_profile.name %}
 	<h3><a class="name-header" href="{% url 'users.views.profile' user.username %}">{{ user.get_profile.name }}</a></h3>
@@ -41,7 +42,7 @@
 					<tr class="editable"> 
 						<td>Email</td>
 						<td class="partial-input">
-							<input class="form-control" tabindex="2" name="email" type="text" autocomplete="off" value="{{ user.email }}" placeholder="johndoe@gmail.com">
+							<input class="user-email form-control" tabindex="2" name="email" type="text" autocomplete="off" value="{{ user.email }}" placeholder="johndoe@gmail.com">
 						</td>
 						<td><a class="edit active" href="#">Edit</a></td>
 					</tr>
@@ -67,6 +68,21 @@
 						{% endif %}
 						<td><a class="change-propic active" href="#">Change Picture</a></td>
 					</tr>
+
+
+					<tr class="uneditable">
+						<td>Get it from Gravatar</td>
+						<td><a href="#" class="btn btn-default default-email">Default Email</a></td>
+						<td>
+							<div class="input-group">
+								<input class="form-control alternate-email-gravatar" type="text" placeholder="alternate address">
+								<span class="input-group-btn"><button class="btn btn-default alternate-email">Get Gravatar</button></span>
+							</div>
+						</td>
+
+					</tr>
+
+
 					<tr class="uneditable">
 						<td>Password</td>
 						<td>&#149;&#149;&#149;&#149;&#149;&#149;&#149;&#149;</td>
