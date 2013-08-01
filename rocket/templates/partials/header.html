@@ -16,39 +16,42 @@
       </a>
       {% if request.user.is_authenticated %}
       <ul class="nav navbar-nav pull-right">
-        <li class="{% active 'create' %} blue-menu-item">
-          <a href="/listings/create/">
+        <li>
+          <a class="{% active 'create' %} blue-menu-item visible-sm" href="/listings/create/">
+            <span class="nav-item-text">Create a listing</span>
             <span class="glyphicon glyphicon-edit"></span>
           </a>
-          
+          <a class="{% active 'create' %} blue-menu-item hidden-sm" href="/listings/create/">
+            <span class="glyphicon glyphicon-edit"></span>
+          </a>
         </li>
-        <li class="{% active 'dashboard' %}">
-
-          <a href="{% url 'listings.views.dashboard' %}">
-            Dashboard
+        <li>
+          <a class="{% active 'dashboard' %}" href="{% url 'listings.views.dashboard' %}">
+            <span class="nav-item-text">Dashboard</span>
             <span class="glyphicon glyphicon-list"></span>
           </a>
-          
         </li>
-        <li class="{% active 'user_profile' %}">
-          <a href="{% url 'user_profile' user.username %}">
-            Profile
+        <li>
+          <a class="{% active 'user_profile' %}" href="{% url 'user_profile' user.username %}">
+            <span class="nav-item-text">Profile</span>
             <span class="glyphicon glyphicon-user "></span>
           </a>
           
         </li>
         <li>
           <a href="{% url 'auth_logout' %}">
-            Logout
+            <span class="nav-item-text">Logout</span>
             <span class="glyphicon glyphicon-off "></span>
           </a>
-          
         </li>
       </ul>    
       {% else %}
       <ul class="nav navbar-nav pull-right">
         <li>
-          <a href="{% url 'auth_login' %}">Login<span class="glyphicon glyphicon-off"></span></a>
+          <a class="{% active 'auth_login' %}" href="{% url 'auth_login' %}">
+            <span class="nav-item-text">Login</span>
+            <span class="glyphicon glyphicon-off"></span>
+          </a>
         </li>
       </ul>
       {% endif %} 
