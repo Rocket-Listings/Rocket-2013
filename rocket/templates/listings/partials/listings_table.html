@@ -6,30 +6,29 @@
 <table class="table listings-table table-hover sortable order-table">
 	<thead>
 		<tr>
-			<th><a href="#">Title</a><i class="icon-blank"></i></th>
-			<th style="text-align:left"><a href="#">Price</a><i class="icon-blank"></i></th>
+			<th class="d-title"><a href="#">Title</a></th>
+			<th class="d-price"><a href="#">Price</a></th>
 			{# <th class="sortable">Location</th> #}
-			<th><a href="#">Category</a><i class="icon-blank"></i></th>
-			<th><a href="#">Status</a><i class="icon-blank"></i></th>
-			<th><a href="#">Date Listed</a><i class="icon-blank"></i></th>
-			<th class="sorttable_nosort manage">Manage</th>
+			<th class="d-category"><a href="#">Category</a></th>
+			<th class="d-date"><a href="#">Date Listed</a></th>
+			<th class="text-center d-manage sorttable_nosort manage">Manage</th>
 		</tr>
 	</thead>
 	<tbody class="listing-table-body">
 		{% for listing in listings %}
 		<tr data-listing-id="{{ listing.id }}" >
-			<td>
+			<td class="d-title">
 				<a href="{{ listing.get_absolute_url }}">
 					{{ listing.title }}
 				</a>
 			</td>
-			<td>${{ listing.price }}</td>
-			<td>{{ listing.category.name }}</td>
-			<td class="listing-status">{{ listing.status }}</td>
-			<td><p class="hide">{{ listing.pub_date|date:"m/d/y P" }}</p>{{ listing.pub_date|naturaltime }}</td>
-			<td class="hide">{{ listing.description}}</td>
-			<td>
-				<div class="btn-toolbar text-right">
+			<td class="d-price">${{ listing.price }}</td>
+			<td class="d-category">{{ listing.category.name }}</td>
+			{# <td class="listing-status">{{ listing.status }}</td> #}
+			<td class="d-date"><p class="hide">{{ listing.pub_date|date:"m/d/y P" }}</p>{{ listing.pub_date|naturaltime }}</td>
+			{# <td class="hide">{{ listing.description}}</td> #}
+			<td class="d-manage">
+				<div class="text-center">
 					<!--<a href="{{ listing.get_absolute_url }}">Link</a>-->
 					<div class="">
 						<!--autopost button -->

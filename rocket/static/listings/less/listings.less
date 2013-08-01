@@ -3,6 +3,12 @@
 /*    Doing this weird convention '.l-<CLASS>' because we don't want other outside class definitions to affect these.
     For instance, if our title was simply '.title', then maybe a '.title' rule from base.less might take into effect. */
 
+// DASHBOARD VARIABLES (WIDTH)
+@title: 45%;
+@price: 5%;
+@category: 20%;
+@date: 15%;
+@manage: 15%;
 
 // DASHBOARD HEADER
 .dashboard-header {
@@ -26,10 +32,23 @@
     }
     .listings-col {
         height: 100%;
+        position: relative;
         border-right: 1px solid #DDDDDD;
+        overflow: hidden;
         .listings-table {
-            td:first-child, th:first-child {
-                padding-left: 40px !important;
+            height: 100%;
+            .d-title { width: @title; }
+            .d-price { width: @price; }
+            .d-category { width: @category; }
+            .d-date { width: @date; }
+            .d-manage { width: @manage; }
+            tbody {
+                display: block;
+                overflow: scroll;
+                height: 100%;
+            }
+            thead tr {
+                display: block;
             }
             tr {
                 &.highlight {
@@ -39,6 +58,7 @@
 
                 }
                 &:hover {
+                    cursor: pointer;
                     background: #F5F5F5;
                     &.highlight {
                         background: inherit;
@@ -47,10 +67,17 @@
                         background: none;
                     }
                 }
+                th:first-child { padding-left: 40px !important; }
+                td {
+
+                    //float: none;
+                    //vertical-align: middle;
+                    &:first-child {
+                        padding-left: 40px !important;
+                    }
+                }
             }
-            a {
-                text-decoration: underline;
-            }
+            a { text-decoration: underline; }
         }
     }
     .buyers-col {
@@ -69,17 +96,6 @@
         line-height: 20px;
         text-rendering: optimizelegibility;
         text-align: center;
-    }
-}
-
-.listings-table {
-    tbody tr:hover {
-        cursor:pointer;
-    }
-
-    td {
-        float: none;
-        vertical-align: middle;
     }
 }
 
@@ -398,6 +414,6 @@
         background-image: url('../img/white-icon.png');
 }
 
-.padding-40-left {
-        padding-left:40px;
-}
+// .padding-40-left {
+//         padding-left:40px;
+// }
