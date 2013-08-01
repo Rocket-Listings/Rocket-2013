@@ -33,10 +33,7 @@ class UserProfile(models.Model):
 		return self.user.username
 
 	def get_view_count(self):
-		
 		return ViewCount.objects.get_or_create(url=UserProfile.get_absolute_url(self))[0].count
-		#sreturn reverse('users.views.profile')
-		#return ViewCount.objects.get_or_create(url=self.get_absolute_url)[0].count
 
 # Handles user profile creation if not already created
 def create_user_profile(sender, instance, created, **kwargs):  
