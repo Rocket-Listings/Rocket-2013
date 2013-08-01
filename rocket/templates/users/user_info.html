@@ -10,7 +10,7 @@
 	{% endif %}
 
 	<div class="content-wrapper">
-		<div class="errors alert alert-danger hide"></div>
+		<div class="error-wrapper"></div>
 		{% if first_visit %}
 			<div class="alert alert-info">
   				<button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -22,7 +22,7 @@
 			{% csrf_token %}
 			<div class="save-all-container">
 				<span class="h4 user-info-label">User Info</span>
-				<input class="btn btn-info save-all disabled" type="submit" value="Save all">
+				<input class="btn btn-primary save-all disabled" type="submit" value="Save all">
 			</div>
 			<table class="table table-hover">
 				<tbody>
@@ -161,7 +161,7 @@
 				</tbody>
 			</table>
 			<a class="delete-account-modaltrigger text-danger" role="button" data-toggle="modal" href="#delete-account-modal">Delete account</a>
-			<input class="btn btn-info save-all disabled" type="submit" value="Save all">
+			<input class="btn btn-primary save-all disabled" type="submit" value="Save all">
 		</form>
 	</div>
 

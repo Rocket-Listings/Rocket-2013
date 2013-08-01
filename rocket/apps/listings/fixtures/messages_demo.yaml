@@ -2,7 +2,7 @@
 
 # password is 'test'
 - model: auth.user
-  pk: null
+  pk: 1
   fields:
     email: chucknorris@gmail.com
     first_name: 'Chuck'
@@ -13,6 +13,14 @@
     password: pbkdf2_sha256$10000$7OzttrdLZ3TM$BRjWWSgMm8MTp+JgWfMpbQfZ99rXTVyIj+014hS+T8U=
     user_permissions: []
     username: chucknorris
+
+- model: users.UserProfile
+  pk: 1 # DO NOT REMOVE
+  fields:
+    user: [chucknorris]
+    name: Chuck Norris
+    location: Burlington, VT
+    default_listing_type: 'O'
 
 - model: listings.Listing
   pk: null

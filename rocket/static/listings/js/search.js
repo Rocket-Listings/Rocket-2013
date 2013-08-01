@@ -1,22 +1,30 @@
 $(function(){
-  var timeout;
-  $(".search-form").submit(e) {
-    e.preventDefault();
-    search();
-  }
 
-  $('.search_text').keyup(function(e){
-    clearTimeout(timeout);
-    timeout = setTimeout(search, 1000);
+  var search_timeout;
+  var form = $('#search-form');
+
+  $("#search-form").submit(function(e) {
+    e.preventDefault();
+    clearTimeout(search_timeout);
+    search();
+  });
+
+  $('#search_input').keyup(function(e) {
+    clearTimeout(search_timeout);
+    search_timeout = setTimeout(search, 300);
   });
 
   function search() {
+    history.pushState({}, "Rocket Search", "?" + form.serialize());
     $.ajax({
-      type: "POST",
-      url:"/search/ajax/",
-      data: $(this).serialize(),
+      type: "GET",
+      url:"ajax/",
+      data: form.serializeArray(),
       success:function(data, textStatus, jqXHR) {
         $(".listing_table").html(data);
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus);
       }
     });
   }

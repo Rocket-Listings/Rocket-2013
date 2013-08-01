@@ -25,17 +25,16 @@
       <div class="tab-pane{% if pane == 'edit' %} active{% endif %}" id="edit">
         {% include 'listings/partials/edit.html' %}
       </div>
-      <div class="tab-pane{% if pane == 'preview' %}active{% endif %}" id="preview"> 
+      <div class="tab-pane{% if pane == 'preview' %} active{% endif %}" id="preview"> 
         {% include 'listings/partials/preview.html' %}
       </div>
     </div>
     <div class="col-lg-3 detail-sidebar">
       <div data-spy="affix" data-offset-top="82">
-        <div class="btn-group" data-toggle="buttons-radio">
+        <div class="btn-group">
           <a class="btn btn-primary{% if pane == 'edit' %} active{% endif %}" data-toggle="tab" href="#edit">Edit</a>
-          <a class="btn btn-primary{% if pane == 'preview' %} preview{% endif %}" data-toggle="tab" href="#preview">Preview</a>
+          <a class="btn btn-primary{% if pane == 'preview' %} active{% endif %}" data-toggle="tab" href="#preview">Preview</a>
         </div>
-        {# <button type="button" class="btn btn-primary submit">Submit Changes</button> #}
       </div>
     </div>
   </div>

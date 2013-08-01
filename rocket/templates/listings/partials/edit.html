@@ -5,46 +5,26 @@
 {% for hidden in formset.hidden_fields %}
   {{ hidden }}
 {% endfor %}
-{% comment %}
-{% for form in formset %}
-{% for field in form %}
-  {{ field }}
-{% endfor %}
-{% endfor %}
-{% endcomment %}
-<form method="POST" class="listing-form form-horizontal">
+
+{% if photo_formset.total_form_count > 0 %}
+<style> .upload-view { display: none; }</style>
+{% else %}
+<style> .photo-view { display: none; }</style>
+{% endif %}
+
+<form method="POST" class="listing-form">
   {% csrf_token %}
   {# Hidden fields  #}
   {% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
   <input type="hidden" id="id_location" maxlength="200" name="location" value="Bethesda, MD">
-
-  {% comment %}
-  {# Errors at the top #}
-  {% for field, errors in form.errors.items %}
-    <div class="alert alert-error alert-block">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <h4>Oops, a few errors</h4>
-      <ul class="errors">
-        {% for error in errors %}
-          <li><strong>{{ field }}</strong>{{ error }}</li>
-        {% endfor %}
-      </ul>
-    </div>
-  {% endfor %}
-  {% comment %}
-
-  {% comment %}
-  {% for group, cat_list in cats.items %}
-  <h2>{{ group }}</h2>
-  <ul>
-  {% for cat in cat_list %}
-  <li>{{ cat }}</li>
-  {% endfor %}
-  </ul>
-  {% endfor %}
-  {% endcomment %}
   {# Category Select #}
-  <fieldset><legend>Category{% if form.category.errors %}<p class="text-error">{{ form.category.errors }}</p>{% endif %}</legend>
+  <fieldset>
+    <legend>Category</legend>
+    {% for error in form.category.errors %}
+    <div class="alert alert-danger">
+      <p>{{ error }}</p>
+    </div>
+    {% endfor %}
     <ul class="nav nav-tabs">
       <li class="active">
         <a href="#forsale" data-toggle="tab">For Sale</a>
@@ -55,9 +35,9 @@
     </ul>
     <div class="tab-content">
       {% for group, cat_list in cats.items %}
-      <div class="tab-pane{% if group == "forsale" %} active{% endif %}" id="{{ group }}">
+      <div class="tab-pane cat-pane {% if group == "forsale" %} active{% endif %}" id="{{ group }}">
         <div class="row">
-          <div class="col-lg-2">
+          <div class="col-lg-2 col-4">
           {% for cat in cat_list %}
               <a class="cat {{ group }}" data-id="{{ cat.id }}">{{ cat.name }}</a>
             {% if group == "forsale" and forloop.counter|divisibleby:9 or group == "housing" and forloop.counter|divisibleby:3 %}
@@ -73,79 +53,107 @@
 
   {# First form row #}
   <fieldset><legend>Listing Info</legend>
-  <div class="row">
-      {# Title #}
-      <div class="col-lg-6">
-        <div class="row">
-          <div class="col-lg-8">
-            <label>{{ form.title.label }}</label>
-            <input class="form-control title input-block-level" maxlength="200" name="title" type="text" placeholder="e.g. 2000 Jeep Wrangler 4.0L" value="{{ form.title.value|default:"" }}">
-          </div>
-          <div class="col-lg-4">
-            <label>{{ form.price.label }}</label>
-            <div class="input-group gridfix">
-              <span class="input-group-addon">$</span>
-              <input class="form-control price input-block-level" name="price" type="text" value="{{ form.price.value|default:"" }}">
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-12">
-            <label>{{ form.description.label }}</label>
-            <textarea class="form-control col-lg-6 description" placeholder="Describe your item" cols="40" name="description" rows="10">{{ form.description.value|default:"" }}</textarea>
-          </div>
-        </div>
+    {# Title #}
+    <div class="row">
+      <div class="col-sm-9 form-group{% if form.title.errors %} has-error {% endif %}">
+        
+        <label class="control-label">{{ form.title.label }}</label>
+        <input class="title form-control" maxlength="200" name="title" type="text" placeholder="2000 Jeep Wrangler 4.0L" value="{{ form.title.value|default:"" }}">
+
+        {% for error in form.title.errors %}
+          <span class="help-block">{{ error }}</span>
+        {% endfor %}
       </div>
-      <div class="col-lg-3">
-        <label>Location</label>
-        <img src="http://placehold.it/370x390"/>
+      <div class="col-sm-3 form-group {% if form.price.errors %} has-error {% endif %}">
+        <label class="control-label">{{ form.price.label }}</label>
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <input class="price form-control" name="price" type="text" placeholder="666" value="{{ form.price.value|default:"" }}">
+        </div>
+        {% for error in form.price.errors %}<span class="help-block">{{ error }}</span>{% endfor %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-lg-12{% if form.description.errors %} has-error {% endif %}">
+        <label class="control-label">{{ form.description.label }}</label>
+        <textarea class="description form-control" placeholder="The best car ever." name="description" rows="5">{{ form.description.value|default:"" }}</textarea>
+        {% for error in form.price.errors %}<span class="help-block">{{ error }}</span>{% endfor %}
       </div>
     </div>
   </fieldset>
-  <fieldset id="spec-fieldset" class="hide"><legend>Specifications</legend>
-    <div class="specs-form">
+  <fieldset id="spec-fieldset" class=""><legend>Location &amp; Specs</legend>
+    <div class="row">
+      <div class="col-lg-6">
+        <label>{{ form.location.label }}</label>
+        <img src="http://placehold.it/420x200"/>
+      </div>
+      <div class="specs-form col-lg-6">
+        <p id="no-specs">No specification fields available for this category.</p>
         {% for spec_key in spec_keys %}
-        <div class="control-group hide" data-cat="{{ spec_key.category_id }}">
+        <div class="form-group" data-cat="{{ spec_key.category_id }}">
             <label class="control-label" for="spec-{{ spec_key.id }}">{{ spec_key.name }}</label>
-            <div class="controls">
-              <input class="form-control" type="text" disabled="disabled" name="spec-{{ spec_key.id }}" value="{{ specs|specval:spec_key.id }}"/>
-            </div>
+            <input class="form-control" type="text" disabled="disabled" name="spec-{{ spec_key.id }}" value="{{ specs|specval:spec_key.id }}"/>
         </div>
         {% endfor %}
+      </div>
     </div>
   </fieldset>
   <fieldset>
-    <legend>Photo Upload<small class="photo-view">Drag to reorder</small>
-      <a class="btn pull-right hide photo-view toggle-view">Upload more</a>
-      <a class="btn pull-right hide upload-view toggle-view">Arrange photos</a>      
+    <legend>Photo Upload<small class="photo-view text-muted">Drag to reorder</small>
+      <a class="btn btn-small btn-default pull-right photo-view toggle-view">Upload more</a>
+      <a class="btn btn-small btn-default pull-right upload-view toggle-view" style="display: none;">Arrange photos</a>      
     </legend>
-    <ul id="photos" class="thumbnails sortable photo-view"></ul>
+    {% for dict in photo_formset.errors %}
+    {% for error in dict.values %}
+      <div class="alert alert-warning alert-block">
+      {{ error }}
+      </div>  
+    {% endfor %}
+    {% endfor %}
+    <div id="photos" class="row sortable photo-view">
+      {% for form in photo_formset %}
+        <div class="col-lg-2" data-id="{{ forloop.counter0 }}" draggable="true">
+          <a class="thumbnail">
+            <img src="{{ S3_URL }}{{ form.key.value }}">
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+    <div id="photo_formset" class="hide">
+      {{ photo_formset.management_form }}
+      {% for form in photo_formset %}
+      {% for field in form %}      
+        {{ field }} 
+      {% endfor %}
+      <br/>
+      {% endfor %}      
+    </div>
     <iframe class="upload-view" id="fp-container"></iframe>
-    
-    <input id="id_listingphoto_set-TOTAL_FORMS" name="listingphoto_set-TOTAL_FORMS" type="hidden" value="0" />
-    <input id="id_listingphoto_set-INITIAL_FORMS" name="listingphoto_set-INITIAL_FORMS" type="hidden" value="0" />
-    <input id="id_listingphoto_set-MAX_NUM_FORMS" name="listingphoto_set-MAX_NUM_FORMS" type="hidden" value="1000" />    
 
+    {# Mustache Template #}
     {% verbatim %}
     <script id="thumbnail-template" type="text/template">
-      {{#imgs}}
-      <li class="col-lg-2" draggable="true">
-        <div class="thumbnail" draggable="true">
-          <img src="{{ src }}" draggable="true">
-        </div>
-
-        <input class="listingphoto_set-key" id="id_listingphoto_set-{{ index }}-key" name="listingphoto_set-{{ index }}-key" type="hidden" value="{{ key }}"/>
-        <input class="listingphoto_set-url" id="id_listingphoto_set-{{ index }}-url" name="listingphoto_set-{{ index }}-url" type="hidden" value="{{ url }}"/>        
-        <input class="listingphoto_set-order" id="id_listingphoto_set-{{ index }}-order" name="listingphoto_set-{{ index }}-order" type="hidden" value="{{ index }}"/>
-        <input class="listingphoto_set-delete hide" id="id_listingphoto_set-{{ index }}-DELETE" name="listingphoto_set-{{ index }}-DELETE" type="checkbox" />
-        <input class="listingphoto_set-listing" id="id_listingphoto_set-{{ index }}-listing" name="listingphoto_set-{{ index }}-listing" type="hidden"{% endverbatim %}{% if form.instance %} value="{{ form.instance.id }}" {% endif %}{% verbatim %}/>
-        <input class="listingphoto_set-id" id="id_listingphoto_set-{{ index }}-id" name="listingphoto_set-{{ index }}-id" type="hidden" />
-      </li>
-      {{/imgs}}
+      {{#photos}}
+      <div class="col-lg-2" data-id="{{ index }}" draggable="true">
+        <a class="thumbnail">
+          <img src="{{ src }}">
+        </a>
+      </div>
+      {{/photos}}
     </script>
     {% endverbatim %}
+
+    <script id="photo-form-template" type="text/template">
+      {% verbatim %}
+      {{#photos}}
+      {% endverbatim %}
+      {% for field in photo_formset.empty_form %}{{ field }}{% endfor %}
+      <br/>
+      {% verbatim %}
+      {{/photos}}
+      {% endverbatim %}
+    </script>
+
   </fieldset>
-  <div class="form-actions">
-    <button type="submit" class="btn btn-primary">Post to Craigslist</button>
-  </div>
+  <button type="submit" class="btn btn-primary">Post to Craigslist</button>
 </form>

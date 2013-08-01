@@ -20,7 +20,7 @@ from django.http import Http404
 from haystack.query import SearchQuerySet
 from haystack.inputs import AutoQuery
 from django.core.urlresolvers import reverse
-from haystack import connections
+import haystack
 from users.decorators import first_visit, view_count
 from django.template.response import TemplateResponse
 
@@ -29,8 +29,7 @@ from django.template.response import TemplateResponse
 @first_visit
 @login_required
 def dashboard(request):
-	user = request.user
-	listings = Listing.objects.filter(user=user).order_by('-pub_date').all() # later on we can change how many are returned
+	listings = Listing.objects.filter(user=request.user).order_by('-pub_date').all() # later on we can change how many are returned
 	buyers = reduce(combine, map(lambda l: list(l.buyer_set.all()), listings), [])
 	messages = reduce(combine, map(lambda b: list(b.message_set.all()), buyers), [])
 	return TemplateResponse(request, 'listings/dashboard.html',  {'listings': listings, 'buyers': buyers, 'messages':messages})
@@ -72,66 +71,81 @@ def create(request, pane='edit'):
 def update(request, listing_id=None): # not directly addressed by a route, allows DRY listing saving
 	if listing_id:
 		listing = get_object_or_404(Listing, id=listing_id)
-		specs = listing.listingspecvalue_set.select_related()
-
 		if request.user != listing.user:
 			raise Http404
-		# spec_form
-		listing_form = ListingForm(request.POST, instance=listing)
-		spec_form = SpecForm(request.POST, initial=specs) # SpecForm is not a real form
-		photo_formset = ListingPhotoFormSet(request.POST, prefix="listingphoto_set")
 	else:
-		listing_form = ListingForm(request.POST)
-		spec_form = SpecForm(request.POST)
-		photo_formset = ListingPhotoFormSet(request.POST, prefix="listingphoto_set")
+		listing = Listing()
+
+	listing_form = ListingForm(request.POST, instance=listing)
+	specs = listing.listingspecvalue_set.select_related()
+	spec_form = SpecForm(request.POST, initial=specs)
+	photo_formset = ListingPhotoFormSet(request.POST, instance=listing, prefix="listingphoto_set")
 
 	if listing_form.is_valid() and spec_form.is_valid() and photo_formset.is_valid():
 		listing = listing_form.save(commit=False)
 		listing.user = request.user
-		listing.save()
+		listing.save()	
+		# update search index
+		haystack.connections['default'].get_unified_index().get_index(Listing).update_object(listing)
+
 		for name, value in spec_form.cleaned_data.items():
-			spec_id = int(name.replace('spec-',''))
-			ListingSpecValue.objects.create(value=value, key_id=spec_id, listing_id=listing.id)
-		photo_formset.save()
+			if value:
+				spec_id = int(name.replace('spec-',''))
+				ListingSpecValue.objects.create(value=value, key_id=spec_id, listing_id=listing.id)
+
+		# for form in photo_formset.marked_for_delete:
+			# form.instance.delete()
+
+		photo_formset.save(commit=False)
+		for form in photo_formset.ordered_forms:
+			form.instance.order = form.cleaned_data['ORDER']
+			form.instance.save()
 
 		return redirect(listing)
 	else:
+		print listing_form.errors
+		print photo_formset.errors
 		# preserving validation errors
 		cxt = {
 			'form': listing_form,
 			'spec_form': spec_form,
 			'pane': 'edit',
+			'photo_formset': photo_formset
 		}
 		cxt.update(utils.get_listing_vars())
 		return TemplateResponse(request, 'listings/detail.html', cxt)
 
 @view_count
-def detail(request, listing_id, pane=None):
+def detail(request, listing_id, pane='preview'):
 	listing = get_object_or_404(Listing, id=listing_id)
-	
-	if request.user.is_authenticated():
-		request.user.skip_count = listing.user.get_username() == request.user.get_username()
-	
+	request.user.is_owner = bool(listing.user == request.user)
+
+	# prep specs
+	specs_set = listing.listingspecvalue_set.select_related().all()
+	specs = {}
+	for spec in specs_set:
+		specs[spec.key_id] = spec
+
 	if request.method == 'GET':
-		specs_set = listing.listingspecvalue_set.select_related().all()
-		specs = {}
-		for spec in specs_set:
-			specs[spec.key_id] = spec
-		cxt = {
-			'listing': listing,
-			'photos': listing.listingphoto_set.all(),
-			'specs': specs,
-		}
 		if listing.user == request.user:
 			form = ListingForm(instance=listing)
-			spec_form = SpecForm(initial=specs)
-			cxt.update(utils.get_listing_vars())
-			cxt.update({
+			photo_formset = ListingPhotoFormSet(instance=listing, prefix="listingphoto_set")
+
+			cxt = {
 				'form': form,
+				'specs': specs,
+				'photo_formset': photo_formset,
 				'pane': pane
-			})
+			}
+			cxt.update(utils.get_listing_vars())
 			return TemplateResponse(request, 'listings/detail.html', cxt)
 		else:
+			photos = listing.listingphoto_set.all()
+			cxt = {
+				'listing': listing,
+				'photos': photos,
+				'specs': specs,
+			}
 			return TemplateResponse(request, 'listings/detail_public.html', cxt)
 	else: # POST
 		return update(request, listing_id)
@@ -148,28 +162,25 @@ def embed(request, listing_id):
 def delete(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
 	if request.user == listing.user:
+		# remove listing from haystack index
+		haystack.connections['default'].get_unified_index().get_index(Listing).remove_object(listing)
 		listing.delete()
 		return redirect('listings.views.dashboard')
 
-# from django.core.context_processors import csrf
+@require_GET
 def search(request):
-	#c = {}
-	#c.update(csrf(request))
-	return TemplateResponse("listings/search_test.html")
+	search_text = request.GET.get('search', '')
+	listings = SearchQuerySet().filter(content=search_text)[:20]	
+	cxt = { 'listings': listings }
+	return TemplateResponse(request, "listings/search.html", cxt)
 
-@require_POST
 def search_ajax(request):
-	search_text = request.POST.get('search_text', '').strip()
-
-	if search_text:
-		listings = SearchQuerySet().autocomplete(content_auto=search_text)
-	else:
-		listings = SearchQuerySet().all()
-
-	for listing in listings:
-		listing.url_id = reverse(listing) # 'listings.views.detail', args=[str(listing.url_id)])
-
-	return TemplateResponse(request, 'listings/partials/ajax_search.html', {'listings' : listings})
+	search_text = request.REQUEST.get('search', '').strip()
+	listings = SearchQuerySet().filter(content=search_text)[:20]
+	cxt = { 'listings': listings }
+	# for listing in listings:
+		# listing.url_id = reverse('listings.views.detail', args=[str(listing.url_id)])
+	return TemplateResponse(request, 'listings/partials/ajax_search.html', cxt)
 
 # Photo upload
 
