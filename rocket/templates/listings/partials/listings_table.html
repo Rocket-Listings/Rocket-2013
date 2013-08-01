@@ -23,6 +23,7 @@
 				</a>
 			</td>
 			<td class="d-price">${{ listing.price }}</td>
+
 			<td class="d-category">{{ listing.category.name }}</td>
 			{# <td class="listing-status">{{ listing.status }}</td> #}
 			<td class="d-date"><p class="hide">{{ listing.pub_date|date:"m/d/y P" }}</p>{{ listing.pub_date|naturaltime }}</td>
@@ -35,10 +36,10 @@
 						<a class="share_optn" id="{{ listing.id }}" title="Autopost to Craigslist" href="{% url 'mail.views.autopost' listing.id %}" data-original-title="Autopost to Craigslist">Publish</a>
 
 						<!--edit button -->
-						<a class="edit_optn" title="Edit Listing" href="{% url 'listings.views.detail' listing.id %}" data-container="body" data-original-title="Edit Listing"><span class="glyphicon glyphicon-pencil"></span></a>
+						<a class="edit_optn" title="Edit Listing" href="{% url 'listings.views.detail' listing.id %}" data-container="body" data-original-title="Edit Listing">{# <span class="glyphicon glyphicon-pencil"></span> #}</a>
 
 						<!--delete button -->
-						<a class="deleteModal trash_optn" title="Delete listing" href="#deleteModal_{{listing.id}}" data-toggle="modal"><span class="glyphicon glyphicon-remove"></span></a>
+						<a class="deleteModal trash_optn" title="Delete listing" href="#deleteModal_{{listing.id}}" data-toggle="modal">{# <span class="glyphicon glyphicon-remove"></span> #}</a>
 
 						<!-- delete listing modal -->
 						<div id="deleteModal_{{listing.id}}" class="modal">

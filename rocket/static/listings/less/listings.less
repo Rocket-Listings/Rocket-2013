@@ -37,11 +37,11 @@
         overflow: hidden;
         .listings-table {
             height: 100%;
-            .d-title { width: @title; }
-            .d-price { width: @price; }
-            .d-category { width: @category; }
-            .d-date { width: @date; }
-            .d-manage { width: @manage; }
+            .d-title { width: @title; min-width: @title; }
+            .d-price { width: @price; min-width: @price; }
+            .d-category { width: @category; min-width: @category; }
+            .d-date { width: @date; min-width: @date; }
+            .d-manage { width: @manage; min-width: @manage; }
             tbody {
                 display: block;
                 overflow: scroll;
@@ -51,6 +51,8 @@
                 display: block;
             }
             tr {
+                position: relative;
+                &:first-child td { border-top: none; }
                 &.highlight {
                     background-color: #8CA8C8 !important;
                     color: #FFFFFF;
