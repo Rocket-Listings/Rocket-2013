@@ -1,6 +1,6 @@
-{% if avg_rating < 10 and avg_rating >= 8%}
+{% if avg_rating < 10 and avg_rating >= 8 %}
 	<h5 class="text-info">{{avg_rating|floatformat:"1"}} - (Super Seller)</h5>
-{% elif avg_rating < 8 and avg_rating >= 6%}
+{% elif avg_rating < 8 and avg_rating >= 6 %}
 	<h5 class="text-primary">{{avg_rating|floatformat:"1"}} - (Great Seller)</h5>
 {% elif avg_rating < 6 and avg_rating >= 4%}
 	<h5 class="text-muted">{{avg_rating|floatformat:"1"}} - (Reliable Seller)</h5>
