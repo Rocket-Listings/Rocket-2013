@@ -52,7 +52,7 @@ class Listing(models.Model):
 	price = models.IntegerField()
 	location = models.CharField(max_length=200)
 	category = models.ForeignKey(ListingCategory)
-	status = models.ForeignKey(ListingStatus, null = True) # TODO want to be able to listings by this
+	status = models.ForeignKey(ListingStatus, null = True, default=1) # TODO want to be able to listings by this
 	user = models.ForeignKey(User)
 	CL_link = models.URLField(null=True, blank=True)
 

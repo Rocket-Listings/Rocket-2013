@@ -21,7 +21,7 @@ $(function(){
       url:"ajax/",
       data: form.serializeArray(),
       success:function(data, textStatus, jqXHR) {
-        $(".listing_table").html(data);
+        $(".listing-table-body").html(data);
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.log(textStatus);

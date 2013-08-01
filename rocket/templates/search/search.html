@@ -27,7 +27,7 @@
 
         {% if query %}
             <h3>Results</h3>
-            <table class="table table-listings table-hover sortable">
+            <table class="table listings-table table-hover sortable">
                 <thead>
                     <tr>
                         <th><a href="#">Title</a></th>
@@ -37,7 +37,7 @@
                         <th><a href="#">Date Listed</a></th>
                     </tr>
                 </thead>
-                <tbody class="listing_table">
+                <tbody class="listing-table-body">
             {% for result in page.object_list %}
                 <tr data-listing-id="{{ result.object.id }}" >
                     <td>

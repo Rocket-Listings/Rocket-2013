@@ -3,74 +3,76 @@
 {% load humanize %}
 {# Requires the context variable 'listings' #}
 
-<div>
-	<table class="table table-listings table-listings-compact table-hover sortable order-table">
-		<thead>
-			<tr>
-				<th><a href="#">Title</a><i class="icon-blank"></i></th>
-				<th style="text-align:left"><a href="#">Price</a><i class="icon-blank"></i></th>
-				{# <th class="sortable">Location</th> #}
-				<th><a href="#">Category</a><i class="icon-blank"></i></th>
-				<th><a href="#">Status</a><i class="icon-blank"></i></th>
-				<th><a href="#">Date Listed</a><i class="icon-blank"></i></th>
-				<th class="sorttable_nosort manage">Manage</th>
-			</tr>
-		</thead>
-		<tbody class="listing_table">
-			{% for listing in listings %}
-			<tr data-listing-id="{{ listing.id }}" >
-				<td>
-					<a href="{{ listing.get_absolute_url }}">
-						{{ listing.title }}
-					</a>
-				</td>
-				<td>${{ listing.price }}</td>
-				<td>{{ listing.category.name }}</td>
-				<td class="listing-status">{{ listing.status }}</td>
-				<td><p class="hide">{{ listing.pub_date|date:"m/d/y P" }}</p>{{ listing.pub_date|naturaltime }}</td>
-				<td class="hide">{{ listing.description}}</td>
-				<td>
-					<div class="btn-toolbar text-right">
-						<a href="{{ listing.get_absolute_url }}">Link</a>
-						<div class="btn-group">
-							<!--autopost button -->
-							<a class="btn share_optn" id="{{ listing.id }}" title="Autopost to Craigslist" href="{% url 'mail.views.autopost' listing.id %}" data-original-title="Autopost to Craigslist">Publish</a>
+<table class="table listings-table table-hover sortable order-table">
+	<thead>
+		<tr>
+			<th class="d-title"><a href="#">Title</a></th>
+			<th class="d-price"><a href="#">Price</a></th>
+			{# <th class="sortable">Location</th> #}
+			<th class="d-category"><a href="#">Category</a></th>
+			<th class="d-date"><a href="#">Date Listed</a></th>
+			<th class="text-center d-manage sorttable_nosort manage">Manage</th>
+		</tr>
+	</thead>
+	<tbody class="listing-table-body">
+		{% for listing in listings %}
+		<tr data-listing-id="{{ listing.id }}" >
+			<td class="d-title">
+				<a href="{{ listing.get_absolute_url }}">
+					{{ listing.title }}
+				</a>
+			</td>
+			<td class="d-price">${{ listing.price }}</td>
 
-							<!--edit button -->
-							<a class="btn edit_optn" title="Edit Listing" href="{% url 'listings.views.detail' listing.id %}" data-container="body" data-original-title="Edit Listing"><i class="icon-pencil"></i></a>
+			<td class="d-category">{{ listing.category.name }}</td>
+			{# <td class="listing-status">{{ listing.status }}</td> #}
+			<td class="d-date"><p class="hide">{{ listing.pub_date|date:"m/d/y P" }}</p>{{ listing.pub_date|naturaltime }}</td>
+			{# <td class="hide">{{ listing.description}}</td> #}
+			<td class="d-manage">
+				<div class="text-center">
+					<!--<a href="{{ listing.get_absolute_url }}">Link</a>-->
+					<div class="">
+						<!--autopost button -->
+						<a class="share_optn" id="{{ listing.id }}" title="Autopost to Craigslist" href="{% url 'mail.views.autopost' listing.id %}" data-original-title="Autopost to Craigslist">Publish</a>
 
-							<!--delete button -->
-							<a class="deleteModal btn trash_optn" title="Delete listing" href="#deleteModal_{{listing.id}}" data-toggle="modal"><i class="icon-remove"></i></a>
+						<!--edit button -->
+						<a class="edit_optn" title="Edit Listing" href="{% url 'listings.views.detail' listing.id %}" data-container="body" data-original-title="Edit Listing">{# <span class="glyphicon glyphicon-pencil"></span> #}</a>
 
-							<!-- delete listing modal -->
-							<div id="deleteModal_{{listing.id}}" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-									<h3 id="myModalLabel">Delete listing?</h3>
-								</div>
-								<div class="modal-body">
-									<h5>If you delete the listing, it will no longer appear on Rocket Listings or Craigslist. You can restore the listing by going to your deleted listings panel.</h5>
-								</div>
-								<div id="dashboard-modal" class="modal-footer">
-									<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-									<a class="btn btn-primary btn-danger" href="{% url 'listings.views.delete' listing.id %}" data-container="body">Delete</a>
+						<!--delete button -->
+						<a class="deleteModal trash_optn" title="Delete listing" href="#deleteModal_{{listing.id}}" data-toggle="modal">{# <span class="glyphicon glyphicon-remove"></span> #}</a>
+
+						<!-- delete listing modal -->
+						<div id="deleteModal_{{listing.id}}" class="modal">
+							<div class="modal-dialog">
+								<div class="model-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+										<h3 id="myModalLabel">Delete listing</h3>
+									</div>
+									<div class="modal-body">
+										<h5>If you delete the listing, it will no longer appear on Rocket Listings or Craigslist. You can restore the listing by going to your deleted listings panel.</h5>
+									</div>
+									<div id="dashboard-modal" class="modal-footer">
+										<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+										<a class="btn btn-primary btn-danger" href="{% url 'listings.views.delete' listing.id %}" data-container="body">Delete</a>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</td>
-				{% comment %}
-				<td class="centered-td">
-					<a href="{{listing.CL_link}}" target="_blank">
-						<img src="{% static 'img/cl_icon.png' %}" width="25" height="25" class="grey"></i>
-					</a>
-					{% else %}
-					<td class="centered-td"> N/A </td>
-				</td>
-		
-				{% endcomment %}
-			</tr>
-		{% endfor %}
-		</tbody>
-	</table>
-</div>
+				</div>
+			</td>
+			{% comment %}
+			<td class="centered-td">
+				<a href="{{listing.CL_link}}" target="_blank">
+					<img src="{% static 'img/cl_icon.png' %}" width="25" height="25" class="grey"></i>
+				</a>
+				{% else %}
+				<td class="centered-td"> N/A </td>
+			</td>
+	
+			{% endcomment %}
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>

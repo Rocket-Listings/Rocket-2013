@@ -180,7 +180,7 @@ $(function() {
   fpConfig.bindSortable();
 
   /* Listings table */
-  $('.table-listings').tablesorter({ cssHeader: 'table-header'});
+  $('.listings-table').tablesorter({ cssHeader: 'table-header'});
 
 
   /* Listing detail photo slideshow */

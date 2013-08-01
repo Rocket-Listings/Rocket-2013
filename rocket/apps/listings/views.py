@@ -8,7 +8,7 @@ from listings.forms import ListingForm, SpecForm, ListingPhotoFormSet
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET, require_POST 
 from django.shortcuts import render, redirect, get_object_or_404
-from django.utils import simplejson
+from django.utils import simplejson, formats
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from rocket import get_client_ip
@@ -23,8 +23,7 @@ from django.core.urlresolvers import reverse
 import haystack
 from users.decorators import first_visit, view_count
 from django.template.response import TemplateResponse
-
-
+from django.contrib.humanize.templatetags.humanize import naturaltime
 
 @first_visit
 @login_required
@@ -195,3 +194,36 @@ def search_ajax(request):
 def status(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
 	return HttpResponse(listing.status)
+
+def dashboard_data(request):
+	user = request.user
+	ids = map(lambda i: int(request.GET.get(i, '0')), ['listing', 'buyer', 'message'])
+
+	listings = Listing.objects.filter(user=user).order_by('-pub_date').all()
+	buyers = reduce(__add__, map(lambda l: list(l.buyer_set.all()), listings), [])
+	messages = reduce(__add__, map(lambda b: list(b.message_set.all()), buyers), [])
+	latest_ids = map(lambda set: max(map(lambda i: i.id, set)), [listings, buyers, messages])
+
+	listings_data = map(lambda l: {
+		'title': l.title, 
+		'link': l.get_absolute_url(), 
+		'id': l.id, 
+		'price': l.price, 
+		'category': l.category.name, 
+		'status': l.status.name, 
+		'date': naturaltime(l.pub_date)}, listings.filter(id__gt=ids[0]))
+	buyers_data = map(lambda b: {
+		'listing-id': b.listing.id, 
+		'buyer-id': b.id, 
+		'max_offer': b.curMaxOffer, 
+		'name': b.name, 
+		'last_message_date': naturaltime(b.last_message().date)}, [b for b in buyers if b.id > ids[1]])
+	messages_data = map(lambda m: {
+		'isSeller': m.isSeller,
+		'buyer-id': m.buyer.id,
+		'buyer-name': m.buyer.name,
+		'content': m.content,
+		'date': naturaltime(m.date)}, [m for m in messages if m.id > ids[2]])
+
+	json = {'listings': listings_data, 'buyers': buyers_data, 'messages': messages_data, 'latest': latest_ids}
+	return HttpResponse(simplejson.dumps(json), content_type="application/json")

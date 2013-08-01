@@ -1,174 +1,177 @@
 @import "../../rocket/less/base.less";
 
-/*  Doing this weird convention '.l-<CLASS>' because we don't want other outside class definitions to affect these.
-  For instance, if our title was simply '.title', then maybe a '.title' rule from base.less might take into effect. */
+/*    Doing this weird convention '.l-<CLASS>' because we don't want other outside class definitions to affect these.
+    For instance, if our title was simply '.title', then maybe a '.title' rule from base.less might take into effect. */
 
+// DASHBOARD VARIABLES (WIDTH)
+@title: 45%;
+@price: 5%;
+@category: 20%;
+@date: 15%;
+@manage: 15%;
+
+// DASHBOARD HEADER
 .dashboard-header {
-  .dashboard-title {
-    padding-left: 40px !important;
-  }
-  .dashboard-create {
-    float: right;
-    padding-right: 40px;
-  }
+    .dashboard-title {
+        padding-left: 40px !important;
+    }
+    .dashboard-create {
+        float: right;
+        padding-right: 40px;
+    }
 }
 
+// DASHBOARD SKELETON
 .dashboard-panel {
-  position:absolute;
-  top:126px;
-  bottom:0;
-  .table-listings thead tr th:first-child, .table-listings tbody tr td:first-child {
-    padding-left: 40px;
-  }
-  .listings-col {
-    height: 100%;
-    margin:0;
-    border-right: 1px solid #dddddd;
-  }
-  .buyers-col {
-    height: 100%;
-    border-right: 1px solid #dddddd;
-    background: #FCFCFC;
+    position: absolute;
+    top: 126px;
+    bottom: 0;
+    padding: 0 !important;
+    &.first-visit {
+        top: 250px !important;
+    }
+    .listings-col {
+        height: 100%;
+        position: relative;
+        border-right: 1px solid #DDDDDD;
+        overflow: hidden;
+        .listings-table {
+            height: 100%;
+            .d-title { width: @title; min-width: @title; }
+            .d-price { width: @price; min-width: @price; }
+            .d-category { width: @category; min-width: @category; }
+            .d-date { width: @date; min-width: @date; }
+            .d-manage { width: @manage; min-width: @manage; }
+            tbody {
+                display: block;
+                overflow: scroll;
+                height: 100%;
+            }
+            thead tr {
+                display: block;
+            }
+            tr {
+                position: relative;
+                &:first-child td { border-top: none; }
+                &.highlight {
+                    background-color: #8CA8C8 !important;
+                    color: #FFFFFF;
+                    a { color: #FFFFFF; }
+
+                }
+                &:hover {
+                    cursor: pointer;
+                    background: #F5F5F5;
+                    &.highlight {
+                        background: inherit;
+                    }
+                    > td, > th {
+                        background: none;
+                    }
+                }
+                th:first-child { padding-left: 40px !important; }
+                td {
+
+                    //float: none;
+                    //vertical-align: middle;
+                    &:first-child {
+                        padding-left: 40px !important;
+                    }
+                }
+            }
+            a { text-decoration: underline; }
+        }
+    }
+    .buyers-col {
+        height: 100%;
+        border-right: 1px solid #DDDDDD;
+    }
+    .messages-col {
+        .messages-panel {
+            margin-right: 40px;
+        }
+        height: 100%;
+    }
     .dash-subtitle {
-      background: white;
+        padding: 8px;
+        font-weight: bold;
+        line-height: 20px;
+        text-rendering: optimizelegibility;
+        text-align: center;
     }
-  }
-  .messages-col {
-    // .dash-subtitle {
-    //   padding-right: 48px;
-    // }
-    .messages-panel {
-      margin-right: 40px;
-    }
-
-    heigth: 100%;
-  }
 }
 
-// Making bootstrap table-hover work with highlight
-.table-hover tbody tr:hover > td, .table-hover tbody tr:hover > th {
-  background: none;
-}
-.table-hover tbody tr:hover, .table-hover tbody tr:hover {
-  background: #f5f5f5;
-}
-.table-hover tbody tr.highlight:hover {
-  background: inherit;
-}
+// DEPRECATED
+// .dash-title {
+//     margin: 25px 0;
+// }
 
-.table-listings {
-  a {
-    text-decoration: underline;
-  }
-
-  tr.highlight {
-    background-color: #8CA8C8 !important; /* overriding specificity problems */
-    color: white;
-
-    a {
-      color: white;
-    }
-
-    .btn-group a{
-      color:black;
-    }
-
-    #dashboard-modal a {
-      text-decoration: none;
-      color:white;
-    }
-  }
-
-  tbody tr:hover {
-    cursor:pointer;
-  }
-
-  td {
-    vertical-align: middle;
-  }
-}
-
-.dash-title {
-  margin:25px 0;
-}
-
-.dash-subtitle {
-  padding: 8px;
-  font-family: inherit;
-  font-weight: bold;
-  line-height: 20px;
-  color: inherit;
-  text-rendering: optimizelegibility;
-  text-align: center;
-}
-
-.dash-subtitle, .table-listings thead {
-  border-bottom: 1px solid #dddddd;
+.dash-subtitle, .listings-table thead {
+    border-bottom: 1px solid #dddddd;
 }
 .buyer-card {
-  margin-bottom: 0 !important;
-  border-bottom: 1px solid #dddddd;;
-  &:hover {
-    cursor: pointer;
-    background: #f5f5f5;
-  }
+    margin-bottom: 0 !important;
+    border-bottom: 1px solid #dddddd;;
+    &:hover {
+        cursor: pointer;
+        background: #f5f5f5;
+    }
 
-  &.highlight {
-    background-color: #8CA8C8 !important;
-    color: white;
-  }
-  tr {
-    border-style: none;
-  }
+    &.highlight {
+        background-color: #8CA8C8 !important;
+        color: white;
+    }
+    tr {
+        border-style: none;
+    }
 
-  td {
-    border-style: none;
-  }
+    td {
+        border-style: none;
+    }
 }
 
 .message-form {
-  background-color: #b2bec3;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-
-  textarea {
+    background-color: #b2bec3;
+    width: 100%;
     margin: 0;
     padding: 0;
-    width: 100%;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    border-bottom: none;
-    resize:vertical;
-  }
 
-  input.send-button {
-    width: 100%;
-  }
+    textarea {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        border-bottom: none;
+        resize:vertical;
+    }
+
+    input.send-button {
+        width: 100%;
+    }
 
 }
 
 .message {
-  padding: 0 10px;
-  margin: 0;
-  color:#333;
+    padding: 0 10px;
+    margin: 0;
+    color:#333;
 
-  &.buyer {
-    margin-left:30px;
-  }
-  /* Right Bubble  */
-  &.left {
-    margin-right:30px;
-    background-color:rgba(67,80,86,0.1);
-  }
+    &.buyer {
+        margin-left:30px;
+    }
+    /* Right Bubble    */
+    &.left {
+        margin-right:30px;
+        background-color:rgba(67,80,86,0.1);
+    }
 }
 
 #listing-detail {
-  overflow-x: hidden;
+    overflow-x: hidden;
 }
 .listing-form {
-
   fieldset small {
     font-size: 60%;
     margin-left: 15px;
@@ -202,41 +205,90 @@
     display: block;
     padding: 8px 0 8px 8px;
     margin-bottom: 0;
+    .nav {
+        margin-bottom: 0px;
+    }
 
-    &:hover {
+    .tab-pane .cat {
+        // float: left;
+        display: block;
+        padding: 8px 0 8px 8px;
+        margin-bottom: 0;
+
+        &:hover {
+                cursor: pointer;
+                // color: #08c;
+                // background: lighten(#08c, 50%);
+                // text-decoration: none;
+                text-decoration: underline;
+        }
+        &.selected {
+            color: black;
+            text-decoration: underline;            
+            // color: white;
+            // background: #08c; 
+        }
+    }
+
+    .title {
+        // display: block;
+    }
+    
+
+    .input-prepend.gridfix {
+        display: block;
+        position: relative;
+        height: 30px;
+        input {
+            position: absolute;
+            right: 0px;
+            left: 27px;
+            width: auto !important;
+        }
+        .add-on {
+            position: absolute;
+            // width: 30px;
+            left: 0px;
+        }
+    }
+
+    #fp-container {
+        border: none;
+        min-height: 412px;
+        width: 108%; 
+        position: relative; 
+        left: -30px;
+    }
+    
+    .sortable .sortable-dragging {
+        // background: blue;
         cursor: pointer;
-        // color: #08c;
-        // background: lighten(#08c, 50%);
-        // text-decoration: none;
-        text-decoration: underline;
     }
-    &.selected {
-      color: black;
-      text-decoration: underline;      
-      // color: white;
-      // background: #08c; 
+    .sortable .sortable-placeholder {
+        float: left;
+        width: 160px;
+        min-height: 160px;
+        margin-left: 30px;
+        margin-bottom: 20px;
+        border: 1px dashed #ddd;
     }
-  }
 
-  .title {
-    // display: block;
-  }
-  
+    .thumbnail:hover {
+        cursor: pointer;
+        // width: 200px;
 
-  .input-prepend.gridfix {
-    display: block;
-    position: relative;
-    height: 30px;
-    input {
-      position: absolute;
-      right: 0px;
-      left: 27px;
-      width: auto !important;
     }
-    .add-on {
-      position: absolute;
-      // width: 30px;
-      left: 0px;
+
+    .photo-view {
+        display: none;
+    }
+
+    #photos {
+        height: 412px;
+    }
+
+    fieldset small {
+        margin-left: 12px;
     }
   }
 
@@ -281,12 +333,11 @@
 
 
 .detail-sidebar {
-  padding-top:38px;
-  > div {
-    top: 10px;
-  }
+    padding-top:38px;
+    > div {
+        top: 10px;
+    }
 }
-
 .icon-blank	{
   display:inline-block;
   width:14px;height:14px;
@@ -295,6 +346,6 @@
 	background-image: url('../img/white-icon.png');
 }
 
-.padding-40-left {
-	padding-left:40px;
-}
+// .padding-40-left {
+//         padding-left:40px;
+// }

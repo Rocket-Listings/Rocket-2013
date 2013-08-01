@@ -26,6 +26,7 @@
 	This is your Listings Dashboard.  Here you can easily review and manage all of your listings, buyers, and messages.
 </div>
 {% endif %}
+
 <div class="dashboard-header col-lg-12 col-lg-fixed">
 	<div class="col-lg-2 dashboard-title"><div class="h4">Listings<br>Dashboard</div></div>
 	<div class="col-lg-3 dashboard-search">
@@ -35,14 +36,14 @@
 		<a class="btn btn-primary">Create a Listing</a>
 	</div>
 </div>
-<div class="dashboard-panel {% if first_visit %}first-visit{% endif %}">
-	<div class="col-lg-8 listings-col col-lg-fixed">
+<div class="dashboard-panel col-lg-12 {% if first_visit %}first-visit{% endif %}">
+	<div class="col-lg-8 col-lg-fixed listings-col">
 		{% include 'listings/partials/listings_table.html' %}
 	</div>
-	<div class="col-lg-2 buyers-col col-lg-fixed">
+	<div class="col-lg-2 col-lg-fixed buyers-col">
 		{% include 'listings/partials/buyer_cards.html' %}
 	</div>
-	<div class="col-lg-2 messages-col col-lg-fixed">
+	<div class="col-lg-2 col-lg-fixed messages-col">
 		{% include 'listings/partials/messages_panel.html' %}
 	</div>
 </div>
