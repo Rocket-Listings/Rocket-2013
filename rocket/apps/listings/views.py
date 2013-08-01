@@ -29,8 +29,7 @@ from django.template.response import TemplateResponse
 @first_visit
 @login_required
 def dashboard(request):
-	user = request.user
-	listings = Listing.objects.filter(user=user).order_by('-pub_date').all() # later on we can change how many are returned
+	listings = Listing.objects.filter(user=request.user).order_by('-pub_date').all() # later on we can change how many are returned
 	buyers = reduce(combine, map(lambda l: list(l.buyer_set.all()), listings), [])
 	messages = reduce(combine, map(lambda b: list(b.message_set.all()), buyers), [])
 	return TemplateResponse(request, 'listings/dashboard.html',  {'listings': listings, 'buyers': buyers, 'messages':messages})
@@ -119,7 +118,7 @@ def update(request, listing_id=None): # not directly addressed by a route, allow
 @view_count
 def detail(request, listing_id, pane='preview'):
 	listing = get_object_or_404(Listing, id=listing_id)
-	request.user.skip_count = listing.user == request.user
+	request.user.is_owner = bool(listing.user == request.user)
 
 	# prep specs
 	specs_set = listing.listingspecvalue_set.select_related().all()
