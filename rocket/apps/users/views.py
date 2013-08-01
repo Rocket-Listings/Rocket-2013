@@ -45,13 +45,21 @@ def info(request):
 				if key != "default_listing_type" and key != "default_category":
 					responseData[key] = escape(value)
 			responseData['profile'] = True
+
+			if profile.filled_out():
+				profile.profile_completed_once = True
+				profile.add_Credit(2)
+
 			return HttpResponse(json.dumps(responseData), content_type="application/json")
 		else:
 			errors = user_profile_form.errors
 			return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
+		credits = profile.listing_credits
+		profile_completed_once = user.get_profile().profile_completed_once
 		user_profile_form = UserProfileForm(instance=profile)
-		return TemplateResponse(request, 'users/user_info.html', {'user': user, 'form': user_profile_form, 'fb': fbProfile})
+		context_dictionary = {'user': user, 'form': user_profile_form, 'fb': fbProfile, 'credits':credits, 'profile_completed_once':profile_completed_once}
+		return TemplateResponse(request, 'users/user_info.html', context_dictionary)
 
 @view_count
 @first_visit
@@ -97,7 +105,8 @@ def profile(request, username=None):
 		# 	errors = comment_form.errors
 		# 	return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
-		return TemplateResponse(request, 'users/user_profile.html', {'url_user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile, 'rating':rating}) #'activelistings':activelistings, 'draftlistings':draftlistings,
+		context_dictionary = {'url_user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile, 'rating':rating}
+		return TemplateResponse(request, 'users/user_profile.html', context_dictionary) #'activelistings':activelistings, 'draftlistings':draftlistings,
 
 def delete_account(request):
 	user = request.user

@@ -25,12 +25,28 @@ class UserProfile(models.Model):
 	twitter_handle = models.CharField(max_length=20, blank=True)
 	TWITTER_OAUTH_TOKEN = models.CharField(max_length=200, blank=True)
 	TWITTER_OAUTH_TOKEN_SECRET = models.CharField(max_length=200, blank=True)
+	listing_credits = models.IntegerField(default=3)
+	profile_completed_once = models.BooleanField(default=False)
 
 	def get_absolute_url(self):
 		return reverse('users.views.profile')
 
 	def __unicode__(self):
 		return self.user.username
+
+	def add_credit(self,add=1):
+		self.listing_credits += add
+		self.save()
+
+	def subtract_credit(self,subtract=1):
+		self.listing_credits -= subtract
+		self.save()
+
+	def filled_out(self):
+		if self.name != "" and self.location != "" and self.phone != "" and self.bio != "":
+			return True
+		else:
+			return False
 
 # Handles user profile creation if not already created
 def create_user_profile(sender, instance, created, **kwargs):  

@@ -18,151 +18,178 @@
   				This is your info panel. Create your profile, connect Twitter and Facebook, and choose your listing defaults.
 			</div>
 		{% endif %}
-		<form class="settings-form" action="" method="POST">
-			{% csrf_token %}
-			<div class="save-all-container">
-				<span class="h4 user-info-label">User Info</span>
+
+		<div class="row">
+			<div class="col-lg8">
+			<form class="settings-form col-lg-8" action="" method="POST">
+				{% csrf_token %}
+				<div class="save-all-container">
+					<span class="h4 user-info-label">User Info</span>
+					<input class="btn btn-primary save-all disabled" type="submit" value="Save all">
+				</div>
+				<table class="table table-hover">
+					<tbody>
+						<tr class="uneditable">
+							<td>Username</td>
+							<td><code class="username">{{ user.username }}</code></td>
+							<td></td>
+						</tr>
+						<tr class="editable">
+							<td>Name</td>
+							<td class="partial-input">
+								<input class="form-control" tabindex="1" name="name" type="text" autocomplete="off" value="{{ user.get_profile.name }}" placeholder="John Doe">
+							</td>
+							<td><a class="edit active" href="#">Edit</a></td>
+						</tr>
+						<tr class="editable"> 
+							<td>Email</td>
+							<td class="partial-input">
+								<input class="form-control" tabindex="2" name="email" type="text" autocomplete="off" value="{{ user.email }}" placeholder="johndoe@gmail.com">
+							</td>
+							<td><a class="edit active" href="#">Edit</a></td>
+						</tr>
+						
+						<tr class="uneditable">
+							<td>Profile Picture</td>
+							{% if user.get_profile.propic %}
+							<td>
+								<div class="propic-wrapper">
+									<img class="propic" src="{{user.get_profile.propic}}" height="100px" width="100px">
+									<span class="loading-overlay hide"><img src="{% static 'users/img/100px_loading.gif' %}"></span>
+								</div>
+								<input class="propic-url" type="hidden" name="propic" value="{{user.get_profile.propic}}">
+							</td>
+							{% else %}
+							<td>
+								<div class="propic-wrapper">
+									<img class="propic" src="http://placekitten.com/100/100" height="100px" width="100px">
+									<span class="loading-overlay hide"><img src="{% static 'users/img/100px_loading.gif' %}"></span>
+								</div>
+								<input class="propic-url" type="hidden" name="propic" value="">
+							</td>
+							{% endif %}
+							<td><a class="change-propic active" href="#">Change Picture</a></td>
+						</tr>
+						<tr class="uneditable">
+							<td>Password</td>
+							<td>&#149;&#149;&#149;&#149;&#149;&#149;&#149;&#149;</td>
+							<td><a class="change-password active" href="/users/password/change/">Change Password</a></td>
+						</tr>
+						<tr class="editable">
+							<td>Phone</td>
+							<td class="partial-input">
+								<input class="form-control" tabindex="3" name="phone" type="text" autocomplete="off" value="{{ user.get_profile.phone }}" placeholder="(888) 888-8888">
+							</td>
+							<td><a class="edit active" href="#">Edit</a></td>
+						</tr>
+						<tr class="editable">
+							<td>Location</td>
+							<td class="partial-input">
+								<input class="form-control" tabindex="4" id="id_location" autocomplete="off" name="location" type="text" value="{{ user.get_profile.location }}" placeholder="Burlington, VT">
+							</td>
+							<td><a class="edit active" href="#">Edit</a></td>
+						</tr>
+						<tr class="editable">
+							<td>Bio</td>
+							<td class="partial-input">
+								<textarea class="form-control" tabindex="5" name="bio" autocomplete="off" rows="3" placeholder="Click to write your bio">{{ user.get_profile.bio }}</textarea>
+							</td>
+							<td><a class="edit active" href="#">Edit</a></td>
+						</tr>
+						<tr>
+							<td class="subheader"><h4>Identity </h4></td>
+						</tr>
+						<tr class="uneditable">
+							<td>Twitter</td>
+							<td>
+								<span class="at {% if not user.get_profile.twitter_handle %}muted{% endif %}">@</span><span class="twitter-handle">{{ user.get_profile.twitter_handle }}</span>
+							</td>
+							<td>
+								<a class="verify-twitter {% if user.get_profile.twitter_handle %}hide{% endif %}" href="#">Connect</a>
+								<a class="disconnect-twitter {% if not user.get_profile.twitter_handle %}hide{% endif %}" href="#">Disconnect</a>
+							</td>
+						</tr>
+						<tr class="uneditable">
+							<td>Facebook</td>
+							<td>
+								<span class="fb-name">{{ fb.name }}</span>
+							</td>
+							<td>
+								<a class="connect-fb {% if fb.name %}hide{% endif %}" href="#">Connect</a>
+								<a class="disconnect-fb {% if not fb.name %}hide{% endif %}" href="#">Disconnect</a>	
+							</td>
+						</tr>
+						<tr>
+							<td class="subheader"><h4>Listings</h4></td>
+						</tr>
+						<tr class="uneditable">
+							<td>Rocket Email</td>
+							<td><code>{{user.username}}@rocketlistings.mailgun.org</code></td>
+							<td></td>
+						</tr>
+						<tr class="editable">
+							<td>Default Seller Type</td>
+							<td class="select">
+								<select class="form-control" id="id_default_seller_type" name="default_seller_type" value="{{user.get_profile.default_seller_type}}">
+									{% for value, text in form.default_seller_type.field.choices %}
+										<option value="{{value}}" {% ifequal value form.default_seller_type.value %}selected="selected"{%endifequal%}>{{text}}</option>
+									{% endfor %}
+								</select>
+							</td>
+							<td></td>
+						</tr>
+						<tr class="editable">
+							<td>Default Listing Type</td>
+							<td class="select">
+								<select class="form-control" id="id_default_listing_type" name="default_listing_type" value="{{user.get_profile.default_listing_type}}"> 
+							    {% for value, text in form.default_listing_type.field.choices %}
+							    	<option value="{{value}}" {% ifequal value form.default_listing_type.value %}selected="selected"{%endifequal%}>{{text}}</option>
+							    {% endfor %}
+								</select>
+							</td>
+							<td></td>
+						</tr>
+						<tr class="editable">
+							<td>Default Category</td>
+							<td class="select">
+								<select class="form-control" id="id_default_category" name="default_category" value="{{user.get_profile.default_category.id}}">
+									{% for option in form.default_category.field.choices.queryset %}
+							       		<option value="{{forloop.counter}}" {% ifequal option user.get_profile.default_category %}selected="selected"{%endifequal%}>{{option}}</option>
+									{% endfor %}
+								</select>
+							</td>
+							<td></td>
+						</tr>
+						
+					</tbody>
+				</table>
+				<a class="delete-account-modaltrigger text-danger" role="button" data-toggle="modal" href="#delete-account-modal">Delete account</a>
 				<input class="btn btn-primary save-all disabled" type="submit" value="Save all">
+			</form>
+
+			<div class="col-lg-4">
+				{% if credits > 1 %}
+					<h4>You have {{credits}} free listings left</h4>
+				{% endif %}
+
+				{% if credits == 1 %}
+					<h4>You have 1 free listing left</h4>
+				{% endif %}
+
+				{% if credits < 1 %}
+					<h4>You have no free listings left</h4>
+				{% endif %}
+
+				<ul>
+					{% if not profile_completed_once %}
+						<li>You can earn more by completing your profile</li>
+					{% endif %}
+					<li>Linking social media accounts</li>
+					<li>Referring friends </li>
+				</ul>
 			</div>
-			<table class="table table-hover">
-				<tbody>
-					<tr class="uneditable">
-						<td>Username</td>
-						<td><code class="username">{{ user.username }}</code></td>
-						<td></td>
-					</tr>
-					<tr class="editable">
-						<td>Name</td>
-						<td class="partial-input">
-							<input class="form-control" tabindex="1" name="name" type="text" autocomplete="off" value="{{ user.get_profile.name }}" placeholder="John Doe">
-						</td>
-						<td><a class="edit active" href="#">Edit</a></td>
-					</tr>
-					<tr class="editable"> 
-						<td>Email</td>
-						<td class="partial-input">
-							<input class="form-control" tabindex="2" name="email" type="text" autocomplete="off" value="{{ user.email }}" placeholder="johndoe@gmail.com">
-						</td>
-						<td><a class="edit active" href="#">Edit</a></td>
-					</tr>
-					
-					<tr class="uneditable">
-						<td>Profile Picture</td>
-						{% if user.get_profile.propic %}
-						<td>
-							<div class="propic-wrapper">
-								<img class="propic" src="{{user.get_profile.propic}}" height="100px" width="100px">
-								<span class="loading-overlay hide"><img src="{% static 'users/img/100px_loading.gif' %}"></span>
-							</div>
-							<input class="propic-url" type="hidden" name="propic" value="{{user.get_profile.propic}}">
-						</td>
-						{% else %}
-						<td>
-							<div class="propic-wrapper">
-								<img class="propic" src="http://placekitten.com/100/100" height="100px" width="100px">
-								<span class="loading-overlay hide"><img src="{% static 'users/img/100px_loading.gif' %}"></span>
-							</div>
-							<input class="propic-url" type="hidden" name="propic" value="">
-						</td>
-						{% endif %}
-						<td><a class="change-propic active" href="#">Change Picture</a></td>
-					</tr>
-					<tr class="uneditable">
-						<td>Password</td>
-						<td>&#149;&#149;&#149;&#149;&#149;&#149;&#149;&#149;</td>
-						<td><a class="change-password active" href="/users/password/change/">Change Password</a></td>
-					</tr>
-					<tr class="editable">
-						<td>Phone</td>
-						<td class="partial-input">
-							<input class="form-control" tabindex="3" name="phone" type="text" autocomplete="off" value="{{ user.get_profile.phone }}" placeholder="(888) 888-8888">
-						</td>
-						<td><a class="edit active" href="#">Edit</a></td>
-					</tr>
-					<tr class="editable">
-						<td>Location</td>
-						<td class="partial-input">
-							<input class="form-control" tabindex="4" id="id_location" autocomplete="off" name="location" type="text" value="{{ user.get_profile.location }}" placeholder="Burlington, VT">
-						</td>
-						<td><a class="edit active" href="#">Edit</a></td>
-					</tr>
-					<tr class="editable">
-						<td>Bio</td>
-						<td class="partial-input">
-							<textarea class="form-control" tabindex="5" name="bio" autocomplete="off" rows="3" placeholder="Click to write your bio">{{ user.get_profile.bio }}</textarea>
-						</td>
-						<td><a class="edit active" href="#">Edit</a></td>
-					</tr>
-					<tr>
-						<td class="subheader"><h4>Identity </h4></td>
-					</tr>
-					<tr class="uneditable">
-						<td>Twitter</td>
-						<td>
-							<span class="at {% if not user.get_profile.twitter_handle %}muted{% endif %}">@</span><span class="twitter-handle">{{ user.get_profile.twitter_handle }}</span>
-						</td>
-						<td>
-							<a class="verify-twitter {% if user.get_profile.twitter_handle %}hide{% endif %}" href="#">Connect</a>
-							<a class="disconnect-twitter {% if not user.get_profile.twitter_handle %}hide{% endif %}" href="#">Disconnect</a>
-						</td>
-					</tr>
-					<tr class="uneditable">
-						<td>Facebook</td>
-						<td>
-							<span class="fb-name">{{ fb.name }}</span>
-						</td>
-						<td>
-							<a class="connect-fb {% if fb.name %}hide{% endif %}" href="#">Connect</a>
-							<a class="disconnect-fb {% if not fb.name %}hide{% endif %}" href="#">Disconnect</a>	
-						</td>
-					</tr>
-					<tr>
-						<td class="subheader"><h4>Listings</h4></td>
-					</tr>
-					<tr class="uneditable">
-						<td>Rocket Email</td>
-						<td><code>{{user.username}}@rocketlistings.mailgun.org</code></td>
-						<td></td>
-					</tr>
-					<tr class="editable">
-						<td>Default Seller Type</td>
-						<td class="select">
-							<select class="form-control" id="id_default_seller_type" name="default_seller_type" value="{{user.get_profile.default_seller_type}}">
-								{% for value, text in form.default_seller_type.field.choices %}
-									<option value="{{value}}" {% ifequal value form.default_seller_type.value %}selected="selected"{%endifequal%}>{{text}}</option>
-								{% endfor %}
-							</select>
-						</td>
-						<td></td>
-					</tr>
-					<tr class="editable">
-						<td>Default Listing Type</td>
-						<td class="select">
-							<select class="form-control" id="id_default_listing_type" name="default_listing_type" value="{{user.get_profile.default_listing_type}}"> 
-						    {% for value, text in form.default_listing_type.field.choices %}
-						    	<option value="{{value}}" {% ifequal value form.default_listing_type.value %}selected="selected"{%endifequal%}>{{text}}</option>
-						    {% endfor %}
-							</select>
-						</td>
-						<td></td>
-					</tr>
-					<tr class="editable">
-						<td>Default Category</td>
-						<td class="select">
-							<select class="form-control" id="id_default_category" name="default_category" value="{{user.get_profile.default_category.id}}">
-								{% for option in form.default_category.field.choices.queryset %}
-						       		<option value="{{forloop.counter}}" {% ifequal option user.get_profile.default_category %}selected="selected"{%endifequal%}>{{option}}</option>
-								{% endfor %}
-							</select>
-						</td>
-						<td></td>
-					</tr>
-					
-				</tbody>
-			</table>
-			<a class="delete-account-modaltrigger text-danger" role="button" data-toggle="modal" href="#delete-account-modal">Delete account</a>
-			<input class="btn btn-primary save-all disabled" type="submit" value="Save all">
-		</form>
+
+		</div>
 	</div>
 
 	<div id="delete-account-modal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="delete-account-modal" aria-hidden="true">
