@@ -57,9 +57,7 @@ def info(request):
 @first_visit
 def profile(request, username=None):
 	user = User.objects.get(username=username)
-	
-	if request.user.is_authenticated():
-		request.user.skip_count = user.get_username() == request.user.get_username()
+	request.user.is_owner = bool(user == request.user)
 		
 	allListings = Listing.objects.filter(user=user).order_by('-pub_date')
 	# activelistings = allListings.filter(status=ListingStatus(pk=1))
@@ -80,6 +78,7 @@ def profile(request, username=None):
 					responseData[key] = escape(str(value))
 				else:
 					responseData[key] = escape(value)
+
 			responseData['new_comment'] = True
 			responseData['date_posted'] = datetime.date.today().strftime("%B %d, %Y")
 			return HttpResponse(json.dumps(responseData), content_type="application/json")

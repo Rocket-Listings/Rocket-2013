@@ -357,7 +357,7 @@ $(function() {
 window.fbAsyncInit = function() {
   	FB.init({
     	appId      : '279057228903179', // App ID
-    	channelUrl : '{% static "/users/channel.html" %}', // Channel File
+    	channelUrl : '/users/channel.html', // Channel File
     	status     : true, // check login status
     	cookie     : true, // enable cookies to allow the server to access the session
     	xfbml      : false  // parse XFBML

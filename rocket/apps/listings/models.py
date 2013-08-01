@@ -67,20 +67,32 @@ class Listing(models.Model):
 	def get_absolute_url(self):
 		return reverse('edit', args=[self.id])
 
+	def get_view_count(self):
+		from users.models import ViewCount
+		return ViewCount.objects.get_or_create(url=self.get_absolute_url())[0].count
+
 
 # Listing Specification
 class ListingSpecKey(models.Model):
 	name = models.CharField(max_length = 100)
 	category = models.ForeignKey(ListingCategory)
 
+	def __unicode__(self):
+		return self.name
 
 class ListingSpecValue(models.Model):
 	value = models.CharField(max_length = 100)
 	key = models.ForeignKey(ListingSpecKey)
 	listing = models.ForeignKey(Listing)
 
+	def __unicode__(self):
+		return self.value
+		
 # Listing Photo
 class ListingPhoto(models.Model):
+	class Meta:
+		ordering = ['order',]
+
 	url = models.CharField(max_length=255) # ink url
 	key = models.CharField(max_length=255) # s3 path
 	order = models.IntegerField(null = True, blank=True)

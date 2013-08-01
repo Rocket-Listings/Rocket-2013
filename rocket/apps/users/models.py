@@ -17,7 +17,7 @@ class UserProfile(models.Model):
 	name = models.CharField(max_length=100, blank=True)
 	location = models.CharField(max_length=255, blank=True)
 	default_category = models.ForeignKey(ListingCategory, null=True, blank=True)
-	default_listing_type = models.CharField(max_length=1, choices=(('O', 'Owner'),('D', 'Dealer')), null=True, blank=True)
+	default_listing_type = models.CharField(max_length=1, choices=(('O', 'Owner'),('D', 'Dealer')), null=False, blank=False)
 	default_seller_type = models.CharField(max_length=1, choices=SELLER_TYPE_CHOICES, default='P')
 	phone = models.CharField(max_length=50, blank=True)
 	bio = models.TextField(blank=True)
@@ -27,10 +27,13 @@ class UserProfile(models.Model):
 	TWITTER_OAUTH_TOKEN_SECRET = models.CharField(max_length=200, blank=True)
 
 	def get_absolute_url(self):
-		return reverse('users.views.profile')
+		return reverse('users.views.profile', args=[self.user])
 
 	def __unicode__(self):
 		return self.user.username
+
+	def get_view_count(self):
+		return ViewCount.objects.get_or_create(url=UserProfile.get_absolute_url(self))[0].count
 
 # Handles user profile creation if not already created
 def create_user_profile(sender, instance, created, **kwargs):  
