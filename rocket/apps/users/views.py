@@ -58,7 +58,6 @@ def info(request):
 def profile(request, username=None):
 	user = User.objects.get(username=username)
 	request.user.is_owner = bool(user == request.user)
-		
 	allListings = Listing.objects.filter(user=user).order_by('-pub_date')
 	# activelistings = allListings.filter(status=ListingStatus(pk=1))
 	# draftlistings = allListings.filter(status=ListingStatus(pk=2))
@@ -68,6 +67,10 @@ def profile(request, username=None):
 	comments = UserComment.objects.filter(user=user).order_by('-date_posted') 
 	avg_rating = comments.aggregate(Avg('rating')).values()[0]
 	fbProfile = ProfileFB.objects.get(profile=user.get_profile())
+	total_listing_views = 0
+	for listing in allListings:
+		total_listing_views += listing.get_view_count()
+	print total_listing_views
 	if request.method == 'POST':
 		comment_form = CommentSubmitForm(request.POST, instance = UserComment(user=user))	
 		if comment_form.is_valid():
@@ -96,7 +99,7 @@ def profile(request, username=None):
 		# 	errors = comment_form.errors
 		# 	return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
-		return TemplateResponse(request, 'users/user_profile.html', {'url_user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile, 'avg_rating':avg_rating}) #'activelistings':activelistings, 'draftlistings':draftlistings,
+		return TemplateResponse(request, 'users/user_profile.html', {'url_user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile, 'avg_rating':avg_rating, 'total_listing_views':total_listing_views}) #'activelistings':activelistings, 'draftlistings':draftlistings,
 
 def delete_account(request):
 	user = request.user

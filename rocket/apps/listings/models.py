@@ -44,7 +44,6 @@ class ListingStatus(models.Model):
 class Listing(models.Model):
 	# also for natural key handling
 	objects = ListingManager()
-
 	title = models.CharField(max_length=200, help_text="Be specific, direct, and include all the important details in your title.")
 	description = models.TextField(help_text="Make sure you include all the important facts (color, dimensions, build year, etc.), as well as when you bought it, why you're selling it and details on any defects or problems.")
 	pub_date = models.DateTimeField('date published', auto_now_add=True, default=datetime.now)

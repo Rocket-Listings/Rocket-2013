@@ -1,11 +1,11 @@
 {% if avg_rating < 10 and avg_rating >= 8 %}
-	<h5 class="text-info">{{avg_rating|floatformat:"1"}} - (Super Seller)</h5>
+	<h5 class="text-info">Super Seller</h5>
 {% elif avg_rating < 8 and avg_rating >= 6 %}
-	<h5 class="text-primary">{{avg_rating|floatformat:"1"}} - (Great Seller)</h5>
+	<h5 class="text-primary">Great Seller</h5>
 {% elif avg_rating < 6 and avg_rating >= 4%}
-	<h5 class="text-muted">{{avg_rating|floatformat:"1"}} - (Reliable Seller)</h5>
+	<h5 class="text-muted">Reliable Seller</h5>
 {% elif avg_rating < 4 and avg_rating >= 2 %}
-	<h5 class="text-warning">{{avg_rating|floatformat:"1"}} - (Unreliable Seller)</h5>
+	<h5 class="text-warning">Unreliable Seller</h5>
 {% else %}	
-	<h5 class="text-danger">{{avg_rating|floatformat:"1"}} - (Scammer)</h5>
+	<h5 class="text-danger">Scammer</h5>
 {% endif %}
