@@ -30,31 +30,34 @@ a {
 		> .active > a  {
 			color: #333 !important;
 		}
+
+		li.blue-menu-item {
+			background-color: #D3D9F2;
+		}
 		li {
 			height: @navbar-height;
 			a {
 				height: @navbar-height;
 				padding-top: 10px;
-				padding-right: 10px;
+				padding-bottom: 10px;
+
 				.glyphicon{
 					vertical-align: middle;	
-				}
-
-				.glyphicon-edit{
-					color: @craigslistBlue;
-					float: none;
-					vertical-align: middle;
 				}
 			}
 		}
 	}
+}
+.nav.navbar-nav.pull-right {
+	position:relative;
+	right: -15px;
 }
 
 .navbar-logo {
 	float: left;
 	display:block;
 	position: relative;
-	left: -4*@accent-width;
+	left: -15px; // -4*@accent-width;
 
 	.accent {
 		float:left;
@@ -131,7 +134,7 @@ a {
 	height: ~"calc(100% - @{footer-height})";
 }
 
-.navbar-fixed {
+/*.navbar-fixed {
 	padding: 0 !important;
 	.navbar-logo {
 		padding-left: 5px;
@@ -143,7 +146,7 @@ a {
 
 .col-lg-fixed {
 	padding: 0 !important;
-}
+}*/
 
 .full-height {
 	height: 100%;

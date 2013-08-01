@@ -1,54 +1,57 @@
 {% load static from staticfiles %}
 {% load active from navigation %}
 
-<div class="navbar navbar-fixed">
-	<div class="col-lg-2">
-        {% if request.user.is_authenticated %}
-            <a class="navbar-logo" href="{% url 'listings.views.dashboard' %}">
-        {% else %}
-            <a class="navbar-logo" href="{% url 'home' %}">
-        {% endif %}
-            <div class="accent accent1"></div>
-            <div class="accent accent2"></div>
-            <div class="accent accent3"></div>
-            <div class="accent accent4"></div>
-            <span class="logo-text">rocket</span>
-        </a>
-    </div>
+<div class="navbar navbar-static-top">
+  {% if request.user.is_authenticated %}
+    <a class="navbar-logo" href="{% url 'listings.views.dashboard' %}">
+  {% else %}
+    <a class="navbar-logo" href="{% url 'home' %}">
+  {% endif %}
+      <div class="accent accent1"></div>
+      <div class="accent accent2"></div>
+      <div class="accent accent3"></div>
+      <div class="accent accent4"></div>
+      <span class="logo-text">rocket</span>
+    </a>
     {% if request.user.is_authenticated %}
-        <ul class="nav navbar-nav">
-            <li class="{% active 'create' %}">
-                <a href="/listings/create/">
-                    <span class="glyphicon glyphicon-edit"></span>
-                </a>
-            </li>
-            <li class="{% active 'dashboard' %}">
-                <a href="{% url 'listings.views.dashboard' %}">
-                    <span class="hidden-phone">Dashboard</span>
-                    <span class="glyphicon glyphicon-list"></span>
-                </a>
-            </li>
-            <li class="{% active 'user_profile' %}">
-                <a href="{% url 'user_profile' user.username %}">
-                    <span class="hidden-phone">Profile</span>
-                    <span class="glyphicon glyphicon-user"></span>
-                </a>
-            </li>
-            <li>
-                <a href="{% url 'auth_logout' %}" class="button-to-edge">
-                    <span class="hidden-phone">Logout</span>
-                    <span class="glyphicon glyphicon-off"></span>
-                </a>
-            </li>
-        </ul>
+    <ul class="nav navbar-nav pull-right">
+      <li class="{% active 'create' %} blue-menu-item">
+        <a href="/listings/create/">
+          <span class="glyphicon glyphicon-edit"></span>
+        </a>
+        
+      </li>
+      <li class="{% active 'dashboard' %}">
+
+        <a href="{% url 'listings.views.dashboard' %}">
+          Dashboard
+          <span class="glyphicon glyphicon-list"></span>
+        </a>
+        
+      </li>
+      <li class="{% active 'user_profile' %}">
+        <a href="{% url 'user_profile' user.username %}">
+          Profile
+          <span class="glyphicon glyphicon-user "></span>
+        </a>
+        
+      </li>
+      <li>
+        <a href="{% url 'auth_logout' %}">
+          Logout
+          <span class="glyphicon glyphicon-off "></span>
+        </a>
+        
+      </li>
+    </ul>    
     {% else %}
-        <ul class="nav navbar-nav">
-            <li>
-                <a href="{% url 'auth_login' %}" class="button-to-edge">
-                    <span class="hidden-phone">login</span>
-                    <span class="glyphicon glyphicon-off"></span>
-                </a>
-            </li>
-        </ul>
-    {% endif %}
+    <ul class="nav navbar-nav pull-right">
+      <li>
+        <a href="{% url 'auth_login' %}">Login<span class="glyphicon glyphicon-off"></span></a>
+      </li>
+    </ul>
+    {% endif %} 
 </div>
+
+
+
