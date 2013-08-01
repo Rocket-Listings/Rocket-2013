@@ -31,8 +31,11 @@ def dashboard(request):
 	listings = Listing.objects.filter(user=request.user).order_by('-pub_date').all() # later on we can change how many are returned
 	buyers = reduce(combine, map(lambda l: list(l.buyer_set.all()), listings), [])
 	messages = reduce(combine, map(lambda b: list(b.message_set.all()), buyers), [])
-	print messages
-	return TemplateResponse(request, 'listings/dashboard.html',  {'listings': listings, 'buyers': buyers, 'buyer_messages':messages})
+	latest_ids = map(lambda set: max(map(lambda i: i.id, set)), [listings, buyers, messages])
+	return TemplateResponse(request, 'listings/dashboard.html',  {'listings': listings, 
+																	'buyers': buyers, 
+																	'buyer_messages':messages, 
+																	'latest': latest_ids})
 
 
 # @login_required
@@ -201,8 +204,8 @@ def dashboard_data(request):
 	ids = map(lambda i: int(request.GET.get(i, '0')), ['listing', 'buyer', 'message'])
 
 	listings = Listing.objects.filter(user=user).order_by('-pub_date').all()
-	buyers = reduce(__add__, map(lambda l: list(l.buyer_set.all()), listings), [])
-	messages = reduce(__add__, map(lambda b: list(b.message_set.all()), buyers), [])
+	buyers = reduce(combine, map(lambda l: list(l.buyer_set.all()), listings), [])
+	messages = reduce(combine, map(lambda b: list(b.message_set.all()), buyers), [])
 	latest_ids = map(lambda set: max(map(lambda i: i.id, set)), [listings, buyers, messages])
 
 	listings_data = map(lambda l: {

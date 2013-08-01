@@ -48,6 +48,24 @@ $(function() {
 		return false;
 	});
 
+	$(".dashboard-refresh").click(function (e) {
+		e.preventDefault();
+		$.ajax({
+			type: 'GET',
+			url: '/listings/dashboard/data/',
+			data: {'listing': $(".last-listing").text(),
+				   'buyer': $(".last-buyer").text(),
+				   'message': $(".last-message").text()},
+			success: function (response) {
+				insertNewData(response);
+			}
+		});
+	});
+
+	function insertNewData(response) {
+		console.log(response);
+	}
+
 	function checkStatus(listingid) {
 		var timer = setInterval(function () {
 			$.ajax({

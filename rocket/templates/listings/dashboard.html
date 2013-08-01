@@ -19,6 +19,10 @@
 {% endblock %}
 
 {% block content %}
+<p class="last-listing hide">{{latest.0}}</p>
+<p class="last-buyer hide">{{latest.1}}</p>
+<p class="last-message hide">{{latest.2}}</p>
+
 {% if first_visit %}
 <div class="alert alert-info col-lg-6 col-offset-3 clearfix">
 	<button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -28,9 +32,14 @@
 {% endif %}
 
 <div class="dashboard-header col-lg-12 col-lg-fixed">
-	<div class="col-lg-2 dashboard-title"><div class="h4">Listings<br>Dashboard</div></div>
-	<div class="col-lg-3 dashboard-search">
+	<div class="dashboard-title">
+		<div class="h4">Listings<br>Dashboard</div>
+	</div>
+	<div class="dashboard-search">
 		<input type="search" class="form-control light-table-filter" data-table="order-table" placeholder="Type to search"/>
+	</div>
+	<div class="dashboard-refresh">
+		<a class="btn btn-primary" href="#"><span class="glyphicon glyphicon-repeat"></span></a>
 	</div>
 	<div class="dashboard-create">
 		<a class="btn btn-primary">Create a Listing</a>
