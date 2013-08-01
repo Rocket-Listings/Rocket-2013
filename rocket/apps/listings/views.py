@@ -31,7 +31,8 @@ def dashboard(request):
 	listings = Listing.objects.filter(user=request.user).order_by('-pub_date').all() # later on we can change how many are returned
 	buyers = reduce(combine, map(lambda l: list(l.buyer_set.all()), listings), [])
 	messages = reduce(combine, map(lambda b: list(b.message_set.all()), buyers), [])
-	return TemplateResponse(request, 'listings/dashboard.html',  {'listings': listings, 'buyers': buyers, 'messages':messages})
+	print messages
+	return TemplateResponse(request, 'listings/dashboard.html',  {'listings': listings, 'buyers': buyers, 'buyer_messages':messages})
 
 
 # @login_required

@@ -5,15 +5,14 @@ $(function() {
 		$('.listings-table tbody tr').removeClass('highlight');
 		listingRow.addClass('highlight');
 		var id = listingRow.data('listing-id');
-		$(".message").hide();
-		$(".buyer-card").hide();
+		$(".buyer-card").addClass("hide");
 		var buyers = $(".listing-" + id);
 		if(buyers.length) {
-			buyers.show();
+			buyers.removeClass("hide");
 			buyers.first().click();
-			$('.message-form').show();
+			$('.message-form').removeClass("hide");
 		} else {
-			$('.message-form').hide();
+			$('.message-form').addClass("hide");
 		}
 	});
 
@@ -26,8 +25,9 @@ $(function() {
 		$('.buyer-card').removeClass('highlight');
 		buyerCard.addClass('highlight');
 		var id = buyerCard.data('buyer-id');
-		$(".message").hide();
-		$('.buyer-' + id).show();
+		console.log(id);
+		$(".message").addClass("hide");
+		$('.buyer-' + id).removeClass("hide");
 	});
 
 	$('.listings-table tbody tr').first().click();
