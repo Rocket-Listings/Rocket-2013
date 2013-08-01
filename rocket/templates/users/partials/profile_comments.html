@@ -4,19 +4,30 @@
 {% if comments %}
 	{% for comment in comments %}
 		<div class="each-comment">
-			<div class="row">
-				<div class="col-lg-6">
-					<h5>{{comment.title}}</h5>
+			{% if comment.rating = 0 %}
+				<div class="red">
+			{% elif comment.rating = 4 %}
+				<div class="yellow">
+			{% elif comment.rating = 6 %}
+				<div class="lightblue">
+			{% else %}
+				<div class="blue">
+			{% endif %}
+					<div class="row comment-top">
+						<div class="col-lg-10">
+							<h5>{{comment.title}}</h5>
+						</div>
+						<div class="col-lg-2">
+							<h6>{{comment.date_posted}}</h6>
+						</div>
+					</div>
+					<div class="row comment-main">
+						<div class="col-lg-7">
+							<p>{{comment.comment}}</p>
+
+						</div>
+					</div>
 				</div>
-				<div class="col-lg-2">
-					<h6>{{comment.date_posted}}</h6>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-7">
-					<p>{{comment.comment}}</p>
-				</div>
-			</div>
 		</div>
 	{% endfor %}
 {% elif request.user.is_authenticated %}
@@ -24,4 +35,5 @@
 {% else %}
 		<div class="no-comment"><p class="muted">Sorry, but {{url_user.username}} doesn't have any feedback from buyers...yet</p></div>
 {% endif %}
+
 </div>

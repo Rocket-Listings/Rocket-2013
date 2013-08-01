@@ -1,15 +1,15 @@
 from listings.models import Listing, ListingPhoto, Buyer, Offer, Message, ListingStatus
 import datetime
 #from users.models import UserProfile
-from users.forms import UserProfileForm, CommentSubmitForm, UserRatingForm
-from users.models import UserProfile, UserComment, ProfileFB, UserRating 
+from users.forms import UserProfileForm, CommentSubmitForm
+from users.models import UserProfile, UserComment, ProfileFB 
 from django.forms.models import inlineformset_factory
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
 from django.contrib.auth.decorators import login_required
 #from forms import UserProfileForm
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ValidationError
 from django.core.mail import send_mail
 from django.core import serializers
 from django.http import HttpResponse, HttpRequest, HttpResponseRedirect, HttpResponseForbidden
@@ -20,12 +20,13 @@ from users.decorators import first_visit
 from django.db.models import Avg
 from users.decorators import first_visit, view_count
 from utils import get_view_count
+from cgi import escape
 
 
 def overview(request, username=None):
 	return info(request, username)
 
-#@first_visit
+@first_visit
 @login_required
 def info(request):
 	user = request.user
@@ -42,7 +43,7 @@ def info(request):
 			responseData = {}
 			for key, value in user_profile_form.cleaned_data.iteritems():
 				if key != "default_listing_type" and key != "default_category":
-					responseData[key] = value
+					responseData[key] = escape(value)
 			responseData['profile'] = True
 			return HttpResponse(json.dumps(responseData), content_type="application/json")
 		else:
@@ -57,7 +58,7 @@ def info(request):
 def profile(request, username=None):
 	user = User.objects.get(username=username)
 	
-	if hasattr(request.user,'name'):
+	if request.user.is_authenticated():
 		request.user.skip_count = user.get_username() == request.user.get_username()
 		
 	allListings = Listing.objects.filter(user=user).order_by('-pub_date')
@@ -65,19 +66,23 @@ def profile(request, username=None):
 	# draftlistings = allListings.filter(status=ListingStatus(pk=2))
 	photos = ListingPhoto.objects.filter(listing=user)
 	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos)
-	ratings = UserRating.objects.filter(user=user)
-	rating = ratings.aggregate(Avg('rating')).values()[0]
+	#ratings = UserRating.objects.filter(user=user)
+	#rating = ratings.aggregate(Avg('rating')).values()[0]
 	comments = UserComment.objects.filter(user=user).order_by('-date_posted') 
 	fbProfile = ProfileFB.objects.get(profile=user.get_profile())
 	if request.method == 'POST':
-		comment_form = CommentSubmitForm(request.POST, instance = UserComment(user=user))
-		rating_form = UserRatingForm(request.POST, instance = UserRating(user=user))
-		if rating_form.is_valid() and comment_form.is_valid():
-			rating = rating_form.save()
+		comment_form = CommentSubmitForm(request.POST, instance = UserComment(user=user))	
+		if comment_form.is_valid():
 			comment = comment_form.save()
-			print "comment form save"
-			responseData = serializers.serialize("json", UserComment.objects.filter(pk=comment.pk));
-			return HttpResponse(responseData, content_type="application/json")
+			responseData = {}
+			for key, value in comment_form.cleaned_data.iteritems():
+				if isinstance(value, int):
+					responseData[key] = escape(str(value))
+				else:
+					responseData[key] = escape(value)
+			responseData['new_comment'] = True
+			responseData['date_posted'] = datetime.date.today().strftime("%B %d, %Y")
+			return HttpResponse(json.dumps(responseData), content_type="application/json")
 		else:
 			errors = comment_form.errors
 			return HttpResponse(json.dumps(errors), content_type="application/json")
@@ -92,7 +97,7 @@ def profile(request, username=None):
 		# 	errors = comment_form.errors
 		# 	return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
-		return TemplateResponse(request, 'users/user_profile.html', {'url_user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile, 'rating':rating}) #'activelistings':activelistings, 'draftlistings':draftlistings,
+		return TemplateResponse(request, 'users/user_profile.html', {'url_user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile}) #'activelistings':activelistings, 'draftlistings':draftlistings,
 
 def delete_account(request):
 	user = request.user
@@ -121,10 +126,15 @@ def verify_twitter(request):
 		_twitter = Twython(settings.TWITTER_KEY, settings.TWITTER_SECRET, _OAUTH_TOKEN, _OAUTH_TOKEN_SECRET)
 		twitter_auth_keys = _twitter.get_authorized_tokens(oauth_verifier)
 		profile = UserProfile.objects.get(user=user)
-		profile.OAUTH_TOKEN = twitter_auth_keys['oauth_token'] #real token
-		profile.OAUTH_TOKEN_SECRET = twitter_auth_keys['oauth_token_secret'] #real secret
-		profile.save()
-		return redirect('/users/twitter/close')
+		profile.TWITTER_OAUTH_TOKEN = twitter_auth_keys['oauth_token'] #real token
+		profile.TWITTER_OAUTH_TOKEN_SECRET = twitter_auth_keys['oauth_token_secret'] #real secret
+		try:
+			profile.full_clean()
+		except ValidationError:
+			return HttpResponseForbidden()
+		else:
+			profile.save()
+			return redirect('/users/twitter/close')
 	elif request.GET.get("denied"):
 		return redirect('/users/twitter/close')
 	else:
@@ -133,10 +143,10 @@ def verify_twitter(request):
 @login_required
 def get_twitter_handle(request):
 	if request.is_ajax():
-		OAUTH_TOKEN = UserProfile.objects.get(user=request.user).OAUTH_TOKEN
-		OAUTH_TOKEN_SECRET = UserProfile.objects.get(user=request.user).OAUTH_TOKEN_SECRET
-		if OAUTH_TOKEN != "":
-			twitter = Twython(settings.TWITTER_KEY, settings.TWITTER_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
+		TWITTER_OAUTH_TOKEN = UserProfile.objects.get(user=request.user).TWITTER_OAUTH_TOKEN
+		TWITTER_OAUTH_TOKEN_SECRET = UserProfile.objects.get(user=request.user).TWITTER_OAUTH_TOKEN_SECRET
+		if TWITTER_OAUTH_TOKEN != "":
+			twitter = Twython(settings.TWITTER_KEY, settings.TWITTER_SECRET, TWITTER_OAUTH_TOKEN, TWITTER_OAUTH_TOKEN_SECRET)
 			handle = twitter.verify_credentials()['screen_name']
 			profile = UserProfile.objects.get(user=request.user)
 			profile.twitter_handle = handle
@@ -150,8 +160,8 @@ def get_twitter_handle(request):
 def disconnect_twitter(request):
 	if request.is_ajax():
 		profile = UserProfile.objects.get(user=request.user)
-		profile.OAUTH_TOKEN = ""
-		profile.OAUTH_TOKEN_SECRET = ""
+		profile.TWITTER_OAUTH_TOKEN = ""
+		profile.TWITTER_OAUTH_TOKEN_SECRET = ""
 		profile.twitter_handle = ""
 		profile.save()
 		return HttpResponse(json.dumps("success"), content_type='application/json')
@@ -190,8 +200,13 @@ def fb_profile(request):
 			fb.name = request.POST.get('name', "")
 			fb.link = request.POST.get('link', "")
 			fb.picture = request.POST.get('picture', "")
-			fb.save()
-			return HttpResponse(fb.name)
+			try:
+				fb.full_clean()
+			except ValidationError:
+				return HttpResponseForbidden()
+			else:
+				fb.save()
+				return HttpResponse(fb.name)
 		else:
 			return HttpResponseForbidden
 	else:

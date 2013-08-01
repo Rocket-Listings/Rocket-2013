@@ -21,8 +21,8 @@ class Migration(SchemaMigration):
             ('bio', self.gf('django.db.models.fields.TextField')(blank=True)),
             ('propic', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
             ('twitter_handle', self.gf('django.db.models.fields.CharField')(max_length=20, blank=True)),
-            ('OAUTH_TOKEN', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
-            ('OAUTH_TOKEN_SECRET', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
+            ('TWITTER_OAUTH_TOKEN', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
+            ('TWITTER_OAUTH_TOKEN_SECRET', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
         ))
         db.send_create_signal(u'users', ['UserProfile'])
 
@@ -36,6 +36,15 @@ class Migration(SchemaMigration):
             ('title', self.gf('django.db.models.fields.CharField')(max_length=255)),
         ))
         db.send_create_signal(u'users', ['UserComment'])
+
+        # Adding model 'UserRating'
+        db.create_table(u'users_userrating', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('date_posted', self.gf('django.db.models.fields.DateField')(auto_now_add=True, blank=True)),
+            ('rating', self.gf('django.db.models.fields.IntegerField')(default=50)),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+        ))
+        db.send_create_signal(u'users', ['UserRating'])
 
         # Adding model 'ProfileFB'
         db.create_table(u'users_profilefb', (
@@ -71,6 +80,9 @@ class Migration(SchemaMigration):
 
         # Deleting model 'UserComment'
         db.delete_table(u'users_usercomment')
+
+        # Deleting model 'UserRating'
+        db.delete_table(u'users_userrating')
 
         # Deleting model 'ProfileFB'
         db.delete_table(u'users_profilefb')
@@ -154,8 +166,8 @@ class Migration(SchemaMigration):
         },
         u'users.userprofile': {
             'Meta': {'object_name': 'UserProfile'},
-            'OAUTH_TOKEN': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
-            'OAUTH_TOKEN_SECRET': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
+            'TWITTER_OAUTH_TOKEN': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
+            'TWITTER_OAUTH_TOKEN_SECRET': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
             'bio': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'default_category': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.ListingCategory']", 'null': 'True', 'blank': 'True'}),
             'default_listing_type': ('django.db.models.fields.CharField', [], {'max_length': '1', 'null': 'True', 'blank': 'True'}),
@@ -167,6 +179,13 @@ class Migration(SchemaMigration):
             'propic': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
             'twitter_handle': ('django.db.models.fields.CharField', [], {'max_length': '20', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['auth.User']", 'unique': 'True'})
+        },
+        u'users.userrating': {
+            'Meta': {'object_name': 'UserRating'},
+            'date_posted': ('django.db.models.fields.DateField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'rating': ('django.db.models.fields.IntegerField', [], {'default': '50'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         },
         u'users.viewcount': {
             'Meta': {'object_name': 'ViewCount'},

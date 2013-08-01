@@ -109,7 +109,7 @@ def update(request, listing_id=None): # not directly addressed by a route, allow
 def detail(request, listing_id, pane=None):
 	listing = get_object_or_404(Listing, id=listing_id)
 	
-	if hasattr(request.user,'name'):
+	if request.user.is_authenticated():
 		request.user.skip_count = listing.user.get_username() == request.user.get_username()
 	
 	if request.method == 'GET':

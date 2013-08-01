@@ -8,19 +8,27 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'UserRating'
-        db.create_table(u'users_userrating', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('date_posted', self.gf('django.db.models.fields.DateField')(auto_now_add=True, blank=True)),
-            ('rating', self.gf('django.db.models.fields.IntegerField')(null=True)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-        ))
-        db.send_create_signal(u'users', ['UserRating'])
+        # Deleting model 'UserRating'
+        db.delete_table(u'users_userrating')
+
+        # Adding field 'UserComment.rating'
+        db.add_column(u'users_usercomment', 'rating',
+                      self.gf('django.db.models.fields.IntegerField')(default=4),
+                      keep_default=False)
 
 
     def backwards(self, orm):
-        # Deleting model 'UserRating'
-        db.delete_table(u'users_userrating')
+        # Adding model 'UserRating'
+        db.create_table(u'users_userrating', (
+            ('rating', self.gf('django.db.models.fields.IntegerField')(default=50)),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+            ('date_posted', self.gf('django.db.models.fields.DateField')(auto_now_add=True, blank=True)),
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+        ))
+        db.send_create_signal(u'users', ['UserRating'])
+
+        # Deleting field 'UserComment.rating'
+        db.delete_column(u'users_usercomment', 'rating')
 
 
     models = {
@@ -62,15 +70,18 @@ class Migration(SchemaMigration):
         },
         u'listings.listingcategory': {
             'Meta': {'object_name': 'ListingCategory'},
+            'cl_dealer_id': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
+            'cl_owner_id': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
             'description': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+            'group': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '60'})
         },
-        u'listings.listingtype': {
-            'Meta': {'object_name': 'ListingType'},
-            'description': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+        u'users.firstvisit': {
+            'Meta': {'object_name': 'FirstVisit'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '60'})
+            'template_path': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         },
         u'users.profilefb': {
             'Meta': {'object_name': 'ProfileFB'},
@@ -87,16 +98,17 @@ class Migration(SchemaMigration):
             'date_posted': ('django.db.models.fields.DateField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '255'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'rating': ('django.db.models.fields.IntegerField', [], {}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         },
         u'users.userprofile': {
             'Meta': {'object_name': 'UserProfile'},
-            'OAUTH_TOKEN': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
-            'OAUTH_TOKEN_SECRET': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
+            'TWITTER_OAUTH_TOKEN': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
+            'TWITTER_OAUTH_TOKEN_SECRET': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
             'bio': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'default_category': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.ListingCategory']", 'null': 'True', 'blank': 'True'}),
-            'default_listing_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.ListingType']", 'null': 'True', 'blank': 'True'}),
+            'default_listing_type': ('django.db.models.fields.CharField', [], {'max_length': '1', 'null': 'True', 'blank': 'True'}),
             'default_seller_type': ('django.db.models.fields.CharField', [], {'default': "'P'", 'max_length': '1'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'location': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
@@ -106,12 +118,11 @@ class Migration(SchemaMigration):
             'twitter_handle': ('django.db.models.fields.CharField', [], {'max_length': '20', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['auth.User']", 'unique': 'True'})
         },
-        u'users.userrating': {
-            'Meta': {'object_name': 'UserRating'},
-            'date_posted': ('django.db.models.fields.DateField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+        u'users.viewcount': {
+            'Meta': {'object_name': 'ViewCount'},
+            'count': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'rating': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
+            'url': ('django.db.models.fields.URLField', [], {'max_length': '200'})
         }
     }
 

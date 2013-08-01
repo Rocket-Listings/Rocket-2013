@@ -102,7 +102,6 @@ $(function() {
 				},
 				success: function(response) {
 					if (response.profile) {
-						console.log(response);
 						$(".errors").hide();
 						$(".save-all").addClass("disabled");
 						$(".save-all").removeClass("propic-enable");
@@ -185,13 +184,13 @@ $(function() {
 	function getTwitterHandle () {
 		$.ajax({
 			type: 'GET',
-			url: 'users/twitter/handle/',
+			url: '/users/twitter/handle/',
 			success: function (response) {
 				if (response !== "no_oauth_token_or_key") {
 					$(".twitter-handle").html(response);
 					$(".at").removeClass("muted");
-					$(".verify-twitter").hide();
-					$(".disconnect-twitter").show();
+					$(".verify-twitter").addClass("hide");
+					$(".disconnect-twitter").removeClass("hide");
 				}
 			}
 		});
@@ -199,12 +198,12 @@ $(function() {
 	function disconnectTwitter() {
 		$.ajax({
 			type: 'GET',
-			url: 'users/twitter/disconnect/',
+			url: '/users/twitter/disconnect/',
 			success: function (response) {
 				if (response === "success") {
 					$(".twitter-handle").html("");
-					$(".verify-twitter").show();
-					$(".disconnect-twitter").hide();
+					$(".verify-twitter").removeClass("hide");
+					$(".disconnect-twitter").addClass("hide");
 					$(".at").addClass("muted");
 				}
 			}
@@ -235,11 +234,11 @@ $(function() {
 		FB.api({ method: 'Auth.revokeAuthorization' });
 		$.ajax({
 			type: 'GET',
-			url: 'users/facebook/disconnect/',
+			url: '/users/facebook/disconnect/',
 			success: function(response) {
 				$(".fb-name").text("");
-				$(".disconnect-fb").hide();
-				$(".connect-fb").show();
+				$(".disconnect-fb").addClass("hide");
+				$(".connect-fb").removeClass("hide");
 			}
 		});
 	});
@@ -267,27 +266,31 @@ $(function() {
 		$.ajax({
 			data: data,
 			type: 'POST',
-			url: 'users/facebook/',
+			url: '/users/facebook/',
 			beforeSend: function(xhr) {
 				xhr.setRequestHeader("X-CSRFToken", csrftoken);
 			},
 			success: function(response) {
-				console.log(response);
 				$(".fb-name").text(response);
-				$(".connect-fb").hide();
-				$(".disconnect-fb").show();
+				$(".connect-fb").addClass("hide");
+				$(".disconnect-fb").removeClass("hide");
 			}
 		});
 	}
 
 	// PROFILE JS
 
-
+	$("div.btn-group[data-toggle-name='comment_rating'] button").click(function () {
+		var button = $(this),
+			hidden = $("input[name='rating']");
+		$("div.btn-group[data-toggle-name='comment_rating'] button").removeClass("active");
+		$(this).addClass("active");
+		hidden.val(button.val());
+	});
 
 	// Handle the comment form
 	$(".comment-form").submit(function() {
-		var csrftoken = $.cookie('csrftoken');
-		console.log(csrftoken);
+		var csrftoken = getCookie('csrftoken');
 		$.ajax({
 			data: $(this).serialize(),
 			type: $(this).attr('method'),
@@ -295,10 +298,10 @@ $(function() {
 			beforeSend: function(xhr) {
 				xhr.setRequestHeader("X-CSRFToken", csrftoken);
 			},
-			success: function(response) {
-				if (response[0]) {
+			success: function (response) {
+				if (response.new_comment) {
 					console.log(response)
-					insertNewComment(response[0].fields);
+					insertNewComment(response);
 					$("input:not(input[type='submit']), textarea").val("");
 					$(".errors").hide();
 					$(".no-comment").hide();
@@ -312,29 +315,25 @@ $(function() {
 	});
 
 	function insertNewComment(data) {
-		var newComment = '<div class="each-comment"><div class="row"><div class="span6"><h5>' + data.title + '</h5></div>';
-			newComment += '<div class="span2"><h6>' + data.date_posted  + '</h6></div></div>';
-			newComment += '<div class="row"><div class="span7"><p>' + data.comment + '</p></div></div></div>';
+		var newComment = '<div class="each-comment"><div class="row comment-top"><div class="col-lg-10"><h5>' + data.title + '</h5></div>';
+			newComment += '<div class="col-lg-2"><h6>' + data.date_posted  + '</h6></div></div>';
+			newComment += '<div class="row comment-main"><div class="col-lg-7"><p>' + data.comment + '</p></div></div></div>';
 		$(".comment-body").append(newComment);
 		$(".comment-form-container").hide();
 		$(".comment-thanks").show();
 	}
 
-
-
-				
-				
-
-
 	// Used for comment form and user info AJAX responses
 	function showError(response) {
-		var errors = $(".errors"),
+		var errorWrapper = $(".error-wrapper"),
+			errorString = "",
 			dismissError = '<a href="#" class="close" data-dismiss="alert">&times;</a>';
-		errors.html("");
+		errorString = '<div class="errors alert alert-danger">' + dismissError;
 		for (key in response) {
-			errors.append(" <strong class='capital'>" + key + ": </strong> " + response[key] + "<br>");
+			errorString += "<strong class='capital'>" + key + ": </strong> " + response[key] + "<br>";
 		}
-		errors.show();
+		errorString += "</div>";
+		errorWrapper.html(errorString);
 	}
 
 	// Get cookie for csrf token
