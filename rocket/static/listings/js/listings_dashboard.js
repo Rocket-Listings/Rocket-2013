@@ -63,4 +63,12 @@ $(function() {
 			});
 		}, 3000);
 	}
+
+	function linkToClickable(text) {
+	    var exp = /(\b(https?):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+	    return text.replace(exp,"<a href='$1'>$1</a>"); 
+	}
+	$(".buyer, .seller").each(function() {
+		$(this).html(linkToClickable($(this).html()));
+	});
 });
