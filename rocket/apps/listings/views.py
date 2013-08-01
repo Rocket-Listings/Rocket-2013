@@ -110,7 +110,7 @@ def detail(request, listing_id, pane=None):
 	listing = get_object_or_404(Listing, id=listing_id)
 	
 	if request.user.is_authenticated():
-		request.user.is_owner = listing.user.get_username() == request.user.get_username()
+		request.user.is_owner = bool(listing.user == request.user)
 	
 	if request.method == 'GET':
 		specs_set = listing.listingspecvalue_set.select_related().all()
