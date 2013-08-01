@@ -7,23 +7,6 @@ if (!String.prototype.format) {
   };
 }
 
-// serialize for backbone
-$.fn.serializeObject = function() {
-    var o = {};
-    var a = this.serializeArray();
-    $.each(a, function() {
-        if (o[this.name] !== undefined) {
-            if (!o[this.name].push) {
-                o[this.name] = [o[this.name]];
-            }
-            o[this.name].push(this.value || '');
-        } else {
-            o[this.name] = this.value || '';
-        }
-    });
-    return o;
-};
-
 $(function() {
 
   // Backbone listing preview stuff
@@ -42,7 +25,7 @@ $(function() {
     },
 
     initialize: function() {
-      this.model = new Listing(this.$('.listing-form:first').serializeObject());
+      this.model = new Listing(this.$('.listing-form:first').serializeArray());
       this.render();
       _.bindAll(this, 'changed', 'render');
     },
