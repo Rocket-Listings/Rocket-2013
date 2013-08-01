@@ -67,8 +67,8 @@ def profile(request, username=None):
 	photos = ListingPhoto.objects.filter(listing=user)
 	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos)
 	#ratings = UserRating.objects.filter(user=user)
-	#rating = ratings.aggregate(Avg('rating')).values()[0]
 	comments = UserComment.objects.filter(user=user).order_by('-date_posted') 
+	avg_rating = comments.aggregate(Avg('rating')).values()[0]
 	fbProfile = ProfileFB.objects.get(profile=user.get_profile())
 	if request.method == 'POST':
 		comment_form = CommentSubmitForm(request.POST, instance = UserComment(user=user))	
@@ -97,7 +97,7 @@ def profile(request, username=None):
 		# 	errors = comment_form.errors
 		# 	return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
-		return TemplateResponse(request, 'users/user_profile.html', {'url_user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile}) #'activelistings':activelistings, 'draftlistings':draftlistings,
+		return TemplateResponse(request, 'users/user_profile.html', {'url_user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile, 'avg_rating':avg_rating}) #'activelistings':activelistings, 'draftlistings':draftlistings,
 
 def delete_account(request):
 	user = request.user
