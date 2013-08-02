@@ -8,8 +8,7 @@
 				<div class="alert alert-info">
   					<button type="button" class="close" data-dismiss="alert">&times;</button>
   					<h4>Welcome</h4>
-  					Its your first time, check dis shit out
-				
+  					This is your profile page. Potential buyers can come here to see your seller rating and a bit about you. 
 				</div>
 			{% endif %} 
 				<div class="row profile-header">
@@ -25,23 +24,27 @@
 					</div>
 					<div class="col-lg-9"> {# contains main profile description (name, username, social, location, bio) #}
 						<div class="row">
-							<div class="col-lg-4">
+							<div class="col-lg-4 col-details">
 								{% if url_user.get_profile.name %} 
 									<h3>{{url_user.get_profile.name}}</h3>
 								{% endif %}
-									<h4 class="text-muted">{{url_user.username}}</h4>
-									<h5>{{url_user.get_profile.location}}</h5>
+									<h4>{{url_user.username}}</h4>
 									{% include "users/partials/profile_rating.html" %}
-									{% if url_user.get_profile.twitter_handle %}
-										<img src="{% static 'users/img/twitter-bird-blue-on-white.png' %}" width="25px">
-										<a href="https://twitter.com/@{{url_user.get_profile.twitter_handle}}"> @{{url_user.get_profile.twitter_handle}} </a>	
-									{% endif %}
-									{% if fb.name %}
-										<br>
-										<img src="{% static 'users/img/FB-f-Logo__blue_29.png' %}" width="15px"><a href="{{fb.link}}"> {{fb.name}} </a>	
-									{% endif %}
+									<div class="row">
+										{% if url_user.get_profile.twitter_handle %}
+											<img src="{% static 'users/img/twitter-bird-blue-on-white.png' %}" width="25px" class="twitter-icon">
+											<a href="https://twitter.com/@{{url_user.get_profile.twitter_handle}}"> @{{url_user.get_profile.twitter_handle}} </a>	
+										{% endif %}
+									</div>
+									<div class="row">
+										{% if fb.name %}
+											<img src="{% static 'users/img/FB-f-Logo__blue_29.png' %}" width="15px" class="facebook-icon"><a href="{{fb.link}}"> {{fb.name}} </a>	
+										{% endif %}
+									</div>
+								<h4>{{url_user.get_profile.location}}</h5>
 							</div>
 							<div class="col-lg-8">
+
 								{% if url_user.get_profile.bio %}
 									<p>{{url_user.get_profile.bio}}</p>
 								{% else %}
