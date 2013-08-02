@@ -1,4 +1,5 @@
 {% load static from staticfiles %}
+{% load humanize %}
 {# Requires the context variable 'listings' #}	
 {# Requires the context variable 'buyers' #}	
 
@@ -20,7 +21,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td>{{ buyer.last_message.date|date:"m-d-y P" }}</td>
+			<td>{{ buyer.last_message.date|naturaltime }}</td>
 		</tr>
 	</table>
 	{% endfor %}

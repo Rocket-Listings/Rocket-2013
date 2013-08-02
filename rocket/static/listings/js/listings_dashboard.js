@@ -6,6 +6,7 @@ $(function() {
 		listingRow.addClass('highlight');
 		var id = listingRow.data('listing-id');
 		$(".buyer-card").addClass("hide");
+		$(".message").addClass("hide");
 		var buyers = $(".listing-" + id);
 		if(buyers.length) {
 			buyers.removeClass("hide");
@@ -62,8 +63,12 @@ $(function() {
 		});
 	});
 
-	function insertNewData(response) {
-		console.log(response);
+	function insertNewData(data) {
+		console.log(data);
+		// Update latest ids
+		$(".last-listing").text(data.latest[0]);
+		$(".last-buyer").text(data.latest[1]);
+		$(".last-message").text(data.latest[2]);
 	}
 
 	function checkStatus(listingid) {
