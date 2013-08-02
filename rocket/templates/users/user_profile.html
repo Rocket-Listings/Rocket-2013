@@ -30,18 +30,18 @@
 								{% endif %}
 									<h4>{{url_user.username}}</h4>
 									{% include "users/partials/profile_rating.html" %}
-									<div class="row">
+									<div class="row twitter-row">
 										{% if url_user.get_profile.twitter_handle %}
-											<img src="{% static 'users/img/twitter-bird-blue-on-white.png' %}" width="25px" class="twitter-icon">
+											<img src="{% static 'users/img/twitter-bird-blue-on-white.png' %}" width="25px">
 											<a href="https://twitter.com/@{{url_user.get_profile.twitter_handle}}"> @{{url_user.get_profile.twitter_handle}} </a>	
 										{% endif %}
 									</div>
-									<div class="row">
+									<div class="row fb-row">
 										{% if fb.name %}
-											<img src="{% static 'users/img/FB-f-Logo__blue_29.png' %}" width="15px" class="facebook-icon"><a href="{{fb.link}}"> {{fb.name}} </a>	
+											<img src="{% static 'users/img/FB-f-Logo__blue_29.png' %}" width="15px"><a href="{{fb.link}}"> {{fb.name}} </a>	
 										{% endif %}
 									</div>
-								<h4>{{url_user.get_profile.location}}</h5>
+								<h5>{{url_user.get_profile.location}}</h5>
 							</div>
 							<div class="col-lg-8">
 
