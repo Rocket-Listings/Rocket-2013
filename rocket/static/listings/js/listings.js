@@ -195,6 +195,11 @@ $(function() {
   $('.toggle-view').click(fpConfig.toggleView);
   fpConfig.bindSortable();
 
+  $("div.btn-group[data-toggle-name='listing-pane-toggle'] a").click(function() {
+    $(this).siblings().removeClass("active");
+    $(this).addClass("active");
+  });
+
   /* Listings table */
   $('.listings-table').tablesorter({ cssHeader: 'table-header'});
 
