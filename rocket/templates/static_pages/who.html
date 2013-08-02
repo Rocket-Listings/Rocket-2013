@@ -2,12 +2,6 @@
 {% load static from staticfiles %}
 {% load compress %}
 
-{% block bootstrap %}
-{% compress css %}
-<link type="text/css" rel="stylesheet" href="{% static 'rocket/vendorcss/bootstrap-gutterless.css' %}"/>
-{% endcompress %}
-{% endblock %}
-
 {% block title %}About Rocket{% endblock %}
 
 {% block content %}
