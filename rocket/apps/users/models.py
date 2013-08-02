@@ -27,7 +27,7 @@ class UserProfile(models.Model):
 	TWITTER_OAUTH_TOKEN_SECRET = models.CharField(max_length=200, blank=True)
 
 	def get_absolute_url(self):
-		return reverse('users.views.profile')
+		return reverse('users.views.profile', args=[self.user])
 
 	def get_display_name(self):
 		if self.name:
@@ -36,6 +36,9 @@ class UserProfile(models.Model):
 
 	def __unicode__(self):
 		return self.user.username
+
+	def get_view_count(self):
+		return ViewCount.objects.get_or_create(url=UserProfile.get_absolute_url(self))[0].count
 
 # Handles user profile creation if not already created
 def create_user_profile(sender, instance, created, **kwargs):  
@@ -53,18 +56,12 @@ class UserComment(models.Model):
 	email = models.EmailField(max_length=255, blank=False) # email of commenter
 	user = models.ForeignKey(User) # contains user foreignkey
 	title = models.CharField(max_length=255, blank=False)
+	rating = models.IntegerField(blank=False)
 	
 
 	def __unicode__(self):
 		return self.user.username
 
-class UserRating(models.Model): 
-	date_posted = models.DateField(auto_now=False, auto_now_add=True)
-	rating = models.IntegerField(default=50)
-	user = models.ForeignKey(User) # contains user foreignkey
-	
-	def __unicode__(self):
-		return self.user.username
 
 #User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 

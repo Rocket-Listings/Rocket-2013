@@ -28,7 +28,9 @@ $(function() {
 
   // Backbone listing preview stuff
   var Listing = Backbone.Model.extend({
-    initialize: function() {}
+    // initialize: function(attrs) {
+      // console.log(attrs);
+    // }
   });
 
   var ListingView = Backbone.View.extend({
@@ -36,18 +38,22 @@ $(function() {
     el: '#listing-detail',
     template: Mustache.compile($('#preview-template').html()),
     events: {
-      "change input":  "changed",
-      "change textarea":  "changed",
+      // "change input": "changed",
+      "keyup .title": "renderTitle",      
+      "change input": "changed",      
+      "change textarea": "changed",
       "change select": "changed"
     },
 
     initialize: function() {
       this.model = new Listing(this.$('.listing-form:first').serializeObject());
-      this.render();
       _.bindAll(this, 'changed', 'render');
+      this.render();
+      this.renderTitle();
     },
 
     changed: function(evt) {
+      console.log('changed');
       var changed = $(evt.currentTarget)
       var obj = {};
       obj[changed.attr('name')] = changed.val();
@@ -55,8 +61,22 @@ $(function() {
       this.render();
     },
 
+    renderTitle: function(e) {
+      if (e)
+        var title = $(e.currentTarget).val();
+      else 
+        var title = this.model.get('title');
+      if (title.length > 0) {
+        this.$('.listing-title').text(title);
+        $('#preview-btn').removeAttr('disabled');
+      } else {
+        $('#preview-btn').attr('disabled', 'disabled');
+      }
+    },
+
     render: function() {
       this.$('#preview-view').html(this.template(this.model.toJSON()));
+      return this;
     }
   });
   var ListingView = new ListingView;
@@ -146,6 +166,7 @@ $(function() {
         formset.find('#id_listingphoto_set-{0}-ORDER'.format(photo.index)).val(photo.index);               
       });
 
+      ListingView.delegateEvents();
     },
     onError: function(type, message) {
       console.log('('+type+') '+ message);
@@ -173,6 +194,11 @@ $(function() {
   filepicker.pickAndStore(fpConfig.picker_options, fpConfig.store_options, $.proxy(fpConfig.onSuccess, fpConfig), fpConfig.onError);
   $('.toggle-view').click(fpConfig.toggleView);
   fpConfig.bindSortable();
+
+  $("div.btn-group[data-toggle-name='listing-pane-toggle'] a").click(function() {
+    $(this).siblings().removeClass("active");
+    $(this).addClass("active");
+  });
 
   /* Listings table */
   $('.listings-table').tablesorter({ cssHeader: 'table-header'});
