@@ -56,9 +56,10 @@ def info(request):
 			return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
 		credits = profile.listing_credits
+		credits_spent = profile.total_credits - credits
 		profile_completed_once = user.get_profile().profile_completed_once
 		user_profile_form = UserProfileForm(instance=profile)
-		context_dictionary = {'user': user, 'form': user_profile_form, 'fb': fbProfile, 'credits':credits, 'profile_completed_once':profile_completed_once}
+		context_dictionary = {'user': user, 'form': user_profile_form, 'fb': fbProfile, 'credits':credits, 'profile_completed_once':profile_completed_once, 'credits_spent':credits_spent}
 		return TemplateResponse(request, 'users/user_info.html', context_dictionary)
 
 @view_count
@@ -105,7 +106,8 @@ def profile(request, username=None):
 		# 	errors = comment_form.errors
 		# 	return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
-		context_dictionary = {'url_user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile, 'rating':rating}
+		credits = user.get_profile().listing_credits
+		context_dictionary = {'url_user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile, 'rating':rating, 'owner':request.user.is_owner, 'credits':credits}
 		return TemplateResponse(request, 'users/user_profile.html', context_dictionary) #'activelistings':activelistings, 'draftlistings':draftlistings,
 
 def delete_account(request):

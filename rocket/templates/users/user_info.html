@@ -3,13 +3,16 @@
 {% load static from staticfiles %}
 
 {% block content %}
-	{% if user.get_profile.name %}
-	<h3><a class="name-header" href="{% url 'users.views.profile' user.username %}">{{ user.get_profile.name }}</a></h3>
-	{% else %}
-	<h3><a class="name-header" href="{% url 'users.views.profile' user.username %}">{{user.username}}</a></h3>
-	{% endif %}
+	
 
 	<div class="content-wrapper">
+
+		{% if user.get_profile.name %}
+			<h3><a class="name-header" href="{% url 'users.views.profile' user.username %}">{{ user.get_profile.name }}</a></h3>
+		{% else %}
+			<h3><a class="name-header" href="{% url 'users.views.profile' user.username %}">{{user.username}}</a></h3>
+		{% endif %}
+
 		<div class="error-wrapper row"></div>
 		{% if first_visit %}
 			<div class="alert alert-info">
@@ -20,11 +23,13 @@
 		{% endif %}
 		<form class="settings-form col-lg-8" action="" method="POST">
 			{% csrf_token %}
-			<div class="save-all-container">
-				<span class="h4 user-info-label">User Info</span>
-				<input class="btn btn-primary save-all disabled" type="submit" value="Save all">
-			</div>
 			<table class="table table-hover">
+				<thead>
+					<div class="save-all-container">
+						<span class="h4 user-info-label">User Info</span>
+						<input class="btn btn-primary save-all disabled" type="submit" value="Save all">
+					</div>
+				</thead>
 				<tbody>
 					<tr class="uneditable">
 						<td>Username</td>
@@ -119,11 +124,6 @@
 					<tr>
 						<td class="subheader"><h4>Listings</h4></td>
 					</tr>
-					<tr class="uneditable">
-						<td>Rocket Email</td>
-						<td><code>{{user.username}}@rocketlistings.mailgun.org</code></td>
-						<td></td>
-					</tr>
 					<tr class="editable">
 						<td>Default Seller Type</td>
 						<td class="select">
@@ -165,25 +165,33 @@
 		</form>
 
 		<div class="col-lg-4">
-			{% if credits > 1 %}
-				<h4>You have {{credits}} free listings left</h4>
-			{% endif %}
+			<h4>Listing Credits</h4>
 
-			{% if credits == 1 %}
-				<h4>You have 1 free listing left</h4>
-			{% endif %}
+			<table class="table">
+				<tr>
+					<td style="padding:8px; text-align:center">{{credits}}</td>
+					<td style="padding:8px">Credits Left</td>
+				</tr>
+				<tr>
+					<td style="padding:8px; text-align:center"><p>{{credits_spent}}</p></td>
+					<td style="padding:8px">Credits Spent</td>
+				</tr>
+			
+				<tr>
+					<td style="padding:8px">{% if not profile_completed_once %}<i class="glyphicon glyphicon-unchecked">{% else %}<i class="glyphicon glyphicon-checked">{% endif %}</i></td>	
+					<td style="padding:8px">You can earn more by completing your profile</td>
+				</tr>
+			</table>
 
-			{% if credits < 1 %}
-				<h4>You have no free listings left</h4>
-			{% endif %}
+			<table>
+				<tr>
+					<td style="padding:8px"><i class="glyphicon glyphicon-unchecked"></i></td><td style="padding:8px">Linking social media accounts</td>
+				</tr>
 
-			<ul>
-				{% if not profile_completed_once %}
-					<li>You can earn more by completing your profile</li>
-				{% endif %}
-				<li>Linking social media accounts</li>
-				<li>Referring friends </li>
-			</ul>
+				<tr>
+					<td style="padding:8px"><i class="glyphicon glyphicon-unchecked"></i></td><td style="padding:8px">Referring friends</td>
+				</tr>
+			</table>
 		</div>
 
 

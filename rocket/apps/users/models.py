@@ -26,6 +26,7 @@ class UserProfile(models.Model):
 	TWITTER_OAUTH_TOKEN = models.CharField(max_length=200, blank=True)
 	TWITTER_OAUTH_TOKEN_SECRET = models.CharField(max_length=200, blank=True)
 	listing_credits = models.IntegerField(default=3)
+	total_credits = models.IntegerField(default=3)
 	profile_completed_once = models.BooleanField(default=False)
 
 	def get_absolute_url(self):
@@ -36,6 +37,7 @@ class UserProfile(models.Model):
 
 	def add_credit(self,add=1):
 		self.listing_credits += add
+		self.total_credits += add
 		self.save()
 
 	def subtract_credit(self,subtract=1):
