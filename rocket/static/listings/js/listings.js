@@ -27,11 +27,9 @@ $.fn.serializeObject = function() {
 $(function() {
 
   // Backbone listing preview stuff
-  var Listing = Backbone.Model.extend({
-    // initialize: function(attrs) {
-      // console.log(attrs);
-    // }
-  });
+  var Listing = Backbone.Model;
+
+  var photos = new Backbone.Collection;
 
   var ListingView = Backbone.View.extend({
 
@@ -166,7 +164,9 @@ $(function() {
         formset.find('#id_listingphoto_set-{0}-ORDER'.format(photo.index)).val(photo.index);               
       });
 
-      ListingView.delegateEvents();
+      photos.add(view.photos);
+      // formset.find('input').trigger('change');
+
     },
     onError: function(type, message) {
       console.log('('+type+') '+ message);
@@ -183,7 +183,9 @@ $(function() {
         var formset = $('#photo_formset');
         $('.sortable div').each(function(index, item) {
           var id = $(item).data('id');
-          formset.find('#id_listingphoto_set-{0}-ORDER'.format(id)).val(index);
+          var orderInput = formset.find('#id_listingphoto_set-{0}-ORDER'.format(id));
+          orderInput.val(index);
+          orderInput.trigger('change');
         });
       });
     }

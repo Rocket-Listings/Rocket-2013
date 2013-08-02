@@ -94,12 +94,12 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">Map</label>
+          {# <label class="form-label">Map</label> #}
           <img src="http://placehold.it/420x200">
         </div>
       </div>
       <div class="specs-form col-lg-6">
-        <p id="no-specs">No specification fields available for this category.</p>
+        <p id="no-specs">No spec fields for this category :(</p>
         {% for spec_key in spec_keys %}
         <div class="form-group" data-cat="{{ spec_key.category_id }}">
             <label class="control-label" for="id_spec-{{ spec_key.id }}">{{ spec_key.name }}</label>
@@ -124,9 +124,9 @@
     <div id="photos" class="row sortable photo-view">
       {% for form in photo_formset %}
         <div class="col-lg-2" data-id="{{ forloop.counter0 }}" draggable="true">
-          <a class="thumbnail">
-            <img src="{{ S3_URL }}{{ form.key.value }}">
-          </a>
+          {# <a class="thumbnail"> #}
+            <img src="{{ S3_URL }}{{ form.key.value }}" class="img-thumbnail">
+          {# </a> #}
         </div>
       {% endfor %}
     </div>
@@ -146,9 +146,9 @@
     <script id="thumbnail-template" type="text/template">
       {{#photos}}
       <div class="col-lg-2" data-id="{{ index }}" draggable="true">
-        <a class="thumbnail">
-          <img src="{{ src }}">
-        </a>
+        // <a class="thumbnail">
+          <img src="{{ src }}" class="img-thumbnail">
+        // </a>
       </div>
       {{/photos}}
     </script>
@@ -166,5 +166,8 @@
     </script>
 
   </fieldset>
-  <button type="submit" class="btn btn-primary">Post to Craigslist</button>
+  <div class="btn-toolbar pull-right">
+    <input type="submit" class="btn btn-default" name="listing_action" value="Save as Draft"/>
+    <input type="submit" class="btn btn-primary" name="listing_action" value="Save to Craigslist"/>
+  </div>
 </form>
