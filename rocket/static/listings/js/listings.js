@@ -53,6 +53,7 @@ $(function() {
     },
 
     changed: function(evt) {
+      console.log('changed');
       var changed = $(evt.currentTarget)
       var obj = {};
       obj[changed.attr('name')] = changed.val();
@@ -164,6 +165,7 @@ $(function() {
         formset.find('#id_listingphoto_set-{0}-key'.format(photo.index)).val(photo.key);
         formset.find('#id_listingphoto_set-{0}-ORDER'.format(photo.index)).val(photo.index);               
       });
+
       ListingView.delegateEvents();
     },
     onError: function(type, message) {

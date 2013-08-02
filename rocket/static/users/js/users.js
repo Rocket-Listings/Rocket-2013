@@ -283,8 +283,6 @@ $(function() {
 	$("div.btn-group[data-toggle-name='comment_rating'] button").click(function () {
 		var button = $(this),
 			hidden = $("input[name='rating']");
-		$("div.btn-group[data-toggle-name='comment_rating'] button").removeClass("active");
-		$(this).addClass("active");
 		hidden.val(button.val());
 	});
 
