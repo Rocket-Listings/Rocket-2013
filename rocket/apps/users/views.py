@@ -1,8 +1,8 @@
 from listings.models import Listing, ListingPhoto, Buyer, Offer, Message, ListingStatus
 import datetime
 #from users.models import UserProfile
-from users.forms import UserProfileForm, CommentSubmitForm, UserRatingForm
-from users.models import UserProfile, UserComment, ProfileFB, UserRating 
+from users.forms import UserProfileForm, CommentSubmitForm
+from users.models import UserProfile, UserComment, ProfileFB 
 from django.forms.models import inlineformset_factory
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect
@@ -67,33 +67,35 @@ def info(request):
 def profile(request, username=None):
 	user = User.objects.get(username=username)
 	request.user.is_owner = bool(user == request.user)
-		
 	allListings = Listing.objects.filter(user=user).order_by('-pub_date')
 	# activelistings = allListings.filter(status=ListingStatus(pk=1))
 	# draftlistings = allListings.filter(status=ListingStatus(pk=2))
 	photos = ListingPhoto.objects.filter(listing=user)
 	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos)
-	ratings = UserRating.objects.filter(user=user)
-	rating = ratings.aggregate(Avg('rating')).values()[0]
+	#ratings = UserRating.objects.filter(user=user)
 	comments = UserComment.objects.filter(user=user).order_by('-date_posted') 
+	avg_rating = comments.aggregate(Avg('rating')).values()[0]
 	fbProfile = ProfileFB.objects.get(profile=user.get_profile())
+	total_listing_views = 0
+	for listing in allListings:
+		total_listing_views += listing.get_view_count()
+	print total_listing_views
 	if request.method == 'POST':
-		comment_form = CommentSubmitForm(request.POST, instance = UserComment(user=user))
-		rating_form = UserRatingForm(request.POST, instance = UserRating(user=user))
-		if rating_form.is_valid() and comment_form.is_valid():
-			rating = rating_form.save()
+		comment_form = CommentSubmitForm(request.POST, instance = UserComment(user=user))	
+		if comment_form.is_valid():
 			comment = comment_form.save()
 			responseData = {}
 			for key, value in comment_form.cleaned_data.iteritems():
-				responseData[key] = escape(value)
-			for key, value in rating_form.cleaned_data.iteritems():
-				responseData[key] = escape(str(value))
+				if isinstance(value, int):
+					responseData[key] = escape(str(value))
+				else:
+					responseData[key] = escape(value)
+
 			responseData['new_comment'] = True
 			responseData['date_posted'] = datetime.date.today().strftime("%B %d, %Y")
 			return HttpResponse(json.dumps(responseData), content_type="application/json")
 		else:
 			errors = comment_form.errors
-			errors.update(rating_form.errors)
 			return HttpResponse(json.dumps(errors), content_type="application/json")
 
 
@@ -107,7 +109,7 @@ def profile(request, username=None):
 		# 	return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
 		credits = user.get_profile().listing_credits
-		context_dictionary = {'url_user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile, 'rating':rating, 'owner':request.user.is_owner, 'credits':credits}
+		context_dictionary = {'url_user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile, 'avg_rating':avg_rating, 'owner':request.user.is_owner, 'credits':credits,'total_listing_views':total_listing_views}
 		return TemplateResponse(request, 'users/user_profile.html', context_dictionary) #'activelistings':activelistings, 'draftlistings':draftlistings,
 
 def delete_account(request):

@@ -15,11 +15,11 @@ def autopost_task(username, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
 	photos = ListingPhoto.objects.filter(listing=listing).order_by('order')
 
-	try:
-		b = Buyer.objects.get(listing= listing, name= "Craigslist")
-	except ObjectDoesNotExist:
-		b = Buyer(listing = listing, name = "Craigslist", email = "robots@craigslist.org")
-		b.save()
+	# try:
+	# 	b = Buyer.objects.get(listing= listing, name= "Craigslist")
+	# except ObjectDoesNotExist:
+	# 	b = Buyer(listing = listing, name = "Craigslist", email = "robots@craigslist.org")
+	# 	b.save()
 	
 	r = requests.get('https://post.craigslist.org/c/brl?lang=en') #GET the url to post to
 	post_url = r.url.split('?')[0] #split out the query string

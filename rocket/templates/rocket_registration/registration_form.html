@@ -70,8 +70,6 @@
 	$("div.btn-group[data-toggle-name='default_seller_type'] button").click(function() {
 		var button = $(this),
 			hidden = $('input[name="default_seller_type"]');
-		$("div.btn-group[data-toggle-name='default_seller_type'] button").removeClass("active");
-		button.addClass("active");
 		hidden.val(button.val());
 	});
     if ($('input[name="default_seller_type"]').val() == "P") {

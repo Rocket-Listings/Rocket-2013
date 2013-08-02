@@ -1,5 +1,6 @@
 {% load specval %}
-<h2>{{ form.title.value|default:"Create a Listing" }}</h2>
+
+<h3 class="listing-title">{{ form.title.value|default:"Create a Listing" }}</h3>
 {# {{ formset.as_p }} #}
 
 {% for hidden in formset.hidden_fields %}
@@ -14,9 +15,8 @@
 
 <form method="POST" class="listing-form">
   {% csrf_token %}
-  {# Hidden fields  #}
+  {# Hidden fields #}
   {% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
-  <input type="hidden" id="id_location" maxlength="200" name="location" value="Bethesda, MD">
   {# Category Select #}
   <fieldset>
     <legend>Category</legend>
@@ -37,10 +37,10 @@
       {% for group, cat_list in cats.items %}
       <div class="tab-pane cat-pane {% if group == "forsale" %} active{% endif %}" id="{{ group }}">
         <div class="row">
-          <div class="col-lg-2 col-4">
+          <div class="col-lg-2 col-sm-4 col-3">
           {% for cat in cat_list %}
               <a class="cat {{ group }}" data-id="{{ cat.id }}">{{ cat.name }}</a>
-            {% if group == "forsale" and forloop.counter|divisibleby:9 or group == "housing" and forloop.counter|divisibleby:3 %}
+            {% if group == "forsale" and forloop.counter|divisibleby:6 or group == "housing" and forloop.counter|divisibleby:3 %}
               </div><div class="col-lg-2">
             {% endif %}
           {% endfor %}
@@ -57,26 +57,26 @@
     <div class="row">
       <div class="col-sm-9 form-group{% if form.title.errors %} has-error {% endif %}">
         
-        <label class="control-label">{{ form.title.label }}</label>
-        <input class="title form-control" maxlength="200" name="title" type="text" placeholder="2000 Jeep Wrangler 4.0L" value="{{ form.title.value|default:"" }}">
+        <label class="control-label" for="id_title">{{ form.title.label }}</label>
+        <input id="id_title" class="title form-control" maxlength="200" name="title" type="text" placeholder="2000 Jeep Wrangler 4.0L" value="{{ form.title.value|default:"" }}">
 
         {% for error in form.title.errors %}
           <span class="help-block">{{ error }}</span>
         {% endfor %}
       </div>
       <div class="col-sm-3 form-group {% if form.price.errors %} has-error {% endif %}">
-        <label class="control-label">{{ form.price.label }}</label>
+        <label for="id_price" class="control-label">{{ form.price.label }}</label>
         <div class="input-group">
           <span class="input-group-addon">$</span>
-          <input class="price form-control" name="price" type="text" placeholder="666" value="{{ form.price.value|default:"" }}">
+          <input id="id_price" class="price form-control" name="price" type="text" placeholder="666" value="{{ form.price.value|default:"" }}">
         </div>
         {% for error in form.price.errors %}<span class="help-block">{{ error }}</span>{% endfor %}
       </div>
     </div>
     <div class="row">
       <div class="form-group col-lg-12{% if form.description.errors %} has-error {% endif %}">
-        <label class="control-label">{{ form.description.label }}</label>
-        <textarea class="description form-control" placeholder="The best car ever." name="description" rows="5">{{ form.description.value|default:"" }}</textarea>
+        <label class="control-label" for="id_description">{{ form.description.label }}</label>
+        <textarea id="id_description" class="description form-control" placeholder="The best car ever." name="description" rows="5">{{ form.description.value|default:"" }}</textarea>
         {% for error in form.price.errors %}<span class="help-block">{{ error }}</span>{% endfor %}
       </div>
     </div>
@@ -84,15 +84,26 @@
   <fieldset id="spec-fieldset" class=""><legend>Location &amp; Specs</legend>
     <div class="row">
       <div class="col-lg-6">
-        <label>{{ form.location.label }}</label>
-        <img src="http://placehold.it/420x200"/>
+        <div class="form-group {% if form.location.errors %} has-error {% endif %}">
+          <label for="id_location" class="form-label">{{ form.location.label }}</label>
+          <div class="input-group">
+            <input type="text" placeholder="Burlington, VT" class="form-control" id="id_location" maxlength="200" name="location" value="{{ form.location.value|default:"" }}">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button">Get Precise Location <i class="glyphicon glyphicon-screenshot"></i></button>
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Map</label>
+          <img src="http://placehold.it/420x200">
+        </div>
       </div>
       <div class="specs-form col-lg-6">
         <p id="no-specs">No specification fields available for this category.</p>
         {% for spec_key in spec_keys %}
         <div class="form-group" data-cat="{{ spec_key.category_id }}">
-            <label class="control-label" for="spec-{{ spec_key.id }}">{{ spec_key.name }}</label>
-            <input class="form-control" type="text" disabled="disabled" name="spec-{{ spec_key.id }}" value="{{ specs|specval:spec_key.id }}"/>
+            <label class="control-label" for="id_spec-{{ spec_key.id }}">{{ spec_key.name }}</label>
+            <input id="id_spec-{{ spec_key.id }}" class="form-control" type="text" disabled="disabled" name="spec-{{ spec_key.id }}" value="{{ specs|specval:spec_key.id }}"/>
         </div>
         {% endfor %}
       </div>

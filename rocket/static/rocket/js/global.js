@@ -1,3 +1,14 @@
+$(function() {
+    $("div[data-toggle='buttons-radio']").each(function() {
+        var btnGroup = $(this),
+            buttons = btnGroup.children('button');
+        buttons.click(function() {
+            buttons.removeClass("active");
+            $(this).addClass("active");
+        });
+    });
+});
+
 // $(function(){
 // //  $(".fancybox").fancybox();
 

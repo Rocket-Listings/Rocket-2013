@@ -16,6 +16,7 @@ from registration.backends import get_backend
 from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 from django import forms
 from django.forms.util import ErrorList
+import hashlib, urllib
 
 
 def activate(request, backend,
@@ -202,6 +203,12 @@ def register(request, backend, success_url=None, form_class=None,
                 new_user = backend.register(request, **form.cleaned_data)
                 profile = UserProfile.objects.get(user=new_user)
                 profile.default_seller_type = seller_type_save
+
+                gravatar_connection = urllib.urlopen("http://www.gravatar.com/avatar/" + hashlib.md5(new_user.email.lower()).hexdigest())
+                gravatar = gravatar_connection.info()['Content-Type']
+                if gravatar == "image/png" or gravatar == "image/jpg" or gravatar == "image/jpeg":
+                    profile.propic = "http://www.gravatar.com/avatar/" + hashlib.md5(new_user.email.lower()).hexdigest()
+
                 profile.save()
                 if request.GET.get('next',''):
                     success_url = request.GET.get('next','')
