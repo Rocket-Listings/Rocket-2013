@@ -24,6 +24,7 @@ class Migration(SchemaMigration):
             ('TWITTER_OAUTH_TOKEN', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
             ('TWITTER_OAUTH_TOKEN_SECRET', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
             ('listing_credits', self.gf('django.db.models.fields.IntegerField')(default=3)),
+            ('profile_completed_once', self.gf('django.db.models.fields.BooleanField')(default=False)),
         ))
         db.send_create_signal(u'users', ['UserProfile'])
 
@@ -178,6 +179,7 @@ class Migration(SchemaMigration):
             'location': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
             'phone': ('django.db.models.fields.CharField', [], {'max_length': '50', 'blank': 'True'}),
+            'profile_completed_once': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'propic': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
             'twitter_handle': ('django.db.models.fields.CharField', [], {'max_length': '20', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['auth.User']", 'unique': 'True'})
