@@ -31,9 +31,9 @@
     </div>
     <div class="col-lg-3 detail-sidebar">
       <div data-spy="affix" data-offset-top="82">
-        <div class="btn-group">
-          <a class="btn btn-primary{% if pane == 'edit' %} active{% endif %}" data-toggle="tab" href="#edit">Edit</a>
-          <a class="btn btn-primary{% if pane == 'preview' %} active{% endif %}" data-toggle="tab" href="#preview">Preview</a>
+        <div class="btn-group" data-toggle="buttons-radio">
+          <button type="button" class="btn btn-primary{% if pane == 'edit' %} active{% endif %}" data-toggle="button" href="#edit">Edit</button>
+          <button type="button" class="btn btn-primary{% if pane == 'preview' %} active{% endif %}" data-toggle="button" href="#preview">Preview</button>
         </div>
       </div>
     </div>
