@@ -2,7 +2,7 @@
 <script id="preview-template" type="text/template">
   <div class="row">
     <h3 class="col-10">{{ title }}</h3>
-    <h3 class="col-2 text-right text-success">${{ price }}</h3>
+    <h3 class="col-2 text-right text-success">{{#price}}${{ price }}{{/price}}</h3>
   </div>
   <p>{{ location }}</p>
   <p>{{ description }}</p>

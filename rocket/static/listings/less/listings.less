@@ -171,6 +171,7 @@
 #listing-detail {
     overflow-x: hidden;
 }
+
 .listing-form {
   fieldset small {
     font-size: 60%;
@@ -186,143 +187,71 @@
   }
   
   .tab-content {
-    // height: 434px;
     border-right: 1px solid #ddd;
     border-left: 1px solid #ddd;
     border-bottom: 1px solid #ddd;    
-    // padding: 12px;
   }
 
   .nav {
     margin-bottom: 0px;
   }
+
   .cat-pane {
     padding: 8px;
   }
 
   .tab-pane .cat {
-    // float: left;
     display: block;
     padding: 8px 0 8px 8px;
     margin-bottom: 0;
+
     .nav {
-        margin-bottom: 0px;
+      margin-bottom: 0px;
     }
 
-    .tab-pane .cat {
-        // float: left;
-        display: block;
-        padding: 8px 0 8px 8px;
-        margin-bottom: 0;
-
-        &:hover {
-                cursor: pointer;
-                // color: #08c;
-                // background: lighten(#08c, 50%);
-                // text-decoration: none;
-                text-decoration: underline;
-        }
-        &.selected {
-            color: black;
-            text-decoration: underline;            
-            // color: white;
-            // background: #08c; 
-        }
+    &:hover {
+    cursor: pointer;
+    text-decoration: underline;
     }
-
-    .title {
-        // display: block;
-    }
-    
-
-    .input-prepend.gridfix {
-        display: block;
-        position: relative;
-        height: 30px;
-        input {
-            position: absolute;
-            right: 0px;
-            left: 27px;
-            width: auto !important;
-        }
-        .add-on {
-            position: absolute;
-            // width: 30px;
-            left: 0px;
-        }
-    }
-
-    #fp-container {
-        border: none;
-        min-height: 412px;
-        width: 108%; 
-        position: relative; 
-        left: -30px;
-    }
-    
-    .sortable .sortable-dragging {
-        // background: blue;
-        cursor: pointer;
-    }
-    .sortable .sortable-placeholder {
-        float: left;
-        width: 160px;
-        min-height: 160px;
-        margin-left: 30px;
-        margin-bottom: 20px;
-        border: 1px dashed #ddd;
-    }
-
-    .thumbnail:hover {
-        cursor: pointer;
-        // width: 200px;
-
-    }
-
-    .photo-view {
-        display: none;
-    }
-
-    #photos {
-        height: 412px;
-    }
-
-    fieldset small {
-        margin-left: 12px;
+    &.selected {
+        color: black;
+        text-decoration: underline;            
     }
   }
 
   #fp-container {
-    border: none;
-    min-height: 412px;
-    width: 108%; 
-    position: relative; 
-    left: -30px;
+      border: none;
+      min-height: 412px;
+      width: 108%; 
+      position: relative; 
+      left: -30px;
   }
   
   .sortable .sortable-dragging {
-    // background: blue;
-    cursor: pointer;
+      // background: blue;
+      cursor: pointer;
   }
   .sortable .sortable-placeholder {
-    float: left;
-    width: 120px;
-    min-height: 90px;
-    margin-left: 15px;
-    margin-right: 15px;    
-    // margin-bottom: 15px;
-    border: 1px dashed #ddd;
+      float: left;
+      width: 160px;
+      min-height: 160px;
+      margin-left: 30px;
+      margin-bottom: 20px;
+      border: 1px dashed #ddd;
   }
 
   .thumbnail:hover {
-    cursor: pointer;
-    // width: 200px;
+      cursor: pointer;
+  }
+
+  .photo-view {
+      display: none;
   }
 
   #photos {
-    min-height: 200px;
+      min-height: 200px;
   }
-
+  
   #spec-fieldset {
     margin-bottom: 20px;
   }
@@ -333,7 +262,7 @@
 
 
 .detail-sidebar {
-    padding-top:38px;
+    margin-top:12px;
     > div {
         top: 10px;
     }
