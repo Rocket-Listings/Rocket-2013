@@ -90,20 +90,6 @@ $(function() {
 			console.log(FPError);
 		});
 	});
-
-
-	$(".default-email").click(function (e) {
-		e.preventDefault();
-		$(".propic").attr("src", "http://www.gravatar.com/avatar/" + MD5($('.user-email').val()));
-		$(".propic-url").val("http://www.gravatar.com/avatar/" + MD5($('.user-email').val()));
-	});
-
-	$(".alternate-email").click(function (e) {
-		e.preventDefault();
-		$(".propic").attr("src", "http://www.gravatar.com/avatar/" + MD5($('.alternate-email-gravatar').val()));
-		$(".propic-url").val("http://www.gravatar.com/avatar/" + MD5($('.alternate-email-gravatar').val()));
-	})
-
 	$("form.settings-form").submit(function() {
 		if ((!$(".save-all").hasClass("disabled")) || ($(".save-all").hasClass("propic-enable"))) {
 			var csrftoken = getCookie('csrftoken');
