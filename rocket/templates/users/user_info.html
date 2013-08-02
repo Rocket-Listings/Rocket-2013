@@ -4,31 +4,65 @@
 {% load compress %}
 	
 {% block content %}
-	
-
-	<div class="content-wrapper">
-
+	<div class="content-wrapper row show-grid">
+		<div class="error-wrapper"></div>
+		
 		{% if user.get_profile.name %}
 			<h3><a class="name-header" href="{% url 'users.views.profile' user.username %}">{{ user.get_profile.name }}</a></h3>
 		{% else %}
 			<h3><a class="name-header" href="{% url 'users.views.profile' user.username %}">{{user.username}}</a></h3>
 		{% endif %}
 
-		<div class="error-wrapper row"></div>
-		{% if first_visit %}
-			<div class="alert alert-info">
-  				<button type="button" class="close" data-dismiss="alert">&times;</button>
-  				<h4>Info Panel</h4>
-  				This is your info panel. Create your profile, connect Twitter and Facebook, and choose your listing defaults.
-			</div>
-		{% endif %}
-		<form class="settings-form col-lg-8" action="" method="POST">
+		<div class="col-lg-4 col-push-8">
+			<h4>Listing Credits</h4>
+
+			<table class="table">
+				<tr>
+					<td class="padding8 text-center">{{credits}}</td>
+					<td class="padding8">Credits Left</td>
+				</tr>
+				<tr>
+					<td class="padding8 text-center"><p>{{credits_spent}}</p></td>
+					<td class="padding8">Credits Spent</td>
+				</tr>
+			</table>
+
+			<table>
+				<tr>
+					<td class="padding8">{% if not profile_completed_once %}<i class="glyphicon glyphicon-unchecked">{% else %}<i class="glyphicon glyphicon-checked">{% endif %}</i></td>	
+					<td class="padding8">You can earn more by completing your profile</td>
+				</tr>
+			
+				<tr>
+					<td class="padding8"><i class="glyphicon glyphicon-unchecked"></i></td><td style="padding:8px">Linking social media accounts</td>
+				</tr>
+
+				<tr>
+					<td class="padding8"><i class="glyphicon glyphicon-unchecked"></i></td><td style="padding:8px">Referring friends</td>
+				</tr>
+			</table>
+		</div>
+
+
+		<form class="settings-form col-lg-8 col-pull-4" action="" method="POST">
+			{% if first_visit %}
+				<div class="alert alert-info">
+  					<button type="button" class="close" data-dismiss="alert">&times;</button>
+  					<h4>Info Panel</h4>
+  					This is your info panel. Create your profile, connect Twitter and Facebook, and choose your listing defaults.
+				</div>
+			{% endif %}
 			{% csrf_token %}
 			<table class="table table-hover">
-				<thead>
+				<thead>					
 					<div class="save-all-container">
-						<span class="h4 user-info-label">User Info</span>
-						<input class="btn btn-primary save-all disabled" type="submit" value="Save all">
+						<th>
+							<span class="h4 user-info-label">User Info</span>
+						</th>
+						<th></th>
+						<th>
+							<input class="btn btn-primary save-all disabled" type="submit" value="Save all">
+						</th>
 					</div>
 				</thead>
 				<tbody>
@@ -160,41 +194,22 @@
 						<td></td>
 					</tr>
 					
+					<tr>
+						<td><a class="delete-account-modaltrigger text-danger" role="button" data-toggle="modal" href="#delete-account-modal">Delete account</a></td>
+						<td></td><td><input class="btn btn-primary save-all disabled" type="submit" value="Save all"/></td>
+					</tr>				
+				
 				</tbody>
+
+						
+						
 			</table>
-			<a class="delete-account-modaltrigger text-danger" role="button" data-toggle="modal" href="#delete-account-modal">Delete account</a>
-			<input class="btn btn-primary save-all disabled" type="submit" value="Save all">
-		</form>
-
-		<div class="col-lg-4">
-			<h4>Listing Credits</h4>
-
-			<table class="table">
-				<tr>
-					<td style="padding:8px; text-align:center">{{credits}}</td>
-					<td style="padding:8px">Credits Left</td>
-				</tr>
-				<tr>
-					<td style="padding:8px; text-align:center"><p>{{credits_spent}}</p></td>
-					<td style="padding:8px">Credits Spent</td>
-				</tr>
 			
-				<tr>
-					<td style="padding:8px">{% if not profile_completed_once %}<i class="glyphicon glyphicon-unchecked">{% else %}<i class="glyphicon glyphicon-checked">{% endif %}</i></td>	
-					<td style="padding:8px">You can earn more by completing your profile</td>
-				</tr>
-			</table>
-
-			<table>
-				<tr>
-					<td style="padding:8px"><i class="glyphicon glyphicon-unchecked"></i></td><td style="padding:8px">Linking social media accounts</td>
-				</tr>
-
-				<tr>
-					<td style="padding:8px"><i class="glyphicon glyphicon-unchecked"></i></td><td style="padding:8px">Referring friends</td>
-				</tr>
-			</table>
+						
+						
+		</form>
 		</div>
+
 
 
 	</div>
