@@ -1,6 +1,6 @@
 from django import forms
 from django.forms.models import modelformset_factory
-from listings.models import Listing, ListingCategory, ListingPhoto, ListingSpecKey, ListingSpecValue
+from listings.models import Listing, ListingCategory, ListingPhoto, ListingSpecKey, ListingSpecValue, Message
 from listings import utils
 from django.forms.models import inlineformset_factory
 
@@ -27,3 +27,15 @@ class SpecForm(forms.Form):
     #     return self.cleaned_data
 
 ListingPhotoFormSet = inlineformset_factory(Listing, ListingPhoto, extra=0, can_order=True, can_delete=True, exclude=('order'))
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        exclude = ('date')
+        fields = ('listing', 'buyer', 'content', 'isSeller')
+
+        def clean(self):
+            for field in self.cleaned_data:
+                if isinstance(self.cleaned_data[field], basestring):
+                    self.cleaned_data[field] = self.cleaned_data[field].strip()
+            return self.cleaned_data

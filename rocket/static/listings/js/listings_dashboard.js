@@ -6,14 +6,11 @@ $(function() {
 		listingRow.addClass('highlight');
 		var id = listingRow.data('listing-id');
 		$(".buyer-card").addClass("hide");
-		$(".message").addClass("hide");
+		$(".message, .message-form").addClass("hide");
 		var buyers = $(".listing-" + id);
 		if(buyers.length) {
 			buyers.removeClass("hide");
 			buyers.first().click();
-			$('.message-form').removeClass("hide");
-		} else {
-			$('.message-form').addClass("hide");
 		}
 	});
 
@@ -26,8 +23,7 @@ $(function() {
 		$('.buyer-card').removeClass('highlight');
 		buyerCard.addClass('highlight');
 		var id = buyerCard.data('buyer-id');
-		console.log(id);
-		$(".message").addClass("hide");
+		$(".message, .message-form").addClass("hide");
 		$('.buyer-' + id).removeClass("hide");
 	});
 
@@ -60,6 +56,40 @@ $(function() {
 			success: function (response) {
 				insertNewData(response);
 			}
+		});
+	});
+
+	$("form.message-form").each(function() {
+		var form = $(this);
+		$(this).submit(function() {
+			var csrftoken = getCookie('csrftoken');
+			$.ajax({
+				url: '/listings/dashboard/message/',
+				method: 'POST',
+				data: form.serialize(),
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader("X-CSRFToken", csrftoken);
+				},
+				success: function (response) {
+					switch (response.status) {
+						case 'success':
+							$("#new-message-wrapper").append(Mustache.render($("#new-message").html(), response));
+							$('.buyer-' + response.messages.buyer_id).removeClass("hide");
+							$('.last-message').text(response.messages.message_id);
+							$('.buyer-' + response.messages.buyer_id + ' textarea').val("");
+							break;
+						case 'err_validation':
+							console.log("There was an error sending the message.");
+							break;
+						case 'err_empty':
+							break;
+					}
+				},
+				error: function (response) {
+					console.log("There was an error sending the message.");
+				}
+			});
+			return false;
 		});
 	});
 

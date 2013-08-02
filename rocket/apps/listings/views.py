@@ -4,7 +4,7 @@ import json
 from django.contrib.auth.models import User
 from django.conf import settings
 from datetime import datetime, timedelta
-from listings.forms import ListingForm, SpecForm, ListingPhotoFormSet
+from listings.forms import ListingForm, SpecForm, ListingPhotoFormSet, MessageForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET, require_POST 
 from django.shortcuts import render, redirect, get_object_or_404
@@ -24,6 +24,7 @@ import haystack
 from users.decorators import first_visit, view_count
 from django.template.response import TemplateResponse
 from django.contrib.humanize.templatetags.humanize import naturaltime
+from mail.views import send_message
 
 @first_visit
 @login_required
@@ -195,10 +196,13 @@ def search_ajax(request):
 
 # import_uploader = AjaxFileUploader(backend=upload_backend)
 
+### API ###
+@require_GET
 def status(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
 	return HttpResponse(listing.status)
 
+@require_GET
 def dashboard_data(request):
 	user = request.user
 	ids = map(lambda i: int(request.GET.get(i, '0')), ['listing', 'buyer', 'message'])
@@ -215,19 +219,43 @@ def dashboard_data(request):
 		'price': l.price, 
 		'category': l.category.name, 
 		'status': l.status.name, 
-		'date': naturaltime(l.pub_date)}, listings.filter(id__gt=ids[0]))
+		'sort_date': l.pub_date.strftime("%m/%d/%y %I:%M %p"),
+		'natural_date': naturaltime(l.pub_date)}, listings.filter(id__gt=ids[0]))
 	buyers_data = map(lambda b: {
-		'listing-id': b.listing.id, 
-		'buyer-id': b.id, 
+		'listing_id': b.listing.id, 
+		'buyer_id': b.id, 
 		'max_offer': b.curMaxOffer, 
 		'name': b.name, 
 		'last_message_date': naturaltime(b.last_message().date)}, [b for b in buyers if b.id > ids[1]])
 	messages_data = map(lambda m: {
 		'isSeller': m.isSeller,
-		'buyer-id': m.buyer.id,
-		'buyer-name': m.buyer.name,
+		'buyer_id': m.buyer.id,
+		'buyer_name': m.buyer.name,
+		'seller_name': m.listing.user.get_profile().get_display_name(),
 		'content': m.content,
 		'date': naturaltime(m.date)}, [m for m in messages if m.id > ids[2]])
 
 	json = {'listings': listings_data, 'buyers': buyers_data, 'messages': messages_data, 'latest': latest_ids}
 	return HttpResponse(simplejson.dumps(json), content_type="application/json")
+
+@require_POST
+def dashboard_message(request):
+	if request.POST.get("content", ""):
+		message_form = MessageForm(request.POST)
+		if message_form.is_valid():
+			message = message_form.save(commit=False)
+			message.isSeller = True
+			message.save()
+			#send_message(message.id)
+			response_data = { 'listing': message.listing.id,
+							  'isSeller': message.isSeller,
+							  'seller_name': message.listing.user.get_profile().get_display_name(),
+							  'buyer_id': message.buyer.id,
+							  'buyer_name': message.buyer.name,
+							  'content': message.content,
+							  'message_id': message.id }
+			return HttpResponse(simplejson.dumps({'messages': response_data, 'status': 'success'}), content_type="application/json")
+		else:
+			return HttpResponse(simplejson.dumps({'errors': message_form.errors, 'status': 'err_validation'}), content_type="application/json")
+	else:
+		return HttpResponse(simplejson.dumps({'errors': 'Message content is empty.', 'status': 'err_empty'}))

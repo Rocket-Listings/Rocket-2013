@@ -134,3 +134,6 @@ def autopost_success_handler(sender=None, result=None, args=None, kwargs=None, *
 	listing = Listing.objects.get(pk=result)
 	listing.status_id = 3
 	listing.save()
+
+def send_message_task(message_id):
+	return

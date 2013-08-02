@@ -125,8 +125,8 @@ class Offer(models.Model):
 
 # Listing Message
 class Message(models.Model):
-	listing = models.ForeignKey(Listing, null = True, blank=True)
-	isSeller = models.NullBooleanField(blank=True)
-	buyer = models.ForeignKey(Buyer, null = True, blank=True)
-	content = models.TextField()
+	listing = models.ForeignKey(Listing, null=False, blank=False)
+	isSeller = models.NullBooleanField(blank=False)
+	buyer = models.ForeignKey(Buyer, null=False, blank=False)
+	content = models.TextField(null=False, blank=False)
 	date = models.DateTimeField('date received', auto_now_add=True, default=datetime.now)

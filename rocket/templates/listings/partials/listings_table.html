@@ -15,6 +15,17 @@
 		</tr>
 	</thead>
 	<tbody class="listing-table-body">
+		<script id="new-listing" type="text/template">
+		{% verbatim %}
+		{{#listings}}
+			<tr data-listing-id="{{ id }}">
+				<td class="d-title"><a href="{{ link }}">{{ title }}</a></td>
+				<td class="d-price">${{ price }}</td>
+				<td class="d-date"><p class="hide">{{ sort_date }}</p>{{ natural_date }}</td>
+			<tr>
+		{{/listings}}
+		{% endverbatim %}
+		</script>
 		{% for listing in listings %}
 		<tr data-listing-id="{{ listing.id }}" >
 			<td class="d-title">

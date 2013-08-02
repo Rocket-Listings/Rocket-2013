@@ -29,6 +29,11 @@ class UserProfile(models.Model):
 	def get_absolute_url(self):
 		return reverse('users.views.profile')
 
+	def get_display_name(self):
+		if self.name:
+			return self.name
+		return self.user.username
+
 	def __unicode__(self):
 		return self.user.username
 

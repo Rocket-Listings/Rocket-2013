@@ -16,10 +16,40 @@
 		<h6>{{message.buyer.name}}</h6>
 		<p class="buyer">{{message.content}}</p>
 	   	{% endif %}
-   	</div>
+	</div>
    	{% endfor %}
+   	<div id="new-message-wrapper"></div>
+   	{% for buyer in buyers %}
+		<form class="message-form buyer-{{buyer.id}} hide">
+			<textarea class="form-control" rows="3" name='content' class="input-long" placeholder="Message..." ></textarea>
+			<input type="hidden" name="listing" value="{{buyer.listing.id}}">
+			<input type="hidden" name="buyer" value="{{buyer.id}}">
+			<input type="submit" class="btn btn-primary send-button"> {# needs to be enabled #}
+		</form>
+	{% endfor %}
+   	<script id="new-message" type="text/template">
+	{% verbatim %}
+	{{#messages}}
+		<div class="message buyer-{{ buyer_id }} hide">
+			<h6>
+				{{#isSeller}}{{seller_name}}{{/isSeller}}
+				{{^isSeller}}{{buyer_name}}{{/isSeller}}
+			</h6>
+			<p class="{{#isSeller}}seller{{/isSeller}}{{^isSeller}}buyer{{/isSeller}}">{{content}}</p>
+		</div>
+	{{/messages}}
+	{% endverbatim %}
+	</script>
+	<script id="new-message-form" type="text/template">
+	{% verbatim %}
+	{{#buyers}}
+		<form class="message-form buyer-{{ buyer_id }} hide">
+			<textarea class="form-control" rows="3" name="content" class="input-long" placeholder="Message..."></textarea>
+			<input type="hidden" name="listing" value="{{ listing_id }}">
+			<input type="hidden" name="buyer" value="{{ buyer_id }}">
+			<input type="submit" class="btn btn-primary send-button">
+		</form>
+	{{/buyers}}
+	{% endverbatim %}
+	</script>
 </div>
-<form class="message-form hide">
-	<textarea class="form-control" rows="2" name='content' class="input-long" placeholder="Message..." ></textarea>
-	<input type="submit" class="btn btn-primary send-button"> {# needs to be enabled #}
-</form>

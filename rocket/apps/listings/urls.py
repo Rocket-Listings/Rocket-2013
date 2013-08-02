@@ -19,5 +19,6 @@ urlpatterns = patterns('listings.views',
 	url(r'^dashboard/$', 'dashboard', name='dashboard'),
 
 	url(r'^dashboard/data/$','dashboard_data'),
+	url(r'^dashboard/message/$', 'dashboard_message'),
 	url(r'^(?P<listing_id>\d+)/status/$', 'status'),
 )

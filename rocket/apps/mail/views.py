@@ -129,5 +129,8 @@ def on_incoming_buyer_message(request):
 def autopost(request, listing_id):
 	username = User.objects.get(username=request.user).username
 	result = autopost_task.delay(username, listing_id)
-	print result.get()
+	return HttpResponse()
+
+def send_message(request, message_id):
+	send_message_task.delay(message_id)
 	return HttpResponse()
