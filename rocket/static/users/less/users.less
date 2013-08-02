@@ -308,6 +308,7 @@ a {
 			margin-bottom: 0px;
 			th{
 				width: 115px;
+				text-align: right;
 			}
 
 			td{
@@ -337,19 +338,19 @@ a {
 		 			padding-bottom: 15px;
 
 		 			.red{
-		 				border-left: 5px solid #C8292D;
+		 				border-left: 5px solid #DF2410;
+		 			}
+
+		 			.orange{
+		 				border-left: 5px solid #E5640F;
 		 			}
 
 		 			.yellow{
-		 				border-left: 5px solid #EB9E3E;
+		 				border-left: 5px solid #f1f00e;
 		 			}
 
-		 			.lightblue{
-		 				border-left: 5px solid #4DB3D6;
-		 			}
-
-		 			.blue{
-		 				border-left: 5px solid #3576BE;
+		 			.green{
+		 				border-left: 5px solid #41d503;
 		 			}
 					
 		 			.comment-top{
@@ -382,9 +383,85 @@ a {
 	.comment-form-container {
 		margin-top: 15px;
 
-		.btn-group button{
-			width: 95px;
+		.form-group{
+			margin-left: 10px;
+
+		.form-control{
+			margin-bottom: 15px;
+		}	
+
+
+		.btn-group{
+
+			.btn-red{
+			background-color: #DF2410;
+
+				&:hover{
+					background-color: #a11b04; 
+					color: #393733;
+				}
+			}
+
+			.btn-red.active{
+					background-color: #a11b04;
+					}
+
+			.btn-orange{
+				background-color: #E5640F;
+				
+				&:hover{
+					background-color: #bd5317; 
+					color: #393733;
+				}
+			}
+
+			.btn-orange.active{
+					background-color: #bd5317;
+					}
+
+
+			.btn-yellow{
+				background-color: #f1f00e;
+
+				&:hover{
+					background-color: #c6be41; 
+					color: #393733;
+				}
+				}
+
+				.btn-yellow.active{
+					background-color: #c6be41;
+				}
+			
+
+			.btn-green{
+				background-color: #41d503;
+
+				&:hover{
+					background-color: #519902; 
+					color: #393733;
+				}
+			}
+				.btn-green.active{
+					background-color: #519902;
+				}
+			
+
+			button{
+				width: 94px;
+			}
+
 		}
+		}
+
+		p{
+			padding-top: 7px;
+		}
+
+		.col-submit{
+			text-align: left;
+		}
+		
 
 	}
 
