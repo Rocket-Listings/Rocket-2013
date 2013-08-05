@@ -98,7 +98,7 @@ $(function() {
 			currentSelectedListing = listings.find("li.highlight"),
 			currentSelectedBuyer = buyers.find('ul.highlight'),
 			key = e.which || e.keyCode;
-		if (!$('.message-form textarea').is(":focus")) {
+		if (!$('input.search, textarea').is(":focus"))  {
 			if (key == "66") window.context = "b"; // B
 			if (key == "76") window.context = "l"; // L
 			if ((key == '74') || (key == '40')) {
@@ -241,6 +241,11 @@ $(function() {
 			icon.removeClass(up).addClass(down);
 		}
 		return false;
+	});
+
+	$("input.search").keydown(function() {
+		$(".buyer-card, .message, .message-form-wrapper").addClass("hide");
+		$(".listings-body li").removeClass("highlight");
 	});
 
 	$(".message-content").each(function() {

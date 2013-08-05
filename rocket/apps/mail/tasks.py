@@ -137,4 +137,4 @@ def autopost_success_handler(sender=None, result=None, args=None, kwargs=None, *
 	listing.save()
 
 def send_message_task(message_id):
-	message = 
+	pass
