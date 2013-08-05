@@ -1,11 +1,11 @@
 {% load static from staticfiles %}
-{% load humanize %}
+
 {# Requires the context variable 'listings' #}	
 {# Requires the context variable 'buyers' #}	
 
 <div class="buyers-header">
 	<ul>
-		<li class="d-buyer-title">Buyers</li>
+		<li class="d-buyer-title"></li>
 	</ul>
 </div>
 <div class="buyers-body">
@@ -13,7 +13,7 @@
 	<ul class="buyer-card listing-{{ buyer.listing.id }} hide" data-buyer-id="{{ buyer.id }}">
 		<li>{{ buyer.name }}</li>
 		<li>{% if buyer.max_offer %}Offering ${{ buyer.max_offer }}{% else %}No offer{% endif %}</li>
-		<li>{{ buyer.last_message.date|naturaltime }}</li>
+		
 	</ul>
 	{% endfor %}
 </div>

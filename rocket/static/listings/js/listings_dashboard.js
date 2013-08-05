@@ -39,13 +39,18 @@ $(function() {
 		listingRow.addClass('highlight');
 		$(".message").addClass("hide");
 		$(".buyer-card").addClass("hide");
+
 		if(buyers.length) {
+			$(".buyers-body").addClass("border");
 			buyers.removeClass("hide");
+			$(".no-messages").addClass("hide");
 			buyers.first().click();
 			$('.message-form-wrapper').removeClass("hide");
 			$('.messages-body').scrollBottom();
 		} else {
+			$(".buyers-body").removeClass("border");
 			$('.message-form-wrapper').addClass("hide");
+			$(".no-messages").removeClass("hide");
 		}
 	});
 
