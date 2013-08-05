@@ -45,6 +45,7 @@ $(function() {
 			buyers.removeClass("hide");
 			$(".no-messages").addClass("hide");
 			buyers.first().click();
+			$('.time').addClass("hide");
 			$('.message-form-wrapper').removeClass("hide");
 			$('.messages-body').scrollBottom();
 		} else {
@@ -62,6 +63,10 @@ $(function() {
 		$(".message").addClass("hide");
 		$('.buyer-' + id).removeClass("hide");
 		$('.messages-body').scrollBottom();
+	});
+
+	$(".messages-body ul").hover(function(event){
+		$(this).children(".time").toggleClass("hide");
 	});
 
 	$('.sort').click(function () {

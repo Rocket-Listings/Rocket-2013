@@ -9,6 +9,7 @@
 <div class="messages-body">
 	{% for message in buyer_messages %}
 	<ul class="message buyer-{{ message.buyer.id }} {% if message.isSeller %}message-seller{% else %}message-buyer{% endif %} hide">
+		<li class="time">{{message.date|naturaltime}}</li>
 		<li class="message-buyer-name">
 			{% if message.isSeller %}
 				{% if user.get_profile.name %}
@@ -19,8 +20,10 @@
 			{% else %}
 				{{ message.buyer.name }}
 			{% endif %}
-			{{message.date|naturaltime}}
+
 		</li>
+
+		
 		<li class="message-content">{{ message.content }}</li>
 	</ul>
 	<span class="hide message-form-preserve buyer-{{ message.buyer.id }}"></span>
@@ -30,7 +33,7 @@
 <div class="message-form-wrapper hide">
 	<form class="message-form">
 		<textarea rows="3" class="form-control" name="content" placeholder="Send a reply..."></textarea>
-		<button input type="submit" class="btn btn-primary send-button">Send</button>
+		<input type="submit" class="btn btn-primary send-button">
 	</form>
 </div>
 
