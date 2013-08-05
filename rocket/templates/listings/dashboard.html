@@ -30,18 +30,23 @@
 <div id="dashboard-content">
 <!-- For search to work -->
 	<div class="dashboard-header col-lg-12 col-lg-fixed">
-		<div class="col-lg-2 dashboard-title"><div class="h4">Listings<br>Dashboard</div></div>
-		<div class="col-lg-3 dashboard-search">
-			<input type="search" class="search form-control" data-table="order-table" placeholder="Type to search"/>
+		<div class="dashboard-title">
+			<div class="h4">Listings<br>Dashboard</div>
 		</div>
-		<div class="col-lg-2 dropdown">
-			<a class="btn btn-primary" data-toggle="dropdown" href="#">Filter</a>
+		<div class="dashboard-search">
+			<input type="search" class="form-control search" data-table="order-table" placeholder="Type to search"/>
+		</div>
+		<div class="dropdown dashboard-dropdown">
+			<a class="btn btn-primary dropdown-btn" data-toggle="dropdown" href="#">Filter</a>
 			<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-			    <li><a id="filter-none" tabindex="-1" href="#">All</a></li>
-			    <li><a id="filter-active" tabindex="-1" href="#">Active</a></li>
-			    <li><a id="filter-draft" tabindex="-1" href="#">Draft</a></li>
-			    <li><a id="filter-deleted" tabindex="-1" href="#">Deleted</a></li>
+			    <li><a id="filter-none" tabindex="-1" href="#" data-toggle="dropdown">All</a></li>
+			    <li><a id="filter-active" tabindex="-1" href="#" data-toggle="dropdown">Active</a></li>
+			    <li><a id="filter-draft" tabindex="-1" href="#" data-toggle="dropdown">Draft</a></li>
+			    <li><a id="filter-deleted" tabindex="-1" href="#" data-toggle="dropdown">Deleted</a></li>
 		    </ul>
+		</div>
+		<div class="dashboard-refresh">
+			<a class="btn btn-primary" href="#"><span class="glyphicon glyphicon-repeat"></span></a>
 		</div>
 		<div class="dashboard-create">
 			<a class="btn btn-primary">Create a Listing</a>

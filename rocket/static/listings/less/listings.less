@@ -13,14 +13,51 @@
 // DASHBOARD HEADER
 .dashboard-header {
     .dashboard-title {
-        padding-left: 40px !important;
+        display: inline-block;
+        padding-left: 25px !important;
+    }
+    .dashboard-search {
+        display: inline-block;
+        float: none;
+        vertical-align: top;
+        width: 250px;
+        padding-left: 20px;
+    }
+    .dashboard-dropdown {
+      display: inline-block;
+      float: none;
+      vertical-align: top;
+      width: 100px;
+      padding-left: 20px;
+      a {
+        width: 100%;
+        position: relative;
+        &:focus {
+          outline: none !important;
+        }
+      }
+      .dropdown-menu {
+        left: auto !important;
+      }
+    }
+    .dashboard-refresh {
+        display: inline-block;
+        float: none;
+        vertical-align: top;
+        padding-left: 20px;
+        .btn {
+            height: 38px;
+        }
+        span {
+            float: none;
+            vertical-align: middle;
+        }
     }
     .dashboard-create {
         float: right;
-        padding-right: 40px;
+        padding-right: 20px;
     }
 }
-
 // DASHBOARD
 .dashboard-panel {
   font-size: 0;
@@ -42,7 +79,8 @@
       float: right;
     }
     .listings-header {
-      height: 37px;
+      height: 36px;
+      width: 100%;
       ul {
         margin: 0 !important;
         padding-left: 0 !important;
@@ -85,7 +123,7 @@
       span {
         &.d-check { 
           width: @delete;
-          height: 100%;
+          height: 37px;
           padding-left: 14px;
           position: relative;
           display: inline-block;
@@ -100,6 +138,7 @@
     }
     .listings-body {
       height: calc(~'100% - ' @footer-height);
+      width: 100%;
       overflow: auto;
       ul {
         margin-bottom: 0 !important;

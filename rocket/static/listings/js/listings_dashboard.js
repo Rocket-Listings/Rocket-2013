@@ -61,8 +61,8 @@ $(function() {
 
 	$('.sort').click(function () {
 		var icon = $(this).next('span'),
-			icons = $("span.glyphicon"),
-			iconsNotClicked = $("span.glyphicon:not('span.glyphicon.active')"),
+			icons = $("span.glyphicon.sort-toggle"),
+			iconsNotClicked = $("span.glyphicon.sort-toggle:not('span.glyphicon.active')"),
 			down = 'glyphicon-chevron-down',
 			up = 'glyphicon-chevron-up';
 		icons.addClass("hide").removeClass("active");
@@ -149,6 +149,7 @@ $(function() {
         });
         return false;
     });
+
     $('#filter-active').click(function() {
         listings.filter(function(item) {
             if (item.values().status == "Active") {
@@ -159,6 +160,7 @@ $(function() {
         });
         return false;
     });
+
     $('#filter-deleted').click(function() {
         listings.filter(function(item) {
             if (item.values().status == "Deleted") {
@@ -169,8 +171,16 @@ $(function() {
         });
         return false;
     });
+
     $('#filter-none').click(function() {
         listings.filter();
         return false;
     });
+
+    $('.dashboard-dropdown .dropdown-menu a').click(function() {
+    	console.log('click');
+    	$(this).parent().parent().prev('a.dropdown-btn').text($(this).text());
+    	$('.dropdown-menu').dropdown('toggle');
+    });
+
 });
