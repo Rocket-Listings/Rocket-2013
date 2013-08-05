@@ -226,16 +226,17 @@
       }
     }
   }
+
   .buyers-col {
     display: inline-block;
     height: 100%;
-    width: 15%;
-    border-right: 1px #DDDDDD solid;
+    width: 10%;
+    
     vertical-align: top;
     ul {
       margin: 0;
       padding: 0;
-      border-bottom: #DDDDDD solid 1px;
+      
       li {
         font-size: 14px;
         list-style: none;
@@ -245,12 +246,15 @@
       text-align: center;
       li {
         padding: 8px;
+        height: 36px;
       }
     }
     .buyers-body {
+      border-top: #DDDDDD solid 1px;
       height: calc(~'100% - ' @footer-height);
       overflow: auto;
       ul {
+        border-bottom: #DDDDDD solid 1px;
         cursor: pointer;
         &:hover {
           background-color: #EEE;
@@ -268,51 +272,87 @@
           &:first-child { padding: 8px 8px 2px 8px; }
           &:nth-child(2) { padding: 2px 8px 2px 8px; }
           &:nth-child(3) { padding: 2px 8px 8px 8px; }
+          &:last-child{ padding: 2px 8px 8px 8px; }
           overflow: hidden;
           white-space: nowrap;
+
         }
       }
     }
+    .buyers-body.border{
+      border-right: 1px #DDDDDD solid;
+      }
   }
+
   .messages-col {
     display: inline-block;
-    height: 100%;
-    width: 25%;
+    height: 99.2%;
+    width: 30%;
     vertical-align: top;
     ul {
       margin: 0;
       padding: 0;
-      border-bottom: #DDDDDD solid 1px;
+
+      
       li {
         font-size: 14px;
         list-style: none;
       }
     }
     .messages-header {
-      text-align: center;
+
       li {
-        padding: 8px;
+        text-align: left;
+        margin-left: 25%;
+        font-size: 16px;
+        font-weight: 500;
+        height: 36px;
+
       }
     }
     .messages-body {
+      border-top: #DDDDDD solid 1px;
       height: calc(~'100% - 111px - ' @footer-height);
       overflow: auto;
+      margin-bottom: 10px;
       ul {
+        border-bottom: #DDDDDD solid 1px;
         &.message-buyer {
           background-color: lighten(#DDD, 10%);
         }
         li {
-          &:first-child { padding: 8px 8px 2px 8px; }
-          &:nth-child(2) { padding: 2px 8px 8px 8px; }
+          &:first-child { padding: 8px 8px 8px 8px; }
+          &:nth-child(0) { padding: 8px 8px 8px 8px; }
+          &:nth-child(1) { padding: 8px 22px 8px 8px; }
+          &:nth-child(2) { padding: 8px 8px 8px 8px; }
+          &:last-child { padding: 2px 8px 8px 8px; }
           &.message-buyer-name {
             font-weight: 500;
           }
+
           word-wrap: break-word;
+
+
         }
+         li.time{
+            display: inline;
+            float: right;
+            color: grey;
+          }
       }
+
+      .no-messages{
+        text-align: left;
+        margin-left: 14%;
+      }
+
     }
+
+
+
     .message-form-wrapper {
       height: 111px;
+      margin-bottom: 30px;
       textarea {
         padding: 5px;
         resize: none;
@@ -322,6 +362,10 @@
         border-bottom: none;
       }
       input {
+        width: 100%;
+      }
+
+      .send-button{
         width: 100%;
       }
     }

@@ -86,6 +86,29 @@ $(function() {
 		window.listings = new List('dashboard-content', options);
 	}
 
+	$(".messages-body ul").hover(function(event){
+		$(this).children(".time").toggleClass("hide");
+	});
+
+	$('.sort').click(function () {
+		var icon = $(this).next('span'),
+			icons = $("span.glyphicon.sort-toggle"),
+			iconsNotClicked = $("span.glyphicon.sort-toggle:not('span.glyphicon.active')"),
+			down = 'glyphicon-chevron-down',
+			up = 'glyphicon-chevron-up';
+		icons.addClass("hide").removeClass("active");
+		icon.removeClass("hide").addClass('active');
+		iconsNotClicked.removeClass(down + " " + up).addClass(down);
+		if (icon.hasClass(down)) {
+			icon.removeClass(down).addClass(up);
+		}
+		else {
+			icon.removeClass(up).addClass(down);
+		}
+		return false;
+	})
+
+
 	// Unbind click events from current items
 	function unbindEvents() {
 		$('.listings-body li, .buyer-card').unbind('click');

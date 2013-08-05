@@ -1,14 +1,16 @@
 {% load static from staticfiles %}
+{% load humanize %}
 {# Requires the context variable 'messages' #}	
 
 <div class="messages-header">
 	<ul>
-		<li>Messages</li>
+		<li>Inbox</li>
 	</ul>
 </div>
 <div class="messages-body">
 	{% for message in buyer_messages %}
 	<ul class="message buyer-{{ message.buyer.id }} {% if message.isSeller %}message-seller{% else %}message-buyer{% endif %} hide">
+		<li class="time">{{message.date|naturaltime}}</li>
 		<li class="message-buyer-name">
 			{% if message.isSeller %}
 				{% if user.get_profile.name %}
@@ -19,11 +21,15 @@
 			{% else %}
 				{{ message.buyer.name }}
 			{% endif %}
+
 		</li>
+
+		
 		<li class="message-content">{{ message.content }}</li>
 	</ul>
 	<span class="hide message-form-preserve buyer-{{ message.buyer.id }}"></span>
 	{% endfor %}
+	<h5 class="text-muted no-messages">You have no messages.</h5>
 </div>
 <div class="message-form-wrapper hide">
 	<form class="message-form">
