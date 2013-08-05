@@ -134,8 +134,43 @@ $(function() {
 	$('.listings-body li').first().click();
 
 	var options = {
-		valueNames: ['title', 'price', 'category', 'date']
+		valueNames: ['title', 'price', 'category', 'date', 'status']
 	};
 
-	var listings = new List('listings-col', options);
+	var listings = new List('dashboard-content', options);
+
+	$('#filter-draft').click(function() {
+        listings.filter(function(item) {
+            if (item.values().status == "Draft") {
+                return true;
+            } else {
+                return false;
+            }
+        });
+        return false;
+    });
+    $('#filter-active').click(function() {
+        listings.filter(function(item) {
+            if (item.values().status == "Active") {
+                return true;
+            } else {
+                return false;
+            }
+        });
+        return false;
+    });
+    $('#filter-deleted').click(function() {
+        listings.filter(function(item) {
+            if (item.values().status == "Deleted") {
+                return true;
+            } else {
+                return false;
+            }
+        });
+        return false;
+    });
+    $('#filter-none').click(function() {
+        listings.filter();
+        return false;
+    });
 });

@@ -27,25 +27,36 @@
 	This is your Listings Dashboard.  Here you can easily review and manage all of your listings, buyers, and messages.
 </div>
 {% endif %}
-
-<div class="dashboard-header col-lg-12 col-lg-fixed">
-	<div class="col-lg-2 dashboard-title"><div class="h4">Listings<br>Dashboard</div></div>
-	<div class="col-lg-3 dashboard-search">
-		<input type="search" class="form-control light-table-filter" data-table="order-table" placeholder="Type to search"/>
+<div id="dashboard-content">
+<!-- For search to work -->
+	<div class="dashboard-header col-lg-12 col-lg-fixed">
+		<div class="col-lg-2 dashboard-title"><div class="h4">Listings<br>Dashboard</div></div>
+		<div class="col-lg-3 dashboard-search">
+			<input type="search" class="search form-control" data-table="order-table" placeholder="Type to search"/>
+		</div>
+		<div class="col-lg-2 dropdown">
+			<a class="btn btn-primary" data-toggle="dropdown" href="#">Filter</a>
+			<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+			    <li><a id="filter-none" tabindex="-1" href="#">All</a></li>
+			    <li><a id="filter-active" tabindex="-1" href="#">Active</a></li>
+			    <li><a id="filter-draft" tabindex="-1" href="#">Draft</a></li>
+			    <li><a id="filter-deleted" tabindex="-1" href="#">Deleted</a></li>
+		    </ul>
+		</div>
+		<div class="dashboard-create">
+			<a class="btn btn-primary">Create a Listing</a>
+		</div>
 	</div>
-	<div class="dashboard-create">
-		<a class="btn btn-primary">Create a Listing</a>
+	<div class="dashboard-panel {% if first_visit %}first-visit{% endif %}">
+		<div class="listings-col" id="listings-col">
+			{% include 'listings/partials/listings_panel.html' %}
+		</div>
+		<div class="buyers-col">
+			{% include 'listings/partials/buyers_panel.html' %}
+		</div>
+		<div class="messages-col">
+			{% include 'listings/partials/messages_panel.html' %}
+		</div>
 	</div>
+	{% endblock %}
 </div>
-<div class="dashboard-panel {% if first_visit %}first-visit{% endif %}">
-	<div class="listings-col" id="listings-col">
-		{% include 'listings/partials/listings_panel.html' %}
-	</div>
-	<div class="buyers-col">
-		{% include 'listings/partials/buyers_panel.html' %}
-	</div>
-	<div class="messages-col">
-		{% include 'listings/partials/messages_panel.html' %}
-	</div>
-</div>
-{% endblock %}
