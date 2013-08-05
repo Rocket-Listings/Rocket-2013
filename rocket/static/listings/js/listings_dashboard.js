@@ -1,4 +1,6 @@
 $(function() {
+	// Helpers
+
 	// Plugin to scroll div to certain location
 	/**
 	 * Copyright (c) 2007-2013 Ariel Flesler - aflesler<a>gmail<d>com | http://flesler.blogspot.com
@@ -23,11 +25,17 @@ $(function() {
 		$(this).scrollTop($(this)[0].scrollHeight);
 	}
 
-	$('.listings-body ul').click(function () {
+	// Convert links in messages to anchors
+	function linkToClickable(text) {
+	    var exp = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/gi;
+	    return text.replace(exp, "<a href='$1'>$1</a>"); 
+	}
+
+	$('.listings-body li').click(function () {
 		var listingRow = $(this),
 			id = listingRow.data('listing-id'),
 			buyers = $(".listing-" + id);
-		$('.listings-body ul').removeClass('highlight');
+		$('.listings-body li').removeClass('highlight');
 		listingRow.addClass('highlight');
 		$(".message").addClass("hide");
 		$(".buyer-card").addClass("hide");
@@ -51,17 +59,35 @@ $(function() {
 		$('.messages-body').scrollBottom();
 	});
 
+	$('.sort').click(function () {
+		var icon = $(this).next('span'),
+			icons = $("span.glyphicon"),
+			iconsNotClicked = $("span.glyphicon:not('span.glyphicon.active')"),
+			down = 'glyphicon-chevron-down',
+			up = 'glyphicon-chevron-up';
+		icons.addClass("hide").removeClass("active");
+		icon.removeClass("hide").addClass('active');
+		iconsNotClicked.removeClass(down + " " + up).addClass(down);
+		if (icon.hasClass(down)) {
+			icon.removeClass(down).addClass(up);
+		}
+		else {
+			icon.removeClass(up).addClass(down);
+		}
+		return false;
+	})
+
 	$(document).keydown(function(e) {
 		var listings = $('.listings-body'),
-			currentSelected = listings.find("ul.highlight"),
+			currentSelected = listings.find("li.highlight"),
 			key = e.which || e.keyCode;
 		if (key == '74') { //J
-			currentSelected.next('ul').click();
-			listings.scrollTo(currentSelected.next('ul'));
+			currentSelected.next('li').click();
+			listings.scrollTo(currentSelected.next('li'));
 		}
 		if (key == '75') { //K
-			currentSelected.prev('ul').click();
-			listings.scrollTo(currentSelected.prev('ul'));
+			currentSelected.prev('li').click();
+			listings.scrollTo(currentSelected.prev('li'));
 		}
 	});
 
@@ -101,14 +127,15 @@ $(function() {
 		}, 3000);
 	}
 
-	function linkToClickable(text) {
-	    var exp = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/gi;
-	    return text.replace(exp, "<a href='$1'>$1</a>"); 
-	}
-
 	$(".message-content").each(function() {
 		$(this).html(linkToClickable($(this).text()));
 	});
 
-	$('.listings-body ul').first().click();
+	$('.listings-body li').first().click();
+
+	var options = {
+		valueNames: ['title', 'price', 'category', 'date']
+	};
+
+	var listings = new List('listings-col', options);
 });
