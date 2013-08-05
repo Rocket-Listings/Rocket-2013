@@ -1,36 +1,50 @@
 $(function() {
-
-	$('.listings-table tbody tr').click(function(event) {
-		var listingRow = $(this);
-		$('.listings-table tbody tr').removeClass('highlight');
-		listingRow.addClass('highlight');
-		var id = listingRow.data('listing-id');
-		$(".message").hide();
-		$(".buyer-card").hide();
-		var buyers = $(".listing-" + id);
-		if(buyers.length) {
-			buyers.show();
-			buyers.first().click();
-			$('.message-form').show();
-		} else {
-			$('.message-form').hide();
+	// Toggle the checkboxes
+	$(".check-all").click(function () {
+		if (this.checked) {
+			$(".check-one").prop('checked', true);
 		}
+		else {
+			$(".check-one").prop('checked', false);
+		}
+	});
+
+	// Scroll messages to bottom
+	$.fn.scrollBottom = function() {
+		$(this).scrollTop($(this)[0].scrollHeight);
+	}
+
+	$('.listings-body ul').click(function () {
+		var listingRow = $(this),
+			id = listingRow.data('listing-id'),
+			buyers = $(".listing-" + id);
+		$('.listings-body ul').removeClass('highlight');
+		listingRow.addClass('highlight');
+		$(".message").addClass("hide");
+		$(".buyer-card").addClass("hide");
+		if(buyers.length) {
+			buyers.removeClass("hide");
+			buyers.first().click();
+			$('.message-form-wrapper').removeClass("hide");
+			$('.messages-body').scrollBottom();
+		} else {
+			$('.message-form-wrapper').addClass("hide");
+		}
+	});
+
+	$('.buyer-card').click(function(event){
+		var buyerCard = $(this),
+			id = buyerCard.data('buyer-id');
+		$('.buyer-card').removeClass('highlight');
+		buyerCard.addClass('highlight');
+		$(".message").addClass("hide");
+		$('.buyer-' + id).removeClass("hide");
+		$('.messages-body').scrollBottom();
 	});
 
 	$('.close').click(function(event){
 		$('.dashboard-panel').removeClass("first-visit");
 	});
-
-	$('.buyer-card').click(function(event){
-		var buyerCard = $(this);
-		$('.buyer-card').removeClass('highlight');
-		buyerCard.addClass('highlight');
-		var id = buyerCard.data('buyer-id');
-		$(".message").hide();
-		$('.buyer-' + id).show();
-	});
-
-	$('.listings-table tbody tr').first().click();
 
 	// AUTOPOST
 	$(".share_optn").click(function (e) {
@@ -65,10 +79,13 @@ $(function() {
 	}
 
 	function linkToClickable(text) {
-	    var exp = /(\b(https?):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-	    return text.replace(exp,"<a href='$1'>$1</a>"); 
+	    var exp = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/gi;
+	    return text.replace(exp, "<a href='$1'>$1</a>"); 
 	}
-	$(".buyer, .seller").each(function() {
-		$(this).html(linkToClickable($(this).html()));
+	
+	$(".message-content").each(function() {
+		$(this).html(linkToClickable($(this).text()));
 	});
+
+	$('.listings-body ul').first().click();
 });

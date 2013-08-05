@@ -7,7 +7,7 @@
 </div>
 <div class="messages-body">
 	{% for message in buyer_messages %}
-	<ul class="message buyer-{{ message.buyer.id }} {% if message.isSeller %}message-seller{% else %}message-buyer{% endif %}">
+	<ul class="message buyer-{{ message.buyer.id }} {% if message.isSeller %}message-seller{% else %}message-buyer{% endif %} hide">
 		<li class="message-buyer-name">
 			{% if message.isSeller %}
 				{% if user.get_profile.name %}
@@ -19,38 +19,14 @@
 				{{ message.buyer.name }}
 			{% endif %}
 		</li>
-		<li>{{ message.content }}
+		<li class="message-content">{{ message.content }}</li>
 	</ul>
+	<span class="hide message-form-preserve buyer-{{ message.buyer.id }}"></span>
 	{% endfor %}
 </div>
-<div class="message-form-wrapper">
+<div class="message-form-wrapper hide">
 	<form class="message-form">
 		<textarea rows="3" class="form-control" name="content" placeholder="Send a reply..."></textarea>
 		<input type="submit" class="btn btn-primary send-button">
 	</form>
 </div>
-
-{% comment %}
-<div class="dash-subtitle">Messages</div>
-<div class="messages-panel" >
-	{% for message in messages %}
-	<div class="message buyer-{{message.buyer.id}} hide">
-		{% if message.isSeller %}
-		{% if user.get_profile.name %}
-		<h6>{{ user.get_profile.name }}</h6>
-		{% else %}
-		<h6>{{ user.username }}</h6>		
-		{% endif %}
-		<p class="seller">{{message.content}}</p>
-		{% else %}
-		<h6>{{message.buyer.name}}</h6>
-		<p class="buyer">{{message.content}}</p>
-	   	{% endif %}
-   	</div>
-   	{% endfor %}
-</div>
-<form class="message-form hide">
-	<textarea rows="2" name='content' class="input-long" placeholder="  Message..." ></textarea>
-	<input type="submit" class="btn send-button"> {# needs to be enabled #}
-</form>
-{% endcomment %}

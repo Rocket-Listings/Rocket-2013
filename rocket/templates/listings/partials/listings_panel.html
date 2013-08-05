@@ -6,7 +6,7 @@
 <!--HEADER-->
 <div class="listings-header">
 	<ul>
-		<li class="d-check"><div class="checkbox-wrapper"><input type="checkbox" name="check-{{ listing.id }}" value="{{ listing.id }}"></div></li>
+		<li class="d-check"><input class="check-all" type="checkbox"></li>
 		<div class="listings-cols-wrapper">
 			<li class="d-title phone-full-width"><a href="#">Title</a></li>
 			<li class="d-price phone-hide"><a href="#">Price</a></li>
@@ -17,8 +17,8 @@
 </div>
 <div class="listings-body">
 	{% for listing in listings %}
-	<ul>
-		<li class="d-check phone-hide"><div class="checkbox-wrapper"><input type="checkbox" name="check-{{ listing.id }}" value="{{ listing.id }}"></div></li>
+	<ul data-listing-id="{{ listing.id }}">
+		<li class="d-check phone-hide"><input class="check-one" type="checkbox" name="check-{{ listing.id }}" value="{{ listing.id }}"></li>
 		<div class="listings-cols-wrapper">
 			<li class="d-title phone-full-width"><a href="{{ listing.get_absolute_url }}">{{ listing.title }}</a></li>
 			<li class="d-price phone-hide">${{ listing.price }}</li>

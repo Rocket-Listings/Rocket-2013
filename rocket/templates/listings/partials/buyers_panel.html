@@ -10,7 +10,7 @@
 </div>
 <div class="buyers-body">
 	{% for buyer in buyers %}
-	<ul class="buyer-card listing-{{ buyer.listing.id }}" data-buyer-id="{{ buyer.id }}">
+	<ul class="buyer-card listing-{{ buyer.listing.id }} hide" data-buyer-id="{{ buyer.id }}">
 		<li>{{ buyer.name }}</li>
 		<li>{% if buyer.max_offer %}Offering ${{ buyer.max_offer }}{% else %}No offer{% endif %}</li>
 		<li>{{ buyer.last_message.date|naturaltime }}</li>
