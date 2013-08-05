@@ -51,11 +51,14 @@ $(function() {
 
 	$('.buyer-card').click(function(event){
 		var buyerCard = $(this),
-			id = buyerCard.data('buyer-id');
+			buyer_id = buyerCard.data('buyer-id'),
+			listing_id = buyerCard.data('listing-id');
 		$('.buyer-card').removeClass('highlight');
 		buyerCard.addClass('highlight');
 		$(".message").addClass("hide");
-		$('.buyer-' + id).removeClass("hide");
+		$('.buyer-' + buyer_id).removeClass("hide");
+		$(".message-form input[name='listing']").val(listing_id);
+		$(".message-form input[name='buyer']").val(buyer_id);
 		$('.messages-body').scrollBottom();
 	});
 
@@ -81,11 +84,11 @@ $(function() {
 		var listings = $('.listings-body'),
 			currentSelected = listings.find("li.highlight"),
 			key = e.which || e.keyCode;
-		if (key == '74') { //J
+		if ((key == '74') || (key == '40')) { //J || DOWN
 			currentSelected.next('li').click();
 			listings.scrollTo(currentSelected.next('li'));
 		}
-		if (key == '75') { //K
+		if ((key == '75') || (key == '38')) { //K || UP
 			currentSelected.prev('li').click();
 			listings.scrollTo(currentSelected.prev('li'));
 		}
@@ -125,38 +128,36 @@ $(function() {
 		});
 	});
 
-	$("form.message-form").each(function() {
-		var form = $(this);
-		$(this).submit(function() {
-			var csrftoken = getCookie('csrftoken');
-			$.ajax({
-				url: '/listings/dashboard/message/',
-				method: 'POST',
-				data: form.serialize(),
-				beforeSend: function(xhr) {
-					xhr.setRequestHeader("X-CSRFToken", csrftoken);
-				},
-				success: function (response) {
-					switch (response.status) {
-						case 'success':
-							$("#new-message-wrapper").append(Mustache.render($("#new-message").html(), response));
-							$('.buyer-' + response.messages.buyer_id).removeClass("hide");
-							$('.last-message').text(response.messages.message_id);
-							$('.buyer-' + response.messages.buyer_id + ' textarea').val("");
-							break;
-						case 'err_validation':
-							console.log("There was an error sending the message.");
-							break;
-						case 'err_empty':
-							break;
-					}
-				},
-				error: function (response) {
-					console.log("There was an error sending the message.");
+	$("form.message-form").submit(function() {
+		var csrftoken = getCookie('csrftoken');
+		$.ajax({
+			url: '/listings/dashboard/message/',
+			method: 'POST',
+			data: $(this).serialize(),
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader("X-CSRFToken", csrftoken);
+			},
+			success: function (response) {
+				switch (response.status) {
+					case 'success':
+						$(".messages-body").append(Mustache.render($("#new-message").html(), response));
+						$('.buyer-' + response.messages.buyer_id).removeClass("hide");
+						$('.messages-body').scrollBottom();
+						$('.last-message').text(response.messages.message_id);
+						$('.message-form textarea').val("");
+						break;
+					case 'err_validation':
+						console.log("There was an error sending the message.");
+						break;
+					case 'err_empty':
+						break;
 				}
-			});
-			return false;
+			},
+			error: function (response) {
+				console.log("There was an error sending the message.");
+			}
 		});
+		return false;
 	});
 
 	function insertNewData(data) {
