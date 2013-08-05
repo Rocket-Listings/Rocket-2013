@@ -31,6 +31,20 @@ $(function() {
 	    return text.replace(exp, "<a href='$1'>$1</a>"); 
 	}
 
+	// Insert new items into dashboard
+	function insertNewData(data) {
+		// Update latest ids
+		$(".last-listing").text(data.latest[0]);
+		$(".last-buyer").text(data.latest[1]);
+		$(".last-message").text(data.latest[2]);
+		// Mustache the new items
+		$(".messages-body").html("").append(Mustache.render($("#new-message").html(), {'messages': data.messages}));
+		$(".buyers-body").html("").prepend(Mustache.render($("#new-buyer").html(), {'buyers': data.buyers}));
+		$(".listings-body ul.list").html("").prepend(Mustache.render($("#new-listing").html(), {'listings': data.listings}));
+		// Reset the filter button
+		$("a.dropdown-btn").text("All");
+	}
+
 	// Bind clicks and list init to the current items
 	function bindEvents() {
 		$('.listings-body li').click(function () {
@@ -69,7 +83,7 @@ $(function() {
 			valueNames: ['title', 'price', 'category', 'date', 'status']
 		};
 
-		var listings = new List('dashboard-content', options);
+		window.listings = new List('dashboard-content', options);
 	}
 
 	// Unbind click events from current items
@@ -143,16 +157,21 @@ $(function() {
 
 	$(".dashboard-refresh").click(function (e) {
 		e.preventDefault();
+		var currentSelectedListing = $(".listings-body").find("li.highlight").data('listing-id');
 		$.ajax({
 			type: 'GET',
 			url: '/listings/dashboard/data/',
-			data: {'listing': $(".last-listing").text(),
-				   'buyer': $(".last-buyer").text(),
-				   'message': $(".last-message").text()},
+			// data: {'listing': $(".last-listing").text(),
+			// 	   'buyer': $(".last-buyer").text(),
+			// 	   'message': $(".last-message").text()},
 			success: function (response) {
 				insertNewData(response);
 				unbindEvents(); // To prevent overlap
 				bindEvents(); // Bind all items (including new)
+				if (currentSelectedListing != null) {
+					$(".listings-body").find("li[data-listing-id='" + currentSelectedListing + "']").click();
+				}
+				else { $(".listings-body li").first().click(); }
 			}
 		});
 	});
@@ -169,7 +188,6 @@ $(function() {
 			success: function (response) {
 				switch (response.status) {
 					case 'success':
-						console.log(response);
 						$(".messages-body").append(Mustache.render($("#new-message").html(), response));
 						$('.buyer-' + response.messages.buyer_id).removeClass("hide");
 						$('.messages-body').scrollBottom();
@@ -190,17 +208,7 @@ $(function() {
 		return false;
 	});
 
-	function insertNewData(data) {
-		console.log(data);
-		// Update latest ids
-		$(".last-listing").text(data.latest[0]);
-		$(".last-buyer").text(data.latest[1]);
-		$(".last-message").text(data.latest[2]);
-		$(".messages-body").append(Mustache.render($("#new-message").html(), {'messages': data.messages}));
-		$(".buyers-body").prepend(Mustache.render($("#new-buyer").html(), {'buyers': data.buyers}));
-		$(".listings-body ul.list").prepend(Mustache.render($("#new-listing").html(), {'listings': data.listings}));
-	}
-
+	// Check the status of a listing (Deprecated)
 	function checkStatus(listingid) {
 		var timer = setInterval(function () {
 			$.ajax({
@@ -239,12 +247,10 @@ $(function() {
 		$(this).html(linkToClickable($(this).text()));
 	});
 
-	$('.listings-body li').first().click();
-
 	bindEvents();
 
 	$('#filter-draft').click(function() {
-        listings.filter(function(item) {
+        window.listings.filter(function(item) {
             if (item.values().status == "Draft") {
                 return true;
             } else {
@@ -255,7 +261,7 @@ $(function() {
     });
 
     $('#filter-active').click(function() {
-        listings.filter(function(item) {
+        window.listings.filter(function(item) {
             if (item.values().status == "Active") {
                 return true;
             } else {
@@ -266,28 +272,36 @@ $(function() {
     });
 
     $('#filter-deleted').click(function() {
-        listings.filter(function(item) {
+        window.listings.filter(function(item) {
             if (item.values().status == "Deleted") {
                 return true;
             } else {
                 return false;
             }
         });
+        $(".buyer-card, message").addClass("hide");
+        $(".listings-body li").first().click();
         return false;
     });
 
     $('#filter-none').click(function() {
-        listings.filter();
+        window.listings.filter();
         return false;
     });
 
     $('.dashboard-dropdown .dropdown-menu a').click(function() {
-    	console.log('click');
     	$(this).parent().parent().prev('a.dropdown-btn').text($(this).text());
     	$('.dropdown-menu').dropdown('toggle');
+    	$(".listings-body li").first().click();
+    	$(".listings-body").scrollTop(0);
+
     });
 
+    $('.listings-body li').first().click();
 });
 
 // Context for keyboard controls
 var context = "l";
+
+// Globally declare List listings for access outside bindEvents() scope
+var listings;

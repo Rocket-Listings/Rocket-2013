@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import requests
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.mail import send_mail
 from celery.signals import task_sent
 from celery.signals import task_success
 
@@ -136,4 +137,4 @@ def autopost_success_handler(sender=None, result=None, args=None, kwargs=None, *
 	listing.save()
 
 def send_message_task(message_id):
-	return
+	message = 
