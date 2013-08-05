@@ -298,6 +298,7 @@ $(function() {
 			},
 			success: function (response) {
 				if (response.new_comment) {
+					console.log(response)
 					insertNewComment(response);
 					$("input:not(input[type='submit']), textarea").val("");
 					$(".errors").hide();
@@ -312,9 +313,9 @@ $(function() {
 	});
 
 	function insertNewComment(data) {
-		var newComment = '<div class="each-comment"><div class="row"><div class="span6"><h5>' + data.title + '</h5></div>';
-			newComment += '<div class="span2"><h6>' + data.date_posted  + '</h6></div></div>';
-			newComment += '<div class="row"><div class="span7"><p>' + data.comment + '</p></div></div></div>';
+		var newComment = '<div class="each-comment"><div class="row comment-top"><div class="col-lg-9"><h5>' + data.title + '</h5></div>';
+			newComment += '<div class="col-lg-2"><h6>' + data.date_posted  + '</h6></div></div>';
+			newComment += '<div class="row comment-main"><div class="col-lg-7"><p>' + data.comment + '</p></div></div></div>';
 		$(".comment-body").append(newComment);
 		$(".comment-form-container").hide();
 		$(".comment-thanks").show();

@@ -12,9 +12,10 @@
 
 {% block js %}
 	{% compress js %}
-	<script src="{% static 'listings/js/light-table-filter.js' %}" type="text/javascript"></script>
+	<script src="{% static 'listings/js/list.min.js' %}"></script>
+	{# <script src="{% static 'listings/js/light-table-filter.js' %}" type="text/javascript"></script> #}
 	<script src="{% static 'listings/js/listings_dashboard.js' %}" type="text/javascript"></script>
-	<script src="{% static 'listings/js/sorttable.js' %}" type="text/javascript"></script>
+	{# <script src="{% static 'listings/js/sorttable.js' %}" type="text/javascript"></script> #}
 	{% endcompress %}
 {% endblock %}
 
@@ -26,25 +27,41 @@
 	This is your Listings Dashboard.  Here you can easily review and manage all of your listings, buyers, and messages.
 </div>
 {% endif %}
-
-<div class="dashboard-header col-lg-12 col-lg-fixed">
-	<div class="col-lg-2 dashboard-title"><div class="h4">Listings<br>Dashboard</div></div>
-	<div class="col-lg-3 dashboard-search">
-		<input type="search" class="form-control light-table-filter" data-table="order-table" placeholder="Type to search"/>
+<div id="dashboard-content">
+<!-- For search to work -->
+	<div class="dashboard-header col-lg-12 col-lg-fixed">
+		<div class="dashboard-title">
+			<div class="h4">Listings<br>Dashboard</div>
+		</div>
+		<div class="dashboard-search">
+			<input type="search" class="form-control search" data-table="order-table" placeholder="Type to search"/>
+		</div>
+		<div class="dropdown dashboard-dropdown">
+			<a class="btn btn-primary dropdown-btn" data-toggle="dropdown" href="#">Filter</a>
+			<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+			    <li><a id="filter-none" tabindex="-1" href="#" data-toggle="dropdown">All</a></li>
+			    <li><a id="filter-active" tabindex="-1" href="#" data-toggle="dropdown">Active</a></li>
+			    <li><a id="filter-draft" tabindex="-1" href="#" data-toggle="dropdown">Draft</a></li>
+			    <li><a id="filter-deleted" tabindex="-1" href="#" data-toggle="dropdown">Deleted</a></li>
+		    </ul>
+		</div>
+		<div class="dashboard-refresh">
+			<a class="btn btn-primary" href="#"><span class="glyphicon glyphicon-repeat"></span></a>
+		</div>
+		<div class="dashboard-create">
+			<a class="btn btn-primary">Create a Listing</a>
+		</div>
 	</div>
-	<div class="dashboard-create">
-		<a class="btn btn-primary" href="{% url 'listings.views.create' %}">Create a Listing</a>
+	<div class="dashboard-panel {% if first_visit %}first-visit{% endif %}">
+		<div class="listings-col" id="listings-col">
+			{% include 'listings/partials/listings_panel.html' %}
+		</div>
+		<div class="buyers-col">
+			{% include 'listings/partials/buyers_panel.html' %}
+		</div>
+		<div class="messages-col">
+			{% include 'listings/partials/messages_panel.html' %}
+		</div>
 	</div>
+	{% endblock %}
 </div>
-<div class="dashboard-panel col-lg-12 {% if first_visit %}first-visit{% endif %}">
-	<div class="col-lg-8 col-lg-fixed listings-col">
-		{% include 'listings/partials/listings_table.html' %}
-	</div>
-	<div class="col-lg-2 col-lg-fixed buyers-col">
-		{% include 'listings/partials/buyer_cards.html' %}
-	</div>
-	<div class="col-lg-2 col-lg-fixed messages-col">
-		{% include 'listings/partials/messages_panel.html' %}
-	</div>
-</div>
-{% endblock %}
