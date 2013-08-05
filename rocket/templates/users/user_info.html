@@ -4,8 +4,7 @@
 {% load compress %}
 	
 {% block content %}
-	<div class="content-wrapper row show-grid">
-		<div class="error-wrapper"></div>
+	<div class="error-wrapper"></div>
 		
 		{% if user.get_profile.name %}
 			<h3><a class="name-header" href="{% url 'users.views.profile' user.username %}">{{ user.get_profile.name }}</a></h3>
@@ -13,38 +12,36 @@
 			<h3><a class="name-header" href="{% url 'users.views.profile' user.username %}">{{user.username}}</a></h3>
 		{% endif %}
 
-		<div class="col-lg-4 col-push-8">
-			<h4>Listing Credits</h4>
+	<div class="content-wrapper row">
+		
+		<div class="col-lg-4 screen-lg-right" id="listing-credits">
+			<h5>Listing Credits</h5>
 
 			<table class="table">
 				<tr>
-					<td class="padding8 text-center">{{credits}}</td>
-					<td class="padding8">Credits Left</td>
+					<td><p>Credits Left:</p></td>
+					<td class="text-center"><p>{{credits}}</p></td>
+					<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr>
-					<td class="padding8 text-center"><p>{{credits_spent}}</p></td>
-					<td class="padding8">Credits Spent</td>
+					<td><p>Credits Spent:</p></td>
+					<td class="text-center"><p>{{credits_spent}}</p></td>
+					<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 			</table>
 
-			<table>
-				<tr>
-					<td class="padding8">{% if not profile_completed_once %}<i class="glyphicon glyphicon-unchecked">{% else %}<i class="glyphicon glyphicon-checked">{% endif %}</i></td>	
-					<td class="padding8">You can earn more by completing your profile</td>
-				</tr>
-			
-				<tr>
-					<td class="padding8"><i class="glyphicon glyphicon-unchecked"></i></td><td style="padding:8px">Linking social media accounts</td>
-				</tr>
+			<h6>You can get more listings by</h6>
+			<ul>	
+				<li><a href="#" class="text-left {% if profile_completed_once %}completed{% endif %}">You can earn more by completing your profile</a></li>
 
-				<tr>
-					<td class="padding8"><i class="glyphicon glyphicon-unchecked"></i></td><td style="padding:8px">Referring friends</td>
-				</tr>
-			</table>
+				<li><a href="#" class="text-left" style="text-decoration:line-through">Linking social media accounts</a></li>
+
+				<li><a href="#" class="text-left">Referring friends</a></li>
+			</ul>
 		</div>
 
 
-		<form class="settings-form col-lg-8 col-pull-4" action="" method="POST">
+		<form class="settings-form col-lg-8 pull-left" id="user-info-form" action="" method="POST">
 			{% if first_visit %}
 				<div class="alert alert-info">
   					<button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -55,15 +52,13 @@
 			{% csrf_token %}
 			<table class="table table-hover">
 				<thead>					
-					<div class="save-all-container">
 						<th>
 							<span class="h4 user-info-label">User Info</span>
 						</th>
 						<th></th>
-						<th>
+						<th class="save-all-container">
 							<input class="btn btn-primary save-all disabled" type="submit" value="Save all">
 						</th>
-					</div>
 				</thead>
 				<tbody>
 					<tr class="uneditable">
@@ -199,16 +194,11 @@
 						<td></td><td><input class="btn btn-primary save-all disabled" type="submit" value="Save all"/></td>
 					</tr>				
 				
-				</tbody>
-
-						
-						
+				</tbody>		
 			</table>
-			
-						
-						
 		</form>
-		</div>
+		
+
 
 
 

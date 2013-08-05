@@ -90,6 +90,7 @@ $(function() {
 			console.log(FPError);
 		});
 	});
+
 	$("form.settings-form").submit(function() {
 		if ((!$(".save-all").hasClass("disabled")) || ($(".save-all").hasClass("propic-enable"))) {
 			var csrftoken = getCookie('csrftoken');
