@@ -1,6 +1,36 @@
 {% load static from staticfiles %}
 {# Requires the context variable 'messages' #}	
+<div class="messages-header">
+	<ul>
+		<li>Messages</li>
+	</ul>
+</div>
+<div class="messages-body">
+	{% for message in buyer_messages %}
+	<ul class="message buyer-{{ message.buyer.id }} {% if message.isSeller %}message-seller{% else %}message-buyer{% endif %}">
+		<li class="message-buyer-name">
+			{% if message.isSeller %}
+				{% if user.get_profile.name %}
+				{{ user.get_profile.name }}
+				{% else %}
+				{{ user.username }}
+				{% endif %}
+			{% else %}
+				{{ message.buyer.name }}
+			{% endif %}
+		</li>
+		<li>{{ message.content }}
+	</ul>
+	{% endfor %}
+</div>
+<div class="message-form-wrapper">
+	<form class="message-form">
+		<textarea rows="3" class="form-control" name="content" placeholder="Send a reply..."></textarea>
+		<input type="submit" class="btn btn-primary send-button">
+	</form>
+</div>
 
+{% comment %}
 <div class="dash-subtitle">Messages</div>
 <div class="messages-panel" >
 	{% for message in messages %}
@@ -23,3 +53,4 @@
 	<textarea rows="2" name='content' class="input-long" placeholder="  Message..." ></textarea>
 	<input type="submit" class="btn send-button"> {# needs to be enabled #}
 </form>
+{% endcomment %}

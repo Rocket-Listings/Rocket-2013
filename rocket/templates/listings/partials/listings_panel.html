@@ -3,7 +3,33 @@
 {% load humanize %}
 {# Requires the context variable 'listings' #}
 
-{# <<<<<<< HEAD #}
+<!--HEADER-->
+<div class="listings-header">
+	<ul>
+		<li class="d-check"><div class="checkbox-wrapper"><input type="checkbox" name="check-{{ listing.id }}" value="{{ listing.id }}"></div></li>
+		<div class="listings-cols-wrapper">
+			<li class="d-title phone-full-width"><a href="#">Title</a></li>
+			<li class="d-price phone-hide"><a href="#">Price</a></li>
+			<li class="d-category phone-hide"><a href="#">Category</a></li>
+			<li class="d-date phone-hide"><a href="#">Date Listed</a></li>
+		</div>
+	</ul>
+</div>
+<div class="listings-body">
+	{% for listing in listings %}
+	<ul>
+		<li class="d-check phone-hide"><div class="checkbox-wrapper"><input type="checkbox" name="check-{{ listing.id }}" value="{{ listing.id }}"></div></li>
+		<div class="listings-cols-wrapper">
+			<li class="d-title phone-full-width"><a href="{{ listing.get_absolute_url }}">{{ listing.title }}</a></li>
+			<li class="d-price phone-hide">${{ listing.price }}</li>
+			<li class="d-category phone-hide">{{ listing.category.name }}</li>
+			<li class="d-date phone-hide"><span class="hide">{{ listing.pub_date|date:"m/d/y P" }}</span>{{ listing.pub_date|naturaltime }}</li>
+		</div>
+	</ul>
+	{% endfor %}
+</div>
+
+{% comment %}
 <table class="table listings-table table-hover sortable order-table">
 	<thead>
 		<tr>
@@ -33,7 +59,7 @@
 					<!--<a href="{{ listing.get_absolute_url }}">Link</a>-->
 						<!--autopost button -->
 						<a class="share_optn" id="{{ listing.id }}" title="Autopost to Craigslist" href="{% url 'mail.views.autopost' listing.id %}" data-original-title="Autopost to Craigslist">Publish</a>
-            {% comment %}
+            
 						<!--edit button -->
 						<a class="edit_optn" title="Edit Listing" href="{% url 'listings.views.detail' listing.id %}" data-container="body" data-original-title="Edit Listing">{# <span class="glyphicon glyphicon-pencil"></span> #}</a>
 
@@ -58,7 +84,7 @@
 								</div>
 						  </div>
   					</div>
-            {% endcomment %}
+            
 				</div>
 			</td>
 			{% comment %}
@@ -70,8 +96,9 @@
 				<td class="centered-td"> N/A </td>
 			</td>
 	
-			{% endcomment %}
+			
 		</tr>
 	{% endfor %}
 	</tbody>
 </table>
+{% endcomment %}

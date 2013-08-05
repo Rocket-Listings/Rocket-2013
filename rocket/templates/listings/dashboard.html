@@ -36,14 +36,14 @@
 		<a class="btn btn-primary">Create a Listing</a>
 	</div>
 </div>
-<div class="dashboard-panel col-lg-12 {% if first_visit %}first-visit{% endif %}">
-	<div class="col-lg-8 col-lg-fixed listings-col">
-		{% include 'listings/partials/listings_table.html' %}
+<div class="dashboard-panel {% if first_visit %}first-visit{% endif %}">
+	<div class="listings-col">
+		{% include 'listings/partials/listings_panel.html' %}
 	</div>
-	<div class="col-lg-2 col-lg-fixed buyers-col">
-		{% include 'listings/partials/buyer_cards.html' %}
+	<div class="buyers-col">
+		{% include 'listings/partials/buyers_panel.html' %}
 	</div>
-	<div class="col-lg-2 col-lg-fixed messages-col">
+	<div class="messages-col">
 		{% include 'listings/partials/messages_panel.html' %}
 	</div>
 </div>
