@@ -26,13 +26,36 @@ $.fn.serializeObject = function() {
 
 $(function() {
 
-  // Backbone listing preview stuff
-  var Listing = Backbone.Model;
+  // var Photo = Backbone.Model.extend({});
+  // var PhotoList = Backbone.Collection.extend({
+  //   model: Photo,
+  //   comparator: 'order',
+  //   initialize: function() {
+  //     this.changed();
+  //   },
+  //   changed: function() {
+  //     var formObject = this.$('.listing-form:first').serializeObject();
+  //     var total = formObject['listingphoto_set-TOTAL_FORMS'];
+  //     var photolist = [];
+  //     for (var i = 0; i < total; i++) {
+  //       var key = 'listingphoto_set-{0}-'.format(i);
+  //       photolist.push(new Photo({
+  //         url: formObject[key + 'url'],
+  //         key: formObject[key + 'key'],
+  //         listing: formObject[key + 'listing'],
+  //         id: formObject[key + 'id'],
+  //         order: formObject[key + 'ORDER'],
+  //         markedDelete: formObject[key + 'DELETE'] || false
+  //       }));
+  //     }
+  //     this.set(photolist);
+  //   }
+  // });
 
-  var photos = new Backbone.Collection;
+  // Backbone listing preview stuff
+  var Listing = Backbone.Model.extend({});
 
   var ListingView = Backbone.View.extend({
-
     el: '#listing-detail',
     template: Mustache.compile($('#preview-template').html()),
     events: {
@@ -44,15 +67,17 @@ $(function() {
     },
 
     initialize: function() {
-      this.model = new Listing(this.$('.listing-form:first').serializeObject());
-      _.bindAll(this, 'changed', 'render');
+      _.bindAll(this, 'changed', 'renderTitle');
+      var formObject = this.$('.listing-form:first').serializeObject();
+      this.model = new Listing(formObject);
+      // this.photos = new PhotoList;
       this.render();
       this.renderTitle();
     },
 
-    changed: function(evt) {
-      console.log('changed');
-      var changed = $(evt.currentTarget)
+    changed: function(e) {
+      // this.photos.changed();
+      var changed = $(e.currentTarget)
       var obj = {};
       obj[changed.attr('name')] = changed.val();
       this.model.set(obj);
@@ -66,8 +91,10 @@ $(function() {
         var title = this.model.get('title');
       if (title.length > 0) {
         this.$('.listing-title').text(title);
-        $('#preview-btn').removeAttr('disabled');
+        this.$('#preview-btn').removeAttr('disabled');
       } else {
+        this.$('.listing-title').text("Create a listing");
+        // not sure why this.$('#preview-btn') is not found here. Using global selector.
         $('#preview-btn').attr('disabled', 'disabled');
       }
     },
@@ -185,7 +212,7 @@ $(function() {
           var id = $(item).data('id');
           var orderInput = formset.find('#id_listingphoto_set-{0}-ORDER'.format(id));
           orderInput.val(index);
-          orderInput.trigger('change');
+          // orderInput.trigger('change');
         });
       });
     }
