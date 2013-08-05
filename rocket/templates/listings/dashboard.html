@@ -49,7 +49,7 @@
 			<a class="btn btn-primary" href="#"><span class="glyphicon glyphicon-repeat"></span></a>
 		</div>
 		<div class="dashboard-create">
-			<a class="btn btn-primary">Create a Listing</a>
+			<a class="btn btn-primary" href="{% url 'listings.views.create' %}">Create a Listing</a>
 		</div>
 	</div>
 	<div class="dashboard-panel {% if first_visit %}first-visit{% endif %}">

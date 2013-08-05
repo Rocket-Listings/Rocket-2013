@@ -53,8 +53,7 @@ $(function() {
   // });
 
   // Backbone listing preview stuff
-  var Listing = Backbone.Model.extend({});
-
+  var Listing = Backbone.Model;
   var ListingView = Backbone.View.extend({
     el: '#listing-detail',
     template: Mustache.compile($('#preview-template').html()),
@@ -217,9 +216,8 @@ $(function() {
       });
     }
   }
-  // Make drag and drop photo upload pane
-  // $('#dragdrop').click(function(e) {
-    // e.preventDefault();
+
+  filepicker.setKey('ATM8Oz2TyCtiJiHu6pP6Qz');
   filepicker.pickAndStore(fpConfig.picker_options, fpConfig.store_options, $.proxy(fpConfig.onSuccess, fpConfig), fpConfig.onError);
   $('.toggle-view').click(fpConfig.toggleView);
   fpConfig.bindSortable();
@@ -231,30 +229,4 @@ $(function() {
 
   /* Listings table */
   $('.listings-table').tablesorter({ cssHeader: 'table-header'});
-
-
-  /* Listing detail photo slideshow */
-  // var photoId = parseInt((window.location.hash || "").substring(1));
-  // if(photoId) {
-  //   if($($('.l-thumbnails img')[photoId]).attr('data-id') == photoId) {
-  //     fillStage($($('.l-thumbnails img')[photoId]));
-  //   } else {
-  //     $('.l-thumbnails img').each(function(index, element) {
-  //       if($(element).attr('data-id') == photoId){
-  //         fillStage($(element));
-  //         return false; // break iteration
-  //       }
-  //     });
-  //   }
-  // }
-
-  // $('.l-thumbnails img').click(function(event){
-  //   fillStage($(event.target));
-  // });
-
-  // function fillStage(image) {
-  //   $(".l-stage img").attr('src', image.attr('data-full'));
-  //   id = image.attr('data-id');
-  //   window.location.hash = image.attr('data-id');
-  // }
 });
