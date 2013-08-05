@@ -38,7 +38,6 @@ def dashboard(request):
 																	'buyer_messages':messages, 
 																	'latest': latest_ids})
 
-
 # @login_required
 # def user_listings(request, username=None):
 # 	user = request.user # if no username parameter is passed, defaults to the currently logged in user.

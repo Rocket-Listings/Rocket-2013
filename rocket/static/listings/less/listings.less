@@ -4,17 +4,54 @@
     For instance, if our title was simply '.title', then maybe a '.title' rule from base.less might take into effect. */
 
 // DASHBOARD VARIABLES (WIDTH)
-@title: 45%;
-@price: 5%;
-@category: 20%;
-@date: 15%;
-@manage: 15%;
+@delete: 40px;
+@title: 50%;
+@price: 10%;
+@category: 15%;
+@date: 25%;
 
 // DASHBOARD HEADER
 .dashboard-header {
     .dashboard-title {
         display: inline-block;
-        padding-left: 40px !important;
+        padding-left: 25px !important;
+    }
+    .dashboard-search {
+        display: inline-block;
+        float: none;
+        vertical-align: top;
+        width: 250px;
+        padding-left: 20px;
+    }
+    .dashboard-dropdown {
+      display: inline-block;
+      float: none;
+      vertical-align: top;
+      width: 100px;
+      padding-left: 20px;
+      a {
+        width: 100%;
+        position: relative;
+        &:focus {
+          outline: none !important;
+        }
+      }
+      .dropdown-menu {
+        left: auto !important;
+      }
+    }
+    .dashboard-refresh {
+        display: inline-block;
+        float: none;
+        vertical-align: top;
+        padding-left: 20px;
+        .btn {
+            height: 38px;
+        }
+        span {
+            float: none;
+            vertical-align: middle;
+        }
     }
     .dashboard-search {
         display: inline-block;
@@ -38,163 +75,246 @@
     }
     .dashboard-create {
         float: right;
-        padding-right: 40px;
+        padding-right: 20px;
     }
 }
-
-// DASHBOARD SKELETON
+// DASHBOARD
 .dashboard-panel {
-    position: absolute;
-    top: 126px;
-    bottom: 0;
-    padding: 0 !important;
-    &.first-visit {
-        top: 250px !important;
+  font-size: 0;
+  position: absolute;
+  top: 126px;
+  bottom: 0;
+  width: 100%;
+  @media (max-width: 767px) {
+    top: 300px !important;
+  }
+  .listings-col {
+    display: inline-block;
+    height: 100%;
+    width: 60%;
+    border-right: 1px #DDDDDD solid;
+    vertical-align: top;
+    .listings-cols-wrapper {
+      width: calc(~'100% - 40px');
+      float: right;
     }
-    .listings-col {
-        height: 100%;
-        position: relative;
-        border-right: 1px solid #DDDDDD;
-        overflow: hidden;
-        .listings-table {
-            height: 100%;
-            .d-title { width: @title; min-width: @title; }
-            .d-price { width: @price; min-width: @price; }
-            .d-category { width: @category; min-width: @category; }
-            .d-date { width: @date; min-width: @date; }
-            .d-manage { width: @manage; min-width: @manage; }
-            
-            tbody {
-                display: block;
-                overflow: scroll;
-                height: 100%;
+    .listings-header {
+      height: 36px;
+      width: 100%;
+      ul {
+        margin: 0 !important;
+        padding-left: 0 !important;
+        li {
+          font-size: 14px;
+          display: inline-block;
+          text-align: left;
+          padding: 8px;
+          overflow: hidden;
+          white-space: nowrap;
+          border-bottom: #DDD 1px solid;
+          &.d-title {
+            width: @title;
+            padding-left: 0;
+          }
+          &.d-price { width: @price; }
+          &.d-category { width: @category; }
+          &.d-date { width: @date; }
+          &.phone-hide {
+            @media (max-width: 480px) {
+              display: none;
             }
-            thead tr {
-                display: block;
+          }
+          &.phone-full-width {
+            @media (max-width: 480px) {
+              width: 100%;
             }
-            tr {
-                position: relative;
-                &:first-child td { border-top: none; }
-                &.highlight {
-                    background-color: #8CA8C8 !important;
-                    color: #FFFFFF;
-                    a { color: #FFFFFF; }
-
-                }
-                &:hover {
-                    cursor: pointer;
-                    background: #F5F5F5;
-                    &.highlight {
-                        background: inherit;
-                    }
-                    > td, > th {
-                        background: none;
-                    }
-                }
-                th:first-child { padding-left: 40px !important; }
-                td {
-
-                    //float: none;
-                    //vertical-align: middle;
-                    &:first-child {
-                        padding-left: 40px !important;
-                    }
-                }
-            }
-            a { text-decoration: underline; }
+          }
+          a {
+            display: inline-block;
+          }
+          span.sort-toggle {
+            display: inline-block;
+            float: none;
+            margin-bottom: -2px;
+            vertical-align: middle;
+          }
         }
+      }
+      span {
+        &.d-check { 
+          width: @delete;
+          height: 37px;
+          padding-left: 14px;
+          position: relative;
+          display: inline-block;
+          padding-top: 8px;
+          border-bottom: #DDD 1px solid;
+          input[type='checkbox'] {
+            vertical-align: top;
+            font-size: 14px;
+          }
+        }
+      }
     }
-    .buyers-col {
-        height: 100%;
-        border-right: 1px solid #DDDDDD;
-    }
-    .messages-col {
-        .messages-panel {
-            .message {
-                padding-right: 40px;
-                border-bottom: #DDD solid 1px;
+    .listings-body {
+      height: calc(~'100% - ' @footer-height);
+      width: 100%;
+      overflow: auto;
+      ul {
+        margin-bottom: 0 !important;
+        padding: 0 !important;
+        li {
+          cursor: pointer;
+          border-bottom: #DDD 1px solid;
+          &:hover {
+            background-color: #EEE;
+          }
+          &.highlight {
+            background-color: darken(#bcddeb, 20%) !important;
+            color: #FFFFFF;
+            text-rendering: optimizeLegibility;
+            a { 
+              color: #FFFFFF;
+              text-rendering: optimizeLegibility;
             }
-            .message-form {
+          }
+          span {
+            font-size: 14px;
+            display: inline-block;
+            text-align: left;
+            padding: 8px;
+            overflow: hidden;
+            white-space: nowrap;
+            &.d-title {
+              width: @title;
+              padding-left: 0;
+            }
+            &.d-price { width: @price; }
+            &.d-category { width: @category; }
+            &.d-date { width: @date; }
+            &.d-check { 
+              width: @delete;
+              padding-left: 14px;
+              position: relative;
+              input[type='checkbox'] {
+                vertical-align: top;
+              }
+            }
+            &.phone-hide {
+              @media (max-width: 480px) {
+                display: none;
+              }
+            }
+            &.phone-full-width {
+              @media (max-width: 480px) {
                 width: 100%;
+              }
             }
+          }
         }
-        height: 100%;
+      }
     }
-    .dash-subtitle {
+  }
+  .buyers-col {
+    display: inline-block;
+    height: 100%;
+    width: 15%;
+    border-right: 1px #DDDDDD solid;
+    vertical-align: top;
+    ul {
+      margin: 0;
+      padding: 0;
+      border-bottom: #DDDDDD solid 1px;
+      li {
+        font-size: 14px;
+        list-style: none;
+      }
+    }
+    .buyers-header {
+      text-align: center;
+      li {
         padding: 8px;
-        font-weight: bold;
-        line-height: 20px;
-        text-rendering: optimizelegibility;
-        text-align: center;
+      }
     }
-}
-
-// DEPRECATED
-// .dash-title {
-//     margin: 25px 0;
-// }
-
-.dash-subtitle, .listings-table thead {
-    border-bottom: 1px solid #dddddd;
-}
-.buyer-card {
-    margin-bottom: 0 !important;
-    border-bottom: 1px solid #dddddd;;
-    &:hover {
+    .buyers-body {
+      height: calc(~'100% - ' @footer-height);
+      overflow: auto;
+      ul {
         cursor: pointer;
-        background: #f5f5f5;
+        &:hover {
+          background-color: #EEE;
+        }
+        &.highlight {
+          background-color: darken(#bcddeb, 20%) !important;
+          color: #FFFFFF;
+          text-rendering: optimizeLegibility;
+          a { 
+            color: #FFFFFF;
+            text-rendering: optimizeLegibility;
+          }
+        }
+        li {
+          &:first-child { padding: 8px 8px 2px 8px; }
+          &:nth-child(2) { padding: 2px 8px 2px 8px; }
+          &:nth-child(3) { padding: 2px 8px 8px 8px; }
+          overflow: hidden;
+          white-space: nowrap;
+        }
+      }
     }
-
-    &.highlight {
-        background-color: #8CA8C8 !important;
-        color: white;
+  }
+  .messages-col {
+    display: inline-block;
+    height: 100%;
+    width: 25%;
+    vertical-align: top;
+    ul {
+      margin: 0;
+      padding: 0;
+      border-bottom: #DDDDDD solid 1px;
+      li {
+        font-size: 14px;
+        list-style: none;
+      }
     }
-    tr {
-        border-style: none;
+    .messages-header {
+      text-align: center;
+      li {
+        padding: 8px;
+      }
     }
-
-    td {
-        border: none !important;
+    .messages-body {
+      height: calc(~'100% - 111px - ' @footer-height);
+      overflow: auto;
+      ul {
+        &.message-buyer {
+          background-color: lighten(#DDD, 10%);
+        }
+        li {
+          &:first-child { padding: 8px 8px 2px 8px; }
+          &:nth-child(2) { padding: 2px 8px 8px 8px; }
+          &.message-buyer-name {
+            font-weight: 500;
+          }
+          word-wrap: break-word;
+        }
+      }
     }
-}
-
-.message-form {
-    background-color: #b2bec3;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-
-    textarea {
-        margin: 0;
-        padding: 0 0 0 10px;
-        width: 100%;
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-        border: #333 solid 1px;
+    .message-form-wrapper {
+      height: 111px;
+      textarea {
+        padding: 5px;
+        resize: none;
+        border-top: 3px solid darken(#DDD, 10%);
+        border-left: 3px solid darken(#DDD, 10%);
+        border-right: 3px solid darken(#DDD, 10%);
         border-bottom: none;
-        resize:vertical;
-    }
-
-    input.send-button {
+      }
+      input {
         width: 100%;
+      }
     }
-
-}
-
-.message {
-    padding: 0 10px;
-    margin: 0;
-    color:#333;
-
-    &.buyer {
-        margin-left:30px;
-    }
-    /* Right Bubble    */
-    &.left {
-        margin-right:30px;
-        background-color:rgba(67,80,86,0.1);
-    }
+  }
 }
 
 #listing-detail {

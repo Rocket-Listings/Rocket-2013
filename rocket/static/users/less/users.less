@@ -233,6 +233,29 @@ a {
 		 	.col-details{
 		 		padding-left: 0;
 
+		 		.ratings{
+
+				 	.green{
+				 		color: #41d503;
+				 	}
+
+				 	.grey{
+				 		color: grey;
+				 	}
+
+				 	.yellow{
+				 		color:  #c6be41;
+				 	}
+
+				 	.orange{
+				 		color: #E5640F;	
+				 	}
+
+				 	.red{
+				 		color: #DF2410;
+				 	}
+			 }
+
 			 	h3{
 			 		text-align: left;
 			 		margin: 0 0 5px 0;
@@ -282,9 +305,7 @@ a {
 			 			a{
 					 		font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 							font-weight: 500;
-							font-size: 14px;
-
-							
+							font-size: 14px;				
 			 		}
 			 	}
 		 	}
@@ -308,6 +329,7 @@ a {
 			margin-bottom: 0px;
 			th{
 				width: 115px;
+				text-align: right;
 			}
 
 			td{
@@ -337,19 +359,19 @@ a {
 		 			padding-bottom: 15px;
 
 		 			.red{
-		 				border-left: 5px solid #C8292D;
+		 				border-left: 5px solid #a11b04;
+		 			}
+
+		 			.orange{
+		 				border-left: 5px solid #bd5317;
 		 			}
 
 		 			.yellow{
-		 				border-left: 5px solid #EB9E3E;
+		 				border-left: 5px solid #c6be41;
 		 			}
 
-		 			.lightblue{
-		 				border-left: 5px solid #4DB3D6;
-		 			}
-
-		 			.blue{
-		 				border-left: 5px solid #3576BE;
+		 			.green{
+		 				border-left: 5px solid  #519902;
 		 			}
 					
 		 			.comment-top{
@@ -382,9 +404,85 @@ a {
 	.comment-form-container {
 		margin-top: 15px;
 
-		.btn-group button{
-			width: 95px;
+		.form-group{
+			margin-left: 10px;
+
+		.form-control{
+			margin-bottom: 15px;
+		}	
+
+
+		.btn-group{
+
+			.btn-red{
+			background-color: #a11b04;
+
+				&:hover{
+					background-color: #DF2410; 
+					color: #393733;
+				}
+			}
+
+			.btn-red.active{
+					background-color: #DF2410;
+					}
+
+			.btn-orange{
+				background-color: #bd5317;
+				
+				&:hover{
+					background-color: #E5640F; 
+					color: #393733;
+				}
+			}
+
+			.btn-orange.active{
+					background-color: #E5640F;
+					}
+
+
+			.btn-yellow{
+				background-color: #c6be41;
+
+				&:hover{
+					background-color: #f1f00e; 
+					color: #393733;
+				}
+				}
+
+				.btn-yellow.active{
+					background-color:#f1f00e;
+				}
+			
+
+			.btn-green{
+				background-color: #519902;
+
+				&:hover{
+					background-color: #41d503; 
+					color: #393733;
+				}
+			}
+				.btn-green.active{
+					background-color: #41d503;
+				}
+			
+
+			button{
+				width: 94px;
+			}
+
 		}
+		}
+
+		p{
+			padding-top: 7px;
+		}
+
+		.col-submit{
+			text-align: left;
+		}
+		
 
 	}
 
