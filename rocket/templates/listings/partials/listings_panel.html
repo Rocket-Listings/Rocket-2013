@@ -5,7 +5,7 @@
 
 <!--HEADER-->
 <div class="listings-header">
-	<span class="d-check"><input class="check-all" type="checkbox"></span>
+	<span class="d-check phone-hide"><input class="check-all" type="checkbox"></span>
 	<ul class="sort-by listings-cols-wrapper">
 		<li class="d-title phone-full-width">
 			<a class="sort" data-sort="title" href="#">Title</a>
@@ -46,3 +46,25 @@
 	{% endfor %}
 	</ul>
 </div>
+
+<script id="new-listing" type="text/template">
+{% verbatim %}
+	{{#listings}}
+		<li data-listing-id="{{ id }}">
+			<span class="d-check phone-hide"><input class="check-one" type="checkbox" name="check-{{ id }}" value="{{ id }}"></span>
+			<div class="listings-cols-wrapper">
+				<span class="d-title phone-full-width">
+					<a class="title phone-full-width">{{ title }}</a>
+				</span>
+				<span class="price d-price phone-hide">${{ price }}</span>
+				<span class="category d-category phone-hide">{{ category }}</span>
+				<span class="d-date phone-hide">
+					<span class="date hide">{{ sort_date }}</span>
+					{{ natural_date }}
+				</span>
+				<span class="status hide">{{ status }}</span>
+			</div>
+		</li>
+	{{/listings}}
+{% endverbatim %}
+</script>

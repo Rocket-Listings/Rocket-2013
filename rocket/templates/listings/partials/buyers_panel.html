@@ -17,3 +17,15 @@
 	</ul>
 	{% endfor %}
 </div>
+
+<script id="new-buyer" type="text/template">
+{% verbatim %}
+	{{#buyers}}
+	<ul class="buyer-card listing-{{ listing_id }} hide" data-buyer-id="{{ buyer_id }}" data-listing-id="{{ listing_id }}">
+		<li>{{ name }}</li>
+		<li>{{#max_offer}}{{max_offer}}{{/max_offer}}{{^max_offer}}No offer{{/max_offer}}</li>
+		<li>{{ last_message_date }}</li>
+	</ul>
+	{{/buyers}}
+{% endverbatim %}
+</script>

@@ -60,6 +60,7 @@ $(function() {
 		$(".message-form input[name='listing']").val(listing_id);
 		$(".message-form input[name='buyer']").val(buyer_id);
 		$('.messages-body').scrollBottom();
+		//$(".message-form textarea").focus();
 	});
 
 	$('.sort').click(function () {
@@ -82,15 +83,42 @@ $(function() {
 
 	$(document).keydown(function(e) {
 		var listings = $('.listings-body'),
-			currentSelected = listings.find("li.highlight"),
+			buyers = $('.buyers-body'),
+			currentSelectedListing = listings.find("li.highlight"),
+			currentSelectedBuyer = buyers.find('ul.highlight'),
 			key = e.which || e.keyCode;
-		if ((key == '74') || (key == '40')) { //J || DOWN
-			currentSelected.next('li').click();
-			listings.scrollTo(currentSelected.next('li'));
+		if (!$('.message-form textarea').is(":focus")) {
+			if (key == "66") window.context = "b";
+			if (key == "76") window.context = "l";
+			if ((key == '74') || (key == '40')) {
+				// J || DOWN
+				if (context == "l") {
+					currentSelectedListing.next('li').click();
+					listings.scrollTo(currentSelectedListing.next('li'));
+				}
+				if (context == "b") {
+					currentSelectedBuyer.next('ul').click();
+					buyers.scrollTo(currentSelectedBuyer.next('ul'));
+				}
+			}
+			if ((key == '75') || (key == '38')) {
+				// K || UP
+				if (context == "l") {
+					currentSelectedListing.prev('li').click();
+					listings.scrollTo(currentSelectedListing.prev('li'));
+				}
+				if (context == "b") {
+					currentSelectedBuyer.prev('ul').click();
+					buyers.scrollTo(currentSelectedBuyer.prev('ul'));
+				}
+			}
+			if ((key == '77') && (!$('.message-form-wrapper').hasClass('hide'))) {
+				$(".message-form textarea").focus();
+				return false;
+			}
 		}
-		if ((key == '75') || (key == '38')) { //K || UP
-			currentSelected.prev('li').click();
-			listings.scrollTo(currentSelected.prev('li'));
+		if (($('.message-form textarea').is(":focus")) && (key == "27")) {
+			$(".message-form textarea").blur();
 		}
 	});
 
@@ -144,7 +172,7 @@ $(function() {
 						$('.buyer-' + response.messages.buyer_id).removeClass("hide");
 						$('.messages-body').scrollBottom();
 						$('.last-message').text(response.messages.message_id);
-						$('.message-form textarea').val("");
+						$('.message-form textarea').val("").focus();
 						break;
 					case 'err_validation':
 						console.log("There was an error sending the message.");
@@ -241,3 +269,6 @@ $(function() {
     });
 
 });
+
+// Context for keyboard controls
+var context = "l";
