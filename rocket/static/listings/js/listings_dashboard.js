@@ -31,56 +31,53 @@ $(function() {
 	    return text.replace(exp, "<a href='$1'>$1</a>"); 
 	}
 
-	$('.listings-body li').click(function () {
-		var listingRow = $(this),
-			id = listingRow.data('listing-id'),
-			buyers = $(".listing-" + id);
-		$('.listings-body li').removeClass('highlight');
-		listingRow.addClass('highlight');
-		$(".message").addClass("hide");
-		$(".buyer-card").addClass("hide");
-		if(buyers.length) {
-			buyers.removeClass("hide");
-			buyers.first().click();
-			$('.message-form-wrapper').removeClass("hide");
+	// Bind clicks and list init to the current items
+	function bindEvents() {
+		$('.listings-body li').click(function () {
+			var listingRow = $(this),
+				id = listingRow.data('listing-id'),
+				buyers = $(".listing-" + id);
+			$('.listings-body li').removeClass('highlight');
+			listingRow.addClass('highlight');
+			$(".message").addClass("hide");
+			$(".buyer-card").addClass("hide");
+			if(buyers.length) {
+				buyers.removeClass("hide");
+				buyers.first().click();
+				$('.message-form-wrapper').removeClass("hide");
+				$('.messages-body').scrollBottom();
+			} else {
+				$('.message-form-wrapper').addClass("hide");
+			}
+		});
+
+		$('.buyer-card').click(function(event){
+			var buyerCard = $(this),
+				buyer_id = buyerCard.data('buyer-id'),
+				listing_id = buyerCard.data('listing-id');
+			$('.buyer-card').removeClass('highlight');
+			buyerCard.addClass('highlight');
+			$(".message").addClass("hide");
+			$('.buyer-' + buyer_id).removeClass("hide");
+			$(".message-form input[name='listing']").val(listing_id);
+			$(".message-form input[name='buyer']").val(buyer_id);
 			$('.messages-body').scrollBottom();
-		} else {
-			$('.message-form-wrapper').addClass("hide");
-		}
-	});
+			//$(".message-form textarea").focus();
+		});
 
-	$('.buyer-card').click(function(event){
-		var buyerCard = $(this),
-			buyer_id = buyerCard.data('buyer-id'),
-			listing_id = buyerCard.data('listing-id');
-		$('.buyer-card').removeClass('highlight');
-		buyerCard.addClass('highlight');
-		$(".message").addClass("hide");
-		$('.buyer-' + buyer_id).removeClass("hide");
-		$(".message-form input[name='listing']").val(listing_id);
-		$(".message-form input[name='buyer']").val(buyer_id);
-		$('.messages-body').scrollBottom();
-		//$(".message-form textarea").focus();
-	});
+		var options = {
+			valueNames: ['title', 'price', 'category', 'date', 'status']
+		};
 
-	$('.sort').click(function () {
-		var icon = $(this).next('span'),
-			icons = $("span.glyphicon.sort-toggle"),
-			iconsNotClicked = $("span.glyphicon.sort-toggle:not('span.glyphicon.active')"),
-			down = 'glyphicon-chevron-down',
-			up = 'glyphicon-chevron-up';
-		icons.addClass("hide").removeClass("active");
-		icon.removeClass("hide").addClass('active');
-		iconsNotClicked.removeClass(down + " " + up).addClass(down);
-		if (icon.hasClass(down)) {
-			icon.removeClass(down).addClass(up);
-		}
-		else {
-			icon.removeClass(up).addClass(down);
-		}
-		return false;
-	})
+		var listings = new List('dashboard-content', options);
+	}
 
+	// Unbind click events from current items
+	function unbindEvents() {
+		$('.listings-body li, .buyer-card').unbind('click');
+	}
+
+	// Keyboard controls
 	$(document).keydown(function(e) {
 		var listings = $('.listings-body'),
 			buyers = $('.buyers-body'),
@@ -88,8 +85,8 @@ $(function() {
 			currentSelectedBuyer = buyers.find('ul.highlight'),
 			key = e.which || e.keyCode;
 		if (!$('.message-form textarea').is(":focus")) {
-			if (key == "66") window.context = "b";
-			if (key == "76") window.context = "l";
+			if (key == "66") window.context = "b"; // B
+			if (key == "76") window.context = "l"; // L
 			if ((key == '74') || (key == '40')) {
 				// J || DOWN
 				if (context == "l") {
@@ -113,11 +110,13 @@ $(function() {
 				}
 			}
 			if ((key == '77') && (!$('.message-form-wrapper').hasClass('hide'))) {
+				// M
 				$(".message-form textarea").focus();
 				return false;
 			}
 		}
 		if (($('.message-form textarea').is(":focus")) && (key == "27")) {
+			// ESC
 			$(".message-form textarea").blur();
 		}
 	});
@@ -126,7 +125,7 @@ $(function() {
 		$('.dashboard-panel').removeClass("first-visit");
 	});
 
-	// AUTOPOST
+	// Autopost from dashboard (Deprecated)
 	$(".share_optn").click(function (e) {
 		e.preventDefault();
 		if (!$(this).hasClass("disabled")) {
@@ -152,6 +151,8 @@ $(function() {
 				   'message': $(".last-message").text()},
 			success: function (response) {
 				insertNewData(response);
+				unbindEvents(); // To prevent overlap
+				bindEvents(); // Bind all items (including new)
 			}
 		});
 	});
@@ -168,6 +169,7 @@ $(function() {
 			success: function (response) {
 				switch (response.status) {
 					case 'success':
+						console.log(response);
 						$(".messages-body").append(Mustache.render($("#new-message").html(), response));
 						$('.buyer-' + response.messages.buyer_id).removeClass("hide");
 						$('.messages-body').scrollBottom();
@@ -194,6 +196,9 @@ $(function() {
 		$(".last-listing").text(data.latest[0]);
 		$(".last-buyer").text(data.latest[1]);
 		$(".last-message").text(data.latest[2]);
+		$(".messages-body").append(Mustache.render($("#new-message").html(), {'messages': data.messages}));
+		$(".buyers-body").prepend(Mustache.render($("#new-buyer").html(), {'buyers': data.buyers}));
+		$(".listings-body ul.list").prepend(Mustache.render($("#new-listing").html(), {'listings': data.listings}));
 	}
 
 	function checkStatus(listingid) {
@@ -212,17 +217,31 @@ $(function() {
 		}, 3000);
 	}
 
+	$('.sort').click(function () {
+		var icon = $(this).next('span'),
+			icons = $("span.glyphicon.sort-toggle"),
+			iconsNotClicked = $("span.glyphicon.sort-toggle:not('span.glyphicon.active')"),
+			down = 'glyphicon-chevron-down',
+			up = 'glyphicon-chevron-up';
+		icons.addClass("hide").removeClass("active");
+		icon.removeClass("hide").addClass('active');
+		iconsNotClicked.removeClass(down + " " + up).addClass(down);
+		if (icon.hasClass(down)) {
+			icon.removeClass(down).addClass(up);
+		}
+		else {
+			icon.removeClass(up).addClass(down);
+		}
+		return false;
+	});
+
 	$(".message-content").each(function() {
 		$(this).html(linkToClickable($(this).text()));
 	});
 
 	$('.listings-body li').first().click();
 
-	var options = {
-		valueNames: ['title', 'price', 'category', 'date', 'status']
-	};
-
-	var listings = new List('dashboard-content', options);
+	bindEvents();
 
 	$('#filter-draft').click(function() {
         listings.filter(function(item) {
