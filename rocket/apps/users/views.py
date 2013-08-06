@@ -38,7 +38,6 @@ def info(request):
 			userObject = User.objects.get(username=user)
 			userObject.email = user_profile_form.cleaned_data['email']
 			userObject.save()
-			user_profile = user_profile_form.save()
 			responseData = {}
 			for key, value in user_profile_form.cleaned_data.iteritems():
 				if key != "default_listing_type" and key != "default_category":
@@ -51,6 +50,8 @@ def info(request):
 				profile.add_credit(2)
 				responseData['credits_added'] = 2
 				responseData['profile_completed'] = True
+
+			user_profile = user_profile_form.save()	
 
 			return HttpResponse(json.dumps(responseData), content_type="application/json")
 		else:
