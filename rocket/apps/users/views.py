@@ -34,24 +34,36 @@ def info(request):
 	fbProfile = ProfileFB.objects.get(profile=profile)
 	if request.method == 'POST':
 		user_profile_form = UserProfileForm(request.POST, instance=profile)
-		print user_profile_form
 		if user_profile_form.is_valid():
 			userObject = User.objects.get(username=user)
 			userObject.email = user_profile_form.cleaned_data['email']
 			userObject.save()
-			user_profile = user_profile_form.save()
 			responseData = {}
 			for key, value in user_profile_form.cleaned_data.iteritems():
 				if key != "default_listing_type" and key != "default_category":
 					responseData[key] = escape(value)
 			responseData['profile'] = True
+			responseData['credits_added'] = 0
+
+			if profile.filled_out() and not profile.profile_completed_once:
+				profile.profile_completed_once = True
+				profile.add_credit(2)
+				responseData['credits_added'] = 2
+				responseData['profile_completed'] = True
+
+			user_profile = user_profile_form.save()	
+
 			return HttpResponse(json.dumps(responseData), content_type="application/json")
 		else:
 			errors = user_profile_form.errors
 			return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
+		credits = profile.listing_credits
+		credits_spent = profile.total_credits - credits
+		profile_completed_once = user.get_profile().profile_completed_once
 		user_profile_form = UserProfileForm(instance=profile)
-		return TemplateResponse(request, 'users/user_info.html', {'user': user, 'form': user_profile_form, 'fb': fbProfile})
+		context_dictionary = {'user': user, 'form': user_profile_form, 'fb': fbProfile, 'credits':credits, 'profile_completed_once':profile_completed_once, 'credits_spent':credits_spent}
+		return TemplateResponse(request, 'users/user_info.html', context_dictionary)
 
 @view_count
 @first_visit
@@ -99,7 +111,9 @@ def profile(request, username=None):
 		# 	errors = comment_form.errors
 		# 	return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
-		return TemplateResponse(request, 'users/user_profile.html', {'url_user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile, 'avg_rating':avg_rating, 'total_listing_views':total_listing_views}) #'activelistings':activelistings, 'draftlistings':draftlistings,
+		credits = user.get_profile().listing_credits
+		context_dictionary = {'url_user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile, 'avg_rating':avg_rating, 'owner':request.user.is_owner, 'credits':credits,'total_listing_views':total_listing_views}
+		return TemplateResponse(request, 'users/user_profile.html', context_dictionary) #'activelistings':activelistings, 'draftlistings':draftlistings,
 
 def delete_account(request):
 	user = request.user
