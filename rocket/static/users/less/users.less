@@ -14,6 +14,15 @@ a {
 
 
 .content-wrapper {
+	
+	.name-header {
+		margin-left:15px;
+	}
+	@media (min-width: 1003px) {
+		.screen-lg-right {
+			float: right;
+		}
+	}
 	table {
 		width: auto !important;
 		tr {
@@ -24,7 +33,7 @@ a {
 				}
 			}
 			td {
-				input, textarea, select{
+				input:not(.btn), textarea, select{
 					border: none !important;
 					background-color: rgba(255, 255, 255, 0) !important;
 					&[name='bio'] {
@@ -627,4 +636,23 @@ a {
 .th-sortable {
     background: url("desc.gif") right center no-repeat;
     padding-right: 15px;
+}
+
+#listing-credits {
+	h5 {
+		margin-top:24px;
+	}
+	
+	p {
+		font-size:12px;
+		margin-bottom: 2px;
+	}
+
+	a {
+		font-size:12px;
+	}
+}
+
+.completed {
+	text-decoration:line-through;
 }

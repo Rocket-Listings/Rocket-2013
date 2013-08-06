@@ -4,28 +4,62 @@
 {% load compress %}
 	
 {% block content %}
-	{% if user.get_profile.name %}
-	<h3><a class="name-header" href="{% url 'users.views.profile' user.username %}">{{ user.get_profile.name }}</a></h3>
-	{% else %}
-	<h3><a class="name-header" href="{% url 'users.views.profile' user.username %}">{{user.username}}</a></h3>
-	{% endif %}
-
-	<div class="content-wrapper">
-		<div class="error-wrapper"></div>
-		{% if first_visit %}
-			<div class="alert alert-info">
-  				<button type="button" class="close" data-dismiss="alert">&times;</button>
-  				<h4>Info Panel</h4>
-  				This is your info panel. Create your profile, connect Twitter and Facebook, and choose your listing defaults.
-			</div>
+	<div class="error-wrapper"></div>
+		
+		{% if user.get_profile.name %}
+			<h3><a class="name-header" href="{% url 'users.views.profile' user.username %}">{{ user.get_profile.name }}</a></h3>
+		{% else %}
+			<h3><a class="name-header" href="{% url 'users.views.profile' user.username %}">{{user.username}}</a></h3>
 		{% endif %}
-		<form class="settings-form" action="" method="POST">
+
+	<div class="content-wrapper row">
+		
+		<div class="col-lg-4 screen-lg-right" id="listing-credits">
+			<h5>Listing Credits</h5>
+
+			<table class="table">
+				<tr>
+					<td><p>Credits Left:</p></td>
+					<td class="text-center"><p id="credit-counter">{{credits}}</p></td>
+					<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+				<tr>
+					<td><p>Credits Spent:</p></td>
+					<td class="text-center"><p>{{credits_spent}}</p></td>
+					<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				</tr>
+			</table>
+
+			<h6>You can get more listings by</h6>
+			<ul>	
+				<li><a href="#" id="profile-completed" class="text-left {% if profile_completed_once %}completed{% endif %}">Completing your profile</a></li>
+
+				<li><a href="#" class="text-left">Linking social media accounts</a></li>
+
+				<li><a href="#" class="text-left">Referring friends</a></li>
+			</ul>
+		</div>
+
+
+		<form class="settings-form col-lg-8 pull-left" id="user-info-form" action="" method="POST">
+			{% if first_visit %}
+				<div class="alert alert-info">
+  					<button type="button" class="close" data-dismiss="alert">&times;</button>
+  					<h4>Info Panel</h4>
+  					This is your info panel. Create your profile, connect Twitter and Facebook, and choose your listing defaults.
+				</div>
+			{% endif %}
 			{% csrf_token %}
-			<div class="save-all-container">
-				<span class="h4 user-info-label">User Info</span>
-				<input class="btn btn-primary save-all disabled" type="submit" value="Save all">
-			</div>
 			<table class="table table-hover">
+				<thead>					
+						<th>
+							<span class="h4 user-info-label">User Info</span>
+						</th>
+						<th></th>
+						<th class="save-all-container">
+							<input class="btn btn-primary save-all disabled" type="submit" value="Save all">
+						</th>
+				</thead>
 				<tbody>
 					<tr class="uneditable">
 						<td>Username</td>
@@ -121,11 +155,6 @@
 					<tr>
 						<td class="subheader"><h4>Listings</h4></td>
 					</tr>
-					<tr class="uneditable">
-						<td>Rocket Email</td>
-						<td><code>{{user.username}}@rocketlistings.mailgun.org</code></td>
-						<td></td>
-					</tr>
 					<tr class="editable">
 						<td>Default Seller Type</td>
 						<td class="select">
@@ -160,11 +189,19 @@
 						<td></td>
 					</tr>
 					
-				</tbody>
+					<tr>
+						<td><a class="delete-account-modaltrigger text-danger" role="button" data-toggle="modal" href="#delete-account-modal">Delete account</a></td>
+						<td></td><td><input class="btn btn-primary save-all disabled" type="submit" value="Save all"/></td>
+					</tr>				
+				
+				</tbody>		
 			</table>
-			<a class="delete-account-modaltrigger text-danger" role="button" data-toggle="modal" href="#delete-account-modal">Delete account</a>
-			<input class="btn btn-primary save-all disabled" type="submit" value="Save all">
 		</form>
+		
+
+
+
+
 	</div>
 
 	<div id="delete-account-modal" class="modal">

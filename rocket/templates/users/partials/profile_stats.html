@@ -18,5 +18,13 @@
 			<th>Profile Views</th>
 			<td>{{url_user.get_profile.get_view_count}}</td>
 		</tr>
+
+		{% if owner %}
+			<tr>
+				<th>Listing Credits:</th>
+				<td>{{credits}}</td>
+			</tr>
+		{% endif %}
+
 	</table>
 </div>

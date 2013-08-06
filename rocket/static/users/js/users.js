@@ -90,6 +90,7 @@ $(function() {
 			console.log(FPError);
 		});
 	});
+
 	$("form.settings-form").submit(function() {
 		if ((!$(".save-all").hasClass("disabled")) || ($(".save-all").hasClass("propic-enable"))) {
 			var csrftoken = getCookie('csrftoken');
@@ -129,6 +130,13 @@ $(function() {
 		}
 		if ($("input[name='propic']").val() !== "") $("img.propic").attr("src", data['propic'] + "?" + new Date().getTime());
 		$(".loading-overlay").addClass("hide");
+
+		if (data['credits_added'] != 0) {
+			$("#credit-counter").text(parseInt($("#credit-counter").html()) + data['credits_added']);
+			if (data['profile_completed'] != undefined) {
+				$("#profile-completed").addClass("completed");
+			}
+		}
 	}
 	function getInput (type) {
 		var input  = $("input:not(input[type='submit']), textarea"),

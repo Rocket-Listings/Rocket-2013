@@ -12,7 +12,7 @@
 				</div>
 			{% endif %} 
 				<div class="row profile-header">
-					<div class="col-lg-2 profile-picture"> {# contains profile pic #}
+					<div class="col-lg-2 profile-picture col-lg-push-10"> {# contains profile pic #}
 						{% if url_user.get_profile.propic %}
 							<img class="thumbnail" src="{{ url_user.get_profile.propic }}">
 						{% else %}
@@ -22,7 +22,7 @@
 									<a href="{% url 'users.views.info' %}">Edit profile</a>
 						{% endif %}
 					</div>
-					<div class="col-lg-10"> {# contains main profile description (name, username, social, location, bio) #}
+					<div class="col-lg-10 col-lg-pull-2"> {# contains main profile description (name, username, social, location, bio) #}
 						<div class="row">
 							<div class="col-lg-4 col-details">
 								{% if url_user.get_profile.name %} 
