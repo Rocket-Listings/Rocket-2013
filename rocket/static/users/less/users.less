@@ -183,6 +183,30 @@ a {
 	}
 }
 
+.ratings{
+
+ 	.green{
+ 		color: #519902;
+ 	}
+
+ 	.grey{
+ 		color: grey;
+ 	}
+
+ 	.yellow{
+ 		color: #FCD61A;
+ 	}
+
+ 	.orange{
+ 		color: #bd5317;
+ 	}
+
+ 	.red{
+ 		color: #a11b04;
+ 	}
+}
+
+
 .profile-content {
 	margin-top: 30px;
 
@@ -233,28 +257,7 @@ a {
 		 	.col-details{
 		 		padding-left: 0;
 
-		 		.ratings{
 
-				 	.green{
-				 		color: #519902;
-				 	}
-
-				 	.grey{
-				 		color: grey;
-				 	}
-
-				 	.yellow{
-				 		color: #FCD61A;
-				 	}
-
-				 	.orange{
-				 		color: #bd5317;
-				 	}
-
-				 	.red{
-				 		color: #a11b04;
-				 	}
-			 }
 
 			 	h3{
 			 		text-align: left;
@@ -564,7 +567,36 @@ a {
 	}
 
 
- #map-canvas {
+.profile-card-top-row{
+		.profile-picture {
+				
+				padding-left: 0px;
+				
+					img.thumbnail {
+						border-radius: 0px;
+					 	-webkit-border-radius: 0px;
+					 	-moz-border-radius: 0px;
+					 	-o-border-radius: 0px;
+					 	box-shadow: none;
+					 	-webkit-box-shadow: none;
+					 	-moz-box-shadow: none;
+					 	padding: 0;
+					 	border: none;
+					 	width: 100%;
+					 	max-width: 181px;
+					 	min-width: 131px;
+					 	display: block;
+						margin-left: auto;
+						margin-right: auto;
+					}
+				a{
+					line-height: 40px;
+					padding-left: 33px;
+				}
+		 	}
+}
+
+#map-canvas {
     margin: 0;
     padding: 0;
     height: 200px;
