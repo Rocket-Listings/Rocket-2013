@@ -63,7 +63,7 @@ def info(request):
 		profile_completed_once = user.get_profile().profile_completed_once
 		user_profile_form = UserProfileForm(instance=profile)
 		context_dictionary = {'user': user, 'form': user_profile_form, 'fb': fbProfile, 'credits':credits, 'profile_completed_once':profile_completed_once, 'credits_spent':credits_spent}
-		return TemplateResponse(request, 'users/user_info.html', context_dictionary)
+		return TemplateResponse(request, 'users/info.html', context_dictionary)
 
 @view_count
 @first_visit
@@ -113,7 +113,7 @@ def profile(request, username=None):
 	else:
 		credits = user.get_profile().listing_credits
 		context_dictionary = {'url_user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile, 'avg_rating':avg_rating, 'owner':request.user.is_owner, 'credits':credits,'total_listing_views':total_listing_views}
-		return TemplateResponse(request, 'users/user_profile.html', context_dictionary) #'activelistings':activelistings, 'draftlistings':draftlistings,
+		return TemplateResponse(request, 'users/profile.html', context_dictionary) #'activelistings':activelistings, 'draftlistings':draftlistings,
 
 def delete_account(request):
 	user = request.user

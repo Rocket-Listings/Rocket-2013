@@ -133,15 +133,15 @@ $(function() {
       var that = this;
       var lat = latlng.lat();
       var lng = latlng.lng();
-      // $.ajax({
-      //   method: 'GET',
-      //   url: 'http://api.geonames.org/findNearestAddressJSON?lat={0}&lng={1}&username=rocketlistings'.format(lat, lng),
-      //   success: function(response) {
-      //     var addr = response.address;
-      //     console.log(addr);
-      //     that.$('#id_location').val([addr.streetNumber, addr.street, addr.placaename, addr.adminCode1].join(' ')).trigger('change');
-      //   }
-      // });
+      /*$.ajax({
+        method: 'GET',
+        url: 'http://api.geonames.org/findNearestAddressJSON?lat={0}&lng={1}&username=rocketlistings'.format(lat, lng),
+        success: function(response) {
+          var addr = response.address;
+          console.log(addr);
+          that.$('#id_location').val([addr.streetNumber, addr.street, addr.placaename, addr.adminCode1].join(' ')).trigger('change');
+        }
+      });*/
       this.geocoder.geocode({'latLng': latlng}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
           if (results[0]) {
