@@ -1,10 +1,11 @@
 from celery.task import task
-from listings.models import Listing, Buyer, ListingPhoto
+from listings.models import Listing, Buyer, ListingPhoto, Message
 from bs4 import BeautifulSoup
 import requests
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
 from celery.signals import task_sent
 from celery.signals import task_success
 
@@ -136,5 +137,27 @@ def autopost_success_handler(sender=None, result=None, args=None, kwargs=None, *
 	listing.status_id = 3
 	listing.save()
 
+@task(name='tasks.send_message_task')
 def send_message_task(message_id):
-	pass
+	msg = Message.objects.get(id=message_id)
+	if msg.isSeller:
+		from_name = msg.listing.user.get_profile().get_display_name()
+		to_name = msg.buyer.name
+		to_email = msg.buyer.email
+	else:
+		from_name = msg.buyer.name
+		to_name = msg.listing.user.get_profile().get_display_name()
+		to_email = msg.listing.user.email
+	ctx = { 'from_name': from_name,
+			'to_name': to_name,
+			'content': msg.content,
+			'date': msg.date,
+			'listing_title': msg.listing.title,
+			'toBuyer': msg.isSeller }
+	subject = render_to_string('', ctx)
+	subject = ''.join(subject.splitlines()) # remove new lines
+	message_text = render_to_string('', ctx)
+	message_html = render_to_string('', ctx)
+	email = EmailMultiAlternatives(subject, message_text, settings.DEFAULT_FROM_EMAIL, [to_email], headers={'Reply-To': ''})
+	email.attach_alternative(message_html, "text/html")
+	email.send()

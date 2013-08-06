@@ -13,7 +13,7 @@ from listings.models import Listing, ListingPhoto, Buyer, Offer, Message
 from django.contrib.auth.models import User
 import requests
 from bs4 import BeautifulSoup
-from mail.tasks import autopost_task
+from mail.tasks import autopost_task, send_message_task
 
 
 
@@ -125,6 +125,20 @@ def on_incoming_buyer_message(request):
 		return HttpResponse('OK')
 	else:
 		return HttpResponse('Unauthorized')
+
+@csrf_exempt
+def new_message_from_seller(request):
+	# seller --> buyer
+	if verify(request.POST.get("token", ""), request.POST.get("timestamp", ""), request.POST.get("signature"), ""):
+		# add the message to our database as isSeller
+		# send the message to the buyer
+
+@csrf_exempt
+def new_message_from_buyer(request):
+	# buyer --> seller
+	if verify(request.POST.get("token", ""), request.POST.get("timestamp", ""), request.POST.get("signature"), ""):
+		# add the message to our database as !isSeller
+		# send the message to the seller's email
 
 def autopost(request, listing_id):
 	username = User.objects.get(username=request.user).username
