@@ -93,7 +93,7 @@ $(function() {
       google.maps.event.trigger(this.map, 'resize');
     },
 
-    toggleLoading : function() {
+    toggleLoading: function() {
       this.$('.loading-spinner').toggle();
     },
 
@@ -182,8 +182,22 @@ $(function() {
     }
   });
 
+  var SidebarView = Backbone.View.extend({
+    el: '.detail-sidebar',
+    events: {
+      // "click .draft-btn": "save",
+      "click .save-btn": "publish"
+    },
 
-
+    // save: function(e) {
+    //   $('#submit-draft').click();
+    // },
+    publish: function(e) {
+      $('#submit-publish').click();
+    }
+  });
+  
+  var sidebarView = new SidebarView;
   var PhotoListView = Backbone.View.extend({
     // el is defined in template with the backbone.subview plugin
     el: '#preview-gallery', 

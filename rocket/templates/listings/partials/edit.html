@@ -93,7 +93,7 @@
         </div>
         <div class="location-map-wrapper">
           <div id="location-map"></div>
-          <button id="location-btn" class="btn btn-default" type="button">Autofill Precise Location <i class="glyphicon glyphicon-screenshot"></i></button>
+          <button id="location-btn" class="btn btn-default" type="button">Autofill Current Location <i class="glyphicon glyphicon-screenshot"></i></button>
           <img src="{% static 'users/img/100px_loading.gif' %}" class="loading-spinner"/>
         </div>
         {# <label class="form-label">Map</label> #}
@@ -165,7 +165,7 @@
 
   </fieldset>
   <div class="btn-toolbar pull-right">
-    <input type="submit" class="btn btn-primary" name="listing_action" value="Save as Draft"/>
-    <input type="submit" class="btn btn-success" name="listing_action" value="Save to Craigslist"/>
+    {# <input id="submit-draft" type="submit" class="btn btn-primary" name="listing_action" value="Save as Draft"/> #}
+    <input id="submit-publish" type="submit" class="btn btn-success" name="listing_action" value="Save to Craigslist"/>
   </div>
 </form>
