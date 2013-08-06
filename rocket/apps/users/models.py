@@ -70,7 +70,7 @@ class UserComment(models.Model):
 	email = models.EmailField(max_length=255, blank=False) # email of commenter
 	user = models.ForeignKey(User) # contains user foreignkey
 	title = models.CharField(max_length=255, blank=False)
-	rating = models.IntegerField(blank=False)
+	rating = models.IntegerField(blank=False, default="5")
 	
 
 	def __unicode__(self):
