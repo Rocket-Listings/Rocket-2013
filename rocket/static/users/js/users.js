@@ -194,12 +194,18 @@ $(function() {
 			type: 'GET',
 			url: '/users/twitter/handle/',
 			success: function (response) {
-				if (response !== "no_oauth_token_or_key") {
-					$(".twitter-handle").html(response);
+				if (response['handle'] !== "no_oauth_token_or_key") {
+					$(".twitter-handle").html(response['handle']);
 					$(".at").removeClass("muted");
 					$(".verify-twitter").addClass("hide");
 					$(".disconnect-twitter").removeClass("hide");
+					$("#twitter-linked").addClass("completed");
 				}
+				if (response['credits_added'] != 0) {
+					$("#credit-counter").text(parseInt($("#credit-counter").html()) + response['credits_added']);
+					
+				}
+
 			}
 		});
 	}
@@ -279,9 +285,14 @@ $(function() {
 				xhr.setRequestHeader("X-CSRFToken", csrftoken);
 			},
 			success: function(response) {
-				$(".fb-name").text(response);
+				$(".fb-name").text(response['name']);
 				$(".connect-fb").addClass("hide");
 				$(".disconnect-fb").removeClass("hide");
+				$("#facebook-linked").addClass("completed");
+
+				if (response['credits_added'] != 0) {
+					$("#credit-counter").text(parseInt($("#credit-counter").html()) + response['credits_added']);
+				}
 			}
 		});
 	}

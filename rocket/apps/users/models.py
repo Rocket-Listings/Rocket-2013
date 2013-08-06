@@ -28,6 +28,8 @@ class UserProfile(models.Model):
 	listing_credits = models.IntegerField(default=3)
 	total_credits = models.IntegerField(default=3)
 	profile_completed_once = models.BooleanField(default=False)
+	twitter_connected_once = models.BooleanField(default=False)
+	facebook_connected_once = models.BooleanField(default=False)
 
 	def get_absolute_url(self):
 		return reverse('users.views.profile', args=[self.user])
