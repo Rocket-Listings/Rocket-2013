@@ -302,6 +302,11 @@
 }
 
 .listing-form {
+  .btn-toolbar {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
   fieldset small {
     font-size: 60%;
     margin-left: 15px;
@@ -362,8 +367,8 @@
   }
   .sortable .sortable-placeholder {
       float: left;
-      width: 115px;
-      height: 115px;
+      width: 116px;
+      height: 116px;
       margin-left: 15px;
       margin-right: 15px;
       border: 1px dashed #ddd;
@@ -374,12 +379,12 @@
       cursor: pointer;
   }
 
-  .photo-view {
-      display: none;
-  }
-
   #photos {
       min-height: 200px;
+      img {
+        width: 100%;
+        cursor: pointer;
+      }
   }
   
   #spec-fieldset {
@@ -392,10 +397,29 @@
 
 
 .detail-sidebar {
-    margin-top:12px;
-    > div {
-        top: 10px;
+
+    margin-top:15px;
+    .affix {
+      top: 10px;
     }
+
+    .btn-group {
+      margin-bottom: 7px;
+    }
+
+    // .preview-btn {
+    //   width: 50%;
+    // }
+
+    // .draft-btn {
+    //   // width: calc(~'45% - 2.5px');
+    //   margin-right: 5px;
+    //   float:left;
+    // }
+    // .save-btn {
+    //   // width: calc(~'55% - 2.5px');
+    //   float:right;
+    // }
 }
 .icon-blank	{
   display:inline-block;
@@ -405,6 +429,21 @@
 	background-image: url('../img/white-icon.png');
 }
 
-// .padding-40-left {
-//         padding-left:40px;
-// }
+.listing-preview {
+  .preview-thumbnails img {
+    width: 100%;
+    cursor: pointer;
+  }
+  .preview-thumbnails img, .preview-stage, .preview-description {
+    margin-bottom: 30px;
+  }
+
+  .preview-stage img {
+    max-width: 100%;
+  }
+
+  .preview-location {
+    margin-left: 15px;
+  }
+
+}

@@ -1,82 +1,39 @@
 {% verbatim %}
-<script id="preview-template" type="text/template">
+<script id="preview-text-template" type="text/template">
   <div class="row">
-    <h3 class="col-10">{{ title }}</h3>
-    <h3 class="col-2 text-right text-success">{{#price}}${{ price }}{{/price}}</h3>
+    <h3 class="col-10">{{ listing.title }}<small class="text-muted preview-location">{{ listing.location }}</small></h3>
+    <h3 class="col-2 text-right text-success">
+      {{#listing.price}}${{ listing.price }}{{/listing.price}}
+    </h3>
   </div>
-  <p>{{ location }}</p>
-  <p>{{ description }}</p>
+  <div id="preview-gallery" data-subview="photoView"></div>
+  <p class="preview-description">{{ listing.description }}</p>    
+  <div id="preview-specs" data-subview="specView"></div>
+</script>
+<script id="preview-specs-template" type="text/template">
+  {{#has_specs}}
+  <h4>Specs</h4>
+  <dl class="dl-horizontal">
+  {{#specs}}
+    <dt>{{ key }}</dt>
+    <dd>{{ value }}</dd>
+  {{/specs}}
+  </dl>
+  {{/has_specs}}
+</script>
+<script id="preview-gallery-template" type="text/template">
+    <div class="preview-thumbnails row">
+      {{#photos}}
+      <div class="col-sm-2">
+        <img src="https://s3.amazonaws.com/static.rocketlistings.com/{{ key }}" data-id="{{ id }}" class="img-responsive">
+      </div>
+      {{/photos}}
+    </div>
+    <div class="preview-stage hidden-sm">
+      {{#first_photo}}
+      <img src="https://s3.amazonaws.com/static.rocketlistings.com/{{ first_photo.key }}" class="img-responsive"/>
+      {{/first_photo}}
+    </div>
 </script>
 {% endverbatim %}
-<div id="preview-view"></div>
-{% comment %}
- <div class="preview-pane">
-  <h5 class="l-category"></h5>
-  <div class="listing">
-    <div class="row">
-      <div class="l-body">
-        <h1 class="l-title title" style="text-align:left;float:left;"></h1>
-        <h1 class="l-dash" style="text-align:left;float:left;margin-left:11px;"> - </h1>
-        <h1 class="l-price" style="text-align:left;float:left;">$</h1>
-        <h1 class = "l-location" style="padding-top:5px"> () </h1><!--This has to from the address function-->
-      </div>
-    </div>
-    {% if photos %}
-      <div class="container col-lg-8">
-            <!--  Carousel - consult the Twitter Bootstrap docs at 
-            http://twitter.github.com/bootstrap/javascript.html#carousel -->
-        <div id="this-carousel-id" class="carousel slide"><!-- class of slide for animation -->
-          <div class="carousel-inner">
-            <div id="images"></div>
-            {% for photo in photos %}
-              <div {% if forloop.first %} class="item active" {% else %} class="item"{% endif %}> <!-- class of active since it's the first item --> 
-                <img src="{{photo.url}}">
-              </div>
-            {% endfor %}
-        </div> <!-- /.carousel-inner -->
-        <!--  Next and Previous controls below
-              href values must reference the id for this carousel -->
-          <a class="carousel-control left" href="#this-carousesl-id" data-slide="prev">&lsaquo;</a>
-          <a class="carousel-control right" href="#this-carousel-id" data-slide="next">&rsaquo;</a>
-        </div><!-- /.carousel -->
-    {% endif %}
-
-      <div class="l-description l-entry" style="white-space: pre-wrap;"></div>
-      <br>
-        
-      <div class="hidden specifications">
-        {% for item in specifications%}
-          {{item.key.key}}:
-          <p>{{item.name}}</p>
-        {% endfor %}
-      </div>
-
-      <div class="spec_tables">
-        {% for item in categories %}
-          <div class="category_{{item}}" style="display:none">
-            <table border='1' class="table_preview_{{item}}">
-              {% for spec_value in specs %}
-                {% if spec_value.category.name == item.name %}
-                  <tr>
-                    <td>{{spec_value.key}}</td>
-                    <td><input type="text" disabled></td>
-                  </tr>
-                {% endif %}
-              {% endfor %}
-            </table>
-          </div>
-        {% endfor %}
-      </div>
-
-      <br>
-
-      <div class="l-footnote">
-        Created with 
-        <a href="http://www.rocketlistings.com" class="icon">Rocket Listings</a>
-        . Blast off. 
-      </div>
-      
-    </div> <!-- /container -->
-  </div>
-</div>
-{% endcomment %}
+<div class="listing-preview" id="preview-view"></div>
