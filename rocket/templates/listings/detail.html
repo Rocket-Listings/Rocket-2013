@@ -18,6 +18,7 @@
 {% endblock %}
 
 {% block content %}
+
   <div class="row">
     <div id="listing-detail" class="col-lg-9 tab-content">
       <div class="tab-pane{% if pane == 'edit' %} active{% endif %}" id="edit">
@@ -30,11 +31,15 @@
     <div class="col-lg-3 detail-sidebar">
       <div data-spy="affix" data-offset-top="60">
         <div class="btn-group" data-toggle-name='listing-pane-toggle'>
-          <a class="btn btn-primary {% if pane == 'edit' %} active{% endif %}" data-toggle="tab" href="#edit">edit</a>
-          <a id="preview-btn" class="btn btn-primary {% if pane == 'preview' %} active{% endif %}" data-toggle="tab" href="#preview">preview</a>
+          <a class="edit-btn btn btn-default {% if pane == 'edit' %} active{% endif %}" data-toggle="tab" href="#edit">Edit</a>
+          <a id="preview-btn" class="preview-btn btn btn-default {% if pane == 'preview' %} active{% endif %}" data-toggle="tab" href="#preview">Preview</a>
         </div>
-        <br/>
-        <a class="btn btn-primary" href="{% url 'dashboard' %}">back to dashboard</a>
+        <div class="btn-row">
+          <a class="btn btn-primary draft-btn">Save as Draft</a>
+          <a class="btn btn-success save-btn">Save to Craigslist</a>
+        </div>
+        <div class="clearfix"></div>
+        {# <a class="btn btn-primary" href="{% url 'dashboard' %}">back to dashboard</a> #}
       </div>
     </div>
   </div>
