@@ -64,7 +64,7 @@ class Listing(models.Model):
 		return self.title
 
 	def get_absolute_url(self):
-		return reverse('edit', args=[self.id])
+		return reverse('detail', args=[self.id])
 
 	def get_view_count(self):
 		from users.models import ViewCount
