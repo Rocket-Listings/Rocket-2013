@@ -8,8 +8,8 @@ $(function() {
   //   } else {}
   // }
   window.ondragstart = function() { return false; } 
-  
-  $('.preview-thumbnails img').click(function(e){
+
+  $('.preview-thumbnails img').on('click', function(e){
     fillStage($(e.currentTarget));
   });
 

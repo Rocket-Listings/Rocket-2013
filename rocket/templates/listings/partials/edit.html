@@ -1,5 +1,4 @@
 {% load specval %}
-
 <h3 class="listing-title">{{ form.title.value|default:"Create a Listing" }}</h3>
 {# {{ formset.as_p }} #}
 
@@ -14,9 +13,12 @@
 {% endif %}
 
 <form method="POST" class="listing-form">
+
   {% csrf_token %}
+
   {# Hidden fields #}
   {% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
+
   {# Category Select #}
   <fieldset>
     <legend>Category</legend>
@@ -55,7 +57,7 @@
   <fieldset><legend>Listing Info</legend>
     {# Title #}
     <div class="row">
-      <div class="col-sm-9 form-group{% if form.title.errors %} has-error {% endif %}">
+      <div class="col-sm-9 form-group {% if form.title.errors %} has-error {% endif %}">
         
         <label class="control-label" for="id_title">{{ form.title.label }}</label>
         <input id="id_title" class="title form-control" maxlength="200" name="title" type="text" placeholder="2000 Jeep Wrangler 4.0L" value="{{ form.title.value|default:"" }}">
@@ -87,7 +89,7 @@
         <div class="form-group {% if form.location.errors %} has-error {% endif %}">
           <label for="id_location" class="form-label">{{ form.location.label }}</label>
           <div class="input-group">
-            <input type="text" placeholder="Burlington, VT" class="form-control" id="id_location" maxlength="200" name="location" value="{{ form.location.value|default:"" }}">
+            <input type="text" placeholder="Burlington, VT" class="location form-control" id="id_location" maxlength="200" name="location" value="{{ form.location.value|default:"" }}">
             <span class="input-group-btn">
               <button class="btn btn-default" type="button">Get Precise Location <i class="glyphicon glyphicon-screenshot"></i></button>
             </span>
@@ -125,7 +127,7 @@
       {% for form in photo_formset %}
         <div class="col-lg-2" data-id="{{ forloop.counter0 }}" draggable="true">
           {# <a class="thumbnail"> #}
-            <img src="{{ S3_URL }}{{ form.key.value }}" class="img-thumbnail">
+            <img src="{{ S3_URL }}{{ form.key.value }}" class="img-responsive">
           {# </a> #}
         </div>
       {% endfor %}
@@ -146,7 +148,7 @@
     <script id="thumbnail-template" type="text/template">
       {{#photos}}
       <div class="col-lg-2" data-id="{{ index }}" draggable="true">
-        <img src="{{ src }}" class="img-thumbnail">
+        <img src="{{ src }}" class="img-responsive">
       </div>
       {{/photos}}
     </script>
