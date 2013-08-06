@@ -81,9 +81,9 @@ $(function() {
 			$(".message-form input[name='listing']").val(listing_id);
 			$(".message-form input[name='buyer']").val(buyer_id);
 			$('.messages-body').scrollBottom();
-			//$(".message-form textarea").focus();
 		});
 
+		// Initialize the listings globally for List.js
 		var options = {
 			valueNames: ['title', 'price', 'category', 'date', 'status']
 		};
@@ -91,10 +91,7 @@ $(function() {
 		window.listings = new List('dashboard-content', options);
 	}
 
-	$(".messages-body ul").hover(function(event){
-		$(this).children(".time").toggleClass("hide");
-	});
-
+	// Toggle up/down chevrons on sort click
 	$('.sort').click(function () {
 		var icon = $(this).next('span'),
 			icons = $("span.glyphicon.sort-toggle"),
@@ -111,7 +108,7 @@ $(function() {
 			icon.removeClass(up).addClass(down);
 		}
 		return false;
-	})
+	});
 
 	// Unbind click events from current items
 	function unbindEvents() {
@@ -161,12 +158,15 @@ $(function() {
 			$(".message-form textarea").blur();
 		}
 	});
-
+	
+	// Remove the 'first-visit' class from the dashboard panel
+	// This will move the dashboard back up on the page when
+	// the first visit info box is closed
 	$('.close').click(function(event){
 		$('.dashboard-panel').removeClass("first-visit");
 	});
 
-	// Autopost from dashboard (Deprecated)
+	// Autopost from dashboard (not used here)
 	$(".share_optn").click(function (e) {
 		e.preventDefault();
 		if (!$(this).hasClass("disabled")) {
@@ -182,6 +182,7 @@ $(function() {
 		return false;
 	});
 
+	// Retrieve any new listings, buyers, messages from the database
 	$(".dashboard-refresh").click(function (e) {
 		e.preventDefault();
 		var currentSelectedListing = $(".listings-body").find("li.highlight").data('listing-id');
@@ -196,6 +197,7 @@ $(function() {
 				unbindEvents(); // To prevent overlap
 				bindEvents(); // Bind all items (including new)
 				if (currentSelectedListing != null) {
+					// Maintain the clicked listing
 					$(".listings-body").find("li[data-listing-id='" + currentSelectedListing + "']").click();
 				}
 				else { $(".listings-body li").first().click(); }
@@ -203,6 +205,7 @@ $(function() {
 		});
 	});
 
+	// Submit and handle a new message
 	$("form.message-form").submit(function() {
 		var csrftoken = getCookie('csrftoken');
 		$.ajax({
@@ -235,6 +238,7 @@ $(function() {
 		return false;
 	});
 
+	// Delete the currently selected listing
 	$(".dashboard-delete a").click(function (e) {
 		var id = $(this).attr('data-listing-id');
 		e.preventDefault();
@@ -256,7 +260,7 @@ $(function() {
 		return false;
 	});
 
-	// Check the status of a listing (Deprecated)
+	// Check the status of a listing (not used here)
 	function checkStatus(listingid) {
 		var timer = setInterval(function () {
 			$.ajax({
@@ -273,24 +277,7 @@ $(function() {
 		}, 3000);
 	}
 
-	$('.sort').click(function () {
-		var icon = $(this).next('span'),
-			icons = $("span.glyphicon.sort-toggle"),
-			iconsNotClicked = $("span.glyphicon.sort-toggle:not('span.glyphicon.active')"),
-			down = 'glyphicon-chevron-down',
-			up = 'glyphicon-chevron-up';
-		icons.addClass("hide").removeClass("active");
-		icon.removeClass("hide").addClass('active');
-		iconsNotClicked.removeClass(down + " " + up).addClass(down);
-		if (icon.hasClass(down)) {
-			icon.removeClass(down).addClass(up);
-		}
-		else {
-			icon.removeClass(up).addClass(down);
-		}
-		return false;
-	});
-
+	// Remove focus from the listings and hide buyers/messages during search
 	$("input.search").keydown(function() {
 		$(".buyer-card, .message, .message-form-wrapper").addClass("hide");
 		$(".listings-body li").removeClass("highlight");
@@ -299,12 +286,7 @@ $(function() {
 		$(".dashboard-delete a").addClass("disabled");
 	});
 
-	$(".message-content").each(function() {
-		$(this).html(linkToClickable($(this).text()));
-	});
-
-	bindEvents();
-
+	// Listings filters
 	$('#filter-draft').click(function() {
         window.listings.filter(function(item) {
             if (item.values().status == "Draft") {
@@ -345,6 +327,10 @@ $(function() {
         return false;
     });
 
+    // Make the filter dropdown more intuitive:
+    // - Change button text to filter type
+    // - Close (toggle) dropdown on click
+    // - Scroll to top of listings on filter
     $('.dashboard-dropdown .dropdown-menu a').click(function() {
     	$(this).parent().parent().prev('a.dropdown-btn').text($(this).text());
     	$('.dropdown-menu').dropdown('toggle');
@@ -352,6 +338,14 @@ $(function() {
     	$(".listings-body").scrollTop(0);
 
     });
+
+    // Convert links in the message text
+    $(".message-content").each(function() {
+		$(this).html(linkToClickable($(this).text()));
+	});
+
+    // Init
+    bindEvents();
 
     $('.listings-body li').first().click();
 });
