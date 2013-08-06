@@ -38,9 +38,9 @@ $(function() {
 		$(".last-buyer").text(data.latest[1]);
 		$(".last-message").text(data.latest[2]);
 		// Mustache the new items
-		$(".messages-body").html("").append(Mustache.render($("#new-message").html(), {'messages': data.messages}));
-		$(".buyers-body").html("").prepend(Mustache.render($("#new-buyer").html(), {'buyers': data.buyers}));
-		$(".listings-body ul.list").html("").prepend(Mustache.render($("#new-listing").html(), {'listings': data.listings}));
+		$(".messages-body").append(Mustache.render($("#new-message").html(), {'messages': data.messages}));
+		$(".buyers-body").prepend(Mustache.render($("#new-buyer").html(), {'buyers': data.buyers}));
+		$(".listings-body ul.list").prepend(Mustache.render($("#new-listing").html(), {'listings': data.listings}));
 		// Reset the filter button
 		$("a.dropdown-btn").text("All");
 	}
@@ -55,13 +55,18 @@ $(function() {
 			listingRow.addClass('highlight');
 			$(".message").addClass("hide");
 			$(".buyer-card").addClass("hide");
+			$(".dashboard-delete a").attr('data-listing-id', id).removeClass("disabled");
 			if(buyers.length) {
+				$(".buyers-body").addClass("border-right");
+				$(".no-messages").addClass("hide");
 				buyers.removeClass("hide");
 				buyers.first().click();
 				$('.message-form-wrapper').removeClass("hide");
 				$('.messages-body').scrollBottom();
 			} else {
 				$('.message-form-wrapper').addClass("hide");
+				$(".buyers-body").removeClass("border-right");
+				$(".no-messages").removeClass("hide");
 			}
 		});
 
@@ -107,7 +112,6 @@ $(function() {
 		}
 		return false;
 	})
-
 
 	// Unbind click events from current items
 	function unbindEvents() {
@@ -184,9 +188,9 @@ $(function() {
 		$.ajax({
 			type: 'GET',
 			url: '/listings/dashboard/data/',
-			// data: {'listing': $(".last-listing").text(),
-			// 	   'buyer': $(".last-buyer").text(),
-			// 	   'message': $(".last-message").text()},
+			data: {'listing': $(".last-listing").text(),
+				   'buyer': $(".last-buyer").text(),
+				   'message': $(".last-message").text()},
 			success: function (response) {
 				insertNewData(response);
 				unbindEvents(); // To prevent overlap
@@ -231,6 +235,27 @@ $(function() {
 		return false;
 	});
 
+	$(".dashboard-delete a").click(function (e) {
+		var id = $(this).attr('data-listing-id');
+		e.preventDefault();
+		if (!$(this).hasClass("disabled")) {
+			$.ajax({
+				url: '/listings/' + id + '/delete',
+				method: 'GET',
+				success: function () {
+					$("li[data-listing-id='" + id +"']").remove();
+					$(".listing-" + id).remove();
+					unbindEvents(); // To prevent overlap
+					bindEvents(); // Bind all items (including new)
+					$(".listings-body li").first().click();
+					$(".listings-body").scrollTop(0);
+
+				}
+			});
+		}
+		return false;
+	});
+
 	// Check the status of a listing (Deprecated)
 	function checkStatus(listingid) {
 		var timer = setInterval(function () {
@@ -269,6 +294,9 @@ $(function() {
 	$("input.search").keydown(function() {
 		$(".buyer-card, .message, .message-form-wrapper").addClass("hide");
 		$(".listings-body li").removeClass("highlight");
+		$(".buyers-body").removeClass("border-right");
+		$(".no-messages").removeClass("hide");
+		$(".dashboard-delete a").addClass("disabled");
 	});
 
 	$(".message-content").each(function() {

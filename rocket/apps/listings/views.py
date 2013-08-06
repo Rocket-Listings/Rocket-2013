@@ -32,7 +32,12 @@ def dashboard(request):
 	listings = Listing.objects.filter(user=request.user).order_by('-pub_date').all() # later on we can change how many are returned
 	buyers = reduce(combine, map(lambda l: list(l.buyer_set.all()), listings), [])
 	messages = reduce(combine, map(lambda b: list(b.message_set.all()), buyers), [])
-	latest_ids = map(lambda set: max(map(lambda i: i.id, set)), [listings, buyers, messages])
+	latest_ids = map(lambda set: map(lambda i: i.id, set), [listings, buyers, messages])
+	for i, val in enumerate(latest_ids):
+		try:
+			latest_ids[i] = max(val)
+		except ValueError:
+			latest_ids[i] = 0
 	return TemplateResponse(request, 'listings/dashboard.html',  {'listings': listings, 
 																	'buyers': buyers, 
 																	'buyer_messages':messages, 
@@ -161,14 +166,15 @@ def embed(request, listing_id):
 	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos)
 	return TemplateResponse(request, 'listings/cl_embed.html', {'listing':listing, 'photos':photos})
 
-@login_required
 def delete(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
 	if request.user == listing.user:
 		# remove listing from haystack index
 		haystack.connections['default'].get_unified_index().get_index(Listing).remove_object(listing)
 		listing.delete()
-		return redirect('listings.views.dashboard')
+		return HttpResponse(200)
+	else:
+		return HttpResponse(403)
 
 @require_GET
 def search(request):
@@ -209,7 +215,12 @@ def dashboard_data(request):
 	listings = Listing.objects.filter(user=user).order_by('-pub_date').all()
 	buyers = reduce(combine, map(lambda l: list(l.buyer_set.all()), listings), [])
 	messages = reduce(combine, map(lambda b: list(b.message_set.all()), buyers), [])
-	latest_ids = map(lambda set: max(map(lambda i: i.id, set)), [listings, buyers, messages])
+	latest_ids = map(lambda set: map(lambda i: i.id, set), [listings, buyers, messages])
+	for i, val in enumerate(latest_ids):
+		try:
+			latest_ids[i] = max(val)
+		except ValueError:
+			latest_ids[i] = 0
 
 	listings_data = map(lambda l: {
 		'title': l.title, 
@@ -225,7 +236,7 @@ def dashboard_data(request):
 		'buyer_id': b.id, 
 		'max_offer': b.curMaxOffer, 
 		'name': b.name, 
-		'last_message_date': naturaltime(b.last_message().date)}, [b for b in buyers if b.id > ids[1]])
+		'last_message_date': naturaltime(b.last_message().date)}, [b for b in reversed(buyers) if b.id > ids[1]])
 	messages_data = map(lambda m: {
 		'isSeller': m.isSeller,
 		'buyer_id': m.buyer.id,

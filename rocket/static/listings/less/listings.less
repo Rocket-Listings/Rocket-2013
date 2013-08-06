@@ -4,7 +4,6 @@
     For instance, if our title was simply '.title', then maybe a '.title' rule from base.less might take into effect. */
 
 // DASHBOARD VARIABLES (WIDTH)
-@delete: 40px;
 @title: 50%;
 @price: 10%;
 @category: 15%;
@@ -106,7 +105,7 @@
     border-right: 1px #DDDDDD solid;
     vertical-align: top;
     .listings-cols-wrapper {
-      width: calc(~'100% - 40px');
+      width: 100%
       float: right;
     }
     .listings-header {
@@ -125,7 +124,7 @@
           border-bottom: #DDD 1px solid;
           &.d-title {
             width: @title;
-            padding-left: 0;
+            padding-left: 40px;
           }
           &.d-price { width: @price; }
           &.d-category { width: @category; }
@@ -151,21 +150,6 @@
           }
         }
       }
-      span {
-        &.d-check { 
-          width: @delete;
-          height: 37px;
-          padding-left: 14px;
-          position: relative;
-          display: inline-block;
-          padding-top: 8px;
-          border-bottom: #DDD 1px solid;
-          input[type='checkbox'] {
-            vertical-align: top;
-            font-size: 14px;
-          }
-        }
-      }
     }
     .listings-body {
       height: calc(~'100% - ' @footer-height);
@@ -177,15 +161,16 @@
         li {
           cursor: pointer;
           border-bottom: #DDD 1px solid;
+          text-rendering: optimizeLegibility;
           &:hover {
             background-color: #EEE;
           }
           &.highlight {
-            background-color: darken(#bcddeb, 20%) !important;
-            color: #FFFFFF;
+            background-color: darken(#EEE, 10%) !important;
+            color: #333;
             text-rendering: optimizeLegibility;
             a { 
-              color: #FFFFFF;
+              color: #333;
               text-rendering: optimizeLegibility;
             }
           }
@@ -198,19 +183,11 @@
             white-space: nowrap;
             &.d-title {
               width: @title;
-              padding-left: 0;
+              padding-left: 40px;
             }
             &.d-price { width: @price; }
             &.d-category { width: @category; }
             &.d-date { width: @date; }
-            &.d-check { 
-              width: @delete;
-              padding-left: 14px;
-              position: relative;
-              input[type='checkbox'] {
-                vertical-align: top;
-              }
-            }
             &.phone-hide {
               @media (max-width: 480px) {
                 display: none;
@@ -226,147 +203,133 @@
       }
     }
   }
-
-  .buyers-col {
+  .buyer-message-wrapper {
     display: inline-block;
     height: 100%;
-    width: 10%;
-    
+    width: 40%;
     vertical-align: top;
-    ul {
-      margin: 0;
-      padding: 0;
-      
-      li {
-        font-size: 14px;
-        list-style: none;
-      }
-    }
-    .buyers-header {
+    .inbox-header, .no-messages {
+      display: block;
+      font-size: 14px;
+      width: 100%;
+      padding: 8px;
       text-align: center;
-      li {
-        padding: 8px;
-        height: 36px;
+      &:not(.no-messages) {
+        border-bottom: #DDD 1px solid;
       }
-    }
-    .buyers-body {
-      border-top: #DDDDDD solid 1px;
-      height: calc(~'100% - ' @footer-height);
-      overflow: auto;
-      ul {
-        border-bottom: #DDDDDD solid 1px;
-        cursor: pointer;
-        &:hover {
-          background-color: #EEE;
-        }
-        &.highlight {
-          background-color: darken(#bcddeb, 20%) !important;
-          color: #FFFFFF;
-          text-rendering: optimizeLegibility;
-          a { 
-            color: #FFFFFF;
-            text-rendering: optimizeLegibility;
-          }
-        }
-        li {
-          &:first-child { padding: 8px 8px 2px 8px; }
-          &:nth-child(2) { padding: 2px 8px 2px 8px; }
-          &:nth-child(3) { padding: 2px 8px 8px 8px; }
-          &:last-child{ padding: 2px 8px 8px 8px; }
-          overflow: hidden;
-          white-space: nowrap;
-
-        }
-      }
-    }
-    .buyers-body.border{
-      border-right: 1px #DDDDDD solid;
-      }
-  }
-
-  .messages-col {
-    display: inline-block;
-    height: 99.2%;
-    width: 30%;
-    vertical-align: top;
-    ul {
-      margin: 0;
-      padding: 0;
-
-      
-      li {
-        font-size: 14px;
-        list-style: none;
-      }
-    }
-    .messages-header {
-
-      li {
-        text-align: left;
-        margin-left: 25%;
-        font-size: 16px;
+      &:not(.inbox-header) {
         font-weight: 500;
-        height: 36px;
-
+        color: darken(#DDD, 20%);
+        text-rendering: optimizeLegibility;
       }
     }
-    .messages-body {
-      border-top: #DDDDDD solid 1px;
-      height: calc(~'100% - 111px - ' @footer-height);
-      overflow: auto;
-      margin-bottom: 10px;
+    .buyers-col {
+      display: inline-block;
+      height: calc(~'100% - 36px');
+      width: 30%;
+      vertical-align: top;
       ul {
-        border-bottom: #DDDDDD solid 1px;
-        &.message-buyer {
-          background-color: lighten(#DDD, 10%);
-        }
+        margin: 0;
+        padding: 0;
         li {
-          &:first-child { padding: 8px 8px 8px 8px; }
-          &:nth-child(0) { padding: 8px 8px 8px 8px; }
-          &:nth-child(1) { padding: 8px 22px 8px 8px; }
-          &:nth-child(2) { padding: 8px 8px 8px 8px; }
-          &:last-child { padding: 2px 8px 8px 8px; }
-          &.message-buyer-name {
-            font-weight: 500;
-          }
-
-          word-wrap: break-word;
-
-
+          font-size: 14px;
+          list-style: none;
         }
-         li.time{
-            display: inline;
-            float: right;
-            color: grey;
+      }
+      .buyers-body {
+        height: 100%;
+        overflow: auto;
+        &.border-right {
+          border-right: 1px #DDD solid;
+        }
+        ul {
+          border-bottom: #DDDDDD solid 1px;
+          cursor: pointer;
+          text-rendering: optimizeLegibility;
+          &:hover {
+            background-color: #EEE;
           }
+          &.highlight {
+            background-color: darken(#EEE, 10%) !important;
+            color: #333;
+            text-rendering: optimizeLegibility;
+            a { 
+              color: #333;
+              text-rendering: optimizeLegibility;
+            }
+          }
+          li {
+            &:first-child { padding: 8px 8px 2px 8px; }
+            &:nth-child(2) { padding: 2px 8px 2px 8px; }
+            &:nth-child(3) { padding: 2px 8px 8px 8px; }
+            &:last-child{ padding: 2px 8px 8px 8px; }
+            overflow: hidden;
+            white-space: nowrap;
+          }
+        }
       }
-
-      .no-messages{
-        text-align: left;
-        margin-left: 14%;
-      }
-
     }
-
-
-
-    .message-form-wrapper {
-      height: 111px;
-      margin-bottom: 30px;
-      textarea {
-        padding: 5px;
-        resize: none;
-        border-top: 3px solid darken(#DDD, 10%);
-        border-left: 3px solid darken(#DDD, 10%);
-        border-right: 3px solid darken(#DDD, 10%);
-        border-bottom: none;
+    .messages-col {
+      display: inline-block;
+      height: calc(~'100% - ' @footer-height);
+      width: 70%;
+      vertical-align: top;
+      ul {
+        margin: 0;
+        padding: 0;
+        li {
+          font-size: 14px;
+          list-style: none;
+        }
       }
-      input {
-        width: 100%;
+      .messages-body {
+        height: calc(~'100% - 111px');
+        overflow: auto;
+        ul {
+          border-bottom: #DDDDDD solid 1px;
+          &.message-buyer {
+            background-color: lighten(#DDD, 10%);
+          }
+          li {
+            &:nth-child(1) { padding: 8px; }
+            &:nth-child(2) { padding: 8px; }
+            &:last-child { padding: 2px 8px 8px 8px; }
+            &.message-buyer-name {
+              font-weight: 500;
+              display: inline-block;
+            }
+            word-wrap: break-word;
+            &.message-time {
+              display: inline-block;
+              float: right;
+              color: darken(#DDD, 20%);
+              opacity: 0;
+              -webkit-transition: opacity .2s ease-in;
+            }
+          }
+          &:hover .message-time{
+            opacity: 1;
+            -webkit-transition: opacity .2s ease-in;
+          }
+        }
       }
-
-      .send-button{
-        width: 100%;
+      .message-form-wrapper {
+        height: 111px;
+        margin-bottom: 30px;
+        textarea {
+          padding: 5px;
+          resize: none;
+          border-top: 3px solid darken(#DDD, 10%);
+          border-left: 3px solid darken(#DDD, 10%);
+          border-right: 3px solid darken(#DDD, 10%);
+          border-bottom: none;
+        }
+        input {
+          width: 100%;
+        }
+        .send-button{
+          width: 100%;
+        }
       }
     }
   }
