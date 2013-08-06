@@ -1,0 +1,45 @@
+{% load static from staticfiles %}
+<div class="row">
+	<div class="col-lg-2 profile-picture"> {# contains profile pic #}
+		{% if url_user.get_profile.propic %}
+			<img class="thumbnail" src="{{ url_user.get_profile.propic }}">
+		{% else %}
+			<img class="thumbnail" src=" {% static 'users/img/no-photo.png' %}">
+		{% endif %}
+		{% if  request.user == url_user %}
+			<a href="{% url 'users.views.info' %}">Edit profile</a>
+		{% endif %}
+	</div>
+	<div class="col-lg-4 col-details">
+		{% if url_user.get_profile.name %} 
+			<h4>{{url_user.get_profile.name}}</h4>
+		{% endif %}
+			<h5>{{url_user.username}}</h5>
+			{% include "users/partials/profile_rating.html" %}
+			<div class="row twitter-row">
+				{% if url_user.get_profile.twitter_handle %}
+					<img src="{% static 'users/img/twitter-bird-blue-on-white.png' %}" width="25px">
+					<a href="https://twitter.com/@{{url_user.get_profile.twitter_handle}}"> @{{url_user.get_profile.twitter_handle}} </a>	
+				{% endif %}
+			</div>
+			<div class="row fb-row">
+				{% if fb.name %}
+					<img src="{% static 'users/img/FB-f-Logo__blue_29.png' %}" width="15px"><a href="{{fb.link}}"> {{fb.name}} </a>	
+				{% endif %}
+			</div>
+		<h5>{{url_user.get_profile.location}}</h5>
+	</div>
+</div>
+<div class="row">
+	<div class="col-lg-8">
+	{% if url_user.get_profile.bio %}
+		<p>{{url_user.get_profile.bio}}</p>
+	{% else %}
+		{% if  request.user == url_user %}
+			<p>Looks like you don't have a bio! <a href="{% url 'users.views.info' %}">Update</a> your profile and add one.</p>
+		{% else %}
+			<p>Sorry, but {{url_user.username}} doesn't have a bio.</p>
+		{% endif %}
+	{% endif %}
+	</div>
+</div>
