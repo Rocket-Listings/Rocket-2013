@@ -45,7 +45,7 @@ class UserProfile(models.Model):
 		self.save()
 
 	def filled_out(self):
-		if self.name != "" and self.location != "" and self.phone != "" and self.bio != "":
+		if self.name != "" and self.location != "" and self.phone != "" and self.bio != "" and self.propic != "" and self.default_listing_type != "":
 			return True
 		else:
 			return False

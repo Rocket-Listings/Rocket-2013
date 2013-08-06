@@ -34,7 +34,6 @@ def info(request):
 	fbProfile = ProfileFB.objects.get(profile=profile)
 	if request.method == 'POST':
 		user_profile_form = UserProfileForm(request.POST, instance=profile)
-		print user_profile_form
 		if user_profile_form.is_valid():
 			userObject = User.objects.get(username=user)
 			userObject.email = user_profile_form.cleaned_data['email']
@@ -45,10 +44,13 @@ def info(request):
 				if key != "default_listing_type" and key != "default_category":
 					responseData[key] = escape(value)
 			responseData['profile'] = True
+			responseData['credits_added'] = 0
 
-			if profile.filled_out():
+			if profile.filled_out() and not profile.profile_completed_once:
 				profile.profile_completed_once = True
-				profile.add_Credit(2)
+				profile.add_credit(2)
+				responseData['credits_added'] = 2
+				responseData['profile_completed'] = True
 
 			return HttpResponse(json.dumps(responseData), content_type="application/json")
 		else:

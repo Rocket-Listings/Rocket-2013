@@ -20,7 +20,7 @@
 			<table class="table">
 				<tr>
 					<td><p>Credits Left:</p></td>
-					<td class="text-center"><p>{{credits}}</p></td>
+					<td class="text-center"><p id="credit-counter">{{credits}}</p></td>
 					<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 				</tr>
 				<tr>
@@ -32,9 +32,9 @@
 
 			<h6>You can get more listings by</h6>
 			<ul>	
-				<li><a href="#" class="text-left {% if profile_completed_once %}completed{% endif %}">You can earn more by completing your profile</a></li>
+				<li><a href="#" id="profile-completed" class="text-left {% if profile_completed_once %}completed{% endif %}">Completing your profile</a></li>
 
-				<li><a href="#" class="text-left" style="text-decoration:line-through">Linking social media accounts</a></li>
+				<li><a href="#" class="text-left">Linking social media accounts</a></li>
 
 				<li><a href="#" class="text-left">Referring friends</a></li>
 			</ul>
