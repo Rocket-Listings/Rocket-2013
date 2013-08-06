@@ -47,6 +47,143 @@ $(function() {
     comparator: 'order'
   });
 
+  var LocationEditView = Backbone.View.extend({
+    el: '#location-col',
+    events: {
+      "change #id_location": "render",
+      "click #location-btn": "getLocationByBrowser",
+    },
+
+    initialize: function() {
+      _.bindAll(this, 'mapResize');
+      this.geocoder = new google.maps.Geocoder();
+      this.render();
+
+      $('.edit-btn').on('shown.bs.tab', this.mapResize);
+    },
+
+    render: function() {
+      var val = $('#id_location').val();
+      if (val.length > 0) {
+        this.geocode(val);
+      } else {
+        this.getLocationByIP();
+      }
+    },
+
+    mapInit: function(latlng, zoom) {
+      if (this.map) {
+        this.map.panTo(latlng);
+      } else {
+        google.maps.visualRefresh = true;
+        var mapOptions = {
+          center: latlng || new google.maps.LatLng(49.5, 60.8), // burlington coords 44.5, -72.8
+          zoom: zoom || 13,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          disableDefaultUI: true,
+          draggable: false,
+          scrollwheel: false,
+          disableDoubleClickZoom: true
+        };
+        this.map = new google.maps.Map(document.getElementById("location-map"), mapOptions);
+      }
+    },
+
+    mapResize: function(e) {
+      google.maps.event.trigger(this.map, 'resize');
+    },
+
+    toggleLoading : function() {
+      this.$('.loading-spinner').toggle();
+    },
+
+    getLocationByBrowser: function(e) {
+      this.toggleLoading();
+      var that = this;
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var lat = position.coords.latitude;
+          var lng = position.coords.longitude;
+          var latlng = new google.maps.LatLng(lat, lng);
+          that.mapInit(latlng, 14);
+          that.toggleLoading();
+          that.reverseGeocode(latlng);
+        }, that.mapError, { enableHighAccuracy: true });
+      } else {
+        this.mapError("Error: Old or non-compliant browser.");
+      }
+    },
+
+    geocode: function(address) {
+      this.toggleLoading();
+      var that = this;
+      this.geocoder.geocode({'address': address}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          var latlng = results[0].geometry.location;
+          that.mapInit(latlng, 12);
+          that.toggleLoading();
+        } else {
+          that.toggleLoading();
+          that.mapError('Geocode was not successful for the following reason: ' + status);
+        }
+      });
+    },
+
+    reverseGeocode: function(latlng) {
+      var that = this;
+      var lat = latlng.lat();
+      var lng = latlng.lng();
+      // $.ajax({
+      //   method: 'GET',
+      //   url: 'http://api.geonames.org/findNearestAddressJSON?lat={0}&lng={1}&username=rocketlistings'.format(lat, lng),
+      //   success: function(response) {
+      //     var addr = response.address;
+      //     console.log(addr);
+      //     that.$('#id_location').val([addr.streetNumber, addr.street, addr.placaename, addr.adminCode1].join(' ')).trigger('change');
+      //   }
+      // });
+      this.geocoder.geocode({'latLng': latlng}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          if (results[0]) {
+            that.$('#id_location').val(results[0].formatted_address).trigger('change');
+          } else {
+            that.mapError('No results found');
+          }
+        } else {
+          that.mapError('Geocoder failed due to: ' + status);
+        }
+      });
+    },
+
+    getLocationByIP: function() {
+      var that = this;
+      $.ajax({
+        method: 'GET',
+        url: 'http://jsonip.appspot.com/',
+        success: function(response) {
+          $.ajax({
+            method: 'GET',
+            url: 'https://freegeoip.net/json/' + response.ip,
+            success: function(response) {
+              var latlng = new google.maps.LatLng(response.latitude, response.longitude);
+              that.mapInit(latlng, 12);
+              that.toggleLoading();
+              that.reverseGeocode(latlng);
+            }
+          });
+        }
+      });
+    },
+
+    mapError: function(error) { 
+      // this.toggleLoading();
+      console.log("Maps error");
+      console.log(error);
+    }
+  });
+
+
+
   var PhotoListView = Backbone.View.extend({
     // el is defined in template with the backbone.subview plugin
     el: '#preview-gallery', 
@@ -175,6 +312,7 @@ $(function() {
     changed: function(e) {
       // this.photos.changed();
       var changed = $(e.currentTarget);
+
       var obj = {};
       obj[changed.attr('name')] = changed.val();
       this.model.set(obj);
@@ -209,7 +347,7 @@ $(function() {
     }
   });
   var listingView = new ListingView;
-
+  var locationEditView = new LocationEditView;
 
   // file picker options and callbacks
   var fpConfig = {
@@ -291,7 +429,7 @@ $(function() {
   $('.toggle-view').click(fpConfig.toggleView);
   fpConfig.bindSortable();
 
-  $("div.btn-group[data-toggle-name='listing-pane-toggle'] a").click(function() {
+  $("div.btn-group[data-toggle-name='listing-pane-toggle'] a").click(function(e) {
     $(this).siblings().removeClass("active");
     $(this).addClass("active");
   });
