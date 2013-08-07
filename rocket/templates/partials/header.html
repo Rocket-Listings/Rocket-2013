@@ -28,13 +28,13 @@
         <li>
           <a class="{% active 'dashboard' %}" href="{% url 'listings.views.dashboard' %}">
             <span class="nav-item-text"> Dashboard</span>
-            <span class="glyphicon glyphicon-th-list"></span>             
+            {# <span class="glyphicon glyphicon-th-list"></span>              #}
           </a>
         </li>
         <li>
-          <a class="{% active 'user_profile' %}" href="{% url 'user_profile' user.username %}">
+          <a class="no-padding-right {% active 'user_profile' %}" href="{% url 'user_profile' user.username %}">
             <span class="nav-item-text"> {{ request.user.username }}</span>
-            <span class="glyphicon glyphicon-user"></span>             
+            {# <span class="glyphicon glyphicon-user"></span>              #}
           </a>
         </li>
         <li class="dropdown">
@@ -45,24 +45,28 @@
             <li>
               <a href="{% url 'user_info' %}">
                 <span class="nav-item-text"> Edit Profile</span>
-               <span class="glyphicon glyphicon-list-alt"></span>
+               {# <span class="glyphicon glyphicon-list-alt"></span> #}
               </a>
             </li>
             <li>
               <a href="{% url 'auth_logout' %}">
                 <span class="nav-item-text">Logout</span>
-                <span class="glyphicon glyphicon-off"></span>                
+                {# <span class="glyphicon glyphicon-off"></span>                 #}
               </a>
             </li>
           </ul>
         </li>
-      </ul>    
+      </ul>
       {% else %}
       <ul class="nav navbar-nav pull-right">
         <li>
+          <a class="{% active 'registration_register' %}" href="{% url 'registration_register' %}">
+            <span class="nav-item-text">Create an Account</span>
+          </a>
+        </li>
+        <li>
           <a class="{% active 'auth_login' %}" href="{% url 'auth_login' %}">
             <span class="nav-item-text">Login</span>
-            <span class="glyphicon glyphicon-off"></span>
           </a>
         </li>
       </ul>

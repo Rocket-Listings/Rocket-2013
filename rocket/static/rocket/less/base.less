@@ -9,10 +9,30 @@ a {
 
 .navbar {
   min-height: 0px;
+  .no-padding-right {
+    padding-right: 0;
+    padding-left: 0;
+    margin-right: -10px;
+  }
+}
+
+.navbar-nav>.open>a, .navbar-nav>.open>a:hover, .navbar-nav>.open>a:focus {
+  background: transparent;
 }
 
 .navbar .dropdown-menu {
-  background: #eee;
+
+  // background: #eee;
+  margin: 0;
+  padding: 0;
+  border-top: none;
+  min-width: 0;
+
+  > li > a {
+    padding: 5px 10px;
+    // text-align: right;
+    // border-bottom: 1px solid #eee;
+  }
 }
 
 @media (min-width: 768px) {
