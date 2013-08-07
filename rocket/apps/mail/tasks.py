@@ -161,10 +161,11 @@ def send_message_task(message_id):
 	subject = ''.join(subject.splitlines()) # remove new lines
 	message_text = render_to_string('mail/dashboard_message_plain.txt', ctx)
 	message_html = render_to_string('mail/dashboard_message_html.html', ctx)
+	mail_headers = {'Reply-To': reply_email, 'X-Rocket-Buyer-Id': msg.buyer.id, 'X-Rocket-Message': 'True'}
 	email = EmailMultiAlternatives(subject, message_text, 
 		from_name + "<" + settings.DEFAULT_FROM_EMAIL + ">", 
 		[to_name +  "<" + to_email + ">"], 
-		headers={'Reply-To': reply_email})
+		headers=mail_headers)
 	email.attach_alternative(message_html, "text/html")
 	try:
 		email.send()

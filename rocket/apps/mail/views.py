@@ -127,7 +127,8 @@ def on_incoming_buyer_message(request):
 		return HttpResponse('Unauthorized')
 
 @csrf_exempt
-def new_message_from_seller(request):
+def new_message_to_buyer(request):
+	print request.POST
 	# seller --> buyer
 	if verify(request.POST.get("token", ""), request.POST.get("timestamp", ""), request.POST.get("signature"), ""):
 		pass
@@ -135,7 +136,8 @@ def new_message_from_seller(request):
 		# send the message to the buyer
 
 @csrf_exempt
-def new_message_from_buyer(request):
+def new_message_to_seller(request):
+	print request.POST
 	# buyer --> seller
 	if verify(request.POST.get("token", ""), request.POST.get("timestamp", ""), request.POST.get("signature"), ""):
 		pass
