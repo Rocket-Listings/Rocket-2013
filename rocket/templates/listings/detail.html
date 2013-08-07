@@ -8,6 +8,7 @@
   <script src="{% static 'rocket/js/underscore.min.js' %}"></script>    
   <script src="{% static 'rocket/js/backbone.min.js' %}"></script>
   <script src="{% static 'rocket/js/backbone.subviews.js' %}"></script>  
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuRtB1F8XVtV22jQ3dkGQPqWCKQz4suJ0&sensor=false"></script>
   {% compress js %}
       <script type="text/javascript">
       (function(a){if(window.filepicker){return}var b=a.createElement("script");b.type="text/javascript";b.async=!0;b.src=("https:"===a.location.protocol?"https:":"http:")+"//api.filepicker.io/v1/filepicker.js";var c=a.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c);var d={};d._queue=[];var e="pick,pickMultiple,pickAndStore,read,write,writeUrl,export,convert,store,storeUrl,remove,stat,setKey,constructWidget,makeDropPane".split(",");var f=function(a,b){return function(){b.push([a,arguments])}};for(var g=0;g<e.length;g++){d[e[g]]=f(e[g],d._queue)}window.filepicker=d})(document); 
@@ -18,7 +19,6 @@
 {% endblock %}
 
 {% block content %}
-
   <div class="row">
     <div id="listing-detail" class="col-lg-9 tab-content">
       <div class="tab-pane{% if pane == 'edit' %} active{% endif %}" id="edit">
@@ -29,14 +29,15 @@
       </div>
     </div>
     <div class="col-lg-3 detail-sidebar">
-      <div data-spy="affix" data-offset-top="60">
+      <h4>Actions</h4>
+      <div data-spy="affix" data-offset-top="98">
         <div class="btn-group" data-toggle-name='listing-pane-toggle'>
           <a class="edit-btn btn btn-default {% if pane == 'edit' %} active{% endif %}" data-toggle="tab" href="#edit">Edit</a>
           <a id="preview-btn" class="preview-btn btn btn-default {% if pane == 'preview' %} active{% endif %}" data-toggle="tab" href="#preview">Preview</a>
         </div>
         <div class="btn-row">
-          <a class="btn btn-primary draft-btn">Save as Draft</a>
-          <a class="btn btn-success save-btn">Save to Craigslist</a>
+          {# Have to stack because of display:inline-block; #}
+          {#<a class="btn btn-primary draft-btn">Save as Draft</a>#}<a class="btn btn-success save-btn">Save to Craigslist</a>
         </div>
         <div class="clearfix"></div>
         {# <a class="btn btn-primary" href="{% url 'dashboard' %}">back to dashboard</a> #}

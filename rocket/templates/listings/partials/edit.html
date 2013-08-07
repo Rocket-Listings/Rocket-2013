@@ -1,3 +1,4 @@
+{% load static from staticfiles %}
 {% load specval %}
 <h3 class="listing-title">{{ form.title.value|default:"Create a Listing" }}</h3>
 {# {{ formset.as_p }} #}
@@ -85,20 +86,17 @@
   </fieldset>
   <fieldset id="spec-fieldset" class=""><legend>Location &amp; Specs</legend>
     <div class="row">
-      <div class="col-lg-6">
+      <div id="location-col" class="col-lg-6">
         <div class="form-group {% if form.location.errors %} has-error {% endif %}">
-          <label for="id_location" class="form-label">{{ form.location.label }}</label>
-          <div class="input-group">
+          <label for="id_location" class="form-label">{{ form.location.label }} <span class="text-muted">(Be as specific as you want)</span></label>
             <input type="text" placeholder="Burlington, VT" class="location form-control" id="id_location" maxlength="200" name="location" value="{{ form.location.value|default:"" }}">
-            <span class="input-group-btn">
-              <button class="btn btn-default" type="button">Get Precise Location <i class="glyphicon glyphicon-screenshot"></i></button>
-            </span>
-          </div>
         </div>
-        <div class="form-group">
-          {# <label class="form-label">Map</label> #}
-          <img src="http://placehold.it/420x200">
+        <div class="location-map-wrapper">
+          <div id="location-map"></div>
+          <button id="location-btn" class="btn btn-default" type="button">Autofill Current Location <i class="glyphicon glyphicon-screenshot"></i></button>
+          <img src="{% static 'users/img/100px_loading.gif' %}" class="loading-spinner"/>
         </div>
+        {# <label class="form-label">Map</label> #}
       </div>
       <div class="specs-form col-lg-6">
         <p id="no-specs">No spec fields for this category :(</p>
@@ -167,7 +165,7 @@
 
   </fieldset>
   <div class="btn-toolbar pull-right">
-    <input type="submit" class="btn btn-primary" name="listing_action" value="Save as Draft"/>
-    <input type="submit" class="btn btn-success" name="listing_action" value="Save to Craigslist"/>
+    {# <input id="submit-draft" type="submit" class="btn btn-primary" name="listing_action" value="Save as Draft"/> #}
+    <input id="submit-publish" type="submit" class="btn btn-success" name="listing_action" value="Save to Craigslist"/>
   </div>
 </form>

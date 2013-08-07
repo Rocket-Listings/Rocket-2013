@@ -33,7 +33,7 @@
         </li>
         <li>
           <a class="{% active 'user_profile' %}" href="{% url 'user_profile' user.username %}">
-            <span class="nav-item-text">Profile</span>
+            <span class="nav-item-text">{{ request.user.username }}</span>
             <span class="glyphicon glyphicon-user "></span>
           </a>
           
