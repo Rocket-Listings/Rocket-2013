@@ -24,7 +24,7 @@ import haystack
 from users.decorators import first_visit, view_count
 from django.template.response import TemplateResponse
 from django.contrib.humanize.templatetags.humanize import naturaltime
-from mail.views import send_message
+from mail.tasks import send_message_task
 
 @first_visit
 @login_required
@@ -256,7 +256,7 @@ def dashboard_message(request):
 			message = message_form.save(commit=False)
 			message.isSeller = True
 			message.save()
-			#send_message(message.id)
+			send_message_task.delay(message.id)
 			response_data = { 'listing': message.listing.id,
 							  'isSeller': message.isSeller,
 							  'seller_name': message.listing.user.get_profile().get_display_name(),

@@ -4,10 +4,11 @@ from bs4 import BeautifulSoup
 import requests
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.mail import EmailMultiAlternatives
+from django.core.mail import EmailMultiAlternatives, BadHeaderError, send_mail
 from django.template.loader import render_to_string
 from celery.signals import task_sent
 from celery.signals import task_success
+from django.conf import settings
 
 
 @task(name='tasks.autopost_task')
@@ -144,20 +145,29 @@ def send_message_task(message_id):
 		from_name = msg.listing.user.get_profile().get_display_name()
 		to_name = msg.buyer.name
 		to_email = msg.buyer.email
+		reply_email = msg.listing.user.username + "@rocketlistings.mailgun.org"
 	else:
 		from_name = msg.buyer.name
 		to_name = msg.listing.user.get_profile().get_display_name()
 		to_email = msg.listing.user.email
+		reply_email = "buyers@rocketlistings.mailgun.org"
 	ctx = { 'from_name': from_name,
 			'to_name': to_name,
 			'content': msg.content,
 			'date': msg.date,
 			'listing_title': msg.listing.title,
 			'toBuyer': msg.isSeller }
-	subject = render_to_string('', ctx)
+	subject = render_to_string('mail/dashboard_message_subject.txt', ctx)
 	subject = ''.join(subject.splitlines()) # remove new lines
-	message_text = render_to_string('', ctx)
-	message_html = render_to_string('', ctx)
-	email = EmailMultiAlternatives(subject, message_text, settings.DEFAULT_FROM_EMAIL, [to_email], headers={'Reply-To': ''})
+	message_text = render_to_string('mail/dashboard_message_plain.txt', ctx)
+	message_html = render_to_string('mail/dashboard_message_html.html', ctx)
+	email = EmailMultiAlternatives(subject, message_text, 
+		from_name + "<" + settings.DEFAULT_FROM_EMAIL + ">", 
+		[to_name +  "<" + to_email + ">"], 
+		headers={'Reply-To': reply_email})
 	email.attach_alternative(message_html, "text/html")
-	email.send()
+	try:
+		email.send()
+	except BadHeaderError:
+		return 'Invalid header found.'
+	return msg.id

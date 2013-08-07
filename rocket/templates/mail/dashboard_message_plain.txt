@@ -1,0 +1,11 @@
+{{ from_name }} sent you a new message about {% if toBuyer %}the{% else %}your{% endif %} listing {{ listing_title }}:
+
+{{ content }}
+
+---
+{% if toBuyer %}
+You can reply to this email directly.
+{% else %}
+You can reply to this email directly or view it on Rocket Listings:
+http://www.rocketlistings.com/listings/dashboard
+{% endif %}

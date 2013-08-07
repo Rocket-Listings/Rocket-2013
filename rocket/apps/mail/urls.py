@@ -5,5 +5,7 @@ urlpatterns = patterns('',
 	url(r'^admin/$', 'mail.views.on_incoming_admin_message'),
 	url(r'^buyer/$', 'mail.views.on_incoming_buyer_message'),
 
-	url(r'^(?P<listing_id>\d+)/autopost/$', 'mail.views.autopost')
+    url(r'^messages/send/(?P<message_id>\d+)$', 'mail.views.send_message'),
+
+	url(r'^(?P<listing_id>\d+)/autopost/$', 'mail.views.autopost'),
 )
