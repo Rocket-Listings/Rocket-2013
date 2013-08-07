@@ -26,6 +26,8 @@ class Migration(SchemaMigration):
             ('listing_credits', self.gf('django.db.models.fields.IntegerField')(default=3)),
             ('total_credits', self.gf('django.db.models.fields.IntegerField')(default=3)),
             ('profile_completed_once', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('twitter_connected_once', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('facebook_connected_once', self.gf('django.db.models.fields.BooleanField')(default=False)),
         ))
         db.send_create_signal(u'users', ['UserProfile'])
 
@@ -37,7 +39,7 @@ class Migration(SchemaMigration):
             ('email', self.gf('django.db.models.fields.EmailField')(max_length=255)),
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('rating', self.gf('django.db.models.fields.IntegerField')()),
+            ('rating', self.gf('django.db.models.fields.IntegerField')(default='5')),
         ))
         db.send_create_signal(u'users', ['UserComment'])
 
@@ -153,7 +155,7 @@ class Migration(SchemaMigration):
             'date_posted': ('django.db.models.fields.DateField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '255'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'rating': ('django.db.models.fields.IntegerField', [], {}),
+            'rating': ('django.db.models.fields.IntegerField', [], {'default': "'5'"}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         },
@@ -165,6 +167,7 @@ class Migration(SchemaMigration):
             'default_category': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.ListingCategory']", 'null': 'True', 'blank': 'True'}),
             'default_listing_type': ('django.db.models.fields.CharField', [], {'max_length': '1'}),
             'default_seller_type': ('django.db.models.fields.CharField', [], {'default': "'P'", 'max_length': '1'}),
+            'facebook_connected_once': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'listing_credits': ('django.db.models.fields.IntegerField', [], {'default': '3'}),
             'location': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
@@ -173,6 +176,7 @@ class Migration(SchemaMigration):
             'profile_completed_once': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'propic': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
             'total_credits': ('django.db.models.fields.IntegerField', [], {'default': '3'}),
+            'twitter_connected_once': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'twitter_handle': ('django.db.models.fields.CharField', [], {'max_length': '20', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['auth.User']", 'unique': 'True'})
         },

@@ -60,9 +60,12 @@ def info(request):
 	else:
 		credits = profile.listing_credits
 		credits_spent = profile.total_credits - credits
-		profile_completed_once = user.get_profile().profile_completed_once
+		profile_completed_once = profile.profile_completed_once
+		twitter_connected_once = profile.twitter_connected_once
+		facebook_connected_once = profile.facebook_connected_once
 		user_profile_form = UserProfileForm(instance=profile)
-		context_dictionary = {'user': user, 'form': user_profile_form, 'fb': fbProfile, 'credits':credits, 'profile_completed_once':profile_completed_once, 'credits_spent':credits_spent}
+		context_dictionary = {'user': user, 'form': user_profile_form, 'fb': fbProfile, 'credits':credits, 'profile_completed_once':profile_completed_once,
+			'credits_spent':credits_spent,'twitter_connected_once':twitter_connected_once, 'facebook_connected_once':facebook_connected_once}
 		return TemplateResponse(request, 'users/info.html', context_dictionary)
 
 @view_count
@@ -82,7 +85,6 @@ def profile(request, username=None):
 	total_listing_views = 0
 	for listing in allListings:
 		total_listing_views += listing.get_view_count()
-	print total_listing_views
 	if request.method == 'POST':
 		comment_form = CommentSubmitForm(request.POST, instance = UserComment(user=user))	
 		if comment_form.is_valid():
@@ -166,10 +168,23 @@ def get_twitter_handle(request):
 			handle = twitter.verify_credentials()['screen_name']
 			profile = UserProfile.objects.get(user=request.user)
 			profile.twitter_handle = handle
+			credits = 0
+			response = {}
+			response['handle'] = handle
+
+			if not profile.twitter_connected_once:
+				credits = 2
+				profile.twitter_connected_once = True
+				profile.add_credit(credits)
+
+			response['credits_added'] = credits
 			profile.save()
-			return HttpResponse(json.dumps(handle), content_type='application/json')
+
+			return HttpResponse(json.dumps(response), content_type='application/json')
 		else:
-			return HttpResponse(json.dumps("no_oauth_token_or_key"), content_type='application/json')
+			response = {}
+			response['handle'] = "no_oauth_token_or_key"
+			return HttpResponse(json.dumps(response), content_type='application/json')
 	else:
 		return HttpResponseForbidden()
 
@@ -222,7 +237,19 @@ def fb_profile(request):
 				return HttpResponseForbidden()
 			else:
 				fb.save()
-				return HttpResponse(fb.name)
+				profile = request.user.get_profile()
+				credits = 0
+				response = {}
+				response['name'] = fb.name
+
+				if not profile.facebook_connected_once:
+					credits = 2
+					profile.facebook_connected_once = True
+					profile.add_credit(credits)
+
+				response['credits_added'] = credits
+				profile.save()
+				return HttpResponse(json.dumps(response), content_type='application/json')
 		else:
 			return HttpResponseForbidden
 	else:
