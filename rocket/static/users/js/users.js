@@ -201,7 +201,7 @@ $(function() {
 					$(".disconnect-twitter").removeClass("hide");
 					$("#twitter-linked").addClass("completed");
 				}
-				if (response['credits_added'] != 0) {
+				if (response['credits_added'] != 0 && response['credits_added'] != undefined) {
 					$("#credit-counter").text(parseInt($("#credit-counter").html()) + response['credits_added']);
 					
 				}
@@ -290,7 +290,7 @@ $(function() {
 				$(".disconnect-fb").removeClass("hide");
 				$("#facebook-linked").addClass("completed");
 
-				if (response['credits_added'] != 0) {
+				if (response['credits_added'] != 0 && response['credits_added'] != undefined) {
 					$("#credit-counter").text(parseInt($("#credit-counter").html()) + response['credits_added']);
 				}
 			}
