@@ -8,7 +8,7 @@
 - model: sites.site
   pk: 2
   fields:
-    domain: 'rocketlistings.com'
+    domain: 'beta.rocketlistings.com'
     name: 'Rocket Listings Prod'
 
 - model: listings.ListingStatus

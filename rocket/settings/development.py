@@ -56,11 +56,6 @@ DEBUG_TOOLBAR_CONFIG = { 'INTERCEPT_REDIRECTS': False }
 # COMPRESS_OFFLINE = True
 COMPRESS_DEBUG_TOGGLE = 'debug'
 
-# TWITTER CONFIG DEV KEYS
-
-TWITTER_KEY = 'ozuyeg1uriTqpgEGNxfXPA'
-TWITTER_SECRET = '4zZjutoXBLs8mfxMHZtGKf1nLNGhABWBz44alSg58' # should move twitter creds to evironment variables
-
 # See: http://docs.celeryproject.org/en/latest/configuration.html#broker-transport
 # BROKER_TRANSPORT = 'amqplib'
 
@@ -80,9 +75,7 @@ BROKER_POOL_LIMIT = 3
 BROKER_CONNECTION_MAX_RETRIES = 0
 
 # See: http://docs.celeryproject.org/en/latest/configuration.html#broker-url
-BROKER_URL = environ.get('RABBITMQ_URL') or environ.get('CLOUDAMQP_URL')
+# BROKER_URL = environ.get('RABBITMQ_URL') or environ.get('CLOUDAMQP_URL')
 
 # See: http://docs.celeryproject.org/en/latest/configuration.html#celery-result-backend
 CELERY_RESULT_BACKEND = 'amqp'
-
-CELERY_IMPORTS = ('mail.tasks',)

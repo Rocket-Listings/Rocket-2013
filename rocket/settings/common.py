@@ -64,6 +64,34 @@ USE_I18N = True
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#use-l10n
 USE_L10N = True
 
+
+# See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
+# AWS_CALLING_FORMAT = OrdinaryCallingFormat
+# See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
+AWS_ACCESS_KEY_ID = environ.get('AWS_KEY', '')
+AWS_SECRET_ACCESS_KEY = environ.get('AWS_SECRET', '')
+AWS_STORAGE_BUCKET_NAME = environ.get('AWS_STORAGE_BUCKET_NAME', '')
+
+S3_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
+STATICFILES_STORAGE = S3_STORAGE
+COMPRESS_STORAGE = S3_STORAGE
+
+AWS_AUTO_CREATE_BUCKET = True
+AWS_QUERYSTRING_AUTH = False
+
+AWS_S3_SECURE_URLS = False
+
+# AWS cache settings, don't change unless you know what you're doing:
+AWS_EXPIREY = 60 * 60 * 24 * 7
+AWS_HEADERS = {
+    'Cache-Control': 'max-age=%d, s-maxage=%d, must-revalidate' % (AWS_EXPIREY, AWS_EXPIREY)
+}
+
+# STATICFILES_STORAGE = DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
+S3_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
+
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
 MEDIA_ROOT = normpath(join(DJANGO_ROOT, 'media'))
 
@@ -88,12 +116,8 @@ STATICFILES_FINDERS = (
   'compressor.finders.CompressorFinder',
 )
 
-AWS_STORAGE_BUCKET_NAME = environ.get('AWS_STORAGE_BUCKET_NAME', 'static.rocketlistings.com')
-
-S3_URL = 'https://s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
-
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-SECRET_KEY = '59%5@qdw12&amp;d)47=3=$ar4bv4vcgk)*-_f2=qr9(n9jy%z%1j!'
+SECRET_KEY = environ.get('SECRET_KEY', 'imnotwearingpants')
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-FIXTURE_DIRS
 FIXTURE_DIRS = (
@@ -175,11 +199,6 @@ THIRD_PARTY_APPS = (
 
 	# pagination template tags
 	'pagination',
-
-	# static file management
-	'compressor',
-
-
 )
 
 LOCAL_APPS = (
@@ -233,10 +252,13 @@ CELERY_TASK_RESULT_EXPIRES = timedelta(minutes=30)
 # See: http://celery.github.com/celery/django/
 setup_loader()
 
+CELERY_IMPORTS = ('mail.tasks',)
 
 ############# COMPRESS CONFIG
 # See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_ENABLED
 COMPRESS_ENABLED = True
+
+COMPRESS_URL = S3_URL
 
 # See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_PRECOMPILERS
 COMPRESS_PRECOMPILERS = (
@@ -281,3 +303,7 @@ HAYSTACK_CONNECTIONS = {
 				'PATH': join(dirname(__file__), 'whoosh_index'),
 		}
 }
+
+# TWITTER CONFIG (defaults to development app credentials)
+TWITTER_KEY = environ.get('TWITTER_KEY', 'ozuyeg1uriTqpgEGNxfXPA')
+TWITTER_SECRET = environ.get('TWITTER_SECRET', '4zZjutoXBLs8mfxMHZtGKf1nLNGhABWBz44alSg58')

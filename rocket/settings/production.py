@@ -3,19 +3,21 @@
 from os import environ
 
 from memcacheify import memcacheify
-from postgresify import postgresify
-from S3 import CallingFormat
-
+# from postgresify import postgresify
+# from S3 import CallingFormat
+# from boto.s3.connection import OrdinaryCallingFormat
+import dj_database_url
 from common import *
+
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#site-id
+SITE_ID = 2
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-use-tls
 EMAIL_USE_TLS = True
 
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#server-email
-SERVER_EMAIL = EMAIL_HOST_USER
-
-DATABASES = postgresify()
+DATABASES['default'] = dj_database_url.config()
 DATABASES['default']['ENGINE'] = 'django_postgrespool'
+
 DATABASE_POOL_ARGS = {
   'max_overflow': 10,
   'pool_size': 10,
@@ -55,45 +57,13 @@ INSTALLED_APPS += (
 )
 
 # See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
-STATICFILES_STORAGE = DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-
-# See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
-AWS_CALLING_FORMAT = CallingFormat.SUBDOMAIN
-
-# See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
-AWS_ACCESS_KEY_ID = environ.get('AWS_ACCESS_KEY_ID', '')
-AWS_SECRET_ACCESS_KEY = environ.get('AWS_SECRET_ACCESS_KEY', '')
-# AWS_STORAGE_BUCKET_NAME = environ.get('AWS_STORAGE_BUCKET_NAME', '') moved to common.py
-AWS_AUTO_CREATE_BUCKET = True
-AWS_QUERYSTRING_AUTH = False
-
-# AWS cache settings, don't change unless you know what you're doing:
-AWS_EXPIREY = 60 * 60 * 24 * 7
-AWS_HEADERS = {
-    'Cache-Control': 'max-age=%d, s-maxage=%d, must-revalidate' % (AWS_EXPIREY, AWS_EXPIREY)
-}
+DEFAULT_FILE_STORAGE = S3_STORAGE
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = S3_URL # S3_URL defined in common.py
 
 # See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_OFFLINE
 COMPRESS_OFFLINE = True
-
-# See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_STORAGE
-COMPRESS_STORAGE = DEFAULT_FILE_STORAGE
-
-# See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_CSS_FILTERS
-COMPRESS_CSS_FILTERS += [
-  'compressor.filters.cssmin.CSSMinFilter',
-]
-
-# See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_JS_FILTERS
-COMPRESS_JS_FILTERS += [
-  'compressor.filters.jsmin.JSMinFilter',
-]
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-SECRET_KEY = environ.get('SECRET_KEY', SECRET_KEY)
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = [
@@ -106,23 +76,14 @@ DOMAIN_NAME = "beta.rocketlistings.com"
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-# SOUTH_DATABASE_ADAPTERS = {
-#     'default': 'south.db.postgresql_psycopg2'
-# }
+SOUTH_DATABASE_ADAPTERS = {
+    'default': 'south.db.postgresql_psycopg2'
+}
 
 # AWS_S3_SECURE_URLS = False
 
 
 ############# MAILGUN CONFIG
 EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
-
 MAILGUN_ACCESS_KEY = 'key-9flqj538z-my-qcnpc74c2wit4vibl-3'
-
 MAILGUN_SERVER_NAME = 'rocketlistings.mailgun.org'
-
-
-# TWITTER CONFIG PRODUCTION KEYS
-
-TWITTER_KEY = 'bZMfei7vpcVLbGJa2IdXw'
-
-TWITTER_SECRET = 'aGGBdl6LaFlF6gJkv1n2QRYarpVAYe3NSCjF0hg1L4'
