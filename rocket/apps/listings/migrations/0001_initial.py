@@ -76,7 +76,8 @@ class Migration(SchemaMigration):
             ('curMaxOffer', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
             ('listing', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.Listing'], blank=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('email', self.gf('django.db.models.fields.EmailField')(max_length=255, null=True, blank=True)),
+            ('email', self.gf('django.db.models.fields.EmailField')(max_length=255)),
+            ('rocket_address', self.gf('django.db.models.fields.CharField')(max_length=40, null=True, blank=True)),
         ))
         db.send_create_signal(u'listings', ['Buyer'])
 
@@ -171,10 +172,11 @@ class Migration(SchemaMigration):
         u'listings.buyer': {
             'Meta': {'object_name': 'Buyer'},
             'curMaxOffer': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'email': ('django.db.models.fields.EmailField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'email': ('django.db.models.fields.EmailField', [], {'max_length': '255'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'listing': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.Listing']", 'blank': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '255'})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'rocket_address': ('django.db.models.fields.CharField', [], {'max_length': '40', 'null': 'True', 'blank': 'True'})
         },
         u'listings.listing': {
             'CL_link': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),

@@ -1,9 +1,13 @@
+import hashlib
+import random
+
 from django.db import models
 from datetime import datetime
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.db.models import Max
+from django.db.models.signals import post_save
 
 # Managers!
 
@@ -103,7 +107,8 @@ class Buyer(models.Model):
 	curMaxOffer = models.IntegerField(null = True, blank = True)
 	listing = models.ForeignKey(Listing, blank=True)
 	name = models.CharField(max_length=255)
-	email = models.EmailField(max_length=255, null = True, blank=True)
+	email = models.EmailField(max_length=255, null = False, blank=False)
+	rocket_address = models.CharField(max_length=40, null=True, blank=True)
 
 	def max_offer(self):
 		"Returns highest offer the buyer has made for the listing"
@@ -115,6 +120,15 @@ class Buyer(models.Model):
 	def last_message(self):
 		"returns the last message between the seller and buyer for that listing"
 		return self.listing.message_set.filter(buyer=self).latest('date')
+
+def add_rocket_address(sender, instance, created, **kwargs):
+	if created:
+		buyer = Buyer.objects.get(pk=instance.id)
+		salt = hashlib.sha1(str(random.random())).hexdigest()[:5]
+		buyer.rocket_address = hashlib.sha1(salt + buyer.email).hexdigest()
+		buyer.save()
+
+post_save.connect(add_rocket_address, sender=Buyer)
 
 # Listing Offer
 class Offer(models.Model):

@@ -145,12 +145,12 @@ def send_message_task(message_id):
 		from_name = msg.listing.user.get_profile().get_display_name()
 		to_name = msg.buyer.name
 		to_email = msg.buyer.email
-		reply_email = msg.listing.user.username + "@rocketlistings.mailgun.org"
+		reply_email = "seller-" + msg.buyer.rocket_address + "@rocketlistings.mailgun.org"
 	else:
 		from_name = msg.buyer.name
 		to_name = msg.listing.user.get_profile().get_display_name()
 		to_email = msg.listing.user.email
-		reply_email = "buyers@rocketlistings.mailgun.org"
+		reply_email = "buyer-" + msg.buyer.rocket_address + "@rocketlistings.mailgun.org"
 	ctx = { 'from_name': from_name,
 			'to_name': to_name,
 			'content': msg.content,
@@ -161,13 +161,14 @@ def send_message_task(message_id):
 	subject = ''.join(subject.splitlines()) # remove new lines
 	message_text = render_to_string('mail/dashboard_message_plain.txt', ctx)
 	message_html = render_to_string('mail/dashboard_message_html.html', ctx)
-	mail_headers = {'Reply-To': reply_email, 'X-Rocket-Buyer-Id': msg.buyer.id, 'X-Rocket-Message': 'True'}
+	mail_headers = {'Reply-To': reply_email}
 	email = EmailMultiAlternatives(subject, message_text, 
 		from_name + "<" + settings.DEFAULT_FROM_EMAIL + ">", 
 		[to_name +  "<" + to_email + ">"], 
 		headers=mail_headers)
 	email.attach_alternative(message_html, "text/html")
 	try:
+		print mail_headers, ctx
 		email.send()
 	except BadHeaderError:
 		return 'Invalid header found.'
