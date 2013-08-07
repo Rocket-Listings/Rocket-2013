@@ -31,7 +31,7 @@
 		</div>
 	{% endfor %}
 {% elif request.user.is_authenticated %}
-		<h5>No one has commented on your skills as a seller, so next time you sell something make sure you ask the buyer for some feedback.</h5>
+		<p>No feedback yet. Buyers can post comments that will appear here.</p>
 {% else %}
 		<div class="no-comment"><p class="muted">Sorry, but {{url_user.username}} doesn't have any feedback from buyers...yet</p></div>
 {% endif %}
