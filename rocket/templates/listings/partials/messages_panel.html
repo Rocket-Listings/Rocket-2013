@@ -36,7 +36,7 @@
 <script id="new-message" type="text/template">
 {% verbatim %}
 {{#messages}}
-	<ul class="message buyer-{{ buyer_id }} listing-{{ message.listing.id }} {{#isSeller}}message-seller{{/isSeller}}{{^isSeller}}message-buyer{{/isSeller}} hide">
+	<ul class="message buyer-{{ buyer_id }} listing-{{ listing_id }} {{#isSeller}}message-seller{{/isSeller}}{{^isSeller}}message-buyer{{/isSeller}} hide">
 		<li class="message-time">{{ date }}</li>
 		<li class="message-buyer-name">
 			{{#isSeller}}{{ seller_name }}{{/isSeller}}

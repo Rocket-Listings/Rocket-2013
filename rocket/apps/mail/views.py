@@ -146,3 +146,6 @@ def autopost(request, listing_id):
 	username = User.objects.get(username=request.user).username
 	result = autopost_task.delay(username, listing_id)
 	return HttpResponse()
+
+def send_message(request, message_id):
+	pass

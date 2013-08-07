@@ -218,6 +218,7 @@ $(function() {
 			success: function (response) {
 				switch (response.status) {
 					case 'success':
+						console.log(response);
 						$(".messages-body").append(Mustache.render($("#new-message").html(), response));
 						$('.buyer-' + response.messages.buyer_id).removeClass("hide");
 						$('.messages-body').scrollBottom();

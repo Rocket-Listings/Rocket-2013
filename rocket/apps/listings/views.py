@@ -242,6 +242,7 @@ def dashboard_data(request):
 		'buyer_id': m.buyer.id,
 		'buyer_name': m.buyer.name,
 		'seller_name': m.listing.user.get_profile().get_display_name(),
+		'listing_id': m.listing.id,
 		'content': m.content,
 		'date': naturaltime(m.date)}, [m for m in messages if m.id > ids[2]])
 
@@ -257,13 +258,14 @@ def dashboard_message(request):
 			message.isSeller = True
 			message.save()
 			send_message_task.delay(message.id)
-			response_data = { 'listing': message.listing.id,
+			response_data = { 'listing_id': message.listing.id,
 							  'isSeller': message.isSeller,
 							  'seller_name': message.listing.user.get_profile().get_display_name(),
 							  'buyer_id': message.buyer.id,
 							  'buyer_name': message.buyer.name,
 							  'content': message.content,
-							  'message_id': message.id }
+							  'message_id': message.id,
+							  'date': naturaltime(message.date) }
 			return HttpResponse(simplejson.dumps({'messages': response_data, 'status': 'success'}), content_type="application/json")
 		else:
 			return HttpResponse(simplejson.dumps({'errors': message_form.errors, 'status': 'err_validation'}), content_type="application/json")
