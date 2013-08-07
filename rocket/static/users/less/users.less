@@ -226,7 +226,32 @@ a {
   }
 }
 
+.ratings{
+
+  .green{
+    color: #519902;
+  }
+
+  .grey{
+    color: grey;
+  }
+
+  .yellow{
+    color: #FCD61A;
+  }
+
+  .orange{
+    color: #bd5317;
+  }
+
+  .red{
+    color: #a11b04;
+  }
+}
+
+
 .profile-content {
+/*<<<<<<< HEAD
   margin-top: 30px;
 
   .row-top{
@@ -381,6 +406,141 @@ a {
       }
     }
   }
+=======*/
+  margin-top: 30px;
+
+  .row-top{
+
+    .profile-header { 
+      margin-left: 0 !important;
+      
+
+      .col-social{
+        padding-left: 0px;
+
+        .fb-row{
+          a{
+            padding-left: 2px;
+          }
+        }
+
+      }
+
+      .profile-picture {
+        
+        padding-left: 0px;
+        
+          img.thumbnail {
+            border-radius: 0px;
+            -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            -o-border-radius: 0px;
+            box-shadow: none;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            padding: 0;
+            border: none;
+            width: 100%;
+            max-width: 181px;
+            min-width: 131px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+          }
+        a{
+          line-height: 40px;
+          padding-left: 33px;
+        }
+      }
+
+      .col-details{
+        padding-left: 0;
+
+
+
+        h3{
+          text-align: left;
+          margin: 0 0 5px 0;
+          padding-left: 35px;
+        }
+
+        h4{
+          margin: 0 0 5px 0;
+          padding-left: 35px;
+        }
+
+        h5{
+          margin: 0 0 5px 0;
+          padding-left: 35px;
+        }
+
+
+        .twitter-row{
+          margin-top: -2px;
+          padding-left: 25px;
+
+
+
+          img{  
+            margin-left: 2px;
+            padding-bottom: 2px;
+          }
+
+
+          a{
+            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            margin-left: -6px;
+            
+            }
+        }
+
+        .fb-row{
+          padding-left: 30px;
+          margin-top: -2px;
+          margin-bottom: 3px;
+            img{
+              padding-bottom:3px;
+            }
+
+            a{
+              font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+              font-weight: 500;
+              font-size: 14px;        
+          }
+        }
+      }
+
+      p{
+        margin-top: 24px;
+        margin-right: 40px;
+        line-height: 21px;
+      }
+  }
+
+    .seller-stats{
+
+    h4{
+      margin: 0;
+      line-height: 30px;
+      text-align: left;
+    }
+
+    .table-stats{
+      margin-bottom: 0px;
+      th{
+        width: 115px;
+        // text-align: right;
+      }
+
+      td{
+        text-align: left;
+        width: 140px;
+      }
+    }
+  }
+// >>>>>>> feature/profilecard
 }
 
 
@@ -542,11 +702,6 @@ a {
     .profile-selling {
       padding-top: 10px;
 
-      h4{
-        text-align: left;
-        margin-bottom: 15px;
-      }
-
       p{
         text-align: center;
       }
@@ -607,7 +762,36 @@ a {
   }
 
 
- #map-canvas {
+.profile-card-top-row{
+    .profile-picture {
+        
+        padding-left: 0px;
+        
+          img.thumbnail {
+            border-radius: 0px;
+            -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            -o-border-radius: 0px;
+            box-shadow: none;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            padding: 0;
+            border: none;
+            width: 100%;
+            max-width: 181px;
+            min-width: 131px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+          }
+        a{
+          line-height: 40px;
+          padding-left: 33px;
+        }
+      }
+}
+
+#map-canvas {
     margin: 0;
     padding: 0;
     height: 200px;
@@ -629,7 +813,7 @@ a {
 }
 
 .listings-list {
-  padding-left: 15px;
+  padding-left: 3px;
   li {
     margin-bottom: 7px;
   }
