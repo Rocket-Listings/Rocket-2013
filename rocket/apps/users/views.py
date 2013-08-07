@@ -66,7 +66,7 @@ def info(request):
 		user_profile_form = UserProfileForm(instance=profile)
 		context_dictionary = {'user': user, 'form': user_profile_form, 'fb': fbProfile, 'credits':credits, 'profile_completed_once':profile_completed_once,
 			'credits_spent':credits_spent,'twitter_connected_once':twitter_connected_once, 'facebook_connected_once':facebook_connected_once}
-		return TemplateResponse(request, 'users/user_info.html', context_dictionary)
+		return TemplateResponse(request, 'users/info.html', context_dictionary)
 
 @view_count
 @first_visit
@@ -173,7 +173,7 @@ def get_twitter_handle(request):
 			response['handle'] = handle
 
 			if not profile.twitter_connected_once:
-				credits = 1
+				credits = 2
 				profile.twitter_connected_once = True
 				profile.add_credit(credits)
 
@@ -243,7 +243,7 @@ def fb_profile(request):
 				response['name'] = fb.name
 
 				if not profile.facebook_connected_once:
-					credits = 1
+					credits = 2
 					profile.facebook_connected_once = True
 					profile.add_credit(credits)
 

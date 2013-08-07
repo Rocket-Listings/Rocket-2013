@@ -14,14 +14,15 @@
 		<div class="listing-credits-wrapper col-lg-3 pull-right-screen-large">
 			<span class="h4">Listing Credits</span>
 			<ul class="listing-credits-stats">
-				<li><span>Credits Remaining</span><span>{{ credits }}</span></li>
-				<li><span>Credits Spent</span><span>{{ credits_spent }}</span></li>
+				<li><span>Credits Available:</span><span id="credit-counter">{{ credits }}</span></li>
+				<li><span>Credits Spent:</span><span>{{ credits_spent }}</span></li>
 			</ul>
 			<span class="h4">Get more listings:</span>
 			<ul class="listing-credits-more">
-				<li><a href="#" class="{% if profile_completed_once %}completed{% endif %}">Complete your profile</a></li>
-				<li>Link <a href="#">Facebook</a> and <a href="#">Twitter</a></li>
-				<li><a href="#">Get your friends to join</a></li>
+				<li><a href="#" id="profile-completed" class="{% if profile_completed_once %}completed{% endif %}">Complete your profile (2)</a></li>
+				<li><a href="#" id="twitter-linked" class="{% if twitter_connected_once %}completed{% endif %}">Link Twitter (2)</a></li>
+				<li><a href="#" id="facebook-linked" class="{% if facebook_connected_once %}completed{% endif %}">Link Facebook (2)</a> 
+				<li><a href="#">Get your friends to join (TBD)</a></li>
 			</ul>
 		</div>
 
@@ -135,11 +136,6 @@
 						</tr>
 						<tr>
 							<td class="subheader"><h4>Listings</h4></td>
-						</tr>
-						<tr class="uneditable">
-							<td>Rocket Email</td>
-							<td><code>{{user.username}}@rocketlistings.mailgun.org</code></td>
-							<td></td>
 						</tr>
 						<tr class="editable">
 							<td>Default Seller Type</td>
