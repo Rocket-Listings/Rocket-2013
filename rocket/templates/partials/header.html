@@ -19,7 +19,6 @@
         <li>
           <a class="{% active 'create' %} blue-menu-item visible-sm" href="/listings/create/">
             <span class="nav-item-text">Create a listing </span>
-            <span class="glyphicon glyphicon-pencil"></span> 
           </a>
           <a class="{% active 'create' %} blue-menu-item hidden-sm" href="/listings/create/">
             <span class="glyphicon glyphicon-pencil"></span>
@@ -28,30 +27,27 @@
         <li>
           <a class="{% active 'dashboard' %}" href="{% url 'listings.views.dashboard' %}">
             <span class="nav-item-text"> Dashboard</span>
-            {# <span class="glyphicon glyphicon-th-list"></span>              #}
           </a>
         </li>
         <li>
-          <a class="no-padding-right {% active 'user_profile' %}" href="{% url 'user_profile' user.username %}">
+          <a class="username-item {% active 'user_profile' 'user_info' %}" href="{% url 'user_profile' user.username %}">
             <span class="nav-item-text"> {{ request.user.username }}</span>
-            {# <span class="glyphicon glyphicon-user"></span>              #}
           </a>
         </li>
         <li class="dropdown">
-          <a id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
-            <span class="glyphicon glyphicon-cog"></span>
+          <a id="dLabel" class="settings-cog {% active 'user_profile' 'user_info' %}" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
+            {# <span class="glyphicon glyphicon-cog"></span> #}
+            <span class="glyphicon glyphicon-chevron-down"></span>
           </a>
           <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
             <li>
               <a href="{% url 'user_info' %}">
-                <span class="nav-item-text"> Edit Profile</span>
-               {# <span class="glyphicon glyphicon-list-alt"></span> #}
+                <span class="nav-item-text">Edit Profile</span>
               </a>
             </li>
             <li>
               <a href="{% url 'auth_logout' %}">
                 <span class="nav-item-text">Logout</span>
-                {# <span class="glyphicon glyphicon-off"></span>                 #}
               </a>
             </li>
           </ul>
@@ -61,7 +57,7 @@
       <ul class="nav navbar-nav pull-right">
         <li>
           <a class="{% active 'registration_register' %}" href="{% url 'registration_register' %}">
-            <span class="nav-item-text">Create an Account</span>
+            <span class="nav-item-text">Create an account</span>
           </a>
         </li>
         <li>

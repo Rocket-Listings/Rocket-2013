@@ -85,6 +85,7 @@ def profile(request, username=None):
 	total_listing_views = 0
 	for listing in allListings:
 		total_listing_views += listing.get_view_count()
+		
 	if request.method == 'POST':
 		comment_form = CommentSubmitForm(request.POST, instance = UserComment(user=user))	
 		if comment_form.is_valid():
