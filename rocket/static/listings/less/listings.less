@@ -162,15 +162,13 @@
           cursor: pointer;
           border-bottom: #DDD 1px solid;
           text-rendering: optimizeLegibility;
-          &:hover {
-            background-color: #EEE;
-          }
           &.highlight {
-            background-color: darken(#EEE, 10%) !important;
-            color: #333;
+            border-left: #357EBD 3px solid;
+            background-color: lighten(#357EBD, 50%) !important;
+            span:first-child { padding-left: 37px; width: calc(~'50% - 1px');}
+            span.category { margin-right: 1px;}
             text-rendering: optimizeLegibility;
             a { 
-              color: #333;
               text-rendering: optimizeLegibility;
             }
           }
@@ -246,15 +244,12 @@
           border-bottom: #DDDDDD solid 1px;
           cursor: pointer;
           text-rendering: optimizeLegibility;
-          &:hover {
-            background-color: #EEE;
-          }
           &.highlight {
-            background-color: darken(#EEE, 10%) !important;
-            color: #333;
+            background-color: lighten(#357EBD, 50%) !important;
+            border-left: #357EBD 3px solid;
             text-rendering: optimizeLegibility;
+            li { padding-left: 5px !important; }
             a { 
-              color: #333;
               text-rendering: optimizeLegibility;
             }
           }
