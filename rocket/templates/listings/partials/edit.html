@@ -61,7 +61,7 @@
       <div class="col-sm-9 form-group {% if form.title.errors %} has-error {% endif %}">
         
         <label class="control-label" for="id_title">{{ form.title.label }}</label>
-        <input id="id_title" class="title form-control" maxlength="200" name="title" type="text" placeholder="2000 Jeep Wrangler 4.0L" value="{{ form.title.value|default:"" }}">
+        <input id="id_title" class="title form-control" maxlength="200" name="title" type="text" placeholder="Listing Title" value="{{ form.title.value|default:"" }}">
 
         {% for error in form.title.errors %}
           <span class="help-block">{{ error }}</span>
@@ -71,7 +71,7 @@
         <label for="id_price" class="control-label">{{ form.price.label }}</label>
         <div class="input-group">
           <span class="input-group-addon">$</span>
-          <input id="id_price" class="price form-control" name="price" type="text" placeholder="666" value="{{ form.price.value|default:"" }}">
+          <input id="id_price" class="price form-control" name="price" type="text" placeholder="0" value="{{ form.price.value|default:"" }}">
         </div>
         {% for error in form.price.errors %}<span class="help-block">{{ error }}</span>{% endfor %}
       </div>
@@ -79,7 +79,7 @@
     <div class="row">
       <div class="form-group col-lg-12{% if form.description.errors %} has-error {% endif %}">
         <label class="control-label" for="id_description">{{ form.description.label }}</label>
-        <textarea id="id_description" class="description form-control" placeholder="The best car ever." name="description" rows="5">{{ form.description.value|default:"" }}</textarea>
+        <textarea id="id_description" class="description form-control" placeholder="Your listing description goes here." name="description" rows="5">{{ form.description.value|default:"" }}</textarea>
         {% for error in form.price.errors %}<span class="help-block">{{ error }}</span>{% endfor %}
       </div>
     </div>
