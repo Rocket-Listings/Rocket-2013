@@ -25,6 +25,10 @@ $(function() {
 		$(this).scrollTop($(this)[0].scrollHeight);
 	}
 
+	$.fn.exists = function () {
+		return this.length !== 0;
+	}
+
 	// Mark a message as seen on the server
 	// Must have attr 'data-message-id'
 	$.fn.markSeen = function(callback) {
@@ -159,28 +163,40 @@ $(function() {
 			currentSelectedBuyer = buyers.find('ul.highlight'),
 			key = e.which || e.keyCode;
 		if (!$('input.search, textarea').is(":focus"))  {
-			if (key == "66") window.context = "b"; // B
-			if (key == "76") window.context = "l"; // L
+			if ((key == "66") || (key == "39")) window.context = "b"; // B || RIGHT
+			if ((key == "76") || (key == "37")) window.context = "l"; // L || LEFT
 			if ((key == '74') || (key == '40')) {
 				// J || DOWN
 				if (context == "l") {
-					currentSelectedListing.next('li').click();
-					listings.scrollTo(currentSelectedListing.next('li'));
+					var nextListing = currentSelectedListing.next('li:not(.hide)');
+					if (nextListing.exists()) {
+						nextListing.click();
+						listings.scrollTo(nextListing);
+					}
 				}
 				if (context == "b") {
-					currentSelectedBuyer.next('ul').click();
-					buyers.scrollTo(currentSelectedBuyer.next('ul'));
+					var nextBuyer = currentSelectedBuyer.next('ul:not(.hide)');
+					if (nextBuyer.exists()) {
+						nextBuyer.click();
+						buyers.scrollTo(nextBuyer);
+					}
 				}
 			}
 			if ((key == '75') || (key == '38')) {
 				// K || UP
 				if (context == "l") {
-					currentSelectedListing.prev('li').click();
-					listings.scrollTo(currentSelectedListing.prev('li'));
+					var prevListing = currentSelectedListing.prev('li:not(.hide)');
+					if (prevListing.exists()) {
+						prevListing.click();
+						listings.scrollTo(prevListing);
+					}
 				}
 				if (context == "b") {
-					currentSelectedBuyer.prev('ul').click();
-					buyers.scrollTo(currentSelectedBuyer.prev('ul'));
+					var prevBuyer = currentSelectedBuyer.prev('ul:not(.hide)');
+					if (prevBuyer.exists()) {
+						prevBuyer.click();
+						buyers.scrollTo(prevBuyer);
+					}
 				}
 			}
 			if ((key == '77') && (!$('.message-form-wrapper').hasClass('hide'))) {
@@ -188,10 +204,29 @@ $(function() {
 				$(".message-form textarea").focus();
 				return false;
 			}
+			if (key == "191") {
+				// \/
+				$("input.search").focus();
+				return false;
+			}
+			if (key == "82") {
+				// R
+				$(".dashboard-refresh").click();
+			}
+			if (key == "78") {
+				// N
+				window.location.href = "/listings/create"
+			}
 		}
-		if (($('.message-form textarea').is(":focus")) && (key == "27")) {
+		if (($('input.search, textarea').is(":focus")) && (key == "27")) {
 			// ESC
-			$(".message-form textarea").blur();
+			$("input.search, textarea").blur();
+		}
+		if ($("input.search").is(":focus") && key == "13") {
+			// ENTER
+			$("input.search").blur();
+			$(".listing").first().click();
+			return false;
 		}
 	});
 	
