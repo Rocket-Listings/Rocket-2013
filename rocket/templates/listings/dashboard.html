@@ -42,7 +42,7 @@
 			<input type="search" class="form-control search" data-table="order-table" placeholder="Type to search"/>
 		</div>
 		<div class="dropdown dashboard-dropdown">
-			<a class="btn btn-primary dropdown-btn" data-toggle="dropdown" href="#">All</a>
+			<a class="btn btn-primary dropdown-btn" data-toggle="dropdown" href="#">Filter</a>
 			<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
 			    <li><a id="filter-none" tabindex="-1" href="#" data-toggle="dropdown">All</a></li>
 			    <li><a id="filter-active" tabindex="-1" href="#" data-toggle="dropdown">Active</a></li>
@@ -53,7 +53,7 @@
 		<div class="dashboard-delete">
 			<a class="btn btn-primary disabled" data-listing-id="">Delete</a>
 		</div>
-		<div class="dashboard-refresh">
+		<div class="dashboard-refresh phone-hide">
 			<a class="btn btn-primary" href="#"><span class="glyphicon glyphicon-repeat"></span></a>
 		</div>
 		<div class="dashboard-create">
@@ -62,10 +62,10 @@
 
 	</div>
 	<div class="dashboard-panel {% if first_visit %}first-visit{% endif %}">
-		<div class="listings-col" id="listings-col">
+		<div class="listings-col phone-full-width" id="listings-col">
 			{% include 'listings/partials/listings_panel.html' %}
 		</div>
-		<div class="buyer-message-wrapper">
+		<div class="buyer-message-wrapper phone-hide">
 			<span class="inbox-header">Inbox</span>
 			<span class="no-messages">You have no messages for this listing.</span>
 			<div class="buyers-col">

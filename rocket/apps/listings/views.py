@@ -228,7 +228,8 @@ def dashboard_data(request):
 		'id': l.id, 
 		'price': l.price, 
 		'category': l.category.name, 
-		'status': l.status.name, 
+		'status': l.status.name,
+		'status_lower': l.status.name.lower(),
 		'sort_date': l.pub_date.strftime("%m/%d/%y %I:%M %p"),
 		'natural_date': naturaltime(l.pub_date)}, listings.filter(id__gt=ids[0]))
 	buyers_data = map(lambda b: {

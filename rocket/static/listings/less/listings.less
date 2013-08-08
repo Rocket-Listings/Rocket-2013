@@ -4,10 +4,22 @@
     For instance, if our title was simply '.title', then maybe a '.title' rule from base.less might take into effect. */
 
 // DASHBOARD VARIABLES (WIDTH)
-@title: 50%;
+@title: 43%;
 @price: 10%;
-@category: 15%;
-@date: 25%;
+@category: 16%;
+@date: 21%;
+@status: 10%;
+
+.phone-hide {
+  @media (max-width: 480px) {
+    display: none !important;
+  }
+}
+.phone-full-width {
+  @media (max-width: 480px) {
+    width: 100% !important;
+  }
+}
 
 // DASHBOARD HEADER
 .dashboard-header {
@@ -88,6 +100,7 @@
         padding-right: 20px;
     }
 }
+
 // DASHBOARD
 .dashboard-panel {
   font-size: 0;
@@ -104,10 +117,6 @@
     width: 60%;
     border-right: 1px #DDDDDD solid;
     vertical-align: top;
-    .listings-cols-wrapper {
-      width: 100%
-      float: right;
-    }
     .listings-header {
       height: 36px;
       width: 100%;
@@ -129,16 +138,7 @@
           &.d-price { width: @price; }
           &.d-category { width: @category; }
           &.d-date { width: @date; }
-          &.phone-hide {
-            @media (max-width: 480px) {
-              display: none;
-            }
-          }
-          &.phone-full-width {
-            @media (max-width: 480px) {
-              width: 100%;
-            }
-          }
+          &.d-status { width: @status; }
           a {
             display: inline-block;
           }
@@ -163,18 +163,32 @@
           border-bottom: #DDD 1px solid;
           text-rendering: optimizeLegibility;
           &.highlight {
-            border-left: #357EBD 3px solid;
-            background-color: lighten(#357EBD, 50%) !important;
-            span:first-child { 
-              padding-left: 37px; 
-              width: calc(~'50% - 1px');
-            }
-            span.category { margin-right: 1px;}
-            span.price { padding-left: 7px !important; }
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            border-left: #357EBD 4px solid;
+            background-color: lighten(#357EBD, 50%);
+            .listings-cols-wrapper { margin-left: -4px; }
             text-rendering: optimizeLegibility;
             a { 
               text-rendering: optimizeLegibility;
             }
+          }
+          &.sold {
+            background-color: #EEE;
+            span.status { color: darken(#EEE, 50%);}
+          }
+          &.deleted {
+            background-color: #F2DEDE;
+            span.status { color: darken(#F2DEDE, 40%); }
+          }
+          &.draft {
+            background-color: lighten(#357EBD, 45%);
+            span.status { color: #357EBD; }
+          }
+          &.pending {
+            background-color: #FCF8E3;
+            span.status { color: darken(#FCF8E3, 45%); }
           }
           &.unread {
             background-color: lighten(#FAF5AF, 10%) !important;
@@ -193,16 +207,7 @@
             &.d-price { width: @price; }
             &.d-category { width: @category; }
             &.d-date { width: @date; }
-            &.phone-hide {
-              @media (max-width: 480px) {
-                display: none;
-              }
-            }
-            &.phone-full-width {
-              @media (max-width: 480px) {
-                width: 100%;
-              }
-            }
+            &.d-status { width: @status; }
           }
         }
       }

@@ -65,7 +65,7 @@ $(function() {
 		$(".buyers-body").prepend(Mustache.render($("#new-buyer").html(), {'buyers': data.buyers}));
 		$(".listings-body ul.list").prepend(Mustache.render($("#new-listing").html(), {'listings': data.listings}));
 		// Reset the filter button
-		$("a.dropdown-btn").text("All");
+		$("a.dropdown-btn").text("Filter");
 	}
 
 	// Bind clicks and list init to the current items
