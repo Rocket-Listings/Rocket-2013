@@ -25,6 +25,25 @@ $(function() {
 		$(this).scrollTop($(this)[0].scrollHeight);
 	}
 
+	// Mark a message as seen on the server
+	// Must have attr 'data-message-id'
+	$.fn.markSeen = function(callback) {
+		var message_id = $(this).data('message-id');
+		$.ajax({
+			method: 'GET',
+			url: '/listings/dashboard/message/seen',
+			data: {'message_id': message_id},
+			success: function (response) {
+				if (response.status == 'success') {
+					callback(response.message_data);
+				}
+				else {
+					console.log("The server experienced an error.");
+				}
+			}
+		});
+	}
+
 	// Convert links in messages to anchors
 	function linkToClickable(text) {
 	    var exp = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/gi;
@@ -47,16 +66,15 @@ $(function() {
 
 	// Bind clicks and list init to the current items
 	function bindEvents() {
-		$('.listings-body li').click(function () {
+		$('.listing').click(function () {
 			var listingRow = $(this),
 				id = listingRow.data('listing-id'),
-				buyers = $(".listing-" + id);
-			$('.listings-body li').removeClass('highlight');
+				buyers = $(".buyer[data-listing-id='" + id + "']");
+			$('.listing').removeClass('highlight');
 			listingRow.addClass('highlight');
-			$(".message").addClass("hide");
-			$(".buyer-card").addClass("hide");
+			$(".message, .buyer").addClass("hide");
 			$(".dashboard-delete a").attr('data-listing-id', id).removeClass("disabled");
-			if(buyers.length) {
+			if (buyers.length) {
 				$(".buyers-body").addClass("border-right");
 				$(".no-messages").addClass("hide");
 				buyers.removeClass("hide");
@@ -70,17 +88,26 @@ $(function() {
 			}
 		});
 
-		$('.buyer-card').click(function(event){
+		$('.buyer').click(function (event){
 			var buyerCard = $(this),
 				buyer_id = buyerCard.data('buyer-id'),
-				listing_id = buyerCard.data('listing-id');
-			$('.buyer-card').removeClass('highlight');
+				listing_id = buyerCard.data('listing-id'),
+				unreadMessages = $(".message.unread[data-buyer-id='" + buyer_id + "']");
+			$('.buyer').removeClass('highlight');
 			buyerCard.addClass('highlight');
 			$(".message").addClass("hide");
-			$('.buyer-' + buyer_id).removeClass("hide");
+			$('.message[data-buyer-id="' + buyer_id + '"]').removeClass("hide");
 			$(".message-form input[name='listing']").val(listing_id);
 			$(".message-form input[name='buyer']").val(buyer_id);
 			$('.messages-body').scrollBottom();
+			unreadMessages.each(function () { 
+				$(this).markSeen(function (data) {
+					$(".message[data-message-id='" + data.message_id +"'], .buyer[data-buyer-id='" + data.buyer_id + "']").removeClass("unread");
+					if (data.listing_all_read) {
+						$(".listing[data-listing-id='" + data.listing_id + "']").removeClass("unread");
+					}
+				});
+			});
 		});
 
 		// Initialize the listings globally for List.js
@@ -89,6 +116,20 @@ $(function() {
 		};
 
 		window.listings = new List('dashboard-content', options);
+	}
+
+	// Unbind click events from current items
+	function unbindEvents() {
+		$('.listing, .buyer').unbind('click');
+	}
+
+	function propogateUnreadMessages() {
+		$(".message.unread").each(function () {
+			var buyer 	= $(this).data('buyer-id'),
+				listing = $(this).data('listing-id');
+			$('.buyer[data-buyer-id="' + buyer + '"]').addClass("unread");
+			$('.listing[data-listing-id="' + listing + '"]').addClass("unread");
+		});
 	}
 
 	// Toggle up/down chevrons on sort click
@@ -109,11 +150,6 @@ $(function() {
 		}
 		return false;
 	});
-
-	// Unbind click events from current items
-	function unbindEvents() {
-		$('.listings-body li, .buyer-card').unbind('click');
-	}
 
 	// Keyboard controls
 	$(document).keydown(function(e) {
@@ -196,6 +232,7 @@ $(function() {
 				insertNewData(response);
 				unbindEvents(); // To prevent overlap
 				bindEvents(); // Bind all items (including new)
+				propogateUnreadMessages();
 				if (currentSelectedListing != null) {
 					// Maintain the clicked listing
 					$(".listings-body").find("li[data-listing-id='" + currentSelectedListing + "']").click();
@@ -254,7 +291,6 @@ $(function() {
 					bindEvents(); // Bind all items (including new)
 					$(".listings-body li").first().click();
 					$(".listings-body").scrollTop(0);
-
 				}
 			});
 		}
@@ -280,7 +316,7 @@ $(function() {
 
 	// Remove focus from the listings and hide buyers/messages during search
 	$("input.search").keydown(function() {
-		$(".buyer-card, .message, .message-form-wrapper").addClass("hide");
+		$(".buyer, .message, .message-form-wrapper").addClass("hide");
 		$(".listings-body li").removeClass("highlight");
 		$(".buyers-body").removeClass("border-right");
 		$(".no-messages").removeClass("hide");
@@ -318,7 +354,7 @@ $(function() {
                 return false;
             }
         });
-        $(".buyer-card, message").addClass("hide");
+        $(".buyer, message").addClass("hide");
         $(".listings-body li").first().click();
         return false;
     });
@@ -347,8 +383,9 @@ $(function() {
 
     // Init
     bindEvents();
+    propogateUnreadMessages();
 
-    $('.listings-body li').first().click();
+    $('.listing').first().click();
 });
 
 // Context for keyboard controls

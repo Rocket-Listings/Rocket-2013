@@ -4,7 +4,7 @@
 
 <div class="messages-body">
 	{% for message in buyer_messages %}
-	<ul class="message buyer-{{ message.buyer.id }} listing-{{ message.listing.id }} {% if message.isSeller %}message-seller{% else %}message-buyer{% endif %} hide">
+	<ul class="message {% if message.isSeller %}message-seller{% else %}message-buyer{% endif %} {% if not message.seen %}unread{% endif %} hide" data-listing-id="{{ message.listing.id }}" data-buyer-id="{{ message.buyer.id }}" data-message-id="{{ message.id }}">
 		<li class="message-time">{{message.date|naturaltime}}</li>
 		<li class="message-buyer-name">
 			{% if message.isSeller %}
@@ -36,7 +36,7 @@
 <script id="new-message" type="text/template">
 {% verbatim %}
 {{#messages}}
-	<ul class="message buyer-{{ buyer_id }} listing-{{ listing_id }} {{#isSeller}}message-seller{{/isSeller}}{{^isSeller}}message-buyer{{/isSeller}} hide">
+	<ul class="message {{#isSeller}}message-seller{{/isSeller}}{{^isSeller}}message-buyer{{/isSeller}} {{^seen}}unread{{/seen}} hide" data-listing-id="{{ listing_id }}" data-buyer-id="{{ buyer_id }}" data-message-id="{{ message_id }}">
 		<li class="message-time">{{ date }}</li>
 		<li class="message-buyer-name">
 			{{#isSeller}}{{ seller_name }}{{/isSeller}}

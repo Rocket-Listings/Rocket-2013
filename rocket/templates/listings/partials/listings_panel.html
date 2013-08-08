@@ -27,7 +27,7 @@
 <div class="listings-body">
 	<ul class="list">
 	{% for listing in listings %}
-		<li data-listing-id="{{ listing.id }}">
+		<li class="listing" data-listing-id="{{ listing.id }}">
 			<div class="listings-cols-wrapper">
 				<span class="d-title phone-full-width">
 					<a class="title" href="{{ listing.get_absolute_url }}">{{ listing.title }}</a>
@@ -48,7 +48,7 @@
 <script id="new-listing" type="text/template">
 {% verbatim %}
 	{{#listings}}
-		<li data-listing-id="{{ id }}">
+		<li class="listing" data-listing-id="{{ id }}">
 			<div class="listings-cols-wrapper">
 				<span class="d-title phone-full-width">
 					<a class="title phone-full-width">{{ title }}</a>

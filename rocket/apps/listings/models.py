@@ -147,3 +147,4 @@ class Message(models.Model):
 	buyer = models.ForeignKey(Buyer, null=False, blank=False)
 	content = models.TextField(null=False, blank=False)
 	date = models.DateTimeField('date received', auto_now_add=True, default=datetime.now)
+	seen = models.NullBooleanField(default=False)

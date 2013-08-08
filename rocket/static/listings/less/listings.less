@@ -165,12 +165,19 @@
           &.highlight {
             border-left: #357EBD 3px solid;
             background-color: lighten(#357EBD, 50%) !important;
-            span:first-child { padding-left: 37px; width: calc(~'50% - 1px');}
+            span:first-child { 
+              padding-left: 37px; 
+              width: calc(~'50% - 1px');
+            }
             span.category { margin-right: 1px;}
+            span.price { padding-left: 7px !important; }
             text-rendering: optimizeLegibility;
             a { 
               text-rendering: optimizeLegibility;
             }
+          }
+          &.unread {
+            background-color: lighten(#FAF5AF, 10%) !important;
           }
           span {
             font-size: 14px;
@@ -253,6 +260,9 @@
               text-rendering: optimizeLegibility;
             }
           }
+          &.unread {
+            background-color: lighten(#FAF5AF, 10%) !important;
+          }
           li {
             &:first-child { padding: 8px 8px 2px 8px; }
             &:nth-child(2) { padding: 2px 8px 2px 8px; }
@@ -284,6 +294,9 @@
           border-bottom: #DDDDDD solid 1px;
           &.message-buyer {
             background-color: lighten(#DDD, 10%);
+          }
+          &.unread {
+            background-color: lighten(#FAF5AF, 10%);
           }
           li {
             &:nth-child(1) { padding: 8px; }

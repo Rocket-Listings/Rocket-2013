@@ -31,7 +31,7 @@ ListingPhotoFormSet = inlineformset_factory(Listing, ListingPhoto, extra=0, can_
 class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
-        exclude = ('date')
+        exclude = ('date', 'seen')
         fields = ('listing', 'buyer', 'content', 'isSeller')
 
         def clean(self):
