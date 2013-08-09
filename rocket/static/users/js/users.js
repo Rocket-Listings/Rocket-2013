@@ -196,7 +196,7 @@ $(function() {
 			success: function (response) {
 				if (response['handle'] !== "no_oauth_token_or_key") {
 					$(".twitter-handle").html(response['handle']);
-					$(".at").removeClass("muted");
+					$(".at").removeClass("hide");
 					$(".verify-twitter").addClass("hide");
 					$(".disconnect-twitter").removeClass("hide");
 					$("#twitter-linked").addClass("completed");
@@ -218,7 +218,7 @@ $(function() {
 					$(".twitter-handle").html("");
 					$(".verify-twitter").removeClass("hide");
 					$(".disconnect-twitter").addClass("hide");
-					$(".at").addClass("muted");
+					$(".at").addClass("hide");
 				}
 			}
 		});
