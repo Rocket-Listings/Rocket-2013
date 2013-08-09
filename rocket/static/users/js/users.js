@@ -133,6 +133,7 @@ $(function() {
 
 		if (data['credits_added'] != 0) {
 			$("#credit-counter").text(parseInt($("#credit-counter").html()) + data['credits_added']);
+			$(".credits-available").addClass("more-credits");
 			if (data['profile_completed'] != undefined) {
 				$("#profile-completed").addClass("completed");
 			}
@@ -203,7 +204,7 @@ $(function() {
 				}
 				if (response['credits_added'] != 0 && response['credits_added'] != undefined) {
 					$("#credit-counter").text(parseInt($("#credit-counter").html()) + response['credits_added']);
-					
+					$(".credits-available").addClass("more-credits");
 				}
 
 			}
@@ -270,7 +271,7 @@ $(function() {
 				else {
 					data['picture'] = "";
 				}
-				fbPostData(data)
+				fbPostData(data);
 			});
 		});
 	}
@@ -292,6 +293,7 @@ $(function() {
 
 				if (response['credits_added'] != 0 && response['credits_added'] != undefined) {
 					$("#credit-counter").text(parseInt($("#credit-counter").html()) + response['credits_added']);
+					$(".credits-available").addClass("more-credits");
 				}
 			}
 		});

@@ -1,5 +1,3 @@
-from django.contrib.auth.models import User
-
 # SITEWIDE UTILITY FUNCTIONS
 
 def get_client_ip(request):
@@ -13,6 +11,3 @@ def get_client_ip(request):
 	else:
 		print "REMOTE_ADDR", request.META['REMOTE_ADDR']
 		return request.META['REMOTE_ADDR']
-
-# Auth model email uniqueness
-User._meta.get_field_by_name('email')[0]._unique = True

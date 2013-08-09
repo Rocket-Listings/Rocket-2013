@@ -11,18 +11,30 @@
 	{% endif %}
 
 	<div class="content-wrapper row">
-		<div class="listing-credits-wrapper col-lg-3 pull-right-screen-large">
+		<div class="listing-credits-wrapper col-lg-3 pull-right">
 			<span class="h4">Listing Credits</span>
 			<ul class="listing-credits-stats">
-				<li><span>Credits Available:</span><span id="credit-counter">{{ credits }}</span></li>
-				<li><span>Credits Spent:</span><span>{{ credits_spent }}</span></li>
+				<li class="credits-available"><span>Credits Available</span><span id="credit-counter">{{ credits }}</span></li>
+				<li><span>Credits Spent</span><span>{{ credits_spent }}</span></li>
 			</ul>
-			<span class="h4">Get more listings:</span>
+			<span class="h4">Get more listings</span>
 			<ul class="listing-credits-more">
-				<li><a href="#" id="profile-completed" class="{% if profile_completed_once %}completed{% endif %}">Complete your profile (2)</a></li>
-				<li><a href="#" id="twitter-linked" class="{% if twitter_connected_once %}completed{% endif %}">Link Twitter (2)</a></li>
-				<li><a href="#" id="facebook-linked" class="{% if facebook_connected_once %}completed{% endif %}">Link Facebook (2)</a> 
-				<li><a href="#">Get your friends to join (TBD)</a></li>
+				<li id="profile-completed" class="{% if profile_completed_once %}completed{% endif %}">
+					<span>Complete your profile</span>
+					<span>2</span>
+				</li>
+				<li id="twitter-linked" class="{% if twitter_connected_once %}completed{% endif %}">
+					<span>Link Twitter</span>
+					<span>2</span>
+				</li>
+				<li id="facebook-linked" class="{% if facebook_connected_once %}completed{% endif %}">
+					<span>Link Facebook</span>
+					<span>2</span>
+				</li>
+				<li>
+					<span>Get your friends to join</span>
+					<span>(TBD)</span>
+				</li>
 			</ul>
 		</div>
 
@@ -102,10 +114,7 @@
 							<td class="partial-input">
 								<input class="form-control" tabindex="4" id="id_location" autocomplete="off" name="location" type="text" value="{{ user.get_profile.location }}" placeholder="Burlington, VT">
 							</td>
-							<td>
-								<a class="get-location" href="#">Get Location <i class="glyphicon glyphicon-screenshot"></i></a>
-								<a class="edit active" href="#">Edit</a>
-							</td>
+							<td><a class="edit active" href="#">Edit</a></td>
 						</tr>
 						<tr class="editable">
 							<td>Bio</td>
