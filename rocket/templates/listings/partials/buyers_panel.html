@@ -3,7 +3,7 @@
 {# Requires the context variable 'listings' #}	
 {# Requires the context variable 'buyers' #}	
 
-<div class="buyers-body">
+<div class="buyers-body hide">
 	{% for buyer in buyers reversed %}
 	<ul class="buyer hide" data-buyer-id="{{ buyer.id }}" data-listing-id="{{ buyer.listing.id }}">
 		<li>{{ buyer.name }}</li>

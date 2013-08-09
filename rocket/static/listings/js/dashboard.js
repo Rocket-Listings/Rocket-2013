@@ -79,15 +79,16 @@ $(function() {
 			$(".message, .buyer").addClass("hide");
 			$(".dashboard-delete a").attr('data-listing-id', id).removeClass("disabled");
 			if (buyers.length) {
-				$(".buyers-body").addClass("border-right");
+				$(".buyers-body").addClass("border-right").removeClass("hide");
 				$(".no-messages").addClass("hide");
 				buyers.removeClass("hide");
 				buyers.first().click();
 				$('.message-form-wrapper').removeClass("hide");
-				$('.messages-body').scrollBottom();
+				$('.messages-body').removeClass("hide").scrollBottom();
 			} else {
 				$('.message-form-wrapper').addClass("hide");
-				$(".buyers-body").removeClass("border-right");
+				$(".buyers-body").removeClass("border-right").addClass("hide");
+				$(".messages-body").addClass("hide");
 				$(".no-messages").removeClass("hide");
 			}
 		});
@@ -156,7 +157,7 @@ $(function() {
 	});
 
 	// Keyboard controls
-	$(document).keydown(function(e) {
+	$(document).bind(function(e) {
 		var listings = $('.listings-body'),
 			buyers = $('.buyers-body'),
 			currentSelectedListing = listings.find("li.highlight"),

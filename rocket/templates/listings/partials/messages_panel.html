@@ -2,7 +2,7 @@
 {% load humanize %}
 {# Requires the context variable 'messages' #}	
 
-<div class="messages-body">
+<div class="messages-body hide">
 	{% for message in buyer_messages %}
 	<ul class="message {% if message.isSeller %}message-seller{% else %}message-buyer{% endif %} {% if not message.seen %}unread{% endif %} hide" data-listing-id="{{ message.listing.id }}" data-buyer-id="{{ message.buyer.id }}" data-message-id="{{ message.id }}">
 		<li class="message-time">{{message.date|naturaltime}}</li>

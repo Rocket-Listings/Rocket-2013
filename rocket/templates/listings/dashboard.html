@@ -6,6 +6,13 @@
 
 {% block css %}
 {% compress css %}
+<style>
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+</style>
 <link type="text/less" media="all" rel="stylesheet" href="{% static 'listings/less/listings.less' %}"/>
 {% endcompress %}
 {% endblock %}
@@ -76,5 +83,26 @@
 			</div>
 		</div>
 	</div>
-	{% endblock %}
+
+	{% comment %}
+	<div class="modal-box">
+		<div class="keyboard-shortcuts-model">
+			<div class="keyboard-pane">
+				<code>j</code> / <code><span class="glyphicon glyphicon-arrow-down"></span></code><br>
+				<code>k</code> / <code><span class="glyphicon glyphicon-arrow-up"></span></code> select previous listing or buyer<br>
+				<code>b</code> / <code><span class="glyphicon glyphicon-arrow-right"></span></code> switch to buyers pane<br>
+				<code>l</code> / <code><span class="glyphicon glyphicon-arrow-left"></span></code> switch to listings pane<br>
+				<code>/</code> search listings<br>
+				<code>m</code> send a message<br>
+				<code>n</code> create a new listing<br>
+				<code>r</code> refresh the dashboard<br>
+			</div>
+			<div class="keyboard-pane">
+			</div>
+		</div>
+	</div>
+	{% endcomment %}
+
 </div>
+{% endblock %}
+
