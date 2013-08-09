@@ -138,23 +138,12 @@
 							<td class="subheader"><h4>Listings</h4></td>
 						</tr>
 						<tr class="editable">
-							<td>Default Seller Type</td>
+							<td>Seller Type</td>
 							<td class="select">
-								<select class="form-control" id="id_default_seller_type" name="default_seller_type" value="{{user.get_profile.default_seller_type}}">
-									{% for value, text in form.default_seller_type.field.choices %}
-										<option value="{{value}}" {% ifequal value form.default_seller_type.value %}selected="selected"{%endifequal%}>{{text}}</option>
+								<select class="form-control" id="id_seller_type" name="seller_type" value="{{user.get_profile.seller_type}}">
+									{% for value, text in form.seller_type.field.choices %}
+										<option value="{{value}}" {% ifequal value form.seller_type.value %}selected="selected"{%endifequal%}>{{text}}</option>
 									{% endfor %}
-								</select>
-							</td>
-							<td></td>
-						</tr>
-						<tr class="editable">
-							<td>Default Listing Type</td>
-							<td class="select">
-								<select class="form-control" id="id_default_listing_type" name="default_listing_type" value="{{user.get_profile.default_listing_type}}"> 
-							    {% for value, text in form.default_listing_type.field.choices %}
-							    	<option value="{{value}}" {% ifequal value form.default_listing_type.value %}selected="selected"{%endifequal%}>{{text}}</option>
-							    {% endfor %}
 								</select>
 							</td>
 							<td></td>

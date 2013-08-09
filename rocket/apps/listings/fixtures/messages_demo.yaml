@@ -20,7 +20,7 @@
     user: [chucknorris]
     name: Chuck Norris
     location: Burlington, VT
-    default_listing_type: 'O'
+    seller_type: 'O'
 
 - model: listings.Listing
   pk: null

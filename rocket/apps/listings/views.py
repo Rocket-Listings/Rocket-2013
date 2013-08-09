@@ -55,7 +55,7 @@ def create(request, pane='edit'):
 		defaults = {
 			'location': profile.location, 
 			'category': profile.default_category, 
-			'listing_type': profile.default_listing_type,
+			'listing_type': profile.seller_type,
 		}
 		cxt = {
 			'form': ListingForm(initial=defaults),

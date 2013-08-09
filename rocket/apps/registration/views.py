@@ -188,21 +188,21 @@ def register(request, backend, success_url=None, form_class=None,
         return redirect(disallowed_url)
     if form_class is None:
         form_class = backend.get_form_class(request)
-        seller_type = "P"
+        seller_type = "O"
 
     if request.method == 'POST':
         form = form_class(data=request.POST, files=request.FILES)
-        seller_type = request.POST.get("default_seller_type", "P")
+        seller_type = request.POST.get("seller_type", "O")
         if form.is_valid():
-            seller_type_field = forms.RegexField(regex=r'^P|B$', max_length=1)
+            seller_type_field = forms.RegexField(regex=r'^O|D$', max_length=1)
             try:
                 seller_type_save = seller_type_field.clean(seller_type)
             except ValidationError as e:
-                form._errors["default_seller_type"] = ErrorList([u"Please choose a valid seller type."])
+                form._errors["seller_type"] = ErrorList([u"Please choose a valid seller type."])
             else:
                 new_user = backend.register(request, **form.cleaned_data)
                 profile = UserProfile.objects.get(user=new_user)
-                profile.default_seller_type = seller_type_save
+                profile.seller_type = seller_type_save
 
                 gravatar_connection = urllib.urlopen("http://www.gravatar.com/avatar/" + hashlib.md5(new_user.email.lower()).hexdigest())
                 gravatar = gravatar_connection.info()['Content-Type']

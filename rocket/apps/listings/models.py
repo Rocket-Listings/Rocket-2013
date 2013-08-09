@@ -47,7 +47,7 @@ class Listing(models.Model):
 	title = models.CharField(max_length=200, help_text="Be specific, direct, and include all the important details in your title.")
 	description = models.TextField(help_text="Make sure you include all the important facts (color, dimensions, build year, etc.), as well as when you bought it, why you're selling it and details on any defects or problems.")
 	pub_date = models.DateTimeField('date published', auto_now_add=True, default=datetime.now)
-	listing_type = models.CharField(max_length=1, choices=(('O', 'Owner'),('D', 'Dealer')), default='O')
+	listing_type = models.CharField(max_length=1, choices=(('O', 'Owner'),('D', 'Dealer')))
 	price = models.IntegerField()
 	location = models.CharField(max_length=200)
 	category = models.ForeignKey(ListingCategory)
