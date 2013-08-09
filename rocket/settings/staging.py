@@ -1,28 +1,35 @@
-"""Production settings and globals."""
+"""Local staging settings and globals."""
 
 from os import environ
-
-from memcacheify import memcacheify
-# from postgresify import postgresify
-# from S3 import CallingFormat
-# from boto.s3.connection import OrdinaryCallingFormat
-import dj_database_url
 from common import *
 
-DATABASES['default'] = dj_database_url.config()
-DATABASES['default']['ENGINE'] = 'django_postgrespool'
+SITE_ID = 1
 
-DATABASE_POOL_ARGS = {
-  'max_overflow': 10,
-  'pool_size': 10,
-  'recycle': 300
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": environ.get('POSTGRES_DB_NAME', environ.get('USER', ''))
+        "USER": "",
+        "PASSWORD": "",
+        "HOST": "localhost",
+        "PORT": "",
+    }
 }
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#caches
-CACHES = memcacheify()
 
 # See: http://docs.celeryproject.org/en/latest/configuration.html#broker-transport
 BROKER_TRANSPORT = 'amqplib'
+
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#caches
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+}
+
+# CELERY CONFIG
+
+# See: http://docs.celeryproject.org/en/latest/configuration.html#broker-transport
+# BROKER_TRANSPORT = 'amqplib'
 
 # Set this number to the amount of allowed concurrent connections on your AMQP
 # provider, divided by the amount of active workers you have.
@@ -40,15 +47,10 @@ BROKER_POOL_LIMIT = 3
 BROKER_CONNECTION_MAX_RETRIES = 0
 
 # See: http://docs.celeryproject.org/en/latest/configuration.html#broker-url
-BROKER_URL = environ.get('RABBITMQ_URL') or environ.get('CLOUDAMQP_URL')
+# BROKER_URL = environ.get('RABBITMQ_URL') or environ.get('CLOUDAMQP_URL')
 
 # See: http://docs.celeryproject.org/en/latest/configuration.html#celery-result-backend
 CELERY_RESULT_BACKEND = 'amqp'
-
-# See: http://django-storages.readthedocs.org/en/latest/index.html
-# INSTALLED_APPS += (
-    # 'storages',
-# )
 
 STATICFILES_STORAGE = S3_CACHED_STORAGE
 
@@ -61,17 +63,13 @@ ALLOWED_HOSTS = [
   'beta.rocketlistings.com' 
 ]
 
-
-DOMAIN_NAME = "beta.rocketlistings.com"
+# DOMAIN_NAME = "beta.rocketlistings.com"
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 SOUTH_DATABASE_ADAPTERS = {
     'default': 'south.db.postgresql_psycopg2'
 }
-
-# AWS_S3_SECURE_URLS = False
-
 
 ############# MAILGUN CONFIG
 EMAIL_BACKEND = 'django_mailgun.MailgunBackend'

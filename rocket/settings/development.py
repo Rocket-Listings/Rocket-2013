@@ -8,8 +8,11 @@ from common import *
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = True
 
+SITE_ID = 1
+
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
 TEMPLATE_DEBUG = DEBUG
+THUMBNAIL_DEBUG = DEBUG
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -36,7 +39,7 @@ CACHES = {
 
 # See: http://docs.celeryq.org/en/latest/configuration.html#celery-always-eager
 # Setting CELERY_ALWAYS_EAGER = True makes the tasks blocking, just run celeryd instead
-CELERY_ALWAYS_EAGER = False
+CELERY_ALWAYS_EAGER = True
 
 # See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
 INSTALLED_APPS += (
