@@ -1,4 +1,4 @@
-Django>=1.5.0
+Django >= 1.5.0
 
 django-celery==3.0.17
 django-compressor
@@ -23,8 +23,6 @@ django-mailgun
 boto
 django-storages==1.1.6
 
-
-dj-database-url==0.2.1
 django-pagination
 
 twython

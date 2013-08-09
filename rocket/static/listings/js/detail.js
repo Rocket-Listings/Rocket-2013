@@ -353,7 +353,7 @@ $(function() {
         this.$('.listing-title').text(this.model.get('title'));
         $('#preview-btn').removeAttr('disabled');
       } else {
-        this.$('.listing-title').text("Create a listing");
+        this.$('.listing-title').html("Create a listing");
         // not sure why this.$('#preview-btn') is not found here. Using global selector.
         $('#preview-btn').attr('disabled', 'disabled');
       }
