@@ -59,15 +59,15 @@ class RegistrationForm(forms.Form):
         else:
             return self.cleaned_data['username']
 
-    def clean_email(self):
-        """
-        Validate that the email is unique.
-        """
-        existing_email = User.objects.filter(email__iexact=self.cleaned_data['email'])
-        if existing_email.exists():
-            raise forms.ValidationError(_("A user with that email address already exists."))
-        else:
-            return self.cleaned_data['email']
+    # def clean_email(self):
+    #     """
+    #     Validate that the email is unique.
+    #     """
+    #     existing_email = User.objects.filter(email__iexact=self.cleaned_data['email'])
+    #     if existing_email.exists():
+    #         raise forms.ValidationError(_("A user with that email address already exists."))
+    #     else:
+    #         return self.cleaned_data['email']
 
     def clean(self):
         """
