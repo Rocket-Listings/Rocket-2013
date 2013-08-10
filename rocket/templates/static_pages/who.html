@@ -1,12 +1,6 @@
-{% extends "static_pages/static_pages_base.html" %}
+{% extends "static_pages/base.html" %}
 {% load static from staticfiles %}
 {% load compress %}
-
-{% block bootstrap %}
-{% compress css %}
-<link type="text/css" rel="stylesheet" href="{% static 'rocket/vendorcss/bootstrap-gutterless.css' %}"/>
-{% endcompress %}
-{% endblock %}
 
 {% block title %}About Rocket{% endblock %}
 

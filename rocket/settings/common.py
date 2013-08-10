@@ -26,7 +26,6 @@ DEBUG = False
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
 TEMPLATE_DEBUG = DEBUG
-
 THUMBNAIL_DEBUG = DEBUG
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
@@ -56,13 +55,43 @@ TIME_ZONE = 'America/New_York'
 LANGUAGE_CODE = 'en-us'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#site-id
-SITE_ID = 1
+SITE_ID = 2
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#use-i18n
 USE_I18N = True
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#use-l10n
 USE_L10N = True
+
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#email-use-tls
+EMAIL_USE_TLS = True
+
+# See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
+# AWS_CALLING_FORMAT = OrdinaryCallingFormat
+# See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
+AWS_ACCESS_KEY_ID = environ.get('AWS_KEY', '')
+AWS_SECRET_ACCESS_KEY = environ.get('AWS_SECRET', '')
+AWS_STORAGE_BUCKET_NAME = environ.get('AWS_STORAGE_BUCKET_NAME', '')
+
+AWS_AUTO_CREATE_BUCKET = True
+AWS_QUERYSTRING_AUTH = False
+AWS_S3_SECURE_URLS = False
+
+# AWS cache settings, don't change unless you know what you're doing:
+AWS_EXPIREY = 60 * 60 * 24 * 7
+AWS_HEADERS = {
+    'Cache-Control': 'max-age=%d, s-maxage=%d, must-revalidate, no-transform' % (AWS_EXPIREY, AWS_EXPIREY)
+}
+AWS_S3_CUSTOM_DOMAIN = 'static.rocketlistings.com'
+S3_URL = 'http://' + AWS_S3_CUSTOM_DOMAIN
+
+S3_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+S3_CACHED_STORAGE = 'rocket.settings.storage.LocalCachedS3BotoStorage'
+
+# See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
+DEFAULT_FILE_STORAGE = S3_STORAGE
+
+# STATICFILES_STORAGE = S3_CACHED_STORAGE
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
 MEDIA_ROOT = normpath(join(DJANGO_ROOT, 'media'))
@@ -88,12 +117,8 @@ STATICFILES_FINDERS = (
   'compressor.finders.CompressorFinder',
 )
 
-AWS_STORAGE_BUCKET_NAME = environ.get('AWS_STORAGE_BUCKET_NAME', 'static.rocketlistings.com')
-
-S3_URL = 'https://s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
-
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-SECRET_KEY = '59%5@qdw12&amp;d)47=3=$ar4bv4vcgk)*-_f2=qr9(n9jy%z%1j!'
+SECRET_KEY = environ.get('SECRET_KEY', 'imnotwearingpants')
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-FIXTURE_DIRS
 FIXTURE_DIRS = (
@@ -176,10 +201,8 @@ THIRD_PARTY_APPS = (
 	# pagination template tags
 	'pagination',
 
-	# static file management
-	'compressor',
-
-
+  # django-storages
+  'storages',
 )
 
 LOCAL_APPS = (
@@ -233,10 +256,19 @@ CELERY_TASK_RESULT_EXPIRES = timedelta(minutes=30)
 # See: http://celery.github.com/celery/django/
 setup_loader()
 
+CELERY_IMPORTS = ('mail.tasks',)
 
 ############# COMPRESS CONFIG
 # See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_ENABLED
 COMPRESS_ENABLED = True
+
+# COMPRESS_STORAGE = S3_CACHED_STORAGE
+
+COMPRESS_URL = STATIC_URL
+
+# See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_OFFLINE
+COMPRESS_OFFLINE = False
+# COMPRESS_URL = S3_URL
 
 # See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_PRECOMPILERS
 COMPRESS_PRECOMPILERS = (
@@ -261,7 +293,7 @@ AUTH_PROFILE_MODULE = 'users.UserProfile'
 
 ACCOUNT_ACTIVATION_DAYS = 7
 
-DEFAULT_FROM_EMAIL = 'webmaster@localhost:8000'
+DEFAULT_FROM_EMAIL = 'teddy@rocketlistings.com'
 
 LOGIN_URL = '/users/login/' # references users/urls.py name
 
@@ -281,3 +313,7 @@ HAYSTACK_CONNECTIONS = {
 				'PATH': join(dirname(__file__), 'whoosh_index'),
 		}
 }
+
+# TWITTER CONFIG (defaults to development app credentials)
+TWITTER_KEY = environ.get('TWITTER_KEY', 'ozuyeg1uriTqpgEGNxfXPA')
+TWITTER_SECRET = environ.get('TWITTER_SECRET', '4zZjutoXBLs8mfxMHZtGKf1nLNGhABWBz44alSg58')

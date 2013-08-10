@@ -11,25 +11,17 @@
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'rocket/img/favicon.ico' %}">
     <link href='http://fonts.googleapis.com/css?family=Radley:400,400italic' rel='stylesheet' type='text/css'>
     
-    {% block bootstrap %}
-    {# CDN #}
-    {# <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet"> #}
-
-    {# Offline/s3 #}
     {% compress css %}
     <link rel="stylesheet" type="text/css" href="{% static 'rocket/vendorcss/bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'rocket/vendorcss/bootstrap-glyphicons.css' %}">
     {% endcompress %}
-    {% endblock %}
-
-    {# <link rel="stylesheet" type="text/css" href="{% static 'rocket/vendorcss/jquery.fancybox.css' %}" media="screen" />#}
     {% block css %}
     {% compress css %}
     <link rel="stylesheet" type="text/less" media="all" href="{% static 'rocket/less/base.less' %}">
     {% endcompress %}
     {% endblock%}
     {# for ?debug mode #}
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/1.4.1/less.min.js"></script>
+    {# // <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/1.4.1/less.min.js"></script> #}
   </head>
   <body>
     <div id="fb-root"></div>
@@ -54,26 +46,7 @@
       <script src="{% static 'rocket/js/global.js' %}"></script>
       {% endcompress %}
       {% block js %}{% endblock %}
-      {# UserVoice Plugin #}
-      {% comment %}
-        <script>(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/o4vmqHxCMmC4DbHGzQ71A.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})()</script>
-      <script>
-        UserVoice = window.UserVoice || [];
-        UserVoice.push(['showTab', 'classic_widget', {
-          mode: 'full',
-          primary_color: '#e26959',
-          link_color: '#007dbf',
-          default_mode: 'support',
-          forum_id: 175448,
-          support_tab_name: 'Found a bug?',
-          feedback_tab_name: 'Have an idea?',
-          tab_label: 'Rocket Support',
-          tab_color: '#e26959',
-          tab_position: 'middle-right',
-          tab_inverted: false
-        }]);
-      </script>
-      {% endcomment %}
+
       {# Google Analytics #}
       {% comment %}
       <script type="text/javascript">
@@ -82,7 +55,6 @@
         _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
         _gaq.push(['_setAccount', 'UA-38799685-1']);
         _gaq.push(['_trackPageview']);
-
         (function() {
           var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
           ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';

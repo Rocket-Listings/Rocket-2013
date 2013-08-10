@@ -9,6 +9,43 @@ a {
 
 .navbar {
   min-height: 0px;
+  .username-item {
+    z-index: 3;
+    padding-right: 3px;    
+  }
+
+  .settings-cog {
+    padding-left: 5px;
+    padding-right: 10px;
+  }
+}
+
+
+ul.navbar-nav > li > a {
+  outline: none;
+}
+
+.navbar-nav>.open>a, .navbar-nav>.open>a:hover, .navbar-nav>.open>a:focus {
+  outline: none;
+}
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
+  background: none;
+  color: inherit;
+}
+
+.navbar .dropdown-menu {
+
+  // background: #eee;
+  margin: 0;
+  padding: 0;
+  border-top: none;
+  min-width: 108px;
+
+  > li > a {
+    padding: 5px 10px;
+    // text-align: right;
+    // border-bottom: 1px solid #eee;
+  }
 }
 
 @media (min-width: 768px) {
@@ -23,33 +60,40 @@ a {
   }
 }
 
-ul.navbar-nav > li > a {
-  height: @navbar-height;
-  padding-top: 10px;
-  padding-bottom: 10px;
-
-  &.active {
-    background-color: #E0E0E0;
+ul.navbar-nav {
+  > li > a {
+    height: @navbar-height;
+    line-height: @navbar-height;
+    padding-top: 0;
+    padding-bottom: 0;
   }
 
-  &.blue-menu-item {
-    background-color:  lighten(@craigslistBlue, 40%); // #D3D9F2;
-    color: white;
-  }
+  li a {
+    font-size: 12px;
 
-  &:hover .nav-item-text {
-    text-decoration: underline;
-  }
+    &.active {
+      background-color: #E0E0E0;
+    }
 
-  .nav-item-text {
-    margin-right: 4px;
-  }
-  .glyphicon{
-    display: inline;        
-    vertical-align: middle; 
+    &.blue-menu-item {
+      background-color:  lighten(@craigslistBlue, 40%); // #D3D9F2;
+      color: white;
+    }
+
+    &:hover .nav-item-text {
+      text-decoration: underline;
+    }
+
+    // .nav-item-text {
+    //   margin-right: 4px;
+    // }
+
+    .glyphicon{
+      display: inline;        
+      vertical-align: middle; 
+    }
   }
 }
-
 
 .navbar-logo {
   float: left;
@@ -115,7 +159,12 @@ ul.navbar-nav > li > a {
   background: #4A4742;
   p {
     margin: 0;
-    line-height: @footer-height;
+    padding-top: 2px; 
+    padding-right: 100px;
+    overflow: hidden;
+    height: @menu-height;
+    line-height: @menu-height;
+    color: #ededed; 
   }
 }
 
@@ -178,14 +227,14 @@ body {
 }
 
 /* Lastly, apply responsive CSS fixes as necessary */
-@media (max-width: 767px) {
-  .footer {
-    margin-left: -20px;
-    margin-right: -20px;
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-}
+// @media (max-width: 767px) {
+//   .footer {
+//     margin-left: -20px;
+//     margin-right: -20px;
+//     padding-left: 20px;
+//     padding-right: 20px;
+//   }
+// }
 
 /* Flatten das boostrap */
 .well, .navbar-inner, .popover, .btn, .tooltip, input, .input-group-addon, select, textarea, pre, .progress,

@@ -25,6 +25,8 @@ from users.decorators import first_visit, view_count
 from django.template.response import TemplateResponse
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from mail.tasks import send_message_task
+from users.models import UserProfile, UserComment, ProfileFB 
+from django.db.models import Avg
 
 @first_visit
 @login_required
@@ -62,7 +64,7 @@ def create(request, pane='edit'):
 		defaults = {
 			'location': profile.location, 
 			'category': profile.default_category, 
-			'listing_type': profile.default_listing_type,
+			'listing_type': profile.seller_type,
 		}
 		cxt = {
 			'form': ListingForm(initial=defaults),
@@ -109,6 +111,7 @@ def update(request, listing_id=None): # not directly addressed by a route, allow
 			form.instance.order = form.cleaned_data['ORDER']
 			form.instance.save()
 
+		request.user.get_profile().subtract_credit();
 		return redirect(listing)
 	else:
 		print listing_form.errors
@@ -127,7 +130,6 @@ def update(request, listing_id=None): # not directly addressed by a route, allow
 def detail(request, listing_id, pane='preview'):
 	listing = get_object_or_404(Listing, id=listing_id)
 	request.user.is_owner = bool(listing.user == request.user)
-
 	# prep specs
 	specs_set = listing.listingspecvalue_set.select_related().all()
 	specs = {}
@@ -148,11 +150,16 @@ def detail(request, listing_id, pane='preview'):
 			cxt.update(utils.get_listing_vars())
 			return TemplateResponse(request, 'listings/detail.html', cxt)
 		else:
+			comments = UserComment.objects.filter(user=listing.user).order_by('-date_posted') 
+			avg_rating = comments.aggregate(Avg('rating')).values()[0]
+			fbProfile = ProfileFB.objects.get(profile=listing.user.get_profile())
 			photos = listing.listingphoto_set.all()
 			cxt = {
 				'listing': listing,
 				'photos': photos,
 				'specs': specs,
+				'fb' : fbProfile, 
+				'avg_rating' : avg_rating 
 			}
 			return TemplateResponse(request, 'listings/detail_public.html', cxt)
 	else: # POST

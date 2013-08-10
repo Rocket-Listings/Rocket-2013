@@ -90,6 +90,7 @@ $(function() {
 			console.log(FPError);
 		});
 	});
+
 	$("form.settings-form").submit(function() {
 		if ((!$(".save-all").hasClass("disabled")) || ($(".save-all").hasClass("propic-enable"))) {
 			var csrftoken = getCookie('csrftoken');
@@ -129,6 +130,14 @@ $(function() {
 		}
 		if ($("input[name='propic']").val() !== "") $("img.propic").attr("src", data['propic'] + "?" + new Date().getTime());
 		$(".loading-overlay").addClass("hide");
+
+		if (data['credits_added'] != 0) {
+			$("#credit-counter").text(parseInt($("#credit-counter").html()) + data['credits_added']);
+			$(".credits-available").addClass("more-credits");
+			if (data['profile_completed'] != undefined) {
+				$("#profile-completed").addClass("completed");
+			}
+		}
 	}
 	function getInput (type) {
 		var input  = $("input:not(input[type='submit']), textarea"),
@@ -186,12 +195,18 @@ $(function() {
 			type: 'GET',
 			url: '/users/twitter/handle/',
 			success: function (response) {
-				if (response !== "no_oauth_token_or_key") {
-					$(".twitter-handle").html(response);
-					$(".at").removeClass("muted");
+				if (response['handle'] !== "no_oauth_token_or_key") {
+					$(".twitter-handle").html(response['handle']);
+					$(".at").removeClass("hide");
 					$(".verify-twitter").addClass("hide");
 					$(".disconnect-twitter").removeClass("hide");
+					$("#twitter-linked").addClass("completed");
 				}
+				if (response['credits_added'] != 0 && response['credits_added'] != undefined) {
+					$("#credit-counter").text(parseInt($("#credit-counter").html()) + response['credits_added']);
+					$(".credits-available").addClass("more-credits");
+				}
+
 			}
 		});
 	}
@@ -204,7 +219,7 @@ $(function() {
 					$(".twitter-handle").html("");
 					$(".verify-twitter").removeClass("hide");
 					$(".disconnect-twitter").addClass("hide");
-					$(".at").addClass("muted");
+					$(".at").addClass("hide");
 				}
 			}
 		});
@@ -256,7 +271,7 @@ $(function() {
 				else {
 					data['picture'] = "";
 				}
-				fbPostData(data)
+				fbPostData(data);
 			});
 		});
 	}
@@ -271,9 +286,15 @@ $(function() {
 				xhr.setRequestHeader("X-CSRFToken", csrftoken);
 			},
 			success: function(response) {
-				$(".fb-name").text(response);
+				$(".fb-name").text(response['name']);
 				$(".connect-fb").addClass("hide");
 				$(".disconnect-fb").removeClass("hide");
+				$("#facebook-linked").addClass("completed");
+
+				if (response['credits_added'] != 0 && response['credits_added'] != undefined) {
+					$("#credit-counter").text(parseInt($("#credit-counter").html()) + response['credits_added']);
+					$(".credits-available").addClass("more-credits");
+				}
 			}
 		});
 	}

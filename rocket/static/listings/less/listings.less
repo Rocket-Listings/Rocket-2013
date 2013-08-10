@@ -52,7 +52,7 @@
 .dashboard-header {
     .dashboard-title {
         display: inline-block;
-        padding-left: 25px !important;
+        padding-left: 8px !important;
     }
     .dashboard-search {
         display: inline-block;
@@ -412,6 +412,45 @@
 }
 
 .listing-form {
+
+  .location-map-wrapper {
+    position: relative;
+
+    #location-btn {
+      &:hover {
+        opacity: 1;
+      }
+
+      opacity: 0.8;
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    .loading-spinner {
+      display: none;
+      z-index: 3;
+      position: absolute;
+      background: rgba(255,255,255,0.7);
+      width: 100px;
+      top: calc(~"50% - 50px");
+      left: calc(~"50% - 50px");
+      border-radius: 10px;
+    }
+  }
+
+  #location-map {
+    width: 100%;
+    height: 300px;
+    background: rgba(0, 0, 0, 0.2);
+    // height: 220px;
+  }
+
+  .btn-toolbar {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
   fieldset small {
     font-size: 60%;
     margin-left: 15px;
@@ -472,8 +511,8 @@
   }
   .sortable .sortable-placeholder {
       float: left;
-      width: 115px;
-      height: 115px;
+      width: 116px;
+      height: 116px;
       margin-left: 15px;
       margin-right: 15px;
       border: 1px dashed #ddd;
@@ -484,12 +523,12 @@
       cursor: pointer;
   }
 
-  .photo-view {
-      display: none;
-  }
-
   #photos {
       min-height: 200px;
+      img {
+        width: 100%;
+        cursor: pointer;
+      }
   }
   
   #spec-fieldset {
@@ -502,9 +541,26 @@
 
 
 .detail-sidebar {
-    margin-top:12px;
-    > div {
-        top: 10px;
+
+    margin-top:15px;
+    .affix {
+      top: 10px;
+    }
+
+    .btn-group {
+      margin-bottom: 7px;
+    }
+
+    // .preview-btn {
+    //   width: 50%;
+    // }
+
+    .draft-btn {
+      // width: calc(~'45% - 2.5px');
+      margin-right: 7px;
+    }
+    .save-btn {
+      // width: calc(~'55% - 2.5px');
     }
 }
 .icon-blank	{
@@ -515,6 +571,158 @@
 	background-image: url('../img/white-icon.png');
 }
 
-// .padding-40-left {
-//         padding-left:40px;
-// }
+.listing-preview {
+  .preview-thumbnails img {
+    width: 100%;
+    cursor: pointer;
+  }
+  .preview-thumbnails img, .preview-stage, .preview-description {
+    margin-bottom: 30px;
+  }
+
+  .preview-stage img {
+    max-width: 100%;
+  }
+
+  .preview-location {
+    margin-left: 15px;
+  }
+}
+
+h4.profile{
+    text-align: center;
+    
+    margin-top: 26px;
+  }
+
+.profile-card{
+  
+
+  h4.seller{
+    text-align: left;
+    padding-left: 10px;
+  }
+
+  border-radius: 10px;
+  padding-bottom: 10px;
+  margin-top: 26px;
+
+  .row-top{
+
+    .profile-picture {
+
+          img.thumbnail {
+            border-radius: 0px;
+            -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            -o-border-radius: 0px;
+            box-shadow: none;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            padding: 0;
+            padding-left: 5px;
+            border: none;
+            width: 100%;
+            max-width: 151px;
+            min-width: 131px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+          }
+      }
+
+  .col-details{
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 0 10px;
+
+
+    h3{
+      text-align: left;
+      margin: 0 0 5px 0;
+      padding-left: 25px;
+    }
+
+    h4{
+      margin: 0 0 5px 0;
+      padding-left: 25px;
+    }
+
+    h5{
+      margin: 0 0 5px 0;
+      padding-left: 25px;
+    }
+
+
+    .twitter-row{
+      margin-top: -2px;
+      padding-left: 35px;
+
+
+   
+      img{  
+        margin-left: 2px;
+        padding-bottom: 2px;
+      }
+
+
+      a{
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-weight: 500;
+        font-size: 14px;
+        margin-left: -6px;
+        
+        }
+    }
+
+    .fb-row{
+      padding-left: 40px;
+      margin-top: -2px;
+        img{
+          padding-bottom:3px;
+        }
+
+        a{
+          font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+          font-weight: 500;
+          font-size: 14px;        
+      }
+    }
+  }
+
+  }
+
+  .row-bottom{
+    margin-top: 10px;
+  }
+
+  p{
+    padding: 0 10px 0 10px;
+  }
+
+}
+
+
+.ratings{
+
+  .green{
+    color: #519902;
+  }
+
+  .grey{
+    color: grey;
+  }
+
+  .yellow{
+    color: #FCD61A;
+  }
+
+  .orange{
+    color: #bd5317;
+  }
+
+  .red{
+    color: #a11b04;
+  }
+}

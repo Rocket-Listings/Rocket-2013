@@ -8,8 +8,11 @@ from common import *
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = True
 
+SITE_ID = 1
+
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
 TEMPLATE_DEBUG = DEBUG
+THUMBNAIL_DEBUG = DEBUG
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -43,7 +46,7 @@ CACHES = {
 
 # See: http://docs.celeryq.org/en/latest/configuration.html#celery-always-eager
 # Setting CELERY_ALWAYS_EAGER = True makes the tasks blocking, just run celeryd instead
-CELERY_ALWAYS_EAGER = False
+CELERY_ALWAYS_EAGER = True
 
 # See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
 INSTALLED_APPS += (
@@ -62,11 +65,6 @@ DEBUG_TOOLBAR_CONFIG = { 'INTERCEPT_REDIRECTS': False }
 
 # COMPRESS_OFFLINE = True
 COMPRESS_DEBUG_TOGGLE = 'debug'
-
-# TWITTER CONFIG DEV KEYS
-
-TWITTER_KEY = 'ozuyeg1uriTqpgEGNxfXPA'
-TWITTER_SECRET = '4zZjutoXBLs8mfxMHZtGKf1nLNGhABWBz44alSg58' # should move twitter creds to evironment variables
 
 # See: http://docs.celeryproject.org/en/latest/configuration.html#broker-transport
 # BROKER_TRANSPORT = 'amqplib'
@@ -87,9 +85,7 @@ BROKER_POOL_LIMIT = 3
 BROKER_CONNECTION_MAX_RETRIES = 0
 
 # See: http://docs.celeryproject.org/en/latest/configuration.html#broker-url
-BROKER_URL = environ.get('RABBITMQ_URL') or environ.get('CLOUDAMQP_URL')
+# BROKER_URL = environ.get('RABBITMQ_URL') or environ.get('CLOUDAMQP_URL')
 
 # See: http://docs.celeryproject.org/en/latest/configuration.html#celery-result-backend
 CELERY_RESULT_BACKEND = 'amqp'
-
-CELERY_IMPORTS = ('mail.tasks',)

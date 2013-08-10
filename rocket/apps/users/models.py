@@ -8,23 +8,22 @@ from django.db.models.signals import post_save
 
 # User Profile
 class UserProfile(models.Model):
-	SELLER_TYPE_CHOICES = (
-		('P', 'Person'),
-		('B', 'Business')
-	)
-
 	user = models.OneToOneField(User)
 	name = models.CharField(max_length=100, blank=True)
 	location = models.CharField(max_length=255, blank=True)
 	default_category = models.ForeignKey(ListingCategory, null=True, blank=True)
-	default_listing_type = models.CharField(max_length=1, choices=(('O', 'Owner'),('D', 'Dealer')), null=False, blank=False)
-	default_seller_type = models.CharField(max_length=1, choices=SELLER_TYPE_CHOICES, default='P')
+	seller_type = models.CharField(max_length=1, choices=(('O', 'Owner'),('D', 'Dealer')), null=False, blank=False)
 	phone = models.CharField(max_length=50, blank=True)
 	bio = models.TextField(blank=True)
 	propic = models.CharField(max_length=200, blank=True)
 	twitter_handle = models.CharField(max_length=20, blank=True)
 	TWITTER_OAUTH_TOKEN = models.CharField(max_length=200, blank=True)
 	TWITTER_OAUTH_TOKEN_SECRET = models.CharField(max_length=200, blank=True)
+	listing_credits = models.IntegerField(default=3)
+	total_credits = models.IntegerField(default=3)
+	profile_completed_once = models.BooleanField(default=False)
+	twitter_connected_once = models.BooleanField(default=False)
+	facebook_connected_once = models.BooleanField(default=False)
 
 	def get_absolute_url(self):
 		return reverse('users.views.profile', args=[self.user])
@@ -37,8 +36,25 @@ class UserProfile(models.Model):
 	def __unicode__(self):
 		return self.user.username
 
+	def add_credit(self, add=1):
+		self.listing_credits += add
+		self.total_credits += add
+		self.save()
+
+	def subtract_credit(self, subtract=1):
+		self.listing_credits -= subtract
+		self.save()
+
+	def filled_out(self):
+		required = [self.name, self.location, self.phone, self.bio, self.propic, self.seller_type]
+		if len([i for i in required if i == ""]) == 0:
+			return True
+		else:
+			return False
+
 	def get_view_count(self):
 		return ViewCount.objects.get_or_create(url=UserProfile.get_absolute_url(self))[0].count
+
 
 # Handles user profile creation if not already created
 def create_user_profile(sender, instance, created, **kwargs):  

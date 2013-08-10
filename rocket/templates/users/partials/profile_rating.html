@@ -2,7 +2,7 @@
 {% if not avg_rating %}
 	<h5 class="grey">Unrated</h5>
 {% else %}
-	{% if avg_rating < 10 and avg_rating >= 8 %}
+	{% if avg_rating <= 10 and avg_rating >= 8 %}
 		<h5 class="green">All-Star Seller</h5>
 	{% elif avg_rating < 8 and avg_rating >= 6 %}
 		<h5 class="grey">Power Seller</h5>
@@ -15,3 +15,4 @@
 	{% endif %}
 {% endif %}
 </div>
+
