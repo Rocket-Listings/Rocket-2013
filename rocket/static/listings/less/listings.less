@@ -138,10 +138,18 @@
   @media (max-width: 767px) {
     top: 300px !important;
   }
+  .sidebar {
+    display: inline-block;
+    height: calc(~'100% - ' @footer-height);
+    width: 156px;
+    vertical-align: bottom;
+    border-right: 1px #DDDDDD solid;
+    margin-top: 36px;
+  }
   .listings-col {
     display: inline-block;
     height: 100%;
-    width: 60%;
+    width: calc(~'60% - 81px');
     border-right: 1px #DDDDDD solid;
     vertical-align: top;
     .listings-header {
@@ -160,7 +168,7 @@
           white-space: nowrap;
           &.d-title {
             width: @title;
-            padding-left: 40px;
+            //padding-left: 40px;
           }
           &.d-price { width: @price; }
           &.d-category { width: @category; }
@@ -233,7 +241,7 @@
             white-space: nowrap;
             &.d-title {
               width: @title;
-              padding-left: 40px;
+              //padding-left: 40px;
             }
             &.d-price { width: @price; }
             &.d-category { width: @category; }
@@ -247,7 +255,7 @@
   .buyer-message-wrapper {
     display: inline-block;
     height: 100%;
-    width: 40%;
+    width: calc(~'40% - 75px');
     vertical-align: top;
     .inbox-header, .no-messages {
       display: block;

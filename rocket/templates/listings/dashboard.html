@@ -69,6 +69,9 @@ html, body {
 
 	</div>
 	<div class="dashboard-panel {% if first_visit %}first-visit{% endif %}">
+		<div class="sidebar phone-hide">
+			{% include 'listings/partials/dashboard_sidebar.html' %}
+		</div>
 		<div class="listings-col phone-full-width" id="listings-col">
 			{% include 'listings/partials/listings_panel.html' %}
 		</div>

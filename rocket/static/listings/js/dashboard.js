@@ -157,7 +157,8 @@ $(function() {
 	});
 
 	// Keyboard controls
-	$(document).bind(function(e) {
+	$(document).keydown(function(e) {
+		console.log(e);
 		var listings = $('.listings-body'),
 			buyers = $('.buyers-body'),
 			currentSelectedListing = listings.find("li.highlight"),

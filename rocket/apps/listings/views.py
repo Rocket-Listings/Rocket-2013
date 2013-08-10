@@ -275,13 +275,17 @@ def dashboard_message(request):
 		return HttpResponse(simplejson.dumps({'errors': 'Message content is empty.', 'status': 'err_empty'}))
 
 @require_GET
+@login_required
 def message_seen(request):
 	message = get_object_or_404(Message, id=request.GET.get("message_id", ""))
-	message.seen = True
-	message.save()
-	msg_dict = {'message_id': message.id,
-				'buyer_id': message.buyer.id,
-				'listing_id': message.listing.id,
-				'listing_all_read': all(map(lambda m: m.seen, message.listing.message_set.all()))}
-	return HttpResponse(simplejson.dumps({'message_data': msg_dict, 'status': 'success'}), content_type="application/json")
+	if request.user == message.listing.user:
+		message.seen = True
+		message.save()
+		msg_dict = {'message_id': message.id,
+					'buyer_id': message.buyer.id,
+					'listing_id': message.listing.id,
+					'listing_all_read': all(map(lambda m: m.seen, message.listing.message_set.all()))}
+		return HttpResponse(simplejson.dumps({'message_data': msg_dict, 'status': 'success'}), content_type="application/json")
+	else:
+		return HttpResponse(simplejson.dumps({'status': 'Error: This action is forbidden.'}), content_type="application/json")
 
