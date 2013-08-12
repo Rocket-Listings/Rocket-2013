@@ -215,6 +215,23 @@ def status(request, listing_id):
 	return HttpResponse(listing.status)
 
 @require_GET
+def update_status(request, listing_id):
+	listing = get_object_or_404(Listing, id=listing_id)
+	if request.user == listing.user:
+		new_status = request.GET.get('status', '')
+		status_dict = {'Draft': 1, 'Pending': 2, 'Active': 3, 'Sold': 4, 'Deleted': 5}
+		if new_status in status_dict:
+			listing.status_id = status_dict[new_status]
+			listing.save()
+			response_dict = {'id': listing.id, 'status': listing.status.name}
+			return HttpResponse(simplejson.dumps({'listing': response_dict, 'status': 'success'}), content_type='application/json')
+		else:
+			return HttpResponse(simplejson.dumps({'listing': listing.id, 'status': 'status error'}), content_type='application/json')
+	else:
+		return HttpResponse(403)
+
+
+@require_GET
 def dashboard_data(request):
 	user = request.user
 	ids = map(lambda i: int(request.GET.get(i, '0')), ['listing', 'buyer', 'message'])

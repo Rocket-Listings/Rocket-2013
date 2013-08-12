@@ -107,7 +107,7 @@ $(function() {
 
 		// Initialize the listings globally for List.js
 		var options = {
-			valueNames: ['title', 'price', 'category', 'date', 'status']
+			valueNames: ['id', 'title', 'price', 'category', 'date', 'status']
 		};
 
 		window.listings = new List('dashboard-content', options);
@@ -304,8 +304,27 @@ $(function() {
 		return false;
 	});
 
-	// Delete the currently selected listing
+	// Change the status of the selected listing to "Deleted"
 	$(".dashboard-delete a").click(function (e) {
+		var id = $(this).attr('data-listing-id');
+		e.preventDefault();
+		if (!$(this).hasClass("disabled")) {
+			$.ajax({
+				url: '/listings/' + id + '/status/update',
+				method: 'GET',
+				data: {'status': 'Deleted'},
+				success: function (response) {
+					var item = window.listings.get('id', response.listing.id);
+					item.values({'status': response.listing.status});
+					$('.listing[data-listing-id="' + response.listing.id + '"]').addClass('deleted').removeClass('active draft pending sold');
+					window.currentFilterButton.click();
+				}
+			});
+		}
+	});
+
+	// Delete the currently selected listing
+	$(".dashboard-delete-permanent a").click(function (e) {
 		var id = $(this).attr('data-listing-id');
 		e.preventDefault();
 		if (!$(this).hasClass("disabled")) {
@@ -439,8 +458,9 @@ $(function() {
     // - Close (toggle) dropdown on click
     // - Scroll to top of listings on filter
     $('.sidebar-text').click(function() {
+    	window.currentFilterButton = $(this);
     	$(".sidebar-button-wrapper").removeClass('selected');
-    	$(this).parent().addClass('selected');
+    	window.currentFilterButton.parent().addClass('selected');
     	$(".listing").first().click();
     	$(".listings-body").scrollTop(0);
 
@@ -463,3 +483,4 @@ var context = "l";
 // Globally declare List listings for access outside bindEvents() scope
 var listings;
 var searchHasFocus;
+var currentFilterButton;

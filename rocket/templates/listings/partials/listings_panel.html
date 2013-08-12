@@ -35,6 +35,7 @@
 	{% for listing in listings %}
 		<li class="listing {{ listing.status|lower }}" data-listing-id="{{ listing.id }}">
 			<div class="listings-cols-wrapper">
+				<span class="id hide">{{ listing.id }}</span>
 				<span class="d-title phone-full-width">
 					<a class="title" href="{{ listing.get_absolute_url }}">{{ listing.title }}</a>
 				</span>
@@ -56,6 +57,7 @@
 	{{#listings}}
 		<li class="listing {{ status_lower }}" data-listing-id="{{ id }}">
 			<div class="listings-cols-wrapper">
+				<span class="id hide">{{ id }}</span>
 				<span class="d-title phone-full-width">
 					<a class="title phone-full-width">{{ title }}</a>
 				</span>

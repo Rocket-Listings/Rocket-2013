@@ -22,4 +22,5 @@ urlpatterns = patterns('listings.views',
 	url(r'^dashboard/message/$', 'dashboard_message'),
 	url(r'^dashboard/message/seen/$', 'message_seen'),
 	url(r'^(?P<listing_id>\d+)/status/$', 'status'),
+	url(r'^(?P<listing_id>\d+)/status/update/$', 'update_status'),
 )
