@@ -48,14 +48,14 @@ html, body {
 		<div class="dashboard-search">
 			<input type="search" class="form-control search" data-table="order-table" placeholder="Type to search"/>
 		</div>
-		<div class="dashboard-delete">
-			<a class="btn btn-primary disabled" data-listing-id="">Delete</a>
+		<div class="dashboard-create">
+			<a class="btn btn-primary" href="{% url 'create' %}">Create a Listing</a>
 		</div>
 		<div class="dashboard-refresh phone-hide">
 			<a class="btn btn-primary" href="#"><span class="glyphicon glyphicon-repeat"></span></a>
 		</div>
-		<div class="dashboard-create">
-			<a class="btn btn-primary" href="{% url 'create' %}">Create a Listing</a>
+		<div class="dashboard-delete">
+			<a class="btn btn-primary disabled" data-listing-id="" href="#"><span class="glyphicon glyphicon-trash"></span></a>
 		</div>
 
 	</div>

@@ -406,8 +406,15 @@ $(function() {
         return false;
     });
 
-    $('#filter-none').click(function() {
-        window.listings.filter();
+    // All
+    $('#filter-not-deleted').click(function() {
+        window.listings.filter(function(item) {
+            if (item.values().status != "Deleted") {
+                return true;
+            } else {
+                return false;
+            }
+        });
         return false;
     });
 
@@ -431,8 +438,7 @@ $(function() {
     // Init
     bindEvents();
     propogateUnreadMessages();
-
-    $('.listing').first().click();
+    $("#filter-not-deleted").click();
 });
 
 // Context for keyboard controls
