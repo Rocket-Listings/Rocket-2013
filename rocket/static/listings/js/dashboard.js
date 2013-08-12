@@ -218,6 +218,7 @@ $(function() {
 			// ENTER
 			$("input.search").blur();
 			$(".listing").first().click();
+			window.searchHasFocus = false;
 			return false;
 		}
 	});
@@ -350,6 +351,21 @@ $(function() {
 		$(".dashboard-delete a").addClass("disabled");
 	});
 
+	$("input.search").focus(function() {
+		window.searchHasFocus = true;
+	});
+
+	$(".dashboard-search-button a").click(function(e) {
+		if (window.searchHasFocus == true) {
+			$("input.search").blur();
+			$(".listing").first().click();
+			window.searchHasFocus = false;
+		}
+		else {
+			$("input.search").focus();
+		}
+	});
+
 	// Listings filters
 	$('#filter-draft').click(function() {
         window.listings.filter(function(item) {
@@ -446,3 +462,4 @@ var context = "l";
 
 // Globally declare List listings for access outside bindEvents() scope
 var listings;
+var searchHasFocus;
