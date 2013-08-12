@@ -1,23 +1,32 @@
-"""Local staging settings and globals."""
+"""Development settings and globals."""
 
 from os import environ
+
+from os.path import join, normpath
 from common import *
+
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
+DEBUG = False
+TEMPLATE_DEBUG = DEBUG
+THUMBNAIL_DEBUG = DEBUG
 
 SITE_ID = 1
 
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": environ.get('POSTGRES_DB_NAME', environ.get('USER', ''))
-        "USER": "",
-        "PASSWORD": "",
-        "HOST": "localhost",
-        "PORT": "",
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': normpath(join(DJANGO_ROOT, 'default.db')),
+        'USER': '',
+        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
     }
 }
-
-# See: http://docs.celeryproject.org/en/latest/configuration.html#broker-transport
-BROKER_TRANSPORT = 'amqplib'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#caches
 CACHES = {
@@ -26,7 +35,53 @@ CACHES = {
     }
 }
 
-# CELERY CONFIG
+# See: http://docs.celeryq.org/en/latest/configuration.html#celery-always-eager
+# Setting CELERY_ALWAYS_EAGER = True makes the tasks blocking, just run celeryd instead
+CELERY_ALWAYS_EAGER = True
+
+ALLOWED_HOSTS = ['*']
+
+# See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
+# AWS_CALLING_FORMAT = OrdinaryCallingFormat
+# See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
+AWS_ACCESS_KEY_ID = environ.get('AWS_KEY', '')
+AWS_SECRET_ACCESS_KEY = environ.get('AWS_SECRET', '')
+AWS_STORAGE_BUCKET_NAME = environ.get('AWS_STORAGE_BUCKET_NAME', '')
+
+AWS_AUTO_CREATE_BUCKET = True
+AWS_QUERYSTRING_AUTH = False
+AWS_S3_SECURE_URLS = False
+
+# AWS cache settings, don't change unless you know what you're doing:
+AWS_EXPIREY = 60 * 60 * 24 * 7
+AWS_HEADERS = {
+    'Cache-Control': 'max-age=%d, s-maxage=%d, must-revalidate, no-transform' % (AWS_EXPIREY, AWS_EXPIREY)
+}
+
+STATIC_URL = S3_URL + 'assets/'
+# COMPRESS_URL = 'http://static.rocketlistings.com.s3.amazonaws.com/assets/'
+
+# COMPRESS_ROOT = STATIC_ROOT
+
+COMPRESS_OFFLINE = True
+# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
+STATICFILES_STORAGE = 'rocket.settings.storage.CachedS3BotoStorage'
+COMPRESS_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+# COMPRESS_STORAGE = 'rocket.settings.storage.CachedS3BotoStorage'
+COMPRESS_OUTPUT_DIR = 'assets'
+
+# See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_CSS_FILTERS
+COMPRESS_CSS_FILTERS = [
+  'compressor.filters.css_default.CssAbsoluteFilter',
+  'compressor.filters.template.TemplateFilter',
+  'compressor.filters.cssmin.CSSMinFilter',
+]
+
+# See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_JS_FILTERS
+COMPRESS_JS_FILTERS = [
+  # 'compressor.filters.template.TemplateFilter',
+  'compressor.filters.jsmin.JSMinFilter',
+]
 
 # See: http://docs.celeryproject.org/en/latest/configuration.html#broker-transport
 # BROKER_TRANSPORT = 'amqplib'
@@ -51,27 +106,3 @@ BROKER_CONNECTION_MAX_RETRIES = 0
 
 # See: http://docs.celeryproject.org/en/latest/configuration.html#celery-result-backend
 CELERY_RESULT_BACKEND = 'amqp'
-
-STATICFILES_STORAGE = S3_CACHED_STORAGE
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
-STATIC_URL = S3_URL # S3_URL defined in common.py
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = [
-  '.herokuapp.com',
-  'beta.rocketlistings.com' 
-]
-
-# DOMAIN_NAME = "beta.rocketlistings.com"
-USE_X_FORWARDED_HOST = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-SOUTH_DATABASE_ADAPTERS = {
-    'default': 'south.db.postgresql_psycopg2'
-}
-
-############# MAILGUN CONFIG
-EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
-MAILGUN_ACCESS_KEY = 'key-9flqj538z-my-qcnpc74c2wit4vibl-3'
-MAILGUN_SERVER_NAME = 'rocketlistings.mailgun.org'

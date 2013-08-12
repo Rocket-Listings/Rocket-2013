@@ -1,4 +1,4 @@
-"""Production settings and globals."""
+"""Heroku production settings and globals."""
 
 from os import environ
 
@@ -17,6 +17,8 @@ DATABASE_POOL_ARGS = {
   'pool_size': 10,
   'recycle': 300
 }
+
+SITE_ID = 1
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#caches
 CACHES = memcacheify()
@@ -46,21 +48,44 @@ BROKER_URL = environ.get('RABBITMQ_URL') or environ.get('CLOUDAMQP_URL')
 CELERY_RESULT_BACKEND = 'amqp'
 
 # See: http://django-storages.readthedocs.org/en/latest/index.html
-# INSTALLED_APPS += (
-    # 'storages',
-# )
+INSTALLED_APPS += (
+    'storages',
+)
 
+# See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
+# AWS_CALLING_FORMAT = OrdinaryCallingFormat
+# See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
+AWS_ACCESS_KEY_ID = environ.get('AWS_KEY', '')
+AWS_SECRET_ACCESS_KEY = environ.get('AWS_SECRET', '')
+AWS_STORAGE_BUCKET_NAME = environ.get('AWS_STORAGE_BUCKET_NAME', '')
+
+AWS_AUTO_CREATE_BUCKET = True
+AWS_QUERYSTRING_AUTH = False
+AWS_S3_SECURE_URLS = False
+
+# AWS cache settings, don't change unless you know what you're doing:
+AWS_EXPIREY = 60 * 60 * 24 * 7
+AWS_HEADERS = {
+    'Cache-Control': 'max-age=%d, s-maxage=%d, must-revalidate, no-transform' % (AWS_EXPIREY, AWS_EXPIREY)
+}
+
+S3_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+S3_CACHED_STORAGE = 'rocket.settings.storage.LocalCachedS3BotoStorage'
+
+# See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
+DEFAULT_FILE_STORAGE = S3_STORAGE
 STATICFILES_STORAGE = S3_CACHED_STORAGE
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = S3_URL # S3_URL defined in common.py
+
+COMPRESS_OFFLINE = True
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = [
   '.herokuapp.com',
   'beta.rocketlistings.com' 
 ]
-
 
 DOMAIN_NAME = "beta.rocketlistings.com"
 USE_X_FORWARDED_HOST = True
@@ -69,9 +94,6 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SOUTH_DATABASE_ADAPTERS = {
     'default': 'south.db.postgresql_psycopg2'
 }
-
-# AWS_S3_SECURE_URLS = False
-
 
 ############# MAILGUN CONFIG
 EMAIL_BACKEND = 'django_mailgun.MailgunBackend'

@@ -32,8 +32,8 @@ THUMBNAIL_DEBUG = DEBUG
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS = (
 	('Teddy Knox', 'teddy@rocketlistings.com'),
-	('Brian Sirkia', 'brian@rocketlistings.com'),
-	('Nat Kelner', 'nat@rocketlistings.com'),
+	# ('Brian Sirkia', 'brian@rocketlistings.com'),
+	# ('Nat Kelner', 'nat@rocketlistings.com'),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
@@ -54,9 +54,6 @@ TIME_ZONE = 'America/New_York'
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#language-code
 LANGUAGE_CODE = 'en-us'
 
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#site-id
-SITE_ID = 2
-
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#use-i18n
 USE_I18N = True
 
@@ -66,32 +63,8 @@ USE_L10N = True
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-use-tls
 EMAIL_USE_TLS = True
 
-# See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
-# AWS_CALLING_FORMAT = OrdinaryCallingFormat
-# See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
-AWS_ACCESS_KEY_ID = environ.get('AWS_KEY', '')
-AWS_SECRET_ACCESS_KEY = environ.get('AWS_SECRET', '')
-AWS_STORAGE_BUCKET_NAME = environ.get('AWS_STORAGE_BUCKET_NAME', '')
-
-AWS_AUTO_CREATE_BUCKET = True
-AWS_QUERYSTRING_AUTH = False
-AWS_S3_SECURE_URLS = False
-
-# AWS cache settings, don't change unless you know what you're doing:
-AWS_EXPIREY = 60 * 60 * 24 * 7
-AWS_HEADERS = {
-    'Cache-Control': 'max-age=%d, s-maxage=%d, must-revalidate, no-transform' % (AWS_EXPIREY, AWS_EXPIREY)
-}
 AWS_S3_CUSTOM_DOMAIN = 'static.rocketlistings.com'
-S3_URL = 'http://' + AWS_S3_CUSTOM_DOMAIN
-
-S3_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-S3_CACHED_STORAGE = 'rocket.settings.storage.LocalCachedS3BotoStorage'
-
-# See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
-DEFAULT_FILE_STORAGE = S3_STORAGE
-
-# STATICFILES_STORAGE = S3_CACHED_STORAGE
+S3_URL = 'http://' + AWS_S3_CUSTOM_DOMAIN + '/'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
 MEDIA_ROOT = normpath(join(DJANGO_ROOT, 'media'))
@@ -200,9 +173,6 @@ THIRD_PARTY_APPS = (
 
 	# pagination template tags
 	'pagination',
-
-  # django-storages
-  'storages',
 )
 
 LOCAL_APPS = (
@@ -264,7 +234,7 @@ COMPRESS_ENABLED = True
 
 # COMPRESS_STORAGE = S3_CACHED_STORAGE
 
-COMPRESS_URL = STATIC_URL
+# COMPRESS_URL = STATIC_URL
 
 # See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_OFFLINE
 COMPRESS_OFFLINE = False
@@ -274,19 +244,6 @@ COMPRESS_OFFLINE = False
 COMPRESS_PRECOMPILERS = (
   ('text/less', 'lessc {infile} {outfile}'),
 )
-
-# See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_CSS_FILTERS
-COMPRESS_CSS_FILTERS = [
-  'compressor.filters.css_default.CssAbsoluteFilter',
-  'compressor.filters.template.TemplateFilter',
-  'compressor.filters.cssmin.CSSMinFilter',
-]
-
-# See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_JS_FILTERS
-COMPRESS_JS_FILTERS = [
-  # 'compressor.filters.template.TemplateFilter',
-  'compressor.filters.jsmin.JSMinFilter',
-]
 
 ############# USER ACCOUNTS CONFIG
 AUTH_PROFILE_MODULE = 'users.UserProfile'
