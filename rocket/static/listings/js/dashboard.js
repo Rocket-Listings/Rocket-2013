@@ -54,8 +54,6 @@ $(function() {
 		$(".messages-body").append(Mustache.render($("#new-message").html(), {'messages': data.messages}));
 		$(".buyers-body").prepend(Mustache.render($("#new-buyer").html(), {'buyers': data.buyers}));
 		$(".listings-body ul.list").prepend(Mustache.render($("#new-listing").html(), {'listings': data.listings}));
-		// Reset the filter button
-		$("a.dropdown-btn").text("Filter");
 	}
 
 	// Bind clicks and list init to the current items
@@ -110,7 +108,12 @@ $(function() {
 			valueNames: ['id', 'title', 'price', 'category', 'date', 'status']
 		};
 
+		if (window.listings) {
+			window.listings.filter();
+		}
+
 		window.listings = new List('dashboard-content', options);
+		window.currentFilterButton.click();
 	}
 
 	// Unbind click events from current items
@@ -387,94 +390,93 @@ $(function() {
 
 	// Listings filters
 	$('#filter-draft').click(function() {
-        window.listings.filter(function(item) {
-            if (item.values().status == "Draft") {
-                return true;
-            } else {
-                return false;
-            }
-        });
-        return false;
+    window.listings.filter(function(item) {
+        if (item.values().status == "Draft") {
+            return true;
+        } else {
+            return false;
+        }
     });
+    return false;
+  });
 
-    $('#filter-active').click(function() {
-        window.listings.filter(function(item) {
-            if (item.values().status == "Active") {
-                return true;
-            } else {
-                return false;
-            }
-        });
-        return false;
+  $('#filter-active').click(function() {
+    window.listings.filter(function(item) {
+        if (item.values().status == "Active") {
+            return true;
+        } else {
+            return false;
+        }
     });
+    return false;
+  });
 
-    $('#filter-deleted').click(function() {
-        window.listings.filter(function(item) {
-            if (item.values().status == "Deleted") {
-                return true;
-            } else {
-                return false;
-            }
-        });
-        return false;
+  $('#filter-deleted').click(function() {
+    window.listings.filter(function(item) {
+        if (item.values().status == "Deleted") {
+            return true;
+        } else {
+            return false;
+        }
     });
+    return false;
+  });
 
-    $('#filter-pending').click(function() {
-        window.listings.filter(function(item) {
-            if (item.values().status == "Pending") {
-                return true;
-            } else {
-                return false;
-            }
-        });
-        return false;
+  $('#filter-pending').click(function() {
+    window.listings.filter(function(item) {
+        if (item.values().status == "Pending") {
+            return true;
+        } else {
+            return false;
+        }
     });
+    return false;
+  });
 
-    $('#filter-sold').click(function() {
-        window.listings.filter(function(item) {
-            if (item.values().status == "Sold") {
-                return true;
-            } else {
-                return false;
-            }
-        });
-        return false;
+  $('#filter-sold').click(function() {
+    window.listings.filter(function(item) {
+        if (item.values().status == "Sold") {
+            return true;
+        } else {
+            return false;
+        }
     });
+    return false;
+  });
 
-    // All
-    $('#filter-not-deleted').click(function() {
-        window.listings.filter(function(item) {
-            if (item.values().status != "Deleted") {
-                return true;
-            } else {
-                return false;
-            }
-        });
-        return false;
+  // All
+  $('#filter-not-deleted').click(function() {
+    window.listings.filter(function(item) {
+        if (item.values().status != "Deleted") {
+            return true;
+        } else {
+            return false;
+        }
     });
+    return false;
+  });
 
-    // Make the filter dropdown more intuitive:
-    // - Change button text to filter type
-    // - Close (toggle) dropdown on click
-    // - Scroll to top of listings on filter
-    $('.sidebar-text').click(function() {
-    	window.currentFilterButton = $(this);
-    	$(".sidebar-button-wrapper").removeClass('selected');
-    	window.currentFilterButton.parent().addClass('selected');
-    	$(".listing").first().click();
-    	$(".listings-body").scrollTop(0);
+  // Make the filter dropdown more intuitive:
+  // - Change button text to filter type
+  // - Close (toggle) dropdown on click
+  // - Scroll to top of listings on filter
+  $('.sidebar-text').click(function() {
+  	window.currentFilterButton = $(this);
+  	$(".sidebar-button-wrapper").removeClass('selected');
+  	window.currentFilterButton.parent().addClass('selected');
+  	$(".listing").first().click();
+  	$(".listings-body").scrollTop(0);
 
-    });
+  });
 
-    // Convert links in the message text
-    $(".message-content").each(function() {
+  // Convert links in the message text
+  $(".message-content").each(function() {
 		$(this).html(linkToClickable($(this).text()));
 	});
 
-    // Init
-    bindEvents();
-    propogateUnreadMessages();
-    $("#filter-not-deleted").click();
+  // Init
+  bindEvents();
+  propogateUnreadMessages();
 });
 
 // Context for keyboard controls
@@ -483,4 +485,4 @@ var context = "l";
 // Globally declare List listings for access outside bindEvents() scope
 var listings;
 var searchHasFocus;
-var currentFilterButton;
+var currentFilterButton = $("#filter-not-deleted");
