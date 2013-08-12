@@ -66,6 +66,9 @@ $(function() {
 			listingRow.addClass('highlight');
 			$(".message, .buyer").addClass("hide");
 			$(".dashboard-delete a").attr('data-listing-id', id).removeClass("disabled");
+			if (listingRow.hasClass("deleted")) {
+				$(".dashboard-delete-permanent a").attr('data-listing-id', id).removeClass("disabled");
+			}
 			if (buyers.length) {
 				$(".buyers-body").addClass("border-right").removeClass("hide");
 				$(".no-messages").addClass("hide");
@@ -466,7 +469,14 @@ $(function() {
   	window.currentFilterButton.parent().addClass('selected');
   	$(".listing").first().click();
   	$(".listings-body").scrollTop(0);
-
+  	if (window.currentFilterButton.attr('id') != "filter-deleted") {
+  		$(".dashboard-delete").removeClass("hide");
+  		$(".dashboard-delete-permanent").addClass("hide");
+  	}
+  	else {
+  		$(".dashboard-delete").addClass("hide");
+  		$(".dashboard-delete-permanent").removeClass("hide");
+  	}
   });
 
   // Convert links in the message text
