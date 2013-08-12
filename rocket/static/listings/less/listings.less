@@ -4,10 +4,10 @@
     For instance, if our title was simply '.title', then maybe a '.title' rule from base.less might take into effect. */
 
 // DASHBOARD VARIABLES (WIDTH)
-@title: 43%;
+@title: 45%;
 @price: 10%;
-@category: 16%;
-@date: 21%;
+@category: 18%;
+@date: 17%;
 @status: 10%;
 
 .phone-hide {
@@ -38,14 +38,6 @@
   &::-webkit-scrollbar:horizontal {
     display: none;
   }
-  // &::-webkit-scrollbar-button {
-  //   width: 0;
-  //   height: 0;
-  //   display: none;
-  // }
-  // &::-webkit-scrollbar-corner {
-  //   background-color: rgba(0, 0, 0, 0);
-  // }
 }
 
 // DASHBOARD HEADER
@@ -107,7 +99,7 @@
         float: none;
         vertical-align: top;
         width: 250px;
-        padding-left: 20px;
+        padding-left: 36px;
     }
     .dashboard-refresh {
         display: inline-block;
@@ -143,14 +135,42 @@
     height: calc(~'100% - ' @footer-height);
     width: 156px;
     vertical-align: bottom;
-    border-right: 1px #DDDDDD solid;
     margin-top: 36px;
+    .sidebar-button-wrapper {
+      width: 100%;
+      cursor: pointer;
+      .sidebar-text {
+        display: inline-block;
+        font-size: 14px;
+        padding: 8px 16px 8px 17px;
+        margin-bottom: 1px;
+        margin-left: 5px;
+        width: calc(~'100% - 5px');
+        text-decoration: none;
+        color: #333;
+        &:hover,
+        &:active {
+          text-decoration: none;
+          color: #333;
+        }
+      }
+      &.selected {
+        border-left: #357EBD 5px solid;
+        .sidebar-text {
+          margin-left: 0 !important;
+          font-weight: bold;
+        }
+      }
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.1)
+      }
+    }
   }
   .listings-col {
     display: inline-block;
     height: 100%;
     width: calc(~'60% - 81px');
-    border-right: 1px #DDDDDD solid;
+    //border-right: 1px #DDDDDD solid;
     vertical-align: top;
     .listings-header {
       height: 36px;
@@ -168,7 +188,6 @@
           white-space: nowrap;
           &.d-title {
             width: @title;
-            //padding-left: 40px;
           }
           &.d-price { width: @price; }
           &.d-category { width: @category; }
@@ -190,7 +209,15 @@
       height: calc(~'100% - ' @footer-height);
       width: 100%;
       overflow: scroll;
-      background-color: rgba(0, 0, 0, 0.03);
+      background-color: rgba(0, 0, 0, 0.04);
+      position: relative;
+      .scroll-down-border-top {
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: rgba(0, 0, 0, .1)
+      }
       ul {
         height: 100%;
         margin-bottom: 0 !important;
@@ -206,7 +233,6 @@
             -webkit-box-sizing: border-box;
             -moz-box-sizing: border-box;
             border-left: #357EBD 4px solid;
-            background-color: lighten(#357EBD, 50%);
             .listings-cols-wrapper { margin-left: -4px; }
             text-rendering: optimizeLegibility;
             a { 
@@ -230,6 +256,7 @@
             span.status { color: darken(#FCF8E3, 45%); }
           }
           &.unread {
+            background-color: #FFFFFF !important;
             span, a { font-weight: bold; }
           }
           span {
@@ -272,7 +299,7 @@
         font-weight: 500;
         color: darken(#DDD, 20%);
         text-rendering: optimizeLegibility;
-        background-color: rgba(0, 0, 0, 0.03);
+        background-color: rgba(0, 0, 0, 0.04);
       }
     }
     .buyers-col {
