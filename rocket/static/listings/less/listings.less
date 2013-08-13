@@ -143,6 +143,7 @@
     width: 156px;
     vertical-align: bottom;
     margin-top: 36px;
+    position: relative;
     .sidebar-button-wrapper {
       width: 100%;
       cursor: pointer;
@@ -170,6 +171,20 @@
       }
       &:hover {
         background-color: rgba(0, 0, 0, 0.1)
+      }
+    }
+    .keyboard-shortcuts-text {
+      font-size: 12px;
+      float: none;
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      a {
+        color: #333;
+        &:hover {
+          color: #333;
+        }
       }
     }
   }
@@ -432,22 +447,64 @@
   }
 }
 
-.modal-box {
-  position: absolute;
+// Keys Modal
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, .4) !important;
+}
+.modal {
+  top: calc(~'50% - 300px');
+  height: 400px;
+}
+.modal-dialog {
   height: 100%;
-  width: 100%;
-  background-color: rgba(0, 0, 0, .5);
-  .keyboard-shortcuts-model {
-    position: absolute;
-    height: 500px;
-    width: 700px;
-    //border-radius: 5px;
-    background-color: #FFF;
-    top: calc(~'50% - 250px');
-    left: calc(~'50% - 350px');
-    box-shadow: 0 0 5px #EEE;
+}
+.modal-content {
+  border-radius: 0 !important;
+  -webkit-border-radius: 0 !important;
+  height: 100%;
+  table {
+    padding: 8px;
+    &.keys {
+      width: 50%;
+    }
+    &.pane-1 {
+      float: left;
+    }
+    &.pane-2 {
+      float: right;
+    }
+    td {
+      padding: 4px;
+      line-height: 20px;
+      vertical-align: top;
+      span {
+        display: inline-block;
+        background-color: #333;
+        color: #FFF;
+        border-radius: 3px;
+        min-width: 21px;
+        line-height: 1;
+        text-align: center;
+        padding: 5px 6px;
+        font-size: 11px;
+        margin-left: 2px;
+        margin-right: 2px;
+        &.char {
+          text-transform: capitalize;
+        }
+        &.arrow {
+          font-family: sans-serif;
+        }
+      }
+      &:first-child {
+        text-align: right;
+        min-width: 75px;
+        color: #999;
+      }
+    }
   }
 }
+
 
 #listing-detail {
     overflow-x: hidden;

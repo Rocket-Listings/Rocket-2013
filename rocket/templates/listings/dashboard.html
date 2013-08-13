@@ -84,24 +84,67 @@ html, body {
 		</div>
 	</div>
 
-	{% comment %}
-	<div class="modal-box">
-		<div class="keyboard-shortcuts-model">
-			<div class="keyboard-pane">
-				<code>j</code> / <code><span class="glyphicon glyphicon-arrow-down"></span></code><br>
-				<code>k</code> / <code><span class="glyphicon glyphicon-arrow-up"></span></code> select previous listing or buyer<br>
-				<code>b</code> / <code><span class="glyphicon glyphicon-arrow-right"></span></code> switch to buyers pane<br>
-				<code>l</code> / <code><span class="glyphicon glyphicon-arrow-left"></span></code> switch to listings pane<br>
-				<code>/</code> search listings<br>
-				<code>m</code> send a message<br>
-				<code>n</code> create a new listing<br>
-				<code>r</code> refresh the dashboard<br>
-			</div>
-			<div class="keyboard-pane">
-			</div>
-		</div>
-	</div>
-	{% endcomment %}
+	
+<div id="keyboard-shortcuts-modal" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Keyboard Shortcuts</h4>
+      </div>
+      <div class="modal-body">
+        <table class="keys pane-1">
+        	<tr>
+        		<td><span class="arrow">&darr;</span>/<span class="char">j</span></td>
+        		<td>Select the next item</td>
+        	</tr>
+        	<tr>
+        		<td><span class="arrow">&uarr;</span>/<span class="char">k</span></td>
+        		<td>Select the previous item</td>
+        	</tr>
+        	<tr>
+        		<td><span class="arrow">&rarr;</span>/<span class="char">b</span></td>
+        		<td>Toggle buyers context</td>
+        	</tr>
+        	<tr>
+        		<td><span class="arrow">&larr;</span>/<span class="char">l</span></td>
+        		<td>Toggle listings context</td>
+        	</tr>
+        	<tr>
+        		<td><span>Enter</span></td>
+        		<td>Select the first listing from search</td>
+        	</tr>
+        	<tr>
+        		<td><span>Esc</span></td>
+        		<td>Unfocus the search or new message field</td>
+        	</tr>
+        </table>
+        <table class="keys pane-2">
+        	<tr>
+        		<td><span class="char">n</span></td>
+        		<td>Create new listing</td>
+        	</tr>
+        	<tr>
+        		<td><span class="char">/</span></td>
+        		<td>Search listings</td>
+        	</tr>
+        	<tr>
+        		<td><span class="char">m</span></td>
+        		<td>Focus new message field</td>
+        	</tr>
+        	<tr>
+        		<td><span class="char">r</span></td>
+        		<td>Refresh the dashboard</td>
+        	</tr>
+        	<tr>
+        		<td><span class="char">?</span></td>
+        		<td>Toggle this dialog</td>
+        	</tr>
+        </table>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 </div>
 {% endblock %}
