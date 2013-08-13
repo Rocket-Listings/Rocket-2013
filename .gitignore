@@ -18,7 +18,13 @@ whoosh_index
 tmp
 .DS_Store
 *.sublime-*
+
+assets/**/js
+assets/**/img
+assets/**/fonts
+assets/**/less
+assets/**/vendorcss
+
 css
 *.db
-assets
-# !manifest.json
+!manifest.json
