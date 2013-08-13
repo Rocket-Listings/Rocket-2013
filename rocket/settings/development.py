@@ -56,7 +56,7 @@ MIDDLEWARE_CLASSES += (
 
 DEBUG_TOOLBAR_CONFIG = { 'INTERCEPT_REDIRECTS': False }
 
-STATICFILES_STORAGE = 'rocket.settings.storage.S3PipelineStorage'
+# STATICFILES_STORAGE = 'rocket.settings.storage.S3PipelineStorage'
 
 # See: http://docs.celeryproject.org/en/latest/configuration.html#broker-transport
 # BROKER_TRANSPORT = 'amqplib'
