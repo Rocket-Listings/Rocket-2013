@@ -256,7 +256,7 @@ CELERY_TASK_RESULT_EXPIRES = timedelta(minutes=30)
 # See: http://celery.github.com/celery/django/
 setup_loader()
 
-CELERY_IMPORTS = ('mail.tasks',)
+CELERY_IMPORTS = ('mail.tasks', 'listings.tasks',)
 
 ############# COMPRESS CONFIG
 # See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_ENABLED
