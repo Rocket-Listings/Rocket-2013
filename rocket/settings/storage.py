@@ -77,7 +77,7 @@ class StaticCachedS3BotoStorage(CachedFilesMixin, StaticFilesStorage):
         self.remote_storage._save(name, content)
         return name
 
-class CompressCachedS3BotoStorage(CachedFilesMixin, StaticFilesStorage):
+class CompressCachedS3BotoStorage(StaticFilesStorage):
     """
     Backend that makes use of django.contrib.staticfiles' caching mechanism both locally and remotely.
     """

@@ -64,17 +64,17 @@ EMAIL_USE_TLS = True
 # AWS_S3_CUSTOM_DOMAIN = 'static.rocketlistings.com'
 # S3_URL = 'http://static.rocketlistings.com/'
 
-# # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
-# MEDIA_ROOT = normpath(join(DJANGO_ROOT, 'media'))
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
+MEDIA_ROOT = normpath(join(DJANGO_ROOT, 'media'))
 
-# # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-url
-# MEDIA_URL = '/media/'
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#media-url
+MEDIA_URL = '/media/'
 
-# # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
-# STATIC_ROOT = normpath(join(SITE_ROOT, 'assets'))
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
+STATIC_ROOT = normpath(join(SITE_ROOT, 'assets'))
 
-# # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
-# STATIC_URL = '/static/'
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
+STATIC_URL = '/static/'
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = (

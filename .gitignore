@@ -21,3 +21,4 @@ tmp
 css
 *.db
 assets
+# !manifest.json
