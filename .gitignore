@@ -18,6 +18,6 @@ whoosh_index
 tmp
 .DS_Store
 *.sublime-*
-css
+/**/less/*.css
 *.db
 assets
