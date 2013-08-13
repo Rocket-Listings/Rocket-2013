@@ -102,7 +102,7 @@ def update(request, listing_id=None): # not directly addressed by a route, allow
 			form.instance.order = form.cleaned_data['ORDER']
 			form.instance.save()
 
-		request.user.get_profile().subtract_credit();
+		request.user.get_profile().subtract_credit()
 		return redirect(listing)
 	else:
 		print listing_form.errors

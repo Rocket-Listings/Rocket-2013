@@ -1,4 +1,4 @@
-{% load compress %}
+{% load compressed %}
 {% load static from staticfiles %}
 
 <!DOCTYPE html>
@@ -9,17 +9,10 @@
     <title>{% block pagetitle %}rocket{% endblock %}</title>
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'rocket/img/favicon.ico' %}">
     <link href= 'http://fonts.googleapis.com/css?family=Radley:400,400italic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="{% static 'rocket/vendorcss/bootstrap-glyphicons.css' %}">    
-    {# {% compress css %} #}
-    <link rel="stylesheet" type="text/css" href="{% static 'rocket/vendorcss/bootstrap.min.css' %}">
-    {# {% endcompress %} #}
-    {% block css %}
-    {# {% compress css %} #}
-    {# <link rel="stylesheet" type="text/less" media="all" href="{% static 'rocket/less/base.less' %}"> #}
-    {# {% endcompress %} #}
-    {% endblock%}
-    {# for ?debug mode #}
-    {# // <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/1.4.1/less.min.js"></script> #}
+    {% compressed_css 'bootstrap_local' %}
+    {% block css %}{% compressed_css 'base' %}{% endblock %}
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/1.4.1/less.min.js"></script>
   </head>
   <body>
     <div id="fb-root"></div>
@@ -37,29 +30,8 @@
     <div class="scripts hide">
       {# // <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> #}
       {# // <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script> #}
-      {# for offline development #} 
-      {# {% compress js %} #}
-      <script src="{% static 'rocket/js/jquery-1.9.0.js' %}"></script>
-      <script src="{% static 'rocket/js/bootstrap/bootstrap.min.js' %}"></script>
-      <script src="{% static 'rocket/js/global.js' %}"></script>
-      {# {% endcompress %} #}
+      {% compressed_js 'jquery_bootstrap_local' %}
       {% block js %}{% endblock %}
-
-      {# Google Analytics #}
-      {% comment %}
-      <script type="text/javascript">
-        var _gaq = _gaq || [];
-        var pluginUrl = '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
-        _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
-        _gaq.push(['_setAccount', 'UA-38799685-1']);
-        _gaq.push(['_trackPageview']);
-        (function() {
-          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
-      </script>
-      {% endcomment %}
     </div>
   </body>
 </html>
