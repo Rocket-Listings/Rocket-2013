@@ -75,12 +75,13 @@
         float: none;
         vertical-align: top;
         width: 300px;
-        padding-left: 36px;
+        padding-left: 38px;
         input:hover {
           border: darken(#DDD, 20%) 1px solid;
         }
         input:active, input:focus {
-          border: #66AfE9 1px solid;
+          //border: #66AfE9 1px solid;
+          border: #357EBD 1px solid;
         }
     }
     .dashboard-refresh, .dashboard-delete {
@@ -110,6 +111,12 @@
       padding-right: 20px;
       .btn {
         height: 38px;
+        background-color: #EEE;
+        border: 1px solid #357EBD;
+        color: #357EBD;
+        &:hover {
+          background-color: darken(#EEE, 2%);
+        }
       }
     }
     .dashboard-create {
@@ -257,7 +264,7 @@
           }
           &.pending {
             background-color: #FCF8E3;
-            span.status { color: darken(#FCF8E3, 45%); }
+            span.status { color: #E8CD02; }
           }
           &.unread {
             background-color: #FFFFFF !important;

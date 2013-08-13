@@ -338,11 +338,9 @@ $(function() {
 				url: '/listings/' + id + '/delete',
 				method: 'GET',
 				success: function () {
-					$("li[data-listing-id='" + id +"']").remove();
-					$(".listing-" + id).remove();
-					unbindEvents(); // To prevent overlap
-					bindEvents(); // Bind all items (including new)
-					$(".listings-body li").first().click();
+					$(".buyer[data-listing-id='" + id + "'], .message[data-listing-id='" + id + "']").remove();
+					window.listings.remove('id', id);
+					window.currentFilterButton.click();
 					$(".listings-body").scrollTop(0);
 				}
 			});
