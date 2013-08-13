@@ -64,7 +64,7 @@ USE_L10N = True
 EMAIL_USE_TLS = True
 
 AWS_S3_CUSTOM_DOMAIN = 'static.rocketlistings.com'
-S3_URL = 'http://' + AWS_S3_CUSTOM_DOMAIN + '/'
+S3_URL = 'http://static.rocketlistings.com/'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
 MEDIA_ROOT = normpath(join(DJANGO_ROOT, 'media'))
