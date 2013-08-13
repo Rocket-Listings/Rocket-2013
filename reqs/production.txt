@@ -9,6 +9,5 @@ django-heroku-memcacheify==0.4
 dj_database_url
 
 gevent==0.13.8
-jsmin==2.0.3
 newrelic
 psycopg2==2.5

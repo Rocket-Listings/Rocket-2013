@@ -35,13 +35,12 @@ from django.contrib.staticfiles.utils import check_settings, matches_patterns
 #     def __init__(self, *args, **kwargs):
 #         kwargs["location"] = "static"
 #         super(S3StaticStorage, self).__init__(*args, **kwargs)
-class ProductionStaticCachedS3BotoStorage(CachedFilesMixin, S3BotoStorage):
-    """
-    Backend that makes use of django.contrib.staticfiles' caching mechanism both locally and remotely.
-    """
-    def __init__(self, *args, **kwargs):
-        super(ProductionStaticCachedS3BotoStorage, self).__init__(*args, **kwargs)
-        kwargs["location"] = "assets"
+
+# class ProductionStaticCachedS3BotoStorage(CachedFilesMixin, S3BotoStorage):
+#     """
+#     Backend that makes use of django.contrib.staticfiles' caching mechanism both locally and remotely.
+#     """
+#     pass
 
 class StaticCachedS3BotoStorage(CachedFilesMixin, StaticFilesStorage):
     """
@@ -77,16 +76,24 @@ class StaticCachedS3BotoStorage(CachedFilesMixin, StaticFilesStorage):
         self.remote_storage._save(name, content)
         return name
 
-class CompressCachedS3BotoStorage(StaticFilesStorage):
+class CompressCachedS3BotoStorage(S3BotoStorage):
     """
     Backend that makes use of django.contrib.staticfiles' caching mechanism both locally and remotely.
     """
     def __init__(self, *args, **kwargs):
-        super(CompressCachedS3BotoStorage, self).__init__(*args, **kwargs)
         kwargs["location"] = "assets"
-        self.remote_storage = S3BotoStorage(*args, **kwargs)
+        super(CompressCachedS3BotoStorage, self).__init__(*args, **kwargs)
+        self.local_storage = StaticFilesStorage(*args, **kwargs)
+
+    def get_available_name(self, name):
+        """
+        Deletes the given file if it exists.
+        """
+        if self.local_storage.exists(name):
+            self.local_storage.delete(name)
+        return super(CompressCachedS3BotoStorage, self).get_available_name(name)
 
     def _save(self, name, content):
         name = super(CompressCachedS3BotoStorage, self)._save(name, content)
-        self.remote_storage._save(name, content)
+        self.local_storage._save(name, content)
         return name

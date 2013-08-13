@@ -65,8 +65,9 @@ STATIC_URL = S3_URL + 'assets/'
 # COMPRESS_ROOT = STATIC_ROOT
 
 COMPRESS_OFFLINE = True
-# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
 STATICFILES_STORAGE = 'rocket.settings.storage.StaticCachedS3BotoStorage'
+# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticCachedS3BotoStorage'
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 # COMPRESS_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 COMPRESS_STORAGE = 'rocket.settings.storage.CompressCachedS3BotoStorage'
 COMPRESS_OUTPUT_DIR = 'compress'

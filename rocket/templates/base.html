@@ -7,18 +7,16 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block pagetitle %}rocket{% endblock %}</title>
-
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'rocket/img/favicon.ico' %}">
-    <link href='http://fonts.googleapis.com/css?family=Radley:400,400italic' rel='stylesheet' type='text/css'>
-    
-    {% compress css %}
+    <link href= 'http://fonts.googleapis.com/css?family=Radley:400,400italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{% static 'rocket/vendorcss/bootstrap-glyphicons.css' %}">    
+    {# {% compress css %} #}
     <link rel="stylesheet" type="text/css" href="{% static 'rocket/vendorcss/bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'rocket/vendorcss/bootstrap-glyphicons.css' %}">
-    {% endcompress %}
+    {# {% endcompress %} #}
     {% block css %}
-    {% compress css %}
-    <link rel="stylesheet" type="text/less" media="all" href="{% static 'rocket/less/base.less' %}">
-    {% endcompress %}
+    {# {% compress css %} #}
+    {# <link rel="stylesheet" type="text/less" media="all" href="{% static 'rocket/less/base.less' %}"> #}
+    {# {% endcompress %} #}
     {% endblock%}
     {# for ?debug mode #}
     {# // <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/1.4.1/less.min.js"></script> #}
@@ -40,11 +38,11 @@
       {# // <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> #}
       {# // <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script> #}
       {# for offline development #} 
-      {% compress js %}
+      {# {% compress js %} #}
       <script src="{% static 'rocket/js/jquery-1.9.0.js' %}"></script>
       <script src="{% static 'rocket/js/bootstrap/bootstrap.min.js' %}"></script>
       <script src="{% static 'rocket/js/global.js' %}"></script>
-      {% endcompress %}
+      {# {% endcompress %} #}
       {% block js %}{% endblock %}
 
       {# Google Analytics #}
