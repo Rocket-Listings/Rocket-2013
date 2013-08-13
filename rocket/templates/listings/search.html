@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static from staticfiles %}
 {% load humanize %}
-
+{% load compressed %}
 
 {% block js %}
   
@@ -11,9 +11,7 @@
 {% endblock %}
 
 {% block css %}
-
-<link type="text/less" media="all" rel="stylesheet" href="{% static 'listings/less/listings.less' %}"/>
-
+  {% compressed_css 'listings_base' %}
 {% endblock %}
 
 {% block content %}

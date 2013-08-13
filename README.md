@@ -19,8 +19,6 @@ As you can see below, I configured heroku to set `DJANGO_SETTINGS_MODULE` to `ro
 
 To use the staging settings, manually set `DJANGO_SETTINGS_MODULE` to `rocket.settings.staging`.
 
-The staging settings are required because a settings conflict between django-compressor, django-staticfiles, and django-storages. When staticfiles and storages is configured right, it serves the files locally when `DEBUG=True` and also pushes them to S3 when `./manage.py collectstatic` is run. Compressor then fucks everything up by looking for its js/less files on S3 and not locally. Later on I might be able to write a custom storage backend to get around the problem, but for now we'll have to set an env var to switch to a different settings file before deploying static assets.
-
 Common.py should only hold indisputable settings that are not overriden in any of the other files. At this point it seems that I'd rather abandon DRY here in favor of DKY (don't kill yourself), because having sensible defaults in common.py leads to madness. It was crazy for a while where `debug = False` would be in common.py and then overriden in development.py. And that kind of thing would happen like 10 times, with both production.py and development.py overriding settings. It seems the easier solution is to have those settings set in their respective files, and leave common.py to the less controversial settings.
 
 The only settings that should be set according to environment variables are ones that store __sensitive__ credentials (e.g. S3, mailgun, twitter keys). Sensitive here means that they relate to our production setup. For example, the keys to our developer twitter app are not sensitive. Those to our production app are. So I don't mind hardcoding the twitter developer app keys into the settings files, but I'll set the production keys as environment variables.
@@ -29,9 +27,9 @@ I'm willing to risk hardcoding arbitrary insensitive data (such as our AWS bucke
 
 ### Heroku Deploy Notes
 
-Branching from master into a temporary branch `staging` is a good idea. Remember to comment out less.js from `base.html`.
+Branching from master into a temporary branch `staging` is a good idea. Remember to comment out less.js from `base.html` and switch over to the CDN bootstrap and jquery.
 
-Static files deployment to S3 is done locally. The S3 connection is configured with environment variables.
+Static files deployment to S3 is done locally. The S3 connection is configured with environment variables. All of the following are required I think.
 
     export AWS_KEY=?????
     export AWS_SECRET=?????
@@ -40,18 +38,9 @@ Static files deployment to S3 is done locally. The S3 connection is configured w
 
 Don't forget to run `source ~/.bash_profile` or whatever.
 
-To collect and compress the staticfiles and push them to S3 run
+To deploy
 
-    ./manage.py collectstatic --noinput
-    ./manage.py compress --force
-
-To push to heroku's master branch from a local staging branch
-
-    git push heroku staging:master
-
-To migrate stuff 
-    
-    heroku run ./manage.py migrate --auto
+    fab deploy
 
 Heroku config vars
 

@@ -123,7 +123,7 @@ TEMPLATE_DIRS = (
 MIDDLEWARE_CLASSES = (
     # Use GZip compression to reduce bandwidth.
     'django.middleware.gzip.GZipMiddleware',
-
+    'pipeline.middleware.MinifyHTMLMiddleware',
     # Default Django middleware.
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -256,6 +256,14 @@ PIPELINE_CSS = {
         'output_filename': 'css/static_pages_base.css',
         'variant': 'datauri',
     },
+    'users_base': {
+        'source_filenames': (
+            'users/less/users.less',
+            'rocket/vendorcss/jquery.tablesorter.pager.css'
+        ),
+        'output_filename': 'css/user_base.css',
+        'variant': 'datauri',
+    },
 }
 
 PIPELINE_JS = {
@@ -278,9 +286,8 @@ AWS_S3_CUSTOM_DOMAIN = 'static.rocketlistings.com'
 AWS_AUTO_CREATE_BUCKET = True
 AWS_QUERYSTRING_AUTH = False
 AWS_S3_SECURE_URLS = False
-AWS_EXPIREY = 60 * 60 * 24 * 7
 AWS_HEADERS = {
-        'Cache-Control': 'max-age=%d, s-maxage=%d, must-revalidate, no-transform' % (AWS_EXPIREY, AWS_EXPIREY)
+        'Cache-Control': 'max-age=300, s-maxage=900, public, no-transform'
 }
 # backend storages.backends.s3boto.S3BotoStorage
 # STATIC_URL = S3_URL + 'assets/'

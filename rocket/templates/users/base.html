@@ -1,14 +1,9 @@
 {% extends 'base.html' %}
 {% load static from staticfiles %}
-
+{% load compressed %}
 
 {% block css %}
-
-
-<link rel="stylesheet" type="text/less" media="all" href="{% static 'users/vendorcss/slider.css' %}"/>
-<link rel="stylesheet" type="text/less" media="all" href="{% static 'users/less/users.less' %}"/>
-<link type="text/css" rel="stylesheet" href="{% static 'rocket/vendorcss/jquery.tablesorter.pager.css' %}"/>
-
+{% compressed_css 'users_base' %}
 {% endblock %}
 
 {% block js %}

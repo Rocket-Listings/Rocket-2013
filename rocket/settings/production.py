@@ -57,7 +57,7 @@ INSTALLED_APPS += (
 )
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-STATICFILES_STORAGE = 'rocket.settings.storage.S3NonPackagingPipelineCachedStorage'
+STATICFILES_STORAGE = 'rocket.settings.storage.NonPackagingS3PipelineStorage'
 
 # STATIC_URL = S3_URL + 'assets/'
 # STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'

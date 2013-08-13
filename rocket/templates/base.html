@@ -9,10 +9,17 @@
     <title>{% block pagetitle %}rocket{% endblock %}</title>
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'rocket/img/favicon.ico' %}">
     <link href= 'http://fonts.googleapis.com/css?family=Radley:400,400italic' rel='stylesheet' type='text/css'>
-    {% compressed_css 'bootstrap_local' %}
+
+    {# production #}
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'rocket/vendorcss/bootstrap-glyphicons.css' %}" rel="stylesheet">
+
+    {# development #}
+    {# {% compressed_css 'bootstrap_local' %} #}
+
     {% block css %}{% compressed_css 'base' %}{% endblock %}
 
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/1.4.1/less.min.js"></script>
+    {# // <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/1.4.1/less.min.js"></script> #}
   </head>
   <body>
     <div id="fb-root"></div>
@@ -28,9 +35,13 @@
     {% endblock %}
     {# CDN JS #}
     <div class="scripts hide">
-      {# // <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> #}
-      {# // <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script> #}
-      {% compressed_js 'jquery_bootstrap_local' %}
+
+      {# production #}
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+      <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
+
+      {# development #}
+      {# {% compressed_js 'jquery_bootstrap_local' %} #}
       {% block js %}{% endblock %}
     </div>
   </body>
