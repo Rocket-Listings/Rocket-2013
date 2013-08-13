@@ -1,0 +1,11 @@
+<p>{{ from_name }} sent you a new message about {% if toBuyer %}the{% else %}your{% endif %} listing {{ listing_title }}:</p>
+
+<p>{{ content }}</p>
+
+<p style="font-size:small;-webkit-text-size-adjust:none;color:333;">&mdash;<br>
+{% if toBuyer %}
+You can reply to this email directly.
+{% else %}
+You can reply to this email directly or <a href="http://www.rocketlistings.com/listings/dashboard">view it on Rocket Listings</a>.
+{% endif %}
+</p>

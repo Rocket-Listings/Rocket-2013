@@ -4,7 +4,7 @@ import json
 from django.contrib.auth.models import User
 from django.conf import settings
 from datetime import datetime, timedelta
-from listings.forms import ListingForm, SpecForm, ListingPhotoFormSet
+from listings.forms import ListingForm, SpecForm, ListingPhotoFormSet, MessageForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET, require_POST 
 from django.shortcuts import render, redirect, get_object_or_404
@@ -24,6 +24,7 @@ import haystack
 from users.decorators import first_visit, view_count
 from django.template.response import TemplateResponse
 from django.contrib.humanize.templatetags.humanize import naturaltime
+from mail.tasks import send_message_task
 from users.models import UserProfile, UserComment, ProfileFB 
 from django.db.models import Avg
 
@@ -33,8 +34,16 @@ def dashboard(request):
 	listings = Listing.objects.filter(user=request.user).order_by('-pub_date').all() # later on we can change how many are returned
 	buyers = reduce(combine, map(lambda l: list(l.buyer_set.all()), listings), [])
 	messages = reduce(combine, map(lambda b: list(b.message_set.all()), buyers), [])
-	return TemplateResponse(request, 'listings/dashboard.html',  {'listings': listings, 'buyers': buyers, 'buyer_messages':messages})
-
+	latest_ids = map(lambda set: map(lambda i: i.id, set), [listings, buyers, messages])
+	for i, val in enumerate(latest_ids):
+		try:
+			latest_ids[i] = max(val)
+		except ValueError:
+			latest_ids[i] = 0
+	return TemplateResponse(request, 'listings/dashboard.html',  {'listings': listings, 
+																	'buyers': buyers, 
+																	'buyer_messages':messages, 
+																	'latest': latest_ids})
 
 # @login_required
 # def user_listings(request, username=None):
@@ -55,7 +64,7 @@ def create(request, pane='edit'):
 		defaults = {
 			'location': profile.location, 
 			'category': profile.default_category, 
-			'listing_type': profile.default_listing_type,
+			'listing_type': profile.seller_type,
 		}
 		cxt = {
 			'form': ListingForm(initial=defaults),
@@ -164,14 +173,15 @@ def embed(request, listing_id):
 	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos)
 	return TemplateResponse(request, 'listings/cl_embed.html', {'listing':listing, 'photos':photos})
 
-@login_required
 def delete(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
 	if request.user == listing.user:
 		# remove listing from haystack index
 		haystack.connections['default'].get_unified_index().get_index(Listing).remove_object(listing)
 		listing.delete()
-		return redirect('listings.views.dashboard')
+		return HttpResponse(200)
+	else:
+		return HttpResponse(403)
 
 @require_GET
 def search(request):
@@ -198,18 +208,43 @@ def search_ajax(request):
 
 # import_uploader = AjaxFileUploader(backend=upload_backend)
 
+### API ###
+@require_GET
 def status(request, listing_id):
 	listing = get_object_or_404(Listing, id=listing_id)
 	return HttpResponse(listing.status)
 
+@require_GET
+def update_status(request, listing_id):
+	listing = get_object_or_404(Listing, id=listing_id)
+	if request.user == listing.user:
+		new_status = request.GET.get('status', '')
+		status_dict = {'Draft': 1, 'Pending': 2, 'Active': 3, 'Sold': 4, 'Deleted': 5}
+		if new_status in status_dict:
+			listing.status_id = status_dict[new_status]
+			listing.save()
+			response_dict = {'id': listing.id, 'status': listing.status.name}
+			return HttpResponse(simplejson.dumps({'listing': response_dict, 'status': 'success'}), content_type='application/json')
+		else:
+			return HttpResponse(simplejson.dumps({'listing': listing.id, 'status': 'status error'}), content_type='application/json')
+	else:
+		return HttpResponse(403)
+
+
+@require_GET
 def dashboard_data(request):
 	user = request.user
 	ids = map(lambda i: int(request.GET.get(i, '0')), ['listing', 'buyer', 'message'])
 
 	listings = Listing.objects.filter(user=user).order_by('-pub_date').all()
-	buyers = reduce(__add__, map(lambda l: list(l.buyer_set.all()), listings), [])
-	messages = reduce(__add__, map(lambda b: list(b.message_set.all()), buyers), [])
-	latest_ids = map(lambda set: max(map(lambda i: i.id, set)), [listings, buyers, messages])
+	buyers = reduce(combine, map(lambda l: list(l.buyer_set.all()), listings), [])
+	messages = reduce(combine, map(lambda b: list(b.message_set.all()), buyers), [])
+	latest_ids = map(lambda set: map(lambda i: i.id, set), [listings, buyers, messages])
+	for i, val in enumerate(latest_ids):
+		try:
+			latest_ids[i] = max(val)
+		except ValueError:
+			latest_ids[i] = 0
 
 	listings_data = map(lambda l: {
 		'title': l.title, 
@@ -217,20 +252,64 @@ def dashboard_data(request):
 		'id': l.id, 
 		'price': l.price, 
 		'category': l.category.name, 
-		'status': l.status.name, 
-		'date': naturaltime(l.pub_date)}, listings.filter(id__gt=ids[0]))
+		'status': l.status.name,
+		'status_lower': l.status.name.lower(),
+		'sort_date': l.pub_date.strftime("%m/%d/%y %I:%M %p"),
+		'natural_date': naturaltime(l.pub_date)}, listings.filter(id__gt=ids[0]))
 	buyers_data = map(lambda b: {
-		'listing-id': b.listing.id, 
-		'buyer-id': b.id, 
+		'listing_id': b.listing.id, 
+		'buyer_id': b.id, 
 		'max_offer': b.curMaxOffer, 
 		'name': b.name, 
-		'last_message_date': naturaltime(b.last_message().date)}, [b for b in buyers if b.id > ids[1]])
+		'last_message_date': naturaltime(b.last_message().date)}, [b for b in reversed(buyers) if b.id > ids[1]])
 	messages_data = map(lambda m: {
 		'isSeller': m.isSeller,
-		'buyer-id': m.buyer.id,
-		'buyer-name': m.buyer.name,
+		'buyer_id': m.buyer.id,
+		'buyer_name': m.buyer.name,
+		'seller_name': m.listing.user.get_profile().get_display_name(),
+		'listing_id': m.listing.id,
+		'message_id': m.id,
 		'content': m.content,
 		'date': naturaltime(m.date)}, [m for m in messages if m.id > ids[2]])
 
 	json = {'listings': listings_data, 'buyers': buyers_data, 'messages': messages_data, 'latest': latest_ids}
 	return HttpResponse(simplejson.dumps(json), content_type="application/json")
+
+@require_POST
+def dashboard_message(request):
+	if request.POST.get("content", ""):
+		message_form = MessageForm(request.POST)
+		if message_form.is_valid():
+			message = message_form.save(commit=False)
+			message.isSeller = True
+			message.save()
+			send_message_task.delay(message.id)
+			response_data = { 'listing_id': message.listing.id,
+							  'isSeller': message.isSeller,
+							  'seller_name': message.listing.user.get_profile().get_display_name(),
+							  'buyer_id': message.buyer.id,
+							  'buyer_name': message.buyer.name,
+							  'content': message.content,
+							  'message_id': message.id,
+							  'date': naturaltime(message.date) }
+			return HttpResponse(simplejson.dumps({'messages': response_data, 'status': 'success'}), content_type="application/json")
+		else:
+			return HttpResponse(simplejson.dumps({'errors': message_form.errors, 'status': 'err_validation'}), content_type="application/json")
+	else:
+		return HttpResponse(simplejson.dumps({'errors': 'Message content is empty.', 'status': 'err_empty'}))
+
+@require_GET
+@login_required
+def message_seen(request):
+	message = get_object_or_404(Message, id=request.GET.get("message_id", ""))
+	if request.user == message.listing.user:
+		message.seen = True
+		message.save()
+		msg_dict = {'message_id': message.id,
+					'buyer_id': message.buyer.id,
+					'listing_id': message.listing.id,
+					'listing_all_read': all(map(lambda m: m.seen, message.listing.message_set.all()))}
+		return HttpResponse(simplejson.dumps({'message_data': msg_dict, 'status': 'success'}), content_type="application/json")
+	else:
+		return HttpResponse(simplejson.dumps({'status': 'Error: This action is forbidden.'}), content_type="application/json")
+

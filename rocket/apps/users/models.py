@@ -8,17 +8,11 @@ from django.db.models.signals import post_save
 
 # User Profile
 class UserProfile(models.Model):
-	SELLER_TYPE_CHOICES = (
-		('P', 'Person'),
-		('B', 'Business')
-	)
-
 	user = models.OneToOneField(User)
 	name = models.CharField(max_length=100, blank=True)
 	location = models.CharField(max_length=255, blank=True)
 	default_category = models.ForeignKey(ListingCategory, null=True, blank=True)
-	default_listing_type = models.CharField(max_length=1, choices=(('O', 'Owner'),('D', 'Dealer')), null=False, blank=False)
-	default_seller_type = models.CharField(max_length=1, choices=SELLER_TYPE_CHOICES, default='P')
+	seller_type = models.CharField(max_length=1, choices=(('O', 'Owner'),('D', 'Dealer')), null=False, blank=False)
 	phone = models.CharField(max_length=50, blank=True)
 	bio = models.TextField(blank=True)
 	propic = models.CharField(max_length=200, blank=True)
@@ -34,20 +28,26 @@ class UserProfile(models.Model):
 	def get_absolute_url(self):
 		return reverse('users.views.profile', args=[self.user])
 
+	def get_display_name(self):
+		if self.name:
+			return self.name
+		return self.user.username
+
 	def __unicode__(self):
 		return self.user.username
 
-	def add_credit(self,add=1):
+	def add_credit(self, add=1):
 		self.listing_credits += add
 		self.total_credits += add
 		self.save()
 
-	def subtract_credit(self,subtract=1):
+	def subtract_credit(self, subtract=1):
 		self.listing_credits -= subtract
 		self.save()
 
 	def filled_out(self):
-		if self.name != "" and self.location != "" and self.phone != "" and self.bio != "" and self.propic != "" and self.default_listing_type != "":
+		required = [self.name, self.location, self.phone, self.bio, self.propic, self.seller_type]
+		if len([i for i in required if i == ""]) == 0:
 			return True
 		else:
 			return False

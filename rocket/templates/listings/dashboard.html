@@ -5,17 +5,28 @@
 {% block title %}{{ block.super }} Dashboard{% endblock %}
 
 {% block css %}
+<style>
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+</style>
 {% compressed_css 'listings_base' %}
 {% endblock %}
 
 {% block js %}
-	<script src="{% static 'listings/js/list.min.js' %}"></script>
-	{# <script src="{% static 'listings/js/light-table-filter.js' %}" type="text/javascript"></script> #}
-	<script src="{% static 'listings/js/listings_dashboard.js' %}" type="text/javascript"></script>
-	{# <script src="{% static 'listings/js/sorttable.js' %}" type="text/javascript"></script> #}
+    <script src="{% static 'rocket/js/mustache.js' %}"></script>
+    <script src="{% static 'listings/js/list.min.js' %}"></script>
+    <script src="{% static 'rocket/js/global.js' %}"></script>
+    <script src="{% static 'listings/js/dashboard.js' %}" type="text/javascript"></script>
 {% endblock %}
 
 {% block content %}
+<p class="last-listing hide">{{latest.0}}</p>
+<p class="last-buyer hide">{{latest.1}}</p>
+<p class="last-message hide">{{latest.2}}</p>
+
 {% if first_visit %}
 <div class="alert alert-info col-lg-6 col-offset-3 clearfix">
 	<button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -23,6 +34,7 @@
 	This is your Listings Dashboard.  Here you can easily review and manage all of your listings, buyers, and messages.
 </div>
 {% endif %}
+
 <div id="dashboard-content">
 <!-- For search to work -->
 	<div class="dashboard-header col-lg-12 col-lg-fixed">
@@ -32,32 +44,103 @@
 		<div class="dashboard-search">
 			<input type="search" class="form-control search" data-table="order-table" placeholder="Type to search"/>
 		</div>
-		<div class="dropdown dashboard-dropdown">
-			<a class="btn btn-primary dropdown-btn" data-toggle="dropdown" href="#">Filter</a>
-			<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-			    <li><a id="filter-none" tabindex="-1" href="#" data-toggle="dropdown">All</a></li>
-			    <li><a id="filter-active" tabindex="-1" href="#" data-toggle="dropdown">Active</a></li>
-			    <li><a id="filter-draft" tabindex="-1" href="#" data-toggle="dropdown">Draft</a></li>
-			    <li><a id="filter-deleted" tabindex="-1" href="#" data-toggle="dropdown">Deleted</a></li>
-		    </ul>
-		</div>
-		<div class="dashboard-refresh">
-			<a class="btn btn-primary" href="#"><span class="glyphicon glyphicon-repeat"></span></a>
+		<div class="dashboard-search-button">
+			<a class="btn btn-primary" href="#"><span class="glyphicon glyphicon-search"></span></a>
 		</div>
 		<div class="dashboard-create">
-			<a class="btn btn-primary" href="{% url 'listings.views.create' %}">Create a Listing</a>
+			<a class="btn btn-primary" href="{% url 'create' %}">New Listing</a>
 		</div>
+		<div class="dashboard-refresh phone-hide">
+			<a class="btn btn-primary" href="#"><span class="glyphicon glyphicon-repeat"></span></a>
+		</div>
+		<div class="dashboard-delete">
+			<a class="btn btn-primary disabled" data-listing-id="" href="#"><span class="glyphicon glyphicon-trash"></span></a>
+		</div>
+		<div class="dashboard-delete-permanent hide">
+			<a class="btn btn-primary disabled" data-listing-id="" href="#">Delete Forever</a>
+		</div>
+
 	</div>
 	<div class="dashboard-panel {% if first_visit %}first-visit{% endif %}">
-		<div class="listings-col" id="listings-col">
+		<div class="sidebar phone-hide">
+			{% include 'listings/partials/dashboard_sidebar.html' %}
+		</div>
+		<div class="listings-col phone-full-width" id="listings-col">
 			{% include 'listings/partials/listings_panel.html' %}
 		</div>
-		<div class="buyers-col">
-			{% include 'listings/partials/buyers_panel.html' %}
-		</div>
-		<div class="messages-col">
-			{% include 'listings/partials/messages_panel.html' %}
+		<div class="buyer-message-wrapper phone-hide">
+			<span class="inbox-header">Inbox</span>
+			<span class="no-messages">You have no messages for this listing.</span>
+			<div class="buyers-col">
+				{% include 'listings/partials/buyers_panel.html' %}
+			</div>
+			<div class="messages-col">
+				{% include 'listings/partials/messages_panel.html' %}
+			</div>
 		</div>
 	</div>
-	{% endblock %}
+
+	
+<div id="keyboard-shortcuts-modal" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Keyboard Shortcuts</h4>
+      </div>
+      <div class="modal-body">
+        <table class="keys pane-1">
+        	<tr>
+        		<td><span class="arrow">&darr;</span>/<span class="char">j</span></td>
+        		<td>Select the next item</td>
+        	</tr>
+        	<tr>
+        		<td><span class="arrow">&uarr;</span>/<span class="char">k</span></td>
+        		<td>Select the previous item</td>
+        	</tr>
+        	<tr>
+        		<td><span class="arrow">&rarr;</span>/<span class="char">b</span></td>
+        		<td>Toggle buyers context</td>
+        	</tr>
+        	<tr>
+        		<td><span class="arrow">&larr;</span>/<span class="char">l</span></td>
+        		<td>Toggle listings context</td>
+        	</tr>
+        	<tr>
+        		<td><span>Enter</span></td>
+        		<td>Select the first listing from search</td>
+        	</tr>
+        	<tr>
+        		<td><span>Esc</span></td>
+        		<td>Unfocus the search or new message field</td>
+        	</tr>
+        </table>
+        <table class="keys pane-2">
+        	<tr>
+        		<td><span class="char">n</span></td>
+        		<td>Create new listing</td>
+        	</tr>
+        	<tr>
+        		<td><span class="char">/</span></td>
+        		<td>Search listings</td>
+        	</tr>
+        	<tr>
+        		<td><span class="char">m</span></td>
+        		<td>Focus new message field</td>
+        	</tr>
+        	<tr>
+        		<td><span class="char">r</span></td>
+        		<td>Refresh the dashboard</td>
+        	</tr>
+        	<tr>
+        		<td><span class="char">?</span></td>
+        		<td>Toggle this dialog</td>
+        	</tr>
+        </table>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 </div>
+{% endblock %}

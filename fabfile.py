@@ -1,4 +1,4 @@
-from fabric_heroku_postgresql.core import *
+#from fabric_heroku_postgresql.core import *
 from fabric.api import local, env, require
 
 def resetdb():
