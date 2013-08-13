@@ -68,7 +68,7 @@ COMPRESS_OFFLINE = True
 STATICFILES_STORAGE = 'rocket.settings.storage.CachedS3BotoStorage'
 COMPRESS_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 # COMPRESS_STORAGE = 'rocket.settings.storage.CachedS3BotoStorage'
-COMPRESS_OUTPUT_DIR = 'assets'
+# COMPRESS_OUTPUT_DIR = 'compressed'
 
 # See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_CSS_FILTERS
 COMPRESS_CSS_FILTERS = [

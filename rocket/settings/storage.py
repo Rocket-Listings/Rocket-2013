@@ -15,7 +15,6 @@ try:
 except ImportError:     # Python 2
     from urllib import unquote
     from urlparse import urlsplit, urlunsplit, urldefrag
-
 from django.conf import settings
 from django.core.cache import (get_cache, InvalidCacheBackendError, cache as default_cache)
 from django.core.exceptions import ImproperlyConfigured
@@ -24,7 +23,7 @@ from django.core.files.storage import FileSystemStorage, get_storage_class
 from django.utils.encoding import force_bytes, force_text
 from django.utils.functional import LazyObject
 from django.utils._os import upath
-
+from django.core.files import File
 from django.contrib.staticfiles.utils import check_settings, matches_patterns
 
 # from django.contrib.staticfiles.storage import CachedStaticFilesStorage
@@ -48,8 +47,17 @@ class CachedS3BotoStorage(CachedFilesMixin, StaticFilesStorage):
 
     def save(self, name, content):
         name = super(CachedS3BotoStorage, self).save(name, content)
-        self.remote_storage._save(name, content)
+        # self.remote_storage._save(name, content)
         return name
+
+    # returns name but doesn't save
+    # def save(self, name, content):
+    #     if name is None:
+    #         name = content.name
+    #     if not hasattr(content, 'chunks'):
+    #         content = File(content)
+    #     name = self.get_available_name(name)
+    #     return force_text(name.replace('\\', '/'))
 
     def __save(self, name, content):
         name = super(CachedS3BotoStorage, self)._save(name, content)
