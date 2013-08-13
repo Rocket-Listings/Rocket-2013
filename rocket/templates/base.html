@@ -11,15 +11,14 @@
     <link href= 'http://fonts.googleapis.com/css?family=Radley:400,400italic' rel='stylesheet' type='text/css'>
 
     {# production #}
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{% static 'rocket/vendorcss/bootstrap-glyphicons.css' %}" rel="stylesheet">
+    {# <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css" rel="stylesheet"> #}
+    {# <link href="{% static 'rocket/vendorcss/bootstrap-glyphicons.css' %}" rel="stylesheet"> #}
 
     {# development #}
-    {# {% compressed_css 'bootstrap_local' %} #}
+    {% compressed_css 'bootstrap_local' %}
 
     {% block css %}{% compressed_css 'base' %}{% endblock %}
-
-    {# // <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/1.4.1/less.min.js"></script> #}
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/1.4.1/less.min.js"></script>
   </head>
   <body>
     <div id="fb-root"></div>
@@ -37,11 +36,11 @@
     <div class="scripts hide">
 
       {# production #}
-      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-      <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
+      {# // <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> #}
+      {# // <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script> #}
 
       {# development #}
-      {# {% compressed_js 'jquery_bootstrap_local' %} #}
+      {% compressed_js 'jquery_bootstrap_local' %}
       {% block js %}{% endblock %}
     </div>
   </body>
