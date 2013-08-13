@@ -66,6 +66,7 @@ COMPRESS_DEBUG_TOGGLE = 'debug'
 AWS_ACCESS_KEY_ID = environ.get('AWS_KEY', '')
 AWS_SECRET_ACCESS_KEY = environ.get('AWS_SECRET', '')
 AWS_STORAGE_BUCKET_NAME = environ.get('AWS_STORAGE_BUCKET_NAME', '')
+AWS_S3_CUSTOM_DOMAIN = 'static.rocketlistings.com'
 
 AWS_AUTO_CREATE_BUCKET = True
 AWS_QUERYSTRING_AUTH = False
@@ -81,6 +82,7 @@ AWS_HEADERS = {
 # COMPRESS_URL = 'http://static.rocketlistings.com.s3.amazonaws.com/assets/'
 
 # COMPRESS_ROOT = STATIC_ROOT
+S3_URL = 'http://static.rocketlistings.com/'
 
 COMPRESS_OFFLINE = False
 # STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'

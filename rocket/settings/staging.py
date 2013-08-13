@@ -47,6 +47,7 @@ ALLOWED_HOSTS = ['*']
 AWS_ACCESS_KEY_ID = environ.get('AWS_KEY', '')
 AWS_SECRET_ACCESS_KEY = environ.get('AWS_SECRET', '')
 AWS_STORAGE_BUCKET_NAME = environ.get('AWS_STORAGE_BUCKET_NAME', '')
+AWS_S3_CUSTOM_DOMAIN = 'static.rocketlistings.com'
 
 AWS_AUTO_CREATE_BUCKET = True
 AWS_QUERYSTRING_AUTH = False
@@ -57,7 +58,7 @@ AWS_EXPIREY = 60 * 60 * 24 * 7
 AWS_HEADERS = {
     'Cache-Control': 'max-age=%d, s-maxage=%d, must-revalidate, no-transform' % (AWS_EXPIREY, AWS_EXPIREY)
 }
-
+S3_URL = 'http://static.rocketlistings.com/'
 STATIC_URL = S3_URL + 'assets/'
 # COMPRESS_URL = 'http://static.rocketlistings.com.s3.amazonaws.com/assets/'
 

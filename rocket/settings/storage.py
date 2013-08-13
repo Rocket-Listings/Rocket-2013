@@ -35,6 +35,13 @@ from django.contrib.staticfiles.utils import check_settings, matches_patterns
 #     def __init__(self, *args, **kwargs):
 #         kwargs["location"] = "static"
 #         super(S3StaticStorage, self).__init__(*args, **kwargs)
+class ProductionStaticCachedS3BotoStorage(CachedFilesMixin, S3BotoStorage):
+    """
+    Backend that makes use of django.contrib.staticfiles' caching mechanism both locally and remotely.
+    """
+    def __init__(self, *args, **kwargs):
+        super(ProductionStaticCachedS3BotoStorage, self).__init__(*args, **kwargs)
+        kwargs["location"] = "assets"
 
 class StaticCachedS3BotoStorage(CachedFilesMixin, StaticFilesStorage):
     """

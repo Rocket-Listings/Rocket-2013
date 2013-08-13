@@ -18,6 +18,10 @@ DATABASE_POOL_ARGS = {
   'recycle': 300
 }
 
+DEBUG = False
+TEMPLATE_DEBUG = DEBUG
+THUMBNAIL_DEBUG = DEBUG
+
 SITE_ID = 1
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#caches
@@ -58,6 +62,7 @@ INSTALLED_APPS += (
 AWS_ACCESS_KEY_ID = environ.get('AWS_KEY', '')
 AWS_SECRET_ACCESS_KEY = environ.get('AWS_SECRET', '')
 AWS_STORAGE_BUCKET_NAME = environ.get('AWS_STORAGE_BUCKET_NAME', '')
+AWS_S3_CUSTOM_DOMAIN = 'static.rocketlistings.com'
 
 AWS_AUTO_CREATE_BUCKET = True
 AWS_QUERYSTRING_AUTH = False
@@ -69,8 +74,9 @@ AWS_HEADERS = {
     'Cache-Control': 'max-age=%d, s-maxage=%d, must-revalidate, no-transform' % (AWS_EXPIREY, AWS_EXPIREY)
 }
 
-S3_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-DEFAULT_FILE_STORAGE = S3_STORAGE
+S3_URL = 'http://static.rocketlistings.com/'
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
 # See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
 # AWS_CALLING_FORMAT = OrdinaryCallingFormat
@@ -96,9 +102,10 @@ STATIC_URL = S3_URL + 'assets/'
 
 COMPRESS_OFFLINE = True
 # STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
-STATICFILES_STORAGE = 'rocket.settings.storage.StaticCachedS3BotoStorage'
+# STATICFILES_STORAGE = 'rocket.settings.storage.ProductionStaticCachedS3BotoStorage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+# COMPRESS_STORAGE = 'rocket.settings.storage.CompressCachedS3BotoStorage'
 # COMPRESS_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-COMPRESS_STORAGE = 'rocket.settings.storage.CompressCachedS3BotoStorage'
 COMPRESS_OUTPUT_DIR = 'compress'
 
 # See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_CSS_FILTERS
