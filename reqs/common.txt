@@ -1,7 +1,6 @@
 Django >= 1.5.0
 
 django-celery==3.0.17
-django-compressor
 
 Fabric==1.6.1
 South==0.8.1
@@ -26,3 +25,7 @@ django-storages==1.1.6
 django-pagination
 
 twython
+
+django-pipeline
+cssmin
+slimit

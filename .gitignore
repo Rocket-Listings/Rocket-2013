@@ -15,9 +15,9 @@ src
 uploads
 media
 whoosh_index
-static_collected
 tmp
 .DS_Store
 *.sublime-*
-css
+/**/less/*.css
 *.db
+assets

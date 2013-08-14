@@ -1,23 +1,32 @@
-"""Local staging settings and globals."""
+"""Development settings and globals."""
 
 from os import environ
+
+from os.path import join, normpath
 from common import *
+
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
+DEBUG = False
+TEMPLATE_DEBUG = DEBUG
+THUMBNAIL_DEBUG = DEBUG
 
 SITE_ID = 1
 
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": environ.get('POSTGRES_DB_NAME', environ.get('USER', ''))
-        "USER": "",
-        "PASSWORD": "",
-        "HOST": "localhost",
-        "PORT": "",
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': normpath(join(DJANGO_ROOT, 'default.db')),
+        'USER': '',
+        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
     }
 }
-
-# See: http://docs.celeryproject.org/en/latest/configuration.html#broker-transport
-BROKER_TRANSPORT = 'amqplib'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#caches
 CACHES = {
@@ -26,7 +35,12 @@ CACHES = {
     }
 }
 
-# CELERY CONFIG
+# Setting CELERY_ALWAYS_EAGER = True makes the tasks blocking, just run celeryd instead
+CELERY_ALWAYS_EAGER = True
+
+ALLOWED_HOSTS = ['*']
+
+STATICFILES_STORAGE = 'rocket.settings.storage.S3PipelineStorage'
 
 # See: http://docs.celeryproject.org/en/latest/configuration.html#broker-transport
 # BROKER_TRANSPORT = 'amqplib'
@@ -51,27 +65,3 @@ BROKER_CONNECTION_MAX_RETRIES = 0
 
 # See: http://docs.celeryproject.org/en/latest/configuration.html#celery-result-backend
 CELERY_RESULT_BACKEND = 'amqp'
-
-STATICFILES_STORAGE = S3_CACHED_STORAGE
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
-STATIC_URL = S3_URL # S3_URL defined in common.py
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = [
-  '.herokuapp.com',
-  'beta.rocketlistings.com' 
-]
-
-# DOMAIN_NAME = "beta.rocketlistings.com"
-USE_X_FORWARDED_HOST = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-SOUTH_DATABASE_ADAPTERS = {
-    'default': 'south.db.postgresql_psycopg2'
-}
-
-############# MAILGUN CONFIG
-EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
-MAILGUN_ACCESS_KEY = 'key-9flqj538z-my-qcnpc74c2wit4vibl-3'
-MAILGUN_SERVER_NAME = 'rocketlistings.mailgun.org'

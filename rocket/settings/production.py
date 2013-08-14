@@ -1,4 +1,4 @@
-"""Production settings and globals."""
+"""Heroku production settings and globals."""
 
 from os import environ
 
@@ -18,6 +18,12 @@ DATABASE_POOL_ARGS = {
   'recycle': 300
 }
 
+DEBUG = False
+TEMPLATE_DEBUG = DEBUG
+THUMBNAIL_DEBUG = DEBUG
+
+SITE_ID = 1
+
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#caches
 CACHES = memcacheify()
 
@@ -34,7 +40,7 @@ BROKER_TRANSPORT = 'amqplib'
 # connections total.
 #
 # See: http://docs.celeryproject.org/en/latest/configuration.html#broker-pool-limit
-BROKER_POOL_LIMIT = 3
+BROKER_POOL_LIMIT = 1
 
 # See: http://docs.celeryproject.org/en/latest/configuration.html#broker-connection-max-retries
 BROKER_CONNECTION_MAX_RETRIES = 0
@@ -46,21 +52,23 @@ BROKER_URL = environ.get('RABBITMQ_URL') or environ.get('CLOUDAMQP_URL')
 CELERY_RESULT_BACKEND = 'amqp'
 
 # See: http://django-storages.readthedocs.org/en/latest/index.html
-# INSTALLED_APPS += (
-    # 'storages',
-# )
+INSTALLED_APPS += (
+    'storages',
+)
 
-STATICFILES_STORAGE = S3_CACHED_STORAGE
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+STATICFILES_STORAGE = 'rocket.settings.storage.NonPackagingS3PipelineStorage'
 
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
-STATIC_URL = S3_URL # S3_URL defined in common.py
+# STATIC_URL = S3_URL + 'assets/'
+# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
+# STATICFILES_STORAGE = 'rocket.settings.storage.ProductionStaticCachedS3BotoStorage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = [
   '.herokuapp.com',
   'beta.rocketlistings.com' 
 ]
-
 
 DOMAIN_NAME = "beta.rocketlistings.com"
 USE_X_FORWARDED_HOST = True
@@ -69,9 +77,6 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SOUTH_DATABASE_ADAPTERS = {
     'default': 'south.db.postgresql_psycopg2'
 }
-
-# AWS_S3_SECURE_URLS = False
-
 
 ############# MAILGUN CONFIG
 EMAIL_BACKEND = 'django_mailgun.MailgunBackend'

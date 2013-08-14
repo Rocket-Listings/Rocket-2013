@@ -10,15 +10,17 @@ def resetdb():
 def deploy():
     """fab [environment] deploy"""
 
-    require('AWS_KEY')
-    require('AWS_SECRET')
-    require('AWS_STORAGE_BUCKET_NAME')
-    require('HEROKU_APP')
+    # require('AWS_KEY')
+    # require('AWS_SECRET')
+    # require('AWS_STORAGE_BUCKET_NAME')
+    # require('HEROKU_APP')
 
     local('heroku maintenance:on')
+    local('DJANGO_SETTINGS_MODULE=rocket.settings.staging python manage.py collectstatic --noinput')
     local('git push heroku HEAD:master')
     local('heroku run python manage.py syncdb --noinput')
-    local('heroku run python manage.py migrate --auto')    
+    local('heroku run python manage.py migrate --auto')
+    local('heroku run python manage.py collectstatic --noinput')
     local('heroku maintenance:off')
     local('heroku ps')
     local('heroku open')

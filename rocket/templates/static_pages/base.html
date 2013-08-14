@@ -1,18 +1,15 @@
 {% extends 'base.html' %}
 {% load static from staticfiles %}
-{% load compress %}
+{% load compressed %}
 
 {% block js %}
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuRtB1F8XVtV22jQ3dkGQPqWCKQz4suJ0&sensor=false"></script>
-	{% compress js %}
-	<script type="text/javascript" src="{% static 'static_pages/js/static_pages.js' %}"></script>
-	{% endcompress %}
+
+	<script type="text/javascript" src="{% static 'static_pages/js/static_pages.js' %}"></script>	
 {% endblock %}
 
 {% block css %}
-{% compress css %}
-<link rel="stylesheet" type="text/less" media="all" href="{% static 'static_pages/less/static_pages.less' %}"/>
-{% endcompress %}
+	{% compressed_css 'static_pages_base' %}
 {% endblock %}
 
 {% block body %}

@@ -3,12 +3,10 @@
 gunicorn
 django-postgrespool
 
-cssmin==0.1.4
 django-heroku-memcacheify==0.4
 # django-heroku-postgresify==0.3
 dj_database_url
 
 gevent==0.13.8
-jsmin==2.0.3
 newrelic
 psycopg2==2.5

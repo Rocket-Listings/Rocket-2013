@@ -129,15 +129,12 @@ def update(request, listing_id=None, create=False): # not directly addressed by 
 										'photos': map(lambda p: settings.S3_URL + p.key, listing.listingphoto_set.all()),
 										'pk': listing.pk}
 
-		print autopost_cxt
-
 		if create:
 			request.user.get_profile().subtract_credit()
 			cl_anon_autopost_task.delay(autopost_cxt)
 		else: # Update
 			autopost_cxt['update_url'] = listing.CL_link
 			cl_anon_update_task.delay(autopost_cxt)
-
 		return redirect(listing)
 	else:
 		print listing_form.errors
