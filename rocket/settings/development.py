@@ -17,8 +17,12 @@ THUMBNAIL_DEBUG = DEBUG
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
+# Console email backend
+# See: https://docs.djangoproject.com/en/dev/topics/email/#console-backend
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 ############# MAILGUN CONFIG
-EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
+#EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
 
 MAILGUN_ACCESS_KEY = 'key-9flqj538z-my-qcnpc74c2wit4vibl-3'
 
@@ -46,7 +50,7 @@ CACHES = {
 
 # See: http://docs.celeryq.org/en/latest/configuration.html#celery-always-eager
 # Setting CELERY_ALWAYS_EAGER = True makes the tasks blocking, just run celeryd instead
-CELERY_ALWAYS_EAGER = False
+CELERY_ALWAYS_EAGER = True
 
 # See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
 INSTALLED_APPS += (
