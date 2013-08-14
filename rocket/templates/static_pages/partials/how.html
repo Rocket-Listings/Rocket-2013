@@ -1,94 +1,58 @@
 {% load static from staticfiles %}
-	<div class = "row how-row">
-		<div class = "col-3 col-listing">
-			<h4 class="text-center listing-form">One-page listing creation form</h4>
-			<p>A lot of page loads can really slow down the process, so we put everything in one place. Pick a category, select your location or we can auto-detect it, upload photos, and fill out the details for your listing. You can even toggle to preview mode in the same window so you can what your listing will look like as you make changes.</p>
-
-			<h4 class="text-center smart-pricing">Smart price suggestions</h4>
-			<p>Knowing how much to sell your item for can be the difference between getting it sold today and having it sitting in your garage forever. We pull data from sites like Craigslist, Ebay, and Amazon to find out what other items like yours are selling for so you know the market rate for your itme.  </p>
-
-			<h4 class="text-center specs">Category-based specifications</h4>
-			<p>It's hard to know what exactly to include in your listing description, so we give you prefilled, optional specs based on the category you choose. Based on the title of your listing, we also show you what other items like yours are being sold for  on Craigslist, Ebay, and Amazon.</p>
-
-			<h4 class="text-center photos">More control of photos</h4>
-			<p>Photos are a huge part of your listing, so we want to make sure you have full control. Upload the highest-res photos you can and we'll display them in all their glory. If there's any editing you need to do, you don't need to do it in image editing software.</p>
 
 
-			<h4 class="text-center one-click">One click to post to Craigslist</h4>
-			<p>Get that awesome listing out there! We can automagically post your listings to Craigslist, Facebook and Twitter. The listing looks like a regular listings on Craigslist and we made sure the preview looks great on Facebook. We're working on adding more sites like Ebay, Etsy, and Amazon.</p>
-			
-			
+<div class="col-sm-1 col-offset-11">
+		<ul class="nav nav-pills nav-stacked" data-spy="affix">
+	            <li><a href="#listing">Listing</a></li>
+	            <li><a href="#dashboard">Dashboard</a></li>
+	            <li><a href="#profile"> Profile</a></li>
+	    </ul>
+</div>
+<div class="row how-row"><a id="listing"></a>
+	<div class="col-sm-3 col-listing">
+		<h4 class="text-center listing-form">One-page listing creation form</h4>
+		<p>A lot of page loads can really slow down the process, so we put everything in one place. Pick a category, select your location or we can auto-detect it, upload photos, and fill out the details for your listing. You can even toggle to preview mode in the same window so you can what your listing will look like as you make changes.</p>
 
-		</div>
-		<div class = "col-8 col-listing-img">
-			<img src="{% static 'static_pages/img/listing-creation.png' %}"  class="img-responsive">
-		</div>
+		<h4 class="text-center smart-pricing">Smart price suggestions</h4>
+		<p>Knowing how much to sell your item for can be the difference between getting it sold today and having it sitting in your garage forever. We pull data from sites like Craigslist, Ebay, and Amazon to find out what other items like yours are selling for so you know the market rate for your itme.  </p>
 
-		</div>
+		<h4 class="text-center specs">Category-based specifications</h4>
+		<p>It's hard to know what exactly to include in your listing description, so we give you prefilled, optional specs based on the category you choose. Based on the title of your listing, we also show you what other items like yours are being sold for  on Craigslist, Ebay, and Amazon.</p>
 
-	<!--<div class = "row how-row">
-		<div class = "col-lg-5 col-lg-push-6 col-lg-push-3">
-			<h4 class="text-center">More control of photos</h4>
-				<p>Photos are a huge part of your listing, so we want to make sure you have full control. Upload the highest-res photos you can and we'll display them in all their glory. If there's any editing you need to do, you don't need to do it in image editing software.</p>
-		</div>
-		<div class = "col-lg-6 col-lg-pull-5">
-			<img src="{% static 'static_pages/img/photo-picker.png' %}"  width = "600px">
-		</div>
-	</div> 
-
+		<h4 class="text-center photos">More control of photos</h4>
+		<p>Photos are a huge part of your listing, so we want to make sure you have full control. Upload the highest-res photos you can and we'll display them in all their glory. If there's any editing you need to do, you don't need to do it in image editing software.</p>
 
 
-	<div class = "row how-row">
-		<div class = "col-lg-5">
-			<h4 class="text-center">Smart suggestions and specifications</h4>
-			<p>It's hard to know what exactly to include in your listing description, so we give you prefilled, optional specs based on the category you choose. Based on the title of your listing, we also show you what other items like yours are being sold for  on Craigslist, Ebay, and Amazon.</p>
-		</div>
-		<div class = "col-lg-6">
-			<img src="{% static 'static_pages/img/listing-category.png' %}"  width = "275px">
-			<img src="{% static 'static_pages/img/listing-specs.png' %}"  width = "275px" >
-		</div>
+		<h4 class="text-center one-click">One click to post to Craigslist</h4>
+		<p>Get that awesome listing out there! We can automagically post your listings to Craigslist, Facebook and Twitter. The listing looks like a regular listings on Craigslist and we made sure the preview looks great on Facebook. We're working on adding more sites like Ebay, Etsy, and Amazon.</p>
 	</div>
-
-	<div class = "row how-row">
-		<div class = "col-lg-5">
-			<h4 class="text-center">One click to post to Craigslist and share</h4>
-				<p>Get that awesome listing out there! We can automagically post your listings to Craigslist, Facebook and Twitter. The listing looks like a regular listings on Craigslist and we made sure the preview looks great on Facebook. We're working on adding more sites like Ebay, Etsy, and Amazon.</p>
-		</div>
-		<div class = "col-lg-6 col-social">
-			<img src="{% static 'static_pages/img/cl-logo.png' %}"  width="150px">
-			<img src="{% static 'static_pages/img/Facebook-Logo.png' %}"  width="150px">
-			<img src="{% static 'static_pages/img/twitter-logo.png' %}"  width="150px">
-		</div>
-	</div> -->
-
-	<div class = "row how-row">
-		<div class = "col-lg-5">
-			<h4 class="text-center">Keep track of it all in the dashboard</h4>
-			<p>Keeping track of all the details and emails for one listing is hard, and gets exponentially more difficult if you have more than one listing. We put it all in one place so you can keep track of each and every listing easily and know what's going on. You can edit, re-post, delete, and mark an item as sold as well as sort your listings by date, category, title, and responses.</p>
-		</div>
-		<div class = "col-lg-6">
-			<img src="{% static 'static_pages/img/dashboard.png' %}"  width = "600px">
-		</div>
+	<div class="col-8 col-listing-img">
+		<img src="{% static 'static_pages/img/listing-creation.png' %}"  class="img-responsive">
 	</div>
-
-	<div class = "row how-row">
-		<div class = "col-lg-5">
-			<h4 class="text-center">Respond to emails</h4>
-				<p>No more sifting through all your emails trying to find the ones related to each of your listing and no more headaches trying to remember who emailed what: it's all here. You can view all your messages related to each listing, keep track of how-row much each buyer offered, and respond right in the dashboard. When it's sold, you can even email everyone else at once to let them know.</p>
-		</div>
-		<div class = "col-lg-6">
-			<img src="{% static 'static_pages/img/inbox.png' %}"  width = "600px">
-		</div>
+	
+</div>
+<div class="row dashboard-row"><a id="dashboard"></a>
+	<div class="col-6 ">
+		<h4 class="text-center">Keep track of it all in the dashboard</h4>
+		<p>Keeping track of all the details and emails for one listing is hard, and gets exponentially more difficult if you have more than one listing. We put it all in one place so you can keep track of each and every listing easily and know what's going on. You can edit, re-post, delete, and mark an item as sold as well as sort your listings by date, category, title, and responses.</p>
 	</div>
-
-	<div class = "row how-row">
-		<div class = "col-lg-5">
-			<h4 class="text-center">Seller profiles for more trust</h4>
-			<p>Everyone feels more comfortable when they know who's on the other end, especially when you're meeting up to show-row and sell an item. We made optional seller profiles so that you can let buyers know you're a real person and worth buying from. </p>
-		</div>
-		<div class = "col-lg-6 text-center col-profile">
-			<img src="{% static 'static_pages/img/profile-card.png' %}"  width = "275px" class="propic"><img src="{% static 'static_pages/img/profile-stats.png' %}"  width = "275px">
-		</div>
+	<div class="col-4 col-offset-1">
+		<h4 class="text-center">Respond to emails</h4>
+		<p>No more sifting through all your emails trying to find the ones related to each of your listing and no more headaches trying to remember who emailed what: it's all here.</p>
 	</div>
-	<a class="btn btn-primary btn-signup" href="{% url "registration_register" %}" data-toggle="modal">Sign Up
-	</a>
+</div>
+<div class="row dashboard-img-row">
+	<div class="col-11">
+		<img src="{% static 'static_pages/img/dashboard.png' %}"  class="img-responsive">
+	</div>
+</div>
+<div class="row profile-row"><a id="profile"></a>
+	<div class="col-sm-3">
+		<h4 class="text-center">Seller profiles for more trust</h4>
+		<p>Everyone feels more comfortable when they know who's on the other end, especially when you're meeting up to show-row and sell an item. We made optional seller profiles so that you can let buyers know you're a real person and worth buying from. </p>
+	</div>
+	<div class="col-sm-8">
+		<img src="{% static 'static_pages/img/profile-card.png' %}"  class="img-responsive">
+	</div>
+</div>
+	

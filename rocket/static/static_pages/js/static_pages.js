@@ -45,7 +45,7 @@ $(function() {
     $("#" + url).addClass('nav-highlight');
   }
 
-  $('.nav').click(function(event) {
+  $('.nav-header').click(function(event) {
       event.preventDefault();         //don't use as normal hyperlinks
       console.log('click');      
       var id = $(this).attr('id');    //find and show relevant partial
