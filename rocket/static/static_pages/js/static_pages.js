@@ -1,3 +1,5 @@
+$('body').scrollspy({ target: '#nav-how' });
+
 $(function() {
   google.maps.visualRefresh = true;
   var mapOptions = {
@@ -55,6 +57,8 @@ $(function() {
       var url = $(this).attr("href"); //update url without changing pages
       history.pushState({page:url}, url, url);
   });
+
+
 
   /* 
   function handleEvents() {

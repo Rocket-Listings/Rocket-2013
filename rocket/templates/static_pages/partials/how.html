@@ -1,16 +1,18 @@
 {% load static from staticfiles %}
 
-
 <div class="col-sm-1 col-offset-11">
-		<ul class="nav nav-pills nav-stacked" data-spy="affix">
-	            <li><a href="#listing">Listing</a></li>
-	            <li><a href="#dashboard">Dashboard</a></li>
-	            <li><a href="#profile"> Profile</a></li>
-	    </ul>
+	<ul class="nav nav-pills nav-stacked" id="nav-how" data-spy="affix">
+            <li><a href="#listing">Better Listing Creation</a></li>
+            <li><a href="#dashboard">Better Listing Management</a></li>
+            <li><a href="#profile">All New Profiles</a></li>
+    </ul>
 </div>
-<div class="row how-row"><a id="listing"></a>
+
+<div id="listing"></div>
+<div class="row how-row">
+	<h3 class="text-center">Better Listing Creation<h3>
 	<div class="col-sm-3 col-listing">
-		<h4 class="text-center listing-form">One-page listing creation form</h4>
+		<h4 class="text-center listing-form">Everything on one page</h4>
 		<p>A lot of page loads can really slow down the process, so we put everything in one place. Pick a category, select your location or we can auto-detect it, upload photos, and fill out the details for your listing. You can even toggle to preview mode in the same window so you can what your listing will look like as you make changes.</p>
 
 		<h4 class="text-center smart-pricing">Smart price suggestions</h4>
@@ -31,7 +33,10 @@
 	</div>
 	
 </div>
-<div class="row dashboard-row"><a id="dashboard"></a>
+
+<div id="dashboard"></div>
+<div class="row dashboard-row">
+	<h3 class="text-center">Better Listing Management</h3>
 	<div class="col-6 ">
 		<h4 class="text-center">Keep track of it all in the dashboard</h4>
 		<p>Keeping track of all the details and emails for one listing is hard, and gets exponentially more difficult if you have more than one listing. We put it all in one place so you can keep track of each and every listing easily and know what's going on. You can edit, re-post, delete, and mark an item as sold as well as sort your listings by date, category, title, and responses.</p>
@@ -46,7 +51,10 @@
 		<img src="{% static 'static_pages/img/dashboard.png' %}"  class="img-responsive">
 	</div>
 </div>
-<div class="row profile-row"><a id="profile"></a>
+<a id="profile"></a>
+
+<div class="row profile-row">
+	<h3 class="text-center">All New Seller Profiles</h3>
 	<div class="col-sm-3">
 		<h4 class="text-center">Seller profiles for more trust</h4>
 		<p>Everyone feels more comfortable when they know who's on the other end, especially when you're meeting up to show-row and sell an item. We made optional seller profiles so that you can let buyers know you're a real person and worth buying from. </p>
@@ -55,4 +63,6 @@
 		<img src="{% static 'static_pages/img/profile-card.png' %}"  class="img-responsive">
 	</div>
 </div>
+<a class="btn btn-primary btn-small btn-signup" href="{% url "registration_register" %}" data-toggle="modal">Sign Up</a>
+</body>
 	
