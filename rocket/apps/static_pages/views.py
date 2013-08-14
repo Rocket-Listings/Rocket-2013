@@ -22,7 +22,7 @@ def home(request):
     if request.user.is_authenticated():
         return redirect('listings.views.dashboard')
     else:
-        return what(request)
+        return homepage(request)
 
 @cache_control(must_revalidate=True, max_age=3600)
 @cache_page(60 * 15)
