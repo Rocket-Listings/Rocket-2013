@@ -29,3 +29,5 @@ twython
 django-pipeline
 cssmin
 slimit
+
+mechanize
