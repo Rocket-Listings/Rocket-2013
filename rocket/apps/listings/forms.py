@@ -7,10 +7,10 @@ from django.forms.models import inlineformset_factory
 class ListingForm(forms.ModelForm):
     class Meta:
         model = Listing
-        exclude = ('pub_date', 'user', 'CL_link', 'status', 'listing_type')
+        exclude = ('pub_date', 'user', 'CL_link', 'status')
         widgets = {
             'category': forms.HiddenInput,
-            # 'listing_type': forms.HiddenInput  
+            'listing_type': forms.HiddenInput
         }
 
 class SpecForm(forms.Form):

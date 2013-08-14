@@ -306,7 +306,7 @@ CELERY_TASK_RESULT_EXPIRES = timedelta(minutes=30)
 # See: http://celery.github.com/celery/django/
 setup_loader()
 
-CELERY_IMPORTS = ('mail.tasks',)
+CELERY_IMPORTS = ('mail.tasks', 'listings.tasks',)
 
 ############# USER ACCOUNTS CONFIG
 AUTH_PROFILE_MODULE = 'users.UserProfile'

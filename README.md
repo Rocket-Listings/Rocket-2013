@@ -98,7 +98,7 @@ Clone the project
 
 Now install all of the python package dependencies by going:
 
-    pip install -r requirements.txt
+    pip install -r reqs/development.txt
 
 Now setup the sqlite3 database with our Fabric command.
 
