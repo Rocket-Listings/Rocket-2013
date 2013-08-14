@@ -32,7 +32,7 @@
     location: Bethesda, MD
     category: [cars and trucks]
     user: [chucknorris]
-    listing_type: 'O'
+    listing_type: O
 
 - model: listings.Buyer
   pk: null
