@@ -29,3 +29,14 @@
 @menu-item-width: 91px;
 @menu-edge-width: 2px;
 @menu-width: 4*@menu-item-width + 2*@menu-edge-width;
+
+.stroke (@color: #000, @width: 1px) {
+  text-shadow:
+    -@width -@width 0 @color,
+    @width -@width 0 @color,
+    -@width @width 0 @color,
+    @width @width 0 @color;  
+}
+
+@footer-color: #4A4742;
+@navbar-color: #eee;

@@ -38,7 +38,8 @@
       {# production #}
       <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
       <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
-
+      {% compressed_js 'global' %}
+      
       {# development #}
       {# {% compressed_js 'jquery_bootstrap_local' %} #}
       {% block js %}{% endblock %}
