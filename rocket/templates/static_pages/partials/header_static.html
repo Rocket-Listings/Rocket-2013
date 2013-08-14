@@ -3,6 +3,11 @@
 
 <div class="navbar navbar-static-top no-margin">
   <div class="container">
+  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>  
   {% if request.user.is_authenticated %}
     <a class="navbar-logo" href="{% url 'listings.views.dashboard' %}">
   {% else %}
@@ -15,6 +20,7 @@
       <span class="logo-text"><span class="serif">rocket</span> <span class="sans-serif">listings</span></span>
       <span class="logo-area">Burlington</span>
     </a>
+    <div class="nav-collapse collapse navbar-responsive-collapse">
     {% if request.user.is_authenticated %}
     <ul class="nav navbar-nav pull-right">
       <li>
@@ -69,16 +75,23 @@
     </ul>
     {% endif %} 
     </div>
+  </div>
 </div>
-<div id="header-map"></div>
-<div id="header-map-overlay">
-  <div class="container overlay-container">
-    {# <div class="row"> #}
-      {# <div class="col-lg-12"> #}
-        <h3>A better way to sell on <a href="http://www.craigslist.org/about/sites" target="_blank">Craigslist.org</a>.</h3><br/>
-        <p class="lead">We let you sell with style</a>.</p>
+<div class="header-map-container">
+  <div id="header-map"></div>
+  <div id="header-map-overlay">
+    <div class="container overlay-container">
+      {# <div class="row"> #}
+        {# <div class="col-lg-12"> #}
+        <div class="heading">
+          <h3>A better way to sell on <a href="http://www.craigslist.org/about/sites" target="_blank">Craigslist.org</a>.</h3><br/>
+        </div>
+        <div class="subheading">
+          <p class="lead">We let you sell in style</a>.</p>
+        </div>
+        {# </div> #}
       {# </div> #}
-    {# </div> #}
+    </div>
   </div>
 </div>
 <div class="header-menu-bar"> {#<div class="col-4"><div class="row">#}
