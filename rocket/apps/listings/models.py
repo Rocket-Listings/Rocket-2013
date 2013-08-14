@@ -58,6 +58,7 @@ class Listing(models.Model):
 	status = models.ForeignKey(ListingStatus, null = True, default=1) # TODO want to be able to listings by this
 	user = models.ForeignKey(User)
 	CL_link = models.URLField(null=True, blank=True)
+	market = models.CharField(max_length=3)
 
 
 	def max_offer(self):
