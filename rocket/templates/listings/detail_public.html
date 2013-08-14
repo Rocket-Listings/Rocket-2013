@@ -1,26 +1,53 @@
 {% extends 'listings/base.html' %}
-{% load compress %}
+{% load thumbnail %}
+
 {% load static from staticfiles %}
 
 {% block js %}
   {{ block.super }}
-  {% compress js %}
-  <script>
-    $(document).ready(function(){
-      $('.carousel').carousel({
-        interval: 10000
-      });
-    })
-  </script>
-  {% endcompress %}
+  
+  <script src="{% static 'listings/js/detail_public.js' %}"></script>
+  
 {% endblock %}
 
 {% block content %}
   <div class="row">
-    <div class="col-lg-10">
-      <h2>Detail Public</h2>
-      {% include 'listings/partials/preview.html' %}
+    <div class="col-sm-8 listing-preview">
+        <div class="row">
+          <h3 class="col-10">{{ listing.title }}<small class="text-muted preview-location">{{ listing.location }}</small></h3>
+          <h3 class="col-2 text-right text-success">
+            {% if listing.price %}${{ listing.price }}{% endif %}
+          </h3>
+        </div>
+        <div class="preview-thumbnails row">
+          {% for photo in photos %}
+            <div class="col-sm-2">
+            {# <a class="thumbnail"> #}
+              <img src="{{ S3_URL }}{{ photo.key }}" data-id="{{ photo.id }}" class="img-responsive">
+            {# </a> #}
+            </div>
+          {% endfor %}
+        </div>
+        <div class="preview-stage hidden-sm">
+        {% if photos %}
+        {% with photos|first as first_photo %}
+        <img src="{{ S3_URL }}{{ first_photo.key }}" class="img-responsive"/>
+        {% endwith %}
+        {% endif %}
+        </div>
+        <p class="preview-description">{{ listing.description }}</p>
+        {% if specs %}
+        <h4>Specs</h4>
+        <dl class="dl-horizontal">
+        {% for spec in specs.values %}
+          <dt>{{ spec.key.name }}</dt>
+          <dd>{{ spec.value }}</dd>
+        {% endfor %}
+        </dl>
+        {% endif %}
     </div>
-    <div class="col-lg-2"></div>
+    <div class="col-sm-4">
+      {% include "users/partials/profile_card.html" %}
+    </div>
   </div>
 {% endblock %}

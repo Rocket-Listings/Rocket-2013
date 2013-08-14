@@ -21,32 +21,29 @@ SITE_NAME = basename(DJANGO_ROOT)
 path.append(DJANGO_ROOT)
 path.append(join(DJANGO_ROOT, 'apps'))
 
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
+# safety precaution. Exception to the rule where we DRY with inherited settings files.
 DEBUG = False
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
 TEMPLATE_DEBUG = DEBUG
-
 THUMBNAIL_DEBUG = DEBUG
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS = (
-	('Teddy Knox', 'teddy@rocketlistings.com'),
-	('Brian Sirkia', 'brian@rocketlistings.com'),
-	('Nat Kelner', 'nat@rocketlistings.com'),
+    ('Teddy Knox', 'teddy@rocketlistings.com'),
+    # ('Brian Sirkia', 'brian@rocketlistings.com'),
+    # ('Nat Kelner', 'nat@rocketlistings.com'),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
-  'default': {
-    'ENGINE': 'django.db.backends.',
-    'NAME': '',
-    'USER': '',
-    'PASSWORD': '',
-    'HOST': '',
-    'PORT': '',
-  }
+    'default': {
+        'ENGINE': 'django.db.backends.',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
+    }
 }
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#time-zone
@@ -55,14 +52,17 @@ TIME_ZONE = 'America/New_York'
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#language-code
 LANGUAGE_CODE = 'en-us'
 
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#site-id
-SITE_ID = 1
-
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#use-i18n
 USE_I18N = True
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#use-l10n
 USE_L10N = True
+
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#email-use-tls
+EMAIL_USE_TLS = True
+
+# AWS_S3_CUSTOM_DOMAIN = 'static.rocketlistings.com'
+# S3_URL = 'http://static.rocketlistings.com/'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
 MEDIA_ROOT = normpath(join(DJANGO_ROOT, 'media'))
@@ -71,123 +71,113 @@ MEDIA_ROOT = normpath(join(DJANGO_ROOT, 'media'))
 MEDIA_URL = '/media/'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
-STATIC_ROOT = normpath(join(SITE_ROOT, 'static_collected'))
+STATIC_ROOT = normpath(join(SITE_ROOT, 'assets'))
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = '/static/'
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = (
-  normpath(join(DJANGO_ROOT, 'static')),
+    normpath(join(DJANGO_ROOT, 'static')),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
 STATICFILES_FINDERS = (
-  'django.contrib.staticfiles.finders.FileSystemFinder',
-  'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-  'compressor.finders.CompressorFinder',
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
-AWS_STORAGE_BUCKET_NAME = environ.get('AWS_STORAGE_BUCKET_NAME', 'static.rocketlistings.com')
-
-S3_URL = 'https://s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
-
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-SECRET_KEY = '59%5@qdw12&amp;d)47=3=$ar4bv4vcgk)*-_f2=qr9(n9jy%z%1j!'
+SECRET_KEY = environ.get('SECRET_KEY', 'imnotwearingpants')
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-FIXTURE_DIRS
 FIXTURE_DIRS = (
-  normpath(join(DJANGO_ROOT, 'fixtures')),
+    normpath(join(DJANGO_ROOT, 'fixtures')),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-context-processors
 TEMPLATE_CONTEXT_PROCESSORS = (
-  'django.contrib.auth.context_processors.auth',
-  'django.core.context_processors.debug',
-  'django.core.context_processors.i18n',
-  'django.core.context_processors.media',
-  'django.core.context_processors.static',
-  'django.core.context_processors.tz',
-  'django.contrib.messages.context_processors.messages',
-  'django.core.context_processors.request',
-  "listings.context_processors.s3_url",
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.core.context_processors.tz',
+    'django.contrib.messages.context_processors.messages',
+    'django.core.context_processors.request',
+    "listings.context_processors.s3_url",
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
 TEMPLATE_LOADERS = (
-  'django.template.loaders.filesystem.Loader',
-  'django.template.loaders.app_directories.Loader',
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
 TEMPLATE_DIRS = (
-  normpath(join(DJANGO_ROOT, 'templates')),
+    normpath(join(DJANGO_ROOT, 'templates')),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#middleware-classes
 MIDDLEWARE_CLASSES = (
-  # Use GZip compression to reduce bandwidth.
-  'django.middleware.gzip.GZipMiddleware',
-
-  # Default Django middleware.
-  'django.middleware.common.CommonMiddleware',
-  'django.contrib.sessions.middleware.SessionMiddleware',
-  'django.middleware.csrf.CsrfViewMiddleware',
-  'django.contrib.auth.middleware.AuthenticationMiddleware',
-  'django.contrib.messages.middleware.MessageMiddleware',
+    # Use GZip compression to reduce bandwidth.
+    'django.middleware.gzip.GZipMiddleware',
+    'pipeline.middleware.MinifyHTMLMiddleware',
+    # Default Django middleware.
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf
 ROOT_URLCONF = '%s.urls' % SITE_NAME
 
 DJANGO_APPS = (
-  # Default Django apps:
-  'django.contrib.auth',
-  'django.contrib.contenttypes',
-  'django.contrib.sessions',
-  'django.contrib.sites',
-  'django.contrib.messages',
-  'django.contrib.staticfiles',
+    # Default Django apps:
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
 
-  # Useful template tags:
-  'django.contrib.humanize',
+    # Useful template tags:
+    'django.contrib.humanize',
 
-  # Admin panel and documentation:
-  'django.contrib.admin',
-  'django.contrib.admindocs',
+    # Admin panel and documentation:
+    'django.contrib.admin',
+    'django.contrib.admindocs',
 )
 
 THIRD_PARTY_APPS = (
-  # Database migration helpers:
-  'south',
+    # Database migration helpers:
+    'south',
 
-  # Static file management:
-  'compressor',
+    # Asynchronous task queue:
+    'djcelery',
 
-  # Asynchronous task queue:
-  'djcelery',
+    # search
+    'haystack',
 
-  # search
-	'haystack',
+    # thumbnails
+    'sorl.thumbnail',
 
-	# thumbnails
-	'sorl.thumbnail',
+    # pagination template tags
+    'pagination',
 
-	# pagination template tags
-	'pagination',
-
-	# static file management
-	'compressor',
-
-
+    # static file management 
+    'pipeline',
 )
 
 LOCAL_APPS = (
-	'listings',
-	'mail',
-	'registration',
-	'static_pages',
-	'users',
+    'listings',
+    'mail',
+    'registration',
+    'static_pages',
+    'users',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -195,35 +185,112 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#logging
 LOGGING = {
-  'version': 1,
-  'disable_existing_loggers': False,
-  'filters': {
-  'require_debug_false': {
-    '()': 'django.utils.log.RequireDebugFalse'
-    }
-  },
-  'handlers': {
-    'mail_admins': {
-      'level': 'ERROR',
-      'filters': ['require_debug_false'],
-      'class': 'django.utils.log.AdminEmailHandler'
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+    'require_debug_false': {
+        '()': 'django.utils.log.RequireDebugFalse'
+        }
     },
-    'console': {
-      'level': 'DEBUG',
-      'class': 'logging.StreamHandler'
-    }
-  },
-  'loggers': {
-    'django.request': {
-      'handlers': ['mail_admins', 'console'],
-      'level': 'ERROR',
-      'propagate': True,
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler'
+        }
     },
-  }
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins', 'console'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    }
 }
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = 'wsgi.application'
+
+############# PIPELINE CONFIG
+STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
+PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.cssmin.CSSMinCompressor'
+PIPELINE_CSSMIN_BINARY = 'cssmin'
+# PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.slimit.SlimItCompressor'
+PIPELINE_JS_COMPRESSOR = None
+PIPELINE_DISABLE_WRAPPER = True
+PIPELINE_COMPILERS = (
+  'pipeline.compilers.less.LessCompiler',
+)
+
+PIPELINE_CSS = {
+    'bootstrap_local': {
+        'source_filenames': (
+            'rocket/vendorcss/bootstrap-glyphicons.css',
+            'rocket/vendorcss/bootstrap.min.css',
+        ),
+        'output_filename': 'css/bootstrap.css',
+        'variant': 'datauri',
+    },
+    'base': {
+        'source_filenames': (
+            'rocket/less/base.less',
+        ),
+        'output_filename': 'css/base.css',
+        'variant': 'datauri',
+    },
+    'listings_base': {
+        'source_filenames': (
+            'listings/less/listings.less',
+        ),
+        'output_filename': 'css/listings_base.css',
+        'variant': 'datauri',
+    },
+    'static_pages_base': {
+        'source_filenames': (
+            'static_pages/less/static_pages.less',
+        ),
+        'output_filename': 'css/static_pages_base.css',
+        'variant': 'datauri',
+    },
+    'users_base': {
+        'source_filenames': (
+            'users/less/users.less',
+            'rocket/vendorcss/jquery.tablesorter.pager.css'
+        ),
+        'output_filename': 'css/user_base.css',
+        'variant': 'datauri',
+    },
+}
+
+PIPELINE_JS = {
+    'jquery_bootstrap_local' : {
+        'source_filenames': (
+            'rocket/js/jquery-1.9.0.js',
+            'rocket/js/bootstrap/bootstrap.min.js',
+            'rocket/js/global.js',
+        ),
+        'output_filename': 'js/base.js'
+    },
+}
+
+############# AWS CONFIG
+S3_URL = 'http://static.rocketlistings.com/'
+AWS_ACCESS_KEY_ID = environ.get('AWS_KEY', '')
+AWS_SECRET_ACCESS_KEY = environ.get('AWS_SECRET', '')
+AWS_STORAGE_BUCKET_NAME = environ.get('AWS_STORAGE_BUCKET_NAME', '')
+AWS_S3_CUSTOM_DOMAIN = 'static.rocketlistings.com'
+AWS_AUTO_CREATE_BUCKET = True
+AWS_QUERYSTRING_AUTH = False
+AWS_S3_SECURE_URLS = False
+AWS_HEADERS = {
+        'Cache-Control': 'max-age=300, s-maxage=900, public, no-transform'
+}
+# backend storages.backends.s3boto.S3BotoStorage
+# STATIC_URL = S3_URL + 'assets/'
 
 
 ############# CELERY CONFIG
@@ -233,35 +300,14 @@ CELERY_TASK_RESULT_EXPIRES = timedelta(minutes=30)
 # See: http://celery.github.com/celery/django/
 setup_loader()
 
-
-############# COMPRESS CONFIG
-# See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_ENABLED
-COMPRESS_ENABLED = True
-
-# See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_PRECOMPILERS
-COMPRESS_PRECOMPILERS = (
-  ('text/less', 'lessc {infile} {outfile}'),
-)
-
-# See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_CSS_FILTERS
-COMPRESS_CSS_FILTERS = [
-  'compressor.filters.css_default.CssAbsoluteFilter',
-  'compressor.filters.template.TemplateFilter',
-  'compressor.filters.cssmin.CSSMinFilter',
-]
-
-# See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_JS_FILTERS
-COMPRESS_JS_FILTERS = [
-  # 'compressor.filters.template.TemplateFilter',
-  'compressor.filters.jsmin.JSMinFilter',
-]
+CELERY_IMPORTS = ('mail.tasks',)
 
 ############# USER ACCOUNTS CONFIG
 AUTH_PROFILE_MODULE = 'users.UserProfile'
 
 ACCOUNT_ACTIVATION_DAYS = 7
 
-DEFAULT_FROM_EMAIL = 'webmaster@localhost:8000'
+DEFAULT_FROM_EMAIL = 'teddy@rocketlistings.com'
 
 LOGIN_URL = '/users/login/' # references users/urls.py name
 
@@ -276,8 +322,12 @@ ROCKET_UNUSED_PHOTO_MINS = 10
 
 # HAYSTACK CONFIG
 HAYSTACK_CONNECTIONS = {
-		'default': {
-				'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-				'PATH': join(dirname(__file__), 'whoosh_index'),
-		}
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': join(dirname(__file__), 'whoosh_index'),
+    }
 }
+
+# TWITTER CONFIG (defaults to development app credentials)
+TWITTER_KEY = environ.get('TWITTER_KEY', 'ozuyeg1uriTqpgEGNxfXPA')
+TWITTER_SECRET = environ.get('TWITTER_SECRET', '4zZjutoXBLs8mfxMHZtGKf1nLNGhABWBz44alSg58')

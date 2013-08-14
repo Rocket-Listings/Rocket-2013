@@ -34,10 +34,10 @@
             <div class="help-block">{% for error in form.email.errors %}{{ error }}&nbsp;{% endfor %}</div>
         </div>
 		<div class="form-group {% if form.errors.default_seller_type %}has-error{% endif %}">
-			<label for="id_default_seller_type" class="col-lg-2 control-label">Post as a</label>
+			<label for="id_default_seller_type" class="col-lg-2 control-label">Seller Type</label>
 			<div class="btn-group col-lg-3" data-toggle-name="default_seller_type" data-toggle="buttons-radio">
-				<button type="button" value="P" class="btn btn-primary" data-toggle="button">Person</button>
-  				<button type="button" value="B" class="btn btn-primary" data-toggle="button">Business</button>
+				<button type="button" value="O" class="btn btn-primary" data-toggle="button">Owner</button>
+  				<button type="button" value="D" class="btn btn-primary" data-toggle="button">Dealer</button>
 			</div>
             <div class="help-block">{% for error in form.errors.default_seller_type %}{{ error }}&nbsp;{% endfor %}</div>
 		</div>
@@ -70,15 +70,13 @@
 	$("div.btn-group[data-toggle-name='default_seller_type'] button").click(function() {
 		var button = $(this),
 			hidden = $('input[name="default_seller_type"]');
-		$("div.btn-group[data-toggle-name='default_seller_type'] button").removeClass("active");
-		button.addClass("active");
 		hidden.val(button.val());
 	});
-    if ($('input[name="default_seller_type"]').val() == "P") {
-        $("button[value='P']").addClass("active");
+    if ($('input[name="default_seller_type"]').val() == "O") {
+        $("button[value='O']").addClass("active");
     }
     else {
-        $("button[value='B']").addClass("active");
+        $("button[value='D']").addClass("active");
     }
 </script>
 {% endblock %}

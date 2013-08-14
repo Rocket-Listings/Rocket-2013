@@ -1,8 +1,8 @@
 from listings.models import Listing, ListingPhoto, Buyer, Offer, Message, ListingStatus
 import datetime
 #from users.models import UserProfile
-from users.forms import UserProfileForm, CommentSubmitForm, UserRatingForm
-from users.models import UserProfile, UserComment, ProfileFB, UserRating 
+from users.forms import UserProfileForm, CommentSubmitForm
+from users.models import UserProfile, UserComment, ProfileFB 
 from django.forms.models import inlineformset_factory
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect
@@ -34,57 +34,74 @@ def info(request):
 	fbProfile = ProfileFB.objects.get(profile=profile)
 	if request.method == 'POST':
 		user_profile_form = UserProfileForm(request.POST, instance=profile)
-		print user_profile_form
 		if user_profile_form.is_valid():
 			userObject = User.objects.get(username=user)
 			userObject.email = user_profile_form.cleaned_data['email']
 			userObject.save()
-			user_profile = user_profile_form.save()
 			responseData = {}
 			for key, value in user_profile_form.cleaned_data.iteritems():
 				if key != "default_listing_type" and key != "default_category":
 					responseData[key] = escape(value)
 			responseData['profile'] = True
+			responseData['credits_added'] = 0
+
+			if profile.filled_out() and not profile.profile_completed_once:
+				profile.profile_completed_once = True
+				profile.add_credit(2)
+				responseData['credits_added'] = 2
+				responseData['profile_completed'] = True
+
+			user_profile = user_profile_form.save()	
+
 			return HttpResponse(json.dumps(responseData), content_type="application/json")
 		else:
 			errors = user_profile_form.errors
 			return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
+		credits = profile.listing_credits
+		credits_spent = profile.total_credits - credits
+		profile_completed_once = profile.profile_completed_once
+		twitter_connected_once = profile.twitter_connected_once
+		facebook_connected_once = profile.facebook_connected_once
 		user_profile_form = UserProfileForm(instance=profile)
-		return TemplateResponse(request, 'users/user_info.html', {'user': user, 'form': user_profile_form, 'fb': fbProfile})
+		context_dictionary = {'user': user, 'form': user_profile_form, 'fb': fbProfile, 'credits':credits, 'profile_completed_once':profile_completed_once,
+			'credits_spent':credits_spent,'twitter_connected_once':twitter_connected_once, 'facebook_connected_once':facebook_connected_once}
+		return TemplateResponse(request, 'users/info.html', context_dictionary)
 
 @view_count
 @first_visit
 def profile(request, username=None):
 	user = User.objects.get(username=username)
 	request.user.is_owner = bool(user == request.user)
-		
 	allListings = Listing.objects.filter(user=user).order_by('-pub_date')
 	# activelistings = allListings.filter(status=ListingStatus(pk=1))
 	# draftlistings = allListings.filter(status=ListingStatus(pk=2))
 	photos = ListingPhoto.objects.filter(listing=user)
 	photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos)
-	ratings = UserRating.objects.filter(user=user)
-	rating = ratings.aggregate(Avg('rating')).values()[0]
+	#ratings = UserRating.objects.filter(user=user)
 	comments = UserComment.objects.filter(user=user).order_by('-date_posted') 
+	avg_rating = comments.aggregate(Avg('rating')).values()[0]
 	fbProfile = ProfileFB.objects.get(profile=user.get_profile())
+	total_listing_views = 0
+	for listing in allListings:
+		total_listing_views += listing.get_view_count()
+		
 	if request.method == 'POST':
-		comment_form = CommentSubmitForm(request.POST, instance = UserComment(user=user))
-		rating_form = UserRatingForm(request.POST, instance = UserRating(user=user))
-		if rating_form.is_valid() and comment_form.is_valid():
-			rating = rating_form.save()
+		comment_form = CommentSubmitForm(request.POST, instance = UserComment(user=user))	
+		if comment_form.is_valid():
 			comment = comment_form.save()
 			responseData = {}
 			for key, value in comment_form.cleaned_data.iteritems():
-				responseData[key] = escape(value)
-			for key, value in rating_form.cleaned_data.iteritems():
-				responseData[key] = escape(str(value))
+				if isinstance(value, int):
+					responseData[key] = escape(str(value))
+				else:
+					responseData[key] = escape(value)
+
 			responseData['new_comment'] = True
 			responseData['date_posted'] = datetime.date.today().strftime("%B %d, %Y")
 			return HttpResponse(json.dumps(responseData), content_type="application/json")
 		else:
 			errors = comment_form.errors
-			errors.update(rating_form.errors)
 			return HttpResponse(json.dumps(errors), content_type="application/json")
 
 
@@ -97,7 +114,9 @@ def profile(request, username=None):
 		# 	errors = comment_form.errors
 		# 	return HttpResponse(json.dumps(errors), content_type="application/json")
 	else:
-		return TemplateResponse(request, 'users/user_profile.html', {'url_user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile, 'rating':rating}) #'activelistings':activelistings, 'draftlistings':draftlistings,
+		credits = user.get_profile().listing_credits
+		context_dictionary = {'url_user':user, 'listings':allListings, 'photos':photos, 'comments':comments, 'fb': fbProfile, 'avg_rating':avg_rating, 'owner':request.user.is_owner, 'credits':credits,'total_listing_views':total_listing_views}
+		return TemplateResponse(request, 'users/profile.html', context_dictionary) #'activelistings':activelistings, 'draftlistings':draftlistings,
 
 def delete_account(request):
 	user = request.user
@@ -150,10 +169,23 @@ def get_twitter_handle(request):
 			handle = twitter.verify_credentials()['screen_name']
 			profile = UserProfile.objects.get(user=request.user)
 			profile.twitter_handle = handle
+			credits = 0
+			response = {}
+			response['handle'] = handle
+
+			if not profile.twitter_connected_once:
+				credits = 2
+				profile.twitter_connected_once = True
+				profile.add_credit(credits)
+
+			response['credits_added'] = credits
 			profile.save()
-			return HttpResponse(json.dumps(handle), content_type='application/json')
+
+			return HttpResponse(json.dumps(response), content_type='application/json')
 		else:
-			return HttpResponse(json.dumps("no_oauth_token_or_key"), content_type='application/json')
+			response = {}
+			response['handle'] = "no_oauth_token_or_key"
+			return HttpResponse(json.dumps(response), content_type='application/json')
 	else:
 		return HttpResponseForbidden()
 
@@ -206,7 +238,19 @@ def fb_profile(request):
 				return HttpResponseForbidden()
 			else:
 				fb.save()
-				return HttpResponse(fb.name)
+				profile = request.user.get_profile()
+				credits = 0
+				response = {}
+				response['name'] = fb.name
+
+				if not profile.facebook_connected_once:
+					credits = 2
+					profile.facebook_connected_once = True
+					profile.add_credit(credits)
+
+				response['credits_added'] = credits
+				profile.save()
+				return HttpResponse(json.dumps(response), content_type='application/json')
 		else:
 			return HttpResponseForbidden
 	else:

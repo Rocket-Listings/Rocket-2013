@@ -90,6 +90,7 @@ $(function() {
 			console.log(FPError);
 		});
 	});
+
 	$("form.settings-form").submit(function() {
 		if ((!$(".save-all").hasClass("disabled")) || ($(".save-all").hasClass("propic-enable"))) {
 			var csrftoken = getCookie('csrftoken');
@@ -129,6 +130,14 @@ $(function() {
 		}
 		if ($("input[name='propic']").val() !== "") $("img.propic").attr("src", data['propic'] + "?" + new Date().getTime());
 		$(".loading-overlay").addClass("hide");
+
+		if (data['credits_added'] != 0) {
+			$("#credit-counter").text(parseInt($("#credit-counter").html()) + data['credits_added']);
+			$(".credits-available").addClass("more-credits");
+			if (data['profile_completed'] != undefined) {
+				$("#profile-completed").addClass("completed");
+			}
+		}
 	}
 	function getInput (type) {
 		var input  = $("input:not(input[type='submit']), textarea"),
@@ -186,12 +195,18 @@ $(function() {
 			type: 'GET',
 			url: '/users/twitter/handle/',
 			success: function (response) {
-				if (response !== "no_oauth_token_or_key") {
-					$(".twitter-handle").html(response);
-					$(".at").removeClass("muted");
+				if (response['handle'] !== "no_oauth_token_or_key") {
+					$(".twitter-handle").html(response['handle']);
+					$(".at").removeClass("hide");
 					$(".verify-twitter").addClass("hide");
 					$(".disconnect-twitter").removeClass("hide");
+					$("#twitter-linked").addClass("completed");
 				}
+				if (response['credits_added'] != 0 && response['credits_added'] != undefined) {
+					$("#credit-counter").text(parseInt($("#credit-counter").html()) + response['credits_added']);
+					$(".credits-available").addClass("more-credits");
+				}
+
 			}
 		});
 	}
@@ -204,7 +219,7 @@ $(function() {
 					$(".twitter-handle").html("");
 					$(".verify-twitter").removeClass("hide");
 					$(".disconnect-twitter").addClass("hide");
-					$(".at").addClass("muted");
+					$(".at").addClass("hide");
 				}
 			}
 		});
@@ -256,7 +271,7 @@ $(function() {
 				else {
 					data['picture'] = "";
 				}
-				fbPostData(data)
+				fbPostData(data);
 			});
 		});
 	}
@@ -271,9 +286,15 @@ $(function() {
 				xhr.setRequestHeader("X-CSRFToken", csrftoken);
 			},
 			success: function(response) {
-				$(".fb-name").text(response);
+				$(".fb-name").text(response['name']);
 				$(".connect-fb").addClass("hide");
 				$(".disconnect-fb").removeClass("hide");
+				$("#facebook-linked").addClass("completed");
+
+				if (response['credits_added'] != 0 && response['credits_added'] != undefined) {
+					$("#credit-counter").text(parseInt($("#credit-counter").html()) + response['credits_added']);
+					$(".credits-available").addClass("more-credits");
+				}
 			}
 		});
 	}
@@ -283,8 +304,6 @@ $(function() {
 	$("div.btn-group[data-toggle-name='comment_rating'] button").click(function () {
 		var button = $(this),
 			hidden = $("input[name='rating']");
-		$("div.btn-group[data-toggle-name='comment_rating'] button").removeClass("active");
-		$(this).addClass("active");
 		hidden.val(button.val());
 	});
 
@@ -300,6 +319,7 @@ $(function() {
 			},
 			success: function (response) {
 				if (response.new_comment) {
+					console.log(response)
 					insertNewComment(response);
 					$("input:not(input[type='submit']), textarea").val("");
 					$(".errors").hide();
@@ -314,9 +334,9 @@ $(function() {
 	});
 
 	function insertNewComment(data) {
-		var newComment = '<div class="each-comment"><div class="row"><div class="span6"><h5>' + data.title + '</h5></div>';
-			newComment += '<div class="span2"><h6>' + data.date_posted  + '</h6></div></div>';
-			newComment += '<div class="row"><div class="span7"><p>' + data.comment + '</p></div></div></div>';
+		var newComment = '<div class="each-comment"><div class="row comment-top"><div class="col-lg-9"><h5>' + data.title + '</h5></div>';
+			newComment += '<div class="col-lg-2"><h6>' + data.date_posted  + '</h6></div></div>';
+			newComment += '<div class="row comment-main"><div class="col-lg-7"><p>' + data.comment + '</p></div></div></div>';
 		$(".comment-body").append(newComment);
 		$(".comment-form-container").hide();
 		$(".comment-thanks").show();
@@ -333,22 +353,6 @@ $(function() {
 		}
 		errorString += "</div>";
 		errorWrapper.html(errorString);
-	}
-
-	// Get cookie for csrf token
-	function getCookie(name) {
-	    var cookieValue = null;
-	    if (document.cookie && document.cookie != '') {
-	        var cookies = document.cookie.split(';');
-	        for (var i = 0; i < cookies.length; i++) {
-	            var cookie = jQuery.trim(cookies[i]);
-	            if (cookie.substring(0, name.length + 1) == (name + '=')) {
-	                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-	                break;
-	            }
-	        }
-	    }
-	    return cookieValue;
 	}
 });
 

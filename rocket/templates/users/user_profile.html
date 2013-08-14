@@ -2,121 +2,112 @@
 {% load static from staticfiles %}
 {% block content %}
 <div class="profile-content">
-	<div class="row">
-		<div class="col-lg-8 span-left">
+	<div class="row row-top">
+		<div class="col-lg-8"> {# contains profile pic, main description #}
 			{% if first_visit %}
 				<div class="alert alert-info">
   					<button type="button" class="close" data-dismiss="alert">&times;</button>
   					<h4>Welcome</h4>
-  					Its your first time, check dis shit out
-				
+  					This is your profile page. Potential buyers can come here to see your seller rating and a bit about you. 
 				</div>
 			{% endif %} 
-			
 				<div class="row profile-header">
-					<div class="col-lg-3 profile-picture">
+					<div class="col-lg-2 profile-picture"> {# contains profile pic #}
 						{% if url_user.get_profile.propic %}
-							<img class="thumbnail" src="{{ url_user.get_profile.propic }}" width="150px">
+							<img class="thumbnail" src="{{ url_user.get_profile.propic }}">
 						{% else %}
-							<img class="thumbnail" src=" {% static 'users/img/no-photo.png' %}" width="150px">
+							<img class="thumbnail" src=" {% static 'users/img/no-photo.png' %}">
 						{% endif %}
-						{% if request.user.is_authenticated %}
+						{% if  request.user == url_user %}
 									<a href="{% url 'users.views.info' %}">Edit profile</a>
 						{% endif %}
 					</div>
-					<div class="col-lg-9">
+					<div class="col-lg-10"> {# contains main profile description (name, username, social, location, bio) #}
 						<div class="row">
-							{% if url_user.get_profile.name %}
-								<div class="col-lg-8">
-										<h3>{{url_user.get_profile.name}}</h3>
-								</div>
-								<div class="col-lg-4">
-										<h5>{{url_user.get_profile.location}}</h5>
-								</div>
-							{% endif %}
-						</div>
-						<div class="row">
+							<div class="col-lg-4 col-details">
+								{% if url_user.get_profile.name %} 
+									<h4>{{url_user.get_profile.name}}</h4>
+								{% endif %}
+									<h5>{{url_user.username}}</h5>
+									{% include "users/partials/profile_rating.html" %}
+									<div class="row twitter-row">
+										{% if url_user.get_profile.twitter_handle %}
+											<img src="{% static 'users/img/twitter-bird-blue-on-white.png' %}" width="25px">
+											<a href="https://twitter.com/@{{url_user.get_profile.twitter_handle}}"> @{{url_user.get_profile.twitter_handle}} </a>	
+										{% endif %}
+									</div>
+									<div class="row fb-row">
+										{% if fb.name %}
+											<img src="{% static 'users/img/FB-f-Logo__blue_29.png' %}" width="15px"><a href="{{fb.link}}"> {{fb.name}} </a>	
+										{% endif %}
+									</div>
+									<h5>{{url_user.get_profile.location}}</h5>
+							</div>
 							<div class="col-lg-8">
-								<h4 class="muted">{{url_user.username}}</h4>	
-							</div>
-							{% if not url_user.get_profile.name %}
-							<div class="col-lg-4">
-									<h5>{{user.get_profile.location}}</h5>
-							</div>
-							{% endif %}
-						</div>
-						{% if url_user.get_profile.twitter_handle %}
-						<div class="row twitter-row">
-							<div class="col-lg-12">
-								<img src="{% static 'users/img/twitter-bird-blue-on-white.png' %}" width="25px">
-								<a href="https://twitter.com/@{{url_user.get_profile.twitter_handle}}"> @{{url_user.get_profile.twitter_handle}} </a>	
-							</div>
-						</div>
-						{% endif %}
-						{% if fb.name %}
-						<div class="row fb-row">
-							<div class="col-lg-12">
-								<img src="{% static 'users/img/FB-f-Logo__blue_29.png' %}" width="15px"><a href="{{fb.link}}"> {{fb.name}} </a>	
-							</div>
-						</div>
-						{% endif %}
-						<div class="row">
-							<div class="col-lg-12">
+
 								{% if url_user.get_profile.bio %}
 									<p>{{url_user.get_profile.bio}}</p>
 								{% else %}
-									{% if request.user.is_authenticated %}
+									{% if  request.user == url_user %}
 										<p>Looks like you don't have a bio! <a href="{% url 'users.views.info' %}">Update</a> your profile and add one.</p>
 									{% else %}
 										<p>Sorry, but {{url_user.username}} doesn't have a bio.</p>
 									{% endif %}
 								{% endif %}
 							</div>
-						</div>	
-					</div>
+						</div>
+					</div>	
 				</div>
-
+			</div>
+		<div class="col-lg-3 "> {# contains stats #}
+			{% include "users/partials/profile_stats.html" %}
+		</div>
+	</div>
+	<div class="row row-bottom">
+		<div class="col-lg-8">
 			<div class="comments">	
 				{% include "users/partials/profile_comments.html" %}
 				{% include "users/partials/profile_comment_form.html" %}
 			</div>
 		</div>
 		<div class="col-lg-3">
-			{% include "users/partials/profile_stats.html" %}
-				<div class="profile-selling">
-					<h4>Listings </h4>
-						{% if listings %}
-						<div class="row">
-								{% for listing in listings|slice:":5" %}
-								<div class="col-lg-12">
-								<a class="thumbnail" href="{{ listing.get_absolute_url }}">
-									{% if photos %}
-										{% for photo in photos|slice:":1" %}
-										<img src="photo.url">
-										{% endfor %}
-									{% else %}
-										<img src="{% static 'users/img/sail.jpg' %}">
-									{% endif %}
-									<div class="overlay">
-										<h4>{{listing.title}}</h4>
-										<h5> ${{listing.price}}</h5>
-									</div>
-									<div class="clearfix"></div>
-								</a>
-							</div>
-								{% endfor %}
-							
+			<div class="profile-selling">
+				<h4>Listings </h4>
+					{% if listings %}
+					<div class="row">
+							{% for listing in listings|slice:":3" %}
+							<div class="col-lg-12">
+							<a class="thumbnail" href="{{ listing.get_absolute_url }}">
+								{% if photos %}
+									{% for photo in photos|slice:":1" %}
+									<img src="photo.url">
+									{% endfor %}
+								{% else %}
+									<img src="{% static 'users/img/sail.jpg' %}">
+								{% endif %}
+								<div class="overlay">
+									<h4>{{listing.title}}</h4>
+									<h5> ${{listing.price}}</h5>
+								</div>
+								<div class="clearfix"></div>
+							</a>
 						</div>
+							{% endfor %}
 						
+					</div>
+					
+					{% else %}
+						{% if  request.user == url_user %}
+						<p> You haven't created any listings yet, <a href="/listings/create"> click here</a> to get started.</p>
 						{% else %}
-							{% if request.user.is_authenticated %}
-							<p> You haven't created any listings yet, <a href="/listings/create"> click here</a> to get started.</p>
-							{% else %}
-								<p> Sorry, {{url_user.username}} hasn't created any listings yet. </p>
-							{% endif %}		
-						{% endif %}
-				</div>
-		</div>
+							<p> Sorry, {{url_user.username}} hasn't created any listings yet. </p>
+						{% endif %}		
+					{% endif %}
+			</div>
+		</div>	
 	</div>
 </div>
+
+
+
 {% endblock %}

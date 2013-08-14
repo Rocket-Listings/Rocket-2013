@@ -1,22 +1,30 @@
 {% load humanize %}
 <div class="seller-stats">
 	<h4>Lifetime Stats</h4>
-	<table class="table table-striped table-stats">
+	<table class="table table-stats table-condensed">
 		<tr>
-			<th>Total Listings:</th>
+			<th>Total Listings</th>
 			<td> {{listings|length }}</td>
 		</tr>
 		<tr>
-			<th>Member Since:</th>
-			<td>{{user.date_joined|naturaltime}}</td>
+			<th>Member Since</th>
+			<td>{{url_user.date_joined|naturaltime}}</td>
 		</tr>
 		<tr>
-			<th>Listing Views:</th>
-			<td></td>
+			<th>Listing Views</th>
+			<td>{{total_listing_views }}</td>
 		</tr>
 		<tr>
-			<th>Profile Views:</th>
-			<td></td>
+			<th>Profile Views</th>
+			<td>{{url_user.get_profile.get_view_count}}</td>
 		</tr>
+
+		{% if owner %}
+			<tr>
+				<th>Listing Credits:</th>
+				<td>{{credits}}</td>
+			</tr>
+		{% endif %}
+
 	</table>
 </div>

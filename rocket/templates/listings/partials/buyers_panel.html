@@ -1,0 +1,24 @@
+{% load static from staticfiles %}
+
+{# Requires the context variable 'listings' #}	
+{# Requires the context variable 'buyers' #}	
+
+<div class="buyers-body hide">
+	{% for buyer in buyers reversed %}
+	<ul class="buyer hide" data-buyer-id="{{ buyer.id }}" data-listing-id="{{ buyer.listing.id }}">
+		<li>{{ buyer.name }}</li>
+		<li>{% if buyer.max_offer %}Offering ${{ buyer.max_offer }}{% else %}No offer{% endif %}</li>
+	</ul>
+	{% endfor %}
+</div>
+
+<script id="new-buyer" type="text/template">
+{% verbatim %}
+	{{#buyers}}
+	<ul class="buyer hide" data-buyer-id="{{ buyer_id }}" data-listing-id="{{ listing_id }}">
+		<li>{{ name }}</li>
+		<li>{{#max_offer}}Offering ${{max_offer}}{{/max_offer}}{{^max_offer}}No offer{{/max_offer}}</li>
+	</ul>
+	{{/buyers}}
+{% endverbatim %}
+</script>

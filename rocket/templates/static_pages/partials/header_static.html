@@ -1,32 +1,40 @@
 {% load static from staticfiles %}
 
 <div class="header">
-	<h1 class="flag">rocket</h1>
-	
-	<div id="header-map"></div>
-	<div id="header-map-overlay"></div>
-	<div class="header-menu-bar">
-		<div class="header-menu">
-			<div class="edge"></div>
-			<div class="item1 nav" id="what" href="/what">What</div>
-			<div class="item2 nav" id="how" href="/how">How</div>
-			<div class="item3 nav" id="why" href="/why">Why</div>
-			<div class="item4 nav" id="pricing" href="/pricing">Pricing</div>
-			<div class="edge"></div>
-		</div> 
-	</div>
-	<div class="hook">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<h3>A better way to sell on Craigslist.</h3>
-					<p class="lead">Powerful tools that integrate with the world's largest classified site.</p>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="header-signup">
-		<a href="{% url 'registration_register' %}" class="btn start-submit">sign-up</a>
-		<a href="{% url 'auth_login' %}" class="btn start-submit">login</a>
-	</div>
+  <h1 class="flag">rocket</h1>
+  
+  <div id="header-map"></div>
+  <div id="header-map-overlay"></div>
+  <div class="header-menu-bar"> {#<div class="col-4"><div class="row">#}
+    <div class="col-lg-6 col-offset-3 col-12"> 
+      <div class="row">
+        <div class="col-sm-2 filler visible-lg"></div>
+        <a class="col-lg-2 col-3 item1 nav" id="what" href="/what/">What</a>
+        <a class="col-lg-2 col-sm-3 col-3 item2 nav" id="how" href="/how/">How</a>
+        <a class="col-lg-2 col-sm-3 col-3 item3 nav" id="why" href="/why/">Why</a>
+        <a class="col-lg-2 col-sm-3 col-3 item4 nav" id="pricing" href="/pricing/">Pricing</a>
+        <div class="col-sm-2 filler visible-lg"></div>        
+      </div> 
+    </div>    
+  </div>
+  <div class="hook">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <h3>A better way to sell on Craigslist.</h3>
+          <p class="lead">Create, autopost, and manage your listings for fast and headache-free selling.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="header-signup">
+    <div class="col-lg-4 col-offset-4 col-sm-12">
+      <div class="row">
+        <div class="col-sm-2 filler visible-lg"></div>
+        <a class="col-lg-4 col-6 start-submit left-btn" href="{% url 'registration_register' %}">post | join</a>
+        <a class="col-lg-4 col-6 start-submit right-btn" href="{% url 'auth_login' %}">login</a>
+        <div class="col-sm-2 filler visible-lg"></div>        
+      </div> 
+    </div>
+  </div>
 </div>

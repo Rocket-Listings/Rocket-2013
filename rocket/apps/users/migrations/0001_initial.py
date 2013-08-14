@@ -15,14 +15,18 @@ class Migration(SchemaMigration):
             ('name', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
             ('location', self.gf('django.db.models.fields.CharField')(max_length=255, blank=True)),
             ('default_category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['listings.ListingCategory'], null=True, blank=True)),
-            ('default_listing_type', self.gf('django.db.models.fields.CharField')(max_length=1, null=True, blank=True)),
-            ('default_seller_type', self.gf('django.db.models.fields.CharField')(default='P', max_length=1)),
+            ('seller_type', self.gf('django.db.models.fields.CharField')(max_length=1)),
             ('phone', self.gf('django.db.models.fields.CharField')(max_length=50, blank=True)),
             ('bio', self.gf('django.db.models.fields.TextField')(blank=True)),
             ('propic', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
             ('twitter_handle', self.gf('django.db.models.fields.CharField')(max_length=20, blank=True)),
             ('TWITTER_OAUTH_TOKEN', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
             ('TWITTER_OAUTH_TOKEN_SECRET', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
+            ('listing_credits', self.gf('django.db.models.fields.IntegerField')(default=3)),
+            ('total_credits', self.gf('django.db.models.fields.IntegerField')(default=3)),
+            ('profile_completed_once', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('twitter_connected_once', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('facebook_connected_once', self.gf('django.db.models.fields.BooleanField')(default=False)),
         ))
         db.send_create_signal(u'users', ['UserProfile'])
 
@@ -34,17 +38,9 @@ class Migration(SchemaMigration):
             ('email', self.gf('django.db.models.fields.EmailField')(max_length=255)),
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('rating', self.gf('django.db.models.fields.IntegerField')(default='5')),
         ))
         db.send_create_signal(u'users', ['UserComment'])
-
-        # Adding model 'UserRating'
-        db.create_table(u'users_userrating', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('date_posted', self.gf('django.db.models.fields.DateField')(auto_now_add=True, blank=True)),
-            ('rating', self.gf('django.db.models.fields.IntegerField')(default=50)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-        ))
-        db.send_create_signal(u'users', ['UserRating'])
 
         # Adding model 'ProfileFB'
         db.create_table(u'users_profilefb', (
@@ -80,9 +76,6 @@ class Migration(SchemaMigration):
 
         # Deleting model 'UserComment'
         db.delete_table(u'users_usercomment')
-
-        # Deleting model 'UserRating'
-        db.delete_table(u'users_userrating')
 
         # Deleting model 'ProfileFB'
         db.delete_table(u'users_profilefb')
@@ -161,6 +154,7 @@ class Migration(SchemaMigration):
             'date_posted': ('django.db.models.fields.DateField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '255'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'rating': ('django.db.models.fields.IntegerField', [], {'default': "'5'"}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         },
@@ -170,22 +164,19 @@ class Migration(SchemaMigration):
             'TWITTER_OAUTH_TOKEN_SECRET': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
             'bio': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'default_category': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.ListingCategory']", 'null': 'True', 'blank': 'True'}),
-            'default_listing_type': ('django.db.models.fields.CharField', [], {'max_length': '1', 'null': 'True', 'blank': 'True'}),
-            'default_seller_type': ('django.db.models.fields.CharField', [], {'default': "'P'", 'max_length': '1'}),
+            'facebook_connected_once': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'listing_credits': ('django.db.models.fields.IntegerField', [], {'default': '3'}),
             'location': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
             'phone': ('django.db.models.fields.CharField', [], {'max_length': '50', 'blank': 'True'}),
+            'profile_completed_once': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'propic': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
+            'seller_type': ('django.db.models.fields.CharField', [], {'max_length': '1'}),
+            'total_credits': ('django.db.models.fields.IntegerField', [], {'default': '3'}),
+            'twitter_connected_once': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'twitter_handle': ('django.db.models.fields.CharField', [], {'max_length': '20', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['auth.User']", 'unique': 'True'})
-        },
-        u'users.userrating': {
-            'Meta': {'object_name': 'UserRating'},
-            'date_posted': ('django.db.models.fields.DateField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'rating': ('django.db.models.fields.IntegerField', [], {'default': '50'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         },
         u'users.viewcount': {
             'Meta': {'object_name': 'ViewCount'},
