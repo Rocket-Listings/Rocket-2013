@@ -7,8 +7,8 @@
     email: chucknorris@gmail.com
     first_name: 'Chuck'
     is_active: true
-    is_staff: true
-    is_superuser: true
+    is_staff: false
+    is_superuser: false
     last_name: 'Norris'
     password: pbkdf2_sha256$10000$7OzttrdLZ3TM$BRjWWSgMm8MTp+JgWfMpbQfZ99rXTVyIj+014hS+T8U=
     user_permissions: []
