@@ -118,15 +118,15 @@ h1.flag {
     margin-right: -15px; 
   }
   // margin-right: 0; 
-    a {
-      padding-left: 15px;
-      line-height: @menu-height;
-      text-align: center;
-      color: @color6;
-      &:hover, &:active {
-        text-decoration: underline;
-      }
+  a {
+    padding-left: 15px;
+    line-height: @menu-height;
+    text-align: center;
+    color: @color6;
+    &:hover, &:active, &.active {
+      text-decoration: underline;
     }
+  }
   .item1 {
     background: @menu1;
     border-left: 3px solid @menu5;
@@ -144,15 +144,6 @@ h1.flag {
   .filler {
     opacity: 0;
   }  
-}
-
-.nav{
-  cursor: pointer;
-}
-
-.nav-highlight{
-  text-decoration: underline;
-  //font-weight: bold;
 }
 
 // .hook {
@@ -358,8 +349,12 @@ h1.flag {
 
 }
 
-.partials {
+.partial {
+  display:none;
   margin-top: 30px;
+}
+.partial.active {
+  display: block;
 }
 
 .why-row {

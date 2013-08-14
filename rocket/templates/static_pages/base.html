@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static from staticfiles %}
 {% load compressed %}
+{% load active from navigation %}
 
 {% block js %}
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuRtB1F8XVtV22jQ3dkGQPqWCKQz4suJ0&sensor=false"></script>
@@ -29,10 +30,10 @@
       <div class="col-lg-6 col-offset-3 col-12"> 
         <div class="row">
           <div class="col-sm-2 filler visible-lg"></div>
-          <a class="col-lg-2 col-3 item1 nav" id="what" href="/what/">What</a>
-          <a class="col-lg-2 col-sm-3 col-3 item2 nav" id="how" href="/how/">How</a>
-          <a class="col-lg-2 col-sm-3 col-3 item3 nav" id="why" href="/why/">Why</a>
-          <a class="col-lg-2 col-sm-3 col-3 item4 nav" id="pricing" href="/pricing/">Pricing</a>
+          <a class="col-lg-2 col-sm-3 col-3 item1 {% active 'what' %}" data-href="#what-partial" id="what" href="/what/">What</a>
+          <a class="col-lg-2 col-sm-3 col-3 item2 {% active 'how' %}" data-href="#how-partial" id="how" href="/how/">How</a>
+          <a class="col-lg-2 col-sm-3 col-3 item3 {% active 'why' %}" data-href="#why-partial" id="why" href="/why/">Why</a>
+          <a class="col-lg-2 col-sm-3 col-3 item4 {% active 'pricing' %}" data-href="#pricing-partial" id="pricing" href="/pricing/">Pricing</a>
           <div class="col-sm-2 filler visible-lg"></div> 
         </div> 
       </div>    

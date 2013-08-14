@@ -109,24 +109,17 @@ $(function() {
 
   getLocationByIP();
 
-  // var pathname = window.location.pathname;
-  //   var url = pathname.replace(/(\/)/g,"");
-  //   if (url.length==""){
-  //     $("#what").addClass('nav-highlight');   
-  //   }else{
-  //   $("#" + url).addClass('nav-highlight');
-  // }
-
-  // $('.nav').click(function(event) {
-  //     event.preventDefault();         //don't use as normal hyperlinks
-  //     console.log('click');      
-  //     var id = $(this).attr('id');    //find and show relevant partial
-  //     $('.partials').hide();
-  //     $('.' + id).show()
-  //     $('#' + id).addClass('nav-highlight').siblings().removeClass('nav-highlight'); //add/remove nav highlighting
-  //     var url = $(this).attr("href"); //update url without changing pages
-  //     history.pushState({page:url}, url, url);
-  // });
+  $('.header-menu-bar a').click(function(event) {
+      var elem = $($(this).data('href'));
+      if (elem.length > 0) {
+        event.preventDefault();
+        elem.siblings().hide();
+        elem.show();
+        $(this).addClass('active').siblings().removeClass('active')
+      } 
+      var url = $(this).attr("href"); //update url without changing pages
+      history.pushState({page:url}, url, url);
+  });
 
   /* 
   function handleEvents() {

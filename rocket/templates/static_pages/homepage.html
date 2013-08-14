@@ -1,0 +1,18 @@
+{% extends "static_pages/base.html" %}
+{% load static from staticfiles %}
+{% load active from navigation %}
+
+{% block content %}
+<div  id="what-partial" class="partial what-partial {% active 'what' %}">
+    {% include 'static_pages/partials/what.html' %}
+</div>
+<div id="how-partial" class="partial how-partial {% active 'how' %}">
+    {% include 'static_pages/partials/how.html' %}
+</div>
+<div  id="why-partial" class="partial {% active 'why' %}">
+    {% include 'static_pages/partials/why.html' %}
+</div>
+<div id="pricing-partial" class="partial {% active 'pricing' %}">
+    {% include 'static_pages/partials/pricing.html' %}
+</div>  
+{% endblock %}

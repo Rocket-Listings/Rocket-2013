@@ -30,8 +30,8 @@ THUMBNAIL_DEBUG = DEBUG
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS = (
     ('Teddy Knox', 'teddy@rocketlistings.com'),
-    # ('Brian Sirkia', 'brian@rocketlistings.com'),
-    # ('Nat Kelner', 'nat@rocketlistings.com'),
+    ('Brian Sirkia', 'brian@rocketlistings.com'),
+    ('Nat Kelner', 'nat@rocketlistings.com'),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
