@@ -4,7 +4,6 @@
 
 {% block js %}
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuRtB1F8XVtV22jQ3dkGQPqWCKQz4suJ0&sensor=false"></script>
-
 	<script type="text/javascript" src="{% static 'static_pages/js/static_pages.js' %}"></script>	
 {% endblock %}
 
@@ -15,9 +14,10 @@
 {% block body %}
 	<div class="wrap">
 		{% include "static_pages/partials/header_static.html" %}
-		<div class="container">
+	 	<div id="static-map"></div>
+		<div class="container-page container">
 			{% block content %}<h3>Error 404</h3>{% endblock %}
-		</div>
+		</div>	
 		<div class="push"></div>{# sticky footer div #}
 	</div>
 	
