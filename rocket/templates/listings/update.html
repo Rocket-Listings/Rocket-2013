@@ -1,10 +1,10 @@
 {% comment %} {% extends 'listings/base.html' %}
 {% load thumbnail %}
 {% load static from staticfiles %}
-{% load compress %}
+
 
 {% block js %}
-  {% compress js %}
+  
   <script>
       filepicker.setKey('ATM8Oz2TyCtiJiHu6pP6Qz');
   </script>
@@ -15,7 +15,7 @@
       });
     })
   </script>
-  {% endcompress %}
+  
 {% endblock %}
 
 {% block content %}

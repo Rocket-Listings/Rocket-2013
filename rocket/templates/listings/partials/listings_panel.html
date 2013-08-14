@@ -1,11 +1,11 @@
 {% load static from staticfiles %}
 {% load pagination_tags %}
 {% load humanize %}
+{% load danatime %}
 {# Requires the context variable 'listings' #}
 
 <!--HEADER-->
 <div class="listings-header">
-	<span class="d-check"><input class="check-all" type="checkbox"></span>
 	<ul class="sort-by listings-cols-wrapper">
 		<li class="d-title phone-full-width">
 			<a class="sort" data-sort="title" href="#">Title</a>
@@ -19,6 +19,10 @@
 			<a class="sort" data-sort="category" href="#">Category</a>
 			<span class="sort-toggle glyphicon glyphicon-chevron-down hide"></span>
 		</li>
+		<li class="d-status phone-hide">
+			<a class="sort" data-sort="status" href="#">Status</a>
+			<span class="sort-toggle glyphicon glyphicon-chevron-down hide"></span>
+		</li>
 		<li class="d-date phone-hide">
 			<a class="sort" data-sort="date" href="#">Date Listed</a>
 			<span class="sort-toggle glyphicon glyphicon-chevron-down hide"></span>
@@ -26,23 +30,46 @@
 	</ul>
 </div>
 <div class="listings-body">
+	{# <div class="scroll-down-border-top"></div> #}
 	<ul class="list">
 	{% for listing in listings %}
-		<li data-listing-id="{{ listing.id }}">
-			<span class="d-check phone-hide"><input class="check-one" type="checkbox" name="check-{{ listing.id }}" value="{{ listing.id }}"></span>
+		<li class="listing {{ listing.status|lower }}" data-listing-id="{{ listing.id }}">
 			<div class="listings-cols-wrapper">
+				<span class="id hide">{{ listing.id }}</span>
 				<span class="d-title phone-full-width">
 					<a class="title" href="{{ listing.get_absolute_url }}">{{ listing.title }}</a>
 				</span>
 				<span class="price d-price phone-hide">${{ listing.price }}</span>
 				<span class="category d-category phone-hide">{{ listing.category.name }}</span>
+				<span class="d-status status phone-hide">{{ listing.status }}</span>
 				<span class="d-date phone-hide">
 					<span class="date hide">{{ listing.pub_date|date:"m/d/y P" }}</span>
-					{{ listing.pub_date|naturaltime }}
+					{{ listing.pub_date|danatime }}
 				</span>
-				<span class="status hide">{{ listing.status }}</span>
 			</div>
 		</li>
 	{% endfor %}
 	</ul>
 </div>
+
+<script id="new-listing" type="text/template">
+{% verbatim %}
+	{{#listings}}
+		<li class="listing {{ status_lower }}" data-listing-id="{{ id }}">
+			<div class="listings-cols-wrapper">
+				<span class="id hide">{{ id }}</span>
+				<span class="d-title phone-full-width">
+					<a class="title phone-full-width">{{ title }}</a>
+				</span>
+				<span class="price d-price phone-hide">${{ price }}</span>
+				<span class="category d-category phone-hide">{{ category }}</span>
+				<span class="d-status status phone-hide">{{ status }}</span>
+				<span class="d-date phone-hide">
+					<span class="date hide">{{ sort_date }}</span>
+					{{ natural_date }}
+				</span>
+			</div>
+		</li>
+	{{/listings}}
+{% endverbatim %}
+</script>

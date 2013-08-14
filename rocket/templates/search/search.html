@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% load static from staticfiles %}
 {% load humanize %}
-{% load compress %}
+
 
 {% block js %}
-    {% compress js %}
+    
         <script src="{% static 'listings/js/sorttable.js' %}" type="text/javascript"></script>
-    {% endcompress %}
+    
         <script src="{% static 'listings/js/search.js' %}" type="text/javascript"></script>
 {% endblock %}
 

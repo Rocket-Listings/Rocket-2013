@@ -1,7 +1,7 @@
 {% extends 'users/base.html' %}
 {% block title %}Account Info{% endblock %}
 {% load static from staticfiles %}
-{% load compress %}
+
   
 {% block content %}
 	{% if user.get_profile.name %}
@@ -11,18 +11,30 @@
 	{% endif %}
 
 	<div class="content-wrapper row">
-		<div class="listing-credits-wrapper col-lg-3 pull-right-screen-large">
+		<div class="listing-credits-wrapper col-lg-3 pull-right">
 			<span class="h4">Listing Credits</span>
 			<ul class="listing-credits-stats">
-				<li><span>Credits Available:</span><span id="credit-counter">{{ credits }}</span></li>
-				<li><span>Credits Spent:</span><span>{{ credits_spent }}</span></li>
+				<li class="credits-available"><span>Credits Available</span><span id="credit-counter">{{ credits }}</span></li>
+				<li><span>Credits Spent</span><span>{{ credits_spent }}</span></li>
 			</ul>
-			<span class="h4">Get more listings:</span>
+			<span class="h4">Get more listings</span>
 			<ul class="listing-credits-more">
-				<li><a href="#" id="profile-completed" class="{% if profile_completed_once %}completed{% endif %}">Complete your profile (2)</a></li>
-				<li><a href="#" id="twitter-linked" class="{% if twitter_connected_once %}completed{% endif %}">Link Twitter (2)</a></li>
-				<li><a href="#" id="facebook-linked" class="{% if facebook_connected_once %}completed{% endif %}">Link Facebook (2)</a> 
-				<li><a href="#">Get your friends to join (TBD)</a></li>
+				<li id="profile-completed" class="{% if profile_completed_once %}completed{% endif %}">
+					<span>Complete your profile</span>
+					<span>2</span>
+				</li>
+				<li id="twitter-linked" class="{% if twitter_connected_once %}completed{% endif %}">
+					<span>Link Twitter</span>
+					<span>2</span>
+				</li>
+				<li id="facebook-linked" class="{% if facebook_connected_once %}completed{% endif %}">
+					<span>Link Facebook</span>
+					<span>2</span>
+				</li>
+				<li>
+					<span>Get your friends to join</span>
+					<span>(TBD)</span>
+				</li>
 			</ul>
 		</div>
 
@@ -112,12 +124,12 @@
 							<td><a class="edit active" href="#">Edit</a></td>
 						</tr>
 						<tr>
-							<td class="subheader"><h4>Identity </h4></td>
+							<td class="subheader"><h4>Identity</h4></td>
 						</tr>
 						<tr class="uneditable">
 							<td>Twitter</td>
 							<td>
-								<span class="at {% if not user.get_profile.twitter_handle %}muted{% endif %}">@</span><span class="twitter-handle">{{ user.get_profile.twitter_handle }}</span>
+								<span class="at {% if not user.get_profile.twitter_handle %}hide{% endif %}">@</span><span class="twitter-handle">{{ user.get_profile.twitter_handle }}</span>
 							</td>
 							<td>
 								<a class="verify-twitter {% if user.get_profile.twitter_handle %}hide{% endif %}" href="#">Connect</a>
@@ -138,23 +150,12 @@
 							<td class="subheader"><h4>Listings</h4></td>
 						</tr>
 						<tr class="editable">
-							<td>Default Seller Type</td>
+							<td>Seller Type</td>
 							<td class="select">
-								<select class="form-control" id="id_default_seller_type" name="default_seller_type" value="{{user.get_profile.default_seller_type}}">
-									{% for value, text in form.default_seller_type.field.choices %}
-										<option value="{{value}}" {% ifequal value form.default_seller_type.value %}selected="selected"{%endifequal%}>{{text}}</option>
+								<select class="form-control" id="id_seller_type" name="seller_type" value="{{user.get_profile.seller_type}}">
+									{% for value, text in form.seller_type.field.choices %}
+										<option value="{{value}}" {% ifequal value form.seller_type.value %}selected="selected"{%endifequal%}>{{text}}</option>
 									{% endfor %}
-								</select>
-							</td>
-							<td></td>
-						</tr>
-						<tr class="editable">
-							<td>Default Listing Type</td>
-							<td class="select">
-								<select class="form-control" id="id_default_listing_type" name="default_listing_type" value="{{user.get_profile.default_listing_type}}"> 
-							    {% for value, text in form.default_listing_type.field.choices %}
-							    	<option value="{{value}}" {% ifequal value form.default_listing_type.value %}selected="selected"{%endifequal%}>{{text}}</option>
-							    {% endfor %}
 								</select>
 							</td>
 							<td></td>

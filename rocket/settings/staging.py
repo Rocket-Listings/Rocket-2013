@@ -6,23 +6,14 @@ from os.path import join, normpath
 from common import *
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
-DEBUG = True
-
-SITE_ID = 1
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 THUMBNAIL_DEBUG = DEBUG
 
+SITE_ID = 1
+
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
-#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-############# MAILGUN CONFIG
-EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
-
-MAILGUN_ACCESS_KEY = 'key-9flqj538z-my-qcnpc74c2wit4vibl-3'
-
-MAILGUN_SERVER_NAME = 'rocketlistings.mailgun.org'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
@@ -44,26 +35,12 @@ CACHES = {
     }
 }
 
-# See: http://docs.celeryq.org/en/latest/configuration.html#celery-always-eager
 # Setting CELERY_ALWAYS_EAGER = True makes the tasks blocking, just run celeryd instead
 CELERY_ALWAYS_EAGER = True
 
-# See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
-INSTALLED_APPS += (
-    'debug_toolbar',
-)
+ALLOWED_HOSTS = ['*']
 
-# See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
-INTERNAL_IPS = ('127.0.0.1',)
-
-# See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
-MIDDLEWARE_CLASSES += (
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
-)
-
-DEBUG_TOOLBAR_CONFIG = { 'INTERCEPT_REDIRECTS': False }
-
-# STATICFILES_STORAGE = 'rocket.settings.storage.S3PipelineStorage'
+STATICFILES_STORAGE = 'rocket.settings.storage.S3PipelineStorage'
 
 # See: http://docs.celeryproject.org/en/latest/configuration.html#broker-transport
 # BROKER_TRANSPORT = 'amqplib'

@@ -99,7 +99,7 @@
         {# <label class="form-label">Map</label> #}
       </div>
       <div class="specs-form col-lg-6">
-        <p id="no-specs">No spec fields for this category :(</p>
+        <p id="no-specs"></p>
         {% for spec_key in spec_keys %}
         <div class="form-group" data-cat="{{ spec_key.category_id }}">
             <label class="control-label" for="id_spec-{{ spec_key.id }}">{{ spec_key.name }}</label>

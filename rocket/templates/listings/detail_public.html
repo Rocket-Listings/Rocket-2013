@@ -1,13 +1,13 @@
 {% extends 'listings/base.html' %}
 {% load thumbnail %}
-{% load compress %}
+
 {% load static from staticfiles %}
 
 {% block js %}
   {{ block.super }}
-  {% compress js %}
+  
   <script src="{% static 'listings/js/detail_public.js' %}"></script>
-  {% endcompress %}
+  
 {% endblock %}
 
 {% block content %}

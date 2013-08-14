@@ -1,15 +1,61 @@
-
-$(document).ready(function() {
-  var pathname = window.location.pathname;
-  var url = pathname.replace(/(\/)/g,"");
-  if (url.length==""){
-    $("#what").addClass('nav-highlight');   
-  }else{
-  $("#" + url).addClass('nav-highlight');
-}
-});
-
 $(function() {
+  google.maps.visualRefresh = true;
+  var mapOptions = {
+    center: new google.maps.LatLng(49.5, 60.8), // burlington coords 44.5, -72.8
+    zoom: 10,
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    disableDefaultUI: true,
+    panControl: false,
+    zoomControl: false,
+    mapTypeControl: false,
+    scaleControl: false,
+    streetViewControl: false,
+    overviewMapControl: false
+  };
+  var map = new google.maps.Map(document.getElementById("header-map"), mapOptions);
+  $("#header-map-overlay").css('visibility', 'visible');
+
+  function getLocationByIP() {
+    $.ajax({
+      method: 'GET',
+      url: 'http://jsonip.appspot.com/',
+      success: function(response) {
+        $.ajax({
+          method: 'GET',
+          url: 'https://freegeoip.net/json/' + response.ip,
+          success: function(response) {
+            gotLocation(response.latitude, response.longitude);
+          }
+        });
+      }
+    });
+  }
+
+  function gotLocation(lat, lng) {
+    map.panTo(new google.maps.LatLng(lat, lng + 0.4));
+  }
+
+  getLocationByIP();
+
+  var pathname = window.location.pathname;
+    var url = pathname.replace(/(\/)/g,"");
+    if (url.length==""){
+      $("#what").addClass('nav-highlight');   
+    }else{
+    $("#" + url).addClass('nav-highlight');
+  }
+
+  $('.nav').click(function(event) {
+      event.preventDefault();         //don't use as normal hyperlinks
+      console.log('click');      
+      var id = $(this).attr('id');    //find and show relevant partial
+      $('.partials').hide();
+      $('.' + id).show()
+      $('#' + id).addClass('nav-highlight').siblings().removeClass('nav-highlight'); //add/remove nav highlighting
+      var url = $(this).attr("href"); //update url without changing pages
+      history.pushState({page:url}, url, url);
+  });
+
   /* 
   function handleEvents() {
     var autoValidate = null;
@@ -53,62 +99,6 @@ $(function() {
 
   handleEvents();
    */
-  google.maps.visualRefresh = true;
-  var mapOptions = {
-    center: new google.maps.LatLng(49.5, 60.8), // burlington coords 44.5, -72.8
-    zoom: 10,
-    mapTypeId: google.maps.MapTypeId.ROADMAP,
-    disableDefaultUI: true,
-    panControl: false,
-    zoomControl: false,
-    mapTypeControl: false,
-    scaleControl: false,
-    streetViewControl: false,
-    overviewMapControl: false
-  };
-  var map = new google.maps.Map(document.getElementById("header-map"), mapOptions);
-  $("#header-map-overlay").css('visibility', 'visible');
-
-  // if (navigator.geolocation) {
-  //  navigator.geolocation.getCurrentPosition(gotLocation, noLocation);
-  // } else {
-  //  console.log("Error: Old or non-compliant browser.");
-  // }
-
-  function getLocationByIP() {
-    $.ajax({
-      method: 'GET',
-      url: 'http://jsonip.appspot.com/',
-      success: function(response) {
-        $.ajax({
-          method: 'GET',
-          url: 'https://freegeoip.net/json/' + response.ip,
-          success: function(response) {
-            gotLocation(response.latitude, response.longitude);
-          }
-        });
-      }
-    });
-  }
-
-  function gotLocation(lat, lng) {
-    map.panTo(new google.maps.LatLng(lat, lng + 0.4));
-  }
-  // function noLocation(error) { 
-  //   console.log( "Maps error: " + error.code); 
-  // }
-
-  getLocationByIP();
-
-  $('.nav').click(function(event) {
-      event.preventDefault();         //don't use as normal hyperlinks
-      var id = $(this).attr('id');    //find and show relevant partial
-      $('.partials').hide();
-      $('.' + id).show()
-      $('#' + id).addClass('nav-highlight').siblings().removeClass('nav-highlight'); //add/remove nav highlighting
-      var url = $(this).attr("href"); //update url without changing pages
-      history.pushState({page:url}, url, url);
-  });
 });
 
 

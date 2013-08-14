@@ -11,4 +11,4 @@ def First_Visit(func):
 	else:
 		first_visit = 0
 
-	return func(request,first_visit);
+	return func(request,first_visit)

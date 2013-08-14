@@ -1,18 +1,14 @@
 {% extends 'base.html' %}
+{% load compressed %}
 {% load static from staticfiles %}
-{% load compress %}
 
 {% block css %}
-{% compress css %}
-<link type="text/less" media="all" rel="stylesheet" href="{% static 'listings/less/listings.less' %}"/>
-{% endcompress %}
+{% compressed_css 'listings_base' %}
 {% endblock %}
 
-{% block js %}
-    {% compress js %}
+{% block js %}   
         <script src="{% static 'rocket/js/mustache.js' %}"></script>
         <script src="{% static 'listings/js/jquery.sortable.min.js' %}"></script>
         <script src="{% static 'rocket/js/jquery.tablesorter.js' %}"></script>
         <script src="{% static 'listings/js/list.min.js' %}"></script>
-    {% endcompress %}
 {% endblock %}

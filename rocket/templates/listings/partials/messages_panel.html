@@ -1,13 +1,11 @@
 {% load static from staticfiles %}
+{% load humanize %}
 {# Requires the context variable 'messages' #}	
-<div class="messages-header">
-	<ul>
-		<li>Messages</li>
-	</ul>
-</div>
-<div class="messages-body">
+
+<div class="messages-body hide">
 	{% for message in buyer_messages %}
-	<ul class="message buyer-{{ message.buyer.id }} {% if message.isSeller %}message-seller{% else %}message-buyer{% endif %} hide">
+	<ul class="message {% if message.isSeller %}message-seller{% else %}message-buyer{% endif %} {% if not message.seen %}unread{% endif %} hide" data-listing-id="{{ message.listing.id }}" data-buyer-id="{{ message.buyer.id }}" data-message-id="{{ message.id }}">
+		<li class="message-time">{{message.date|naturaltime}}</li>
 		<li class="message-buyer-name">
 			{% if message.isSeller %}
 				{% if user.get_profile.name %}
@@ -18,7 +16,9 @@
 			{% else %}
 				{{ message.buyer.name }}
 			{% endif %}
+
 		</li>
+
 		<li class="message-content">{{ message.content }}</li>
 	</ul>
 	<span class="hide message-form-preserve buyer-{{ message.buyer.id }}"></span>
@@ -26,7 +26,25 @@
 </div>
 <div class="message-form-wrapper hide">
 	<form class="message-form">
-		<textarea rows="3" class="form-control" name="content" placeholder="Send a reply..."></textarea>
+		<textarea rows="4" class="form-control" name="content" placeholder="Send a reply..."></textarea>
+		<input type="hidden" name="listing" value="">
+		<input type="hidden" name="buyer" value="">
 		<input type="submit" class="btn btn-primary send-button">
 	</form>
 </div>
+
+<script id="new-message" type="text/template">
+{% verbatim %}
+{{#messages}}
+	<ul class="message {{#isSeller}}message-seller{{/isSeller}}{{^isSeller}}message-buyer{{/isSeller}} {{^seen}}unread{{/seen}} hide" data-listing-id="{{ listing_id }}" data-buyer-id="{{ buyer_id }}" data-message-id="{{ message_id }}">
+		<li class="message-time">{{ date }}</li>
+		<li class="message-buyer-name">
+			{{#isSeller}}{{ seller_name }}{{/isSeller}}
+			{{^isSeller}}{{ buyer_name }}{{/isSeller}}
+		</li>
+		<li class="message-content">{{ content }}</li>
+	</ul>
+	<span class="hide message-form-preserve buyer-{{ buyer_id }}"></span>
+{{/messages}}
+{% endverbatim %}
+</script>

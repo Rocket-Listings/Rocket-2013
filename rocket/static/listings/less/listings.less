@@ -4,60 +4,129 @@
     For instance, if our title was simply '.title', then maybe a '.title' rule from base.less might take into effect. */
 
 // DASHBOARD VARIABLES (WIDTH)
-@delete: 40px;
-@title: 50%;
+@title: 45%;
 @price: 10%;
-@category: 15%;
-@date: 25%;
+@category: 18%;
+@date: 17%;
+@status: 10%;
+
+.phone-hide {
+  @media (max-width: 480px) {
+    display: none !important;
+  }
+}
+.phone-full-width {
+  @media (max-width: 480px) {
+    width: 100% !important;
+  }
+}
+
+.listings-body, .buyers-body, .messages-body {
+  overflow-x: hidden !important;
+  &::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,.3);
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.3);
+    &:hover {
+      background-color: rgba(0, 0, 0, .6);
+    }
+  }
+  &::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, .1);
+    -webkit-box-shadow: inset 0 0 1px #DDD;
+  }
+  &::-webkit-scrollbar:horizontal {
+    display: none;
+  }
+}
 
 // DASHBOARD HEADER
 .dashboard-header {
     .dashboard-title {
         display: inline-block;
-        padding-left: 25px !important;
+        padding-left: 8px !important;
+    }
+    .dashboard-search-button {
+      display: inline-block;
+      padding-left: 20px;
+      width: 100px;
+      float: none;
+      vertical-align: top;
+      .btn {
+        width: 100%;
+        height: 38px;
+        background-color: #EEE;
+        border: 1px solid #357EBD;
+        color: #357EBD;
+        &:hover {
+          background-color: darken(#EEE, 2%);
+        }
+      }
+      span {
+        float: none;
+        vertical-align: middle;
+      }
     }
     .dashboard-search {
         display: inline-block;
         float: none;
         vertical-align: top;
-        width: 250px;
-        padding-left: 20px;
-    }
-    .dashboard-dropdown {
-      display: inline-block;
-      float: none;
-      vertical-align: top;
-      width: 100px;
-      padding-left: 20px;
-      a {
-        width: 100%;
-        position: relative;
-        &:focus {
-          outline: none !important;
+        width: 300px;
+        padding-left: 38px;
+        input:hover {
+          border: darken(#DDD, 20%) 1px solid;
         }
-      }
-      .dropdown-menu {
-        left: auto !important;
-      }
+        input:active, input:focus {
+          //border: #66AfE9 1px solid;
+          border: #357EBD 1px solid;
+        }
     }
-    .dashboard-refresh {
+    .dashboard-refresh, .dashboard-delete {
         display: inline-block;
-        float: none;
         vertical-align: top;
-        padding-left: 20px;
+        float: right;
+        padding-right: 20px;
         .btn {
-            height: 38px;
+          height: 38px;
+          width: 42px;
+          background-color: #EEE;
+          border: 1px solid #357EBD;
+          color: #357EBD;
+          &:hover {
+            background-color: darken(#EEE, 2%);
+          }
         }
         span {
             float: none;
             vertical-align: middle;
         }
     }
+    .dashboard-delete-permanent {
+      display: inline-block;
+      vertical-align: top;
+      float: right;
+      padding-right: 20px;
+      .btn {
+        height: 38px;
+        background-color: #EEE;
+        border: 1px solid #357EBD;
+        color: #357EBD;
+        &:hover {
+          background-color: darken(#EEE, 2%);
+        }
+      }
+    }
     .dashboard-create {
         float: right;
-        padding-right: 20px;
+        padding-right: 8px;
+        width: 119px;
+        .btn { width: 100%; }
     }
 }
+
 // DASHBOARD
 .dashboard-panel {
   font-size: 0;
@@ -68,21 +137,69 @@
   @media (max-width: 767px) {
     top: 300px !important;
   }
+  .sidebar {
+    display: inline-block;
+    height: calc(~'100% - ' @footer-height);
+    width: 156px;
+    vertical-align: bottom;
+    margin-top: 36px;
+    position: relative;
+    .sidebar-button-wrapper {
+      width: 100%;
+      cursor: pointer;
+      .sidebar-text {
+        display: inline-block;
+        font-size: 14px;
+        padding: 8px 16px 8px 17px;
+        margin-bottom: 1px;
+        margin-left: 5px;
+        width: calc(~'100% - 5px');
+        text-decoration: none;
+        color: #333;
+        &:hover,
+        &:active {
+          text-decoration: none;
+          color: #333;
+        }
+      }
+      &.selected {
+        border-left: #357EBD 5px solid;
+        .sidebar-text {
+          margin-left: 0 !important;
+          font-weight: bold;
+        }
+      }
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.1)
+      }
+    }
+    .keyboard-shortcuts-text {
+      font-size: 12px;
+      float: none;
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      a {
+        color: #333;
+        &:hover {
+          color: #333;
+        }
+      }
+    }
+  }
   .listings-col {
     display: inline-block;
     height: 100%;
-    width: 60%;
-    border-right: 1px #DDDDDD solid;
+    width: calc(~'60% - 81px');
+    //border-right: 1px #DDDDDD solid;
     vertical-align: top;
-    .listings-cols-wrapper {
-      width: calc(~'100% - 40px');
-      float: right;
-    }
     .listings-header {
       height: 36px;
       width: 100%;
+      border-bottom: #DDD 1px solid !important;
       ul {
-        margin: 0 !important;
+        margin: 0 7px 0 0 !important;
         padding-left: 0 !important;
         li {
           font-size: 14px;
@@ -91,24 +208,13 @@
           padding: 8px;
           overflow: hidden;
           white-space: nowrap;
-          border-bottom: #DDD 1px solid;
           &.d-title {
             width: @title;
-            padding-left: 0;
           }
           &.d-price { width: @price; }
           &.d-category { width: @category; }
           &.d-date { width: @date; }
-          &.phone-hide {
-            @media (max-width: 480px) {
-              display: none;
-            }
-          }
-          &.phone-full-width {
-            @media (max-width: 480px) {
-              width: 100%;
-            }
-          }
+          &.d-status { width: @status; }
           a {
             display: inline-block;
           }
@@ -120,43 +226,64 @@
           }
         }
       }
-      span {
-        &.d-check { 
-          width: @delete;
-          height: 37px;
-          padding-left: 14px;
-          position: relative;
-          display: inline-block;
-          padding-top: 8px;
-          border-bottom: #DDD 1px solid;
-          input[type='checkbox'] {
-            vertical-align: top;
-            font-size: 14px;
-          }
-        }
-      }
     }
     .listings-body {
       height: calc(~'100% - ' @footer-height);
       width: 100%;
-      overflow: auto;
+      overflow: scroll;
+      background-color: rgba(0, 0, 0, 0.04);
+      position: relative;
+      .scroll-down-border-top {
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: rgba(0, 0, 0, .1)
+      }
       ul {
+        height: 100%;
         margin-bottom: 0 !important;
         padding: 0 !important;
         li {
+          position: relative;
           cursor: pointer;
           border-bottom: #DDD 1px solid;
-          &:hover {
-            background-color: #EEE;
-          }
+          text-rendering: optimizeLegibility;
+          //background-color: rgba(0, 0, 0, 0.1);
           &.highlight {
-            background-color: darken(#bcddeb, 20%) !important;
-            color: #FFFFFF;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            border-left: #357EBD 2px solid;
+            border-bottom: none !important;
             text-rendering: optimizeLegibility;
+            .listings-cols-wrapper {
+              margin-left: -2px;
+              border-bottom: #DDD 1px solid;
+            }
             a { 
-              color: #FFFFFF;
               text-rendering: optimizeLegibility;
             }
+          }
+          &.sold {
+            background-color: darken(#EEE, 10%);
+            span.status { color: darken(#EEE, 50%);}
+          }
+          &.deleted {
+            background-color: #F2DEDE;
+            span.status { color: darken(#F2DEDE, 40%); }
+          }
+          &.draft {
+            background-color: lighten(#357EBD, 45%);
+            span.status { color: #357EBD; }
+          }
+          &.pending {
+            background-color: #FCF8E3;
+            span.status { color: #E8CD02; }
+          }
+          &.unread {
+            background-color: #FFFFFF !important;
+            span, a { font-weight: bold; }
           }
           span {
             font-size: 14px;
@@ -167,135 +294,217 @@
             white-space: nowrap;
             &.d-title {
               width: @title;
-              padding-left: 0;
+              //padding-left: 40px;
             }
             &.d-price { width: @price; }
             &.d-category { width: @category; }
             &.d-date { width: @date; }
-            &.d-check { 
-              width: @delete;
-              padding-left: 14px;
-              position: relative;
-              input[type='checkbox'] {
-                vertical-align: top;
-              }
-            }
-            &.phone-hide {
-              @media (max-width: 480px) {
-                display: none;
-              }
-            }
-            &.phone-full-width {
-              @media (max-width: 480px) {
-                width: 100%;
-              }
-            }
+            &.d-status { width: @status; }
           }
         }
       }
     }
   }
-  .buyers-col {
+  .buyer-message-wrapper {
     display: inline-block;
     height: 100%;
-    width: 15%;
-    border-right: 1px #DDDDDD solid;
+    width: calc(~'40% - 75px');
     vertical-align: top;
-    ul {
-      margin: 0;
-      padding: 0;
-      border-bottom: #DDDDDD solid 1px;
-      li {
-        font-size: 14px;
-        list-style: none;
-      }
-    }
-    .buyers-header {
+    .inbox-header, .no-messages {
+      display: block;
+      font-size: 14px;
+      width: 100%;
+      padding: 8px;
       text-align: center;
-      li {
-        padding: 8px;
+      overflow-y: hidden !important;
+      &:not(.no-messages) {
+        border-bottom: #DDD 1px solid;
+        height: 36px;
+      }
+      &:not(.inbox-header) {
+        font-weight: 500;
+        color: darken(#DDD, 20%);
+        text-rendering: optimizeLegibility;
+        background-color: rgba(0, 0, 0, 0.04);
       }
     }
-    .buyers-body {
-      height: calc(~'100% - ' @footer-height);
-      overflow: auto;
+    .buyers-col {
+      display: inline-block;
+      height: calc(~'100% - 36px');
+      width: 30%;
+      vertical-align: top;
+      background-color: rgba(0, 0, 0, 0.04);
       ul {
-        cursor: pointer;
-        &:hover {
-          background-color: #EEE;
+        margin: 0;
+        padding: 0;
+        border-bottom: #DDDDDD solid 1px;
+        li {
+          font-size: 14px;
+          list-style: none;
         }
-        &.highlight {
-          background-color: darken(#bcddeb, 20%) !important;
-          color: #FFFFFF;
+      }
+      .buyers-body {
+        height: 100%;
+        overflow: scroll;
+        ul {
+          cursor: pointer;
           text-rendering: optimizeLegibility;
-          a { 
-            color: #FFFFFF;
+          &.highlight {
+            border-left: #357EBD 2px solid;
             text-rendering: optimizeLegibility;
+            border-bottom: none !important;
+            li {
+              margin-left: -2px;
+              &:nth-child(2){
+                border-bottom: #DDD 1px solid;
+              }
+            }
+            a { 
+              text-rendering: optimizeLegibility;
+            }
+          }
+          &.unread {
+            li:first-child { font-weight: bold }
+          }
+          li {
+            &:first-child { padding: 8px 8px 2px 8px; }
+            &:nth-child(2) { padding: 2px 8px 2px 8px; }
+            &:nth-child(3) { padding: 2px 8px 8px 8px; }
+            &:last-child{ padding: 2px 8px 8px 8px; }
+            overflow: hidden;
+            white-space: nowrap;
           }
         }
-        li {
-          &:first-child { padding: 8px 8px 2px 8px; }
-          &:nth-child(2) { padding: 2px 8px 2px 8px; }
-          &:nth-child(3) { padding: 2px 8px 8px 8px; }
-          overflow: hidden;
-          white-space: nowrap;
-        }
       }
     }
-  }
-  .messages-col {
-    display: inline-block;
-    height: 100%;
-    width: 25%;
-    vertical-align: top;
-    ul {
-      margin: 0;
-      padding: 0;
-      border-bottom: #DDDDDD solid 1px;
-      li {
-        font-size: 14px;
-        list-style: none;
-      }
-    }
-    .messages-header {
-      text-align: center;
-      li {
-        padding: 8px;
-      }
-    }
-    .messages-body {
-      height: calc(~'100% - 111px - ' @footer-height);
-      overflow: auto;
+    .messages-col {
+      display: inline-block;
+      height: calc(~'100% - ' @footer-height);
+      width: 70%;
+      vertical-align: top;
+      background-color: rgba(0, 0, 0, 0.04);
+
       ul {
-        &.message-buyer {
-          background-color: lighten(#DDD, 10%);
-        }
+        margin: 0;
+        padding: 0;
         li {
-          &:first-child { padding: 8px 8px 2px 8px; }
-          &:nth-child(2) { padding: 2px 8px 8px 8px; }
-          &.message-buyer-name {
-            font-weight: 500;
-          }
-          word-wrap: break-word;
+          font-size: 14px;
+          list-style: none;
         }
       }
-    }
-    .message-form-wrapper {
-      height: 111px;
-      textarea {
-        padding: 5px;
-        resize: none;
-        border-top: 3px solid darken(#DDD, 10%);
-        border-left: 3px solid darken(#DDD, 10%);
-        border-right: 3px solid darken(#DDD, 10%);
-        border-bottom: none;
+      .messages-body {
+        height: calc(~'100% - 131px');
+        overflow: scroll;
+        ul {
+          border-bottom: #DDDDDD solid 1px;
+          &.message-buyer {
+            background-color: rgba(0, 0, 0, 0.05);
+          }
+          li {
+            &:nth-child(1) { padding: 8px; }
+            &:nth-child(2) { padding: 8px; }
+            &:last-child { padding: 2px 8px 8px 8px; }
+            &.message-buyer-name {
+              font-weight: 500;
+              display: inline-block;
+            }
+            word-wrap: break-word;
+            &.message-time {
+              display: inline-block;
+              float: right;
+              color: darken(#DDD, 20%);
+              opacity: 0;
+              -webkit-transition: opacity .2s ease-in;
+            }
+          }
+          &:hover .message-time{
+            opacity: 1;
+            -webkit-transition: opacity .2s ease-in;
+          }
+        }
       }
-      input {
-        width: 100%;
+      .message-form-wrapper {
+        margin-bottom: 30px;
+        .message-form {
+          border-right: rgba(0, 0, 0, .1) 7px solid;
+          textarea {
+            padding: 5px;
+            resize: none;
+            border-top: 3px solid darken(#DDD, 10%);
+            border-bottom: none;
+            border-left: none;
+            border-right: none;
+          }
+          input {
+            width: 100%;
+          }
+          .send-button {
+            width: 100%;
+          }
+        }
       }
     }
   }
 }
+
+// Keys Modal
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, .4) !important;
+}
+.modal {
+  top: calc(~'50% - 300px');
+  height: 400px;
+}
+.modal-dialog {
+  height: 100%;
+}
+.modal-content {
+  border-radius: 0 !important;
+  -webkit-border-radius: 0 !important;
+  height: 100%;
+  table {
+    padding: 8px;
+    &.keys {
+      width: 50%;
+    }
+    &.pane-1 {
+      float: left;
+    }
+    &.pane-2 {
+      float: right;
+    }
+    td {
+      padding: 4px;
+      line-height: 20px;
+      vertical-align: top;
+      span {
+        display: inline-block;
+        background-color: #333;
+        color: #FFF;
+        border-radius: 3px;
+        min-width: 21px;
+        line-height: 1;
+        text-align: center;
+        padding: 5px 6px;
+        font-size: 11px;
+        margin-left: 2px;
+        margin-right: 2px;
+        &.char {
+          text-transform: capitalize;
+        }
+        &.arrow {
+          font-family: sans-serif;
+        }
+      }
+      &:first-child {
+        text-align: right;
+        min-width: 75px;
+        color: #999;
+      }
+    }
+  }
+}
+
 
 #listing-detail {
     overflow-x: hidden;
