@@ -8,6 +8,8 @@ a {
 }
 
 .navbar {
+  border-bottom: 1px solid darken(@navbar-color, 30%);
+  background: @navbar-color;
   min-height: 0px;
   .username-item {
     z-index: 3;
@@ -132,29 +134,47 @@ ul.navbar-nav {
     background:@menu4H;
   }
 
+  &:hover .logo-text {
+    text-decoration: underline;
+  }
+  
   .logo-text {
     .serif {
       font-family: 'Radley';
+      line-height: @navbar-height;
       font-size: 20px;
       font-weight: 600;
     }
     .sans-serif {
-      padding-left: 4px;
+      // padding-left: 4px;
+      line-height: @navbar-height;
       letter-spacing: 0.15em;
       font-weight: 100;      
       font-size: 18px;
     }
     float: left;
-    line-height: @navbar-height;
     padding: 0 20px;
     color: @color6;
     // color: #2200CC;
     background-color: white;
     margin:0;
     position: relative;
-    &:hover {
-      text-decoration: underline;
-    }
+  }
+
+  &:hover .logo-area {
+    text-decoration: none;
+  }
+
+  .logo-area {
+    float: left;
+    // display:block;
+    height: @navbar-height;
+    // line-height: @navbar-height;
+    padding: 12px 12px 0;
+    background: lighten(@footer-color, 30%);
+    color: white;
+    font-size: 12px;
+    margin:0;
   }
 }
 
@@ -164,7 +184,7 @@ ul.navbar-nav {
 
 
 .footer, .footer-fixed {
-  background: #4A4742;
+  background: @footer-color;
   p {
     margin: 0;
     padding-top: 2px; 

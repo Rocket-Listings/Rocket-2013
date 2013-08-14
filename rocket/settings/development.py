@@ -19,9 +19,7 @@ THUMBNAIL_DEBUG = DEBUG
 
 ############# MAILGUN CONFIG
 EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
-
 MAILGUN_ACCESS_KEY = 'key-9flqj538z-my-qcnpc74c2wit4vibl-3'
-
 MAILGUN_SERVER_NAME = 'rocketlistings.mailgun.org'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
