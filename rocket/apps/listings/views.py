@@ -112,22 +112,24 @@ def update(request, listing_id=None, create=False): # not directly addressed by 
 			form.instance.order = form.cleaned_data['ORDER']
 			form.instance.save()
 
-		if listing.listing_type = "O":
+		if listing.listing_type == "O":
 			cl_type = "fso"
-			cl_cat = listing.category.cl_owner_id
+			cl_cat = str(listing.category.cl_owner_id)
 		else: # Dealer
 			cl_type = "fsd"
-			cl_cat = listing.category.cl_dealer_id
+			cl_cat = str(listing.category.cl_dealer_id)
 
 		autopost_cxt = {'type': cl_type,
 										'cat': cl_cat,
 										'title': listing.title,
-										'price': listing.price,
+										'price': str(listing.price),
 										'location': listing.location,
 										'description': listing.description,
-										'from': listing.user.email,
-										'photos': map(lambda p: p.key, listing.listingphoto_set.all()),
+										'from': listing.user.username + "@" + settings.MAILGUN_SERVER_NAME,
+										'photos': map(lambda p: settings.S3_URL + p.key, listing.listingphoto_set.all()),
 										'pk': listing.pk}
+
+		print autopost_cxt
 
 		if create:
 			request.user.get_profile().subtract_credit()

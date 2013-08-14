@@ -8,7 +8,7 @@ import mechanize
 import cookielib
 
 @task(name="tasks.cl_anon_autopost_task")
-def cl_anon_autpost_task(data):
+def cl_anon_autopost_task(data):
   #inititalize the browser
   br = mechanize.Browser()
 
@@ -70,13 +70,15 @@ def cl_anon_autpost_task(data):
 
   if br.geturl().endswith("mailoop"):
     payload = {'pk': data["pk"], 'success': 'True'}
-    r = requests.get(data["callback_url"], params =payload)
-    print r.text
+    #r = requests.get(data["callback_url"], params =payload)
+    #print r.text
     print "succeded"
+    return payload
   else:
     payload = {'pk': data["pk"], 'success': 'False'}
-    r = requests.get(data["callback_url"], params =payload)
+    #r = requests.get(data["callback_url"], params =payload)
     print "failed"
+    return payload
 
 @task(name="tasks.cl_anon_update_task")
 def cl_anon_update_task(data):
@@ -91,14 +93,21 @@ def cl_anon_update_task(data):
   br.set_handle_robots(False)
 
   #set debugging
-  br.set_debug_http(True)
-  br.set_debug_redirects(True)
-  br.set_debug_responses(True)
+  # br.set_debug_http(True)
+  # br.set_debug_redirects(True)
+  # br.set_debug_responses(True)
 
   #set User-agent header ;)
   br.addheaders = [('User-Agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.36')]
 
   br.open(data["update_url"])
+  print br.geturl()
+
+  for i, form in enumerate(br.forms()):
+    if form.get_value(name = "go") == "Cancel Edit":
+      print "FOUND"
+      br.select_form(nr = i)
+      br.submit()
 
   br.select_form(nr = 0)
   r = br.submit()
@@ -126,11 +135,12 @@ def cl_anon_update_task(data):
 
   print br.submit().read()
 
-  for i in data["photos"]:
-    print br.geturl()
-    br.select_form(nr=1)
-    br.submit()
-    print br.geturl()
+  if len(list(br.forms())) != 3:
+    while len(list(br.forms())) > 3:
+      print br.geturl()
+      br.select_form(nr=1)
+      br.submit()
+      print br.geturl()
 
   for form in br.forms():
     print form
@@ -156,7 +166,7 @@ def cl_anon_update_task(data):
     payload = {'pk': data["pk"], 'success': 'True'}
     return payload
     #r = requests.get(data["callback_url"], params =payload)
-    print r.text
+    #print r.text
     print "succeded"
 
   else:
@@ -186,29 +196,33 @@ def cl_delete_task(data):
   br.addheaders = [('User-Agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.36')]
 
   br.open(data["update_url"])
+
+  for i, form in enumerate(br.forms()):
+    if form.get_value(name = "go") == "Cancel Edit":
+      print "FOUND"
+      br.select_form(nr = i)
+      br.submit()
+
   br.select_form(nr=1)
   br.submit()
   br.select_form(nr=1)
+  br.submit()
 
   return data['pk']
 
-@connect.task_success(sender="tasks.cl_anon_autopost_task")
-def anon_autopost_success_handler(sender=None, result=None, args=None, kwargs=None, **kwds):
-  if result['status'] == 'True':
-    listing = get_object_or_404(Listing, pk=result['pk'])
-    listing.status_id = 3
-    listing.save()
-  else:
-    print "Tried to autopost listting " + result['pk'] + ". Failed."
-  
-
-@connect.task_success(sender="tasks.cl_anon_update_task")
-def anon_update_success_handler(sender=None, result=None, args=None, kwargs=None, **kwds):
-  if result['status'] == 'True':
-    print "Successfully autoposted listing " + result['pk']
-  else:
-    print "Tried to update listing " + result['pk'] + ". Failed."
-
-@connect.task_success(sender="tasks.cl_delete_task")
-def delete_success_handler(sender=None, result=None, args=None, kwargs=None, **kwds):
-  print "Successfully deleted listing " + result['pk']
+@task_success.connect
+def celery_task_success_handler(sender=None, result=None, args=None, kwargs=None, **kwds):
+  if sender.name == "tasks.cl_anon_autopost_task":
+    if result['success'] == 'True':
+      listing = get_object_or_404(Listing, pk=result['pk'])
+      listing.status_id = 3
+      listing.save()
+    else:
+      print "Tried to autopost listing " + str(result['pk']) + ". Failed."
+  elif sender.name == "tasks.cl_anon_update_task":
+    if result['success'] == 'True':
+      print "Successfully autoposted listing " + str(result['pk'])
+    else:
+      print "Tried to update listing " + str(result['pk']) + ". Failed."
+  elif sender.name == "tasks.cl_delete_task":
+    print "Successfully deleted listing " + str(result)

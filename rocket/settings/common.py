@@ -83,7 +83,7 @@ AWS_HEADERS = {
     'Cache-Control': 'max-age=%d, s-maxage=%d, must-revalidate, no-transform' % (AWS_EXPIREY, AWS_EXPIREY)
 }
 AWS_S3_CUSTOM_DOMAIN = 'static.rocketlistings.com'
-S3_URL = 'http://' + AWS_S3_CUSTOM_DOMAIN
+S3_URL = 'http://' + AWS_S3_CUSTOM_DOMAIN + "/"
 
 S3_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 S3_CACHED_STORAGE = 'rocket.settings.storage.LocalCachedS3BotoStorage'
