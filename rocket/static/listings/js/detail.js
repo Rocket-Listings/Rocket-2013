@@ -1,7 +1,7 @@
 $(function() {
 
   //select2 init
-  $("#id_market").select2();
+  $(".form-select").select2();
   
   // Category Selection Stuff
   function selectCategory(next_id) {
