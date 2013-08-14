@@ -1,4 +1,5 @@
 from celery.task import task
+from celery.signals import task_success
 from listings.models import Listing, Buyer, ListingPhoto, Message
 from bs4 import BeautifulSoup
 import requests
@@ -9,6 +10,8 @@ from django.template.loader import render_to_string
 from celery.signals import task_sent
 from celery.signals import task_success
 from django.conf import settings
+from users.models import UserProfile
+import hashlib, urllib
 
 
 @task(name='tasks.autopost_task')
@@ -132,7 +135,7 @@ def autopost_task(username, listing_id):
 
 	return Listing.objects.get(pk=listing_id).pk
 
-@task_success.connect
+@task_success.connect(sender='tasks.autopost_task')
 def autopost_success_handler(sender=None, result=None, args=None, kwargs=None, **kwds):
 	listing = Listing.objects.get(pk=result)
 	listing.status_id = 3
