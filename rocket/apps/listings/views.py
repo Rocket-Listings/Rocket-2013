@@ -131,10 +131,12 @@ def update(request, listing_id=None, create=False): # not directly addressed by 
 
 		if create:
 			request.user.get_profile().subtract_credit()
-			cl_anon_autopost_task.delay(autopost_cxt)
+			if not settings.AUTOPOST_DEBUG:
+				cl_anon_autopost_task.delay(autopost_cxt)
 		else: # Update
-			autopost_cxt['update_url'] = listing.CL_link
-			cl_anon_update_task.delay(autopost_cxt)
+			if not settings.AUTOPOST_DEBUG:
+				autopost_cxt['update_url'] = listing.CL_link
+				cl_anon_update_task.delay(autopost_cxt)
 		return redirect(listing)
 	else:
 		print listing_form.errors
@@ -202,7 +204,8 @@ def delete(request, listing_id):
 		# remove listing from haystack index
 		haystack.connections['default'].get_unified_index().get_index(Listing).remove_object(listing)
 		cl_cxt = {'update_url': listing.CL_link, 'pk': listing.pk}
-		cl_delete_task.delay(cl_cxt)
+		if not settings.AUTOPOST_DEBUG:
+			cl_delete_task.delay(cl_cxt)
 		listing.delete()
 		return HttpResponse(200)
 	else:
