@@ -59,6 +59,7 @@ class Listing(models.Model):
 	status = models.ForeignKey(ListingStatus, null = True, default=1) # TODO want to be able to listings by this
 	user = models.ForeignKey(User)
 	CL_link = models.URLField(null=True, blank=True)
+	CL_view = models.URLField(null=True, blank=True)
 
 	class Meta:
 		unique_together = ('title', 'user',)
