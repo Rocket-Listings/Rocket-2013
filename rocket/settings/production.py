@@ -22,7 +22,7 @@ DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 THUMBNAIL_DEBUG = DEBUG
 
-SITE_ID = 1
+SITE_ID = 2
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#caches
 CACHES = memcacheify()
@@ -50,6 +50,7 @@ BROKER_URL = environ.get('RABBITMQ_URL') or environ.get('CLOUDAMQP_URL')
 
 # See: http://docs.celeryproject.org/en/latest/configuration.html#celery-result-backend
 CELERY_RESULT_BACKEND = 'amqp'
+CELERY_DISABLE_RATE_LIMITS = True
 
 # See: http://django-storages.readthedocs.org/en/latest/index.html
 INSTALLED_APPS += (

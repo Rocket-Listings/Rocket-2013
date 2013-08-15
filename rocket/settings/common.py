@@ -30,8 +30,8 @@ THUMBNAIL_DEBUG = DEBUG
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS = (
     ('Teddy Knox', 'teddy@rocketlistings.com'),
-    # ('Brian Sirkia', 'brian@rocketlistings.com'),
-    # ('Nat Kelner', 'nat@rocketlistings.com'),
+    ('Brian Sirkia', 'brian@rocketlistings.com'),
+    ('Nat Kelner', 'nat@rocketlistings.com'),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
@@ -275,6 +275,12 @@ PIPELINE_JS = {
         ),
         'output_filename': 'js/base.js'
     },
+    'global' : {
+        'source_filenames': (
+            'rocket/js/global.js',
+        ),
+        'output_filename': 'js/global.js'
+    },
 }
 
 ############# AWS CONFIG
@@ -316,9 +322,6 @@ LOGOUT_URL = '/users/logout/' #references users/urls.py name
 LOGIN_REDIRECT_URL = '/users/info/'
 
 LOGOUT_REDIRECT_URL = '/'
-
-# Minimum time that uploaded photos will stay on server if not assigned to a listing.
-ROCKET_UNUSED_PHOTO_MINS = 10
 
 # HAYSTACK CONFIG
 HAYSTACK_CONNECTIONS = {

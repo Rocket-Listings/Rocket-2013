@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.decorators.cache import cache_control
 from django.views.decorators.cache import cache_page
 from django.template.response import TemplateResponse
@@ -18,25 +18,16 @@ def http404(request):
 def http500(request):
     return render(request, 'static_pages/500.html')
 
-@cache_control(must_revalidate=True, max_age=3600)
-@cache_page(60 * 15)
-def what(request):
-    return TemplateResponse(request, 'static_pages/what.html')
+def home(request):
+    if request.user.is_authenticated():
+        return redirect('listings.views.dashboard')
+    else:
+        return homepage(request)
 
 @cache_control(must_revalidate=True, max_age=3600)
 @cache_page(60 * 15)
-def how(request):
-    return TemplateResponse(request, 'static_pages/how.html')
-
-@cache_control(must_revalidate=True, max_age=3600)
-@cache_page(60 * 15)
-def why(request):
-    return TemplateResponse(request, 'static_pages/why.html')
-
-@cache_control(must_revalidate=True, max_age=3600)
-@cache_page(60 * 15)
-def pricing(request):
-    return TemplateResponse(request, 'static_pages/pricing.html')
+def homepage(request):
+    return TemplateResponse(request, 'static_pages/homepage.html')
 
 @cache_control(must_revalidate=True, max_age=3600)
 @cache_page(60 * 15)

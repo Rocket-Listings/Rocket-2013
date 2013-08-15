@@ -7,8 +7,8 @@
     email: chucknorris@gmail.com
     first_name: 'Chuck'
     is_active: true
-    is_staff: true
-    is_superuser: true
+    is_staff: false
+    is_superuser: false
     last_name: 'Norris'
     password: pbkdf2_sha256$10000$7OzttrdLZ3TM$BRjWWSgMm8MTp+JgWfMpbQfZ99rXTVyIj+014hS+T8U=
     user_permissions: []
@@ -31,9 +31,8 @@
     status: 3
     location: Bethesda, MD
     category: [cars and trucks]
-    listing_type: [Private]
     user: [chucknorris]
-    listing_type: 'O'
+    listing_type: O
 
 - model: listings.Buyer
   pk: null
@@ -120,7 +119,7 @@
     status: 4
     location: Bethesda, MD
     category: [clothes]
-    listing_type: [Private]
+    listing_type: O
     user: [chucknorris]
 
 - model: listings.Listing
@@ -132,7 +131,7 @@
     status: 5
     location: Bethesda, MD
     category: [video gaming]
-    listing_type: [Private]
+    listing_type: O
     user: [chucknorris]
 
 - model: listings.Listing
@@ -144,7 +143,7 @@
     status: 3
     location: Bethesda, MD
     category: [free]
-    listing_type: [Private]
+    listing_type: O
     user: [chucknorris]
 
 - model: listings.Listing
@@ -156,7 +155,7 @@
     status: 1
     location: Bethesda, MD
     category: [cars and trucks]
-    listing_type: [Private]
+    listing_type: O
     user: [chucknorris]
 
 - model: listings.Listing
@@ -168,7 +167,7 @@
     status: 5
     location: Bethesda, MD
     category: [cds dvd vhs]
-    listing_type: [Private]
+    listing_type: O
     user: [chucknorris]
 
 - model: listings.Listing
@@ -180,7 +179,7 @@
     status: 4
     location: Bethesda, MD
     category: [general]
-    listing_type: [Private]
+    listing_type: O
     user: [chucknorris]
 
 - model: listings.Listing
@@ -192,7 +191,7 @@
     status: 2
     location: Bethesda, MD
     category: [general]
-    listing_type: [Private]
+    listing_type: O
     user: [chucknorris]
 
 - model: listings.Listing
@@ -204,7 +203,7 @@
     status: 1
     location: Bethesda, MD
     category: [household]
-    listing_type: [Private]
+    listing_type: O
     user: [chucknorris]
 
 - model: listings.Listing
@@ -216,7 +215,7 @@
     status: 3
     location: Bethesda, MD
     category: [free]
-    listing_type: [Private]
+    listing_type: O
     user: [chucknorris]
 
 - model: listings.Listing
@@ -228,7 +227,7 @@
     status: 3
     location: Bethesda, MD
     category: [general]
-    listing_type: [Private]
+    listing_type: O
     user: [chucknorris]
 
 - model: listings.Listing
@@ -240,7 +239,7 @@
     status: 3
     location: Bethesda, MD
     category: [cds dvd vhs]
-    listing_type: [Private]
+    listing_type: O
     user: [chucknorris]
 
 - model: listings.Listing
@@ -252,7 +251,7 @@
     status: 3
     location: Bethesda, MD
     category: [free]
-    listing_type: [Private]
+    listing_type: O
     user: [chucknorris]
 
 - model: listings.Listing
@@ -264,7 +263,7 @@
     status: 3
     location: Bethesda, MD
     category: [electronics]
-    listing_type: [Private]
+    listing_type: O
     user: [chucknorris]
 
 - model: listings.Listing
@@ -276,7 +275,7 @@
     status: 3
     location: Bethesda, MD
     category: [sporting]
-    listing_type: [Private]
+    listing_type: O
     user: [chucknorris]
 
 - model: listings.Listing
@@ -288,7 +287,7 @@
     status: 3
     location: Bethesda, MD
     category: [computer]
-    listing_type: [Private]
+    listing_type: O
     user: [chucknorris]
 
 - model: listings.Listing
@@ -300,7 +299,7 @@
     status: 3
     location: Bethesda, MD
     category: [free]
-    listing_type: [Private]
+    listing_type: O
     user: [chucknorris]
 
 - model: listings.Listing
@@ -312,7 +311,7 @@
     status: 3
     location: Bethesda, MD
     category: [clothes]
-    listing_type: [Private]
+    listing_type: O
     user: [chucknorris]
 
 - model: listings.Listing
@@ -324,7 +323,7 @@
     status: 3
     location: Bethesda, MD
     category: [general]
-    listing_type: [Private]
+    listing_type: O
     user: [chucknorris]
 
 - model: listings.Listing
@@ -336,5 +335,5 @@
     status: 3
     location: Bethesda, MD
     category: [general]
-    listing_type: [Private]
+    listing_type: O
     user: [chucknorris]

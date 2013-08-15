@@ -1,0 +1,18 @@
+{% extends "static_pages/base.html" %}
+{% load static from staticfiles %}
+{% load active from navigation %}
+
+{% block content %}
+<div  id="product-partial" class="partial product-partial {% active 'home' %}">
+    {% include 'static_pages/partials/product.html' %}
+</div>
+<div  id="background-partial" class="partial {% active 'background' %}">
+    {% include 'static_pages/partials/background.html' %}
+</div>
+<div id="about-partial" class="partial about-partial {% active 'about' %}">
+    {% include 'static_pages/partials/about.html' %}
+</div>
+<div id="pricing-partial" class="partial {% active 'pricing' %}">
+    {% include 'static_pages/partials/pricing.html' %}
+</div>  
+{% endblock %}
