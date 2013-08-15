@@ -84,9 +84,10 @@
       </div>
     </div>
   </fieldset>
-  <fieldset><legend>Marketplace</legend>
+  <fieldset><legend>Marketplace &amp; Location</legend>
     <div class = "row">
       <div id="market-col" class="col-lg-6">
+        <label for="id_market" class="control-label">{{ form.market.label }}</label>
         <select class= "form-select" name = "market" style="display:none">
           <option value="sfo" >Sf Bay Area</option>
           <option value="abz" >Aberdeen</option>
@@ -797,10 +798,6 @@
           <option value="zur" >Zurich</option>
         </select>
       </div>
-    </div>  
-  </fieldset>
-  <fieldset id="spec-fieldset" class=""><legend>Location &amp; Specs</legend>
-    <div class="row">
       <div id="location-col" class="col-lg-6">
         <div class="form-group {% if form.location.errors %} has-error {% endif %}">
           <label for="id_location" class="form-label">{{ form.location.label }} <span class="text-muted">(Be as specific as you want)</span></label>
@@ -813,6 +810,10 @@
         </div>
         {# <label class="form-label">Map</label> #}
       </div>
+    </div>  
+  </fieldset>
+  <fieldset id="spec-fieldset" class=""><legend>Specs</legend>
+    <div class="row">
       <div class="specs-form col-lg-6">
         <p id="no-specs"></p>
         {% for spec_key in spec_keys %}
