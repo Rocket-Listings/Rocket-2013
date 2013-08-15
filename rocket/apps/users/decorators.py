@@ -10,7 +10,7 @@ def first_visit(view_func):
         response = view_func(request, *args, **kwargs)
         
         if request.user.is_authenticated() and hasattr(request.user,'is_owner') and request.user.is_owner and hasattr(response,'template_name'):
-            if not FirstVisit.objects.filter(user=request.user.id, template_path=response.template_name).exists():
+            if not FirstVisit.objects.get(user=request.user.id, template_path=response.template_name).exists():
                 response.context_data.update({'first_visit': True})
                 FirstVisit.objects.create(user=request.user, template_path=response.template_name)
         

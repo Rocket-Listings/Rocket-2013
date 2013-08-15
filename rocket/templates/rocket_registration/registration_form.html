@@ -5,7 +5,7 @@
 		{% csrf_token %}
 		{% if form.non_field_errors %}
         <div class="form-group">
-            <div class="col-lg-4">
+            <div class="col-lg-3 col-offset-2">
                 <div class="alert alert-danger">
                     {% for error in form.non_field_errors %}
                         <span>{{error}}</span>
@@ -33,15 +33,6 @@
             </div>
             <div class="help-block">{% for error in form.email.errors %}{{ error }}&nbsp;{% endfor %}</div>
         </div>
-		<div class="form-group {% if form.errors.default_seller_type %}has-error{% endif %}">
-			<label for="id_default_seller_type" class="col-lg-2 control-label">Seller Type</label>
-			<div class="btn-group col-lg-3" data-toggle-name="default_seller_type" data-toggle="buttons-radio">
-				<button type="button" value="O" class="btn btn-primary" data-toggle="button">Owner</button>
-  				<button type="button" value="D" class="btn btn-primary" data-toggle="button">Dealer</button>
-			</div>
-            <div class="help-block">{% for error in form.errors.default_seller_type %}{{ error }}&nbsp;{% endfor %}</div>
-		</div>
-		<input name="default_seller_type" type="hidden" value="{{ seller_type }}"/>
 		<div class="form-group {% if form.password1.errors %}has-error{% endif %}">
             <label for="id_password1" class="col-lg-2 control-label">Password</label>
             <div class="col-lg-3">
@@ -56,6 +47,15 @@
             </div>
             <div class="help-block">{% for error in form.password2.errors %}{{ error }}&nbsp;{% endfor %}</div>
         </div>
+        <div class="form-group {% if form.errors.default_seller_type %}has-error{% endif %}">
+            <label for="id_default_seller_type" class="col-lg-2 control-label">Seller Type</label>
+            <div class="btn-group col-lg-3" data-toggle-name="default_seller_type" data-toggle="buttons-radio">
+                <button type="button" value="O" class="btn btn-primary" data-toggle="button">Owner</button>
+                <button type="button" value="D" class="btn btn-primary" data-toggle="button">Dealer</button>
+            </div>
+            <div class="help-block">{% for error in form.errors.default_seller_type %}{{ error }}&nbsp;{% endfor %}</div>
+        </div>
+        <input name="default_seller_type" type="hidden" value="{{ seller_type }}"/>
 		<div class="form-group">
             <div class="col-lg-3 col-offset-2">
                 <input class="btn btn-primary" type="submit" value="Create Account">

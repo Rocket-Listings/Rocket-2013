@@ -11,34 +11,7 @@
 	{% endif %}
 
 	<div class="content-wrapper row">
-		<div class="listing-credits-wrapper col-lg-3 pull-right">
-			<span class="h4">Listing Credits</span>
-			<ul class="listing-credits-stats">
-				<li class="credits-available"><span>Credits Available</span><span id="credit-counter">{{ credits }}</span></li>
-				<li><span>Credits Spent</span><span>{{ credits_spent }}</span></li>
-			</ul>
-			<span class="h4">Get more listings</span>
-			<ul class="listing-credits-more">
-				<li id="profile-completed" class="{% if profile_completed_once %}completed{% endif %}">
-					<span>Complete your profile</span>
-					<span>2</span>
-				</li>
-				<li id="twitter-linked" class="{% if twitter_connected_once %}completed{% endif %}">
-					<span>Link Twitter</span>
-					<span>2</span>
-				</li>
-				<li id="facebook-linked" class="{% if facebook_connected_once %}completed{% endif %}">
-					<span>Link Facebook</span>
-					<span>2</span>
-				</li>
-				<li>
-					<span>Get your friends to join</span>
-					<span>(TBD)</span>
-				</li>
-			</ul>
-		</div>
-
-		<div class="info-form-wrapper col-lg-9">
+		<div class="info-form-wrapper col-lg-5">
 			<div class="error-wrapper"></div>
 			{% if first_visit %}
 				<div class="alert alert-info">
@@ -51,7 +24,7 @@
 				{% csrf_token %}
 				<div class="save-all-container">
 					<span class="h4 user-info-label">User Info</span>
-					<input class="btn btn-primary save-all disabled" type="submit" value="Save all">
+					{# <input class="btn btn-primary save-all disabled" type="submit" value="Save all"> #}
 				</div>
 				<table class="table table-hover">
 					<tbody>
@@ -175,8 +148,34 @@
 					</tbody>
 				</table>
 				<a class="delete-account-modaltrigger text-danger" role="button" data-toggle="modal" href="#delete-account-modal">Delete account</a>
-				<input class="btn btn-primary save-all disabled" type="submit" value="Save all">
+				<input class="btn btn-primary save-all disabled" type="submit" value="Save">
 			</form>
+		</div>
+		<div class="listing-credits-wrapper col-lg-3">
+			<span class="h4">Listing Credits</span>
+			<ul class="listing-credits-stats">
+				<li class="credits-available"><span>Credits Available</span><span id="credit-counter">{{ credits }}</span></li>
+				<li><span>Credits Used</span><span>{{ credits_spent }}</span></li>
+			</ul>
+			<span>Get more listings by...</span>
+			<ul class="listing-credits-more">
+				<li id="profile-completed" class="{% if profile_completed_once %}completed{% endif %}">
+					<span>Completing your profile</span>
+					<span>2</span>
+				</li>
+				<li id="twitter-linked" class="{% if twitter_connected_once %}completed{% endif %}">
+					<span>Connecting to Twitter</span>
+					<span>2</span>
+				</li>
+				<li id="facebook-linked" class="{% if facebook_connected_once %}completed{% endif %}">
+					<span>Connecting to Facebook</span>
+					<span>2</span>
+				</li>
+				<li>
+					<span>Inviting friends</span>
+					<span>(TBD)</span>
+				</li>
+			</ul>
 		</div>
 	</div>
 

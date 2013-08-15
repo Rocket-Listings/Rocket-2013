@@ -1,14 +1,97 @@
 @import "../../rocket/less/base.less";
 
+.no-margin {
+  margin-bottom: 0;
+}
+
+@map-height: 200px;
+
+.header-map-container {
+  position: relative;
+}
+
+#header-map {
+  // top: 0;
+  height: @map-height;
+  width: 100%;
+  @media (max-width: 766px) {
+    height: @map-height-responsive;
+  }
+}
+
+#header-map-overlay {
+  height: @map-height;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  // background: -webkit-radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.15), rgba(255, 255, 255, .1));
+  background: rgba(255, 255, 255, 0.35);
+  visibility: hidden; /* made visible when map loads */
+  z-index: 2;
+
+  @media (max-width: 766px) {
+    height: @map-height-responsive;
+  }
+  .overlay-container {
+    position: relative;
+  }
+
+  .heading {
+    position: absolute;    
+    top: 60px;
+    left: 0;
+    @media (max-width: 766px) {
+      top: 20px;
+      left: 10px;
+    }
+  }
+  .subheading {
+    position: absolute;
+    top: 120px;
+    left: 60px;
+    @media (max-width: 766px) {
+      left: 50px;
+      top: 80px;
+    }
+  }
+
+  h3 {
+    display:inline;
+    font-weight: 400;
+    word-spacing: 1.5px;
+    letter-spacing: 1px;
+    padding: 4px;
+    font-size: 28px;
+    background: white;
+    @media (max-width: 766px) {
+      font-size: 20px;
+      line-height: 34px;
+    }
+  }
+
+  .lead {
+    padding: 4px;    
+    display: inline;
+    background: white;
+  }
+}
+
 a {
   color: @craigslistBlue;
 }
 
 h1.flag {
-  font-family: 'Radley';
+  .serif {
+    font-family: 'Radley';
   font-size: 49px;
   font-weight: 600;
-
+  }
+  .sans-serif {
+    padding-left: 4px;
+    letter-spacing: 0.15em;
+    font-weight: 100;      
+    font-size: 49px;
+  }
   padding: 20px;
   color: @color6;
   // color: #2200CC;
@@ -46,28 +129,10 @@ h1.flag {
   border-left: 1px solid grey;
 }
 
-
-#header-map {
-  // top: 0;
-  height: @map-height;
-  width: 100%;
-  // position: absolute;
-}
-
 /* remove google map attributions (kinda illegal) */
 .gmnoprint a, .gmnoprint span, .gm-style-cc div { display:none; }
 .gmnoprint div, .gm-style-cc div { background:none !important; }
 #GMapsID div div a div img{ diplay:none; }
-
-#header-map-overlay {
-  height: 2*@map-height;
-  width: 100%;
-  top: -@map-height;
-  position: absolute;
-  background: -webkit-radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, .1));
-  visibility: hidden; /* made visible when map loads */
-  z-index: 2;
-}
 
 .header-menu-bar {
   background: @menu0;
@@ -77,15 +142,15 @@ h1.flag {
     margin-right: -15px; 
   }
   // margin-right: 0; 
-    a {
-      padding-left: 15px;
-      line-height: @menu-height;
-      text-align: center;
-      color: @color6;
-      &:hover, &:active {
-        text-decoration: underline;
-      }
+  a {
+    padding-left: 15px;
+    line-height: @menu-height;
+    text-align: center;
+    color: @color6;
+    &:hover, &:active, &.active {
+      text-decoration: underline;
     }
+  }
   .item1 {
     background: @menu1;
     border-left: 3px solid @menu5;
@@ -105,26 +170,10 @@ h1.flag {
   }  
 }
 
-.nav{
-  cursor: pointer;
-}
-
-.nav-highlight{
-  text-decoration: underline;
-  //font-weight: bold;
-}
-
-.hook {
-  background: #4A4742;
-  color: @menu0;
-
-  h3{
-    font-weight: 400;
-    word-spacing: 1.5px;
-    letter-spacing: 1px;
-    font-size: 26px;
-  }
-}
+// .hook {
+  // background: #4A4742;
+  // color: @menu0;
+// }
 
 .header-signup {
   // border-bottom: 2px solid white;
@@ -156,7 +205,7 @@ h1.flag {
   padding-right: 15px;
   padding-left: 15px;
   z-index: 1;
-  background-color:rgba(0,113,67, 1);
+  background-color:rgba(0,113,67, 0.6);
   // font-size: 14px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 400; 
@@ -293,21 +342,16 @@ h1.flag {
   margin: 20px auto;
 }
 
-.learn-more-link{
+.call-to-action {
   text-align: center;
-  padding-top: 40px;
+  margin-top: 40px;
   margin-bottom: 40px;
-  
-  
-    a{
-    font-size: 16px;
-    line-height: 40px;
-    color: @craigslistBlue;
-    &:hover {
-      color: #2200CC;
-      text-decoration: underline;
-      background: rgba(255,255,255,0.7);
-    }
+  a {
+    float: right;
+    margin-left: 20px;
+  }
+  .plain-link {
+    padding: 10px 0;
   }
 }
 
@@ -329,8 +373,12 @@ h1.flag {
 
 }
 
-.partials {
+.partial {
+  display:none;
   margin-top: 30px;
+}
+.partial.active {
+  display: block;
 }
 
 .why-row {

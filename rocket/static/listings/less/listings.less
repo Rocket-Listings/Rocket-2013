@@ -75,7 +75,7 @@
         float: none;
         vertical-align: top;
         width: 300px;
-        padding-left: 38px;
+        padding-left: 20px;
         input:hover {
           border: darken(#DDD, 20%) 1px solid;
         }
@@ -127,20 +127,27 @@
     }
 }
 
+.dashboard-panel, .dashboard-header {
+    min-width: 1162px;
+}
+
 // DASHBOARD
 .dashboard-panel {
   font-size: 0;
   position: absolute;
-  top: 126px;
+  top: 110px;
   bottom: 0;
   width: 100%;
+  &.first-visit {
+    top: 250px !important;
+  }
   @media (max-width: 767px) {
     top: 300px !important;
   }
   .sidebar {
     display: inline-block;
-    height: calc(~'100% - ' @footer-height);
-    width: 156px;
+    height: 100%;
+    width: 138px;
     vertical-align: bottom;
     margin-top: 36px;
     position: relative;
@@ -191,7 +198,7 @@
   .listings-col {
     display: inline-block;
     height: 100%;
-    width: calc(~'60% - 81px');
+    width: calc(~'60% - 63px');
     //border-right: 1px #DDDDDD solid;
     vertical-align: top;
     .listings-header {
@@ -228,7 +235,7 @@
       }
     }
     .listings-body {
-      height: calc(~'100% - ' @footer-height);
+      height: 100%;
       width: 100%;
       overflow: scroll;
       background-color: rgba(0, 0, 0, 0.04);
@@ -330,7 +337,7 @@
     }
     .buyers-col {
       display: inline-block;
-      height: calc(~'100% - 36px');
+      height: 100%;
       width: 30%;
       vertical-align: top;
       background-color: rgba(0, 0, 0, 0.04);
@@ -379,7 +386,7 @@
     }
     .messages-col {
       display: inline-block;
-      height: calc(~'100% - ' @footer-height);
+      height: 100%;
       width: 70%;
       vertical-align: top;
       background-color: rgba(0, 0, 0, 0.04);

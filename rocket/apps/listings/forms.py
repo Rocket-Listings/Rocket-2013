@@ -5,13 +5,23 @@ from listings import utils
 from django.forms.models import inlineformset_factory
 
 class ListingForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', '')
+        super(ListingForm, self).__init__(*args, **kwargs)
+
     class Meta:
         model = Listing
-        exclude = ('pub_date', 'user', 'CL_link', 'status', 'listing_type')
+        exclude = ('pub_date', 'CL_link', 'status', 'user')
         widgets = {
             'category': forms.HiddenInput,
-            # 'listing_type': forms.HiddenInput  
+            'listing_type': forms.HiddenInput
         }
+
+    def clean(self):
+        cleaned_data = super(ListingForm, self).clean()
+        if Listing.objects.filter(user=self.user, title=cleaned_data['title']).exists():
+            self._errors['title'] = self.error_class(["You already have a listing named %s." % cleaned_data['title']])
+        return cleaned_data
 
 class SpecForm(forms.Form):
     def __init__(self, *args, **kwargs):
