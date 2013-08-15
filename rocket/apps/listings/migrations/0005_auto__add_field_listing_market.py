@@ -10,7 +10,7 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         # Adding field 'Listing.market'
         db.add_column(u'listings_listing', 'market',
-                      self.gf('django.db.models.fields.CharField')(default='brl', max_length=3),
+                      self.gf('django.db.models.fields.CharField')(default='xxx', max_length=3),
                       keep_default=False)
 
 
@@ -67,7 +67,8 @@ class Migration(SchemaMigration):
         },
         u'listings.listing': {
             'CL_link': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'Meta': {'object_name': 'Listing'},
+            'CL_view': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            'Meta': {'unique_together': "(('title', 'user'),)", 'object_name': 'Listing'},
             'category': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['listings.ListingCategory']"}),
             'description': ('django.db.models.fields.TextField', [], {}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
