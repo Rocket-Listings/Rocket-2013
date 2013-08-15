@@ -60,6 +60,7 @@ class Listing(models.Model):
 	user = models.ForeignKey(User)
 	CL_link = models.URLField(null=True, blank=True)
 	CL_view = models.URLField(null=True, blank=True)
+	market = models.CharField(max_length=3)
 
 	class Meta:
 		unique_together = ('title', 'user',)
