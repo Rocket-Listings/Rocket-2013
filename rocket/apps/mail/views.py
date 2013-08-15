@@ -70,7 +70,7 @@ def new_cl_admin_message(request):
 	if verify(request.POST.get('token', ''), request.POST.get('timestamp', ''), request.POST.get('signature', '')):
 		if request.method == 'POST':
 			user = get_object_or_404(User, username=request.POST.get('recipient').split('@')[0])
-			listing = user.listing_set.filter(title__exact=request.POST.get('subject', '').partition('"')[2].partition('"')[0], CL_link=None).order_by('pub_date').all()[0]
+			listing = user.listing_set.get(title__exact=request.POST.get('subject', '').partition('"')[2].partition('"')[0])
 
 			to_parse = BeautifulSoup(request.POST.get('body-html', ''))
 
@@ -119,7 +119,7 @@ def new_cl_buyer_message(request):
 	if verify(request.POST.get('token', ''), request.POST.get('timestamp', ''), request.POST.get('signature', '')):
 		if request.method == 'POST':
 			user = get_object_or_404(User, username= request.POST.get('recipient').split('@')[0])
-			listing = user.listing_set.filter(title__exact= request.POST.get('subject', '').partition(' - ')[0])[0]
+			listing = user.listing_set.get(title__exact= request.POST.get('subject', '').partition(' - ')[0])
 			buyer_name = request.POST.get('from', '').partition("\"")[2].partition("\"")[0]
 			buyer_email = request.POST.get('from', '').partition("<")[2].partition(">")[0]
 
