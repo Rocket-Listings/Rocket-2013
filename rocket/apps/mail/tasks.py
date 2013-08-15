@@ -1,4 +1,5 @@
 from celery.task import task
+from celery.signals import task_success
 from listings.models import Listing, Buyer, ListingPhoto, Message
 from bs4 import BeautifulSoup
 import requests
@@ -9,6 +10,8 @@ from django.template.loader import render_to_string
 from celery.signals import task_sent
 from celery.signals import task_success
 from django.conf import settings
+from users.models import UserProfile
+import hashlib, urllib
 
 
 @task(name='tasks.autopost_task')
@@ -132,11 +135,11 @@ def autopost_task(username, listing_id):
 
 	return Listing.objects.get(pk=listing_id).pk
 
-@task_success.connect
-def autopost_success_handler(sender=None, result=None, args=None, kwargs=None, **kwds):
-	listing = Listing.objects.get(pk=result)
-	listing.status_id = 3
-	listing.save()
+# @task_success.connect
+# def autopost_success_handler(sender=None, result=None, args=None, kwargs=None, **kwds):
+# 	listing = Listing.objects.get(pk=result)
+# 	listing.status_id = 3
+# 	listing.save()
 
 @task(name='tasks.send_message_task')
 def send_message_task(message_id):
@@ -145,12 +148,12 @@ def send_message_task(message_id):
 		from_name = msg.listing.user.get_profile().get_display_name()
 		to_name = msg.buyer.name
 		to_email = msg.buyer.email
-		reply_email = "seller-" + msg.buyer.rocket_address + "@rocketlistings.mailgun.org"
+		reply_email = "seller-" + msg.buyer.rocket_address + "@" + settings.MAILGUN_SERVER_NAME
 	else:
 		from_name = msg.buyer.name
 		to_name = msg.listing.user.get_profile().get_display_name()
 		to_email = msg.listing.user.email
-		reply_email = "buyer-" + msg.buyer.rocket_address + "@rocketlistings.mailgun.org"
+		reply_email = "buyer-" + msg.buyer.rocket_address + "@" + settigns.MAILGUN_SERVER_NAME
 	ctx = { 'from_name': from_name,
 			'to_name': to_name,
 			'content': msg.content,
@@ -161,7 +164,7 @@ def send_message_task(message_id):
 	subject = ''.join(subject.splitlines()) # remove new lines
 	message_text = render_to_string('mail/dashboard_message_plain.txt', ctx)
 	message_html = render_to_string('mail/dashboard_message_html.html', ctx)
-	mail_headers = {'Reply-To': reply_email}
+	mail_headers = {'Reply-To': from_name + "<" + reply_email + ">"}
 	email = EmailMultiAlternatives(subject, message_text, 
 		from_name + "<" + settings.DEFAULT_FROM_EMAIL + ">", 
 		[to_name +  "<" + to_email + ">"], 

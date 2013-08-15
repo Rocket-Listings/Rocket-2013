@@ -17,8 +17,12 @@ THUMBNAIL_DEBUG = DEBUG
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
+# Console email backend
+# See: https://docs.djangoproject.com/en/dev/topics/email/#console-backend
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 ############# MAILGUN CONFIG
-EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
+#EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
 
 MAILGUN_ACCESS_KEY = 'key-9flqj538z-my-qcnpc74c2wit4vibl-3'
 
@@ -94,3 +98,5 @@ BROKER_CONNECTION_MAX_RETRIES = 0
 
 # See: http://docs.celeryproject.org/en/latest/configuration.html#celery-result-backend
 CELERY_RESULT_BACKEND = 'amqp'
+
+AUTOPOST_DEBUG = True

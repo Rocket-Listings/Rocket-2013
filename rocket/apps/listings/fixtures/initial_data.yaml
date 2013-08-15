@@ -46,8 +46,8 @@
   fields:
     name: appliances
     description: appliances
-    cl_owner_id: 162
-    cl_dealer_id: 149
+    cl_dealer_id: 162
+    cl_owner_id: 149
     group: forsale
 
 - model: listings.ListingCategory
@@ -55,8 +55,8 @@
   fields:
     name: antiques
     description: antiques
-    cl_owner_id: # No cl foud in this file
-    cl_dealer_id: 150
+    cl_dealer_id: # No cl foud in this file
+    cl_owner_id: 150
     group: forsale
 
 - model: listings.ListingCategory
@@ -64,8 +64,8 @@
   fields:
     name: arts and crafts
     description: arts and crafts
-    cl_owner_id: 170
-    cl_dealer_id: 135
+    cl_dealer_id: 170
+    cl_owner_id: 135
     group: forsale
 
 - model: listings.ListingCategory
@@ -73,8 +73,8 @@
   fields:
     name: auto parts
     description: auto parts
-    cl_owner_id: 163
-    cl_dealer_id: 122
+    cl_dealer_id: 163
+    cl_owner_id: 122
     group: forsale
 
 - model: listings.ListingCategory
@@ -82,8 +82,8 @@
   fields:
     name: baby and kids
     description: baby and kids
-    cl_owner_id: 171
-    cl_dealer_id: 107
+    cl_dealer_id: 171
+    cl_owner_id: 107
     group: forsale
 
 - model: listings.ListingCategory
@@ -98,8 +98,8 @@
   fields:
     name: beauty and health
     description: beauty and health
-    cl_owner_id: 180
-    cl_dealer_id: 152
+    cl_dealer_id: 180
+    cl_owner_id: 152
     group: forsale
 
 - model: listings.ListingCategory
@@ -107,8 +107,8 @@
   fields:
     name: bikes
     description: bikes
-    cl_owner_id: 172
-    cl_dealer_id: 68
+    cl_dealer_id: 172
+    cl_owner_id: 68
     group: forsale
 
 - model: listings.ListingCategory
@@ -116,8 +116,8 @@
   fields:
     name: boats
     description: boats
-    cl_owner_id: 164
-    cl_dealer_id: 119
+    cl_dealer_id: 164
+    cl_owner_id: 119
     group: forsale
 
 - model: listings.ListingCategory
@@ -125,8 +125,8 @@
   fields:
     name: books
     description: books
-    cl_owner_id: 173
-    cl_dealer_id: 92
+    cl_dealer_id: 173
+    cl_owner_id: 92
     group: forsale
 
 - model: listings.ListingCategory
@@ -134,8 +134,8 @@
   fields:
     name: business
     description: business
-    cl_owner_id: 174
-    cl_dealer_id: 134
+    cl_dealer_id: 174
+    cl_owner_id: 134
     group: forsale
 
 - model: listings.ListingCategory
@@ -143,8 +143,8 @@
   fields:
     name: cars and trucks
     description: cars and trucks
-    cl_owner_id: 146
-    cl_dealer_id: 145
+    cl_dealer_id: 146
+    cl_owner_id: 145
     group: forsale
 
 - model: listings.ListingCategory
@@ -152,8 +152,8 @@
   fields:
     name: cds dvd vhs
     description: cds dvd vhs
-    cl_owner_id: 175
-    cl_dealer_id: 117
+    cl_dealer_id: 175
+    cl_owner_id: 117
     group: forsale
 
 - model: listings.ListingCategory
@@ -161,8 +161,8 @@
   fields:
     name: cell phones
     description: cell phones
-    cl_owner_id: 165
-    cl_dealer_id: 153
+    cl_dealer_id: 165
+    cl_owner_id: 153
     group: forsale
 
 - model: listings.ListingCategory
@@ -170,8 +170,8 @@
   fields:
     name: collectibles
     description: collectibles
-    cl_owner_id: 177
-    cl_dealer_id: 95
+    cl_dealer_id: 177
+    cl_owner_id: 95
     group: forsale
 
 - model: listings.ListingCategory
@@ -179,8 +179,8 @@
   fields:
     name: computer
     description: computer
-    cl_owner_id: 166
-    cl_dealer_id: 7
+    cl_dealer_id: 166
+    cl_owner_id: 7
     group: forsale
 
 - model: listings.ListingCategory
@@ -188,8 +188,8 @@
   fields:
     name: electronics
     description: electronics
-    cl_owner_id: 167
-    cl_dealer_id: 96
+    cl_dealer_id: 167
+    cl_owner_id: 96
     group: forsale
 
 - model: listings.ListingCategory
@@ -197,8 +197,8 @@
   fields:
     name: farm and garden
     description: farm and garden
-    cl_owner_id: 178
-    cl_dealer_id: 133
+    cl_dealer_id: 178
+    cl_owner_id: 133
     group: forsale
     group: forsale
 
@@ -207,7 +207,7 @@
   fields:
     name: free
     description: free
-    cl_dealer_id: 101
+    cl_owner_id: 101
     group: forsale
 
 - model: listings.ListingCategory
@@ -215,8 +215,8 @@
   fields:
     name: clothes
     description: clothes and accessories
-    cl_owner_id: 176
-    cl_dealer_id: 94
+    cl_dealer_id: 176
+    cl_owner_id: 94
     group: forsale
 
 - model: listings.ListingCategory
@@ -224,8 +224,8 @@
   fields:
     name: furniture
     description: furniture
-    cl_owner_id: 142
-    cl_dealer_id: 141
+    cl_dealer_id: 142
+    cl_owner_id: 141
     group: forsale
 
 - model: listings.ListingCategory
@@ -233,7 +233,7 @@
   fields:
     name: garage sale
     description: garage sale
-    cl_dealer_id: 73
+    cl_owner_id: 73
     group: forsale
 
 - model: listings.ListingCategory
@@ -241,8 +241,8 @@
   fields:
     name: general
     description: general
-    cl_owner_id: 179
-    cl_dealer_id: 5
+    cl_dealer_id: 179
+    cl_owner_id: 5
     group: forsale
 
 - model: listings.ListingCategory
@@ -250,8 +250,8 @@
   fields:
     name: household
     description: household
-    cl_owner_id: 181
-    cl_dealer_id: 97
+    cl_dealer_id: 181
+    cl_owner_id: 97
     group: forsale
 
 - model: listings.ListingCategory
@@ -259,8 +259,8 @@
   fields:
     name: jewelry
     description: jewelry
-    cl_owner_id: 182
-    cl_dealer_id: 120
+    cl_dealer_id: 182
+    cl_owner_id: 120
     group: forsale
 
 - model: listings.ListingCategory
@@ -268,8 +268,8 @@
   fields:
     name: materials
     description: materials
-    cl_owner_id: 183
-    cl_dealer_id: 136
+    cl_dealer_id: 183
+    cl_owner_id: 136
     group: forsale
 
 - model: listings.ListingCategory
@@ -277,8 +277,8 @@
   fields:
     name: motorcycles
     description: motorcycles
-    cl_owner_id: 160
-    cl_dealer_id: 69
+    cl_dealer_id: 160
+    cl_owner_id: 69
     group: forsale
 
 - model: listings.ListingCategory
@@ -286,8 +286,8 @@
   fields:
     name: music instruments
     description: music instruments
-    cl_owner_id: 184
-    cl_dealer_id: 98
+    cl_dealer_id: 184
+    cl_owner_id: 98
     group: forsale
 
 - model: listings.ListingCategory
@@ -295,7 +295,7 @@
   fields:
     name: photo and video
     description: photo and video
-    cl_owner_id: 185
+    cl_dealer_id: 185
     group: forsale
 
 - model: listings.ListingCategory
@@ -303,8 +303,8 @@
   fields:
     name: rvs
     description: rvs
-    cl_owner_id: 168
-    cl_dealer_id: 124
+    cl_dealer_id: 168
+    cl_owner_id: 124
     group: forsale
 
 - model: listings.ListingCategory
@@ -312,8 +312,8 @@
   fields:
     name: sporting
     description: sporting
-    cl_owner_id: 186
-    cl_dealer_id: 93
+    cl_dealer_id: 186
+    cl_owner_id: 93
     group: forsale
 
 - model: listings.ListingCategory
@@ -321,8 +321,8 @@
   fields:
     name: tickets
     description: tickets
-    cl_owner_id: 161
-    cl_dealer_id: 44
+    cl_dealer_id: 161
+    cl_owner_id: 44
     group: forsale
 
 - model: listings.ListingCategory
@@ -330,8 +330,8 @@
   fields:
     name: tools
     description: tools
-    cl_owner_id: 187
-    cl_dealer_id: 118
+    cl_dealer_id: 187
+    cl_owner_id: 118
     group: forsale
 
 - model: listings.ListingCategory
@@ -339,8 +339,8 @@
   fields:
     name: toys and games
     description: toys and games
-    cl_owner_id: 188
-    cl_dealer_id: 132
+    cl_dealer_id: 188
+    cl_owner_id: 132
     group: forsale
 
 - model: listings.ListingCategory
@@ -348,8 +348,8 @@
   fields:
     name: video gaming
     description: video gaming 
-    cl_owner_id: 189
-    cl_dealer_id: 151
+    cl_dealer_id: 189
+    cl_owner_id: 151
     group: forsale
 
 - model: listings.ListingCategory
