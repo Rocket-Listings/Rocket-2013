@@ -75,7 +75,7 @@ $(function() {
     }
   ];
   var mapOptions = {
-    center: new google.maps.LatLng(49.9, 60.8), // burlington coords 44.5, -72.8
+    center: new google.maps.LatLng(44.475, -73.612), // burlington coords 44.5, -72.8
     zoom: 10,
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     disableDefaultUI: true,
@@ -104,10 +104,11 @@ $(function() {
   }
 
   function gotLocation(lat, lng) {
+    console.log(lat, lng);
     map.panTo(new google.maps.LatLng(lat, lng - 0.5));
   }
 
-  getLocationByIP();
+  // getLocationByIP();
 
   $('.header-menu-bar a').click(function(event) {
       var elem = $($(this).data('href'));
