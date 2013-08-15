@@ -1,9 +1,8 @@
 $(function() {
 
-   $(".form-select").select2();
-    $(window).load(function(){
-        $(".form-select").show();
-    });
+  $(".form-select").select2();
+  $(".form-select").show();
+
   
   // Category Selection Stuff
   function selectCategory(next_id) {
