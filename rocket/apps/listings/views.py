@@ -87,7 +87,7 @@ def update(request, listing_id=None, create=False): # not directly addressed by 
 	else:
 		listing = Listing()
 
-	listing_form = ListingForm(request.POST, instance=listing)
+	listing_form = ListingForm(request.POST, instance=listing, user=request.user)
 	specs = listing.listingspecvalue_set.select_related()
 	spec_form = SpecForm(request.POST, initial=specs)
 	photo_formset = ListingPhotoFormSet(request.POST, instance=listing, prefix="listingphoto_set")
