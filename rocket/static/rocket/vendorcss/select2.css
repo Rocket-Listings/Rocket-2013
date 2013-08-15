@@ -145,8 +145,8 @@ Version: 3.4.2 Timestamp: Mon Aug 12 15:04:12 PDT 2013
     border: 1px solid #aaa;
     border-top: 0;
 
-    border-radius: 0 0 4px 4px;
-
+    border-radius: 0px !important;
+    border-collapse: collapse !important;
     -webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
             box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
 }
@@ -174,6 +174,8 @@ Version: 3.4.2 Timestamp: Mon Aug 12 15:04:12 PDT 2013
 .select2-drop-active {
     border: 1px solid #5897fb;
     border-top: none;
+    padding-top: 1px;
+
 }
 
 .select2-drop.select2-drop-above.select2-drop-active {
