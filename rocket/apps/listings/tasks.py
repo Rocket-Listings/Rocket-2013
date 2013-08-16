@@ -2,6 +2,7 @@ from celery import task
 from celery.signals import task_success
 from django.shortcuts import get_object_or_404
 from listings.models import Listing
+from django.template.loader import render_to_string
 
 import requests
 import mechanize
@@ -18,13 +19,20 @@ def cl_anon_autopost_task(listing_id):
     cl_type = "fsd"
     cl_cat = str(l.category.cl_dealer_id)
 
+  specs_set = l.listingspecvalue_set.select_related().all()
+  specs = {}
+  for spec in specs_set:
+    specs[spec.key_id] = spec
+
+  description = render_to_string('listings/cl_description.html', {'description': l.description, 'specs': specs})
+
   data = {'type': cl_type,
           'cat': cl_cat,
           'market': l.market,
           'title': l.title,
           'price': str(l.price),
           'location': l.location,
-          'description': l.description,
+          'description': description,
           'from': listing.user.username + "@" + settings.MAILGUN_SERVER_NAME,
           'photos': map(lambda p: settings.S3_URL + p.key, l.listingphoto_set.all()),
           'pk': l.pk}
@@ -112,13 +120,20 @@ def cl_anon_update_task(listing_id):
     cl_type = "fsd"
     cl_cat = str(l.category.cl_dealer_id)
 
+  specs_set = l.listingspecvalue_set.select_related().all()
+  specs = {}
+  for spec in specs_set:
+    specs[spec.key_id] = spec
+
+  description = render_to_string('listings/cl_description.html', {'description': l.description, 'specs': specs})
+
   data = {'type': cl_type,
           'cat': cl_cat,
           'market': l.market,
           'title': l.title,
           'price': str(l.price),
           'location': l.location,
-          'description': l.description,
+          'description': description,
           'from': listing.user.username + "@" + settings.MAILGUN_SERVER_NAME,
           'photos': map(lambda p: settings.S3_URL + p.key, l.listingphoto_set.all()),
           'update_url': l.CL_link,

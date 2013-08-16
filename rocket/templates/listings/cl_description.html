@@ -1,0 +1,9 @@
+<p>{{ description }}</p>
+<table>
+{% for key, val in specs %}
+  <tr>
+    <td>{{ key }}</td>
+    <td>{{ val }}</td>
+  </tr>
+{% endfor %}
+</table>
