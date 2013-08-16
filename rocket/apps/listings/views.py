@@ -27,7 +27,8 @@ from django.contrib.humanize.templatetags.humanize import naturaltime
 from mail.tasks import send_message_task
 from users.models import UserProfile, UserComment, ProfileFB 
 from django.db.models import Avg
-from listings.tasks import cl_anon_autopost_task, cl_anon_update_task, cl_delete_task
+from listings.tasks import cl_delete_task
+from django.db import connection
 
 @first_visit
 @login_required
@@ -112,32 +113,14 @@ def update(request, listing_id=None, create=False): # not directly addressed by 
 			form.instance.order = form.cleaned_data['ORDER']
 			form.instance.save()
 
-		if listing.listing_type == "O":
-			cl_type = "fso"
-			cl_cat = str(listing.category.cl_owner_id)
-		else: # Dealer
-			cl_type = "fsd"
-			cl_cat = str(listing.category.cl_dealer_id)
-
-		autopost_cxt = {'type': cl_type,
-										'cat': cl_cat,
-										'market': listing.market,
-										'title': listing.title,
-										'price': str(listing.price),
-										'location': listing.location,
-										'description': listing.description,
-										'from': listing.user.username + "@" + settings.MAILGUN_SERVER_NAME,
-										'photos': map(lambda p: settings.S3_URL + p.key, listing.listingphoto_set.all()),
-										'pk': listing.pk}
-
 		if create:
 			request.user.get_profile().subtract_credit()
-			if not settings.AUTOPOST_DEBUG:
-				cl_anon_autopost_task.delay(autopost_cxt)
+			if not settings.AUTOPOST_DEBUG:			
+				cl_anon_autopost_task.delay(listing.id)
 		else: # Update
 			if not settings.AUTOPOST_DEBUG:
-				autopost_cxt['update_url'] = listing.CL_link
-				cl_anon_update_task.delay(autopost_cxt)
+	      cl_anon_update_task.delay(listing.id)
+
 		return redirect(listing)
 	else:
 		print listing_form.errors
@@ -204,9 +187,8 @@ def delete(request, listing_id):
 	if request.user == listing.user:
 		# remove listing from haystack index
 		haystack.connections['default'].get_unified_index().get_index(Listing).remove_object(listing)
-		cl_cxt = {'update_url': listing.CL_link, 'pk': listing.pk}
 		if not settings.AUTOPOST_DEBUG:
-			cl_delete_task.delay(cl_cxt)
+			cl_delete_task.delay(listing.id)
 		listing.delete()
 		return HttpResponse(200)
 	else:

@@ -8,7 +8,27 @@ import mechanize
 import cookielib
 
 @task(name="tasks.cl_anon_autopost_task")
-def cl_anon_autopost_task(data):
+def cl_anon_autopost_task(listing_id):
+
+  l = Listing.objects.select_related().get(id=listing_id)
+  if l.listing_type == "O":
+    cl_type = "fso"
+    cl_cat = str(l.category.cl_owner_id)
+  else: # Dealer
+    cl_type = "fsd"
+    cl_cat = str(l.category.cl_dealer_id)
+
+  data = {'type': cl_type,
+          'cat': cl_cat,
+          'market': l.market,
+          'title': l.title,
+          'price': str(l.price),
+          'location': l.location,
+          'description': l.description,
+          'from': listing.user.username + "@" + settings.MAILGUN_SERVER_NAME,
+          'photos': map(lambda p: settings.S3_URL + p.key, l.listingphoto_set.all()),
+          'pk': l.pk}
+
   #inititalize the browser
   br = mechanize.Browser()
 
@@ -83,7 +103,26 @@ def cl_anon_autopost_task(data):
     return payload
 
 @task(name="tasks.cl_anon_update_task")
-def cl_anon_update_task(data):
+def cl_anon_update_task(listing_id):
+  l = Listing.objects.select_related().get(id=listing_id)
+  if l.listing_type == "O":
+    cl_type = "fso"
+    cl_cat = str(l.category.cl_owner_id)
+  else: # Dealer
+    cl_type = "fsd"
+    cl_cat = str(l.category.cl_dealer_id)
+
+  data = {'type': cl_type,
+          'cat': cl_cat,
+          'market': l.market,
+          'title': l.title,
+          'price': str(l.price),
+          'location': l.location,
+          'description': l.description,
+          'from': listing.user.username + "@" + settings.MAILGUN_SERVER_NAME,
+          'photos': map(lambda p: settings.S3_URL + p.key, l.listingphoto_set.all()),
+          'update_url': l.CL_link,
+          'pk': l.pk}
   #inititalize the browser
   br = mechanize.Browser()
 
@@ -178,7 +217,9 @@ def cl_anon_update_task(data):
     print "failed"
 
 @task(name="tasks.cl_delete_task")
-def cl_delete_task(data):
+def cl_delete_task(listing_id):
+  listing = Listing.objects.get(id=listing_id)
+  data = {'update_url': listing.CL_link, 'pk': listing.pk}
   #inititalize the browser
   br = mechanize.Browser()
 
