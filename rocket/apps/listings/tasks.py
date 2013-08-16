@@ -2,8 +2,8 @@ from celery import task
 from celery.signals import task_success
 from django.shortcuts import get_object_or_404
 from listings.models import Listing
-from django.template.loader import render_to_string
-
+from django.conf import settings
+from listings import utils
 import requests
 import mechanize
 import cookielib
@@ -11,31 +11,7 @@ import cookielib
 @task(name="tasks.cl_anon_autopost_task")
 def cl_anon_autopost_task(listing_id):
 
-  l = Listing.objects.select_related().get(id=listing_id)
-  if l.listing_type == "O":
-    cl_type = "fso"
-    cl_cat = str(l.category.cl_owner_id)
-  else: # Dealer
-    cl_type = "fsd"
-    cl_cat = str(l.category.cl_dealer_id)
-
-  specs_set = l.listingspecvalue_set.select_related().all()
-  specs = {}
-  for spec in specs_set:
-    specs[spec.key_id] = spec
-
-  description = render_to_string('listings/cl_description.html', {'description': l.description, 'specs': specs})
-
-  data = {'type': cl_type,
-          'cat': cl_cat,
-          'market': l.market,
-          'title': l.title,
-          'price': str(l.price),
-          'location': l.location,
-          'description': description,
-          'from': listing.user.username + "@" + settings.MAILGUN_SERVER_NAME,
-          'photos': map(lambda p: settings.S3_URL + p.key, l.listingphoto_set.all()),
-          'pk': l.pk}
+  data = utils.process_autopost_data(listing_id)
 
   #inititalize the browser
   br = mechanize.Browser()
@@ -112,32 +88,9 @@ def cl_anon_autopost_task(listing_id):
 
 @task(name="tasks.cl_anon_update_task")
 def cl_anon_update_task(listing_id):
-  l = Listing.objects.select_related().get(id=listing_id)
-  if l.listing_type == "O":
-    cl_type = "fso"
-    cl_cat = str(l.category.cl_owner_id)
-  else: # Dealer
-    cl_type = "fsd"
-    cl_cat = str(l.category.cl_dealer_id)
+  
+  data = utils.process_autopost_data(listing_id, update=True)
 
-  specs_set = l.listingspecvalue_set.select_related().all()
-  specs = {}
-  for spec in specs_set:
-    specs[spec.key_id] = spec
-
-  description = render_to_string('listings/cl_description.html', {'description': l.description, 'specs': specs})
-
-  data = {'type': cl_type,
-          'cat': cl_cat,
-          'market': l.market,
-          'title': l.title,
-          'price': str(l.price),
-          'location': l.location,
-          'description': description,
-          'from': listing.user.username + "@" + settings.MAILGUN_SERVER_NAME,
-          'photos': map(lambda p: settings.S3_URL + p.key, l.listingphoto_set.all()),
-          'update_url': l.CL_link,
-          'pk': l.pk}
   #inititalize the browser
   br = mechanize.Browser()
 
@@ -266,6 +219,8 @@ def cl_delete_task(listing_id):
   br.select_form(nr=1)
   br.submit()
 
+  listing.delete()
+
   return data['pk']
 
 @task_success.connect
@@ -273,7 +228,7 @@ def celery_task_success_handler(sender=None, result=None, args=None, kwargs=None
   if sender.name == "tasks.cl_anon_autopost_task":
     if result['success'] == 'True':
       listing = get_object_or_404(Listing, pk=result['pk'])
-      listing.status_id = 3
+      listing.status_id = 2
       listing.save()
     else:
       print "Tried to autopost listing " + str(result['pk']) + ". Failed."

@@ -27,7 +27,7 @@ from django.contrib.humanize.templatetags.humanize import naturaltime
 from mail.tasks import send_message_task
 from users.models import UserProfile, UserComment, ProfileFB 
 from django.db.models import Avg
-from listings.tasks import cl_delete_task
+from listings.tasks import cl_anon_autopost_task, cl_anon_update_task, cl_delete_task
 from django.db import connection
 
 @first_visit
@@ -119,7 +119,7 @@ def update(request, listing_id=None, create=False): # not directly addressed by 
 				cl_anon_autopost_task.delay(listing.id)
 		else: # Update
 			if not settings.AUTOPOST_DEBUG:
-	      cl_anon_update_task.delay(listing.id)
+				cl_anon_update_task.delay(listing.id)
 
 		return redirect(listing)
 	else:
@@ -189,7 +189,6 @@ def delete(request, listing_id):
 		haystack.connections['default'].get_unified_index().get_index(Listing).remove_object(listing)
 		if not settings.AUTOPOST_DEBUG:
 			cl_delete_task.delay(listing.id)
-		listing.delete()
 		return HttpResponse(200)
 	else:
 		return HttpResponse(403)

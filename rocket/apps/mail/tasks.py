@@ -18,6 +18,7 @@ def new_cl_admin_message_task(msg_dict):
 	to_parse = BeautifulSoup(msg_dict['body'])
 	manage_link = to_parse.find('a').contents[0]
 	listing.CL_link = manage_link
+	listing.status_id = 3
 	listing.save()
 
 	r = requests.get(manage_link)
