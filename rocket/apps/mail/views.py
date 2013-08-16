@@ -75,7 +75,10 @@ def new_cl_buyer_message(request):
 		msg_parts = request.POST.get('body-plain', '').split('------------------------------------------------------------------------')
 		msg_body = msg_parts[0]
 		listing_view_link = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', msg_parts[1])[0]
-		listing = user.listing_set.get(CL_view=listing_view_link)
+		try:
+			listing = user.listing_set.get(CL_view=listing_view_link)
+		except ObjectDoesNotExist:
+			listings_no_links = user.listing_set.filter(CL_view=None, title__exact=request.POST.get('subject', '').partition('"')[2].partition('"')[0])[0]
 		buyer_name = request.POST.get('from', '').partition("\"")[2].partition("\"")[0]
 		buyer_email = request.POST.get('from', '').partition("<")[2].partition(">")[0]
 
