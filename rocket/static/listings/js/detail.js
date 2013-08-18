@@ -48,6 +48,80 @@ $(function() {
   });
 
   var LocationEditView = Backbone.View.extend({
+    mapTypeStyle: [
+      {
+        "featureType": "poi",
+        "elementType": "labels",
+        "stylers": [
+          { "visibility": "off" }
+        ]
+      },{
+        "featureType": "administrative.neighborhood",
+        "elementType": "labels",
+        "stylers": [
+          { "visibility": "off" }
+        ]
+      },{
+        "featureType": "water",
+        "elementType": "labels",
+        "stylers": [
+          { "visibility": "off" }
+        ]
+      },{
+        "featureType": "transit",
+        "elementType": "labels",
+        "stylers": [
+          { "visibility": "off" }
+        ]
+      },{
+        "featureType": "road.highway",
+        "stylers": [
+          { "weight": 1.4 }
+        ]
+      },{
+        "featureType": "road",
+        "elementType": "labels.text",
+        "stylers": [
+          { "visibility": "off" }
+        ]
+      },{
+        "featureType": "water",
+        "stylers": [
+          { "saturation": -44 },
+          { "lightness": -18 },
+          { "hue": "#00ccff" }
+        ]
+      },{
+        "featureType": "road"  },{
+        "featureType": "road.arterial",
+        "stylers": [
+          { "weight": 1.4 }
+        ]
+      },{
+        "featureType": "road.arterial",
+        "elementType": "labels",
+        "stylers": [
+          { "visibility": "off" }
+        ]
+      },{
+        "featureType": "road.local",
+        "elementType": "labels",
+        "stylers": [
+          { "visibility": "off" }
+        ]
+      },{
+        "featureType": "poi.park",
+        "stylers": [
+          { "hue": "#33ff00" }
+        ]
+      },{
+      },{
+        "featureType": "road.highway",
+        "stylers": [
+          { "lightness": 33 }
+        ]
+      }
+    ],
     el: '#location-col',
     events: {
       "change #id_location": "render",
@@ -58,7 +132,6 @@ $(function() {
       _.bindAll(this, 'mapResize');
       this.geocoder = new google.maps.Geocoder();
       this.render();
-
       $('.edit-btn').on('shown.bs.tab', this.mapResize);
     },
 
@@ -83,7 +156,8 @@ $(function() {
           disableDefaultUI: true,
           draggable: false,
           scrollwheel: false,
-          disableDoubleClickZoom: true
+          disableDoubleClickZoom: true,
+          styles: this.mapTypeStyle
         };
         this.map = new google.maps.Map(document.getElementById("location-map"), mapOptions);
       }
@@ -93,12 +167,13 @@ $(function() {
       google.maps.event.trigger(this.map, 'resize');
     },
 
-    toggleLoading: function() {
+    toggleLoading: function(str) {
+      console.log(str);
       this.$('.loading-spinner').toggle();
     },
 
     getLocationByBrowser: function(e) {
-      this.toggleLoading();
+      this.toggleLoading('getLocationByBrowser start');
       var that = this;
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -106,10 +181,11 @@ $(function() {
           var lng = position.coords.longitude;
           var latlng = new google.maps.LatLng(lat, lng);
           that.mapInit(latlng, 14);
-          that.toggleLoading();
+          that.toggleLoading('getLoctationByBrowser stop success');
           that.reverseGeocode(latlng);
         }, that.mapError, { enableHighAccuracy: true });
       } else {
+        that.toggleLoading('getLoctationByBrowser stop no navigator.geoLocation');
         this.mapError("Error: Old or non-compliant browser.");
       }
     },
@@ -121,9 +197,9 @@ $(function() {
         if (status == google.maps.GeocoderStatus.OK) {
           var latlng = results[0].geometry.location;
           that.mapInit(latlng, 12);
-          that.toggleLoading();
+          that.toggleLoading('geocode stop success');
         } else {
-          that.toggleLoading();
+          that.toggleLoading('geocode stop geocoder status not ok');
           that.mapError('Geocode was not successful for the following reason: ' + status);
         }
       });
@@ -169,14 +245,22 @@ $(function() {
               that.mapInit(latlng, 12);
               that.toggleLoading();
               that.reverseGeocode(latlng);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+              console.log('freegeoip error');
+              console.log(textStatus);
             }
           });
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.log('jsonip error');
+          console.log(textStatus);
         }
       });
     },
 
     mapError: function(error) { 
-      // this.toggleLoading();
+      this.toggleLoading();
       console.log("Maps error");
       console.log(error);
     }

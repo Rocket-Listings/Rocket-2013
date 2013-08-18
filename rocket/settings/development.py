@@ -24,7 +24,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ############# MAILGUN CONFIG
 #EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
 MAILGUN_ACCESS_KEY = 'key-9flqj538z-my-qcnpc74c2wit4vibl-3'
-MAILGUN_SERVER_NAME = 'rocketlistings.mailgun.org'
+MAILGUN_SERVER_NAME = 'dev.rocketlistings.mailgun.org'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
@@ -85,16 +85,16 @@ DEBUG_TOOLBAR_CONFIG = { 'INTERCEPT_REDIRECTS': False }
 # number to 1, since 3 workers each maintaining one open connection = 3
 # connections total.
 #
-# See: http://docs.celeryproject.org/en/latest/configuration.html#broker-pool-limit
-BROKER_POOL_LIMIT = 3
+# # See: http://docs.celeryproject.org/en/latest/configuration.html#broker-pool-limit
+# BROKER_POOL_LIMIT = 3
 
-# See: http://docs.celeryproject.org/en/latest/configuration.html#broker-connection-max-retries
-BROKER_CONNECTION_MAX_RETRIES = 0
+# # See: http://docs.celeryproject.org/en/latest/configuration.html#broker-connection-max-retries
+# BROKER_CONNECTION_MAX_RETRIES = 0
 
-# See: http://docs.celeryproject.org/en/latest/configuration.html#broker-url
-# BROKER_URL = environ.get('RABBITMQ_URL') or environ.get('CLOUDAMQP_URL')
+# # See: http://docs.celeryproject.org/en/latest/configuration.html#broker-url
+# # BROKER_URL = environ.get('RABBITMQ_URL') or environ.get('CLOUDAMQP_URL')
 
-# See: http://docs.celeryproject.org/en/latest/configuration.html#celery-result-backend
-CELERY_RESULT_BACKEND = 'amqp'
+# # See: http://docs.celeryproject.org/en/latest/configuration.html#celery-result-backend
+# CELERY_RESULT_BACKEND = 'amqp'
 
 AUTOPOST_DEBUG = True

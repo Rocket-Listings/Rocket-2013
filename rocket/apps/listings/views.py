@@ -25,7 +25,7 @@ from users.decorators import first_visit, view_count
 from django.template.response import TemplateResponse
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from mail.tasks import send_message_task
-from users.models import UserProfile, UserComment, ProfileFB 
+from users.models import UserProfile, UserComment 
 from django.db.models import Avg
 from listings.tasks import cl_anon_autopost_task, cl_anon_update_task, cl_delete_task
 
@@ -120,14 +120,15 @@ def update(request, listing_id=None, create=False): # not directly addressed by 
 			cl_cat = str(listing.category.cl_dealer_id)
 
 		autopost_cxt = {'type': cl_type,
-										'cat': cl_cat,
-										'title': listing.title,
-										'price': str(listing.price),
-										'location': listing.location,
-										'description': listing.description,
-										'from': listing.user.username + "@" + settings.MAILGUN_SERVER_NAME,
-										'photos': map(lambda p: settings.S3_URL + p.key, listing.listingphoto_set.all()),
-										'pk': listing.pk}
+			'cat': cl_cat,
+			'title': listing.title,
+			'price': str(listing.price),
+			'location': listing.location,
+			'description': listing.description,
+			'from': listing.user.username + "@" + settings.MAILGUN_SERVER_NAME,
+			'photos': map(lambda p: settings.S3_URL + p.key, listing.listingphoto_set.all()),
+			'pk': listing.pk
+		}
 
 		if create:
 			request.user.get_profile().subtract_credit()
@@ -153,8 +154,10 @@ def update(request, listing_id=None, create=False): # not directly addressed by 
 
 @view_count
 def detail(request, listing_id, pane='preview'):
-	listing = get_object_or_404(Listing, id=listing_id)
-	request.user.is_owner = bool(listing.user == request.user)
+	listing = get_object_or_404(Listing.objects.select_related(), id=listing_id)
+	is_owner = bool(listing.user == request.user)
+	request.user.is_owner = is_owner
+
 	# prep specs
 	specs_set = listing.listingspecvalue_set.select_related().all()
 	specs = {}
@@ -162,7 +165,7 @@ def detail(request, listing_id, pane='preview'):
 		specs[spec.key_id] = spec
 
 	if request.method == 'GET':
-		if listing.user == request.user:
+		if is_owner:
 			form = ListingForm(instance=listing)
 			photo_formset = ListingPhotoFormSet(instance=listing, prefix="listingphoto_set")
 
@@ -177,7 +180,8 @@ def detail(request, listing_id, pane='preview'):
 		else:
 			comments = UserComment.objects.filter(user=listing.user).order_by('-date_posted') 
 			avg_rating = comments.aggregate(Avg('rating')).values()[0]
-			fbProfile = ProfileFB.objects.get(profile=listing.user.get_profile())
+
+			fbProfile = user.get_profile().fbProfile
 			photos = listing.listingphoto_set.all()
 			cxt = {
 				'listing': listing,

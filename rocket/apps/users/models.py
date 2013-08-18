@@ -16,11 +16,16 @@ class UserProfile(models.Model):
 	phone = models.CharField(max_length=50, blank=True)
 	bio = models.TextField(blank=True)
 	propic = models.CharField(max_length=200, blank=True)
+
+	fbProfile = models.OneToOneField('ProfileFB', null=True)
+
 	twitter_handle = models.CharField(max_length=20, blank=True)
 	TWITTER_OAUTH_TOKEN = models.CharField(max_length=200, blank=True)
 	TWITTER_OAUTH_TOKEN_SECRET = models.CharField(max_length=200, blank=True)
+
 	listing_credits = models.IntegerField(default=3)
 	total_credits = models.IntegerField(default=3)
+
 	profile_completed_once = models.BooleanField(default=False)
 	twitter_connected_once = models.BooleanField(default=False)
 	facebook_connected_once = models.BooleanField(default=False)
@@ -46,11 +51,7 @@ class UserProfile(models.Model):
 		self.save()
 
 	def filled_out(self):
-		required = [self.name, self.location, self.phone, self.bio, self.propic, self.seller_type]
-		if len([i for i in required if i == ""]) == 0:
-			return True
-		else:
-			return False
+		return all([self.name, self.location, self.phone, self.bio, self.propic, self.seller_type])
 
 	def get_view_count(self):
 		return ViewCount.objects.get_or_create(url=UserProfile.get_absolute_url(self))[0].count
@@ -60,7 +61,6 @@ class UserProfile(models.Model):
 def create_user_profile(sender, instance, created, **kwargs):  
     if created:  
     	profile = UserProfile.objects.create(user=instance)
-    	ProfileFB.objects.create(profile=profile)
 
 post_save.connect(create_user_profile, sender=User)
 
@@ -82,7 +82,6 @@ class UserComment(models.Model):
 #User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 
 class ProfileFB(models.Model):
-	profile = models.OneToOneField(UserProfile)
 	username = models.CharField(max_length=50, blank=True)
 	name = models.CharField(max_length=100, blank=True)
 	link = models.CharField(max_length=100, blank=True)
