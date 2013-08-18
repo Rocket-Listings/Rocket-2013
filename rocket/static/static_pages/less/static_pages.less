@@ -214,8 +214,10 @@ h1.flag {
 }
 
   
-.what-row p,
+
 .how-row p,
+.dashboard-row p,
+.profile-row p,
 .pricing-row p {
   text-align:justify;
   font-size: 16px;
@@ -224,8 +226,12 @@ h1.flag {
   font-weight: 300; 
 }
 
-.pricing-row p {
+.pricing-row {
+margin-top: 60px;
+
+p {
   text-align: center;
+  }
 }
 
 .what-row {
@@ -234,6 +240,22 @@ h1.flag {
   &:last-child {
     margin-top: 30px;
   }
+
+  h3{
+    margin: 30px 0 10px 28px;
+    text-align: left;
+    font-size: 21px;
+  }
+  
+  p{
+    text-align:center;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 0 15px 0 15px;
+    font-weight: 300; 
+  }
+
+  
 
   a {
     color: @craigslistBlue;
@@ -254,18 +276,18 @@ h1.flag {
   background-size: 100% 90%;
   width: 100px;
   height: 80px;
-  margin: 20px auto;
+  margin: 10px auto;
   
 }
 
 .icon-newspaper{
-    background-image: url("../img/newspaper.svg");
-    background-position: 50% 40%;
-    background-size: 400px 400px;
+  background-image: url("../img/newspaper.svg");
+  background-position: 50% 40%;
+  background-size: 400px 400px;
   background-repeat:no-repeat;
   width: 100px;
   height: 80px;
-  margin: 20px auto;
+  margin: 10px auto;
   
 }
 
@@ -276,7 +298,7 @@ h1.flag {
   background-size: 100% 90%;
   width: 100px;
   height: 80px;
-  margin: 20px auto;
+  margin: 10px auto;
   
 }
 
@@ -287,7 +309,7 @@ h1.flag {
   background-size: 100% 100%;
   width: 100px;
   height: 80px;
-  margin: 20px auto;
+  margin: auto;
   
 }
 .icon-chat{
@@ -297,7 +319,7 @@ h1.flag {
   background-size: 100% 100%;
   width: 100px;
   height: 80px;
-  margin: 20px auto;
+  margin: auto;
   
 }
 
@@ -308,7 +330,7 @@ h1.flag {
   background-size: 70% 70%;
   width: 100px;
   height: 80px;
-  margin: 20px auto;
+  margin: auto;
   
 }
 
@@ -355,8 +377,117 @@ h1.flag {
   }
 }
 
+.nav-how{
+  margin-top: 76px;
+
+  .btn{
+    border: 1px solid #ddd;
+    color: black;
+    
+    &:hover{
+      color: black;
+    }
+  }
+
+  .affix {
+      top: 10px;
+      width: 97px;
+  
+    }
+}
+
+.dashboard-img-row{
+   h3{
+    margin-bottom: 40px;
+    margin-left: 28px;
+    font-size: 21px;
+  }
+
+  img{
+    padding: 20px;
+    border: 1px solid #ddd;
+    margin-bottom: 30px;
+  }
+
+}
+.dashboard-row{
+  margin-bottom: 50px;
+}
+
+.profile-row{
+  margin-bottom: 100px;
+
+   h3{
+    margin-bottom: 40px;
+    margin-left: 28px;
+    font-size: 21px;
+  }
+
+  img{
+    margin-top: 18px;
+    padding: 20px;
+    border: 1px solid #ddd; 
+  }
+
+}
+
 .how-row{
-  margin-bottom: 60px;
+  margin-bottom: 50px;
+
+  h3{
+    margin-top: 10px;
+    margin-bottom: 40px;
+    margin-left: 28px;
+    font-size: 21px;
+  }
+
+  img{
+    vertical-align: top; 
+  }
+
+
+
+  .col-social{
+    img{
+      margin: 0 18px;
+    }
+    }
+  .col-profile{
+    img.propic{
+      margin-right: 20px;
+  }
+  }
+  
+  .col-listing{
+
+    h4.listing-form{
+      
+    }
+
+    h4.smart-pricing{
+      margin-top: 93%;
+    }
+
+    h4.specs{
+      margin-top: 38%;
+    }
+
+    h4.photos{
+      margin-top: 165%;
+    }
+
+    h4.one-click{
+      margin-top: 70%;
+    }
+
+  }
+
+  .col-listing-img{
+    img{
+      padding: 20px;
+      border: 1px solid #ddd;
+    }
+  }
 }
 
 .btn-signup{
@@ -375,21 +506,33 @@ h1.flag {
 
 .partial {
   display:none;
-  margin-top: 30px;
+  
 }
 .partial.active {
   display: block;
 }
 
 .why-row {
+  margin-top: 60px;
   div {
     margin-bottom: 18px; 
   }
   .text { 
+    line-height: 23px;
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     height: 100%;
     background-color:#ededed;
     padding: 10px 30px 10px 30px;
+    font-size: 16px;
+    color: #333;
+    font-weight: 300;
+  }
+
+  .col-map{
+    p{
+      font-size: 10px;
+      margin-left: 20px;
+    }
   }
 }
 

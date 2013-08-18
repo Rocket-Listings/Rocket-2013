@@ -1,3 +1,5 @@
+
+
 $(function() {
   google.maps.visualRefresh = true;
   var mapTypeStyle = [
@@ -110,6 +112,7 @@ $(function() {
 
   // getLocationByIP();
 
+
   $('.header-menu-bar a').click(function(event) {
       var elem = $($(this).data('href'));
       if (elem.length > 0) {
@@ -118,6 +121,7 @@ $(function() {
         elem.show();
         $(this).addClass('active').siblings().removeClass('active')
       } 
+
       var url = $(this).attr("href"); //update url without changing pages
       history.pushState({page:url}, url, url);
   });
