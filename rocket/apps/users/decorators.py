@@ -1,5 +1,5 @@
-from models import FirstVisit
-from models import ViewCount
+from users.models import FirstVisit
+from users.models import ViewCount
 
 def first_visit(view_func): 
     """tests to see if its the first time has visited a page
@@ -10,10 +10,11 @@ def first_visit(view_func):
         response = view_func(request, *args, **kwargs)
         
         if request.user.is_authenticated() and hasattr(request.user,'is_owner') and request.user.is_owner and hasattr(response,'template_name'):
-            if not FirstVisit.objects.get(user=request.user.id, template_path=response.template_name).exists():
+            try:
+                FirstVisit.objects.get(user=request.user.id, template_path=response.template_name)
+            except FirstVisit.DoesNotExist:
+                FirstVisit.objects.create(user=request.user, template_path=response.template_name)       
                 response.context_data.update({'first_visit': True})
-                FirstVisit.objects.create(user=request.user, template_path=response.template_name)
-        
         return response
 
     return _wrapped_visit_func
@@ -22,7 +23,7 @@ def first_visit(view_func):
 def view_count(view_func):
     """keeps track of the number of views a page gets
     
-    view_count function is used to keep track of the number of times an anonymous or a non-owner of a page 
+    used to keep track of the number of times an anonymous or a non-owner of a page 
     views a certain page of another user. It will not add to the page views if the owner of the page visits the page.
     To use this functionality, you need to set the property of request.user.is_owner to a boolean. 
     The way it has been done is that if request.user is equal to the owner of the page being visited skip_count is set to True

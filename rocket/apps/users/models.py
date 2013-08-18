@@ -53,10 +53,6 @@ class UserProfile(models.Model):
 	def filled_out(self):
 		return all([self.name, self.location, self.phone, self.bio, self.propic, self.seller_type])
 
-	def get_view_count(self):
-		return ViewCount.objects.get_or_create(url=UserProfile.get_absolute_url(self))[0].count
-
-
 # Handles user profile creation if not already created
 def create_user_profile(sender, instance, created, **kwargs):  
     if created:  

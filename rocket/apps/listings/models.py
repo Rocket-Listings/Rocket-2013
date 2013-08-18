@@ -1,13 +1,15 @@
 import hashlib
 import random
 
-from django.db import models
+from django.db import models, IntegrityError
 from datetime import datetime
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.db.models import Max
 from django.db.models.signals import post_save
+# from django.forms.util import ValidationError
+
 # Managers!
 
 # Natural key handling for fixtures
@@ -57,7 +59,11 @@ class Listing(models.Model):
 	status = models.ForeignKey(ListingStatus, null = True, default=1) # TODO want to be able to listings by this
 	user = models.ForeignKey(User)
 	CL_link = models.URLField(null=True, blank=True)
+	CL_view = models.URLField(null=True, blank=True)
+	market = models.CharField(max_length=3)
 
+	class Meta:
+		unique_together = ('title', 'user',)
 
 	def max_offer(self):
 		"Returns highest offer made by any buyer for that listing"
@@ -68,7 +74,6 @@ class Listing(models.Model):
 
 	def get_absolute_url(self):
 		return reverse('detail', args=[self.id])
-
 
 # Listing Specification
 class ListingSpecKey(models.Model):

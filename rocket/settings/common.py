@@ -171,6 +171,7 @@ THIRD_PARTY_APPS = (
 
     # static file management 
     'pipeline',
+
 )
 
 LOCAL_APPS = (
@@ -246,6 +247,7 @@ PIPELINE_CSS = {
     'listings_base': {
         'source_filenames': (
             'listings/less/listings.less',
+            'rocket/vendorcss/select2.css'
         ),
         'output_filename': 'css/listings_base.css',
         'variant': 'datauri',

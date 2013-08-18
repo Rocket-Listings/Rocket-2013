@@ -27,7 +27,9 @@ def cl_anon_autopost_task(data):
   #set User-agent header ;)
   br.addheaders = [('User-Agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.36')]
 
-  br.open('https://post.craigslist.org/c/brl?lang=en')
+  post_url = 'https://post.craigslist.org/c/' + data["market"] + '?lang=en'
+
+  br.open(post_url)
   br.select_form(nr=0)
   br.form['id'] = [data["type"]]
   br.submit()
