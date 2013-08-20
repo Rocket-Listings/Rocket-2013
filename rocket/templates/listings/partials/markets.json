@@ -1,5 +1,33 @@
 {
 
+"sfo":[
+     {
+          "id": "1",
+          "text":"City Of San Francisco"
+     },
+     {
+          "id": "2",
+          "text":"South Bay Area"
+     },
+     {
+          "id": "3",
+          "text":"East Bay Area"
+     },
+     {
+          "id": "4",
+          "text":"Peninsula"
+     },
+     {
+          "id": "5",
+          "text":"North Bay / Marin"
+     },
+     {
+          "id": "6",
+          "text":"Santa Cruz Co"
+     }
+
+],
+
 "markets":[     
      {
           "id": "sfo",

@@ -1,17 +1,24 @@
 $(function() {
 
   //Market Select Stuff
-
   var dat = $.parseJSON($("#market-data").html());
+
   $(".form-select").select2({
     placeholder: "Select a Market",
     data: dat.markets
   });
-
   $(".form-select").show();
 
   $(".form-select").on("change", function(e){
-    console.log(e.val)
+    if (e.val === "sfo") {
+      $(".form-select-sub").select2({
+        placeholder: "Select a Sub-Market",
+        data: dat[e.val]
+      });
+      $(".form-select-sub").show();
+    } else{
+      $(".form-select-sub").hide();
+    }
   });
 
 
