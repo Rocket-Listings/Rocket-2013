@@ -10,13 +10,15 @@ $(function() {
   $(".form-select").show();
 
   $(".form-select").on("change", function(e){
-    if (e.val === "sfo") {
+
+    if (dat[e.val]) {
       $(".form-select-sub").select2({
         placeholder: "Select a Sub-Market",
         data: dat[e.val]
       });
       $(".form-select-sub").show();
-    } else{
+    }
+    else{
       $(".form-select-sub").hide();
     }
   });

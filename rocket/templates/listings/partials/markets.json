@@ -28,6 +28,445 @@
 
 ],
 
+"atl": [
+
+     {
+          "id":"1",
+          "text":"City Of Atlanta"
+     },
+     {
+          "id":"2",
+          "text":"Otp North"
+     },
+     {
+          "id":"3",
+          "text":"Otp East"
+     },
+     {
+          "id":"4",
+          "text":"Otp South"
+     },
+     {
+          "id":"5",
+          "text":"Otp West"
+     }
+
+],
+
+"bos":[ 
+     {
+          "id": "1",
+          "text": "Boston/cambridge/brookline"
+     },
+     {
+          "id": "2",
+          "text": "Northwest/merrimack"
+     },
+     {
+          "id": "3",
+          "text": "Metro West"
+     },
+     {
+          "id": "4",
+          "text": "North Shore"
+     },
+     {
+          "id": "5",
+          "text": "South Shore"
+     }
+],
+
+"chi":[ 
+     {
+          "id": "1",
+          "text": "City Of Chicago "
+     },
+     {
+          "id": "2",
+          "text": "North Chicagoland"
+     },
+     {
+          "id": "3",
+          "text": "West Chicagoland"
+     },
+     {
+          "id": "4",
+          "text": "South Chicagoland"
+     },
+     {
+          "id": "5",
+          "text": "Northwest Indiana"
+     },
+     {
+          "id": "",
+          "text": "Northwest Suburbs"
+     }
+],
+
+"dal":[ 
+     {
+          "id": "1",
+          "text": "Dallas"
+     },
+     {
+          "id": "2",
+          "text": "Fort Worth"
+     },
+     {
+          "id": "3",
+          "text": "Mid Cities"
+     },
+     {
+          "id": "4",
+          "text": "North Dfw"
+     },
+     {
+          "id": "5",
+          "text": "South Df"
+     }
+], 
+
+"det":[ 
+     {
+          "id": "1",
+          "text": "Macomb County"
+     },
+     {
+          "id": "2",
+          "text": "Wayne County"
+     },
+     {
+          "id": "3",
+          "text": "Oakland County"
+     }
+],
+
+"fmy":[ 
+     {
+          "id": "1",
+          "text": "Lee County"
+     },
+     {
+          "id": "2",
+          "text": "Charlotte County"
+     },
+     {
+          "id": "3",
+          "text": "Collier County"
+     }
+],
+
+"hnl":[ 
+     {
+          "id": "1",
+          "text": "Oahu"
+     },
+     {
+          "id": "2",
+          "text": "Big Island"
+     },
+     {
+          "id": "3",
+          "text": "Maui"
+     },
+     {
+          "id": "4",
+          "text": "Kauai"
+     },
+     {
+          "id": "5",
+          "text": "Molokai"
+     }
+],
+
+"lax":[ 
+     {
+          "id": "1",
+          "text": "Westside-southbay-310"
+     },
+     {
+          "id": "2",
+          "text": "San Fernando Valley"
+     },
+     {
+          "id": "3",
+          "text": "Central La 213/323"
+     },
+     {
+          "id": "4",
+          "text": "San Gabriel Valley"
+     },
+     {
+          "id": "5",
+          "text": "Long Beach / 562"
+     },
+     {
+          "id": "6",
+          "text": "Antelope Valley"
+     }
+     ],
+
+"min":[ 
+     {
+          "id": "1",
+          "text": "Hennepin County"
+     },
+     {
+          "id": "2",
+          "text": "Ramsey County"
+     },
+     {
+          "id": "3",
+          "text": "Anoka/chisago/isanti"
+     },
+     {
+          "id": "4",
+          "text": "Washington Co / Wi"
+     },
+     {
+          "id": "5",
+          "text": "Dakota / Scott"
+     },
+     {
+          "id": "6",
+          "text": "Carver/sherburne/wright"
+     }
+],
+
+
+
+"nyc":[ 
+     {
+          "id":"1",
+          "text":"Manhattan"
+     },
+     {
+          "id":"2",
+          "text":"Brooklyn"
+     },
+     {
+          "id":"3",
+          "text":"Queens"
+     },
+     {
+          "id":"4",
+          "text":"Bronx"
+     },
+     {
+          "id":"5",
+          "text":"Staten Island"
+     },
+     {
+          "id":"6",
+          "text":"New Jersey"
+     },
+     {
+          "id":"7",
+          "text":"Long Island"
+     },
+     {
+          "id":"8",
+          "text":"Westchester"
+     },
+     {
+          "id":"9",
+          "text":"Fairfield Co, Ct"
+     }
+], 
+"phx":[ 
+     {
+          "id":"1",
+          "text":"Central/south Phx"
+     },
+     {
+          "id":"2",
+          "text":"East Valley"
+     },
+     {
+          "id":"3",
+          "text":"Phx North"
+     },
+     {
+          "id":"4",
+          "text":"West Valley"
+     }
+], 
+"pdx":[ 
+     {
+          "id":"1",
+          "text":"Multnomah County"
+     },
+     {
+          "id":"2",
+          "text":"Washington County"
+     },
+     {
+          "id":"3",
+          "text":"Clark/cowlitz Wa"
+     },
+     {
+          "id":"4",
+          "text":"Clackamas County"
+     },
+     {
+          "id":"5",
+          "text":"North Coast"
+     },
+     {
+          "id":"6",
+          "text":"Yamhill Co"
+     },
+     {
+          "id":"7",
+          "text":"Columbia Gorge"
+     }
+],  
+"sdo":[ 
+     {
+          "id":"1",
+          "text":"City Of San Diego"
+     },
+     {
+          "id":"2",
+          "text":"North San Diego County"
+     },
+     {
+          "id":"3",
+          "text":"East San Diego County"
+     },
+     {
+          "id":"4",
+          "text":"South San Diego County"
+     }
+],  
+"sea":[ 
+     {
+          "id":"1",
+          "text":"Seattle"
+     },
+     {
+          "id":"2",
+          "text":"Eastside"
+     },
+     {
+          "id":"3",
+          "text":"Snohomish County"
+     },
+     {
+          "id":"4",
+          "text":"Kitsap / West Puget"
+     },
+     {
+          "id":"5",
+          "text":"Tacoma / Pierce"
+     },
+     {
+          "id":"6",
+          "text":"Olympia / Thurston"
+     },
+     {
+          "id":"7",
+          "text":"South King Co"
+     }
+],  
+"mia":[ 
+     {
+          "id":"1",
+          "text":"Miami / Dade County"
+     },
+     {
+          "id":"2",
+          "text":"Broward County"
+     },
+     {
+          "id":"3",
+          "text":"Palm Beach County"
+     }
+],  
+"tpa":[ 
+     {
+          "id":"1",
+          "text":"Hernando Co"
+     },
+     {
+          "id":"2",
+          "text":"Hillsborough Co"
+     },
+     {
+          "id":"3",
+          "text":"Pasco Co"
+     },
+     {
+          "id":"4",
+          "text":"Pinellas Co"
+     }
+],  
+"tor":[ 
+     {
+          "id":"1",
+          "text":"City Of Toronto"
+     },
+     {
+          "id":"2",
+          "text":"Durham Region"
+     },
+     {
+          "id":"3",
+          "text":"York Region"
+     },
+     {
+          "id":"4",
+          "text":"Brampton-caledon"
+     },
+     {
+          "id":"5",
+          "text":"Mississauga"
+     },
+     {
+          "id":"6",
+          "text":"Oakville-milton"
+     }
+],  
+"van":[ 
+     {
+          "id":"1",
+          "text":"City Of Vancouver"
+     },
+     {
+          "id":"2",
+          "text":"North Shore"
+     },
+     {
+          "id":"3",
+          "text":"Burnaby/newwest"
+     },
+     {
+          "id":"4",
+          "text":"Delta/surrey/langley"
+     },
+     {
+          "id":"5",
+          "text":"Tricities/pitt/maple"
+     },
+     {
+          "id":"6",
+          "text":"Richmond"
+     }
+],  
+"wdc":[ 
+     {
+          "id":"1",
+          "text":"District Of Columbia"
+     },
+     {
+          "id":"2",
+          "text":"Northern Virginia"
+     },
+     {
+          "id":"3",
+          "text":"Maryland"
+     }
+],
 "markets":[     
      {
           "id": "sfo",
