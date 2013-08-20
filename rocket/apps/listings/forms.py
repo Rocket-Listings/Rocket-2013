@@ -41,7 +41,7 @@ SpecFormSet = inlineformset_factory(Listing, Spec, extra=0, can_order=True, can_
     #         print name, value
     #     return self.cleaned_data
 
-ListingPhotoFormSet = inlineformset_factory(Listing, ListingPhoto, extra=0, can_order=True, can_delete=True, exclude=('order'))
+ListingPhotoFormSet = inlineformset_factory(Listing, ListingPhoto, extra=0, can_order=True, can_delete=True, exclude=('order', 'listing'))
 
 class MessageForm(forms.ModelForm):
     class Meta:

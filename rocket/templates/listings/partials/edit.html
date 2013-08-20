@@ -1,5 +1,4 @@
 {% load static from staticfiles %}
-{% load specval %}
 <h3 class="listing-title">{{ form.title.value|default:"Create a Listing" }}</h3>
 {# {{ formset.as_p }} #}
 
@@ -42,7 +41,7 @@
         <div class="row">
           <div class="col-lg-2 col-sm-4 col-3">
           {% for cat in cat_list %}
-              <a class="cat {{ group }}" data-id="{{ cat.id }}">{{ cat.name }}</a>
+              <a class="cat {{ group }}" data-id="{{ cat.id }}" data-slug="{{ cat.name|slugify }}">{{ cat.name }}</a>
             {% if group == "forsale" and forloop.counter|divisibleby:6 or group == "housing" and forloop.counter|divisibleby:3 %}
               </div><div class="col-lg-2">
             {% endif %}
@@ -818,7 +817,7 @@
       {% include "listings/partials/initial_specs.json" %}
     </script>
     {% verbatim %}
-    <script id="spec-form-template" type="text/template">
+    <script id="spec-edit-template" type="text/template">
       {{#specs}}
       <div class="form-group">
         <input id="id_spec_set-{{num}}-name" maxlength="100" name="spec_set-{{num}}-name" type="text" value="{{ name }}" />
@@ -848,7 +847,7 @@
     </div>
     {% endcomment %}
   </fieldset>
-  <fieldset>
+  <fieldset id="photo-fieldset">
     <legend>Photo Upload<small class="photo-view text-muted">Drag to reorder</small>
       <a class="btn btn-small btn-default pull-right photo-view toggle-view">Upload more</a>
       <a class="btn btn-small btn-default pull-right upload-view toggle-view" style="display: none;">Arrange photos</a>      
@@ -869,7 +868,7 @@
         </div>
       {% endfor %}
     </div>
-    <div id="photo_formset" class="hide">
+    <div id="photo-formset" class="hide">
       {{ photo_formset.management_form }}
       {% for form in photo_formset %}
       {% for field in form %}      
@@ -882,22 +881,21 @@
 
     {# Mustache Template #}
     {% verbatim %}
-    <script id="thumbnail-template" type="text/template">
+    <script id="photo-thumbnail-template" type="text/template">
       {{#photos}}
       <div class="col-lg-2" data-id="{{ index }}" draggable="true">
         <img src="{{ src }}" class="img-responsive">
       </div>
       {{/photos}}
     </script>
-    {% endverbatim %}
-
     <script id="photo-form-template" type="text/template">
-      {% verbatim %}
       {{#photos}}
-      {% endverbatim %}
-      {% for field in photo_formset.empty_form %}{{ field }}{% endfor %}
-      <br/>
-      {% verbatim %}
+      <input id="id_listingphoto_set-{{num}}-url" maxlength="255" name="listingphoto_set-{{num}}-url" type="text" />
+      <input id="id_listingphoto_set-{{num}}-key" maxlength="255" name="listingphoto_set-{{num}}-key" type="text" />
+      <input id="id_listingphoto_set-{{num}}-listing" name="listingphoto_set-{{num}}-listing" type="hidden" value="19" />
+      <input id="id_listingphoto_set-{{num}}-id" name="listingphoto_set-{{num}}-id" type="hidden" />
+      <input id="id_listingphoto_set-{{num}}-ORDER" name="listingphoto_set-{{num}}-ORDER" type="text" />
+      <input id="id_listingphoto_set-{{num}}-DELETE" name="listingphoto_set-{{num}}-DELETE" type="checkbox" />
       {{/photos}}
       {% endverbatim %}
     </script>

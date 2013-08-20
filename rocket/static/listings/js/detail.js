@@ -1,133 +1,63 @@
 $(function() {
+  var ListingEditView = Backbone.View.extend({
+    el: '#info-fieldset',
+    events: {
+      // "change input": "changed",
+      "keyup .title":         "changed",      
+      "change .price":        "changed",
+      "change .description":  "changed",
+      // "change .location":     "changed",
+    },
+    initialize: function(options) {
+      this.D = options.dispatcher;
 
-  // models are split up by their corresponding django form
-  var Listing = Backbone.Model.extend({});
+      this.categoryEditView = new CategoryEditView(options);
+      this.locationEditView = new LocationEditView(options);
 
-  var Spec = Backbone.Model.extend({});  
-  var SpecList = Backbone.Collection.extend({
-    model: Spec
+      _.bindAll(this, 'changed');
+      this.listenTo(this.model, 'change:title', this.renderPageTitle);
+    },
+    changed: function(e) {
+      var input = $(e.currentTarget);
+      this.model.set(input.attr('name'), input.val());
+    },
+    renderPageTitle: function(e) {
+      var title = this.model.get('title');
+      if (title.length > 0) {
+        $('.listing-title').text(title);
+        $('#preview-btn').removeAttr('disabled');
+      } else {
+        $('.listing-title').text("Create a listing");
+        $('#preview-btn').attr('disabled', 'disabled');
+      }
+    }
   });
 
-  var Photo = Backbone.Model.extend({});  
-  var PhotoList = Backbone.Collection.extend({
-    model: Photo,
-    comparator: 'order'
-  });
-
-  // There should be two views for each component, 
-  // one for its EditView and another for its PreviewView.
   var CategoryEditView = Backbone.View.extend({
     el: '#category-fieldset',
     events: {
-      "click .tab-pane .cat": "catClick"
+      "click .tab-pane .cat": "changed"
     },
-    initialize: function() {
-      _.bindAll(this, 'catClick');
-
-      this.prevCat = this.cat;
-      this.cat = this.$('#id_category').val();
-
-      // this.cat = new Backbone.Model({
-      //   id: $('#id_category').val();
-      // });
-      // this.listenTo(this.cat, 'change', this.render);
+    initialize: function(options) {
+      _.bindAll(this, 'changed');
       this.render();
     },
-
-    catClick: function(e) {
-      // this.cat.set({
-      //   prev_id: this.cat.get('id'),
-      //   id: $(e.currentTarget).data('id')
-      // });
-      this.prevCat = this.cat;
-      this.cat = $(e.currentTarget).data('id');
-      this.render();
+    changed: function(e) {
+      var elem = $(e.currentTarget);
+      var nextCat = elem.data('id');
+      var prevCat = this.model.get('category');
+      this.model.set('category', nextCat);
+      this.render(prevCat);
     },
-
-    render: function() {
-      var prev_id = this.prevCat
-      var next_id = this.cat;
-
-      if (prev_id) {
-        this.$('.tab-pane .cat[data-id="{0}"]'.format(prev_id)).removeClass('selected');
-        var prev_specs = $('.specs-form > div[data-cat="{0}"]'.format(prev_id));
-        prev_specs.hide();
-        prev_specs.find('input').attr('disabled', 'disabled');
+    render: function(prevCat) {
+      if (prevCat) {
+        this.$('.tab-pane .cat[data-id="{0}"]'.format(prevCat)).removeClass('selected');
       }
-
-      var cat = $('.tab-pane .cat[data-id="{0}"]'.format(next_id));
+      var nextCat = this.model.get('category');
+      var cat = $('.tab-pane .cat[data-id="{0}"]'.format(nextCat));
       cat.addClass('selected');
-
       // switch to tab
       $('.nav-tabs a[href="#{0}"]'.format(cat.parent('.tab-pane').attr('id'))).tab('show');
-
-      var next_specs = $('.specs-form > div[data-cat="{0}"]'.format(next_id));
-      if (next_specs.length) {
-        next_specs.find('input').removeAttr('disabled');
-        next_specs.show();
-        $('#no-specs').hide();
-      } else {
-        $('#no-specs').show();
-      }
-    }
-  });
-
-  var SpecEditView = Backbone.View.extend({
-    el: '#spec-fieldset',
-    template: Mustache.compile($('#spec-form-template').html()),
-    events: {
-      "change input": "parseToModel"
-    },
-    initialize: function() {
-      _.bindAll(this, "parseToModel");
-      this.defaults = $.parseJSON(this.$('#initial-specs').html());
-    },
-    parseToModel: function(e) {
-      console.log('parse to model');
-    },
-    switchCategory: function(catSlug) {
-      var specNames = this.defaults[catSlug];
-      if (!specNames) 
-        return;
-      var total = $('#id_spec_set-TOTAL_FORMS').val();
-      var initial = $('#id_spec_set-INITIAL_FORMS').val();        
-      var context = _.map(specNames, function(name, index) {
-        return {
-          num: total + index,
-          name: name,
-          value: ""
-        };
-      });
-      this.$('#spec-row').html(this.template(context));
-    }
-  });
-
-  var SpecPreviewView = Backbone.View.extend({
-    el: '#preview-specs',
-    template: Mustache.compile($('#preview-specs-template').html()),
-    initialize: function(e) {
-      _.bindAll(this, 'load');
-      this.specs = new SpecList;
-      this.load();
-    },
-    render: function() {
-      var context = {
-        "specs": this.specs.toJSON(),
-        "has_specs": this.specs.length > 0
-      }
-      this.$el.html(this.template(context));
-    },
-    load: function() {
-      var inputs = _.filter($('.specs-form input:enabled'), function(input) {
-        return $(input).val().length > 0;
-      });
-      var specs = _.map(inputs, function(input) {
-        return new Spec({
-          key: $(input).siblings('label').text(),
-          value: $(input).val()
-        });
-      });
-      this.specs.set(specs);
     }
   });
 
@@ -352,163 +282,61 @@ $(function() {
     ]
   });
 
-  var SidebarView = Backbone.View.extend({
-    el: '.detail-sidebar',
+  var SpecEditView = Backbone.View.extend({
+    el: '#spec-fieldset',
+    template: Mustache.compile($('#spec-edit-template').html()),
     events: {
-      // "click .draft-btn": "save",
-      "click .save-btn": "publish"
+      "change input": "parseToCollection"
     },
-
-    // save: function(e) {
-    //   $('#submit-draft').click();
-    // },
-    publish: function(e) {
-      $('#submit-publish').click();
-    }
-  });
-  
-  var PhotoPreviewView = Backbone.View.extend({
-    // el is defined in template with the backbone.subview plugin
-    el: '#preview-gallery', 
-    template: Mustache.compile($('#preview-gallery-template').html()),
-    events: {
-      "click .preview-thumbnails img": "fillStage"
+    initialize: function(options) {
+      this.listenTo(options.listing, 'change:category', this.switchCategory);
+      _.bindAll(this, "parseToCollection");
+      this.defaults = $.parseJSON(this.$('#initial-specs').html());
+      this.parseToCollection();
     },
-
-    initialize: function() {
-      _.bindAll(this, 'fillStage', 'load');
-      this.photos = new PhotoList;
-      this.load();
-    },
-
-    render: function() {
-      var context = {
-        "photos": this.photos.toJSON(),
-      };
-      if (this.photos.length > 0) {
-        context["first_photo"] = this.photos.at(0).toJSON();
-      }
-      this.$el.html(this.template(context));
-    },
-
-    fillStage: function(e) {
-      e.preventDefault();
-      var photo = $(e.currentTarget);
-      var src = photo.attr('data-full') || photo.attr('src');
-      this.$(".preview-stage img").attr('src', src);
-      window.location.hash = photo.attr('data-id');
-      return this;
-    },
-
-    load: function() {      
-      var formObject = $('.listing-form:first').serializeObject();
-      var total = formObject['listingphoto_set-TOTAL_FORMS'];
-      var photolist = [];
+    parseToCollection: function() {
+      var form = $('.listing-form:first').serializeObject();
+      var total = form['listingphoto_set-TOTAL_FORMS'];
+      var specList = [];
       for (var i = 0; i < total; i++) {
-        var key = 'listingphoto_set-{0}-'.format(i);
-        photolist.push(new Photo({
-          url: formObject[key + 'url'],
-          key: formObject[key + 'key'],
+        var key = 'id_spec_set-{0}-'.format(i);
+        specList.push(new Spec({
+          name: formObject[key + 'name'],
+          value: formObject[key + 'value'],
           listing: formObject[key + 'listing'],
-          order: formObject[key + 'ORDER'],
           markedDelete: formObject[key + 'DELETE'] || false
         }));
       }
-      this.photos.set(photolist); // {merge: true});
+      this.collection.set(specList); // {merge: true});
       return this;
-    }
-  });
-  var ListingPreviewView = Backbone.View.extend({
-    el: '#preview',
-    template: Mustache.compile($('#preview-text-template').html()),
-    subviewCreators : {
-      "photoView": function() {
-          var options = {};
-          return new PhotoListView(options);
-      },
-      "specView": function() {
-        var options = {};
-        return new SpecListView(options);
+    },
+    switchCategory: function(model) {
+      var cat = model.get('category');
+      var catSlug = $('.cat[data-id="{0}"]'.format(cat)); // workaround
+      var specNames = this.defaults[catSlug];
+      console.log(specNames);
+      if (!specNames) {
+        return;
       }
-    },
-    initialize: function() {
-      Backbone.Subviews.add(this);      
 
+      var total = $('#id_spec_set-TOTAL_FORMS').val();
+      var initial = $('#id_spec_set-INITIAL_FORMS').val();        
+      var context = _.map(specNames, function(name, index) {
+        return {
+          num: total + index,
+          name: name,
+          value: ""
+        };
+      });
+      this.$('#spec-row').html(this.template(context));
     }
   });
-
-  var ListingEditView = Backbone.View.extend({
-    el: '#info-fieldset',
-    template: Mustache.compile($('#preview-text-template').html()),
+  
+  var PhotoEditView = Backbone.View.extend({
+    el: '#photo-fieldset',
     events: {
-      // "change input": "changed",
-      "keyup .title":         "changed",      
-      "change .price":        "changed",
-      "change .description":  "changed",
-      "change .location":     "changed",
+      "click .toggle-view": this.toggleView
     },
-      // "change .specs-form input:enabled": "specChanged",
-      // "change #photo_formset input": "photoChanged",
-
-    initialize: function() {
-      _.bindAll(this, 'changed');
-      // , 'specChanged', 'photoChanged');
-      // this.on('photoChanged', this.photoChanged, this);
-      // this.photoView = new PhotoListView;
-      this.render();
-    },
-
-
-    changed: function(e) {
-      // this.photos.changed();
-      var input = $(e.currentTarget);
-      this.model.set(input.attr('name'), input.val());
-    },
-
-    specChanged: function(e) {
-      this.subviews.specView.load();
-      this.subviews.specView.render();
-    },
-
-    photoChanged: function(e) {
-      this.subviews.photoView.load();
-      this.subviews.photoView.render();      
-    },
-
-    // render: function() {
-    //   var context = { 
-    //     "listing": this.model.toJSON(),
-    //   };
-    //   this.$('#preview-view').html(this.template(context));
-    //   if (this.model.get('title').length > 0) {
-    //     this.$('.listing-title').text(this.model.get('title'));
-    //     $('#preview-btn').removeAttr('disabled');
-    //   } else {
-    //     this.$('.listing-title').html("Create a listing");
-    //     // not sure why this.$('#preview-btn') is not found here. Using global selector.
-    //     $('#preview-btn').attr('disabled', 'disabled');
-    //   }
-    //   return this;
-    // }
-  });
-
-  var form = this.$('.listing-form:first').serializeObject();
-  var listing = {
-    "title": form.title,
-    "category": form.category,       
-    "price": form.price,
-    "description": form.description,
-    "location": form.location
-  }
-  var listingView = new ListingView;
-  var locationEditView = new LocationEditView;
-  var categorySelectView = new CategorySelectView;
-  var sidebarView = new SidebarView;
-  var specEditView = new SpecEditView;
-
-
-  // file picker options and callbacks
-  var fpConfig = {
     picker_options: {
       mimetype:"image/*",
       multiple: true,
@@ -520,75 +348,184 @@ $(function() {
       path: '/photos/',
       access: 'public'
     },
-    onSuccess: function(InkBlobs) {
-      // update management form
-      var totalForms = parseInt($('#id_listingphoto_set-TOTAL_FORMS').val());
-      var initialForms = parseInt($('#id_listingphoto_set-INITIAL_FORMS').val());
-      $('#id_listingphoto_set-TOTAL_FORMS').val(totalForms + InkBlobs.length);
-
-      // prepare view context variables
-      var view = { photos: [] };
-      $.each(InkBlobs, function(index, blob) {
-        view.photos.push({
-          index: initialForms + index,
-          url: blob.url,
-          key: blob.key,
-          src: "https://s3.amazonaws.com/static.rocketlistings.com/" + blob.key
-        });
-      });
-
+    initialize: function(options) {  
+      filepicker.setKey('ATM8Oz2TyCtiJiHu6pP6Qz');
+      filepicker.pickAndStore(this.picker_options, this.store_options, _.bind(this.onSuccess, this), this.onError);
+      // this.bindSortable();
+      // want to compile these after enabling UI functionality
+      this.thumbnailTemplate = Mustache.compile(this.$('#photo-thumbnail-template').html());
+      this.formTemplate = Mustache.compile(this.$('#photo-form-template').html());
+      this.parseToCollection();
+    },
+    parseToCollection: function() {      
+      var form = $('.listing-form:first').serializeObject();
+      var total = form['listingphoto_set-TOTAL_FORMS'];
+      var photolist = [];
+      for (var i = 0; i < total; i++) {
+        var key = 'listingphoto_set-{0}-'.format(i);
+        photolist.push(new Photo({
+          url: form[key + 'url'],
+          key: form[key + 'key'],
+          // listing: form[key + 'listing'],
+          order: form[key + 'ORDER'],
+          db_id: form[key + 'id'],
+          markedDelete: form[key + 'DELETE'] || false
+        }));
+      }
+      this.collection.set(photolist); // {merge: true});
+      this.render();
+      return this;
+    },
+    render: function() {
+      var context = { 'photos': this.collection.toJSON() };
       // user interface first
-      var thumbnails = Mustache.render($('#thumbnail-template').html(), view);
-      $('#photos').append(thumbnails);
+      var thumbnails = this.thumbnailTemplate(context);
+      this.$('#photos').append(thumbnails);
       this.bindSortable();
-      $('.photo-view').fadeIn();
-      $('.upload-view').hide();
+      this.$('.photo-view').fadeIn();
+      this.$('.upload-view').hide();
 
       // then formset stuff
-      var photoFormTemplate = $('#photo-form-template').html().replace(/__prefix__/g, "{{ index }}");
-      var photoForm = Mustache.render(photoFormTemplate, view);
-      var formset = $('#photo_formset');
+      var photoForm = this.formTemplate(context);
+      var formset = this.$('#photo-formset');
       formset.append(photoForm);
 
       // manual labor to insert values
-      $.each(view.photos, function(index, photo) {
-        formset.find('#id_listingphoto_set-{0}-url'.format(photo.index)).val(photo.url);
-        formset.find('#id_listingphoto_set-{0}-key'.format(photo.index)).val(photo.key);
-        formset.find('#id_listingphoto_set-{0}-ORDER'.format(photo.index)).val(photo.index);               
+      // $.each(view.photos, function(index, photo) {
+      //   formset.find('#id_listingphoto_set-{0}-url'.format(photo.index)).val(photo.url);
+      //   formset.find('#id_listingphoto_set-{0}-key'.format(photo.index)).val(photo.key);
+      //   formset.find('#id_listingphoto_set-{0}-ORDER'.format(photo.index)).val(photo.index);               
+      // });
+    },
+    onSuccess: function(InkBlobs) {
+      // update management form
+      var totalInput = this.$('#id_listingphoto_set-TOTAL_FORMS');
+      var total = parseInt(totalInput.val());
+      totalInput.val(total + InkBlobs.length);
+      var initial = parseInt(this.$('#id_listingphoto_set-INITIAL_FORMS').val());
+      // prepare view context variables
+      var photos = [];
+      _.each(InkBlobs, function(blob, index) {
+        photos.push({
+          index: initial + index,
+          url: blob.url,
+          key: blob.key,
+          src: "https://static.rocketlistings.com/" + blob.key,
+          markedDelete: false
+        });
       });
-
-      listingView.trigger('photoChanged');
+      this.collection.set(photos);
+      this.render();
     },
     onError: function(type, message) {
       console.log('('+type+') '+ message);
     },
     toggleView: function(e) {
-      if (e)
+      if (e) {
         e.preventDefault();
-
+      }
       $('.upload-view').toggle();
       $('.photo-view').toggle();     
     },
     bindSortable: function() {
-      $('.sortable').sortable().bind('sortupdate', function() {
+      this.$('.sortable').sortable().bind('sortupdate', function() {
         var formset = $('#photo_formset');
-        $('.sortable div').each(function(index, item) {
+        this.$('.sortable div').each(function(index, item) {
           var id = $(item).data('id');
           var orderInput = formset.find('#id_listingphoto_set-{0}-ORDER'.format(id));
           orderInput.val(index);
-          listingView.trigger('photoChanged');
+          // listingView.trigger('photoChanged');
         });
       });
     }
-  }
-
-  filepicker.setKey('ATM8Oz2TyCtiJiHu6pP6Qz');
-  filepicker.pickAndStore(fpConfig.picker_options, fpConfig.store_options, $.proxy(fpConfig.onSuccess, fpConfig), fpConfig.onError);
-  $('.toggle-view').click(fpConfig.toggleView);
-  fpConfig.bindSortable();
-
-  $("div.btn-group[data-toggle-name='listing-pane-toggle'] a").click(function(e) {
-    $(this).siblings().removeClass("active");
-    $(this).addClass("active");
   });
+
+  var PreviewView = Backbone.View.extend({
+    el: '#preview-container',
+    template: Mustache.compile($('#preview-template').html()),
+    events: {
+      "click .preview-thumbnails img": "fillStage"
+    },
+    initialize: function(options) {
+      this.listing = options.listing;
+      this.photos = options.photos;
+      this.specs = options.specs;
+
+      this.render();
+
+      this.listenTo(this.listing, 'change', this.render);
+      this.listenTo(this.specs, 'change', this.render);
+      this.listenTo(this.photos, 'change', this.render);
+    },
+    render: function() {
+      var context = {
+        listing: this.listing.toJSON(),
+        photos: this.photos.toJSON(),
+        specs: this.specs.toJSON(),
+        has_specs: this.specs.length > 0
+      };
+      if (this.photos.length > 0) {
+       context.first_photo = this.photos.at(0).toJSON();
+      }
+      this.$el.html(this.template(context));
+    },
+    fillStage: function(e) {
+      e.preventDefault();
+      var photo = $(e.currentTarget);
+      var src = photo.attr('data-full') || photo.attr('src');
+      this.$(".preview-stage img").attr('src', src);
+      window.location.hash = photo.attr('data-id');
+      return this;
+    }
+  });
+
+  // models are split up by their corresponding django form
+  var Listing = Backbone.Model.extend({});
+  var Spec = Backbone.Model.extend({});  
+  var SpecList = Backbone.Collection.extend({
+    model: Spec
+  });
+  var Photo = Backbone.Model.extend({});  
+  var PhotoList = Backbone.Collection.extend({
+    model: Photo,
+    comparator: 'order'
+  });
+
+  var form = $('.listing-form:first').serializeObject();
+  // we don't want all the input fields
+  var listing = new Listing({
+    "title": form.title,
+    "category": form.category,       
+    "price": form.price,
+    "description": form.description,
+    "location": form.location
+  });
+  var specs = new SpecList;
+  var photos = new PhotoList;
+
+  var listingEditView = new ListingEditView({ model: listing });
+  var specEditView = new SpecEditView({ collection: specs, listing: listing  });
+  var photoEditView = new PhotoEditView({ collection: photos });
+
+  var previewView = new PreviewView({ listing: listing, specs: specs, photos: photos });
+
+  var SidebarView = Backbone.View.extend({
+    el: '.detail-sidebar',
+    events: {
+      // "click .draft-btn": "save",
+      "click div.btn-group[data-toggle-name='listing-pane-toggle'] a": "toggleView",
+      "click .save-btn": "publish"
+    },
+    toggleView: function(e) {
+      $(this).siblings().removeClass("active");
+      $(this).addClass("active");
+    },
+    // save: function(e) {
+    //   $('#submit-draft').click();
+    // },
+    publish: function(e) {
+      $('#submit-publish').click();
+    }
+  });
+  var sidebarView = new SidebarView;
 });

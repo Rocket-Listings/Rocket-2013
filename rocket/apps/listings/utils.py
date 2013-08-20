@@ -10,4 +10,4 @@ def get_cats():
         for group in cat_groups:
             cats[group] = list(cats_queryset.filter(group=group))
         cache.set('cats', cats, None)
-    return cats
+    return { 'cats': cats }

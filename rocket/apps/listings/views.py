@@ -153,7 +153,7 @@ def update(request, listing_id=None, create=False): # not directly addressed by 
             'photo_formset': photo_formset,
             'pane': 'edit'
         }
-        cxt.update(utils.get_cats())
+        cxt.update(utils.get_listing_vars())
         return TemplateResponse(request, 'listings/detail.html', cxt)
 
 @view_count

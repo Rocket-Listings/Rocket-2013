@@ -1,27 +1,12 @@
 {% verbatim %}
-<script id="preview-text-template" type="text/template">
+<script id="preview-template" type="text/template">
   <div class="row">
     <h3 class="col-10">{{ listing.title }}<small class="text-muted preview-location">{{ listing.location }}</small></h3>
     <h3 class="col-2 text-right text-success">
       {{#listing.price}}${{ listing.price }}{{/listing.price}}
     </h3>
   </div>
-  <div id="preview-gallery" data-subview="photoView"></div>
-  <p class="preview-description">{{ listing.description }}</p>    
-  <div id="preview-specs" data-subview="specView"></div>
-</script>
-<script id="preview-specs-template" type="text/template">
-  {{#has_specs}}
-  <h4>Specs</h4>
-  <dl class="dl-horizontal">
-  {{#specs}}
-    <dt>{{ key }}</dt>
-    <dd>{{ value }}</dd>
-  {{/specs}}
-  </dl>
-  {{/has_specs}}
-</script>
-<script id="preview-gallery-template" type="text/template">
+  <div id="preview-gallery">
     <div class="preview-thumbnails row">
       {{#photos}}
       <div class="col-sm-2">
@@ -34,6 +19,18 @@
       <img src="https://s3.amazonaws.com/static.rocketlistings.com/{{ first_photo.key }}" class="img-responsive"/>
       {{/first_photo}}
     </div>
+  </div>
+  <p class="preview-description">{{ listing.description }}</p>    
+  {{#has_specs}}
+    <h4>Specs</h4>
+    <dl class="dl-horizontal">
+      {{#specs}}
+      <dt>{{ key }}</dt>
+      <dd>{{ value }}</dd>
+      {{/specs}}
+    </dl>
+  {{/has_specs}}
 </script>
 {% endverbatim %}
-<div id="preview-view"></div>
+
+<div id="preview-container"></div>
