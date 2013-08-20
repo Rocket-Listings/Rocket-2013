@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.core.exceptions import ObjectDoesNotExist
@@ -17,7 +18,7 @@ def verify(token, timestamp, signature):
 	Encoding the resulting string with the HMAC algorithm (using your API Key as a key and SHA256 digest mode).
 	Comparing the resulting hexdigest to the signature."""
 
-	api_key = 'key-9flqj538z-my-qcnpc74c2wit4vibl-3'
+	api_key = settings.MAILGUN_ACCESS_KEY
 	return signature == hmac.new(
                              key=api_key,
                              msg='{}{}'.format(timestamp, token),
@@ -71,24 +72,31 @@ def new_cl_admin_message(request):
 @require_POST
 def new_cl_buyer_message(request):
 	if verify(request.POST.get('token', ''), request.POST.get('timestamp', ''), request.POST.get('signature', '')):
-		user = get_object_or_404(User, username= request.POST.get('recipient').split('@')[0])
+		user = get_object_or_404(User, username=request.POST.get('recipient').split('@')[0])
 		msg_parts = request.POST.get('body-plain', '').split('------------------------------------------------------------------------')
 		msg_body = msg_parts[0]
 		listing_view_link = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', msg_parts[1])[0]
 		try:
+			# Try to find the listing that matches the message
 			listing = user.listing_set.get(CL_view=listing_view_link)
-		except ObjectDoesNotExist:
-			listings_no_links = user.listing_set.filter(CL_view=None, title__exact=request.POST.get('subject', '').partition('"')[2].partition('"')[0])[0]
-		buyer_name = request.POST.get('from', '').partition("\"")[2].partition("\"")[0]
-		buyer_email = request.POST.get('from', '').partition("<")[2].partition(">")[0]
 
-		try:
-			b = Buyer.objects.get(listing=listing, name=buyer_name)
-		except ObjectDoesNotExist:
-			b = Buyer(listing=listing, name=buyer_name, email=buyer_email)
-			b.save()
+			# If it exists, try to find the buyer,
+			# else create a new buyer
+			buyer_name = request.POST.get('from', '').partition("\"")[2].partition("\"")[0]
+			buyer_email = request.POST.get('from', '').partition("<")[2].partition(">")[0]
+			try:
+				b = Buyer.objects.get(listing=listing, name=buyer_name)
+			except ObjectDoesNotExist:
+				b = Buyer(listing=listing, name=buyer_name, email=buyer_email)
+				b.save()
 
-		message = Message(listing=listing, content=msg_body, buyer=b)
+			# Save the message with the associated listing and buyer
+			message = Message(listing=listing, content=msg_body, buyer=b)
+		except ObjectDoesNotExist:
+			# If there is no matching listing
+			listings_no_links = map(lambda l: l.id, user.listing_set.filter(CL_view=None))
+			
+			message = Message(content=msg_body)
 		message.save()
 
 		return HttpResponse('OK')
