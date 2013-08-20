@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from listings.models import Listing, Buyer, Message
 
 import requests
+import mechanize
 import hashlib, urllib
 
 @task(name='tasks.new_cl_admin_message_task')
@@ -83,3 +84,39 @@ def send_message_task(message_id):
 	except BadHeaderError:
 		return 'Invalid header found.'
 	return msg.id
+
+@task(name='tasks.lookup_view_links_task')
+def lookup_view_links_task(listing_id):
+	# takes an array of listing ids to look up
+	view_page_text = "Your posting can be seen at "
+	listing = Listing.objects.get(id=listing_id)
+	r = requests.get(listing.CL_link)
+	partition = BeautifulSoup(r.text).find("p").text.partition(view_page_text)
+	if partition[1]:
+		# Houston, we have a link!
+		# Else, listing has not been activated so we do nothing
+		listing.CL_view = partition[2].strip(".")
+		listing.save()
+
+@task(name='tasks.process_new_cl_message_task')
+def process_new_cl_message_task(*args, **kwargs):
+	"""
+	Takes keyword arguments:
+	'listing_view_link': The link in the original message
+	'buyer_name': The name of the buyer from the original message
+	'buyer_email': The email of the buyer from the original message
+	'message_id': The id of the message saved without a buyer or listing
+	"""
+
+	listing = Listing.objects.get(CL_view=kwargs['listing_view_link'])
+	try:
+		buyer = Buyer.objects.get(listing=listing, name=kwargs['buyer_name'])
+	except ObjectDoesNotExist:
+		buyer = Buyer(listing=listing, name=buyer_name, email=kwargs['buyer_email'])
+		buyer.save()
+
+	message = Message.objects.get(id=kwargs['message_id'])
+	message.buyer = buyer
+	if not message.listing:
+		message.listing = listing
+	message.save()
