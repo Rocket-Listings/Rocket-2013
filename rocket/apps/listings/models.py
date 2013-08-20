@@ -49,6 +49,7 @@ class ListingStatus(models.Model):
 class Listing(models.Model):
 	# also for natural key handling
 	objects = ListingManager()
+
 	title = models.CharField(max_length=200)
 	description = models.TextField()
 	pub_date = models.DateTimeField('date published', auto_now_add=True, default=datetime.now)
@@ -57,7 +58,9 @@ class Listing(models.Model):
 	location = models.CharField(max_length=200)
 	category = models.ForeignKey(ListingCategory)
 	status = models.ForeignKey(ListingStatus, null = True, default=1) # TODO want to be able to listings by this
+	
 	user = models.ForeignKey(User)
+	
 	CL_link = models.URLField(null=True, blank=True)
 	CL_view = models.URLField(null=True, blank=True)
 	market = models.CharField(max_length=3)
@@ -75,21 +78,13 @@ class Listing(models.Model):
 	def get_absolute_url(self):
 		return reverse('detail', args=[self.id])
 
-# Listing Specification
-class ListingSpecKey(models.Model):
-	name = models.CharField(max_length = 100)
-	category = models.ForeignKey(ListingCategory)
+class Spec(models.Model):
+	name = models.CharField(max_length=100)
+	value = models.CharField(max_length=100)
+	listing = models.ForeignKey(Listing);
 
 	def __unicode__(self):
-		return self.name
-
-class ListingSpecValue(models.Model):
-	value = models.CharField(max_length = 100)
-	key = models.ForeignKey(ListingSpecKey)
-	listing = models.ForeignKey(Listing)
-
-	def __unicode__(self):
-		return self.value
+		return self.name + ' ' + self.value
 		
 # Listing Photo
 class ListingPhoto(models.Model):

@@ -21,7 +21,7 @@
   {% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
 
   {# Category Select #}
-  <fieldset>
+  <fieldset id="category-fieldset">
     <legend>Category</legend>
     {% for error in form.category.errors %}
     <div class="alert alert-danger">
@@ -55,7 +55,8 @@
   </fieldset>
 
   {# First form row #}
-  <fieldset><legend>Listing Info</legend>
+  <fieldset id="info-fieldset">
+    <legend>Listing Info</legend>
     {# Title #}
     <div class="row">
       <div class="col-sm-9 form-group {% if form.title.errors %} has-error {% endif %}">
@@ -84,8 +85,8 @@
       </div>
     </div>
   </fieldset>
-  <fieldset><legend>Marketplace &amp; Location</legend>
-    <div class = "row">
+  <fieldset id="marketplace-location-fieldset"><legend>Marketplace &amp; Location</legend>
+    <div class="row">
       <div id="market-col" class="col-lg-6">
         <label for="id_market" class="control-label">Market</label>
         <select class= "form-select" name = "market" style="display:none" value="{{form.market.value}}">
@@ -798,21 +799,42 @@
           <option value="zur" {% ifequal form.market.value "zur" %} selected {%endifequal%} >Zurich</option>
         </select>
       </div>
-      <div id="location-col" class="col-lg-6">
+      <div class="col-lg-6">
         <div class="form-group {% if form.location.errors %} has-error {% endif %}">
           <label for="id_location" class="form-label">{{ form.location.label }} <span class="text-muted">(Be as specific as you want)</span></label>
-            <input type="text" placeholder="Burlington, VT" class="location form-control" id="id_location" maxlength="200" name="location" value="{{ form.location.value|default:"" }}">
-        </div>
-        <div class="location-map-wrapper">
-          <div id="location-map"></div>
-          <button id="location-btn" class="btn btn-default" type="button">Autofill Current Location <i class="glyphicon glyphicon-screenshot"></i></button>
-          <img src="{% static 'users/img/100px_loading.gif' %}" class="loading-spinner"/>
+          <input type="text" placeholder="Burlington, VT" class="location form-control" id="id_location" maxlength="200" name="location" value="{{ form.location.value|default:"" }}">
         </div>
         {# <label class="form-label">Map</label> #}
       </div>
-    </div>  
+    </div>
+    <div class="location-map-wrapper">
+      <div id="location-map"></div>
+      <button id="location-btn" class="btn btn-default" type="button">Autofill Current Location <i class="glyphicon glyphicon-screenshot"></i></button>
+      <img src="{% static 'users/img/100px_loading.gif' %}" class="loading-spinner"/>
+    </div>
   </fieldset>
   <fieldset id="spec-fieldset" class=""><legend>Specs</legend>
+    <script type="text/json" id="initial-specs">
+      {% include "listings/partials/initial_specs.json" %}
+    </script>
+    {% verbatim %}
+    <script id="spec-form-template" type="text/template">
+      {{#specs}}
+      <div class="form-group">
+        <input id="id_spec_set-{{num}}-name" maxlength="100" name="spec_set-{{num}}-name" type="text" value="{{ name }}" />
+        <input id="id_spec_set-{{num}}-value" maxlength="100" name="spec_set-{{num}}-value" type="text" value="{{ value }}" />
+        <input id="id_spec_set-{{num}}-listing" name="spec_set-{{num}}-listing" type="hidden" value="19" />
+        <input id="id_spec_set-{{num}}-id" name="spec_set-{{num}}-id" type="hidden" />
+        <input id="id_spec_set-{{num}}-DELETE" name="spec_set-{{num}}-DELETE" type="checkbox" />
+      </div>
+      {{/specs}}  
+    </script>
+    {% endverbatim %}
+
+    {{ spec_formset.management_form }}
+    <div id="spec-row" class="row">
+    </div>
+    {% comment %}
     <div class="row">
       <div class="specs-form col-lg-6">
         <p id="no-specs"></p>
@@ -824,6 +846,7 @@
         {% endfor %}
       </div>
     </div>
+    {% endcomment %}
   </fieldset>
   <fieldset>
     <legend>Photo Upload<small class="photo-view text-muted">Drag to reorder</small>

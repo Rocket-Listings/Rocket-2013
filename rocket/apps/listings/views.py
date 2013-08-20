@@ -4,7 +4,7 @@ import json
 from django.contrib.auth.models import User
 from django.conf import settings
 from datetime import datetime, timedelta
-from listings.forms import ListingForm, SpecForm, ListingPhotoFormSet, MessageForm
+from listings.forms import ListingForm, SpecFormSet, ListingPhotoFormSet, MessageForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET, require_POST 
 from django.shortcuts import render, redirect, get_object_or_404
@@ -69,10 +69,11 @@ def create(request, pane='edit'):
         }
         cxt = {
             'form': ListingForm(initial=defaults),
-            'pane': pane,
-            'photo_formset': ListingPhotoFormSet(prefix="listingphoto_set")
+            'spec_formset': SpecFormSet(prefix="spec_set"),
+            'photo_formset': ListingPhotoFormSet(prefix="listingphoto_set"),
+            'pane': pane
         }
-        cxt.update(utils.get_listing_vars())
+        cxt.update(utils.get_cats())
         return TemplateResponse(request, 'listings/detail.html', cxt)
     else: # POST
         return update(request, create=True)
@@ -85,32 +86,32 @@ def update(request, listing_id=None, create=False): # not directly addressed by 
         if request.user != listing.user:
             raise Http404
     else:
-        listing = Listing()
+        listing = Listing(user=request.user)
 
-    listing_form = ListingForm(request.POST, instance=listing, user=request.user)
-    specs = listing.listingspecvalue_set.select_related()
-    spec_form = SpecForm(request.POST, initial=specs)
+    listing_form = ListingForm(request.POST, instance=listing)
+    spec_formset = SpecFormSet(request.POST, instance=listing, prefix="spec_set")
     photo_formset = ListingPhotoFormSet(request.POST, instance=listing, prefix="listingphoto_set")
 
-    if listing_form.is_valid() and spec_form.is_valid() and photo_formset.is_valid():
-        listing = listing_form.save(commit=False)
-        listing.user = request.user
-        listing.save()  
-        # update search index
-        haystack.connections['default'].get_unified_index().get_index(Listing).update_object(listing)
+    if listing_form.is_valid() and spec_formset.is_valid() and photo_formset.is_valid():
+        listing = listing_form.save()
+        spec_formset.save()
 
-        for name, value in spec_form.cleaned_data.items():
-            if value:
-                spec_id = int(name.replace('spec-',''))
-                ListingSpecValue.objects.create(value=value, key_id=spec_id, listing_id=listing.id)
-
-        # for form in photo_formset.marked_for_delete:
-            # form.instance.delete()
-
+        # need to do this for ordering
         photo_formset.save(commit=False)
         for form in photo_formset.ordered_forms:
             form.instance.order = form.cleaned_data['ORDER']
             form.instance.save()
+
+        # for name, value in spec_form.cleaned_data.items():
+        #     if value:
+        #         spec_id = int(name.replace('spec-',''))
+        #         ListingSpecValue.objects.create(value=value, key_id=spec_id, listing_id=listing.id)
+
+        # for form in photo_formset.marked_for_delete:
+            # form.instance.delete()
+
+        # update search index
+        haystack.connections['default'].get_unified_index().get_index(Listing).update_object(listing)
 
         if listing.listing_type == "O":
             cl_type = "fso"
@@ -144,47 +145,53 @@ def update(request, listing_id=None, create=False): # not directly addressed by 
     else:
         print listing_form.errors
         print photo_formset.errors
+        print spec_formset.errors        
         # preserving validation errors
         cxt = {
             'form': listing_form,
-            'spec_form': spec_form,
-            'pane': 'edit',
-            'photo_formset': photo_formset
+            'spec_formset': spec_formset,
+            'photo_formset': photo_formset,
+            'pane': 'edit'
         }
-        cxt.update(utils.get_listing_vars())
+        cxt.update(utils.get_cats())
         return TemplateResponse(request, 'listings/detail.html', cxt)
 
 @view_count
 def detail(request, listing_id, pane='preview'):
     listing = get_object_or_404(Listing.objects.select_related(), id=listing_id)
+
     is_owner = bool(listing.user == request.user)
     request.user.is_owner = is_owner
 
+    
     # prep specs
-    specs_set = listing.listingspecvalue_set.select_related().all()
-    specs = {}
-    for spec in specs_set:
-        specs[spec.key_id] = spec
+    # specs_set = listing.listingspecvalue_set.select_related().all()
+    # specs = {}
+    # for spec in specs_set:
+    #     specs[spec.key_id] = spec
 
     if request.method == 'GET':
         if is_owner:
-            form = ListingForm(instance=listing)
+            listing_form = ListingForm(instance=listing)
+            spec_formset = SpecFormSet(instance=listing, prefix="spec_set")
             photo_formset = ListingPhotoFormSet(instance=listing, prefix="listingphoto_set")
 
             cxt = {
-                'form': form,
-                'specs': specs,
+                'form': listing_form,
+                'spec_formset': spec_formset,
                 'photo_formset': photo_formset,
                 'pane': pane
             }
-            cxt.update(utils.get_listing_vars())
+            cxt.update(utils.get_cats())
             return TemplateResponse(request, 'listings/detail.html', cxt)
-        else:
+        else: 
             comments = UserComment.objects.filter(user=listing.user).order_by('-date_posted') 
             avg_rating = comments.aggregate(Avg('rating')).values()[0]
-
             fbProfile = user.get_profile().fbProfile
+
+            specs = listing.spec_set.all()
             photos = listing.listingphoto_set.all()
+
             cxt = {
                 'listing': listing,
                 'photos': photos,

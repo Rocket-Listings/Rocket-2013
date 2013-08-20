@@ -1,0 +1,7 @@
+{
+  "appliances": ["dimensions", "brand", "model", "remote", "usage"],
+  "antiques": ["dimensions", "location created", "year created", "utility"],
+  "bikes": ["color", "gears", "type of bike", "wheel dimensions", "usage"],
+  "boats": ["color", "dimensions", "engine", "sail dimensions", "max speed", "usage"],
+  "books": ["genre", "condition", "cover"]
+}

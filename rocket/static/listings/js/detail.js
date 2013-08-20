@@ -1,138 +1,146 @@
 $(function() {
 
-  $(".form-select").select2();
-  $(".form-select").show();
-
-  
-  // Category Selection Stuff
-  function selectCategory(next_id) {
-    var cat_input = $('#id_category');
-    var prev_id = cat_input.val();
-    cat_input.val(next_id);
-
-    if (prev_id) {
-      $('.tab-pane .cat[data-id="{0}"]'.format(prev_id)).removeClass('selected');
-      var prev_specs = $('.specs-form > div[data-cat="{0}"]'.format(prev_id));
-      prev_specs.hide();
-      prev_specs.find('input').attr('disabled', 'disabled');
-    }
-
-    var cat = $('.tab-pane .cat[data-id="{0}"]'.format(next_id));
-    cat.addClass('selected');
-
-    // switch to tab
-    $('.nav-tabs a[href="#{0}"]'.format(cat.parent('.tab-pane').attr('id'))).tab('show');
-
-    var next_specs = $('.specs-form > div[data-cat="{0}"]'.format(next_id));
-    if (next_specs.length) {
-      next_specs.find('input').removeAttr('disabled');
-      next_specs.show();
-      $('#no-specs').hide();
-    } else {
-      $('#no-specs').show();
-    }
-  }
-
-  // set initial/current category value
-  selectCategory($('#id_category').val());
-  $('.tab-pane .cat').click(function(e) {
-    selectCategory($(this).data('id'))
-  });
-
-  var Photo = Backbone.Model.extend({});
+  // models are split up by their corresponding django form
   var Listing = Backbone.Model.extend({});
-  var Spec = Backbone.Model.extend({});  
 
+  var Spec = Backbone.Model.extend({});  
   var SpecList = Backbone.Collection.extend({
     model: Spec
   });
+
+  var Photo = Backbone.Model.extend({});  
   var PhotoList = Backbone.Collection.extend({
     model: Photo,
     comparator: 'order'
   });
 
-  var LocationEditView = Backbone.View.extend({
-    mapTypeStyle: [
-      {
-        "featureType": "poi",
-        "elementType": "labels",
-        "stylers": [
-          { "visibility": "off" }
-        ]
-      },{
-        "featureType": "administrative.neighborhood",
-        "elementType": "labels",
-        "stylers": [
-          { "visibility": "off" }
-        ]
-      },{
-        "featureType": "water",
-        "elementType": "labels",
-        "stylers": [
-          { "visibility": "off" }
-        ]
-      },{
-        "featureType": "transit",
-        "elementType": "labels",
-        "stylers": [
-          { "visibility": "off" }
-        ]
-      },{
-        "featureType": "road.highway",
-        "stylers": [
-          { "weight": 1.4 }
-        ]
-      },{
-        "featureType": "road",
-        "elementType": "labels.text",
-        "stylers": [
-          { "visibility": "off" }
-        ]
-      },{
-        "featureType": "water",
-        "stylers": [
-          { "saturation": -44 },
-          { "lightness": -18 },
-          { "hue": "#00ccff" }
-        ]
-      },{
-        "featureType": "road"  },{
-        "featureType": "road.arterial",
-        "stylers": [
-          { "weight": 1.4 }
-        ]
-      },{
-        "featureType": "road.arterial",
-        "elementType": "labels",
-        "stylers": [
-          { "visibility": "off" }
-        ]
-      },{
-        "featureType": "road.local",
-        "elementType": "labels",
-        "stylers": [
-          { "visibility": "off" }
-        ]
-      },{
-        "featureType": "poi.park",
-        "stylers": [
-          { "hue": "#33ff00" }
-        ]
-      },{
-      },{
-        "featureType": "road.highway",
-        "stylers": [
-          { "lightness": 33 }
-        ]
+  // There should be two views for each component, 
+  // one for its EditView and another for its PreviewView.
+  var CategoryEditView = Backbone.View.extend({
+    el: '#category-fieldset',
+    events: {
+      "click .tab-pane .cat": "catClick"
+    },
+    initialize: function() {
+      _.bindAll(this, 'catClick');
+
+      this.prevCat = this.cat;
+      this.cat = this.$('#id_category').val();
+
+      // this.cat = new Backbone.Model({
+      //   id: $('#id_category').val();
+      // });
+      // this.listenTo(this.cat, 'change', this.render);
+      this.render();
+    },
+
+    catClick: function(e) {
+      // this.cat.set({
+      //   prev_id: this.cat.get('id'),
+      //   id: $(e.currentTarget).data('id')
+      // });
+      this.prevCat = this.cat;
+      this.cat = $(e.currentTarget).data('id');
+      this.render();
+    },
+
+    render: function() {
+      var prev_id = this.prevCat
+      var next_id = this.cat;
+
+      if (prev_id) {
+        this.$('.tab-pane .cat[data-id="{0}"]'.format(prev_id)).removeClass('selected');
+        var prev_specs = $('.specs-form > div[data-cat="{0}"]'.format(prev_id));
+        prev_specs.hide();
+        prev_specs.find('input').attr('disabled', 'disabled');
       }
-    ],
-    el: '#location-col',
+
+      var cat = $('.tab-pane .cat[data-id="{0}"]'.format(next_id));
+      cat.addClass('selected');
+
+      // switch to tab
+      $('.nav-tabs a[href="#{0}"]'.format(cat.parent('.tab-pane').attr('id'))).tab('show');
+
+      var next_specs = $('.specs-form > div[data-cat="{0}"]'.format(next_id));
+      if (next_specs.length) {
+        next_specs.find('input').removeAttr('disabled');
+        next_specs.show();
+        $('#no-specs').hide();
+      } else {
+        $('#no-specs').show();
+      }
+    }
+  });
+
+  var SpecEditView = Backbone.View.extend({
+    el: '#spec-fieldset',
+    template: Mustache.compile($('#spec-form-template').html()),
+    events: {
+      "change input": "parseToModel"
+    },
+    initialize: function() {
+      _.bindAll(this, "parseToModel");
+      this.defaults = $.parseJSON(this.$('#initial-specs').html());
+    },
+    parseToModel: function(e) {
+      console.log('parse to model');
+    },
+    switchCategory: function(catSlug) {
+      var specNames = this.defaults[catSlug];
+      if (!specNames) 
+        return;
+      var total = $('#id_spec_set-TOTAL_FORMS').val();
+      var initial = $('#id_spec_set-INITIAL_FORMS').val();        
+      var context = _.map(specNames, function(name, index) {
+        return {
+          num: total + index,
+          name: name,
+          value: ""
+        };
+      });
+      this.$('#spec-row').html(this.template(context));
+    }
+  });
+
+  var SpecPreviewView = Backbone.View.extend({
+    el: '#preview-specs',
+    template: Mustache.compile($('#preview-specs-template').html()),
+    initialize: function(e) {
+      _.bindAll(this, 'load');
+      this.specs = new SpecList;
+      this.load();
+    },
+    render: function() {
+      var context = {
+        "specs": this.specs.toJSON(),
+        "has_specs": this.specs.length > 0
+      }
+      this.$el.html(this.template(context));
+    },
+    load: function() {
+      var inputs = _.filter($('.specs-form input:enabled'), function(input) {
+        return $(input).val().length > 0;
+      });
+      var specs = _.map(inputs, function(input) {
+        return new Spec({
+          key: $(input).siblings('label').text(),
+          value: $(input).val()
+        });
+      });
+      this.specs.set(specs);
+    }
+  });
+
+  var LocationEditView = Backbone.View.extend({
+    el: '#marketplace-location-fieldset',
     events: {
       "change #id_location": "render",
       "click #location-btn": "getLocationByBrowser",
     },
 
     initialize: function() {
+      $(".form-select").select2();
+      $(".form-select").show();
       _.bindAll(this, 'mapResize');
       this.geocoder = new google.maps.Geocoder();
       this.render();
@@ -172,7 +180,7 @@ $(function() {
     },
 
     toggleLoading: function(str) {
-      console.log(str);
+      // console.log(str);
       this.$('.loading-spinner').toggle();
     },
 
@@ -267,7 +275,81 @@ $(function() {
       this.toggleLoading();
       console.log("Maps error");
       console.log(error);
-    }
+    },
+    mapTypeStyle: [
+      {
+        "featureType": "poi",
+        "elementType": "labels",
+        "stylers": [
+          { "visibility": "off" }
+        ]
+      },{
+        "featureType": "administrative.neighborhood",
+        "elementType": "labels",
+        "stylers": [
+          { "visibility": "off" }
+        ]
+      },{
+        "featureType": "water",
+        "elementType": "labels",
+        "stylers": [
+          { "visibility": "off" }
+        ]
+      },{
+        "featureType": "transit",
+        "elementType": "labels",
+        "stylers": [
+          { "visibility": "off" }
+        ]
+      },{
+        "featureType": "road.highway",
+        "stylers": [
+          { "weight": 1.4 }
+        ]
+      },{
+        "featureType": "road",
+        "elementType": "labels.text",
+        "stylers": [
+          { "visibility": "off" }
+        ]
+      },{
+        "featureType": "water",
+        "stylers": [
+          { "saturation": -44 },
+          { "lightness": -18 },
+          { "hue": "#00ccff" }
+        ]
+      },{
+        "featureType": "road"  },{
+        "featureType": "road.arterial",
+        "stylers": [
+          { "weight": 1.4 }
+        ]
+      },{
+        "featureType": "road.arterial",
+        "elementType": "labels",
+        "stylers": [
+          { "visibility": "off" }
+        ]
+      },{
+        "featureType": "road.local",
+        "elementType": "labels",
+        "stylers": [
+          { "visibility": "off" }
+        ]
+      },{
+        "featureType": "poi.park",
+        "stylers": [
+          { "hue": "#33ff00" }
+        ]
+      },{
+      },{
+        "featureType": "road.highway",
+        "stylers": [
+          { "lightness": 33 }
+        ]
+      }
+    ]
   });
 
   var SidebarView = Backbone.View.extend({
@@ -285,8 +367,7 @@ $(function() {
     }
   });
   
-  var sidebarView = new SidebarView;
-  var PhotoListView = Backbone.View.extend({
+  var PhotoPreviewView = Backbone.View.extend({
     // el is defined in template with the backbone.subview plugin
     el: '#preview-gallery', 
     template: Mustache.compile($('#preview-gallery-template').html()),
@@ -337,69 +418,9 @@ $(function() {
       return this;
     }
   });
-
-  var SpecListView = Backbone.View.extend({
-    el: '#preview-specs',
-    template: Mustache.compile($('#preview-specs-template').html()),
-    initialize: function(e) {
-      _.bindAll(this, 'load');
-      this.specs = new SpecList;
-      this.load();
-    },
-
-    render: function() {
-      var context = {
-        "specs": this.specs.toJSON(),
-        "has_specs": this.specs.length > 0
-      }
-      this.$el.html(this.template(context));
-    },
-
-    load: function() {
-      var inputs = _.filter($('.specs-form input:enabled'), function(input) {
-        return $(input).val().length > 0;
-      });
-      var specs = _.map(inputs, function(input) {
-        return new Spec({
-          key: $(input).siblings('label').text(),
-          value: $(input).val()
-        });
-      });
-      this.specs.set(specs);
-    }
-  });
-
-  var ListingView = Backbone.View.extend({
-    el: '#listing-detail',
+  var ListingPreviewView = Backbone.View.extend({
+    el: '#preview',
     template: Mustache.compile($('#preview-text-template').html()),
-    events: {
-      // "change input": "changed",
-      "keyup .title":         "changed",      
-      "change .price":        "changed",
-      "change .description":  "changed",
-      "change .location":     "changed",
-      "change .specs-form input:enabled": "specChanged",
-      "change #photo_formset input": "photoChanged",
-    },
-
-    initialize: function() {
-      _.bindAll(this, 'changed', 'specChanged', 'photoChanged');
-      Backbone.Subviews.add(this);
-      this.on('photoChanged', this.photoChanged, this);
-
-      var form = this.$('.listing-form:first').serializeObject();
-      var listing = {
-        "title": form.title,
-        "category": form.category,       
-        "price": form.price,
-        "description": form.description,
-        "location": form.location
-      }
-      this.model = new Listing(listing);
-      // this.photoView = new PhotoListView;
-      this.render();
-    },
-
     subviewCreators : {
       "photoView": function() {
           var options = {};
@@ -410,15 +431,38 @@ $(function() {
         return new SpecListView(options);
       }
     },
+    initialize: function() {
+      Backbone.Subviews.add(this);      
+
+    }
+  });
+
+  var ListingEditView = Backbone.View.extend({
+    el: '#info-fieldset',
+    template: Mustache.compile($('#preview-text-template').html()),
+    events: {
+      // "change input": "changed",
+      "keyup .title":         "changed",      
+      "change .price":        "changed",
+      "change .description":  "changed",
+      "change .location":     "changed",
+    },
+      // "change .specs-form input:enabled": "specChanged",
+      // "change #photo_formset input": "photoChanged",
+
+    initialize: function() {
+      _.bindAll(this, 'changed');
+      // , 'specChanged', 'photoChanged');
+      // this.on('photoChanged', this.photoChanged, this);
+      // this.photoView = new PhotoListView;
+      this.render();
+    },
+
 
     changed: function(e) {
       // this.photos.changed();
-      var changed = $(e.currentTarget);
-
-      var obj = {};
-      obj[changed.attr('name')] = changed.val();
-      this.model.set(obj);
-      this.render();
+      var input = $(e.currentTarget);
+      this.model.set(input.attr('name'), input.val());
     },
 
     specChanged: function(e) {
@@ -431,25 +475,37 @@ $(function() {
       this.subviews.photoView.render();      
     },
 
-    render: function() {
-      var context = { 
-        "listing": this.model.toJSON(),
-      };
-      this.$('#preview-view').html(this.template(context));
-
-      if (this.model.get('title').length > 0) {
-        this.$('.listing-title').text(this.model.get('title'));
-        $('#preview-btn').removeAttr('disabled');
-      } else {
-        this.$('.listing-title').html("Create a listing");
-        // not sure why this.$('#preview-btn') is not found here. Using global selector.
-        $('#preview-btn').attr('disabled', 'disabled');
-      }
-      return this;
-    }
+    // render: function() {
+    //   var context = { 
+    //     "listing": this.model.toJSON(),
+    //   };
+    //   this.$('#preview-view').html(this.template(context));
+    //   if (this.model.get('title').length > 0) {
+    //     this.$('.listing-title').text(this.model.get('title'));
+    //     $('#preview-btn').removeAttr('disabled');
+    //   } else {
+    //     this.$('.listing-title').html("Create a listing");
+    //     // not sure why this.$('#preview-btn') is not found here. Using global selector.
+    //     $('#preview-btn').attr('disabled', 'disabled');
+    //   }
+    //   return this;
+    // }
   });
+
+  var form = this.$('.listing-form:first').serializeObject();
+  var listing = {
+    "title": form.title,
+    "category": form.category,       
+    "price": form.price,
+    "description": form.description,
+    "location": form.location
+  }
   var listingView = new ListingView;
   var locationEditView = new LocationEditView;
+  var categorySelectView = new CategorySelectView;
+  var sidebarView = new SidebarView;
+  var specEditView = new SpecEditView;
+
 
   // file picker options and callbacks
   var fpConfig = {
@@ -511,7 +567,7 @@ $(function() {
         e.preventDefault();
 
       $('.upload-view').toggle();
-      $('.photo-view').toggle();      
+      $('.photo-view').toggle();     
     },
     bindSortable: function() {
       $('.sortable').sortable().bind('sortupdate', function() {
@@ -535,17 +591,4 @@ $(function() {
     $(this).siblings().removeClass("active");
     $(this).addClass("active");
   });
-
-/*  $('.preview-thumbnails img').on('click', function(e){
-    fillStage($(e.currentTarget));
-  });
-
-  function fillStage(photo) {
-    var src = photo.attr('data-full') || photo.attr('src');
-    $(".preview-stage img").attr('src', src);
-    window.location.hash = photo.attr('data-id');
-  } */
-
-  /* Listings table */
-  // $('.listings-table').tablesorter({ cssHeader: 'table-header'});
 });
