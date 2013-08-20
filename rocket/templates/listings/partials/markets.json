@@ -1,0 +1,3539 @@
+{
+
+"markets":[     
+     {
+          "id": "sfo",
+          "text": "Sf Bay Area"
+     },
+
+     {
+          "id": "abz",
+          "text": "Aberdeen"
+     },
+
+     {
+          "id": "abi",
+          "text": "Abilene"
+     },
+
+     {
+          "id": "aca",
+          "text": "Acapulco"
+     },
+
+     {
+          "id": "adl",
+          "text": "Adelaide"
+     },
+
+     {
+          "id": "amd",
+          "text": "Ahmedabad"
+     },
+
+     {
+          "id": "cak",
+          "text": "Akron / Canton"
+     },
+
+     {
+          "id": "alb",
+          "text": "Albany"
+     },
+
+     {
+          "id": "aby",
+          "text": "Albany, Ga"
+     },
+
+     {
+          "id": "abq",
+          "text": "Albuquerque"
+     },
+
+     {
+          "id": "alc",
+          "text": "Alicante"
+     },
+
+     {
+          "id": "aoo",
+          "text": "Altoona-johnstown"
+     },
+
+     {
+          "id": "ama",
+          "text": "Amarillo"
+     },
+
+     {
+          "id": "ame",
+          "text": "Ames, Ia"
+     },
+
+     {
+          "id": "ams",
+          "text": "Amsterdam / Randstad"
+     },
+
+     {
+          "id": "anc",
+          "text": "Anchorage / Mat-su"
+     },
+
+     {
+          "id": "aaa",
+          "text": "Ann Arbor"
+     },
+
+     {
+          "id": "anp",
+          "text": "Annapolis"
+     },
+
+     {
+          "id": "app",
+          "text": "Appleton-oshkosh-fdl"
+     },
+
+     {
+          "id": "ash",
+          "text": "Asheville"
+     },
+
+     {
+          "id": "jfn",
+          "text": "Ashtabula"
+     },
+
+     {
+          "id": "ahn",
+          "text": "Athens, Ga"
+     },
+
+     {
+          "id": "ohu",
+          "text": "Athens, Oh"
+     },
+
+     {
+          "id": "atl",
+          "text": "Atlanta"
+     },
+
+     {
+          "id": "aub",
+          "text": "Auburn"
+     },
+
+     {
+          "id": "akl",
+          "text": "Auckland, Nz"
+     },
+
+     {
+          "id": "aug",
+          "text": "Augusta"
+     },
+
+     {
+          "id": "aus",
+          "text": "Austin"
+     },
+
+     {
+          "id": "bcd",
+          "text": "Bacolod"
+     },
+
+     {
+          "id": "bcs",
+          "text": "Baja California Sur"
+     },
+
+     {
+          "id": "bak",
+          "text": "Bakersfield"
+     },
+
+     {
+          "id": "ibz",
+          "text": "Baleares"
+     },
+
+     {
+          "id": "bal",
+          "text": "Baltimore"
+     },
+
+     {
+          "id": "bng",
+          "text": "Bangalore"
+     },
+
+     {
+          "id": "bgl",
+          "text": "Bangladesh"
+     },
+
+     {
+          "id": "bar",
+          "text": "Barcelona"
+     },
+
+     {
+          "id": "brr",
+          "text": "Barrie"
+     },
+
+     {
+          "id": "bsl",
+          "text": "Basel"
+     },
+
+     {
+          "id": "bth",
+          "text": "Bath"
+     },
+
+     {
+          "id": "btr",
+          "text": "Baton Rouge"
+     },
+
+     {
+          "id": "btc",
+          "text": "Battle Creek"
+     },
+
+     {
+          "id": "bpt",
+          "text": "Beaumont / Port Arthur"
+     },
+
+     {
+          "id": "pek",
+          "text": "Beijing"
+     },
+
+     {
+          "id": "bey",
+          "text": "Beirut, Lebanon"
+     },
+
+     {
+          "id": "blf",
+          "text": "Belfast"
+     },
+
+     {
+          "id": "bru",
+          "text": "Belgium"
+     },
+
+     {
+          "id": "bel",
+          "text": "Belleville, On"
+     },
+
+     {
+          "id": "bli",
+          "text": "Bellingham"
+     },
+
+     {
+          "id": "cnf",
+          "text": "Belo Horizonte"
+     },
+
+     {
+          "id": "bji",
+          "text": "Bemidji"
+     },
+
+     {
+          "id": "bnd",
+          "text": "Bend"
+     },
+
+     {
+          "id": "ber",
+          "text": "Berlin"
+     },
+
+     {
+          "id": "brn",
+          "text": "Bern"
+     },
+
+     {
+          "id": "bbi",
+          "text": "Bhubaneswar"
+     },
+
+     {
+          "id": "wnp",
+          "text": "Bicol Region"
+     },
+
+     {
+          "id": "bio",
+          "text": "Bilbao"
+     },
+
+     {
+          "id": "bil",
+          "text": "Billings"
+     },
+
+     {
+          "id": "bgm",
+          "text": "Binghamton"
+     },
+
+     {
+          "id": "bhx",
+          "text": "Birmingham / West Mids"
+     },
+
+     {
+          "id": "bhm",
+          "text": "Birmingham, Al"
+     },
+
+     {
+          "id": "bis",
+          "text": "Bismarck"
+     },
+
+     {
+          "id": "bmg",
+          "text": "Bloomington, In"
+     },
+
+     {
+          "id": "bln",
+          "text": "Bloomington-normal"
+     },
+
+     {
+          "id": "boi",
+          "text": "Boise"
+     },
+
+     {
+          "id": "lpb",
+          "text": "Bolivia"
+     },
+
+     {
+          "id": "blq",
+          "text": "Bologna"
+     },
+
+     {
+          "id": "bnc",
+          "text": "Boone"
+     },
+
+     {
+          "id": "bod",
+          "text": "Bordeaux"
+     },
+
+     {
+          "id": "bos",
+          "text": "Boston"
+     },
+
+     {
+          "id": "bou",
+          "text": "Boulder"
+     },
+
+     {
+          "id": "blg",
+          "text": "Bowling Green"
+     },
+
+     {
+          "id": "bzn",
+          "text": "Bozeman"
+     },
+
+     {
+          "id": "brd",
+          "text": "Brainerd"
+     },
+
+     {
+          "id": "bfd",
+          "text": "Brantford-woodstock"
+     },
+
+     {
+          "id": "bsb",
+          "text": "Brasilia"
+     },
+
+     {
+          "id": "brm",
+          "text": "Bremen"
+     },
+
+     {
+          "id": "bri",
+          "text": "Brighton"
+     },
+
+     {
+          "id": "bne",
+          "text": "Brisbane"
+     },
+
+     {
+          "id": "brs",
+          "text": "Bristol"
+     },
+
+     {
+          "id": "rns",
+          "text": "Brittany"
+     },
+
+     {
+          "id": "bro",
+          "text": "Brownsville"
+     },
+
+     {
+          "id": "bwk",
+          "text": "Brunswick, Ga"
+     },
+
+     {
+          "id": "bud",
+          "text": "Budapest"
+     },
+
+     {
+          "id": "bue",
+          "text": "Buenos Aires"
+     },
+
+     {
+          "id": "buf",
+          "text": "Buffalo"
+     },
+
+     {
+          "id": "sof",
+          "text": "Bulgaria"
+     },
+
+     {
+          "id": "btm",
+          "text": "Butte"
+     },
+
+     {
+          "id": "cdz",
+          "text": "Cadiz"
+     },
+
+     {
+          "id": "cdo",
+          "text": "Cagayan De Oro"
+     },
+
+     {
+          "id": "cns",
+          "text": "Cairns"
+     },
+
+     {
+          "id": "clg",
+          "text": "Calgary"
+     },
+
+     {
+          "id": "cam",
+          "text": "Cambridge, Uk"
+     },
+
+     {
+          "id": "tfn",
+          "text": "Canarias"
+     },
+
+     {
+          "id": "cbr",
+          "text": "Canberra"
+     },
+
+     {
+          "id": "cap",
+          "text": "Cape Cod / Islands"
+     },
+
+     {
+          "id": "cpt",
+          "text": "Cape Town"
+     },
+
+     {
+          "id": "cym",
+          "text": "Cardiff / Wales"
+     },
+
+     {
+          "id": "crb",
+          "text": "Caribbean Islands"
+     },
+
+     {
+          "id": "cbo",
+          "text": "Cariboo"
+     },
+
+     {
+          "id": "cat",
+          "text": "Catskills"
+     },
+
+     {
+          "id": "ceb",
+          "text": "Cebu"
+     },
+
+     {
+          "id": "ced",
+          "text": "Cedar Rapids"
+     },
+
+     {
+          "id": "cnj",
+          "text": "Central Nj"
+     },
+
+     {
+          "id": "aex",
+          "text": "Central Louisiana"
+     },
+
+     {
+          "id": "cmu",
+          "text": "Central Michigan"
+     },
+
+     {
+          "id": "chm",
+          "text": "Champaign Urbana"
+     },
+
+     {
+          "id": "ixc",
+          "text": "Chandigarh"
+     },
+
+     {
+          "id": "chs",
+          "text": "Charleston, Sc"
+     },
+
+     {
+          "id": "crw",
+          "text": "Charleston, Wv"
+     },
+
+     {
+          "id": "cha",
+          "text": "Charlotte"
+     },
+
+     {
+          "id": "uva",
+          "text": "Charlottesville"
+     },
+
+     {
+          "id": "chk",
+          "text": "Chatham-kent"
+     },
+
+     {
+          "id": "cht",
+          "text": "Chattanooga"
+     },
+
+     {
+          "id": "chq",
+          "text": "Chautauqua"
+     },
+
+     {
+          "id": "ctu",
+          "text": "Chengdu"
+     },
+
+     {
+          "id": "che",
+          "text": "Chennai (madras)"
+     },
+
+     {
+          "id": "chi",
+          "text": "Chicago"
+     },
+
+     {
+          "id": "chc",
+          "text": "Chico"
+     },
+
+     {
+          "id": "chh",
+          "text": "Chihuahua"
+     },
+
+     {
+          "id": "scl",
+          "text": "Chile"
+     },
+
+     {
+          "id": "chl",
+          "text": "Chillicothe"
+     },
+
+     {
+          "id": "ckg",
+          "text": "Chongqing"
+     },
+
+     {
+          "id": "chr",
+          "text": "Christchurch"
+     },
+
+     {
+          "id": "cin",
+          "text": "Cincinnati, Oh"
+     },
+
+     {
+          "id": "cjs",
+          "text": "Ciudad Juarez"
+     },
+
+     {
+          "id": "ckv",
+          "text": "Clarksville, Tn"
+     },
+
+     {
+          "id": "cle",
+          "text": "Cleveland"
+     },
+
+     {
+          "id": "cvn",
+          "text": "Clovis / Portales"
+     },
+
+     {
+          "id": "cst",
+          "text": "College Station"
+     },
+
+     {
+          "id": "cgn",
+          "text": "Cologne"
+     },
+
+     {
+          "id": "bog",
+          "text": "Colombia"
+     },
+
+     {
+          "id": "cos",
+          "text": "Colorado Springs"
+     },
+
+     {
+          "id": "cou",
+          "text": "Columbia / Jeff City"
+     },
+
+     {
+          "id": "cae",
+          "text": "Columbia, Sc"
+     },
+
+     {
+          "id": "col",
+          "text": "Columbus"
+     },
+
+     {
+          "id": "csg",
+          "text": "Columbus, Ga"
+     },
+
+     {
+          "id": "cmx",
+          "text": "Comox Valley"
+     },
+
+     {
+          "id": "coo",
+          "text": "Cookeville"
+     },
+
+     {
+          "id": "cop",
+          "text": "Copenhagen"
+     },
+
+     {
+          "id": "ycc",
+          "text": "Cornwall, On"
+     },
+
+     {
+          "id": "crp",
+          "text": "Corpus Christi"
+     },
+
+     {
+          "id": "crv",
+          "text": "Corvallis/albany"
+     },
+
+     {
+          "id": "cri",
+          "text": "Costa Rica"
+     },
+
+     {
+          "id": "cov",
+          "text": "Coventry"
+     },
+
+     {
+          "id": "zag",
+          "text": "Croatia"
+     },
+
+     {
+          "id": "cbg",
+          "text": "Cumberland Valley"
+     },
+
+     {
+          "id": "cwb",
+          "text": "Curitiba"
+     },
+
+     {
+          "id": "dlc",
+          "text": "Dalian"
+     },
+
+     {
+          "id": "dal",
+          "text": "Dallas / Fort Worth"
+     },
+
+     {
+          "id": "dnv",
+          "text": "Danville"
+     },
+
+     {
+          "id": "drw",
+          "text": "Darwin"
+     },
+
+     {
+          "id": "dvo",
+          "text": "Davao City"
+     },
+
+     {
+          "id": "day",
+          "text": "Dayton / Springfield"
+     },
+
+     {
+          "id": "dab",
+          "text": "Daytona Beach"
+     },
+
+     {
+          "id": "dil",
+          "text": "Decatur, Il"
+     },
+
+     {
+          "id": "och",
+          "text": "Deep East Texas"
+     },
+
+     {
+          "id": "drt",
+          "text": "Del Rio / Eagle Pass"
+     },
+
+     {
+          "id": "dlw",
+          "text": "Delaware"
+     },
+
+     {
+          "id": "del",
+          "text": "Delhi"
+     },
+
+     {
+          "id": "den",
+          "text": "Denver"
+     },
+
+     {
+          "id": "dby",
+          "text": "Derby"
+     },
+
+     {
+          "id": "dsm",
+          "text": "Des Moines"
+     },
+
+     {
+          "id": "det",
+          "text": "Detroit Metro"
+     },
+
+     {
+          "id": "dvc",
+          "text": "Devon &amp; Cornwall"
+     },
+
+     {
+          "id": "sdq",
+          "text": "Dominican Republic"
+     },
+
+     {
+          "id": "dhn",
+          "text": "Dothan, Al"
+     },
+
+     {
+          "id": "drs",
+          "text": "Dresden"
+     },
+
+     {
+          "id": "dub",
+          "text": "Dublin"
+     },
+
+     {
+          "id": "dbq",
+          "text": "Dubuque"
+     },
+
+     {
+          "id": "dlh",
+          "text": "Duluth / Superior"
+     },
+
+     {
+          "id": "dnd",
+          "text": "Dundee"
+     },
+
+     {
+          "id": "dud",
+          "text": "Dunedin"
+     },
+
+     {
+          "id": "dur",
+          "text": "Durban"
+     },
+
+     {
+          "id": "dus",
+          "text": "Dusseldorf"
+     },
+
+     {
+          "id": "nwh",
+          "text": "East Anglia"
+     },
+
+     {
+          "id": "eid",
+          "text": "East Idaho"
+     },
+
+     {
+          "id": "eml",
+          "text": "East Midlands"
+     },
+
+     {
+          "id": "eor",
+          "text": "East Oregon"
+     },
+
+     {
+          "id": "eco",
+          "text": "Eastern Co"
+     },
+
+     {
+          "id": "nlo",
+          "text": "Eastern Ct"
+     },
+
+     {
+          "id": "enc",
+          "text": "Eastern Nc"
+     },
+
+     {
+          "id": "eky",
+          "text": "Eastern Kentucky"
+     },
+
+     {
+          "id": "mnt",
+          "text": "Eastern Montana"
+     },
+
+     {
+          "id": "ewv",
+          "text": "Eastern Panhandle"
+     },
+
+     {
+          "id": "esh",
+          "text": "Eastern Shore"
+     },
+
+     {
+          "id": "eau",
+          "text": "Eau Claire"
+     },
+
+     {
+          "id": "qui",
+          "text": "Ecuador"
+     },
+
+     {
+          "id": "edi",
+          "text": "Edinburgh"
+     },
+
+     {
+          "id": "edm",
+          "text": "Edmonton"
+     },
+
+     {
+          "id": "cai",
+          "text": "Egypt"
+     },
+
+     {
+          "id": "elp",
+          "text": "El Paso"
+     },
+
+     {
+          "id": "sal",
+          "text": "El Salvador"
+     },
+
+     {
+          "id": "elk",
+          "text": "Elko"
+     },
+
+     {
+          "id": "elm",
+          "text": "Elmira-corning"
+     },
+
+     {
+          "id": "eri",
+          "text": "Erie, Pa"
+     },
+
+     {
+          "id": "ess",
+          "text": "Essen / Ruhr"
+     },
+
+     {
+          "id": "esx",
+          "text": "Essex"
+     },
+
+     {
+          "id": "add",
+          "text": "Ethiopia"
+     },
+
+     {
+          "id": "eug",
+          "text": "Eugene"
+     },
+
+     {
+          "id": "evv",
+          "text": "Evansville"
+     },
+
+     {
+          "id": "fai",
+          "text": "Fairbanks"
+     },
+
+     {
+          "id": "far",
+          "text": "Fargo / Moorhead"
+     },
+
+     {
+          "id": "fnm",
+          "text": "Farmington, Nm"
+     },
+
+     {
+          "id": "fro",
+          "text": "Faro / Algarve"
+     },
+
+     {
+          "id": "fay",
+          "text": "Fayetteville"
+     },
+
+     {
+          "id": "fyv",
+          "text": "Fayetteville, Ar"
+     },
+
+     {
+          "id": "fgl",
+          "text": "Finger Lakes"
+     },
+
+     {
+          "id": "hel",
+          "text": "Finland"
+     },
+
+     {
+          "id": "flg",
+          "text": "Flagstaff / Sedona"
+     },
+
+     {
+          "id": "fnt",
+          "text": "Flint"
+     },
+
+     {
+          "id": "msl",
+          "text": "Florence / Muscle Shoals"
+     },
+
+     {
+          "id": "flr",
+          "text": "Florence / Tuscany"
+     },
+
+     {
+          "id": "flo",
+          "text": "Florence, Sc"
+     },
+
+     {
+          "id": "key",
+          "text": "Florida Keys"
+     },
+
+     {
+          "id": "ftc",
+          "text": "Fort Collins / North Co"
+     },
+
+     {
+          "id": "ftd",
+          "text": "Fort Dodge"
+     },
+
+     {
+          "id": "fsm",
+          "text": "Fort Smith, Ar"
+     },
+
+     {
+          "id": "fwa",
+          "text": "Fort Wayne"
+     },
+
+     {
+          "id": "ftl",
+          "text": "Fortaleza"
+     },
+
+     {
+          "id": "fra",
+          "text": "Frankfurt"
+     },
+
+     {
+          "id": "abb",
+          "text": "Fraser Valley"
+     },
+
+     {
+          "id": "fdk",
+          "text": "Frederick"
+     },
+
+     {
+          "id": "ezf",
+          "text": "Fredericksburg"
+     },
+
+     {
+          "id": "fre",
+          "text": "Fresno / Madera"
+     },
+
+     {
+          "id": "fmc",
+          "text": "Ft Mcmurray"
+     },
+
+     {
+          "id": "fmy",
+          "text": "Ft Myers / Sw Florida"
+     },
+
+     {
+          "id": "fuk",
+          "text": "Fukuoka"
+     },
+
+     {
+          "id": "anb",
+          "text": "Gadsden-anniston"
+     },
+
+     {
+          "id": "gnv",
+          "text": "Gainesville"
+     },
+
+     {
+          "id": "gls",
+          "text": "Galveston"
+     },
+
+     {
+          "id": "gva",
+          "text": "Geneva"
+     },
+
+     {
+          "id": "gen",
+          "text": "Genoa"
+     },
+
+     {
+          "id": "acc",
+          "text": "Ghana"
+     },
+
+     {
+          "id": "gla",
+          "text": "Glasgow"
+     },
+
+     {
+          "id": "gfl",
+          "text": "Glens Falls"
+     },
+
+     {
+          "id": "goa",
+          "text": "Goa"
+     },
+
+     {
+          "id": "ool",
+          "text": "Gold Coast"
+     },
+
+     {
+          "id": "gld",
+          "text": "Gold Country"
+     },
+
+     {
+          "id": "grx",
+          "text": "Granada"
+     },
+
+     {
+          "id": "gfk",
+          "text": "Grand Forks"
+     },
+
+     {
+          "id": "gil",
+          "text": "Grand Island"
+     },
+
+     {
+          "id": "grr",
+          "text": "Grand Rapids"
+     },
+
+     {
+          "id": "gtf",
+          "text": "Great Falls"
+     },
+
+     {
+          "id": "ath",
+          "text": "Greece"
+     },
+
+     {
+          "id": "grb",
+          "text": "Green Bay"
+     },
+
+     {
+          "id": "gbo",
+          "text": "Greensboro"
+     },
+
+     {
+          "id": "gsp",
+          "text": "Greenville / Upstate"
+     },
+
+     {
+          "id": "gnb",
+          "text": "Grenoble"
+     },
+
+     {
+          "id": "gdl",
+          "text": "Guadalajara"
+     },
+
+     {
+          "id": "gum",
+          "text": "Guam-micronesia"
+     },
+
+     {
+          "id": "bjx",
+          "text": "Guanajuato"
+     },
+
+     {
+          "id": "can",
+          "text": "Guangzhou"
+     },
+
+     {
+          "id": "gua",
+          "text": "Guatemala"
+     },
+
+     {
+          "id": "gph",
+          "text": "Guelph"
+     },
+
+     {
+          "id": "gpt",
+          "text": "Gulfport / Biloxi"
+     },
+
+     {
+          "id": "hfa",
+          "text": "Haifa"
+     },
+
+     {
+          "id": "hfx",
+          "text": "Halifax"
+     },
+
+     {
+          "id": "ham",
+          "text": "Hamburg"
+     },
+
+     {
+          "id": "hml",
+          "text": "Hamilton-burlington"
+     },
+
+     {
+          "id": "sou",
+          "text": "Hampshire"
+     },
+
+     {
+          "id": "nfk",
+          "text": "Hampton Roads"
+     },
+
+     {
+          "id": "hnf",
+          "text": "Hanford-corcoran"
+     },
+
+     {
+          "id": "hgh",
+          "text": "Hangzhou"
+     },
+
+     {
+          "id": "haj",
+          "text": "Hannover"
+     },
+
+     {
+          "id": "hrs",
+          "text": "Harrisburg"
+     },
+
+     {
+          "id": "shd",
+          "text": "Harrisonburg"
+     },
+
+     {
+          "id": "htf",
+          "text": "Hartford"
+     },
+
+     {
+          "id": "usm",
+          "text": "Hattiesburg"
+     },
+
+     {
+          "id": "hnl",
+          "text": "Hawaii"
+     },
+
+     {
+          "id": "cfl",
+          "text": "Heartland Florida"
+     },
+
+     {
+          "id": "hdb",
+          "text": "Heidelberg"
+     },
+
+     {
+          "id": "hln",
+          "text": "Helena"
+     },
+
+     {
+          "id": "hrm",
+          "text": "Hermosillo"
+     },
+
+     {
+          "id": "hky",
+          "text": "Hickory / Lenoir"
+     },
+
+     {
+          "id": "rck",
+          "text": "High Rockies"
+     },
+
+     {
+          "id": "hhi",
+          "text": "Hilton Head"
+     },
+
+     {
+          "id": "hij",
+          "text": "Hiroshima"
+     },
+
+     {
+          "id": "hld",
+          "text": "Holland"
+     },
+
+     {
+          "id": "hkg",
+          "text": "Hong Kong"
+     },
+
+     {
+          "id": "hum",
+          "text": "Houma"
+     },
+
+     {
+          "id": "hou",
+          "text": "Houston"
+     },
+
+     {
+          "id": "hud",
+          "text": "Hudson Valley"
+     },
+
+     {
+          "id": "hmb",
+          "text": "Humboldt County"
+     },
+
+     {
+          "id": "hts",
+          "text": "Huntington-ashland"
+     },
+
+     {
+          "id": "hsv",
+          "text": "Huntsville / Decatur"
+     },
+
+     {
+          "id": "hyd",
+          "text": "Hyderabad"
+     },
+
+     {
+          "id": "ilo",
+          "text": "Iloilo"
+     },
+
+     {
+          "id": "imp",
+          "text": "Imperial County"
+     },
+
+     {
+          "id": "ind",
+          "text": "Indianapolis"
+     },
+
+     {
+          "id": "jkt",
+          "text": "Indonesia"
+     },
+
+     {
+          "id": "idr",
+          "text": "Indore"
+     },
+
+     {
+          "id": "inl",
+          "text": "Inland Empire"
+     },
+
+     {
+          "id": "iac",
+          "text": "Iowa City"
+     },
+
+     {
+          "id": "trh",
+          "text": "Iran"
+     },
+
+     {
+          "id": "bgd",
+          "text": "Iraq"
+     },
+
+     {
+          "id": "ith",
+          "text": "Ithaca"
+     },
+
+     {
+          "id": "jxn",
+          "text": "Jackson, Mi"
+     },
+
+     {
+          "id": "jan",
+          "text": "Jackson, Ms"
+     },
+
+     {
+          "id": "jxt",
+          "text": "Jackson, Tn"
+     },
+
+     {
+          "id": "jax",
+          "text": "Jacksonville"
+     },
+
+     {
+          "id": "oaj",
+          "text": "Jacksonville, Nc"
+     },
+
+     {
+          "id": "jai",
+          "text": "Jaipur"
+     },
+
+     {
+          "id": "jvl",
+          "text": "Janesville"
+     },
+
+     {
+          "id": "jys",
+          "text": "Jersey Shore"
+     },
+
+     {
+          "id": "jrs",
+          "text": "Jerusalem"
+     },
+
+     {
+          "id": "jnb",
+          "text": "Johannesburg"
+     },
+
+     {
+          "id": "jbr",
+          "text": "Jonesboro"
+     },
+
+     {
+          "id": "jln",
+          "text": "Joplin"
+     },
+
+     {
+          "id": "klt",
+          "text": "Kaiserslautern"
+     },
+
+     {
+          "id": "kzo",
+          "text": "Kalamazoo"
+     },
+
+     {
+          "id": "fca",
+          "text": "Kalispell"
+     },
+
+     {
+          "id": "kml",
+          "text": "Kamloops"
+     },
+
+     {
+          "id": "ksc",
+          "text": "Kansas City, Mo"
+     },
+
+     {
+          "id": "kel",
+          "text": "Kelowna / Okanagan"
+     },
+
+     {
+          "id": "ena",
+          "text": "Kenai Peninsula"
+     },
+
+     {
+          "id": "kpr",
+          "text": "Kennewick-pasco-richland"
+     },
+
+     {
+          "id": "rac",
+          "text": "Kenosha-racine"
+     },
+
+     {
+          "id": "ken",
+          "text": "Kent"
+     },
+
+     {
+          "id": "nbo",
+          "text": "Kenya"
+     },
+
+     {
+          "id": "cok",
+          "text": "Kerala"
+     },
+
+     {
+          "id": "grk",
+          "text": "Killeen / Temple / Ft Hood"
+     },
+
+     {
+          "id": "kng",
+          "text": "Kingston, On"
+     },
+
+     {
+          "id": "krk",
+          "text": "Kirksville"
+     },
+
+     {
+          "id": "kch",
+          "text": "Kitchener-waterloo-cambridge"
+     },
+
+     {
+          "id": "klf",
+          "text": "Klamath Falls"
+     },
+
+     {
+          "id": "knx",
+          "text": "Knoxville"
+     },
+
+     {
+          "id": "okk",
+          "text": "Kokomo"
+     },
+
+     {
+          "id": "kol",
+          "text": "Kolkata (calcutta)"
+     },
+
+     {
+          "id": "koo",
+          "text": "Kootenays"
+     },
+
+     {
+          "id": "kwi",
+          "text": "Kuwait"
+     },
+
+     {
+          "id": "lse",
+          "text": "La Crosse"
+     },
+
+     {
+          "id": "lsl",
+          "text": "La Salle Co"
+     },
+
+     {
+          "id": "lft",
+          "text": "Lafayette"
+     },
+
+     {
+          "id": "laf",
+          "text": "Lafayette / West Lafayette"
+     },
+
+     {
+          "id": "lkc",
+          "text": "Lake Charles"
+     },
+
+     {
+          "id": "loz",
+          "text": "Lake Of The Ozarks"
+     },
+
+     {
+          "id": "lal",
+          "text": "Lakeland"
+     },
+
+     {
+          "id": "lns",
+          "text": "Lancaster, Pa"
+     },
+
+     {
+          "id": "lan",
+          "text": "Lansing"
+     },
+
+     {
+          "id": "lrd",
+          "text": "Laredo"
+     },
+
+     {
+          "id": "lcr",
+          "text": "Las Cruces"
+     },
+
+     {
+          "id": "lvg",
+          "text": "Las Vegas"
+     },
+
+     {
+          "id": "lau",
+          "text": "Lausanne"
+     },
+
+     {
+          "id": "lwr",
+          "text": "Lawrence"
+     },
+
+     {
+          "id": "law",
+          "text": "Lawton"
+     },
+
+     {
+          "id": "lds",
+          "text": "Leeds"
+     },
+
+     {
+          "id": "alt",
+          "text": "Lehigh Valley"
+     },
+
+     {
+          "id": "lej",
+          "text": "Leipzig"
+     },
+
+     {
+          "id": "lth",
+          "text": "Lethbridge"
+     },
+
+     {
+          "id": "lws",
+          "text": "Lewiston / Clarkston"
+     },
+
+     {
+          "id": "lex",
+          "text": "Lexington, Ky"
+     },
+
+     {
+          "id": "lil",
+          "text": "Lille"
+     },
+
+     {
+          "id": "lma",
+          "text": "Lima / Findlay"
+     },
+
+     {
+          "id": "lnk",
+          "text": "Lincoln"
+     },
+
+     {
+          "id": "lis",
+          "text": "Lisbon"
+     },
+
+     {
+          "id": "lit",
+          "text": "Little Rock"
+     },
+
+     {
+          "id": "liv",
+          "text": "Liverpool"
+     },
+
+     {
+          "id": "lgu",
+          "text": "Logan"
+     },
+
+     {
+          "id": "nte",
+          "text": "Loire Valley"
+     },
+
+     {
+          "id": "ldn",
+          "text": "London"
+     },
+
+     {
+          "id": "lon",
+          "text": "London, On"
+     },
+
+     {
+          "id": "isp",
+          "text": "Long Island"
+     },
+
+     {
+          "id": "lax",
+          "text": "Los Angeles"
+     },
+
+     {
+          "id": "lou",
+          "text": "Louisville"
+     },
+
+     {
+          "id": "lbb",
+          "text": "Lubbock"
+     },
+
+     {
+          "id": "lko",
+          "text": "Lucknow"
+     },
+
+     {
+          "id": "lux",
+          "text": "Luxembourg"
+     },
+
+     {
+          "id": "lyn",
+          "text": "Lynchburg"
+     },
+
+     {
+          "id": "lys",
+          "text": "Lyon"
+     },
+
+     {
+          "id": "mcn",
+          "text": "Macon / Warner Robins"
+     },
+
+     {
+          "id": "mad",
+          "text": "Madison"
+     },
+
+     {
+          "id": "mdd",
+          "text": "Madrid"
+     },
+
+     {
+          "id": "mne",
+          "text": "Maine"
+     },
+
+     {
+          "id": "agp",
+          "text": "Malaga"
+     },
+
+     {
+          "id": "mly",
+          "text": "Malaysia"
+     },
+
+     {
+          "id": "man",
+          "text": "Manchester"
+     },
+
+     {
+          "id": "mhk",
+          "text": "Manhattan, Ks"
+     },
+
+     {
+          "id": "mnl",
+          "text": "Manila"
+     },
+
+     {
+          "id": "mkt",
+          "text": "Mankato"
+     },
+
+     {
+          "id": "mfd",
+          "text": "Mansfield"
+     },
+
+     {
+          "id": "mrs",
+          "text": "Marseille"
+     },
+
+     {
+          "id": "msc",
+          "text": "Mason City"
+     },
+
+     {
+          "id": "mto",
+          "text": "Mattoon-charleston"
+     },
+
+     {
+          "id": "mzt",
+          "text": "Mazatlan"
+     },
+
+     {
+          "id": "mca",
+          "text": "Mcallen / Edinburg"
+     },
+
+     {
+          "id": "mdv",
+          "text": "Meadville"
+     },
+
+     {
+          "id": "mfr",
+          "text": "Medford-ashland"
+     },
+
+     {
+          "id": "hat",
+          "text": "Medicine Hat"
+     },
+
+     {
+          "id": "mel",
+          "text": "Melbourne"
+     },
+
+     {
+          "id": "mem",
+          "text": "Memphis, Tn"
+     },
+
+     {
+          "id": "mdo",
+          "text": "Mendocino County"
+     },
+
+     {
+          "id": "mer",
+          "text": "Merced"
+     },
+
+     {
+          "id": "mei",
+          "text": "Meridian"
+     },
+
+     {
+          "id": "mex",
+          "text": "Mexico City"
+     },
+
+     {
+          "id": "mxp",
+          "text": "Milan"
+     },
+
+     {
+          "id": "mil",
+          "text": "Milwaukee"
+     },
+
+     {
+          "id": "min",
+          "text": "Minneapolis / St Paul"
+     },
+
+     {
+          "id": "mso",
+          "text": "Missoula"
+     },
+
+     {
+          "id": "mob",
+          "text": "Mobile"
+     },
+
+     {
+          "id": "mod",
+          "text": "Modesto"
+     },
+
+     {
+          "id": "mhv",
+          "text": "Mohave County"
+     },
+
+     {
+          "id": "mnr",
+          "text": "Monroe"
+     },
+
+     {
+          "id": "mlu",
+          "text": "Monroe, La"
+     },
+
+     {
+          "id": "mtb",
+          "text": "Monterey Bay"
+     },
+
+     {
+          "id": "mty",
+          "text": "Monterrey"
+     },
+
+     {
+          "id": "mvd",
+          "text": "Montevideo"
+     },
+
+     {
+          "id": "mgm",
+          "text": "Montgomery"
+     },
+
+     {
+          "id": "mpl",
+          "text": "Montpellier"
+     },
+
+     {
+          "id": "mon",
+          "text": "Montreal"
+     },
+
+     {
+          "id": "wvu",
+          "text": "Morgantown"
+     },
+
+     {
+          "id": "cas",
+          "text": "Morocco"
+     },
+
+     {
+          "id": "mos",
+          "text": "Moscow"
+     },
+
+     {
+          "id": "mlk",
+          "text": "Moses Lake"
+     },
+
+     {
+          "id": "mum",
+          "text": "Mumbai"
+     },
+
+     {
+          "id": "mun",
+          "text": "Muncie / Anderson"
+     },
+
+     {
+          "id": "muc",
+          "text": "Munich"
+     },
+
+     {
+          "id": "mkg",
+          "text": "Muskegon"
+     },
+
+     {
+          "id": "myr",
+          "text": "Myrtle Beach"
+     },
+
+     {
+          "id": "ngo",
+          "text": "Nagoya"
+     },
+
+     {
+          "id": "nmo",
+          "text": "Nanaimo"
+     },
+
+     {
+          "id": "nkg",
+          "text": "Nanjing"
+     },
+
+     {
+          "id": "nap",
+          "text": "Napoli / Campania"
+     },
+
+     {
+          "id": "nsh",
+          "text": "Nashville"
+     },
+
+     {
+          "id": "nbw",
+          "text": "New Brunswick"
+     },
+
+     {
+          "id": "nhm",
+          "text": "New Hampshire"
+     },
+
+     {
+          "id": "hvn",
+          "text": "New Haven"
+     },
+
+     {
+          "id": "nor",
+          "text": "New Orleans"
+     },
+
+     {
+          "id": "vpi",
+          "text": "New River Valley"
+     },
+
+     {
+          "id": "nyc",
+          "text": "New York City"
+     },
+
+     {
+          "id": "ncl",
+          "text": "Newcastle / Ne England"
+     },
+
+     {
+          "id": "ntl",
+          "text": "Newcastle, Nsw"
+     },
+
+     {
+          "id": "nsc",
+          "text": "Niagara Region"
+     },
+
+     {
+          "id": "mga",
+          "text": "Nicaragua"
+     },
+
+     {
+          "id": "nce",
+          "text": "Nice / Cote D'azur"
+     },
+
+     {
+          "id": "rou",
+          "text": "Normandy"
+     },
+
+     {
+          "id": "lcq",
+          "text": "North Central Fl"
+     },
+
+     {
+          "id": "ndk",
+          "text": "North Dakota"
+     },
+
+     {
+          "id": "njy",
+          "text": "North Jersey"
+     },
+
+     {
+          "id": "nms",
+          "text": "North Mississippi"
+     },
+
+     {
+          "id": "lbf",
+          "text": "North Platte"
+     },
+
+     {
+          "id": "abr",
+          "text": "Northeast Sd"
+     },
+
+     {
+          "id": "nwi",
+          "text": "Northern Wi"
+     },
+
+     {
+          "id": "nmi",
+          "text": "Northern Michigan"
+     },
+
+     {
+          "id": "whl",
+          "text": "Northern Panhandle"
+     },
+
+     {
+          "id": "nct",
+          "text": "Northwest Ct"
+     },
+
+     {
+          "id": "nwg",
+          "text": "Northwest Ga"
+     },
+
+     {
+          "id": "nwk",
+          "text": "Northwest Ks"
+     },
+
+     {
+          "id": "end",
+          "text": "Northwest Ok"
+     },
+
+     {
+          "id": "osl",
+          "text": "Norway"
+     },
+
+     {
+          "id": "not",
+          "text": "Nottingham"
+     },
+
+     {
+          "id": "nue",
+          "text": "Nuremberg"
+     },
+
+     {
+          "id": "oax",
+          "text": "Oaxaca"
+     },
+
+     {
+          "id": "oca",
+          "text": "Ocala"
+     },
+
+     {
+          "id": "odm",
+          "text": "Odessa / Midland"
+     },
+
+     {
+          "id": "ogd",
+          "text": "Ogden-clearfield"
+     },
+
+     {
+          "id": "vps",
+          "text": "Okaloosa / Walton"
+     },
+
+     {
+          "id": "oka",
+          "text": "Okinawa"
+     },
+
+     {
+          "id": "okc",
+          "text": "Oklahoma City"
+     },
+
+     {
+          "id": "olp",
+          "text": "Olympic Peninsula"
+     },
+
+     {
+          "id": "oma",
+          "text": "Omaha / Council Bluffs"
+     },
+
+     {
+          "id": "onh",
+          "text": "Oneonta"
+     },
+
+     {
+          "id": "orc",
+          "text": "Orange County"
+     },
+
+     {
+          "id": "cor",
+          "text": "Oregon Coast"
+     },
+
+     {
+          "id": "orl",
+          "text": "Orlando"
+     },
+
+     {
+          "id": "osa",
+          "text": "Osaka-kobe-kyoto"
+     },
+
+     {
+          "id": "ott",
+          "text": "Ottawa-hull-gatineau"
+     },
+
+     {
+          "id": "obx",
+          "text": "Outer Banks"
+     },
+
+     {
+          "id": "ows",
+          "text": "Owen Sound"
+     },
+
+     {
+          "id": "owb",
+          "text": "Owensboro"
+     },
+
+     {
+          "id": "oxf",
+          "text": "Oxford"
+     },
+
+     {
+          "id": "pak",
+          "text": "Pakistan"
+     },
+
+     {
+          "id": "psp",
+          "text": "Palm Springs, Ca"
+     },
+
+     {
+          "id": "crk",
+          "text": "Pampanga"
+     },
+
+     {
+          "id": "pan",
+          "text": "Panama"
+     },
+
+     {
+          "id": "pfn",
+          "text": "Panama City, Fl"
+     },
+
+     {
+          "id": "par",
+          "text": "Paris"
+     },
+
+     {
+          "id": "pkb",
+          "text": "Parkersburg-marietta"
+     },
+
+     {
+          "id": "pax",
+          "text": "Peace River Country"
+     },
+
+     {
+          "id": "pns",
+          "text": "Pensacola"
+     },
+
+     {
+          "id": "pia",
+          "text": "Peoria"
+     },
+
+     {
+          "id": "per",
+          "text": "Perth"
+     },
+
+     {
+          "id": "lim",
+          "text": "Peru"
+     },
+
+     {
+          "id": "peg",
+          "text": "Perugia"
+     },
+
+     {
+          "id": "ypq",
+          "text": "Peterborough"
+     },
+
+     {
+          "id": "phi",
+          "text": "Philadelphia"
+     },
+
+     {
+          "id": "phx",
+          "text": "Phoenix"
+     },
+
+     {
+          "id": "csd",
+          "text": "Pierre / Central Sd"
+     },
+
+     {
+          "id": "pit",
+          "text": "Pittsburgh"
+     },
+
+     {
+          "id": "plb",
+          "text": "Plattsburgh-adirondacks"
+     },
+
+     {
+          "id": "poc",
+          "text": "Poconos"
+     },
+
+     {
+          "id": "waw",
+          "text": "Poland"
+     },
+
+     {
+          "id": "phn",
+          "text": "Port Huron"
+     },
+
+     {
+          "id": "pdx",
+          "text": "Portland, Or"
+     },
+
+     {
+          "id": "pto",
+          "text": "Porto"
+     },
+
+     {
+          "id": "pgp",
+          "text": "Porto Alegre"
+     },
+
+     {
+          "id": "ptd",
+          "text": "Potsdam-canton-massena"
+     },
+
+     {
+          "id": "prg",
+          "text": "Prague"
+     },
+
+     {
+          "id": "prc",
+          "text": "Prescott"
+     },
+
+     {
+          "id": "hpr",
+          "text": "Pretoria"
+     },
+
+     {
+          "id": "pei",
+          "text": "Prince Edward Island"
+     },
+
+     {
+          "id": "yxs",
+          "text": "Prince George"
+     },
+
+     {
+          "id": "pvu",
+          "text": "Provo / Orem"
+     },
+
+     {
+          "id": "pbl",
+          "text": "Puebla"
+     },
+
+     {
+          "id": "pub",
+          "text": "Pueblo"
+     },
+
+     {
+          "id": "pri",
+          "text": "Puerto Rico"
+     },
+
+     {
+          "id": "pvr",
+          "text": "Puerto Vallarta"
+     },
+
+     {
+          "id": "plm",
+          "text": "Pullman / Moscow"
+     },
+
+     {
+          "id": "pnq",
+          "text": "Pune"
+     },
+
+     {
+          "id": "mli",
+          "text": "Quad Cities, Ia/il"
+     },
+
+     {
+          "id": "qbc",
+          "text": "Quebec City"
+     },
+
+     {
+          "id": "ral",
+          "text": "Raleigh / Durham / Ch"
+     },
+
+     {
+          "id": "rap",
+          "text": "Rapid City / West Sd"
+     },
+
+     {
+          "id": "rea",
+          "text": "Reading"
+     },
+
+     {
+          "id": "rec",
+          "text": "Recife"
+     },
+
+     {
+          "id": "red",
+          "text": "Red Deer"
+     },
+
+     {
+          "id": "rdd",
+          "text": "Redding"
+     },
+
+     {
+          "id": "reg",
+          "text": "Regina"
+     },
+
+     {
+          "id": "rno",
+          "text": "Reno / Tahoe"
+     },
+
+     {
+          "id": "rkv",
+          "text": "Reykjavik"
+     },
+
+     {
+          "id": "prv",
+          "text": "Rhode Island"
+     },
+
+     {
+          "id": "ric",
+          "text": "Richmond"
+     },
+
+     {
+          "id": "rin",
+          "text": "Richmond, In"
+     },
+
+     {
+          "id": "rio",
+          "text": "Rio De Janeiro"
+     },
+
+     {
+          "id": "roa",
+          "text": "Roanoke"
+     },
+
+     {
+          "id": "rmn",
+          "text": "Rochester, Mn"
+     },
+
+     {
+          "id": "rcs",
+          "text": "Rochester, Ny"
+     },
+
+     {
+          "id": "rfd",
+          "text": "Rockford"
+     },
+
+     {
+          "id": "buh",
+          "text": "Romania"
+     },
+
+     {
+          "id": "rom",
+          "text": "Rome"
+     },
+
+     {
+          "id": "rbg",
+          "text": "Roseburg"
+     },
+
+     {
+          "id": "row",
+          "text": "Roswell / Carlsbad"
+     },
+
+     {
+          "id": "sac",
+          "text": "Sacramento"
+     },
+
+     {
+          "id": "mbs",
+          "text": "Saginaw-midland-baycity"
+     },
+
+     {
+          "id": "sgy",
+          "text": "Saguenay"
+     },
+
+     {
+          "id": "sle",
+          "text": "Salem, Or"
+     },
+
+     {
+          "id": "sns",
+          "text": "Salina"
+     },
+
+     {
+          "id": "slc",
+          "text": "Salt Lake City"
+     },
+
+     {
+          "id": "ssa",
+          "text": "Salvador, Bahia"
+     },
+
+     {
+          "id": "sjt",
+          "text": "San Angelo"
+     },
+
+     {
+          "id": "sat",
+          "text": "San Antonio"
+     },
+
+     {
+          "id": "sdo",
+          "text": "San Diego"
+     },
+
+     {
+          "id": "slo",
+          "text": "San Luis Obispo"
+     },
+
+     {
+          "id": "tsu",
+          "text": "San Marcos"
+     },
+
+     {
+          "id": "sky",
+          "text": "Sandusky"
+     },
+
+     {
+          "id": "sba",
+          "text": "Santa Barbara"
+     },
+
+     {
+          "id": "saf",
+          "text": "Santa Fe / Taos"
+     },
+
+     {
+          "id": "smx",
+          "text": "Santa Maria"
+     },
+
+     {
+          "id": "spo",
+          "text": "Sao Paulo"
+     },
+
+     {
+          "id": "spp",
+          "text": "Sapporo"
+     },
+
+     {
+          "id": "srq",
+          "text": "Sarasota-bradenton"
+     },
+
+     {
+          "id": "srd",
+          "text": "Sardinia"
+     },
+
+     {
+          "id": "srn",
+          "text": "Sarnia"
+     },
+
+     {
+          "id": "skt",
+          "text": "Saskatoon"
+     },
+
+     {
+          "id": "soo",
+          "text": "Sault Ste Marie, On"
+     },
+
+     {
+          "id": "sav",
+          "text": "Savannah / Hinesville"
+     },
+
+     {
+          "id": "bff",
+          "text": "Scottsbluff / Panhandle"
+     },
+
+     {
+          "id": "avp",
+          "text": "Scranton / Wilkes-barre"
+     },
+
+     {
+          "id": "sea",
+          "text": "Seattle-tacoma"
+     },
+
+     {
+          "id": "sdj",
+          "text": "Sendai"
+     },
+
+     {
+          "id": "sel",
+          "text": "Seoul"
+     },
+
+     {
+          "id": "sev",
+          "text": "Sevilla"
+     },
+
+     {
+          "id": "sha",
+          "text": "Shanghai"
+     },
+
+     {
+          "id": "sbm",
+          "text": "Sheboygan, Wi"
+     },
+
+     {
+          "id": "shf",
+          "text": "Sheffield"
+     },
+
+     {
+          "id": "she",
+          "text": "Shenyang"
+     },
+
+     {
+          "id": "szx",
+          "text": "Shenzhen"
+     },
+
+     {
+          "id": "shb",
+          "text": "Sherbrooke"
+     },
+
+     {
+          "id": "sow",
+          "text": "Show Low"
+     },
+
+     {
+          "id": "shv",
+          "text": "Shreveport"
+     },
+
+     {
+          "id": "sic",
+          "text": "Sicilia"
+     },
+
+     {
+          "id": "fhu",
+          "text": "Sierra Vista"
+     },
+
+     {
+          "id": "sng",
+          "text": "Singapore"
+     },
+
+     {
+          "id": "sux",
+          "text": "Sioux City, Ia"
+     },
+
+     {
+          "id": "fsd",
+          "text": "Sioux Falls / Se Sd"
+     },
+
+     {
+          "id": "ssk",
+          "text": "Siskiyou County"
+     },
+
+     {
+          "id": "mvw",
+          "text": "Skagit / Island / Sji"
+     },
+
+     {
+          "id": "ske",
+          "text": "Skeena-bulkley"
+     },
+
+     {
+          "id": "sbn",
+          "text": "South Bend / Michiana"
+     },
+
+     {
+          "id": "sma",
+          "text": "South Coast"
+     },
+
+     {
+          "id": "sdk",
+          "text": "South Dakota"
+     },
+
+     {
+          "id": "mia",
+          "text": "South Florida"
+     },
+
+     {
+          "id": "snj",
+          "text": "South Jersey"
+     },
+
+     {
+          "id": "otu",
+          "text": "Southeast Ia"
+     },
+
+     {
+          "id": "sek",
+          "text": "Southeast Ks"
+     },
+
+     {
+          "id": "jnu",
+          "text": "Southeast Alaska"
+     },
+
+     {
+          "id": "smo",
+          "text": "Southeast Missouri"
+     },
+
+     {
+          "id": "swv",
+          "text": "Southern Wv"
+     },
+
+     {
+          "id": "cbd",
+          "text": "Southern Illinois"
+     },
+
+     {
+          "id": "smd",
+          "text": "Southern Maryland"
+     },
+
+     {
+          "id": "swk",
+          "text": "Southwest Ks"
+     },
+
+     {
+          "id": "mml",
+          "text": "Southwest Mn"
+     },
+
+     {
+          "id": "hez",
+          "text": "Southwest Ms"
+     },
+
+     {
+          "id": "wtx",
+          "text": "Southwest Tx"
+     },
+
+     {
+          "id": "vaw",
+          "text": "Southwest Va"
+     },
+
+     {
+          "id": "swm",
+          "text": "Southwest Michigan"
+     },
+
+     {
+          "id": "mlb",
+          "text": "Space Coast"
+     },
+
+     {
+          "id": "spk",
+          "text": "Spokane / Coeur D'alene"
+     },
+
+     {
+          "id": "spi",
+          "text": "Springfield, Il"
+     },
+
+     {
+          "id": "sgf",
+          "text": "Springfield, Mo"
+     },
+
+     {
+          "id": "ust",
+          "text": "St Augustine"
+     },
+
+     {
+          "id": "stc",
+          "text": "St Cloud"
+     },
+
+     {
+          "id": "stg",
+          "text": "St George"
+     },
+
+     {
+          "id": "nfl",
+          "text": "St John's, Nl"
+     },
+
+     {
+          "id": "stj",
+          "text": "St Joseph"
+     },
+
+     {
+          "id": "stl",
+          "text": "St Louis, Mo"
+     },
+
+     {
+          "id": "stp",
+          "text": "St Petersburg, Ru"
+     },
+
+     {
+          "id": "psu",
+          "text": "State College"
+     },
+
+     {
+          "id": "tbr",
+          "text": "Statesboro"
+     },
+
+     {
+          "id": "osu",
+          "text": "Stillwater"
+     },
+
+     {
+          "id": "stk",
+          "text": "Stockton"
+     },
+
+     {
+          "id": "sxb",
+          "text": "Strasbourg"
+     },
+
+     {
+          "id": "str",
+          "text": "Stuttgart"
+     },
+
+     {
+          "id": "sud",
+          "text": "Sudbury"
+     },
+
+     {
+          "id": "sun",
+          "text": "Sunshine Coast"
+     },
+
+     {
+          "id": "svt",
+          "text": "Surat Surat"
+     },
+
+     {
+          "id": "ssn",
+          "text": "Susanville"
+     },
+
+     {
+          "id": "sth",
+          "text": "Sweden"
+     },
+
+     {
+          "id": "syd",
+          "text": "Sydney"
+     },
+
+     {
+          "id": "syr",
+          "text": "Syracuse"
+     },
+
+     {
+          "id": "twd",
+          "text": "Taiwan"
+     },
+
+     {
+          "id": "tal",
+          "text": "Tallahassee"
+     },
+
+     {
+          "id": "tpa",
+          "text": "Tampa Bay Area"
+     },
+
+     {
+          "id": "hba",
+          "text": "Tasmania"
+     },
+
+     {
+          "id": "tlv",
+          "text": "Tel Aviv"
+     },
+
+     {
+          "id": "tha",
+          "text": "Terre Haute"
+     },
+
+     {
+          "id": "toc",
+          "text": "Territories"
+     },
+
+     {
+          "id": "txk",
+          "text": "Texarkana"
+     },
+
+     {
+          "id": "txm",
+          "text": "Texoma"
+     },
+
+     {
+          "id": "bkk",
+          "text": "Thailand"
+     },
+
+     {
+          "id": "thb",
+          "text": "The Thumb"
+     },
+
+     {
+          "id": "tby",
+          "text": "Thunder Bay"
+     },
+
+     {
+          "id": "tij",
+          "text": "Tijuana"
+     },
+
+     {
+          "id": "tok",
+          "text": "Tokyo"
+     },
+
+     {
+          "id": "tol",
+          "text": "Toledo"
+     },
+
+     {
+          "id": "tpk",
+          "text": "Topeka"
+     },
+
+     {
+          "id": "trn",
+          "text": "Torino"
+     },
+
+     {
+          "id": "tor",
+          "text": "Toronto"
+     },
+
+     {
+          "id": "tls",
+          "text": "Toulouse"
+     },
+
+     {
+          "id": "psl",
+          "text": "Treasure Coast"
+     },
+
+     {
+          "id": "tri",
+          "text": "Tri-cities, Tn"
+     },
+
+     {
+          "id": "trs",
+          "text": "Trois-rivieres"
+     },
+
+     {
+          "id": "tus",
+          "text": "Tucson"
+     },
+
+     {
+          "id": "tul",
+          "text": "Tulsa"
+     },
+
+     {
+          "id": "tun",
+          "text": "Tunisia"
+     },
+
+     {
+          "id": "ist",
+          "text": "Turkey"
+     },
+
+     {
+          "id": "tsc",
+          "text": "Tuscaloosa"
+     },
+
+     {
+          "id": "nph",
+          "text": "Tuscarawas Co"
+     },
+
+     {
+          "id": "twf",
+          "text": "Twin Falls"
+     },
+
+     {
+          "id": "tts",
+          "text": "Twin Tiers Ny/pa"
+     },
+
+     {
+          "id": "etx",
+          "text": "Tyler / East Tx"
+     },
+
+     {
+          "id": "kbp",
+          "text": "Ukraine"
+     },
+
+     {
+          "id": "uae",
+          "text": "United Arab Emirates"
+     },
+
+     {
+          "id": "yup",
+          "text": "Upper Peninsula"
+     },
+
+     {
+          "id": "uti",
+          "text": "Utica-rome-oneida"
+     },
+
+     {
+          "id": "vld",
+          "text": "Valdosta"
+     },
+
+     {
+          "id": "val",
+          "text": "Valencia"
+     },
+
+     {
+          "id": "van",
+          "text": "Vancouver, Bc"
+     },
+
+     {
+          "id": "ccs",
+          "text": "Venezuela"
+     },
+
+     {
+          "id": "vce",
+          "text": "Venice / Veneto"
+     },
+
+     {
+          "id": "oxr",
+          "text": "Ventura County"
+     },
+
+     {
+          "id": "vcz",
+          "text": "Veracruz"
+     },
+
+     {
+          "id": "brl",
+          "text": "Vermont"
+     },
+
+     {
+          "id": "vic",
+          "text": "Victoria"
+     },
+
+     {
+          "id": "vtx",
+          "text": "Victoria, Tx"
+     },
+
+     {
+          "id": "vie",
+          "text": "Vienna"
+     },
+
+     {
+          "id": "vtn",
+          "text": "Vietnam"
+     },
+
+     {
+          "id": "vrg",
+          "text": "Virgin Islands"
+     },
+
+     {
+          "id": "vis",
+          "text": "Visalia-tulare"
+     },
+
+     {
+          "id": "wco",
+          "text": "Waco"
+     },
+
+     {
+          "id": "wdc",
+          "text": "Washington, Dc"
+     },
+
+     {
+          "id": "wlo",
+          "text": "Waterloo / Cedar Falls"
+     },
+
+     {
+          "id": "wtn",
+          "text": "Watertown"
+     },
+
+     {
+          "id": "wau",
+          "text": "Wausau"
+     },
+
+     {
+          "id": "wll",
+          "text": "Wellington"
+     },
+
+     {
+          "id": "wen",
+          "text": "Wenatchee"
+     },
+
+     {
+          "id": "pal",
+          "text": "West Bank"
+     },
+
+     {
+          "id": "wva",
+          "text": "West Virginia (old)"
+     },
+
+     {
+          "id": "qcy",
+          "text": "Western Il"
+     },
+
+     {
+          "id": "wky",
+          "text": "Western Ky"
+     },
+
+     {
+          "id": "wmd",
+          "text": "Western Maryland"
+     },
+
+     {
+          "id": "wma",
+          "text": "Western Massachusetts"
+     },
+
+     {
+          "id": "gjt",
+          "text": "Western Slope"
+     },
+
+     {
+          "id": "whi",
+          "text": "Whistler, Bc"
+     },
+
+     {
+          "id": "whh",
+          "text": "Whitehorse"
+     },
+
+     {
+          "id": "wic",
+          "text": "Wichita"
+     },
+
+     {
+          "id": "wtf",
+          "text": "Wichita Falls"
+     },
+
+     {
+          "id": "wpt",
+          "text": "Williamsport"
+     },
+
+     {
+          "id": "wnc",
+          "text": "Wilmington, Nc"
+     },
+
+     {
+          "id": "okv",
+          "text": "Winchester"
+     },
+
+     {
+          "id": "wsr",
+          "text": "Windsor"
+     },
+
+     {
+          "id": "win",
+          "text": "Winnipeg"
+     },
+
+     {
+          "id": "wsl",
+          "text": "Winston-salem"
+     },
+
+     {
+          "id": "wol",
+          "text": "Wollongong"
+     },
+
+     {
+          "id": "wor",
+          "text": "Worcester / Central Ma"
+     },
+
+     {
+          "id": "wuh",
+          "text": "Wuhan"
+     },
+
+     {
+          "id": "wyo",
+          "text": "Wyoming"
+     },
+
+     {
+          "id": "xiy",
+          "text": "Xi'an"
+     },
+
+     {
+          "id": "yak",
+          "text": "Yakima"
+     },
+
+     {
+          "id": "ykf",
+          "text": "Yellowknife"
+     },
+
+     {
+          "id": "yrk",
+          "text": "York, Pa"
+     },
+
+     {
+          "id": "yng",
+          "text": "Youngstown"
+     },
+
+     {
+          "id": "ybs",
+          "text": "Yuba-sutter"
+     },
+
+     {
+          "id": "yuc",
+          "text": "Yucatan"
+     },
+
+     {
+          "id": "yum",
+          "text": "Yuma"
+     },
+
+     {
+          "id": "zam",
+          "text": "Zamboanga"
+     },
+
+     {
+          "id": "zvl",
+          "text": "Zanesville / Cambridge"
+     },
+
+     {
+          "id": "zur",
+          "text": "Zurich"
+     }
+     ]
+}

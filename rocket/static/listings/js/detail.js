@@ -1,7 +1,19 @@
 $(function() {
 
-  $(".form-select").select2();
+  //Market Select Stuff
+
+  var dat = $.parseJSON($("#market-data").html());
+  $(".form-select").select2({
+    placeholder: "Select a Market",
+    data: dat.markets
+  });
+
   $(".form-select").show();
+
+  $(".form-select").on("change", function(e){
+    console.log(e.val)
+  });
+
 
   
   // Category Selection Stuff
