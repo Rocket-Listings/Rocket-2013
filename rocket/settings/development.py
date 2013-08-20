@@ -97,4 +97,4 @@ BROKER_CONNECTION_MAX_RETRIES = 0
 # See: http://docs.celeryproject.org/en/latest/configuration.html#celery-result-backend
 CELERY_RESULT_BACKEND = 'amqp'
 
-AUTOPOST_DEBUG = False
+AUTOPOST_DEBUG = True
