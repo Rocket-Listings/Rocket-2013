@@ -5,7 +5,7 @@
 		{% csrf_token %}
 		{% if form.non_field_errors %}
         <div class="form-group">
-            <div class="col-lg-3 col-offset-2">
+            <div class="col-lg-3 col-lg-offset-2">
                 <div class="alert alert-danger">
                     {% for error in form.non_field_errors %}
                         <span>{{error}}</span>
@@ -15,7 +15,7 @@
         </div>
         {% endif %}
         <div class="form-group">
-            <div class="col-lg-3 col-offset-2">
+            <div class="col-lg-3 col-lg-offset-2">
                 <h4>Signup</h4>
             </div>
         </div>
@@ -57,7 +57,7 @@
         </div>
         <input name="default_seller_type" type="hidden" value="{{ seller_type }}"/>
 		<div class="form-group">
-            <div class="col-lg-3 col-offset-2">
+            <div class="col-lg-3 col-lg-offset-2">
                 <input class="btn btn-primary" type="submit" value="Create Account">
             </div>
         </div>
