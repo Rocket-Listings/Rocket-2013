@@ -61,6 +61,9 @@ class Listing(models.Model):
 	CL_link = models.URLField(null=True, blank=True)
 	CL_view = models.URLField(null=True, blank=True)
 	market = models.CharField(max_length=3)
+	sub_market = models.CharField(max_length=3, null=True, blank=True)
+	hood = models.CharField(max_length=3, null=True, blank=True)
+
 
 	class Meta:
 		unique_together = ('title', 'user',)
