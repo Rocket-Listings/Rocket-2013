@@ -316,7 +316,7 @@ AUTH_PROFILE_MODULE = 'users.UserProfile'
 
 ACCOUNT_ACTIVATION_DAYS = 7
 
-DEFAULT_FROM_EMAIL = 'teddy@rocketlistings.com'
+DEFAULT_FROM_EMAIL = 'apollo@rocketlistings.com'
 
 LOGIN_URL = '/users/login/' # references users/urls.py name
 

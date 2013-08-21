@@ -2,13 +2,17 @@ from celery import task
 from celery.signals import task_success
 from django.shortcuts import get_object_or_404
 from listings.models import Listing
-
+from django.conf import settings
+from listings import utils
 import requests
 import mechanize
 import cookielib
 
 @task(name="tasks.cl_anon_autopost_task")
-def cl_anon_autopost_task(data):
+def cl_anon_autopost_task(listing_id):
+
+  data = utils.process_autopost_data(listing_id)
+
   #inititalize the browser
   br = mechanize.Browser()
 
@@ -83,7 +87,10 @@ def cl_anon_autopost_task(data):
     return payload
 
 @task(name="tasks.cl_anon_update_task")
-def cl_anon_update_task(data):
+def cl_anon_update_task(listing_id):
+  
+  data = utils.process_autopost_data(listing_id, update=True)
+
   #inititalize the browser
   br = mechanize.Browser()
 
@@ -178,7 +185,9 @@ def cl_anon_update_task(data):
     print "failed"
 
 @task(name="tasks.cl_delete_task")
-def cl_delete_task(data):
+def cl_delete_task(listing_id):
+  listing = Listing.objects.get(id=listing_id)
+  data = {'update_url': listing.CL_link, 'pk': listing.pk}
   #inititalize the browser
   br = mechanize.Browser()
 
@@ -210,6 +219,8 @@ def cl_delete_task(data):
   br.select_form(nr=1)
   br.submit()
 
+  listing.delete()
+
   return data['pk']
 
 @task_success.connect
@@ -217,7 +228,7 @@ def celery_task_success_handler(sender=None, result=None, args=None, kwargs=None
   if sender.name == "tasks.cl_anon_autopost_task":
     if result['success'] == 'True':
       listing = get_object_or_404(Listing, pk=result['pk'])
-      listing.status_id = 3
+      listing.status_id = 2
       listing.save()
     else:
       print "Tried to autopost listing " + str(result['pk']) + ". Failed."
