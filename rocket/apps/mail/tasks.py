@@ -25,16 +25,15 @@ def new_cl_admin_message_task(msg_dict):
 	r = requests.get(manage_link)
 	to_parse = BeautifulSoup(r.text)
 	phone_page_text = "Your craigslist user account requires phone verification. Please use the form below to complete this process."
-	try:
-		if to_parse.find("section", class_="body").find("p").text == phone_page_text:
-			buyer = Buyer(listing=listing, name="Apollo Rocket", email=settings.DEFAULT_FROM_EMAIL)
-			buyer.save()
-			message = Message(
-				listing=listing, 
-				buyer=buyer, 
-				content="Sorry, but Craigslist wants you to verify your phone number. Follow this link to finish posting: " + activate_link)
-			message.save()
-	except AttributeError:
+	if to_parse.find("section", class_="body").find("p").text == phone_page_text:
+		buyer = Buyer(listing=listing, name="Apollo Rocket", email=settings.DEFAULT_FROM_EMAIL)
+		buyer.save()
+		message = Message(
+			listing=listing, 
+			buyer=buyer, 
+			content="Sorry, but Craigslist wants you to verify your phone number. Follow this link to finish posting: " + activate_link)
+		message.save()
+	else:
 		form = to_parse.find('form')
 		action = form.attrs['action']
 		hidden_inputs = form.find_all_next('input', type='hidden', limit=2)
