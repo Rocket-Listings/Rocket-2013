@@ -1,14 +1,36 @@
 $(function() {
 
   //Market Select Stuff
+  //Initialization and edit state
   var dat = $.parseJSON($("#market-data").html());
 
   $(".form-select").select2({
     placeholder: "Select a Market",
     data: dat.markets 
   });
-  $(".form-select").show();
+  $(".form-select").show(); 
 
+  if ($(".form-select-sub").attr('value') != ""){
+    $(".form-select-sub").select2({
+        placeholder: "Select a Sub-Market",
+        data: dat[$(".form-select").select2("val")]
+      });
+    $(".form-select-sub").show();
+
+  };
+
+  if ($(".form-select-hood").attr('value') != ""){
+    console.log("in");
+    $(".form-select-hood").select2({
+        placeholder: "Select a Sub-Market",
+        data: dat[$(".form-select").select2("val")][$(".form-select-sub").select2("val")-1].hoods
+      });
+    $(".form-select-hood").show();
+
+  };
+
+
+  //on change 
   $(".form-select").on("change", function(e){
       $(".form-select-sub").select2("val", "")
       $(".form-select-hood").select2("val", "")
@@ -36,9 +58,7 @@ $(function() {
     }else{
       $(".form-select-hood").hide()
     }
-    
-
-  });
+    });
 
 
   

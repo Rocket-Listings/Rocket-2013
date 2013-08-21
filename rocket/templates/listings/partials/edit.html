@@ -88,11 +88,11 @@
     <div class = "row">
       <div id="market-col" class="col-lg-6">
         <label for="id_market" class="control-label">Market</label>
-          <input type = "hidden" class= "form-select" name = "market" style="display:none">
+          <input type = "hidden" class= "form-select" name = "market" style="display:none" value = "{{form.market.value|default:""}}">
           </input> 
-          <input type = "hidden" class= "form-select-sub" name = "sub_market" style="display:none">
+          <input type = "hidden" class= "form-select-sub" name = "sub_market" style="display:none" value = "{{form.sub_market.value|default:""}}">
           </input>
-          <input type = "hidden" class= "form-select-hood" name = "hood" style="display:none">
+          <input type = "hidden" class= "form-select-hood" name = "hood" style="display:none" value = "{{form.hood.value|default:""}}">
           </input>
       </div>
       <div id="location-col" class="col-lg-6">
