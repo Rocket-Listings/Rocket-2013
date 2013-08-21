@@ -5,8 +5,9 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
-from celery import chain
-from listings.models import Buyer, Message
+from django.db.models import Q
+from celery import chain, chord
+from listings.models import Buyer, Message, Listing
 from listings.forms import MessageForm
 from mail.tasks import send_message_task, new_cl_admin_message_task, lookup_view_links_task, process_new_cl_message_task
 
@@ -33,24 +34,24 @@ def on_incoming_test_message(request):
 	sig = request.POST.get('signature', '')
 	if verify(token, timestamp, sig):
 		print "Received unrouted Rocket Dev message."
-		mime = request.POST.get('message-headers')
-		print mime
-		sender = request.POST.get('sender')
-		print sender
-		recipient = request.POST.get('recipient')
-		print recipient
-		subject   = request.POST.get('subject', '')
-		print subject
-		frm = request.POST.get('from', '')
-		print frm
+		# mime = request.POST.get('message-headers')
+		# print mime
+		# sender = request.POST.get('sender')
+		# print sender
+		# recipient = request.POST.get('recipient')
+		# print recipient
+		# subject   = request.POST.get('subject', '')
+		# print subject
+		# frm = request.POST.get('from', '')
+		# print frm
 		body = request.POST.get('body-plain', '')
 		print body
-		body_html = request.POST.get('body-html', '')
-		print body_html
-		text = request.POST.get('stripped-text', '')
-		print text
-		signature = request.POST.get('stripped-signature', '')
-		print signature
+		# body_html = request.POST.get('body-html', '')
+		# print body_html
+		# text = request.POST.get('stripped-text', '')
+		# print text
+		# signature = request.POST.get('stripped-signature', '')
+		# print signature
 
 		return HttpResponse('OK')
 	else:
@@ -84,16 +85,18 @@ def new_cl_buyer_message(request):
 										'buyer_email': buyer_email}
 		try:
 			listing = user.listing_set.get(CL_view=listing_view_link)
-			message = Message(listing=listing, content=msg_body)
+			message = Message(listing=listing, content=msg_body, isSeller=False)
 			message.save()
 			message_dict['message_id'] = message.id
 			process_new_cl_message_task.delay(**message_dict)
-		except ObjectDoesNotExist:
-			listings_no_links = map(lambda l: l.id, user.listing_set.filter(CL_view=None))
-			message = Message(content=msg_body)
+		except Listing.DoesNotExist:
+			listings_no_links = map(lambda l: l.id, user.listing_set.filter(Q(CL_view="") | Q(CL_view=None)))
+			message = Message(content=msg_body, isSeller=False)
 			message.save()
 			message_dict['message_id'] = message.id
-			(lookup_view_links_task.map(listings_no_links) | process_new_cl_message_task(**message_dict))()
+			print listings_no_links
+			lookup_view_links_task.apply_async((listings_no_links), link=process_new_cl_message_task.s(**message_dict))
+			#chord(lookup_view_links_task.map(listings_no_links) | process_new_cl_message_task(**message_dict))()
 		return HttpResponse('OK')
 	else:
 		return HttpResponse('Unauthorized')

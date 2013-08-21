@@ -86,17 +86,18 @@ def send_message_task(message_id):
 	return msg.id
 
 @task(name='tasks.lookup_view_links_task')
-def lookup_view_links_task(listing_id):
-	# takes an array of listing ids to look up
+def lookup_view_links_task(*listing_ids):
 	view_page_text = "Your posting can be seen at "
-	listing = Listing.objects.get(id=listing_id)
-	r = requests.get(listing.CL_link)
-	partition = BeautifulSoup(r.text).find("p").text.partition(view_page_text)
-	if partition[1]:
-		# Houston, we have a link!
-		# Else, listing has not been activated so we do nothing
-		listing.CL_view = partition[2].strip(".")
-		listing.save()
+	for id in listing_ids:
+		listing = Listing.objects.get(id=id)
+		if listing.CL_link:
+			r = requests.get(listing.CL_link)
+			partition = BeautifulSoup(r.text).find("p").text.partition(view_page_text)
+			if partition[1]:
+				# Houston, we have a link!
+				# Else, listing has not been activated so we do nothing
+				listing.CL_view = partition[2].strip(".")
+				listing.save()
 
 @task(name='tasks.process_new_cl_message_task')
 def process_new_cl_message_task(*args, **kwargs):
