@@ -806,7 +806,109 @@
 "nyc":[ 
      {
           "id":"1",
-          "text":"Manhattan"
+          "text":"Manhattan",
+          "hoods":[
+               {
+                    "text": "Battery Park",
+                    "id": "120"
+               },
+               {
+                    "text": "Chelsea",
+                    "id": "134"
+               },
+               {
+                    "text": "Chinatown / Lit Italy",
+                    "id": "160"
+               },
+               {
+                    "text": "Downtown",
+                    "id": "121"
+               },
+               {
+                    "text": "East Harlem",
+                    "id": "159"
+               },
+               {
+                    "text": "East Village",
+                    "id": "129"
+               },
+               {
+                    "text": "Financial District",
+                    "id": "122"
+               },
+               {
+                    "text": "Flatiron",
+                    "id": "133"
+               },
+               {
+                    "text": "Gramercy",
+                    "id": "132"
+               },
+               {
+                    "text": "Greenwich Village",
+                    "id": "127"
+               },
+               {
+                    "text": "Harlem / Morningside",
+                    "id": "141"
+               },
+               {
+                    "text": "Inwood / Wash Hts",
+                    "id": "140"
+               },
+               {
+                    "text": "Lower East Side",
+                    "id": "126"
+               },
+               {
+                    "text": "Midtown",
+                    "id": "135"
+               },
+               {
+                    "text": "Midtown East",
+                    "id": "136"
+               },
+               {
+                    "text": "Midtown West",
+                    "id": "137"
+               },
+               {
+                    "text": "Murray Hill",
+                    "id": "131"
+               },
+               {
+                    "text": "Nolita / Bowery",
+                    "id": "125"
+               },
+               {
+                    "text": "SoHo",
+                    "id": "124"
+               },
+               {
+                    "text": "TriBeCa",
+                    "id": "123"
+               },
+               {
+                    "text": "Union Square",
+                    "id": "130"
+               },
+               {
+                    "text": "Upper East Side",
+                    "id": "139"
+               },
+               {
+                    "text": "Upper West Side",
+                    "id": "138"
+               },
+               {
+                    "text": "West Village",
+                    "id": "128"
+               },
+               {
+                    "text": "bypass this step",
+                    "id": "0"
+               }
+          ]
      },
      {
           "id":"2",
