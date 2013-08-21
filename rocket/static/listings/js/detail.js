@@ -23,6 +23,14 @@ $(function() {
     }
   });
 
+  $(".form-select-sub").on("change", function(e){
+    if ($(".form-select").select2("val") === "sfo"){
+      console.log(e.val);
+    }
+    
+
+  });
+
 
   
   // Category Selection Stuff

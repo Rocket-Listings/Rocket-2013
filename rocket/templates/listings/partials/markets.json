@@ -3,27 +3,595 @@
 "sfo":[
      {
           "id": "1",
-          "text":"City Of San Francisco"
+          "text":"City Of San Francisco",
+          "hoods": [
+          {
+               "text":"alamo square / nopa",
+               "id": "149"
+          },
+          {
+               "text":"bayview",
+               "id": "110"
+          },
+          {
+               "text":"bernal heights",
+               "id": "3"
+          },
+          {
+               "text":"castro / upper market",
+               "id": "4"
+          },
+          {
+               "text":"cole valley / ashbury hts",
+               "id": "5"
+          },
+          {
+               "text":"downtown / civic / van ness",
+               "id": "6"
+          },
+          {
+               "text":"excelsior / outer mission",
+               "id": "7"
+          },
+          {
+               "text":"financial district",
+               "id": "8"
+          },
+          {
+               "text":"glen park",
+               "id": "9"
+          },
+          {
+               "text":"haight ashbury",
+               "id": "11"
+          },
+          {
+               "text":"hayes valley",
+               "id": "12"
+          },
+          {
+               "text":"ingleside / SFSU / CCSF",
+               "id": "13"
+          },
+          {
+               "text":"inner richmond",
+               "id": "14"
+          },
+          {
+               "text":"inner sunset / UCSF",
+               "id": "15"
+          },
+          {
+               "text":"laurel hts / presidio",
+               "id": "16"
+          },
+          {
+               "text":"lower haight",
+               "id": "10"
+          },
+          {
+               "text":"lower nob hill",
+               "id": "20"
+          },
+          {
+               "text":"lower pac hts",
+               "id": "24"
+          },
+          {
+               "text":"marina / cow hollow",
+               "id": "17"
+          },
+          {
+               "text":"mission district",
+               "id": "18"
+          },
+          {
+               "text":"nob hill",
+               "id": "19"
+          },
+          {
+               "text":"noe valley",
+               "id": "21"
+          },
+          {
+               "text":"north beach / telegraph hill",
+               "id": "22"
+          },
+          {
+               "text":"pacific heights",
+               "id": "23"
+          },
+          {
+               "text":"portola district",
+               "id": "164"
+          },
+          {
+               "text":"potrero hill",
+               "id": "25"
+          },
+          {
+               "text":"richmond / seacliff",
+               "id": "26"
+          },
+          {
+               "text":"russian hill",
+               "id": "27"
+          },
+          {
+               "text":"SOMA / south beach",
+               "id": "1"
+          },
+          {
+               "text":"sunset / parkside",
+               "id": "28"
+          },
+          {
+               "text":"tenderloin",
+               "id": "156"
+          },
+          {
+               "text":"treasure island",
+               "id": "157"
+          },
+          {
+               "text":"twin peaks / diamond hts",
+               "id": "29"
+          },
+          {
+               "text":"USF / panhandle",
+               "id": "2"
+          },
+          {
+               "text":"visitacion valley",
+               "id": "118"
+          },
+          {
+               "text":"west portal / forest hill",
+               "id": "114"
+          },
+          {
+               "text":"western addition",
+               "id": "30"
+          },
+          {
+               "text":"bypass this step",
+               "id": "0"
+          }
+          ]
      },
      {
           "id": "2",
-          "text":"South Bay Area"
+          "text":"South Bay Area",
+          "hoods":[
+          {
+               "text":"campbell",
+               "id": "31"
+          },
+          {
+               "text":"cupertino",
+               "id": "32"
+          },
+          {
+               "text":"gilroy",
+               "id": "33"
+          },
+          {
+               "text":"hollister",
+               "id": "158"
+          },
+          {
+               "text":"los gatos",
+               "id": "34"
+          },
+          {
+               "text":"milpitas",
+               "id": "109"
+          },
+          {
+               "text":"morgan hill",
+               "id": "119"
+          },
+          {
+               "text":"mountain view",
+               "id": "35"
+          },
+          {
+               "text":"san jose downtown",
+               "id": "36"
+          },
+          {
+               "text":"san jose east",
+               "id": "37"
+          },
+          {
+               "text":"san jose north",
+               "id": "38"
+          },
+          {
+               "text":"san jose south",
+               "id": "39"
+          },
+          {
+               "text":"san jose west",
+               "id": "40"
+          },
+          {
+               "text":"santa clara",
+               "id": "41"
+          },
+          {
+               "text":"saratoga",
+               "id": "43"
+          },
+          {
+               "text":"sunnyvale",
+               "id": "44"
+          },
+          {
+               "text":"willow glen / cambrian",
+               "id": "45"
+          },
+          {
+               "text":"bypass this step",
+               "id": "0"
+          }
+          ]
      },
      {
           "id": "3",
-          "text":"East Bay Area"
+          "text":"East Bay Area",
+          "hoods": [
+          {
+               "text":"alameda",
+               "id": "46"
+          },
+          {
+               "text":"albany / el cerrito",
+               "id": "47"
+          },
+          {
+               "text":"berkeley",
+               "id": "48"
+          },
+          {
+               "text":"berkeley north / hills",
+               "id": "49"
+          },
+          {
+               "text":"brentwood / oakley",
+               "id": "142"
+          },
+          {
+               "text":"concord / pleasant hill / martinez",
+               "id": "51"
+          },
+          {
+               "text":"danville / san ramon",
+               "id": "52"
+          },
+          {
+               "text":"dublin / pleasanton / livermore",
+               "id": "53"
+          },
+          {
+               "text":"emeryville",
+               "id": "112"
+          },
+          {
+               "text":"fairfield / vacaville",
+               "id": "154"
+          },
+          {
+               "text":"fremont / union city / newark",
+               "id": "54"
+          },
+          {
+               "text":"hayward / castro valley",
+               "id": "55"
+          },
+          {
+               "text":"hercules, pinole, san pablo, el sob",
+               "id": "56"
+          },
+          {
+               "text":"lafayette / orinda / moraga",
+               "id": "57"
+          },
+          {
+               "text":"oakland downtown",
+               "id": "58"
+          },
+          {
+               "text":"oakland east",
+               "id": "59"
+          },
+          {
+               "text":"oakland hills / mills",
+               "id": "60"
+          },
+          {
+               "text":"oakland lake merritt / grand",
+               "id": "61"
+          },
+          {
+               "text":"oakland north / temescal",
+               "id": "62"
+          },
+          {
+               "text":"oakland piedmont / montclair",
+               "id": "63"
+          },
+          {
+               "text":"oakland rockridge / claremont",
+               "id": "66"
+          },
+          {
+               "text":"oakland west",
+               "id": "64"
+          },
+          {
+               "text":"pittsburg / antioch",
+               "id": "113"
+          },
+          {
+               "text":"richmond / point / annex",
+               "id": "65"
+          },
+          {
+               "text":"san leandro",
+               "id": "67"
+          },
+          {
+               "text":"vallejo / benicia",
+               "id": "68"
+          },
+          {
+               "text":"walnut creek",
+               "id": "69"
+          },
+          {
+               "text":"bypass this step",
+               "id": "0"
+          }
+          ]
      },
      {
           "id": "4",
-          "text":"Peninsula"
+          "text":"Peninsula",
+          "hoods": [
+          {
+               "text":"atherton",
+               "id": "70"
+          },
+          {
+               "text":"belmont",
+               "id": "71"
+          },
+          {
+               "text":"brisbane",
+               "id": "73"
+          },
+          {
+               "text":"burlingame",
+               "id": "74"
+          },
+          {
+               "text":"coastside/pescadero",
+               "id": "115"
+          },
+          {
+               "text":"daly city",
+               "id": "75"
+          },
+          {
+               "text":"east palo alto",
+               "id": "76"
+          },
+          {
+               "text":"foster city",
+               "id": "77"
+          },
+          {
+               "text":"half moon bay",
+               "id": "161"
+          },
+          {
+               "text":"los altos",
+               "id": "78"
+          },
+          {
+               "text":"menlo park",
+               "id": "79"
+          },
+          {
+               "text":"millbrae",
+               "id": "80"
+          },
+          {
+               "text":"mountain view",
+               "id": "81"
+          },
+          {
+               "text":"pacifica",
+               "id": "82"
+          },
+          {
+               "text":"palo alto",
+               "id": "83"
+          },
+          {
+               "text":"portola valley",
+               "id": "163"
+          },
+          {
+               "text":"redwood city",
+               "id": "84"
+          },
+          {
+               "text":"redwood shores",
+               "id": "85"
+          },
+          {
+               "text":"san bruno",
+               "id": "86"
+          },
+          {
+               "text":"san carlos",
+               "id": "87"
+          },
+          {
+               "text":"san mateo",
+               "id": "88"
+          },
+          {
+               "text":"south san francisco",
+               "id": "89"
+          },
+          {
+               "text":"woodside",
+               "id": "162"
+          },
+          {
+               "text":"bypass this step",
+               "id": "0"
+          }
+          ]
      },
      {
           "id": "5",
-          "text":"North Bay / Marin"
+          "text":"North Bay / Marin",
+          "hoods": [
+          {
+               "text":"corte madera",
+               "id": "91"
+          },
+          {
+               "text":"fairfax",
+               "id": "92"
+          },
+          {
+               "text":"greenbrae",
+               "id": "93"
+          },
+          {
+               "text":"healdsburg / windsor",
+               "id": "155"
+          },
+          {
+               "text":"kentfield / ross",
+               "id": "94"
+          },
+          {
+               "text":"lake county",
+               "id": "152"
+          },
+          {
+               "text":"larkspur",
+               "id": "95"
+          },
+          {
+               "text":"mendocino county",
+               "id": "153"
+          },
+          {
+               "text":"mill valley",
+               "id": "96"
+          },
+          {
+               "text":"napa county",
+               "id": "97"
+          },
+          {
+               "text":"novato",
+               "id": "98"
+          },
+          {
+               "text":"petaluma",
+               "id": "99"
+          },
+          {
+               "text":"rohnert pk / cotati",
+               "id": "117"
+          },
+          {
+               "text":"russian river",
+               "id": "143"
+          },
+          {
+               "text":"san anselmo",
+               "id": "101"
+          },
+          {
+               "text":"san rafael",
+               "id": "102"
+          },
+          {
+               "text":"santa rosa",
+               "id": "103"
+          },
+          {
+               "text":"sausalito",
+               "id": "104"
+          },
+          {
+               "text":"sebastopol",
+               "id": "105"
+          },
+          {
+               "text":"sonoma",
+               "id": "106"
+          },
+          {
+               "text":"tiburon / belvedere",
+               "id": "108"
+          },
+          {
+               "text":"west marin",
+               "id": "107"
+          },
+          {
+               "text":"bypass this step",
+               "id": "0"
+          }
+          ]
      },
      {
           "id": "6",
-          "text":"Santa Cruz Co"
+          "text":"Santa Cruz Co",
+          "hoods": [
+          {
+               "text":"aptos",
+               "id": "144"
+          },
+          {
+               "text":"boulder creek",
+               "id": "148"
+          },
+          {
+               "text":"capitola",
+               "id": "145"
+          },
+          {
+               "text":"santa cruz",
+               "id": "42"
+          },
+          {
+               "text":"scotts valley",
+               "id": "146"
+          },
+          {
+               "text":"soquel",
+               "id": "151"
+          },
+          {
+               "text":"watsonville",
+               "id": "147"
+          },
+          {
+               "text":"bypass this step",
+               "id": "0"
+          }
+          ]
      }
 
 ],
