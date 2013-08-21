@@ -77,7 +77,7 @@ def new_cl_buyer_message(request):
 		buyer_name = request.POST.get('from', '').partition("\"")[2].partition("\"")[0]
 		buyer_email = request.POST.get('from', '').partition("<")[2].partition(">")[0]
 		msg_parts = request.POST.get('body-plain', '').split('------------------------------------------------------------------------')
-		msg_body = msg_parts[0]
+		msg_body = request.POST.get('stripped-text', '')
 		listing_view_link = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', msg_parts[1])[0]
 		message_dict = {'listing_view_link': listing_view_link,
 										'buyer_name': buyer_name,
@@ -85,14 +85,15 @@ def new_cl_buyer_message(request):
 		try:
 			listing = user.listing_set.get(CL_view=listing_view_link)
 			message = Message(listing=listing, content=msg_body)
+			message.save()
 			message_dict['message_id'] = message.id
 			process_new_cl_message_task.delay(**message_dict)
 		except ObjectDoesNotExist:
 			listings_no_links = map(lambda l: l.id, user.listing_set.filter(CL_view=None))
 			message = Message(content=msg_body)
+			message.save()
 			message_dict['message_id'] = message.id
 			(lookup_view_links_task.map(listings_no_links) | process_new_cl_message_task(**message_dict))()
-		message.save()
 		return HttpResponse('OK')
 	else:
 		return HttpResponse('Unauthorized')

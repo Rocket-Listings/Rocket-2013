@@ -112,7 +112,7 @@ def process_new_cl_message_task(*args, **kwargs):
 	try:
 		buyer = Buyer.objects.get(listing=listing, name=kwargs['buyer_name'])
 	except ObjectDoesNotExist:
-		buyer = Buyer(listing=listing, name=buyer_name, email=kwargs['buyer_email'])
+		buyer = Buyer(listing=listing, name=kwargs['buyer_name'], email=kwargs['buyer_email'])
 		buyer.save()
 
 	message = Message.objects.get(id=kwargs['message_id'])
