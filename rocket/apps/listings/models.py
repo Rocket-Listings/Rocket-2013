@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.db.models import Max
 from django.db.models.signals import post_save
-from django.forms.util import ValidationError
+# from django.forms.util import ValidationError
 
 # Managers!
 
@@ -74,10 +74,6 @@ class Listing(models.Model):
 
 	def get_absolute_url(self):
 		return reverse('detail', args=[self.id])
-
-	def get_view_count(self):
-		from users.models import ViewCount
-		return ViewCount.objects.get_or_create(url=self.get_absolute_url())[0].count
 
 # Listing Specification
 class ListingSpecKey(models.Model):

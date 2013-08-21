@@ -32,6 +32,7 @@ MANAGERS = ADMINS = (
     ('Teddy Knox', 'teddy@rocketlistings.com'),
     ('Brian Sirkia', 'brian@rocketlistings.com'),
     ('Nat Kelner', 'nat@rocketlistings.com'),
+    ('Dana Silver', 'dsilver1221@gmail.com'),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases

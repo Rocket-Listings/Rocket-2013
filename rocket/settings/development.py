@@ -85,16 +85,16 @@ DEBUG_TOOLBAR_CONFIG = { 'INTERCEPT_REDIRECTS': False }
 # number to 1, since 3 workers each maintaining one open connection = 3
 # connections total.
 #
-# See: http://docs.celeryproject.org/en/latest/configuration.html#broker-pool-limit
-BROKER_POOL_LIMIT = 3
+# # See: http://docs.celeryproject.org/en/latest/configuration.html#broker-pool-limit
+# BROKER_POOL_LIMIT = 3
 
-# See: http://docs.celeryproject.org/en/latest/configuration.html#broker-connection-max-retries
-BROKER_CONNECTION_MAX_RETRIES = 0
+# # See: http://docs.celeryproject.org/en/latest/configuration.html#broker-connection-max-retries
+# BROKER_CONNECTION_MAX_RETRIES = 0
 
-# See: http://docs.celeryproject.org/en/latest/configuration.html#broker-url
-# BROKER_URL = environ.get('RABBITMQ_URL') or environ.get('CLOUDAMQP_URL')
+# # See: http://docs.celeryproject.org/en/latest/configuration.html#broker-url
+# # BROKER_URL = environ.get('RABBITMQ_URL') or environ.get('CLOUDAMQP_URL')
 
-# See: http://docs.celeryproject.org/en/latest/configuration.html#celery-result-backend
-CELERY_RESULT_BACKEND = 'amqp'
+# # See: http://docs.celeryproject.org/en/latest/configuration.html#celery-result-backend
+# CELERY_RESULT_BACKEND = 'amqp'
 
-AUTOPOST_DEBUG = False
+AUTOPOST_DEBUG = True

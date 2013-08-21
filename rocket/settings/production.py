@@ -60,11 +60,6 @@ INSTALLED_APPS += (
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 STATICFILES_STORAGE = 'rocket.settings.storage.NonPackagingS3PipelineStorage'
 
-# STATIC_URL = S3_URL + 'assets/'
-# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
-# STATICFILES_STORAGE = 'rocket.settings.storage.ProductionStaticCachedS3BotoStorage'
-# STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = [
   '.herokuapp.com',
