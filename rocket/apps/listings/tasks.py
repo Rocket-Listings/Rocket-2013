@@ -38,6 +38,16 @@ def cl_anon_autopost_task(data):
   br.form['id'] = [data["cat"]]
   br.submit()
 
+  if data["sub_market"]:
+    br.select_form(nr=0)
+    br.set_value([data["sub_market"]], type="radio")
+    br.submit()
+    
+  if data["hood"]:
+    br.select_form(nr=0)
+    br.set_value([data["hood"]], type="radio")
+    br.submit()
+
   br.select_form(nr=0)
   #title
   br.form[br._pairs()[0][0]] = data["title"]
@@ -51,8 +61,6 @@ def cl_anon_autopost_task(data):
   br.form['FromEMail'] = data["from"]
   br.form['ConfirmEMail'] = data["from"]
   r = br.submit()
-
-  #figure out no photos case
   
   if data["photos"]:
     br.select_form(nr=0)

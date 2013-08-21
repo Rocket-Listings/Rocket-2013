@@ -122,6 +122,8 @@ def update(request, listing_id=None, create=False): # not directly addressed by 
 		autopost_cxt = {'type': cl_type,
 										'cat': cl_cat,
 										'market': listing.market,
+										'sub_market': listing.sub_market,
+										'hood': listing.hood,
 										'title': listing.title,
 										'price': str(listing.price),
 										'location': listing.location,
