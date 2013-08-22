@@ -38,6 +38,8 @@ def process_autopost_data(listing_id, update=False):
   data = {'type': cl_type,
           'cat': cl_cat,
           'market': l.market,
+          'sub_market': l.sub_market,
+          'hood': l.hood,
           'title': l.title,
           'price': str(l.price),
           'location': l.location,
