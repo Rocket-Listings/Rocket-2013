@@ -10,13 +10,13 @@
     <div class="preview-thumbnails row">
       {{#photos}}
       <div class="col-sm-2">
-        <img src="https://s3.amazonaws.com/static.rocketlistings.com/{{ key }}" data-id="{{ id }}" class="img-responsive">
+        <img src="http://static.rocketlistings.com/{{ key }}" data-id="{{ id }}" class="img-responsive">
       </div>
       {{/photos}}
     </div>
     <div class="preview-stage hidden-sm">
       {{#first_photo}}
-      <img src="https://s3.amazonaws.com/static.rocketlistings.com/{{ first_photo.key }}" class="img-responsive"/>
+      <img src="http://static.rocketlistings.com/{{ first_photo.key }}" class="img-responsive"/>
       {{/first_photo}}
     </div>
   </div>

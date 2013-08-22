@@ -22,11 +22,12 @@ class ListingForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super(ListingForm, self).clean()
-        if Listing.objects.filter(user=self.user, title=cleaned_data['title']).exists():
+        title_errors = self._errors.get('title', None)
+        if not title_errors and Listing.objects.filter(user=self.user, title=cleaned_data['title']).exists():
             self._errors['title'] = self.error_class(["You already have a listing named %s." % cleaned_data['title']])
         return cleaned_data
 
-SpecFormSet = inlineformset_factory(Listing, Spec, extra=0, can_order=True, can_delete=True, exclude=('listing'))
+SpecFormSet = inlineformset_factory(Listing, Spec, extra=0, can_order=False, can_delete=True, fields=('name', 'value'))
 
 # class SpecForm(forms.Form):
 #     def __init__(self, *args, **kwargs):
@@ -41,7 +42,7 @@ SpecFormSet = inlineformset_factory(Listing, Spec, extra=0, can_order=True, can_
     #         print name, value
     #     return self.cleaned_data
 
-ListingPhotoFormSet = inlineformset_factory(Listing, ListingPhoto, extra=0, can_order=True, can_delete=True, exclude=('order', 'listing'))
+ListingPhotoFormSet = inlineformset_factory(Listing, ListingPhoto, extra=0, can_order=True, can_delete=True, exclude=('order', 'listing', 'id'))
 
 class MessageForm(forms.ModelForm):
     class Meta:
