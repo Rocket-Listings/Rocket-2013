@@ -28,6 +28,7 @@ from mail.tasks import send_message_task
 from users.models import UserProfile, UserComment 
 from django.db.models import Avg
 from listings.tasks import cl_anon_autopost_task, cl_anon_update_task, cl_delete_task
+from django.db import connection
 
 @first_visit
 @login_required
@@ -80,79 +81,58 @@ def create(request, pane='edit'):
 @login_required
 @require_POST
 def update(request, listing_id=None, create=False): # not directly addressed by a route, allows DRY listing saving
-    if listing_id:
-        listing = get_object_or_404(Listing, id=listing_id)
-        if request.user != listing.user:
-            raise Http404
-    else:
-        listing = Listing()
+	if listing_id:
+		listing = get_object_or_404(Listing, id=listing_id)
+		if request.user != listing.user:
+			raise Http404
+	else:
+		listing = Listing()
 
-    listing_form = ListingForm(request.POST, instance=listing, user=request.user)
-    specs = listing.listingspecvalue_set.select_related()
-    spec_form = SpecForm(request.POST, initial=specs)
-    photo_formset = ListingPhotoFormSet(request.POST, instance=listing, prefix="listingphoto_set")
+	listing_form = ListingForm(request.POST, instance=listing, user=request.user)
+	specs = listing.listingspecvalue_set.select_related()
+	spec_form = SpecForm(request.POST, initial=specs)
+	photo_formset = ListingPhotoFormSet(request.POST, instance=listing, prefix="listingphoto_set")
 
-    if listing_form.is_valid() and spec_form.is_valid() and photo_formset.is_valid():
-        listing = listing_form.save(commit=False)
-        listing.user = request.user
-        listing.save()  
-        # update search index
-        haystack.connections['default'].get_unified_index().get_index(Listing).update_object(listing)
+	if listing_form.is_valid() and spec_form.is_valid() and photo_formset.is_valid():
+		listing = listing_form.save(commit=False)
+		listing.user = request.user
+		listing.save()	
+		# update search index
+		haystack.connections['default'].get_unified_index().get_index(Listing).update_object(listing)
 
-        for name, value in spec_form.cleaned_data.items():
-            if value:
-                spec_id = int(name.replace('spec-',''))
-                ListingSpecValue.objects.create(value=value, key_id=spec_id, listing_id=listing.id)
+		for name, value in spec_form.cleaned_data.items():
+			if value:
+				spec_id = int(name.replace('spec-',''))
+				ListingSpecValue.objects.create(value=value, key_id=spec_id, listing_id=listing.id)
 
-        # for form in photo_formset.marked_for_delete:
-            # form.instance.delete()
+		# for form in photo_formset.marked_for_delete:
+			# form.instance.delete()
 
-        photo_formset.save(commit=False)
-        for form in photo_formset.ordered_forms:
-            form.instance.order = form.cleaned_data['ORDER']
-            form.instance.save()
+		photo_formset.save(commit=False)
+		for form in photo_formset.ordered_forms:
+			form.instance.order = form.cleaned_data['ORDER']
+			form.instance.save()
+		if create:
+			request.user.get_profile().subtract_credit()
+			if not settings.AUTOPOST_DEBUG:			
+				cl_anon_autopost_task.delay(listing.id)
+		else: # Update
+			if not settings.AUTOPOST_DEBUG:
+				cl_anon_update_task.delay(listing.id)
 
-        if listing.listing_type == "O":
-            cl_type = "fso"
-            cl_cat = str(listing.category.cl_owner_id)
-        else: # Dealer
-            cl_type = "fsd"
-            cl_cat = str(listing.category.cl_dealer_id)
-
-        autopost_cxt = {
-            'type': cl_type,
-            'cat': cl_cat,
-            'market': listing.market,
-            'title': listing.title,
-            'price': str(listing.price),
-            'location': listing.location,
-            'description': listing.description,
-            'from': listing.user.username + "@" + settings.MAILGUN_SERVER_NAME,
-            'photos': map(lambda p: settings.S3_URL + p.key, listing.listingphoto_set.all()),
-            'pk': listing.pk
-        }
-
-        if create:
-            request.user.get_profile().subtract_credit()
-            if not settings.AUTOPOST_DEBUG:
-                cl_anon_autopost_task.delay(autopost_cxt)
-        else: # Update
-            if not settings.AUTOPOST_DEBUG:
-                autopost_cxt['update_url'] = listing.CL_link
-                cl_anon_update_task.delay(autopost_cxt)
-        return redirect(listing)
-    else:
-        print listing_form.errors
-        print photo_formset.errors
-        # preserving validation errors
-        cxt = {
-            'form': listing_form,
-            'spec_form': spec_form,
-            'pane': 'edit',
-            'photo_formset': photo_formset
-        }
-        cxt.update(utils.get_listing_vars())
-        return TemplateResponse(request, 'listings/detail.html', cxt)
+		return redirect(listing)
+	else:
+		print listing_form.errors
+		print photo_formset.errors
+		# preserving validation errors
+		cxt = {
+			'form': listing_form,
+			'spec_form': spec_form,
+			'pane': 'edit',
+			'photo_formset': photo_formset
+		}
+		cxt.update(utils.get_listing_vars())
+		return TemplateResponse(request, 'listings/detail.html', cxt)
 
 @view_count
 def detail(request, listing_id, pane='preview'):
@@ -205,17 +185,15 @@ def embed(request, listing_id):
     return TemplateResponse(request, 'listings/cl_embed.html', {'listing':listing, 'photos':photos})
 
 def delete(request, listing_id):
-    listing = get_object_or_404(Listing, id=listing_id)
-    if request.user == listing.user:
-        # remove listing from haystack index
-        haystack.connections['default'].get_unified_index().get_index(Listing).remove_object(listing)
-        cl_cxt = {'update_url': listing.CL_link, 'pk': listing.pk}
-        if not settings.AUTOPOST_DEBUG:
-            cl_delete_task.delay(cl_cxt)
-        listing.delete()
-        return HttpResponse(200)
-    else:
-        return HttpResponse(403)
+	listing = get_object_or_404(Listing, id=listing_id)
+	if request.user == listing.user:
+		# remove listing from haystack index
+		haystack.connections['default'].get_unified_index().get_index(Listing).remove_object(listing)
+		if not settings.AUTOPOST_DEBUG:
+			cl_delete_task.delay(listing.id)
+		return HttpResponse(200)
+	else:
+		return HttpResponse(403)
 
 @require_GET
 def search(request):

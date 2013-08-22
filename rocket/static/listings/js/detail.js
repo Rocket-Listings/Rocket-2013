@@ -1,7 +1,65 @@
 $(function() {
 
-  $(".form-select").select2();
-  $(".form-select").show();
+  //Market Select Stuff
+  //Initialization and edit state
+  var dat = $.parseJSON($("#market-data").html());
+
+  $(".form-select").select2({
+    placeholder: "Select a Market",
+    data: dat.markets 
+  });
+  $(".form-select").show(); 
+
+  if ($(".form-select-sub").attr('value') != ""){
+    $(".form-select-sub").select2({
+        placeholder: "Select a Sub-Market",
+        data: dat[$(".form-select").select2("val")]
+      });
+    $(".form-select-sub").show();
+
+  };
+
+  if ($(".form-select-hood").attr('value') != ""){
+    console.log("in");
+    $(".form-select-hood").select2({
+        placeholder: "Select a Sub-Market",
+        data: dat[$(".form-select").select2("val")][$(".form-select-sub").select2("val")-1].hoods
+      });
+    $(".form-select-hood").show();
+
+  };
+
+
+  //on change 
+  $(".form-select").on("change", function(e){
+      $(".form-select-sub").select2("val", "")
+      $(".form-select-hood").select2("val", "")
+    if (dat[e.val]) {
+      $(".form-select-sub").select2({
+        placeholder: "Select a Sub-Market",
+        data: dat[e.val]
+      });
+      $(".form-select-sub").show();
+    }
+    else{
+      $(".form-select-sub").hide();
+      $(".form-select-hood").hide()
+    }
+  });
+
+  $(".form-select-sub").on("change", function(e){
+    if ($(".form-select").select2("val") === "sfo" || 
+       ($(".form-select").select2("val") === "nyc" && e.val === "1")){
+          $(".form-select-hood").select2({
+            placeholder: "Select a Hood",
+            data: dat[$(".form-select").select2("val")][e.val-1].hoods
+          });
+          $(".form-select-hood").show()
+    }else{
+      $(".form-select-hood").hide()
+    }
+    });
+
 
   
   // Category Selection Stuff

@@ -19,8 +19,12 @@ class ListingForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super(ListingForm, self).clean()
-        if Listing.objects.filter(user=self.user, title=cleaned_data['title']).exists():
-            self._errors['title'] = self.error_class(["You already have a listing named %s." % cleaned_data['title']])
+        if self.instance.id:
+            if Listing.objects.filter(user=self.user, title=cleaned_data['title']).exclude(id=self.instance.id).exists():
+                self._errors['title'] = self.error_class(["You already have a listing named %s." % cleaned_data['title']])
+        else: # listing is being created
+            if Listing.objects.filter(user=self.user, title=cleaned_data['title']).exists():
+                self._errors['title'] = self.error_class(["You already have a listing named %s." % cleaned_data['title']])
         return cleaned_data
 
 class SpecForm(forms.Form):
