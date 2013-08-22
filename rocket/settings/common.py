@@ -32,6 +32,7 @@ MANAGERS = ADMINS = (
     ('Teddy Knox', 'teddy@rocketlistings.com'),
     ('Brian Sirkia', 'brian@rocketlistings.com'),
     ('Nat Kelner', 'nat@rocketlistings.com'),
+    ('Dana Silver', 'dsilver1221@gmail.com'),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
@@ -315,7 +316,7 @@ AUTH_PROFILE_MODULE = 'users.UserProfile'
 
 ACCOUNT_ACTIVATION_DAYS = 7
 
-DEFAULT_FROM_EMAIL = 'teddy@rocketlistings.com'
+DEFAULT_FROM_EMAIL = 'apollo@rocketlistings.com'
 
 LOGIN_URL = '/users/login/' # references users/urls.py name
 

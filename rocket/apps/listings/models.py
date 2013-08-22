@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.db.models import Max
 from django.db.models.signals import post_save
-from django.forms.util import ValidationError
+# from django.forms.util import ValidationError
 
 # Managers!
 
@@ -78,10 +78,6 @@ class Listing(models.Model):
 	def get_absolute_url(self):
 		return reverse('detail', args=[self.id])
 
-	def get_view_count(self):
-		from users.models import ViewCount
-		return ViewCount.objects.get_or_create(url=self.get_absolute_url())[0].count
-
 # Listing Specification
 class ListingSpecKey(models.Model):
 	name = models.CharField(max_length = 100)
@@ -149,9 +145,9 @@ class Offer(models.Model):
 
 # Listing Message
 class Message(models.Model):
-	listing = models.ForeignKey(Listing, null=False, blank=False)
+	listing = models.ForeignKey(Listing, null=True, blank=True)
 	isSeller = models.NullBooleanField(blank=False)
-	buyer = models.ForeignKey(Buyer, null=False, blank=False)
+	buyer = models.ForeignKey(Buyer, null=True, blank=True)
 	content = models.TextField(null=False, blank=False)
 	date = models.DateTimeField('date received', auto_now_add=True, default=datetime.now)
 	seen = models.NullBooleanField(default=False)

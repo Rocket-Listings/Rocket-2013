@@ -1,16 +1,15 @@
 #We put this file in the users folder but we could put it anywhere we want there
 
-from models import ViewCount
+from users.models import ViewCount
 
-def get_view_count(obj):
-	if isinstance(obj, basestring):
-		url = obj
-	else:
-		url = obj.get_absolute_url()
+def get_view_count(url):
+    """ 
+    Accepts as its parameter a url string or a model.
+    """
+    if not isinstance(url, basestring):
+        url = url.get_absolute_url() # assume it's a model... not so good
 
-	view_count = ViewCount.objects.get(url=url)
-	if view_count:
-		return view_count.count
-	else:
-		return 0
-
+    try:
+        return ViewCount.objects.get(url=url).count
+    except ViewCount.DoesNotExist:
+        return 0

@@ -1,57 +1,67 @@
 {% load static from staticfiles %}
-<div class = "row how-row">
-		<div class = "col-lg-5 col-offset-1">
-			<h4 class="text-center">More control of photos</h4>
-				<p>Photos are a huge part of your listing, so we want to make sure you have full control. Upload the highest-res photos you can and we'll display them in all their glory. If there's any editing you need to do, you don't need to do it in image editing software.</p>
+
+<div class="row">
+	<div class="col-11">
+		<div id="listing"></div>
+		<div class="row how-row">
+			<h3>Better Listing Creation</h3>
+			<div class="col-sm-3 col-listing">
+				<h4 class="text-center listing-form">Everything on one page, including the preview</h4>
+				<p>A lot of page loads can really slow down the process, so we put everything in one place. You can even toggle to preview mode in the same window so you can see what your listing will look like as you make changes.</p>
+
+				<h4 class="text-center smart-pricing">Smart price suggestions</h4>
+				<p>Knowing how much to sell your item for can be the difference between getting it sold today and having it sitting in your garage forever. We pull data from sites like Craigslist, Ebay, and Amazon to find the going rate for your item.  </p>
+
+				<h4 class="text-center specs">Category-based specifications</h4>
+				<p>We give you prefilled, optional specs based on the category so you know what info buyers need to know about your item.</p>
+
+				<h4 class="text-center photos">More control of photos</h4>
+				<p>Photos are a huge part of your listing, so we want to make sure you have full control. Easily upload multiple, high-res photos, so you if you need to make edits you don't need image editing software .</p>
+
+
+				<h4 class="text-center one-click">Automagically post to Craigslist</h4>
+				<p>Get that awesome listing out there! It's just one click to post to Craigslist and share on Twitter and Facebook.</p>
+			</div>
+			<div class="col-9 col-listing-img">
+				<img src="{% static 'static_pages/img/listing-creation.png' %}"  class="img-responsive">
+			</div>
 		</div>
-		<div class = "col-lg-5">
-			<img src="{% static 'static_pages/img/placeholder.svg' %}"  width = "400px">
+		<div id="dashboard"></div>
+		<div class="row dashboard-img-row">
+			<h3>Better Listing Management</h3>
+			<div class="col-12">
+				<img src="{% static 'static_pages/img/dashboard.png' %}"  class="img-responsive">
+			</div>
 		</div>
+		<div class="row dashboard-row">
+			<div class="col-7">
+				<h4 class="text-center">Keep track of everything in the dashboard</h4>
+				<p>Keeping track of all the details and emails for one listing is hard, and gets even worse as you make mulitiple listings. We put it all in one place so you can keep track of every listing. You can edit, re-post, delete, and mark an item as sold as well as sort your listings by date, category, title, and responses.</p>
+			</div>
+			<div class="col-4 col-offset-1">
+				<h4 class="text-center">Respond to emails</h4>
+				<p>No more sifting through all your emails trying to find the ones related to each of your listing and no more headaches trying to remember who emailed what: it's all here.</p>
+			</div>
+		</div>
+
+		<a id="profile"></a>
+		<div class="row profile-row">
+			<h3>All New Seller Profiles</h3>
+			<div class="col-sm-8">
+				<img src="{% static 'static_pages/img/profile-card.png' %}"  class="img-responsive">
+			</div>
+			<div class="col-sm-4">
+				<h4 class="text-center">Seller profiles for more trust</h4>
+				<p>Everyone feels more comfortable when they know who's on the other end, especially when you're meeting up to show-row and sell an item. We made optional seller profiles so that you can let buyers know you're a real person and worth buying from. </p>
+			</div>
+		</div>
+		<a class="btn btn-primary btn-small btn-signup" href="{% url "registration_register" %}" data-toggle="modal">Sign Up</a>
 	</div>
-	<div class = "row how-row">
-		<div class = "col-lg-5 col-push-5 col-offset-1">
-			<h4 class="text-center">Short and smart listing creation</h4>
-			<p>A lot of page loads can really slow down the process, so we put everything in one place. Pick a category, you can select your location or we can auto-include it, upload photos, and fill out the form (we give you important specs to include). You can even toggle to preview mode in the same window so you can what your listing will look like as you make changes.</p>
-		</div>
-		<div class = "col-lg-5 col-pull-5">
-			<img src="{% static 'static_pages/img/placeholder.svg' %}"  width = "400px">
-		</div>
+	<div class="col-1 nav-how">
+		<div class="btn-group btn-group-vertical" data-spy="affix" data-offset-top="540"> 
+            <a class="btn" href="#listing">Better Listing Creation</a>
+            <a class="btn" href="#dashboard">Better Listing Management</a>
+            <a class="btn" href="#profile">All New Profiles</a>
+	    </div>
 	</div>
-	<div class = "row how-row">
-		<div class = "col-lg-5 col-offset-1">
-			<h4 class="text-center">One click to post to Craigslist and share</h4>
-				<p>Get that awesome listing out there! We can automagically post your listings to Craigslist, Facebook and Twitter. The listing looks like a regular listings on Craigslist and we made sure the preview looks great on Facebook. We're working on adding more sites like Ebay, Etsy, and Amazon.</p>
-		</div>
-		<div class = "col-lg-5">
-			<img src="{% static 'static_pages/img/placeholder.svg' %}"  width = "400px">
-		</div>
-	</div>
-	<div class = "row how-row">
-		<div class = "col-lg-5 col-push-5 col-offset-1">
-			<h4 class="text-center">The Dashboard: where the magic happens</h4>
-			<p>Keeping track of all the details and emails for one listing is hard, and gets exponentially more difficult if you have more than one. We put it all in one place so you can keep track of each and every listing easily and know what's going on. You can edit, re-post, delete, and mark an item as sold as well as sort your listings by date, category, title, and responses.</p>
-		</div>
-		<div class = "col-lg-5 col-pull-5">
-			<img src="{% static 'static_pages/img/placeholder.svg' %}"  width = "400px">
-		</div>
-	</div>
-	<div class = "row how-row">
-		<div class = "col-lg-5 col-offset-1">
-			<h4 class="text-center">Respond to emails</h4>
-				<p>No more sifting through all your emails trying to find the ones related to each of your listing and no more headaches trying to remember who emailed what: it's all here. You can view all your messages related to each listing, keep track of how-row much each buyer offered, and respond right in the dashboard. When it's sold, you can even email everyone else at once to let them know.</p>
-		</div>
-		<div class = "col-lg-5">
-			<img src="{% static 'static_pages/img/placeholder.svg' %}"  width = "400px">
-		</div>
-	</div>
-	<div class = "row how-row">
-		<div class = "col-lg-5 col-push-5 col-offset-1">
-			<h4 class="text-center">Seller profiles = Online trust</h4>
-			<p>Everyone feels more comfortable when they know who's on the other end, especially when you're meeting up to show-row and sell an item. We made optional seller profiles so that you can let buyers know you're a real person and worth buying from. </p>
-		</div>
-		<div class = "col-lg-5 col-pull-5">
-			<img src="{% static 'static_pages/img/placeholder.svg' %}"  width = "400px">
-		</div>
-	</div>
-	<a class="btn btn-primary btn-signup" href="{% url "registration_register" %}" data-toggle="modal">Sign Up
-	</a>
+</div>			
