@@ -91,7 +91,10 @@ def lookup_view_links_task(*listing_ids):
 		listing = Listing.objects.get(id=id)
 		if listing.CL_link:
 			r = requests.get(listing.CL_link)
-			partition = BeautifulSoup(r.text).find("p").text.partition(view_page_text)
+			try:
+				partition = BeautifulSoup(r.text).find("p").text.partition(view_page_text)
+			except AttributeError:
+				partition = BeautifulSoup(r.text).find("li").text.partition(view_page_text)
 			if partition[1]:
 				# Houston, we have a link!
 				# Else, listing has not been activated so we do nothing
