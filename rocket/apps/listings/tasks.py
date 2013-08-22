@@ -58,9 +58,12 @@ def cl_anon_autopost_task(listing_id):
   #price
   br.form[br._pairs()[1][0]] = data["price"]
   #specific location
-  br.form[br._pairs()[2][0]] = data["location"]
-  #posting description  
-  br.form[br._pairs()[3][0]] = data["description"]
+  if not data["hood"]:
+    br.form[br._pairs()[2][0]] = data["location"]
+    #posting description  
+    br.form[br._pairs()[3][0]] = data["description"]
+  else:
+    br.form[br._pairs()[2][0]] = data["description"]
   #email
   br.form['FromEMail'] = data["from"]
   br.form['ConfirmEMail'] = data["from"]
@@ -141,11 +144,14 @@ def cl_anon_update_task(listing_id):
   if data["price"]:
     br.form[br._pairs()[1][0]] = data["price"]
 
-  if data["location"]:
-    br.form[br._pairs()[2][0]] = data["location"]
+  if data["hood"]:
+    br.form["Neighborhood"] = [data["hood"]]
 
+  if data["location"] and not data["hood"]:
+    br.form[br._pairs()[2][0]] = data["location"]
+  
   if data["description"]:
-    br.form[br._pairs()[3][0]] = data["description"]
+      br.form[br._pairs()[3][0]] = data["description"]
 
   if data["cat"]:
     br.form["CategoryID"] = [data["cat"]]
