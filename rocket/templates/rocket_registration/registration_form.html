@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Registration{% endblock %}
 {% block content %}
+    <div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-2">
 	<form class="form-horizontal fixed-width-form" action="{% url 'registration_register' %}" method="POST">
 		{% csrf_token %}
 		{% if form.non_field_errors %}
@@ -14,55 +15,56 @@
             </div>
         </div>
         {% endif %}
+        
         <div class="form-group">
-            <div class="col-lg-3 col-lg-offset-2">
+            
                 <h4>Signup</h4>
-            </div>
+            
         </div>
 		<div class="form-group {% if form.username.errors %}has-error{% endif %}">
-			<label for="id_username" class="col-lg-2 control-label">Username</label>
-			<div class="col-lg-3">
+			<label for="id_username" class="control-label">Username</label>
+			
 				<input type="text" name="username" autocomplete="off" class="form-control" id="id_username" value="{% if form.username.value %}{{form.username.value}}{% endif %}">
-			</div>
+			
             <div class="help-block">{% for error in form.username.errors %}{{ error }}&nbsp;{% endfor %}</div>
 		</div>
 		<div class="form-group {% if form.email.errors %}has-error{% endif %}">
-            <label for="id_email" class="col-lg-2 control-label">Email</label>
-            <div class="col-lg-3">
+            <label for="id_email" class="control-label">Email</label>
+            
                 <input type="email" name="email" autocomplete="off" class="form-control" id="id_email" value="{% if form.email.value %}{{form.email.value}}{% endif %}">
-            </div>
+            
             <div class="help-block">{% for error in form.email.errors %}{{ error }}&nbsp;{% endfor %}</div>
         </div>
 		<div class="form-group {% if form.password1.errors %}has-error{% endif %}">
-            <label for="id_password1" class="col-lg-2 control-label">Password</label>
-            <div class="col-lg-3">
+            <label for="id_password1" class="control-label">Password</label>
+            
                 <input type="password" name="password1" autocomplete="off" class="form-control" id="id_password1" value="">
-            </div>
+            
             <div class="help-block">{% for error in form.password1.errors %}{{ error }}&nbsp;{% endfor %}</div>
         </div>
 		<div class="form-group {% if form.password2.errors %}has-error{% endif %}">
-            <label for="id_password2" class="col-lg-2 control-label">Password (again)</label>
-            <div class="col-lg-3">
+            <label for="id_password2" class="control-label">Password (again)</label>
+            
                 <input type="password" name="password2" autocomplete="off" class="form-control" id="id_password2" value="">
-            </div>
+            
             <div class="help-block">{% for error in form.password2.errors %}{{ error }}&nbsp;{% endfor %}</div>
         </div>
         <div class="form-group {% if form.errors.default_seller_type %}has-error{% endif %}">
-            <label for="id_default_seller_type" class="col-lg-2 control-label">Seller Type</label>
-            <div class="btn-group col-lg-3" data-toggle-name="default_seller_type" data-toggle="buttons-radio">
-                <button type="button" value="O" class="btn btn-primary" data-toggle="button">Owner</button>
-                <button type="button" value="D" class="btn btn-primary" data-toggle="button">Dealer</button>
+            <label for="id_default_seller_type" class="control-label">Seller Type</label>
+            <div class="btn-group" data-toggle-name="default_seller_type" data-toggle="buttons-radio">
+                <button type="button" value="O" class="btn btn-primary col-6" data-toggle="button">Owner</button>
+                <button type="button" value="D" class="btn btn-primary col-6" data-toggle="button">Dealer</button>
             </div>
             <div class="help-block">{% for error in form.errors.default_seller_type %}{{ error }}&nbsp;{% endfor %}</div>
         </div>
         <input name="default_seller_type" type="hidden" value="{{ seller_type }}"/>
 		<div class="form-group">
-            <div class="col-lg-3 col-lg-offset-2">
                 <input class="btn btn-primary" type="submit" value="Create Account">
-            </div>
         </div>
+    
 
 	</form>
+</div>
 {% endblock %}
 
 {% block js %}
