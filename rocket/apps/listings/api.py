@@ -39,8 +39,8 @@ class ListingDetail(APIView):
     """
     Retrieve, update or delete a listing instance.
     """
-    def pre_save(self, obj):
-        obj.user = self.request.user
+    # def pre_save(self, obj):
+    #     obj.user = self.request.user
 
     def get_object(self, pk):
         try:
@@ -56,6 +56,14 @@ class ListingDetail(APIView):
     def put(self, request, pk, format=None):
         listing = self.get_object(pk)
         serializer = ListingSerializer(listing, data=request.DATA)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+
+    def patch(self, request, pk, format=None):
+        listing = self.get_object(pk)
+        serializer = ListingSerializer(listing, partial=True, data=request.DATA)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -114,7 +122,7 @@ def dashboard_data(request):
     user = request.user
     ids = map(lambda i: int(request.GET.get(i, '0')), ['listing', 'buyer', 'message'])
 
-    listings = Listing.objects.filter(user=user).order_by('-pub_date').all()
+    listings = Listing.objects.filter(user=user).order_by('-create_date').all()
     buyers = reduce(__add__, map(lambda l: list(l.buyer_set.all()), listings), [])
     messages = reduce(__add__, map(lambda b: list(b.message_set.all()), buyers), [])
     latest_ids = map(lambda set: map(lambda i: i.id, set), [listings, buyers, messages])
@@ -132,8 +140,8 @@ def dashboard_data(request):
         'category': l.category.name, 
         'status': l.status.name,
         'status_lower': l.status.name.lower(),
-        'sort_date': l.pub_date.strftime("%m/%d/%y %I:%M %p"),
-        'natural_date': naturaltime(l.pub_date)}, listings.filter(id__gt=ids[0]))
+        'sort_date': l.create_date.strftime("%m/%d/%y %I:%M %p"),
+        'natural_date': naturaltime(l.create_date)}, listings.filter(id__gt=ids[0]))
     buyers_data = map(lambda b: {
         'listing_id': b.listing.id, 
         'buyer_id': b.id, 

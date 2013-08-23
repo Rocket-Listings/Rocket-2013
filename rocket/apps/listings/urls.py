@@ -24,7 +24,7 @@ urlpatterns += patterns('listings.api',
     url(r'^(?P<listing_id>\d+)/delete/$', 'delete'),
 
     url(r'^api/$', api.ListingList.as_view()),
-    url(r'^api/(?P<pk>[0-9]+)/$', api.ListingDetail.as_view()),
+    url(r'^api/(?P<pk>[0-9]+)$', api.ListingDetail.as_view()),
 )
 
 urlpatterns = format_suffix_patterns(urlpatterns)

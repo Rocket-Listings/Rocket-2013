@@ -29,7 +29,7 @@ from django.template.response import TemplateResponse
 @first_visit
 @login_required
 def dashboard(request):
-    listings = Listing.objects.filter(user=request.user).order_by('-pub_date').all() # later on we can change how many are returned
+    listings = Listing.objects.filter(user=request.user).order_by('-create_date').all() # later on we can change how many are returned
     buyers = reduce(__add__, map(lambda l: list(l.buyer_set.all()), listings), [])
     messages = reduce(__add__, map(lambda b: list(b.message_set.all()), buyers), [])
     latest_ids = map(lambda set: map(lambda i: i.id, set), [listings, buyers, messages])
@@ -182,7 +182,7 @@ def search(request):
 #   user = request.user # if no username parameter is passed, defaults to the currently logged in user.
 #   if username:
 #       user = get_object_or_404(User, username=username)
-#   listings = Listing.objects.filter(user=user).order_by('-pub_date')[:10]
+#   listings = Listing.objects.filter(user=user).order_by('-create_date')[:10]
 #   buyers = Buyer.objects.filter(listing__user=user)
 #   messages = Message.objects.filter(listing__user=user)
 #   return TemplateResponse(request, 'listings/listings_dashboard.html', {'listings': listings, 'buyers': buyers, 'messages':messages})

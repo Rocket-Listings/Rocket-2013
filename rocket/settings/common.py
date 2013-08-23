@@ -217,6 +217,7 @@ LOGGING = {
     }
 }
 
+# APPEND_SLASH = False
 REST_FRAMEWORK = {
     # Use hyperlinked styles by default.
     # Only used if the `serializer_class` attribute is not set on a view.

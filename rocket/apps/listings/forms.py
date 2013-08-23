@@ -14,7 +14,7 @@ class ListingForm(forms.ModelForm):
 
     class Meta:
         model = Listing
-        exclude = ('pub_date', 'CL_link', 'status', 'user')
+        exclude = ('create_date', 'CL_link', 'status', 'user')
         widgets = {
             'category': forms.HiddenInput,
             'listing_type': forms.HiddenInput

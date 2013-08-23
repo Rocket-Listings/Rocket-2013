@@ -1,13 +1,16 @@
 {% load static from staticfiles %}
-<h3 class="listing-title">{{ form.title.value|default:"Create a Listing" }}</h3>
+<h3>
+  <span class="listing-title">{{ listing.title|default:"Create a Listing" }}</span>
+  <small id="loading" class="text-muted" style="display: none;">Saving...</small>
+</h3>
 {# {{ formset.as_p }} #}
 
 {# {% for hidden in formset.hidden_fields %} #}
   {# {{ hidden }} #}
 {# {% endfor %} #}
 
-<div class="listing-form">
-
+<form class="listing-form">
+  <input type="hidden" name="category" id="id_category" value="{{ listing.category_id|default:"" }}"/>
   {# Category Select #}
   <fieldset id="category-fieldset">
     <legend>Category</legend>
@@ -31,7 +34,7 @@
         <div class="row">
           <div class="col-lg-2 col-sm-4 col-3">
           {% for cat in cats.forsale %}
-              <a class="cat {{ cat.group }}" data-id="{{ cat.id }}">{{ cat.name }}</a>
+              <a class="cat" data-id="{{ cat.id }}">{{ cat.name }}</a>
               {# next column #}
               {% if forloop.counter|divisibleby:6 %}</div><div class="col-lg-2 col-sm-4 col-3">{% endif %}
           {% endfor %}
@@ -41,11 +44,14 @@
       <div class="tab-pane cat-pane" id="housing">
         <div class="row">
           <div class="col-lg-2 col-sm-4 col-3">
+          Coming soon!
+          {% comment %}
           {% for cat in cats.housing %}
-              <a class="cat {{ cat.group }}" data-id="{{ cat.id }}">{{ cat.name }}</a>
+              <a class="cat" data-id="{{ cat.id }}">{{ cat.name }}</a>
               {# next column #}
               {% if forloop.counter|divisibleby:3 %}</div><div class="col-lg-3 col-sm-4 col-3">{% endif %}
           {% endfor %}
+          {% endcomment %}
           </div>
         </div>
       </div>
@@ -96,11 +102,12 @@
       {{/specs}}  
     </script>
     {% endverbatim %}
-        {# <input id="id_spec_set-{{index}}-id" name="spec_set-{{index}}-id" type="hidden" /> #}
 
-    {# <div id="spec-formset" class="hide"> #}
-    {# </div> #}
-    {# {{ spec_formset.empty_form }} #}
+    {% for spec in specs %}
+    <input type="hidden" class="spec-data" data-id="{{ spec.id }}" name="{{ spec.name }}" value="{{ spec.value }}" />
+    {% endfor %}
+    </div>
+
     <div id="spec-row" class="row">
       {% comment %}
       {% for form in spec_formset %}
@@ -117,9 +124,7 @@
     {# description #}
     <div class="form-group{# {% if form.description.errors %} has-error {% endif %} #}">
       <label for="id_description">Description</label>
-      <textarea id="id_description" class="description form-control" placeholder="" name="description" rows="5">
-        {{ listing.description|default:"" }}
-      </textarea>
+      <textarea id="id_description" class="description form-control" placeholder="" name="description" rows="5">{{ listing.description|default:"" }}</textarea>
     {# {% for error in form.price.errors %}<span class="help-block">{{ error }}</span>{% endfor %} #}
    </div>
   </fieldset>
@@ -905,6 +910,6 @@
 
   <div class="btn-toolbar pull-right">
     {# <input id="submit-draft" type="submit" class="btn btn-primary" name="listing_action" value="Save as Draft"/> #}
-    <a class="publish-btn btn btn-success">Save to Craigslist<a/>
+    <a class="publish-btn btn btn-success">Publish to Craigslist</a>
   </div>
-</div>
+</form>

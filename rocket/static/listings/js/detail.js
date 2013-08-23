@@ -3,23 +3,22 @@ $(function() {
     el: '#info-fieldset',
     events: {
       // "change input": "changed",
-      "keyup .title":         "changed",      
-      "change .price":        "changed",
-      // "change .location":     "changed",
+      "keyup .title":   "renderPageTitle",
+      "change .title":  "changed",
+      "change .price":  "changed",
     },
     initialize: function(options) {
       this.categoryEditView = new CategoryEditView(options);
       this.locationEditView = new LocationEditView(options);
 
       _.bindAll(this, 'changed');
-      this.listenTo(this.model, 'change:title', this.renderPageTitle);
     },
     changed: function(e) {
       var input = $(e.currentTarget);
-      this.model.save(input.attr('name'), input.val());
+      this.model.save(input.attr('name'), input.val(), {patch: true});
     },
     renderPageTitle: function(e) {
-      var title = this.model.get('title');
+      var title = $(e.currentTarget).val();
       if (title.length > 0) {
         $('.listing-title').text(title);
         $('#preview-btn').removeAttr('disabled');
@@ -37,26 +36,31 @@ $(function() {
     },
     initialize: function(options) {
       _.bindAll(this, 'changed');
-      this.parseToModel();
+      this.render();
+      // this.parseToModel();
     },
     changed: function(e) {
       var elem = $(e.currentTarget);
       var nextCat = elem.data('id');
       var prevCat = this.model.get('category');
-      this.model.set('category', nextCat);
-      this.render(prevCat);
+      this.render(nextCat, prevCat);
+      this.model.save('category', nextCat, { patch: true });
+
     },
-    parseToModel: function() {
-      this.model.set('category', $('#id_category').val());
-      this.render();
-    },
-    render: function(prevCat) {
-      if (prevCat) {
-        this.$('.tab-pane .cat[data-id="{0}"]'.format(prevCat)).removeClass('selected');
+    // parseToModel: function() {
+    //   this.model.set('category', $('#id_category').val());
+    //   this.render();
+    // },
+    render: function(nextCat, prevCat) {
+      if (!nextCat) {
+        var nextCat = this.model.get('category');
       }
-      var nextCat = this.model.get('category');
+      if (prevCat) {
+        $('.tab-pane .cat[data-id="{0}"]'.format(prevCat)).removeClass('selected');
+      }
       var cat = $('.tab-pane .cat[data-id="{0}"]'.format(nextCat));
       cat.addClass('selected');
+      // cat.siblings().removeClass('selected');
       // switch to tab
       $('.nav-tabs a[href="#{0}"]'.format(cat.parent('.tab-pane').attr('id'))).tab('show');
     }
@@ -65,18 +69,21 @@ $(function() {
   var LocationEditView = Backbone.View.extend({
     el: '#marketplace-location-fieldset',
     events: {
-      "change #id_location": "render",
+      "change #id_location": "changed",
       "click #location-btn": "getLocationByBrowser",
     },
     initialize: function() {
       $(".form-select").select2();
       $(".form-select").show();
-      _.bindAll(this, 'mapResize');
+      _.bindAll(this, 'mapResize', 'changed');
       this.geocoder = new google.maps.Geocoder();
       this.render();
       $('.edit-btn').on('shown.bs.tab', this.mapResize);
     },
-
+    changed: function(e) {
+      var input = $(e.currentTarget);
+      this.model.save(input.attr('name'), input.val(), { patch: true });
+    },
     render: function() {
       var val = $('#id_location').val();
       if (val.length > 0) {
@@ -201,7 +208,7 @@ $(function() {
       });
     },
 
-    mapError: function(error) { 
+    mapError: function(error) {
       this.toggleLoading();
       console.log("Maps error");
       console.log(error);
@@ -290,31 +297,27 @@ $(function() {
       "change .description":  "changed"
     },
     initialize: function(options) {
+      this.parseToCollection();
       this.listenTo(this.model, 'change:category', this.switchCategory);
       _.bindAll(this, "changed");
       this.defaults = $.parseJSON(this.$('#initial-specs').html());
-      // this.parseToCollection();
       this.switchCategory(this.model);
     },
     changed: function(e) {
       var input = $(e.currentTarget);
-      this.model.set(input.attr('name'), input.val());
+      this.model.save(input.attr('name'), input.val(), { patch: true });
     },
-    // parseToCollection: function() {
-    //   var form = $('.listing-form:first').serializeObject();
-    //   var total = parseInt(form['listingphoto_set-TOTAL_FORMS']);
-    //   var specList = [];
-    //   for (var i = 0; i < total; i++) {
-    //     var key = 'id_spec_set-{0}-'.format(i);
-    //     specList.push(new Spec({
-    //       name: form[key + 'name'],
-    //       value: form[key + 'value'],
-    //       markedDelete: form[key + 'DELETE'] || false
-    //     }));
-    //   }
-    //   this.collection.set(specList); // {merge: true});
-    //   return this;
-    // },
+    parseToCollection: function() {
+      var specs = $('.spec-data').map(function(index, input) {
+        return new Spec({
+          id: input.data('id'),
+          name: input.attr('name'),
+          value: input.val(),
+        });
+      });
+      this.collection.set(specs.get());
+      return this;
+    },
     switchCategory: function(model) {
       var cat = model.get('category');
       var catName = $('.cat[data-id="{0}"]'.format(cat)).html(); // workaround
@@ -336,7 +339,7 @@ $(function() {
       this.$('#spec-row').html(this.template(context));
     }
   });
-  
+
   var PhotoEditView = Backbone.View.extend({
     el: '#photo-fieldset',
     events: {
@@ -353,7 +356,7 @@ $(function() {
       path: '/photos/',
       access: 'public'
     },
-    initialize: function(options) {  
+    initialize: function(options) {
       filepicker.setKey('ATM8Oz2TyCtiJiHu6pP6Qz');
       filepicker.pickAndStore(this.picker_options, this.store_options, _.bind(this.onSuccess, this), this.onError);
       _.bindAll(this, 'updateOrder');
@@ -404,7 +407,7 @@ $(function() {
       // totalInput.val(total + InkBlobs.length);
       // var initial = parseInt(this.$('#id_listingphoto_set-INITIAL_FORMS').val());
       // prepare view context variables
-      var total = 0, 
+      var total = 0,
           initial = 0;
       var photos = [];
       _.each(InkBlobs, function(blob, index) {
@@ -428,7 +431,7 @@ $(function() {
         e.preventDefault();
       }
       $('.upload-view').toggle();
-      $('.photo-view').toggle();     
+      $('.photo-view').toggle();
     },
     updateOrder: function(e, ui) {
       var that = this;
@@ -493,24 +496,30 @@ $(function() {
   var Listing = Backbone.Model.extend({
     urlRoot: '/listings/api/'
   });
-  var Spec = Backbone.Model.extend({});  
+  var Spec = Backbone.Model.extend({});
   var SpecList = Backbone.Collection.extend({
     model: Spec
   });
-  var Photo = Backbone.Model.extend({});  
+  var Photo = Backbone.Model.extend({});
   var PhotoList = Backbone.Collection.extend({
     model: Photo,
     comparator: 'order'
   });
 
-  var form = $('.listing-form:first').serializeObject();
+  // number after /listing/
+  var listingId = parseInt(window.location.pathname.split('/listings/')[1].split('/')[0]);
   // we don't want all the input fields
+  var form = $('.listing-form:first').serializeObject();
   var listing = new Listing({
-    "title": form.title,
-    "category": form.category,
-    "price": form.price,
-    "description": form.description,
-    "location": form.location
+    id: listingId,
+    title: form.title || null,
+    category: form.category || null,
+    price: form.price || null,
+    description: form.description || null,
+    location: form.location || null,
+    market: form.market || null,
+    CL_link: null,
+    CL_view: null,
   });
   var specs = new SpecList;
   var photos = new PhotoList;
@@ -521,39 +530,8 @@ $(function() {
 
   var previewView = new PreviewView({ listing: listing, specs: specs, photos: photos });
 
-  // too hardcore for me
-  // function setupAjaxCSRF() {
-  //   function csrfSafeMethod(method) {
-  //     // these HTTP methods do not require CSRF protection
-  //     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-  //   }
-  //   function sameOrigin(url) {
-  //     // test that a given url is a same-origin URL
-  //     // url could be relative or scheme relative or absolute
-  //     var host = document.location.host; // host + port
-  //     var protocol = document.location.protocol;
-  //     var sr_origin = '//' + host;
-  //     var origin = protocol + sr_origin;
-  //     // Allow absolute or scheme relative URLs to same origin
-  //     return  (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
-  //             (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
-  //             // or any other URL that isn't scheme relative or absolute i.e relative.
-  //             !(/^(\/\/|http:|https:).*/.test(url));
-  //   }
-  //   $.ajaxSetup({
-  //     beforeSend: function(xhr, settings) {
-  //       if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
-  //         // Send the token to same-origin, relative URLs only.
-  //         // Send the token only if the method warrants CSRF protection
-  //         // Using the CSRFToken value acquired earlier
-  //         xhr.setRequestHeader("X-CSRFToken", csrftoken);
-  //       }
-  //     }
-  //   });
-  // }
   $.ajaxSetup({
     beforeSend: function(xhr, settings) {
-      console.log('hello');
       xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));
     }
   });
@@ -565,6 +543,22 @@ $(function() {
       "click div.btn-group[data-toggle-name='listing-pane-toggle'] a": "toggleView",
       // "click .save-btn": "publish"
     },
+    initialize: function() {
+      this.listenTo(listing, 'request', this.showSaving);
+      this.listenTo(listing, 'sync', this.hideSaving);
+
+      this.listenTo(specs, 'request', this.showSaving);
+      this.listenTo(specs, 'sync', this.hideSaving);
+
+      this.listenTo(photos, 'request', this.showSaving);
+      this.listenTo(photos, 'sync', this.hideSaving);
+    },
+    showSaving: function(event) {
+      $('#loading').show();
+    },
+    hideSaving: function(event) {
+      $('#loading').hide();
+    },
     toggleView: function(e) {
       $(this).siblings().removeClass("active");
       $(this).addClass("active");
@@ -573,7 +567,7 @@ $(function() {
     //   $('#submit-draft').click();
     // },
     publish: function(e) {
-      $('#submit-publish').click();
+      console.log('publish');
     }
   });
   var sidebarView = new SidebarView;

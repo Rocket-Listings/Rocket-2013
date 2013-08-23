@@ -7,7 +7,7 @@
     <span class="icon-bar"></span>
     <span class="icon-bar"></span>
     <span class="icon-bar"></span>
-  </button>  
+  </button>
   {% if request.user.is_authenticated %}
     <a class="navbar-logo" href="{% url 'listings.views.dashboard' %}">
   {% else %}
@@ -23,10 +23,10 @@
     {% if request.user.is_authenticated %}
     <ul class="nav navbar-nav pull-right">
       <li>
-        <a class="{% active 'create' %} blue-menu-item visible-sm" href="/listings/create/">
+          <a class="{% active 'create' %} blue-menu-item visible-sm" href="{% url 'create' %}">
           <span class="nav-item-text">Create a listing </span>
         </a>
-        <a class="{% active 'create' %} blue-menu-item hidden-sm" href="/listings/create/" title="Create a listing">
+          <a class="{% active 'create' %} blue-menu-item hidden-sm" href="{% url 'create' %}" title="Create a listing">
           <span class="glyphicon glyphicon-pencil"></span>
         </a>
       </li>
@@ -72,7 +72,7 @@
         </a>
       </li>
     </ul>
-    {% endif %} 
+    {% endif %}
 
     </div>
   </div>
@@ -95,14 +95,14 @@
   </div>
 </div>
 <div class="header-menu-bar"> {#<div class="col-4"><div class="row">#}
-  <div class="col-lg-6 col-offset-3 col-12"> 
+  <div class="col-lg-6 col-offset-3 col-12">
     <div class="row">
       <div class="col-sm-2 filler visible-lg"></div>
       <a class="col-lg-2 col-sm-3 col-3 item1 {% active 'home' %}" data-href="#product-partial" id="product" href="/">Product</a>
       <a class="col-lg-2 col-sm-3 col-3 item3 {% active 'background' %}" data-href="#background-partial" id="background" href="/background/">Background</a>
       <a class="col-lg-2 col-sm-3 col-3 item2 {% active 'about' %}" data-href="#about-partial" id="about" href="/about/">About</a>
       <a class="col-lg-2 col-sm-3 col-3 item4 {% active 'pricing' %}" data-href="#pricing-partial" id="pricing" href="/pricing/">Pricing</a>
-      <div class="col-sm-2 filler visible-lg"></div> 
-    </div> 
-  </div>    
+      <div class="col-sm-2 filler visible-lg"></div>
+    </div>
+  </div>
 </div>
