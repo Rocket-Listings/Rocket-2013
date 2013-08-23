@@ -502,7 +502,7 @@ $(function() {
       this.$el.html(this.template(context));
     },
     publish: function(e) {
-      if (this.listing.isValid()) {
+      // if (this.listing.isValid()) {
         $.ajax({
           url: '/listing/' + this.listing.id.toString() + '/autopost',
           method: 'GET',
@@ -513,7 +513,7 @@ $(function() {
             console.log('error saving');
           }
         });
-      }
+      // }
     },
     fillStage: function(e) {
       e.preventDefault();
@@ -534,7 +534,7 @@ $(function() {
       'price',
       'description', 
       'market'
-    ];
+    ],
     validate: function(attrs, options) {
       console.log(attrs);
       var requiredAttrs = _.filter(attrs, function(attr) {

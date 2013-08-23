@@ -33,7 +33,11 @@ def attach_client_ip(view_func):
         else:
             ip_address = "76.118.78.216"
 
-        response.context_data['REMOTE_ADDR'] = ip_address
+        ip_dict = { 'REMOTE_ADDR': ip_address }
+        if response.context_data:
+            response.context_data.update(ip_dict)
+        else:
+            response.context_data = ip_dict
 
         return response
     return _wrapped_visit_func
