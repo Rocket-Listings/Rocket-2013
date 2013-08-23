@@ -1,30 +1,30 @@
 from listings.models import Listing, ListingPhoto, Spec, Message
 from listings import utils
-# from django.conf import settings
+from django.conf import settings
 
-# import json
-# from django.contrib.auth.models import User
+import json
+from django.contrib.auth.models import User
 
-# from datetime import datetime, timedelta
-# from listings.forms import ListingForm, SpecFormSet, ListingPhotoFormSet, MessageForm
+from datetime import datetime, timedelta
+from listings.forms import ListingForm, SpecFormSet, ListingPhotoFormSet, MessageForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET, require_POST
 from django.shortcuts import redirect, get_object_or_404
-# from django.core.exceptions import ObjectDoesNotExist
-# from rocket import get_client_ip
-# from django.db.models import Max
+from django.core.exceptions import ObjectDoesNotExist
+from rocket import get_client_ip
+from django.db.models import Max
 from django.http import HttpResponse
 from operator import __add__
 from django.http import Http404
-# from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse
 import haystack
 from users.decorators import first_visit, view_count
 from django.template.response import TemplateResponse
-# from django.contrib.humanize.templatetags.humanize import naturaltime
-# from mail.tasks import send_message_task
-# from users.models import UserProfile, UserComment 
-# from django.db.models import Avg
-# from listings.tasks import cl_anon_autopost_task, cl_anon_update_task, cl_delete_task
+from django.contrib.humanize.templatetags.humanize import naturaltime
+from mail.tasks import send_message_task
+from users.models import UserProfile, UserComment 
+from django.db.models import Avg
+from listings.tasks import cl_anon_autopost_task, cl_anon_update_task, cl_delete_task
 
 @first_visit
 @login_required
@@ -57,76 +57,58 @@ def create(request):
 @login_required
 @require_POST
 def update(request, listing_id=None, create=False): # not directly addressed by a route, allows DRY listing saving
-    if listing_id:
-        listing = get_object_or_404(Listing, id=listing_id)
-        if request.user != listing.user:
-            raise Http404
-    else:
-        listing = Listing(user=request.user)
+	if listing_id:
+		listing = get_object_or_404(Listing, id=listing_id)
+		if request.user != listing.user:
+			raise Http404
+	else:
+		listing = Listing()
 
-    listing_form = ListingForm(request.POST, instance=listing)
-    spec_formset = SpecFormSet(request.POST, instance=listing, prefix="spec_set")
+	listing_form = ListingForm(request.POST, instance=listing, user=request.user)
+	specs = listing.listingspecvalue_set.select_related()
+	spec_form = SpecForm(request.POST, initial=specs)
+	photo_formset = ListingPhotoFormSet(request.POST, instance=listing, prefix="listingphoto_set")
 
-    # for form in spec_formset:
-        # print dir(form)
-    # print
-    # print spec_formset 
-    # print 
+	if listing_form.is_valid() and spec_form.is_valid() and photo_formset.is_valid():
+		listing = listing_form.save(commit=False)
+		listing.user = request.user
+		listing.save()	
+		# update search index
+		haystack.connections['default'].get_unified_index().get_index(Listing).update_object(listing)
 
-    photo_formset = ListingPhotoFormSet(request.POST, instance=listing, prefix="listingphoto_set")
+		for name, value in spec_form.cleaned_data.items():
+			if value:
+				spec_id = int(name.replace('spec-',''))
+				ListingSpecValue.objects.create(value=value, key_id=spec_id, listing_id=listing.id)
 
-    if listing_form.is_valid() and spec_formset.is_valid() and photo_formset.is_valid():
-        listing = listing_form.save()
-        spec_formset.save()
+		# for form in photo_formset.marked_for_delete:
+			# form.instance.delete()
 
-        # need to do this for ordering
-        photo_formset.save(commit=False)
-        for form in photo_formset.ordered_forms:
-            form.instance.order = form.cleaned_data['ORDER']
-            form.instance.save()
+		photo_formset.save(commit=False)
+		for form in photo_formset.ordered_forms:
+			form.instance.order = form.cleaned_data['ORDER']
+			form.instance.save()
+		if create:
+			request.user.get_profile().subtract_credit()
+			if not settings.AUTOPOST_DEBUG:			
+				cl_anon_autopost_task.delay(listing.id)
+		else: # Update
+			if not settings.AUTOPOST_DEBUG:
+				cl_anon_update_task.delay(listing.id)
 
-        # update search index
-        haystack.connections['default'].get_unified_index().get_index(Listing).update_object(listing)
-
-        if listing.listing_type == "O":
-            cl_type = "fso"
-            cl_cat = str(listing.category.cl_owner_id)
-        else: # Dealer
-            cl_type = "fsd"
-            cl_cat = str(listing.category.cl_dealer_id)
-
-        autopost_context = {
-            'type': cl_type,
-            'cat': cl_cat,
-            'market': listing.market,
-            'title': listing.title,
-            'price': str(listing.price),
-            'location': listing.location,
-            'description': listing.description,
-            'from': listing.user.username + "@" + settings.MAILGUN_SERVER_NAME,
-            'photos': map(lambda p: settings.S3_URL + p.key, listing.listingphoto_set.all()),
-            'pk': listing.pk
-        }
-
-        if create:
-            request.user.get_profile().subtract_credit()
-            if not settings.AUTOPOST_DEBUG:
-                cl_anon_autopost_task.delay(autopost_context)
-        else: # Update
-            if not settings.AUTOPOST_DEBUG:
-                autopost_context['update_url'] = listing.CL_link
-                cl_anon_update_task.delay(autopost_context)
-        return redirect(listing)
-    else:
-        # preserving validation errors
-        context = {
-            'form': listing_form,
-            'spec_formset': spec_formset,
-            'photo_formset': photo_formset,
-            'pane': 'edit'
-        }
-        context.update(utils.get_cats())
-        return TemplateResponse(request, 'listings/detail.html', context)
+		return redirect(listing)
+	else:
+		print listing_form.errors
+		print photo_formset.errors
+		# preserving validation errors
+		cxt = {
+			'form': listing_form,
+			'spec_form': spec_form,
+			'pane': 'edit',
+			'photo_formset': photo_formset
+		}
+		cxt.update(utils.get_listing_vars())
+		return TemplateResponse(request, 'listings/detail.html', cxt)
 
 @view_count
 @require_GET
@@ -159,8 +141,54 @@ def detail(request, listing_id, pane='preview'):
             'avg_rating' : avg_rating 
         }
         return TemplateResponse(request, 'listings/detail_public.html', context)
-        # else: # POST
-        # return update(request, listing_id)
+        
+        # =======
+        #     # prep specs
+        #     specs_set = listing.listingspecvalue_set.select_related().all()
+        #     specs = {}
+        #     for spec in specs_set:
+        #         specs[spec.key_id] = spec
+
+        #     if request.method == 'GET':
+        #         if is_owner:
+        #             form = ListingForm(instance=listing)
+        #             photo_formset = ListingPhotoFormSet(instance=listing, prefix="listingphoto_set")
+
+        #             cxt = {
+        #                 'form': form,
+        #                 'specs': specs,
+        #                 'photo_formset': photo_formset,
+        #                 'pane': pane
+        #             }
+        #             cxt.update(utils.get_listing_vars())
+        #             return TemplateResponse(request, 'listings/detail.html', cxt)
+        #         else:
+        #             comments = UserComment.objects.filter(user=listing.user).order_by('-date_posted') 
+        #             avg_rating = comments.aggregate(Avg('rating')).values()[0]
+
+        #             fbProfile = user.get_profile().fbProfile
+        #             photos = listing.listingphoto_set.all()
+        #             cxt = {
+        #                 'listing': listing,
+        #                 'photos': photos,
+        #                 'specs': specs,
+        #                 'fb' : fbProfile, 
+        #                 'avg_rating' : avg_rating 
+        #             }
+        #             return TemplateResponse(request, 'listings/detail_public.html', cxt)
+        #     else: # POST
+        #         return update(request, listing_id)
+
+def delete(request, listing_id):
+	listing = get_object_or_404(Listing, id=listing_id)
+	if request.user == listing.user:
+		# remove listing from haystack index
+		haystack.connections['default'].get_unified_index().get_index(Listing).remove_object(listing)
+		if not settings.AUTOPOST_DEBUG:
+			cl_delete_task.delay(listing.id)
+		return HttpResponse(200)
+	else:
+		return HttpResponse(403)
 
 @require_GET
 def search(request):

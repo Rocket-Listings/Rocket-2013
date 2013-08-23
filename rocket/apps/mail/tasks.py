@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from listings.models import Listing, Buyer, Message
 
 import requests
+import mechanize
 import hashlib, urllib
 
 @task(name='tasks.new_cl_admin_message_task')
@@ -18,11 +19,22 @@ def new_cl_admin_message_task(msg_dict):
 	to_parse = BeautifulSoup(msg_dict['body'])
 	manage_link = to_parse.find('a').contents[0]
 	listing.CL_link = manage_link
+	listing.status_id = 3
 	listing.save()
 
 	r = requests.get(manage_link)
 	to_parse = BeautifulSoup(r.text)
 	phone_page_text = "Your craigslist user account requires phone verification. Please use the form below to complete this process."
+	form = to_parse.find('form')
+	action = form.attrs['action']
+	hidden_inputs = form.find_all_next('input', type='hidden', limit=2)
+	hashed_key_1 = hidden_inputs[0].attrs['name']
+	hashed_value_1 = hidden_inputs[0].attrs['value']
+	hashed_key_2 = hidden_inputs[1].attrs['name']
+	hashed_value_2 = hidden_inputs[1].attrs['value']
+	payload = {hashed_key_1: hashed_value_1, hashed_key_2: hashed_value_2}
+	r = requests.post(action, data=payload)
+	to_parse = BeautifulSoup(r.text)
 	try:
 		if to_parse.find("section", class_="body").find("p").text == phone_page_text:
 			buyer = Buyer(listing=listing, name="Apollo Rocket", email=settings.DEFAULT_FROM_EMAIL)
@@ -30,20 +42,9 @@ def new_cl_admin_message_task(msg_dict):
 			message = Message(
 				listing=listing, 
 				buyer=buyer, 
-				content="Sorry, but Craigslist wants you to verify your phone number. Follow this link to finish posting: " + activate_link)
+				content="Sorry, but Craigslist wants you to verify your phone number. Follow this link to finish posting: " + manage_link)
 			message.save()
 	except AttributeError:
-		form = to_parse.find('form')
-		action = form.attrs['action']
-		hidden_inputs = form.find_all_next('input', type='hidden', limit=2)
-		hashed_key_1 = hidden_inputs[0].attrs['name']
-		hashed_value_1 = hidden_inputs[0].attrs['value']
-		hashed_key_2 = hidden_inputs[1].attrs['name']
-		hashed_value_2 = hidden_inputs[1].attrs['value']
-		payload = {hashed_key_1: hashed_value_1, hashed_key_2: hashed_value_2}
-		r = requests.post(action, data=payload)
-
-		to_parse = BeautifulSoup(r.text)
 		view_link = to_parse.find('li').find_next('a').contents[0]
 		listing.CL_view = view_link
 		listing.save()
@@ -82,3 +83,43 @@ def send_message_task(message_id):
 	except BadHeaderError:
 		return 'Invalid header found.'
 	return msg.id
+
+@task(name='tasks.lookup_view_links_task')
+def lookup_view_links_task(*listing_ids):
+	view_page_text = "Your posting can be seen at "
+	for id in listing_ids:
+		listing = Listing.objects.get(id=id)
+		if listing.CL_link:
+			r = requests.get(listing.CL_link)
+			try:
+				partition = BeautifulSoup(r.text).find("p").text.partition(view_page_text)
+			except AttributeError:
+				partition = BeautifulSoup(r.text).find("li").text.partition(view_page_text)
+			if partition[1]:
+				# Houston, we have a link!
+				# Else, listing has not been activated so we do nothing
+				listing.CL_view = partition[2].strip(".")
+				listing.save()
+
+@task(name='tasks.process_new_cl_message_task')
+def process_new_cl_message_task(*args, **kwargs):
+	"""
+	Takes keyword arguments:
+	'listing_view_link': The link in the original message
+	'buyer_name': The name of the buyer from the original message
+	'buyer_email': The email of the buyer from the original message
+	'message_id': The id of the message saved without a buyer or listing
+	"""
+
+	listing = Listing.objects.get(CL_view=kwargs['listing_view_link'])
+	try:
+		buyer = Buyer.objects.get(listing=listing, name=kwargs['buyer_name'])
+	except ObjectDoesNotExist:
+		buyer = Buyer(listing=listing, name=kwargs['buyer_name'], email=kwargs['buyer_email'])
+		buyer.save()
+
+	message = Message.objects.get(id=kwargs['message_id'])
+	message.buyer = buyer
+	if not message.listing:
+		message.listing = listing
+	message.save()

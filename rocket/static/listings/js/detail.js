@@ -10,7 +10,6 @@ $(function() {
     initialize: function(options) {
       this.categoryEditView = new CategoryEditView(options);
       this.locationEditView = new LocationEditView(options);
-
       _.bindAll(this, 'changed');
     },
     changed: function(e) {
@@ -71,14 +70,69 @@ $(function() {
     events: {
       "change #id_location": "changed",
       "click #location-btn": "getLocationByBrowser",
+      "change .form-select": "formSelectChange",
+      "change .form-select-sub": "formSelectSubChange"
     },
     initialize: function() {
-      $(".form-select").select2();
-      $(".form-select").show();
-      _.bindAll(this, 'mapResize', 'changed');
+      setupMapSelectStuff();
+      _.bindAll(this, 'mapResize', 'changed', 'formSelectChange', 'formSelectSubChange');
       this.geocoder = new google.maps.Geocoder();
       this.render();
       $('.edit-btn').on('shown.bs.tab', this.mapResize);
+    },
+    setupMapSelectStuff: function() {
+      //Market Select Stuff
+      //Initialization and edit state
+      this.dat = dat = $.parseJSON($("#market-data").html());
+      $(".form-select").select2({
+        placeholder: "Select a Market",
+        data: dat.markets
+      });
+      $(".form-select").show(); 
+      if ($(".form-select-sub").attr('value') != "") {
+        $(".form-select-sub").select2({
+            placeholder: "Select a Sub-Market",
+            data: dat[$(".form-select").select2("val")]
+          });
+        $(".form-select-sub").show();
+      };
+      if ($(".form-select-hood").attr('value') != "") {
+        console.log("in");
+        $(".form-select-hood").select2({
+            placeholder: "Select a Sub-Market",
+            data: dat[$(".form-select").select2("val")][$(".form-select-sub").select2("val")-1].hoods
+          });
+        $(".form-select-hood").show();
+      };
+    },
+    formSelectChange: function(e) {
+      var dat = this.dat;
+      $(".form-select-sub").select2("val", "");
+      $(".form-select-hood").select2("val", "");
+      if (dat[e.val]) {
+        $(".form-select-sub").select2({
+          placeholder: "Select a Sub-Market",
+          data: dat[e.val]
+        });
+        $(".form-select-sub").show();
+      }
+      else{
+        $(".form-select-sub").hide();
+        $(".form-select-hood").hide();
+      }
+    },
+    formSelectSubChange: function(e){
+      var dat = this.dat;
+      if ($(".form-select").select2("val") === "sfo" || 
+         ($(".form-select").select2("val") === "nyc" && e.val === "1")){
+            $(".form-select-hood").select2({
+              placeholder: "Select a Hood",
+              data: dat[$(".form-select").select2("val")][e.val-1].hoods
+            });
+            $(".form-select-hood").show()
+      }else{
+        $(".form-select-hood").hide()
+      }
     },
     changed: function(e) {
       var input = $(e.currentTarget);

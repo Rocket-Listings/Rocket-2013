@@ -151,150 +151,6 @@ $(function() {
 		}
 		return false;
 	});
-
-	var Keys = {
-		b: 66, l: 76,
-		j: 74, k: 75,
-		m: 77, r: 82, n: 78,
-		esc: 27, enter: 13, slash: 191,
-		shift: 16, qmark: 191,
-		rarr: 39, larr: 37,
-		up: 38, down: 40,
-		context: "l",
-		keys: [],
-		init: function () {
-			this.cacheElements();
-			this.bindEvents();
-		},
-		cacheElements: function () {
-			this.$body = $("body");
-			this.$listings = $(".listings-body");
-			this.$buyers = $(".buyers-body");
-			this.$search = $("input.search");
-			this.$refresh = $(".dashboard-refresh");
-			this.$messageFormWrapper = $(".message-form-wrapper");
-			this.$message = this.$messageFormWrapper.find("textarea");
-		},
-		bindEvents: function () {
-			var $doc = $(document);
-			$doc.on('keydown', this.addKey);
-			$doc.on('keydown', this.executeEvents);
-			$doc.on('keyup', this.removeKey);
-		},
-		addKey: function (e) {
-			var key = e.which || e.keyCode;
-			if (Keys.keys.indexOf(key) == -1) {
-				Keys.keys.push(key);
-			}
-		},
-		removeKey: function (e) {
-			var key = e.which || e.keyCode;
-			var keyIndex = Keys.keys.indexOf(key);
-			Keys.keys.splice(keyIndex, 1);
-		},
-		executeEvents: function (e) {
-			var keys = Keys.keys;
-			var context = Keys.context;
-			if (keys.length > 1) {
-				if ((keys.length == 2) 
-					&& (keys.indexOf(Keys.shift) != -1) 
-					&& (keys.indexOf(Keys.qmark) != -1)
-					&& (!Keys.$search.is(":focus")) 
-					&& (!Keys.$message.is(":focus"))) {
-					$("#keyboard-shortcuts-modal").modal('toggle');
-				}
-			}
-			if (!Keys.$body.hasClass("modal-open")) {
-				if ((!Keys.$search.is(":focus")) && (!Keys.$message.is(":focus"))) {
-					switch (keys[0]) {
-						case Keys.l:
-						case Keys.larr:
-							if (Keys.$listings.find("li.highlight").length != 0) {
-								Keys.context = "l";
-							}
-							break;
-						case Keys.b:
-						case Keys.rarr:
-							if (Keys.$buyers.find("ul.highlight").length != 0) {
-								Keys.context = "b";
-							}
-							break;
-						case Keys.j:
-						case Keys.down:
-							switch (context) {
-								case "l":
-									var currentSelectedListing = Keys.$listings.find("li.highlight");
-									var nextListing = currentSelectedListing.next("li:not(.hide)");
-									if (nextListing.exists()) {
-										nextListing.click();
-										Keys.$listings.scrollTo(nextListing)
-									}
-									break;
-								case "b":
-									var currentSelectedBuyer = Keys.$buyers.find("ul.highlight");
-									var nextBuyer = currentSelectedBuyer.next("ul:not(.hide)");
-									if (nextBuyer.exists()) {
-										nextBuyer.click();
-										Keys.$buyers.scrollTo(nextBuyer);
-									}
-									break;
-							}
-							break;
-						case Keys.k:
-						case Keys.up:
-							switch (context) {
-								case "l":
-									var currentSelectedListing = Keys.$listings.find("li.highlight");
-									var prevListing = currentSelectedListing.prev("li:not(.hide)");
-									if (prevListing.exists()) {
-										prevListing.click();
-										Keys.$listings.scrollTo(prevListing)
-									}
-									break;
-								case "b":
-									var currentSelectedBuyer = Keys.$buyers.find("ul.highlight");
-									var prevBuyer = currentSelectedBuyer.prev("ul:not(.hide)");
-									if (prevBuyer.exists()) {
-										prevBuyer.click();
-										Keys.$buyers.scrollTo(prevBuyer);
-									}
-									break;
-							}
-							break;
-						case Keys.m:
-							if (!Keys.$messageFormWrapper.hasClass("hide")) {
-								Keys.$message.focus();
-								return false;
-							}
-							break;
-						case Keys.slash:
-							Keys.$search.focus();
-							return false;
-							break;
-						case Keys.r:
-							Keys.$refresh.click();
-							break;
-						case Keys.n:
-							window.location.href = "/listings/create";
-							break;
-					}
-				}
-				if (((Keys.$search.is(":focus")) || (Keys.$message.is(":focus"))) 
-					&& (keys[0] == Keys.esc)) {
-					Keys.$search.blur();
-					Keys.$message.blur();
-					return false;
-				}
-				if (Keys.$search.is(":focus") && (keys[0] == Keys.enter)) {
-					Keys.$search.blur();
-					$(".listing").first().click();
-					window.searchHasFocus = false;
-					return false;
-				}
-			}
-		}
-	}
-	Keys.init();
 	
 	// Remove the 'first-visit' class from the dashboard panel
 	// This will move the dashboard back up on the page when
@@ -547,14 +403,157 @@ $(function() {
   	$("#keyboard-shortcuts-modal").modal();
   });
 
-  // Convert links in the message text
-  $(".message-content").each(function() {
-		$(this).html(linkToClickable($(this).text()));
-	});
+  var Keys = {
+		b: 66, l: 76,
+		j: 74, k: 75,
+		m: 77, r: 82, n: 78,
+		esc: 27, enter: 13, slash: 191,
+		shift: 16, qmark: 191,
+		rarr: 39, larr: 37,
+		up: 38, down: 40,
+		context: "l",
+		keys: [],
+		init: function () {
+			this.cacheElements();
+			this.bindEvents();
+		},
+		cacheElements: function () {
+			this.$body = $("body");
+			this.$listings = $(".listings-body");
+			this.$buyers = $(".buyers-body");
+			this.$search = $("input.search");
+			this.$refresh = $(".dashboard-refresh");
+			this.$messageFormWrapper = $(".message-form-wrapper");
+			this.$message = this.$messageFormWrapper.find("textarea");
+		},
+		bindEvents: function () {
+			var $doc = $(document);
+			$doc.on('keydown', this.addKey);
+			$doc.on('keydown', this.executeEvents);
+			$doc.on('keyup', this.removeKey);
+		},
+		addKey: function (e) {
+			var key = e.which || e.keyCode;
+			if (Keys.keys.indexOf(key) == -1) {
+				Keys.keys.push(key);
+			}
+		},
+		removeKey: function (e) {
+			var key = e.which || e.keyCode;
+			var keyIndex = Keys.keys.indexOf(key);
+			Keys.keys.splice(keyIndex, 1);
+		},
+		executeEvents: function (e) {
+			var keys = Keys.keys;
+			var context = Keys.context;
+			if (keys.length > 1) {
+				if ((keys.length == 2) 
+					&& (keys.indexOf(Keys.shift) != -1) 
+					&& (keys.indexOf(Keys.qmark) != -1)
+					&& (!Keys.$search.is(":focus")) 
+					&& (!Keys.$message.is(":focus"))) {
+					$("#keyboard-shortcuts-modal").modal('toggle');
+				}
+			}
+			if (!Keys.$body.hasClass("modal-open")) {
+				if ((!Keys.$search.is(":focus")) && (!Keys.$message.is(":focus"))) {
+					switch (keys[0]) {
+						case Keys.l:
+						case Keys.larr:
+							if (Keys.$listings.find("li:not(.hide)").length != 0) {
+								Keys.context = "l";
+							}
+							break;
+						case Keys.b:
+						case Keys.rarr:
+							if (Keys.$buyers.find("ul:not(.hide)").length != 0) {
+								Keys.context = "b";
+							}
+							break;
+						case Keys.j:
+						case Keys.down:
+							switch (context) {
+								case "l":
+									var currentSelectedListing = Keys.$listings.find("li.highlight");
+									var nextListing = currentSelectedListing.next("li:not(.hide)");
+									if (nextListing.exists()) {
+										nextListing.click();
+										Keys.$listings.scrollTo(nextListing)
+									}
+									break;
+								case "b":
+									var currentSelectedBuyer = Keys.$buyers.find("ul.highlight");
+									var nextBuyer = currentSelectedBuyer.next("ul:not(.hide)");
+									if (nextBuyer.exists()) {
+										nextBuyer.click();
+										Keys.$buyers.scrollTo(nextBuyer);
+									}
+									break;
+							}
+							break;
+						case Keys.k:
+						case Keys.up:
+							switch (context) {
+								case "l":
+									var currentSelectedListing = Keys.$listings.find("li.highlight");
+									var prevListing = currentSelectedListing.prev("li:not(.hide)");
+									if (prevListing.exists()) {
+										prevListing.click();
+										Keys.$listings.scrollTo(prevListing)
+									}
+									break;
+								case "b":
+									var currentSelectedBuyer = Keys.$buyers.find("ul.highlight");
+									var prevBuyer = currentSelectedBuyer.prev("ul:not(.hide)");
+									if (prevBuyer.exists()) {
+										prevBuyer.click();
+										Keys.$buyers.scrollTo(prevBuyer);
+									}
+									break;
+							}
+							break;
+						case Keys.m:
+							if (!Keys.$messageFormWrapper.hasClass("hide")) {
+								Keys.$message.focus();
+								return false;
+							}
+							break;
+						case Keys.slash:
+							Keys.$search.focus();
+							return false;
+							break;
+						case Keys.r:
+							Keys.$refresh.click();
+							break;
+						case Keys.n:
+							window.location.href = "/listings/create";
+							break;
+					}
+				}
+				if (((Keys.$search.is(":focus")) || (Keys.$message.is(":focus"))) 
+					&& (keys[0] == Keys.esc)) {
+					Keys.$search.blur();
+					Keys.$message.blur();
+					return false;
+				}
+				if (Keys.$search.is(":focus") && (keys[0] == Keys.enter)) {
+					Keys.$search.blur();
+					$(".listing").first().click();
+					window.searchHasFocus = false;
+					return false;
+				}
+			}
+		}
+	}
+	Keys.init();
 
   // Init
   bindEvents();
   propogateUnreadMessages();
+  // Convert links in the message text
+  $(".message-content").each(function() {
+		$(this).html(linkToClickable($(this).text()));
+	});
 });
 
 // Context for keyboard controls

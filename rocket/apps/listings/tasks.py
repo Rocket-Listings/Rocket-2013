@@ -2,13 +2,17 @@ from celery import task
 from celery.signals import task_success
 from django.shortcuts import get_object_or_404
 from listings.models import Listing
-
+from django.conf import settings
+from listings import utils
 import requests
 import mechanize
 import cookielib
 
 @task(name="tasks.cl_anon_autopost_task")
-def cl_anon_autopost_task(data):
+def cl_anon_autopost_task(listing_id):
+
+  data = utils.process_autopost_data(listing_id)
+
   #inititalize the browser
   br = mechanize.Browser()
 
@@ -38,21 +42,32 @@ def cl_anon_autopost_task(data):
   br.form['id'] = [data["cat"]]
   br.submit()
 
+  if data["sub_market"]:
+    br.select_form(nr=0)
+    br.set_value([data["sub_market"]], type="radio")
+    br.submit()
+    
+  if data["hood"]:
+    br.select_form(nr=0)
+    br.set_value([data["hood"]], type="radio")
+    br.submit()
+
   br.select_form(nr=0)
   #title
   br.form[br._pairs()[0][0]] = data["title"]
   #price
   br.form[br._pairs()[1][0]] = data["price"]
   #specific location
-  br.form[br._pairs()[2][0]] = data["location"]
-  #posting description  
-  br.form[br._pairs()[3][0]] = data["description"]
+  if not data["hood"]:
+    br.form[br._pairs()[2][0]] = data["location"]
+    #posting description  
+    br.form[br._pairs()[3][0]] = data["description"]
+  else:
+    br.form[br._pairs()[2][0]] = data["description"]
   #email
   br.form['FromEMail'] = data["from"]
   br.form['ConfirmEMail'] = data["from"]
   r = br.submit()
-
-  #figure out no photos case
   
   if data["photos"]:
     br.select_form(nr=0)
@@ -83,7 +98,10 @@ def cl_anon_autopost_task(data):
     return payload
 
 @task(name="tasks.cl_anon_update_task")
-def cl_anon_update_task(data):
+def cl_anon_update_task(listing_id):
+  
+  data = utils.process_autopost_data(listing_id, update=True)
+
   #inititalize the browser
   br = mechanize.Browser()
 
@@ -126,11 +144,14 @@ def cl_anon_update_task(data):
   if data["price"]:
     br.form[br._pairs()[1][0]] = data["price"]
 
-  if data["location"]:
-    br.form[br._pairs()[2][0]] = data["location"]
+  if data["hood"]:
+    br.form["Neighborhood"] = [data["hood"]]
 
+  if data["location"] and not data["hood"]:
+    br.form[br._pairs()[2][0]] = data["location"]
+  
   if data["description"]:
-    br.form[br._pairs()[3][0]] = data["description"]
+      br.form[br._pairs()[3][0]] = data["description"]
 
   if data["cat"]:
     br.form["CategoryID"] = [data["cat"]]
@@ -178,7 +199,9 @@ def cl_anon_update_task(data):
     print "failed"
 
 @task(name="tasks.cl_delete_task")
-def cl_delete_task(data):
+def cl_delete_task(listing_id):
+  listing = Listing.objects.get(id=listing_id)
+  data = {'update_url': listing.CL_link, 'pk': listing.pk}
   #inititalize the browser
   br = mechanize.Browser()
 
@@ -210,6 +233,8 @@ def cl_delete_task(data):
   br.select_form(nr=1)
   br.submit()
 
+  listing.delete()
+
   return data['pk']
 
 @task_success.connect
@@ -217,7 +242,7 @@ def celery_task_success_handler(sender=None, result=None, args=None, kwargs=None
   if sender.name == "tasks.cl_anon_autopost_task":
     if result['success'] == 'True':
       listing = get_object_or_404(Listing, pk=result['pk'])
-      listing.status_id = 3
+      listing.status_id = 2
       listing.save()
     else:
       print "Tried to autopost listing " + str(result['pk']) + ". Failed."
