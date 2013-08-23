@@ -502,16 +502,18 @@ $(function() {
       this.$el.html(this.template(context));
     },
     publish: function(e) {
-      $.ajax({
-        url: '/listing/' + this.listing.id.toString() + '/autopost',
-        method: 'GET',
-        success: function(data, status, xhr) {
-          window.location.replace('/listings/dashboard/');
-        },
-        error: function(jqXHR, textStatus, errorThrown ) {
-          console.log('error saving');
-        }
-      });
+      if (this.listing.isValid()) {
+        $.ajax({
+          url: '/listing/' + this.listing.id.toString() + '/autopost',
+          method: 'GET',
+          success: function(data, status, xhr) {
+            window.location.replace('/listings/dashboard/');
+          },
+          error: function(jqXHR, textStatus, errorThrown ) {
+            console.log('error saving');
+          }
+        });
+      }
     },
     fillStage: function(e) {
       e.preventDefault();
@@ -525,7 +527,23 @@ $(function() {
 
   // models are split up by their corresponding django form
   var Listing = Backbone.Model.extend({
-    urlRoot: '/api/listings'
+    urlRoot: '/api/listings',
+    required: [
+      'category',
+      'title',
+      'price',
+      'description', 
+      'market'
+    ];
+    validate: function(attrs, options) {
+      console.log(attrs);
+      var requiredAttrs = _.filter(attrs, function(attr) {
+          // attr
+      });
+      // var exist = _.reduce(attrs, function(memo, attr) {
+      //   return memo && attr.length > 0;
+      // });
+    }
   });
   var Spec = Backbone.Model.extend({
     toJSON: function() {

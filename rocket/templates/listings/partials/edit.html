@@ -108,23 +108,23 @@
   <fieldset id="marketplace-location-fieldset"><legend>Marketplace &amp; Location</legend>
     <div class="row">
       <div id="market-col" class="col-lg-6">
+        <div class="form-group{# {% if form.location.errors %} has-error {% endif %}#}">
+          <label for="id_location">Precise Location <span class="text-muted"> (Be as specific as you want)</span></label>
+          <input type="text" placeholder="" class="location form-control" id="id_location" maxlength="200" name="location" value="{{ listing.location|default:"" }}">
+        </div>
         <label for="id_market" class="control-label">Market</label>
         <input type="hidden" class="market" name="market" style="display:none" value="{{ listing.market|default:"" }}"/>
         <input type="hidden" class="sub_market" name="sub_market" style="display:none" value="{{ listing.sub_market|default:"" }}"/>
         <input type="hidden" class="hood" name="hood" style="display:none" value="{{ listing.hood|default:"" }}"/>
       </div>
       <div class="col-lg-6">
-        <div class="form-group{# {% if form.location.errors %} has-error {% endif %}#}">
-          <label for="id_location">Precise Location<span class="text-muted">(Be as specific as you want)</span></label>
-          <input type="text" placeholder="" class="location form-control" id="id_location" maxlength="200" name="location" value="{{ listing.location|default:"" }}">
+        <label class="form-label">Map Preview</label>
+        <div class="location-map-wrapper">
+          <div id="location-map"></div>
+          <button id="location-btn" class="btn btn-default" type="button">Guess Current Location <i class="glyphicon glyphicon-screenshot"></i></button>
+          <img src="{% static 'users/img/100px_loading.gif' %}" class="loading-spinner"/>
         </div>
-        {# <label class="form-label">Map</label> #}
       </div>
-    </div>
-    <div class="location-map-wrapper">
-      <div id="location-map"></div>
-      <button id="location-btn" class="btn btn-default" type="button">Guess Current Location <i class="glyphicon glyphicon-screenshot"></i></button>
-      <img src="{% static 'users/img/100px_loading.gif' %}" class="loading-spinner"/>
     </div>
   </fieldset>
   <fieldset id="photo-fieldset">
