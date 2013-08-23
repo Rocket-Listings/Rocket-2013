@@ -18,7 +18,9 @@
     height: @map-height-responsive;
   }
 }
-
+.header-menu-bar{
+  margin: 0 -20px;
+}
 #header-map-overlay {
   height: @map-height;
   width: 100%;
@@ -134,46 +136,6 @@ h1.flag {
 .gmnoprint div, .gm-style-cc div { background:none !important; }
 #GMapsID div div a div img{ diplay:none; }
 
-.header-menu-bar {
-  background: @menu0;
-  height: @menu-height;
-  .row {
-    margin-left: -15px;
-    margin-right: -15px; 
-  }
-  // margin-right: 0; 
-  a {
-    padding-left: 15px;
-    line-height: @menu-height;
-    text-align: center;
-    color: @color6;
-    &:hover, &:active, &.active {
-      text-decoration: underline;
-    }
-  }
-  .item1 {
-    background: @menu1;
-    border-left: 3px solid @menu5;
-  }
-  .item2 {
-    background: @menu2;
-  }
-  .item3 {
-    background: @menu3;
-  }
-  .item4 {
-    background: @menu4;
-    border-right: 3px solid @menu5; 
-  }
-  .filler {
-    opacity: 0;
-  }  
-}
-
-// .hook {
-  // background: #4A4742;
-  // color: @menu0;
-// }
 
 .header-signup {
   // border-bottom: 2px solid white;

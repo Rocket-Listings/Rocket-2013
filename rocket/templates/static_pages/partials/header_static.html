@@ -70,6 +70,11 @@
         </li>
       </ul>
       {% else %}
+      <ul class="nav navbar-nav pull-left header-menu-bar">
+        <li><a class="{% active 'home' %}" data-href="#product-partial" id="product" href="/">Features</a></li>
+        <li><a class="{% active 'background' %}" data-href="#background-partial" id="background" href="/background/">Background</a></li>
+        <li><a class="{% active 'pricing' %}" data-href="#pricing-partial" id="pricing" href="/pricing/">Pricing</a></li>
+      </ul>
       <ul class="nav navbar-nav pull-right">
         <li>
           <a class="{% active 'registration_register' %}" href="{% url 'registration_register' %}">
@@ -102,16 +107,4 @@
       {# </div> #}
     </div>
   </div>
-</div>
-<div class="header-menu-bar"> {#<div class="col-4"><div class="row">#}
-  <div class="col-lg-6 col-lg-offset-3 col-12"> 
-    <div class="row">
-      <div class="col-sm-2 filler visible-lg"></div>
-      <a class="col-lg-2 col-sm-3 col-3 item1 {% active 'home' %}" data-href="#product-partial" id="product" href="/">Product</a>
-      <a class="col-lg-2 col-sm-3 col-3 item3 {% active 'background' %}" data-href="#background-partial" id="background" href="/background/">Background</a>
-      <a class="col-lg-2 col-sm-3 col-3 item2 {% active 'about' %}" data-href="#about-partial" id="about" href="/about/">About</a>
-      <a class="col-lg-2 col-sm-3 col-3 item4 {% active 'pricing' %}" data-href="#pricing-partial" id="pricing" href="/pricing/">Pricing</a>
-      <div class="col-sm-2 filler visible-lg"></div> 
-    </div> 
-  </div>    
 </div>
