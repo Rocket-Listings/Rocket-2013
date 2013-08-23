@@ -18,13 +18,16 @@ from operator import __add__
 from django.http import Http404
 from django.core.urlresolvers import reverse
 import haystack
-from users.decorators import first_visit, view_count
+from users.decorators import first_visit, view_count, attach_client_ip
 from django.template.response import TemplateResponse
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from mail.tasks import send_message_task
 from users.models import UserProfile, UserComment 
 from django.db.models import Avg
 from listings.tasks import cl_anon_autopost_task, cl_anon_update_task, cl_delete_task
+
+from rest_framework.renderers import UnicodeJSONRenderer
+from listings.serializers import ListingSerializer
 
 @first_visit
 @login_required
@@ -111,11 +114,14 @@ def update(request, listing_id=None, create=False): # not directly addressed by 
 		return TemplateResponse(request, 'listings/detail.html', cxt)
 
 @view_count
+@attach_client_ip
 @require_GET
 def detail(request, listing_id, pane='preview'):
     listing = get_object_or_404(Listing.objects.select_related(), id=listing_id)
     photos = listing.listingphoto_set.all()
     specs = listing.spec_set.all()
+    listing_serializer = ListingSerializer(listing)
+    listing_json = UnicodeJSONRenderer().render(listing_serializer.data)
 
     is_owner = bool(listing.user == request.user)
     request.user.is_owner = is_owner
@@ -125,7 +131,8 @@ def detail(request, listing_id, pane='preview'):
             'pane': pane,
             'listing': listing,
             'photos': photos,
-            'specs': specs
+            'specs': specs,
+            'listing_json': listing_json
         }
         context.update(utils.get_cats())
         return TemplateResponse(request, 'listings/detail.html', context)

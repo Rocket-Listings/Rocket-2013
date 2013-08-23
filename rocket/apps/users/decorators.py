@@ -1,5 +1,6 @@
 from users.models import FirstVisit
 from users.models import ViewCount
+from django.conf import settings
 
 def first_visit(view_func): 
     """tests to see if its the first time has visited a page
@@ -18,6 +19,25 @@ def first_visit(view_func):
         return response
 
     return _wrapped_visit_func
+
+def attach_client_ip(view_func):
+    def _wrapped_visit_func(request, *args, **kwargs):
+        response = view_func(request, *args, **kwargs)
+
+        if not settings.DEBUG:
+            ip_address = request.META.get('REMOTE_ADDR', None);
+            forwarded_ips_str = request.META.get('x-forwarded-for', None); 
+            if forwarded_ips_str:
+                forwarded_ips = forwarded_ips_str.split(',');
+                ip_address = forwarded_ips[0];
+        else:
+            ip_address = "76.118.78.216"
+
+        response.context_data['REMOTE_ADDR'] = ip_address
+
+        return response
+    return _wrapped_visit_func
+
 
 
 def view_count(view_func):

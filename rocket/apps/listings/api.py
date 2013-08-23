@@ -6,8 +6,8 @@ from django.http import HttpResponse
 from django.utils import simplejson
 from operator import __add__
 
-from listings.models import Listing, Message
-from listings.serializers import ListingSerializer
+from listings.models import Listing, Message, Spec, ListingPhoto
+from listings.serializers import ListingSerializer, SpecSerializer, ListingPhotoSerializer
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -15,6 +15,7 @@ from rest_framework import status
 
 from haystack.query import SearchQuerySet
 
+# Listing API
 class ListingList(APIView):
     """
     List all listings, or create a new listing.
@@ -28,11 +29,10 @@ class ListingList(APIView):
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        print "hello world"
         serializer = ListingSerializer(data=request.DATA)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
 
 class ListingDetail(APIView):
@@ -72,7 +72,123 @@ class ListingDetail(APIView):
     def delete(self, request, pk, format=None):
         listing = self.get_object(pk)
         listing.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=204)
+
+class SpecList(APIView):
+    """
+    List all specs, or create a new spec.
+    """
+    def pre_save(self, obj):
+        obj.user = self.request.user
+
+    def get(self, request, format=None):
+        specs = Spec.objects.all()
+        serializer = SpecSerializer(specs, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = SpecSerializer(data=request.DATA)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+
+class SpecDetail(APIView):
+    """
+    Retrieve, update or delete a spec instance.
+    """
+    # def pre_save(self, obj):
+    #     obj.user = self.request.user
+
+    def get_object(self, pk):
+        try:
+            return Spec.objects.get(pk=pk)
+        except Spec.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        spec = self.get_object(pk)
+        serializer = SpecSerializer(spec)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        spec = self.get_object(pk)
+        serializer = SpecSerializer(spec, data=request.DATA)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+
+    def patch(self, request, pk, format=None):
+        spec = self.get_object(pk)
+        serializer = SpecSerializer(spec, partial=True, data=request.DATA)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+
+    def delete(self, request, pk, format=None):
+        spec = self.get_object(pk)
+        spec.delete()
+        return Response(status=204)
+
+class ListingPhotoList(APIView):
+    """
+    List all photos, or create a new photo.
+    """
+    def pre_save(self, obj):
+        obj.user = self.request.user
+
+    def get(self, request, format=None):
+        photos = ListingPhoto.objects.all()
+        serializer = ListingPhotoSerializer(photos, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = ListingPhotoSerializer(data=request.DATA)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+
+class ListingPhotoDetail(APIView):
+    """
+    Retrieve, update or delete a photo instance.
+    """
+    # def pre_save(self, obj):
+    #     obj.user = self.request.user
+
+    def get_object(self, pk):
+        try:
+            return ListingPhoto.objects.get(pk=pk)
+        except ListingPhoto.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        photo = self.get_object(pk)
+        serializer = ListingPhotoSerializer(photo)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        photo = self.get_object(pk)
+        serializer = ListingPhotoSerializer(photo, data=request.DATA)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+
+    def patch(self, request, pk, format=None):
+        photo = self.get_object(pk)
+        serializer = ListingPhotoSerializer(photo, partial=True, data=request.DATA)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+
+    def delete(self, request, pk, format=None):
+        photo = self.get_object(pk)
+        photo.delete()
+        return Response(status=204)
 
 def delete(request, listing_id):
     listing = get_object_or_404(Listing, id=listing_id)

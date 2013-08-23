@@ -519,19 +519,19 @@
 
 .listing-form {
 
-  .form-select{
+  .market{
     width: 101%;
     margin-bottom: 15px;
   }
 
-  .form-select-sub {
+  .sub_market {
     width: 101%;
     margin-bottom: 15px;
   }
 
-  .form-select-hood {
+  .hood {
     width: 101%;
-
+    margin-bottom: 15px;
   }
 
 
@@ -542,7 +542,7 @@
 
   .select2-container .select2-choice {
     padding: 8px 12px;
-    height: 38px;
+    height: 34px;
     font-size: 14px;
     color: #555;
     line-height: 1.428571429;
@@ -707,10 +707,22 @@
 .detail-sidebar {
 
     margin-top:15px;
-    .affix {
-      top: 10px;
-    }
 
+    @media (min-width: 992px) {
+      .affix {
+        position: fixed;
+        width: 262.5px;
+        top: 10px;
+      }
+    }
+    @media (max-width: 992px) {
+      .affix {
+        position: static;
+      }
+    }    .btn-stack > * {
+      // display: block;
+      margin-bottom: 10px;
+    }
     .btn-group {
       margin-bottom: 7px;
     }

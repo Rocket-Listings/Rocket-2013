@@ -49,9 +49,15 @@
         </div>
         <div class="form-group {% if form.errors.default_seller_type %}has-error{% endif %}">
             <label for="id_default_seller_type" class="col-sm-2 control-label">Seller Type</label>
-            <div class="btn-group col-sm-3" data-toggle-name="default_seller_type" data-toggle="buttons-radio">
-                <button type="button" value="O" class="btn btn-primary" data-toggle="button">Owner</button>
-                <button type="button" value="D" class="btn btn-primary" data-toggle="button">Dealer</button>
+            <div class="col-sm-3">
+                <div class="btn-group btn-group-justified" data-toggle="buttons">
+                    <label class="btn btn-default active">
+                        <input type="radio" value="O" checked="checked"> Owner
+                    </label>
+                    <label class="btn btn-default">                
+                        <input type="radio" value="D"> Dealer
+                    </label>
+                </div>
             </div>
             <div class="help-block">{% for error in form.errors.default_seller_type %}{{ error }}&nbsp;{% endfor %}</div>
         </div>
@@ -64,19 +70,20 @@
 
 	</form>
 {% endblock %}
-
+{% comment %}
 {% block js %}
-<script>
-	$("div.btn-group[data-toggle-name='default_seller_type'] button").click(function() {
+<script> $}
+ 	$("div.btn-group[data-toggle-name='default_seller_type'] button").click(function() {
 		var button = $(this),
-			hidden = $('input[name="default_seller_type"]');
-		hidden.val(button.val());
-	});
-    if ($('input[name="default_seller_type"]').val() == "O") {
-        $("button[value='O']").addClass("active");
-    }
+ 			hidden = $('input[name="default_seller_type"]');
+ 		hidden.val(button.val());
+ 	});
+     if ($('input[name="default_seller_type"]').val() == "O") {
+         $("button[value='O']").addClass("active");
+     }
     else {
-        $("button[value='D']").addClass("active");
-    }
+         $("button[value='D']").addClass("active");
+     }
 </script>
 {% endblock %}
+{% endcomment %}

@@ -12,13 +12,22 @@
       <script type="text/javascript">
       (function(a){if(window.filepicker){return}var b=a.createElement("script");b.type="text/javascript";b.async=!0;b.src=("https:"===a.location.protocol?"https:":"http:")+"//api.filepicker.io/v1/filepicker.js";var c=a.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c);var d={};d._queue=[];var e="pick,pickMultiple,pickAndStore,read,write,writeUrl,export,convert,store,storeUrl,remove,stat,setKey,constructWidget,makeDropPane".split(",");var f=function(a,b){return function(){b.push([a,arguments])}};for(var g=0;g<e.length;g++){d[e[g]]=f(e[g],d._queue)}window.filepicker=d})(document); 
       </script>
-  <script src="{% static 'rocket/js/jquery.cookie.js' %}"></script>
   <script src="{% static 'listings/js/utils.js' %}"></script>
-  <script src="{% static 'listings/js/detail.js' %}"></script> 
+  <script type="text/javascript">
+    var listingJSON = $.parseJSON('{{ listing_json|escapejs }}');
+    var REMOTE_ADDR = "{{ REMOTE_ADDR|escapejs }}";
+  </script>
+  <script id="market-data" type="text/json">
+    {% include 'listings/partials/markets.json' %}
+  </script>
+  <script type="text/json" id="initial-specs">
+    {% include "listings/partials/initial_specs.json" %}
+  </script>
+  <script src="{% static 'listings/js/detail.js' %}"></script>
 {% endblock %}
 {% block content %}
   <div class="row">
-    <div id="listing-detail" class="col-lg-9 tab-content">
+    <div id="listing-detail" class="col-md-9 tab-content">
       <div class="tab-pane{% if pane == 'edit' %} active{% endif %}" id="edit">
         {% include 'listings/partials/edit.html' %}
       </div>
@@ -26,19 +35,24 @@
         {% include 'listings/partials/preview.html' %}
       </div>
     </div>
-
-    <div class="col-lg-3 detail-sidebar">
+    <div class="col-md-3 detail-sidebar">
       <h4>Actions</h4>
-      <p class="text-muted">We're saving your work as you go. <br/>You don't have to believe us though.</p>        
-      <div data-spy="affix" data-offset-top="98">
-        <div class="btn-group" data-toggle-name='listing-pane-toggle'>
-          <a class="edit-btn btn btn-default {% if pane == 'edit' %} active{% endif %}" data-toggle="tab" href="#edit">Edit</a>
-          <a id="preview-btn" class="preview-btn btn btn-default {% if pane == 'preview' %} active{% endif %}" data-toggle="tab" href="#preview">Preview</a>
+      <p class="text-muted">Your listing saves itself automatically.</p>        
+      <div class="btn-stack" data-spy="affix" data-offset-top="132">
+        <div class="btn-group btn-group-justified" data-toggle="buttons">
+          <a class="btn btn-default {% if pane == 'edit' %}active{% endif %}" href="#edit" data-toggle="tab">
+            {# Need the radio input to make the bootstrap data-toggle="button" work #}
+            <input type="radio">
+             Edit
+          </a>
+          <a class="btn btn-default {% if pane == 'preview' %}active{% endif %}" href="#preview" data-toggle="tab">
+            <input type="radio">
+            Preview
+          </a>
         </div>
         {# Have to stack because of display:inline-block; #}
-        <a class="btn btn-default" href="{% url 'dashboard' %}">Back to dashboard</a>
-        <a class="btn btn-success publish-btn">Publish to Craigslist</a>
-      </div>
+        <a class="btn btn-default btn-block" href="{% url 'dashboard' %}">Save go to the dashboard</a>
+        <a class="btn btn-success btn-block publish-btn">Publish to Craigslist</a>
       </div>
     </div>
   </div>

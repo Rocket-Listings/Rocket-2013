@@ -65,7 +65,7 @@ class Listing(models.Model):
 
 	CL_link = models.URLField(null=True, blank=True)
 	CL_view = models.URLField(null=True, blank=True)
-	market = models.CharField(max_length=3)
+	market = models.CharField(max_length=3, null=True, blank=True)
 	sub_market = models.CharField(max_length=3, null=True, blank=True)
 	hood = models.CharField(max_length=3, null=True, blank=True)
 

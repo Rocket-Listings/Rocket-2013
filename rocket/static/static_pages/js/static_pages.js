@@ -92,15 +92,9 @@ $(function() {
   function getLocationByIP() {
     $.ajax({
       method: 'GET',
-      url: 'http://jsonip.appspot.com/',
+      url: 'https://freegeoip.net/json/' + REMOTE_ADDR,
       success: function(response) {
-        $.ajax({
-          method: 'GET',
-          url: 'https://freegeoip.net/json/' + response.ip,
-          success: function(response) {
-            gotLocation(response.latitude, response.longitude);
-          }
-        });
+        gotLocation(response.latitude, response.longitude);
       }
     });
   }

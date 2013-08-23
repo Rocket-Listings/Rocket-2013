@@ -2,6 +2,7 @@
 <h3>
   <span class="listing-title">{{ listing.title|default:"Create a Listing" }}</span>
   <small id="loading" class="text-muted" style="display: none;">Saving...</small>
+  <small id="error-saving" class="text-danger" style="display: none;">Error saving :(</small>
 </h3>
 {# {{ formset.as_p }} #}
 
@@ -10,7 +11,6 @@
 {# {% endfor %} #}
 
 <form class="listing-form">
-  <input type="hidden" name="category" id="id_category" value="{{ listing.category_id|default:"" }}"/>
   {# Category Select #}
   <fieldset id="category-fieldset">
     <legend>Category</legend>
@@ -85,41 +85,18 @@
   </fieldset>
   <fieldset id="spec-fieldset">
     <legend>Information</legend>
-
-    {# json of initial specs #}
-    <script type="text/json" id="initial-specs">
-      {% include "listings/partials/initial_specs.json" %}
-    </script>
-
+    <div id="spec-row" class="row"></div>
     {# template for spec form #}
     {% verbatim %}
     <script id="spec-edit-template" type="text/template">
       {{#specs}}
       <div class="form-group col-lg-3">
-        <label for="id_spec-{{index}}">{{ name }}</label>
-        <input class="form-control" id="id_spec-{{index}}" maxlength="100" type="text" value="{{ value }}" />
+        <label for="id_spec-{{id}}">{{ name }}</label>
+        <input class="form-control" id="id_spec-{{id}}" data-id="{{id}}" maxlength="100" type="text" name="value" value="{{ value }}" />
       </div>
       {{/specs}}  
     </script>
     {% endverbatim %}
-
-    {% for spec in specs %}
-    <input type="hidden" class="spec-data" data-id="{{ spec.id }}" name="{{ spec.name }}" value="{{ spec.value }}" />
-    {% endfor %}
-    </div>
-
-    <div id="spec-row" class="row">
-      {% comment %}
-      {% for form in spec_formset %}
-      <div class="form-group col-lg-3">
-        <input id="{{form.name.id}}" maxlength="100" name="{{form.name.name}}" type="hidden" value="{{ form.instance.name }}" />
-        <label for="id_spec_set-{{form.id.value}}-value">{{ name }}</label>
-        <input class="form-control" id="id_spec_set-{{form.id.value}}-value" maxlength="100" name="spec_set-{{index}}-value" type="text" value="{{ value }}" />
-        <input id="id_spec_set-{{form.id.value}}-DELETE" name="spec_set-{{form.id.value}}-DELETE" type="hidden" />
-      </div>
-      {% endfor %} 
-      {% endcomment %}
-    </div>
 
     {# description #}
     <div class="form-group{# {% if form.description.errors %} has-error {% endif %} #}">
@@ -132,12 +109,9 @@
     <div class="row">
       <div id="market-col" class="col-lg-6">
         <label for="id_market" class="control-label">Market</label>
-          <input type = "hidden" class= "form-select" name = "market" style="display:none" value = "{{form.market.value|default:""}}">
-          </input> 
-          <input type = "hidden" class= "form-select-sub" name = "sub_market" style="display:none" value = "{{form.sub_market.value|default:""}}">
-          </input>
-          <input type = "hidden" class= "form-select-hood" name = "hood" style="display:none" value = "{{form.hood.value|default:""}}">
-          </input>
+        <input type="hidden" class="market" name="market" style="display:none" value="{{ listing.market|default:"" }}"/>
+        <input type="hidden" class="sub_market" name="sub_market" style="display:none" value="{{ listing.sub_market|default:"" }}"/>
+        <input type="hidden" class="hood" name="hood" style="display:none" value="{{ listing.hood|default:"" }}"/>
       </div>
       <div class="col-lg-6">
         <div class="form-group{# {% if form.location.errors %} has-error {% endif %}#}">
@@ -155,34 +129,20 @@
   </fieldset>
   <fieldset id="photo-fieldset">
     <legend>Photo Upload<small class="photo-view text-muted">Drag to reorder</small>
-      <a class="btn btn-small btn-default pull-right photo-view toggle-view">Upload more</a>
-      <a class="btn btn-small btn-default pull-right upload-view toggle-view" style="display: none;">Arrange photos</a>      
+      <a class="btn btn-xs btn-default pull-right photo-view toggle-view">Upload more</a>
+      <a class="btn btn-xs btn-default pull-right upload-view toggle-view" style="display: none;">Arrange photos</a>      
     </legend>
-
-    {# errors #}
-    {% comment %}
-    {% for dict in photo_formset.errors %}
-    {% for error in dict.values %}
-      <div class="alert alert-warning alert-block">
-      {{ error }}
-      </div>  
-    {% endfor %}
-    {% endfor %}
-    {% endcomment %}
 
     {# filepicker iframe #}
     <iframe class="upload-view" id="fp-container"></iframe>
 
     {# thumbnails #}
     <div id="photos" class="row sortable photo-view">
-      {% comment %}
-      {% for form in photo_formset %}
-      <div class="col-lg-2" data-id="{{ forloop.counter0 }}" draggable="true">
-        <img src="{{ S3_URL }}" class="img-responsive">
-        {{ form }}
+      {% for photo in photos %}
+      <div class="photo-data col-md-2" data-id="{{ photo.id }}" draggable="true">
+        <img src="{{ S3_URL }}{{ photo.key }}" class="img-responsive">
       </div>
       {% endfor %}
-      {% endcomment %}
     </div>
 
     {# hidden formset #}
@@ -192,18 +152,16 @@
     </div>
     {% endcomment %}
 
-    <iframe class="upload-view" id="fp-container"></iframe>
     {# Mustache Template #}
     {% verbatim %}
     <script id="photo-thumbnail-template" type="text/template">
       {{#photos}}
-      <div class="col-lg-2" data-id="{{ index }}" draggable="true">
-        <img src="{{ src }}" class="img-responsive">
+      <div class="col-lg-2" data-id="{{ id }}" draggable="true">
+        <img src="{% endverbatim %}{{ S3_URL }}{% verbatim %}{{ key }}" class="img-responsive">
       </div>
       {{/photos}}
     </script>
     {% endverbatim %}
-      {# <input id="id_listingphoto_set-{{num}}-id" name="listingphoto_set-{{num}}-id" type="hidden" /> #}
   </fieldset>
 
   <div class="btn-toolbar pull-right">
@@ -211,6 +169,3 @@
     <a class="publish-btn btn btn-success">Publish to Craigslist</a>
   </div>
 </form>
-<script id="market-data" type="text/json">
-  {% include 'listings/partials/markets.json' %}
-</script>

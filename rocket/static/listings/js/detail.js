@@ -42,9 +42,10 @@ $(function() {
       var elem = $(e.currentTarget);
       var nextCat = elem.data('id');
       var prevCat = this.model.get('category');
-      this.render(nextCat, prevCat);
-      this.model.save('category', nextCat, { patch: true });
-
+      if (nextCat != prevCat) {
+        this.render(nextCat, prevCat);
+        this.model.save('category', nextCat, { patch: true });
+      }
     },
     // parseToModel: function() {
     //   this.model.set('category', $('#id_category').val());
@@ -70,78 +71,77 @@ $(function() {
     events: {
       "change #id_location": "changed",
       "click #location-btn": "getLocationByBrowser",
-      "change .form-select": "formSelectChange",
-      "change .form-select-sub": "formSelectSubChange"
+      "change .market": "marketChange",
+      "change .sub_market": "submarketChange",
+      "change .hood": "hoodChange"
     },
     initialize: function() {
-      setupMapSelectStuff();
-      _.bindAll(this, 'mapResize', 'changed', 'formSelectChange', 'formSelectSubChange');
+      _.bindAll(this, 'mapResize', 'changed', 'marketChange', 'submarketChange', 'hoodChange');
       this.geocoder = new google.maps.Geocoder();
       this.render();
+      this.markets = $.parseJSON($("#market-data").html());
+      this.initMarket();
       $('.edit-btn').on('shown.bs.tab', this.mapResize);
     },
-    setupMapSelectStuff: function() {
-      //Market Select Stuff
+    initMarket: function() {
       //Initialization and edit state
-      this.dat = dat = $.parseJSON($("#market-data").html());
-      $(".form-select").select2({
+      this.$(".market").select2({
         placeholder: "Select a Market",
-        data: dat.markets
+        data: this.markets.markets
       });
-      $(".form-select").show(); 
-      if ($(".form-select-sub").attr('value') != "") {
-        $(".form-select-sub").select2({
-            placeholder: "Select a Sub-Market",
-            data: dat[$(".form-select").select2("val")]
-          });
-        $(".form-select-sub").show();
-      };
-      if ($(".form-select-hood").attr('value') != "") {
-        console.log("in");
-        $(".form-select-hood").select2({
-            placeholder: "Select a Sub-Market",
-            data: dat[$(".form-select").select2("val")][$(".form-select-sub").select2("val")-1].hoods
-          });
-        $(".form-select-hood").show();
-      };
+      this.$(".market").show();
+      this.initSubmarket(this.model.get('market'));
     },
-    formSelectChange: function(e) {
-      var dat = this.dat;
-      $(".form-select-sub").select2("val", "");
-      $(".form-select-hood").select2("val", "");
-      if (dat[e.val]) {
-        $(".form-select-sub").select2({
+    initSubmarket: function(market) {
+      if (this.markets[market]) {
+        this.$(".sub_market").select2({
           placeholder: "Select a Sub-Market",
-          data: dat[e.val]
+          val: "",
+          data: this.markets[market]
         });
-        $(".form-select-sub").show();
+        this.$(".sub_market").show(); 
+      } else {
+        this.$(".sub_market").hide();
       }
-      else{
-        $(".form-select-sub").hide();
-        $(".form-select-hood").hide();
+      this.initHood(market, this.model.get('sub_market'));
+    },
+    initHood: function(market, subMarket) {
+      if (this.markets[market] && this.markets[market][subMarket-1].hoods) {
+        this.$(".hood").select2({
+          placeholder: "Select a Sub-Market",
+          val: "",
+          data: this.markets[market][subMarket-1].hoods
+        });
+        this.$(".hood").show();
+      } else {
+        this.$(".hood").hide();
       }
     },
-    formSelectSubChange: function(e){
-      var dat = this.dat;
-      if ($(".form-select").select2("val") === "sfo" || 
-         ($(".form-select").select2("val") === "nyc" && e.val === "1")){
-            $(".form-select-hood").select2({
-              placeholder: "Select a Hood",
-              data: dat[$(".form-select").select2("val")][e.val-1].hoods
-            });
-            $(".form-select-hood").show()
-      }else{
-        $(".form-select-hood").hide()
-      }
+    marketChange: function(e) {
+      this.initSubmarket(e.val);
+      if (e.val)
+        this.model.save('market', e.val, { patch: true });
+    },
+    submarketChange: function(e){
+      var value = parseInt(e.val);
+      this.initHood(this.model.get('market'), value);
+      if (value)
+        this.model.save('sub_market', value, { patch: true });      
+    },
+    hoodChange: function(e) {
+      var value = parseInt(e.val);
+      this.model.save('hood', value, { patch: true });
     },
     changed: function(e) {
       var input = $(e.currentTarget);
       this.model.save(input.attr('name'), input.val(), { patch: true });
     },
+
     render: function() {
-      var val = $('#id_location').val();
-      if (val.length > 0) {
-        this.geocode(val);
+      this.toggleLoading();
+      this.model.get('location');
+      if (location.length > 0) {
+        this.geocode(location);
       } else {
         this.getLocationByIP();
       }
@@ -188,13 +188,11 @@ $(function() {
           that.reverseGeocode(latlng);
         }, that.mapError, { enableHighAccuracy: true });
       } else {
-        that.toggleLoading('getLoctationByBrowser stop no navigator.geoLocation');
         this.mapError("Error: Old or non-compliant browser.");
       }
     },
 
     geocode: function(address) {
-      this.toggleLoading();
       var that = this;
       this.geocoder.geocode({'address': address}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
@@ -202,7 +200,6 @@ $(function() {
           that.mapInit(latlng, 12);
           that.toggleLoading('geocode stop success');
         } else {
-          that.toggleLoading('geocode stop geocoder status not ok');
           that.mapError('Geocode was not successful for the following reason: ' + status);
         }
       });
@@ -238,30 +235,19 @@ $(function() {
       var that = this;
       $.ajax({
         method: 'GET',
-        url: 'http://jsonip.appspot.com/',
+        url: 'https://freegeoip.net/json/' + REMOTE_ADDR,
+        beforeSend: function(xhr, settings) {},
         success: function(response) {
-          $.ajax({
-            method: 'GET',
-            url: 'https://freegeoip.net/json/' + response.ip,
-            success: function(response) {
-              var latlng = new google.maps.LatLng(response.latitude, response.longitude);
-              that.mapInit(latlng, 12);
-              that.toggleLoading();
-              that.reverseGeocode(latlng);
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-              console.log('freegeoip error');
-              console.log(textStatus);
-            }
-          });
+          var latlng = new google.maps.LatLng(response.latitude, response.longitude);
+          that.mapInit(latlng, 12);
+          that.toggleLoading();
+          // that.reverseGeocode(latlng);
         },
         error: function(jqXHR, textStatus, errorThrown) {
-          console.log('jsonip error');
-          console.log(textStatus);
+          console.log('freegeoip error');
         }
-      });
+      });      
     },
-
     mapError: function(error) {
       this.toggleLoading();
       console.log("Maps error");
@@ -347,50 +333,55 @@ $(function() {
     el: '#spec-fieldset',
     template: Mustache.compile($('#spec-edit-template').html()),
     events: {
-      "change input": "parseToCollection",
-      "change .description":  "changed"
+      "change .description":  "descriptionChanged",
+      "change #spec-row input": "specChanged"
     },
     initialize: function(options) {
-      this.parseToCollection();
       this.listenTo(this.model, 'change:category', this.switchCategory);
-      _.bindAll(this, "changed");
-      this.defaults = $.parseJSON(this.$('#initial-specs').html());
+      _.bindAll(this, "descriptionChanged", "specChanged");
+      this.defaults = $.parseJSON($('#initial-specs').html());
       this.switchCategory(this.model);
     },
-    changed: function(e) {
+    descriptionChanged: function(e) {
       var input = $(e.currentTarget);
       this.model.save(input.attr('name'), input.val(), { patch: true });
     },
-    parseToCollection: function() {
-      var specs = $('.spec-data').map(function(index, input) {
-        return new Spec({
-          id: input.data('id'),
-          name: input.attr('name'),
-          value: input.val(),
-        });
-      });
-      this.collection.set(specs.get());
-      return this;
+    specChanged: function(e) {
+      var input = $(e.currentTarget);
+      var id = input.data('id')
+      var spec = this.collection.get(id);
+      if (input.val().length > 0) {
+        spec.save('value', input.val());
+      } else if (!spec.isNew()) {
+        spec.destroy();
+      }
     },
     switchCategory: function(model) {
+      var that = this;
       var cat = model.get('category');
       var catName = $('.cat[data-id="{0}"]'.format(cat)).html(); // workaround
       var specNames = this.defaults[catName];
-      if (!specNames) {
-        return;
-      }
-      var total = parseInt(this.$('#id_spec_set-TOTAL_FORMS').val());
-      var initial = parseInt(this.$('#id_spec_set-INITIAL_FORMS').val());
-      var specs = _.map(specNames, function(name, _index) {
-        return {
-          index: total + _index,
-          name: name,
-          value: ""
-        };
+      var filteredSpecs = this.collection.filter(function(spec) {
+        return spec.get('value').length > 0;
       });
-      var context = { 'specs': specs };
-      this.$('#id_spec_set-TOTAL_FORMS').val(total+specNames.length);
-      this.$('#spec-row').html(this.template(context));
+      if (filteredSpecs) {
+        this.collection.reset(filteredSpecs);
+      }
+      if (specNames) {
+        var nextSpecs = _.map(specNames, function(name, index) {
+          var existing = that.collection.findWhere({name: name });
+          if (existing)
+            return existing;
+          else
+            return new Spec({
+              "name": name,
+              "value": "",
+              "listing": that.model.id
+            });
+        });
+      }
+      this.collection.add(nextSpecs, { merge: true });
+      this.$('#spec-row').html(this.template({ 'specs': this.collection.toJSON() }));
     }
   });
 
@@ -417,35 +408,19 @@ $(function() {
       this.bindSortable();
       // want to compile these after enabling UI functionality
       this.template = Mustache.compile(this.$('#photo-thumbnail-template').html());
+      this.render(false);
+      this.collection.on('add', function(photo) {
+        photo.save();
+      });
       // this.parseToCollection();
     },
-    // parseToCollection: function() {
-    //   var form = $('.listing-form:first').serializeObject();
-    //   var total = parseInt(form['listingphoto_set-TOTAL_FORMS']);
-    //   var photolist = [];
-    //   for (var i = 0; i < total; i++) {
-    //     var key = 'listingphoto_set-{0}-'.format(i);
-    //     console.log(form);
-    //     photolist.push(new Photo({
-    //       url: form[key + 'url'],
-    //       key: form[key + 'key'],
-    //       index: i,
-    //       // listing: form[key + 'listing'],
-    //       order: form[key + 'ORDER'],
-    //       id: form[key + 'id'],
-    //       markedDelete: form[key + 'DELETE'] || false
-    //     }));
-    //   }
-    //   this.collection.set(photolist); // {merge: true});
-    //   this.render();
-    //   return this;
-    // },
-    render: function() {
+    render: function(update) {
       if (this.collection.length > 0) {
         var context = { 'photos': this.collection.toJSON() };
-        console.log(context);
-        var thumbnails = this.template(context);
-        this.$('#photos').append(thumbnails);
+        if (update) {
+          var thumbnails = this.template(context);
+          this.$('#photos').html(thumbnails);
+        }
         this.bindSortable();
         this.$('.photo-view').fadeIn();
         this.$('.upload-view').hide();
@@ -455,27 +430,20 @@ $(function() {
       }
     },
     onSuccess: function(InkBlobs) {
-      // update management form
-      // var totalInput = this.$('#id_listingphoto_set-TOTAL_FORMS');
-      // var total = parseInt(totalInput.val());
-      // totalInput.val(total + InkBlobs.length);
-      // var initial = parseInt(this.$('#id_listingphoto_set-INITIAL_FORMS').val());
-      // prepare view context variables
-      var total = 0,
-          initial = 0;
-      var photos = [];
-      _.each(InkBlobs, function(blob, index) {
-        photos.push(new Photo({
-          index: initial + index,
-          order: initial + index,
+      var that = this;
+      var len = this.collection.length;
+      var nextPhotos = _.map(InkBlobs, function(blob, index) {
+        return new Photo({
           url: blob.url,
           key: blob.key,
-          src: "http://static.rocketlistings.com/" + blob.key,
-          markedDelete: false
-        }));
+          order: len + index,
+          listing: that.model.id
+        });
       });
-      this.collection.set(photos);
-      this.render();
+      console.log(this.collection.toJSON());
+      this.collection.set(nextPhotos, { merge: true });
+      console.log(this.collection.toJSON());      
+      this.render(true);
     },
     onError: function(type, message) {
       console.log('('+type+') '+ message);
@@ -487,15 +455,16 @@ $(function() {
       $('.upload-view').toggle();
       $('.photo-view').toggle();
     },
+    // theres a beneign error that happens around here that we should fix
     updateOrder: function(e, ui) {
       var that = this;
       this.$('.sortable div').each(function(_index, item) {
         var id = $(item).data('id');
-        that.collection.get(id).set('order', _index);
+        that.collection.get(id).save('order', _index, { patch: true });
       });
     },
     bindSortable: function() {
-      this.$('.sortable').sortable()
+      $('.sortable').sortable()
         .unbind('sortupdate')
         .bind('sortupdate', this.updateOrder);
     }
@@ -511,7 +480,6 @@ $(function() {
       this.listing = options.listing;
       this.photos = options.photos;
       this.specs = options.specs;
-
       this.render();
 
       this.listenTo(this.listing, 'change add remove', this.render);
@@ -534,7 +502,16 @@ $(function() {
       this.$el.html(this.template(context));
     },
     publish: function(e) {
-      console.log('publish');
+      $.ajax({
+        url: '/listing/' + this.listing.id.toString() + '/autopost',
+        method: 'GET',
+        success: function(data, status, xhr) {
+          window.location.replace('/listings/dashboard/');
+        },
+        error: function(jqXHR, textStatus, errorThrown ) {
+          console.log('error saving');
+        }
+      });
     },
     fillStage: function(e) {
       e.preventDefault();
@@ -548,81 +525,96 @@ $(function() {
 
   // models are split up by their corresponding django form
   var Listing = Backbone.Model.extend({
-    urlRoot: '/listings/api/'
+    urlRoot: '/api/listings'
   });
-  var Spec = Backbone.Model.extend({});
+  var Spec = Backbone.Model.extend({
+    toJSON: function() {
+      var json = Backbone.Model.prototype.toJSON.apply(this, arguments);
+      if (!this.id && this.cid) {          
+        json.id = this.cid;
+      }
+      return json;
+    }
+  });
   var SpecList = Backbone.Collection.extend({
-    model: Spec
+    model: Spec,
+    url: '/api/specs',
   });
-  var Photo = Backbone.Model.extend({});
+
+  var Photo = Backbone.Model.extend({
+    toJSON: function() {
+      var json = Backbone.Model.prototype.toJSON.apply(this, arguments);      
+      if (!this.id && this.cid) {          
+        json.id = this.cid;
+      }
+      return json;
+    }
+  });
+
   var PhotoList = Backbone.Collection.extend({
     model: Photo,
+    url: '/api/photos',
     comparator: 'order'
   });
 
-  // number after /listing/
-  var listingId = parseInt(window.location.pathname.split('/listings/')[1].split('/')[0]);
-  // we don't want all the input fields
-  var form = $('.listing-form:first').serializeObject();
-  var listing = new Listing({
-    id: listingId,
-    title: form.title || null,
-    category: form.category || null,
-    price: form.price || null,
-    description: form.description || null,
-    location: form.location || null,
-    market: form.market || null,
-    CL_link: null,
-    CL_view: null,
-  });
-  var specs = new SpecList;
-  var photos = new PhotoList;
+  var specsJSON = listingJSON.spec_set;
+  var photosJSON = listingJSON.listingphoto_set;
 
-  var specEditView = new SpecEditView({ collection: specs, model: listing  });
-  var photoEditView = new PhotoEditView({ collection: photos });
-  var listingEditView = new ListingEditView({ model: listing });
+  // prune json.. we should probably modify the serializer so we don't have to do this
+  delete listingJSON.spec_set;
+  delete listingJSON.listingphoto_set;  
+  delete listingJSON.user;
 
-  var previewView = new PreviewView({ listing: listing, specs: specs, photos: photos });
+  var listing = new Listing(listingJSON);
+  var specs = new SpecList(specsJSON);
+  var photos = new PhotoList(photosJSON);
 
   $.ajaxSetup({
     beforeSend: function(xhr, settings) {
-      xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));
+      xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
     }
   });
+
+  var previewView = new PreviewView({ listing: listing, specs: specs, photos: photos });
+
+  var specEditView = new SpecEditView({ collection: specs, model: listing  });
+  var photoEditView = new PhotoEditView({ collection: photos, model: listing });
+  var listingEditView = new ListingEditView({ model: listing });
 
   var SidebarView = Backbone.View.extend({
     el: '.detail-sidebar',
     events: {
       // "click .draft-btn": "save",
-      "click div.btn-group[data-toggle-name='listing-pane-toggle'] a": "toggleView",
       // "click .save-btn": "publish"
     },
     initialize: function() {
       this.listenTo(listing, 'request', this.showSaving);
       this.listenTo(listing, 'sync', this.hideSaving);
+      this.listenTo(listing, 'error', this.errorSaving);
 
       this.listenTo(specs, 'request', this.showSaving);
       this.listenTo(specs, 'sync', this.hideSaving);
+      this.listenTo(listing, 'error', this.errorSaving);
 
       this.listenTo(photos, 'request', this.showSaving);
       this.listenTo(photos, 'sync', this.hideSaving);
+      this.listenTo(listing, 'error', this.errorSaving);      
     },
     showSaving: function(event) {
+      $('#error-saving').hide();      
       $('#loading').show();
     },
     hideSaving: function(event) {
+      $('#error-saving').hide();
       $('#loading').hide();
     },
-    toggleView: function(e) {
-      $(this).siblings().removeClass("active");
-      $(this).addClass("active");
+    errorSaving: function(event) {
+      $('#loading').hide();      
+      $('#error-saving').show();
     },
     // save: function(e) {
     //   $('#submit-draft').click();
     // },
-    publish: function(e) {
-      console.log('publish');
-    }
   });
   var sidebarView = new SidebarView;
 });
