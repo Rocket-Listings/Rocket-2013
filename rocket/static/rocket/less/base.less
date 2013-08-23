@@ -7,24 +7,55 @@ a {
   }
 }
 
+.navbar-static-top{
+  margin-bottom: 0;
+}
 .navbar {
   border-bottom: 1px solid darken(@navbar-color, 30%);
   background: @navbar-color;
   min-height: 0px;
+  padding-bottom: 0px;
   .username-item {
     z-index: 3;
     padding-right: 3px;    
   }
 
   .settings-cog {
-    padding-left: 5px;
+    padding-left: 7px;
     padding-right: 10px;
+
+  
+  &:hover{
+    background-color: #d5d5d5 !important;
+  }
+
+  a:focus{
+    background-color: #d5d5d5 !important;
+  }
+
+  &:active{
+    background-color: #d5d5d5 !important; 
+  }
+
+  }  
+}
+
+.container.nav-fixed{
+  max-width: none;
+}
+
+.dropdown.open{
+  .settings-cog.active{
+    background-color: #d5d5d5 !important;
   }
 }
 
-
+.navbar-nav{
+  margin: 0 -15px;
+}
 ul.navbar-nav > li > a {
   outline: none;
+  color: grey;
 }
 
 .navbar-nav>.open>a, .navbar-nav>.open>a:hover, .navbar-nav>.open>a:focus {
@@ -35,17 +66,34 @@ ul.navbar-nav > li > a {
   color: inherit;
 }
 
-.navbar-toggle {
-  top: 2px;
-}
 
+button.navbar-toggle{
+  background-color: grey;
+  padding: 6px 8px;
+  margin-bottom: 0;
+  margin-top: 4px; 
+
+  &.collapsed{
+    background-color: transparent;
+    padding: 6px 8px;
+    border-color: grey;
+
+    span.icon-bar{
+      background-color: grey;
+    }
+  }
+
+  span.icon-bar{
+    background-color: white;
+  }
+}
 .navbar .dropdown-menu {
 
-  // background: #eee;
+  // background: #eee#d5d5d5
   margin: 0;
   padding: 0;
   border-top: none;
-  min-width: 108px;
+  min-width: 111px;
 
   > li > a {
     padding: 5px 10px;
@@ -54,19 +102,21 @@ ul.navbar-nav > li > a {
   }
 }
 
-@media (min-width: 768px) {
-  .navbar > .nav.navbar-nav.pull-right {
-    position:relative;
-    right: 5px;
-  }
+// @media (min-width: 768px) {
+//   .navbar > .nav.navbar-nav.pull-right {
+//     position:relative;
+//     right: 5px;
+//   }
 
-  .container > .nav.navbar-nav.pull-right {
-    position:relative;
-    right: -15px;
-  }
-}
+//   .container > .nav.navbar-nav.pull-right {
+//     position:relative;
+//     right: -15px;
+//   }
+// }
+
 
 ul.navbar-nav {
+
   > li > a {
     height: @navbar-height;
     line-height: @navbar-height;
@@ -106,6 +156,7 @@ ul.navbar-nav {
   display:block;
   position: relative;
   left: -4*@accent-width + 5;
+  margin-left: 14px;
 
   .accent {
     float:left;
@@ -151,7 +202,7 @@ ul.navbar-nav {
     }
     .sans-serif {
       // padding-left: 4px;
-      line-height: @navbar-height;
+      line-height: 35px;
       letter-spacing: 0.15em;
       font-weight: 100;      
       font-size: 18px;
@@ -188,8 +239,6 @@ ul.navbar-nav {
 .container .navbar-logo {
   left: -4*@accent-width;
 }
-
-
 .footer, .footer-fixed {
   background: @footer-color;
   p {
