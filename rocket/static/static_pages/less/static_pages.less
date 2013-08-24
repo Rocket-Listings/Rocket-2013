@@ -191,6 +191,8 @@ h1.flag {
   text-align: right;
 }
 
+
+
 .what-row {
   text-align: center;
   margin-bottom: 30px;
@@ -205,42 +207,71 @@ h1.flag {
 
   .col-photos{
     height: 100%;
-    background-color: @menu2;
+    background-color: @menu0;
     padding: 10px 10px;
     overflow: hidden;
+    border: 1px solid #CACACA;
+
+    &:hover{
+      background-color: @menu1;
+    }
 
   }
 
   .col-listing{
-    background-color: @menu1;
+    background-color: @menu0;
     padding: 10px 10px;
     overflow: hidden;
-    
+    border: 1px solid #CACACA;
+
+    &:hover{
+      background-color: @menu2;
+    }    
   }
 
   .col-autopost{
-    background-color: @menu3;
+    background-color: @menu0;
     padding: 10px 10px;
     overflow: hidden;
+    border: 1px solid #CACACA;
+
+    &:hover{
+      background-color: @menu3;
+    }    
     
   }
 
   .col-dashboard{
-    background-color: @menu4;
+    background-color: @menu0;
     padding: 10px 10px;
     overflow: hidden;
+    border: 1px solid #CACACA;
+
+    &:hover{
+      background-color: @menu4;
+    }    
   }
 
   .col-message{
     background-color: @menu0;
     padding: 10px 10px;
     overflow: hidden;
+    border: 1px solid #CACACA;
+
+    &:hover{
+      background-color: @menu1;
+    }    
   }
 
   .col-profiles{
-    background-color: #CCCCFF;
+    background-color: @menu0;
     padding: 10px 10px;
     overflow: hidden;
+    border: 1px solid #CACACA;
+
+    &:hover{
+      background-color: @menu2;
+    }    
 
   }
 
@@ -512,7 +543,7 @@ h1.flag {
   .col-listing-img{
     img{
       padding: 20px;
-      border: 1px solid #ddd;
+      border: 1px solid @craigslistBlue;
       background-color: white; 
     }
   }
