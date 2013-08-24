@@ -1123,7 +1123,7 @@
           "text":"Richmond"
      }
 ],  
-"wdc":[ 
+"wdc": [ 
      {
           "id":"1",
           "text":"District Of Columbia"
@@ -1137,7 +1137,7 @@
           "text":"Maryland"
      }
 ],
-"markets":[     
+"markets":[
      {
           "id": "sfo",
           "text": "Sf Bay Area"

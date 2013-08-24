@@ -42,7 +42,7 @@ $(function() {
     },
     changed: function(e) {
       var input = $(e.currentTarget);
-      this.model.save(input.attr('name'), input.val(), {patch: true});
+      this.model.save(input.attr('name'), input.val(), {patch: true, validate: false});
     },
     renderPageTitle: function(e) {
       var title = $(e.currentTarget).val();
@@ -72,7 +72,7 @@ $(function() {
       var prevCat = this.model.get('category');
       if (nextCat != prevCat) {
         this.render(nextCat, prevCat);
-        this.model.save('category', nextCat, { patch: true });
+        this.model.save('category', nextCat, { patch: true, validate: false });
       }
     },
     // parseToModel: function() {
@@ -106,9 +106,9 @@ $(function() {
     initialize: function() {
       _.bindAll(this, 'mapResize', 'changed', 'marketChange', 'submarketChange', 'hoodChange');
       this.geocoder = new google.maps.Geocoder();
-      this.render();
       this.markets = $.parseJSON($("#market-data").html());
       this.initMarket();
+      this.render();
       $('.edit-btn').on('shown.bs.tab', this.mapResize);
     },
     initMarket: function() {
@@ -129,6 +129,7 @@ $(function() {
         });
         this.$(".sub_market").show(); 
       } else {
+        this.model.save('sub_market', null, { patch: true, validate: false });
         this.$(".sub_market").hide();
       }
       this.initHood(market, this.model.get('sub_market'));
@@ -141,35 +142,62 @@ $(function() {
           data: this.markets[market][subMarket-1].hoods
         });
         this.$(".hood").show();
+        this.$('#id_location').val('');
+        this.$('#id_location').prop('disabled', true);
       } else {
+        this.model.save('hood', null, { patch: true, validate: false });
+        this.$('#id_location').prop('disabled', false);
         this.$(".hood").hide();
       }
     },
     marketChange: function(e) {
       this.initSubmarket(e.val);
-      if (e.val)
-        this.model.save('market', e.val, { patch: true });
+      this.model.save('market', e.val, { patch: true, validate: false });
+      this.render();
     },
     submarketChange: function(e){
       var value = parseInt(e.val);
       this.initHood(this.model.get('market'), value);
-      if (value)
-        this.model.save('sub_market', value, { patch: true });      
+      // if (value)
+      this.model.save('sub_market', value, { patch: true, validate: false });      
+      this.render();      
     },
     hoodChange: function(e) {
       var value = parseInt(e.val);
-      this.model.save('hood', value, { patch: true });
+      this.model.save('hood', value, { patch: true, validate: false });
+      this.render();      
     },
     changed: function(e) {
       var input = $(e.currentTarget);
-      this.model.save(input.attr('name'), input.val(), { patch: true });
+      this.model.save(input.attr('name'), input.val(), { patch: true, validate: false });
+      this.render();
     },
 
     render: function() {
-      this.toggleLoading();
-      this.model.get('location');
-      if (location.length > 0) {
-        this.geocode(location);
+      this.startLoad('render');
+
+      var location = this.model.get('location');
+      var market = this.model.get('market');
+      var sub = this.model.get('sub_market');
+      var hood = this.model.get('hood');
+      var marketName, subName, hoodName;
+
+      // hella inefficient
+      if (market) {
+        marketName = _.findWhere(this.markets.markets, { id: market }).text; 
+        // console.log(sub);
+        if (sub) {
+          subName = _.findWhere(this.markets[market], { id: sub.toString() }).text + ', ' + marketName;
+          // console.log(hood);
+          if (hood) {
+            hoodName = _.findWhere(this.markets[market][sub-1].hoods, { id: hood.toString() }).text + ', ' + subName;
+          }
+        }
+      }
+
+      var mapFocus = location || hoodName || subName || marketName;
+      if (mapFocus) {
+        this.geocode(mapFocus);
       } else {
         this.getLocationByIP();
       }
@@ -197,14 +225,17 @@ $(function() {
     mapResize: function(e) {
       google.maps.event.trigger(this.map, 'resize');      
     },
-
-    toggleLoading: function(str) {
-      // console.log(str);
-      this.$('.loading-spinner').toggle();
+    startLoad: function(str) {
+      // console.log("startLoad: " + str);
+      this.$('.loading-spinner').show();
+    },
+    stopLoad: function(str) {
+      // console.log("stopLoad: " + str);
+      this.$('.loading-spinner').hide();
     },
 
     getLocationByBrowser: function(e) {
-      this.toggleLoading('getLocationByBrowser start');
+      this.startLoad('getLocationByBrowser');
       var that = this;
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -212,11 +243,11 @@ $(function() {
           var lng = position.coords.longitude;
           var latlng = new google.maps.LatLng(lat, lng);
           that.mapInit(latlng, 14);
-          that.toggleLoading('getLoctationByBrowser stop success');
+          that.stopLoad('getLoctationByBrowser');
           that.reverseGeocode(latlng);
         }, that.mapError, { enableHighAccuracy: true });
       } else {
-        this.mapError("Error: Old or non-compliant browser.");
+        this.mapError("Old or non-compliant browser.");
       }
     },
 
@@ -225,10 +256,10 @@ $(function() {
       this.geocoder.geocode({'address': address}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
           var latlng = results[0].geometry.location;
-          that.mapInit(latlng, 12);
-          that.toggleLoading('geocode stop success');
+          that.mapInit(latlng, 14);
+          that.stopLoad('geocode');
         } else {
-          that.mapError('Geocode was not successful for the following reason: ' + status);
+          that.mapError('Geocode was not successful because ' + status);
         }
       });
     },
@@ -254,7 +285,7 @@ $(function() {
             that.mapError('No results found');
           }
         } else {
-          that.mapError('Geocoder failed due to: ' + status);
+          that.mapError('Geocoder failed due to ' + status);
         }
       });
     },
@@ -268,18 +299,16 @@ $(function() {
         success: function(response) {
           var latlng = new google.maps.LatLng(response.latitude, response.longitude);
           that.mapInit(latlng, 12);
-          that.toggleLoading();
+          that.stopLoad('getLocationByIP');
           // that.reverseGeocode(latlng);
         },
         error: function(jqXHR, textStatus, errorThrown) {
-          console.log('freegeoip error');
+          that.mapError('freegeoip');
         }
       });      
     },
     mapError: function(error) {
-      this.toggleLoading();
-      console.log("Maps error");
-      console.log(error);
+      this.stopLoad("Maps error:" + error);
     },
     mapTypeStyle: [
       {
@@ -372,7 +401,7 @@ $(function() {
     },
     descriptionChanged: function(e) {
       var input = $(e.currentTarget);
-      this.model.save(input.attr('name'), input.val(), { patch: true });
+      this.model.save(input.attr('name'), input.val(), { patch: true, validate: false });
     },
     specChanged: function(e) {
       var input = $(e.currentTarget);
