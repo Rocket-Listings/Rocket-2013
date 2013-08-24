@@ -7,6 +7,9 @@ a {
   }
 }
 
+.navbar-static-top{
+  margin-bottom: 0;
+}
 .navbar {
   border-bottom: 1px solid darken(@navbar-color, 30%);
   background: @navbar-color;
@@ -35,8 +38,10 @@ a {
   }
 
   }  
+}
 
-
+.container.nav-fixed{
+  max-width: none;
 }
 
 .dropdown.open{
@@ -234,8 +239,6 @@ ul.navbar-nav {
 .container .navbar-logo {
   left: -4*@accent-width;
 }
-
-
 .footer, .footer-fixed {
   background: @footer-color;
   p {
