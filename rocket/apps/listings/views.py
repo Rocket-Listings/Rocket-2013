@@ -10,10 +10,10 @@ from listings.forms import ListingForm, SpecFormSet, ListingPhotoFormSet, Messag
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET, require_POST
 from django.shortcuts import redirect, get_object_or_404
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from rocket import get_client_ip
 from django.db.models import Max
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 from operator import __add__
 from django.http import Http404
 from django.core.urlresolvers import reverse
@@ -58,60 +58,33 @@ def create(request):
     return redirect('edit', listing.id)
 
 @login_required
-@require_POST
-def update(request, listing_id=None, create=False): # not directly addressed by a route, allows DRY listing saving
-	if listing_id:
-		listing = get_object_or_404(Listing, id=listing_id)
-		if request.user != listing.user:
-			raise Http404
-	else:
-		listing = Listing()
+@require_GET
+def autopost(request, listing_id):
+    listing = get_object_or_404(Listing.objects.select_related(), id=listing_id)
 
-	listing_form = ListingForm(request.POST, instance=listing, user=request.user)
-	specs = listing.listingspecvalue_set.select_related()
-	spec_form = SpecForm(request.POST, initial=specs)
-	photo_formset = ListingPhotoFormSet(request.POST, instance=listing, prefix="listingphoto_set")
+    if listing.title == None or listing.description == None or listing.market == None or listing.category == None:
+        return HttpResponse(status=400)
 
-	if listing_form.is_valid() and spec_form.is_valid() and photo_formset.is_valid():
-		listing = listing_form.save(commit=False)
-		listing.user = request.user
-		listing.save()	
-		# update search index
-		haystack.connections['default'].get_unified_index().get_index(Listing).update_object(listing)
+    if listing.status_id == 1:
+            if not settings.AUTOPOST_DEBUG and request.user.get_profile().listing_credits > 0:     
+                cl_anon_autopost_task.delay(listing_id)
+                return HttpResponse(status=202) #Accepted rather than 200 OK b/c listing has been put in queue rather than actually completed.
+            elif settings.AUTOPOST_DEBUG:
+                print "posted successfully but atopost_debug is on so nothing was sent to CL"
+                return HttpResponse(status=200)    
+            else:
+                return HttpResponse(status=403) #Forbidden
+    elif listing.status_id == 2:
+        return HttpResponse(status=400) #Bad Request
+    elif listing.status_id == 3:
+        if not settings.AUTOPOST_DEBUG:
+            cl_anon_update_task.delay(listing_id)
+        else:
+            return HttpResponse(status=200)
+    elif listing.status_id == 4:
+        return HttpResponse(status=400) #Bad Request
 
-		for name, value in spec_form.cleaned_data.items():
-			if value:
-				spec_id = int(name.replace('spec-',''))
-				ListingSpecValue.objects.create(value=value, key_id=spec_id, listing_id=listing.id)
 
-		# for form in photo_formset.marked_for_delete:
-			# form.instance.delete()
-
-		photo_formset.save(commit=False)
-		for form in photo_formset.ordered_forms:
-			form.instance.order = form.cleaned_data['ORDER']
-			form.instance.save()
-		if create:
-			request.user.get_profile().subtract_credit()
-			if not settings.AUTOPOST_DEBUG:			
-				cl_anon_autopost_task.delay(listing.id)
-		else: # Update
-			if not settings.AUTOPOST_DEBUG:
-				cl_anon_update_task.delay(listing.id)
-
-		return redirect(listing)
-	else:
-		print listing_form.errors
-		print photo_formset.errors
-		# preserving validation errors
-		cxt = {
-			'form': listing_form,
-			'spec_form': spec_form,
-			'pane': 'edit',
-			'photo_formset': photo_formset
-		}
-		cxt.update(utils.get_listing_vars())
-		return TemplateResponse(request, 'listings/detail.html', cxt)
 
 @view_count
 @attach_client_ip
