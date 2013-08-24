@@ -40,18 +40,18 @@
       <p class="text-muted">Your listing saves itself automatically.</p>        
       <div class="btn-stack" data-spy="affix" data-offset-top="154">
         <div class="btn-group btn-group-justified" data-toggle="buttons">
-          <a class="btn btn-default {% if pane == 'edit' %}active{% endif %}" href="#edit" data-toggle="tab">
+          <a class="edit-btn btn btn-default {% if pane == 'edit' %}active{% endif %}" href="#edit" data-toggle="tab">
             {# Need the radio input to make the bootstrap data-toggle="button" work #}
             <input type="radio">
              Edit
           </a>
-          <a class="btn btn-default {% if pane == 'preview' %}active{% endif %}" href="#preview" data-toggle="tab">
+          <a class="preview-btn btn btn-default {% if pane == 'preview' %}active{% endif %}" href="#preview" data-toggle="tab">
             <input type="radio">
             Preview
           </a>
         </div>
         {# Have to stack because of display:inline-block; #}
-        <a class="btn btn-default btn-block" href="{% url 'dashboard' %}">Save go to the dashboard</a>
+        <a class="btn btn-default btn-block" href="{% url 'dashboard' %}">Back to Dashboard</a>
         <a class="btn btn-success btn-block publish-btn">Publish to Craigslist</a>
       </div>
     </div>

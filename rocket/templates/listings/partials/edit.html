@@ -14,13 +14,11 @@
   {# Category Select #}
   <fieldset id="category-fieldset">
     <legend>Category</legend>
-    {% comment %}
-    {% for error in form.category.errors %}
-    <div class="alert alert-danger">
-      <p>{{ error }}</p>
+    
+    <div class="alert alert-danger" style="display:none;">
+      <p id="category-error"></p>
     </div>
-    {% endfor %}
-    {% endcomment %}
+    
     <ul class="nav nav-tabs">
       <li class="active">
         <a href="#forsale" data-toggle="tab">For Sale</a>
@@ -63,15 +61,10 @@
     <legend>Listing Info</legend>
     {# Title #}
     <div class="row">
-      <div class="col-sm-9 form-group{# {% if form.title.errors %} has-error {% endif %} #}">
-        
+      <div class="col-sm-9 form-group">
         <label for="id_title">Title:</label>
         <input id="id_title" class="title form-control" maxlength="200" name="title" type="text" placeholder="" value="{{ listing.title|default:"" }}">
-        {% comment %}
-        {% for error in form.title.errors %}
-          <span class="help-block">{{ error }}</span>
-        {% endfor %}
-        {% endcomment %}
+        <span id="title-error" class="help-block"></span>
       </div>
       <div class="col-sm-3 form-group{# {% if form.price.errors %} has-error {% endif %} #}">
         <label for="id_price">Price</label>
@@ -79,7 +72,7 @@
           <span class="input-group-addon">$</span>
           <input id="id_price" class="price form-control" name="price" type="text" placeholder="" value="{{ listing.price|default:"" }}">
         </div>
-        {# {% for error in form.price.errors %}<span class="help-block">{{ error }}</span>{% endfor %} #}
+        <span id="price-error" class="help-block"></span>
       </div>
     </div>
   </fieldset>
@@ -99,16 +92,16 @@
     {% endverbatim %}
 
     {# description #}
-    <div class="form-group{# {% if form.description.errors %} has-error {% endif %} #}">
+    <div class="form-group">
       <label for="id_description">Description</label>
       <textarea id="id_description" class="description form-control" placeholder="" name="description" rows="5">{{ listing.description|default:"" }}</textarea>
-    {# {% for error in form.price.errors %}<span class="help-block">{{ error }}</span>{% endfor %} #}
+      <span id="description-error" class="help-block"></span>
    </div>
   </fieldset>
   <fieldset id="marketplace-location-fieldset"><legend>Marketplace &amp; Location</legend>
     <div class="row">
       <div id="market-col" class="col-lg-6">
-        <div class="form-group{# {% if form.location.errors %} has-error {% endif %}#}">
+        <div class="form-group">
           <label for="id_location">Precise Location <span class="text-muted"> (Be as specific as you want)</span></label>
           <input type="text" placeholder="" class="location form-control" id="id_location" maxlength="200" name="location" value="{{ listing.location|default:"" }}">
         </div>

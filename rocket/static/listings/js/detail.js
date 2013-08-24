@@ -11,6 +11,34 @@ $(function() {
       this.categoryEditView = new CategoryEditView(options);
       this.locationEditView = new LocationEditView(options);
       _.bindAll(this, 'changed');
+      this.listenTo(this.model, 'invalid', this.validationError);
+    },
+    validationError: function(model, error) {
+      if (error.category) {
+        var elem = $('#category-error');
+        elem.html(error.category.join(' ,'));
+        elem.parent().show();
+      };
+      if (error.title) {
+        var elem = $('#title-error');
+        elem.html(error.title.join(' ,'));
+        elem.parent().addClass('has-error');
+      };
+      if (error.price) {
+        var elem = $('#price-error');
+        elem.html(error.price.join(' ,'));
+        elem.parent().addClass('has-error');        
+      };
+      if (error.description) {
+        var elem = $('#description-error');
+        elem.html(error.description.join(' ,'));
+        elem.parent().addClass('has-error');        
+      };
+      if (error.location) {
+        var elem = $('#location-error');
+        elem.html(error.location.join(' ,'));
+        elem.parent().addClass('has-error');        
+      };
     },
     changed: function(e) {
       var input = $(e.currentTarget);
@@ -167,7 +195,7 @@ $(function() {
     },
 
     mapResize: function(e) {
-      google.maps.event.trigger(this.map, 'resize');
+      google.maps.event.trigger(this.map, 'resize');      
     },
 
     toggleLoading: function(str) {
@@ -502,7 +530,7 @@ $(function() {
       this.$el.html(this.template(context));
     },
     publish: function(e) {
-      // if (this.listing.isValid()) {
+      if (this.listing.isValid() && this.specs.isValid() && this.photos.isValid()) {
         $.ajax({
           url: '/listing/' + this.listing.id.toString() + '/autopost',
           method: 'GET',
@@ -513,7 +541,7 @@ $(function() {
             console.log('error saving');
           }
         });
-      // }
+      }
     },
     fillStage: function(e) {
       e.preventDefault();
@@ -528,21 +556,42 @@ $(function() {
   // models are split up by their corresponding django form
   var Listing = Backbone.Model.extend({
     urlRoot: '/api/listings',
-    required: [
-      'category',
-      'title',
-      'price',
-      'description', 
-      'market'
-    ],
     validate: function(attrs, options) {
-      console.log(attrs);
-      var requiredAttrs = _.filter(attrs, function(attr) {
-          // attr
-      });
-      // var exist = _.reduce(attrs, function(memo, attr) {
-      //   return memo && attr.length > 0;
-      // });
+      var errors = {};
+
+      // title
+      errors.title = this.validateLength('title', attrs.title, 3, 100);
+      errors.price = this.validateLength('price', attrs.price, 1, 8);      
+      errors.category = this.validateExists('category', attrs.category);
+      // errors.description = this.validateExists('description', attrs.description);
+      errors.market = this.validateExists('market', attrs.market, 3, 100);
+      errors.title = this.validateLength('title', attrs.title, 3, 100);
+
+      var filteredErrors = {};
+      _.each(errors, function(value, name) { if(value.length > 0) filteredErrors[name] = value; });
+      if (!$.isEmptyObject(filteredErrors)) {
+        return filteredErrors;
+      }
+    },
+    validateExists: function(name, value) {
+      if (!value) {
+        return ["You should select a " + name + "."];
+      } else {
+        return [];
+      }
+    },
+    validateLength: function(name, value, min, max) {
+      if (value) {
+        if (value.length > min && value.length < max) {
+          return [];
+        } else if(value.length <= min) {
+          return ["Your " + name + " must be longer than" + min + "characters."];
+        } else if (value.length >= max) {
+          return ["Your " + name + " must be shorter than" + max + "characters."];
+        };
+      } else {
+        return ["Don't forget to enter a " + name];
+      };
     }
   });
   var Spec = Backbone.Model.extend({
@@ -552,27 +601,39 @@ $(function() {
         json.id = this.cid;
       }
       return json;
-    }
+    },
+    validate: function(attrs, options) {} // no spec validation for now
   });
   var SpecList = Backbone.Collection.extend({
     model: Spec,
     url: '/api/specs',
+    isValid: function() {
+      return _.all(this.models, function(model) {
+        return model.isValid();
+      });
+    }
   });
 
   var Photo = Backbone.Model.extend({
     toJSON: function() {
-      var json = Backbone.Model.prototype.toJSON.apply(this, arguments);      
-      if (!this.id && this.cid) {          
+      var json = Backbone.Model.prototype.toJSON.apply(this, arguments);
+      if (!this.id && this.cid) {
         json.id = this.cid;
       }
       return json;
-    }
+    }, 
+    validation: function(attrs, options) {} // no validation for now.
   });
 
   var PhotoList = Backbone.Collection.extend({
     model: Photo,
     url: '/api/photos',
-    comparator: 'order'
+    comparator: 'order',
+    isValid: function() {
+      return _.all(this.models, function(model) {
+        return model.isValid();
+      });
+    }
   });
 
   var specsJSON = listingJSON.spec_set;
