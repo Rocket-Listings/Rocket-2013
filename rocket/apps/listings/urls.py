@@ -7,7 +7,7 @@ urlpatterns = patterns('listings.views',
     url(r'^(?P<listing_id>\d+)/edit/$', 'detail', {'pane': 'edit' }, name='edit'),
     url(r'^search/$','search'),
     # url(r'^(?P<listing_id>\d+)/cl-embed/$', 'embed'),
-    url(r'^(?P<listing_id>\d+)/autopost/$', 'autopost'),
+    url(r'^(?P<listing_id>\d+)/autopost/$', 'autopost', name='autopost'),
     url(r'^dashboard/$', 'dashboard', name='dashboard'),
 )
 

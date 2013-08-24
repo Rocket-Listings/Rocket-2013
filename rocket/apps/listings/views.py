@@ -62,34 +62,28 @@ def create(request):
 def autopost(request, listing_id):
     listing = get_object_or_404(Listing.objects.select_related(), id=listing_id)
 
-    try:
-        listing.full_clean(exclude=["price", "location"])
-    except ValidationError as e:
-        return HttpResponse(400) #Bad Request
-request.user.get_profile().subtract_credit()
-    if listing.status == 1:
+    if listing.title == None or listing.description == None or listing.market == None or listing.category == None:
+        return HttpResponse(status=400)
+
+    if listing.status_id == 1:
             if not settings.AUTOPOST_DEBUG and request.user.get_profile().listing_credits > 0:     
                 cl_anon_autopost_task.delay(listing_id)
-                return HttpResponse(202) #Accepted rather than 200 OK b/c listing has been put in queue rather than actually completed.
+                return HttpResponse(status=202) #Accepted rather than 200 OK b/c listing has been put in queue rather than actually completed.
             elif settings.AUTOPOST_DEBUG:
-                return HttpResponse(200)    
-            else
-                return HttpResponse(403) #Forbidden
-    elif listing.status == 2:
-        return HttpResponse(400) #Bad Request
-    elif listing.status == 3:
+                print "posted successfully but atopost_debug is on so nothing was sent to CL"
+                return HttpResponse(status=200)    
+            else:
+                return HttpResponse(status=403) #Forbidden
+    elif listing.status_id == 2:
+        return HttpResponse(status=400) #Bad Request
+    elif listing.status_id == 3:
         if not settings.AUTOPOST_DEBUG:
             cl_anon_update_task.delay(listing_id)
         else:
-            return HttpResponse(200)
-    elif listing.status == 4:
-        return HttpResponse(400) #Bad Request
+            return HttpResponse(status=200)
+    elif listing.status_id == 4:
+        return HttpResponse(status=400) #Bad Request
 
-	#    request.user.get_profile().subtract_credit()
-	#    if not settings.AUTOPOST_DEBUG:			
-	# 	  cl_anon_autopost_task.delay(listing_id)
-	#    if not settings.AUTOPOST_DEBUG:
-	# 	  cl_anon_update_task.delay(listing_id)
 
 
 @view_count
