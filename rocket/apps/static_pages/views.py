@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.decorators.cache import cache_control
 from django.views.decorators.cache import cache_page
 from django.template.response import TemplateResponse
+from users.decorators import attach_client_ip
 
 @cache_control(must_revalidate=True, max_age=3600)
 @cache_page(60 * 15)
@@ -24,8 +25,9 @@ def home(request):
     else:
         return homepage(request)
 
-@cache_control(must_revalidate=True, max_age=3600)
 @cache_page(60 * 15)
+@cache_control(must_revalidate=True, max_age=3600)
+@attach_client_ip
 def homepage(request):
     return TemplateResponse(request, 'static_pages/homepage.html')
 

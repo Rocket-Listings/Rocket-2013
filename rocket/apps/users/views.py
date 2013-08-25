@@ -84,7 +84,7 @@ def info(request):
 def profile(request, username=None):
     user = get_object_or_404(User, username=username)
     request.user.is_owner = bool(user == request.user) # put in to make the annotations work
-    listings = Listing.objects.filter(user=user).order_by('-pub_date')
+    listings = Listing.objects.filter(user=user).order_by('-create_date')
     # activelistings = allListings.filter(status=ListingStatus(pk=1))
     # draftlistings = allListings.filter(status=ListingStatus(pk=2))
     #photos = ListingPhoto.objects.filter(listing=user)

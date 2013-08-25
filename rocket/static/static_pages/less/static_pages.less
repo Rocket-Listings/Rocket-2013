@@ -18,16 +18,19 @@
     height: @map-height-responsive;
   }
 }
-
+.header-menu-bar{
+  margin: 0 -20px;
+}
 #header-map-overlay {
   height: @map-height;
   width: 100%;
   position: absolute;
   top: 0;
   // background: -webkit-radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.15), rgba(255, 255, 255, .1));
-  background: rgba(255, 255, 255, 0.35);
+  // background: rgba(255, 255, 255, 0.35);
   visibility: hidden; /* made visible when map loads */
   z-index: 2;
+  border-bottom: 1px solid #a2a2a2;
 
   @media (max-width: 766px) {
     height: @map-height-responsive;
@@ -134,46 +137,6 @@ h1.flag {
 .gmnoprint div, .gm-style-cc div { background:none !important; }
 #GMapsID div div a div img{ diplay:none; }
 
-.header-menu-bar {
-  background: @menu0;
-  height: @menu-height;
-  .row {
-    margin-left: -15px;
-    margin-right: -15px; 
-  }
-  // margin-right: 0; 
-  a {
-    padding-left: 15px;
-    line-height: @menu-height;
-    text-align: center;
-    color: @color6;
-    &:hover, &:active, &.active {
-      text-decoration: underline;
-    }
-  }
-  .item1 {
-    background: @menu1;
-    border-left: 3px solid @menu5;
-  }
-  .item2 {
-    background: @menu2;
-  }
-  .item3 {
-    background: @menu3;
-  }
-  .item4 {
-    background: @menu4;
-    border-right: 3px solid @menu5; 
-  }
-  .filler {
-    opacity: 0;
-  }  
-}
-
-// .hook {
-  // background: #4A4742;
-  // color: @menu0;
-// }
 
 .header-signup {
   // border-bottom: 2px solid white;
@@ -214,10 +177,10 @@ h1.flag {
 }
 
   
-.what-row p,
+
 .how-row p,
 .pricing-row p {
-  text-align:justify;
+  text-align: justify;
   font-size: 16px;
   line-height: 24px;
   padding: 0 15px 0 15px;
@@ -225,11 +188,100 @@ h1.flag {
 }
 
 .pricing-row p {
-  text-align: center;
+  text-align: right;
 }
+
+
 
 .what-row {
   text-align: center;
+  margin-bottom: 30px;
+
+  .col-lg-3{
+    padding: 0;
+    margin-left: -10px;
+    
+  }
+
+
+
+  .col-photos{
+    height: 100%;
+    background-color: @menu0;
+    padding: 10px 10px;
+    overflow: hidden;
+    border: 1px solid #CACACA;
+
+    &:hover{
+      background-color: @menu1;
+    }
+
+  }
+
+  .col-listing{
+    background-color: @menu0;
+    padding: 10px 10px;
+    overflow: hidden;
+    border: 1px solid #CACACA;
+
+    &:hover{
+      background-color: @menu2;
+    }    
+  }
+
+  .col-autopost{
+    background-color: @menu0;
+    padding: 10px 10px;
+    overflow: hidden;
+    border: 1px solid #CACACA;
+
+    &:hover{
+      background-color: @menu3;
+    }    
+    
+  }
+
+  .col-dashboard{
+    background-color: @menu0;
+    padding: 10px 10px;
+    overflow: hidden;
+    border: 1px solid #CACACA;
+
+    &:hover{
+      background-color: @menu4;
+    }    
+  }
+
+  .col-message{
+    background-color: @menu0;
+    padding: 10px 10px;
+    overflow: hidden;
+    border: 1px solid #CACACA;
+
+    &:hover{
+      background-color: @menu1;
+    }    
+  }
+
+  .col-profiles{
+    background-color: @menu0;
+    padding: 10px 10px;
+    overflow: hidden;
+    border: 1px solid #CACACA;
+
+    &:hover{
+      background-color: @menu2;
+    }    
+
+  }
+
+  p{
+    text-align: left;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 0 0px 0 0px;
+    font-weight: 300; 
+  }
 
   &:last-child {
     margin-top: 30px;
@@ -245,38 +297,46 @@ h1.flag {
       // background: rgba(255,255,255,0.7);
     }
   }
+
+  h4{
+    margin-bottom: 20px;
+    text-align: center;
+    padding: 0 15px;
+  }
 }
 
 .icon-photo{
   background-image: url("../img/icon-photo.svg");
-  background-position: center;
+  background-position: left;
   background-repeat:no-repeat;
   background-size: 100% 90%;
   width: 100px;
-  height: 80px;
-  margin: 20px auto;
+  height: 60px;
+  margin: 0 auto;
+  margin-top: 5px;
   
 }
 
 .icon-newspaper{
-    background-image: url("../img/newspaper.svg");
-    background-position: 50% 40%;
-    background-size: 400px 400px;
+  background-image: url("../img/newspaper.svg");
+  background-position: 50% 43%;
+  background-size: 340px 340px;
   background-repeat:no-repeat;
   width: 100px;
-  height: 80px;
-  margin: 20px auto;
+  height: 70px;
+  margin: 0 auto;
+  margin-top: 5px;
   
 }
 
 .icon-share{
   background-image: url("../img/share.svg");
-  background-position: center;
+  background-position: top;
   background-repeat:no-repeat;
   background-size: 100% 90%;
   width: 100px;
-  height: 80px;
-  margin: 20px auto;
+  height: 70px;
+  margin: 0 auto;
   
 }
 
@@ -286,18 +346,18 @@ h1.flag {
   background-repeat:no-repeat;
   background-size: 100% 100%;
   width: 100px;
-  height: 80px;
-  margin: 20px auto;
+  height: 65px;
+  margin: 0px auto;
   
 }
 .icon-chat{
   background-image: url("../img/chat.svg");
   background-position: center;
   background-repeat:no-repeat;
-  background-size: 100% 100%;
+  background-size: 70%;
   width: 100px;
-  height: 80px;
-  margin: 20px auto;
+  height: 60px;
+  margin: 0px auto;
   
 }
 
@@ -305,10 +365,10 @@ h1.flag {
   background-image: url("../img/profile.svg");
   background-position: center;
   background-repeat:no-repeat;
-  background-size: 70% 70%;
+  background-size: 45%;
   width: 100px;
-  height: 80px;
-  margin: 20px auto;
+  height: 60px;
+  margin: 0px auto;
   
 }
 
@@ -373,6 +433,14 @@ h1.flag {
 
 }
 
+#join{
+  background: #3276b1;
+
+  span{
+    color: white;
+  }
+}
+
 .partial {
   display:none;
   margin-top: 30px;
@@ -381,23 +449,48 @@ h1.flag {
   display: block;
 }
 
-.why-row {
-  div {
-    margin-bottom: 18px; 
+.nav-how{
+
+
+  .btn{
+    border: 1px solid #ddd;
+    color: black;
+    
+    &:hover{
+      color: black;
+    }
   }
-  .text { 
-    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-    height: 100%;
-    background-color:#ededed;
-    padding: 10px 30px 10px 30px;
-  }
+
+  .affix {
+      top: 10px;
+      width: 165px;
+  
+    }
 }
 
-.dim
-{
-  position:absolute;  
-  width:100%;  
-  height:100%;  
-  background-color:#000000;  
-  opacity:0.70; 
+.feature-preview{
+  margin-top: 60px;
+  margin-bottom: 70px;
+
+
+  p{
+    text-align: left;
+    font-size: 18px;
+    line-height: 24px;
+    padding: 0 0px 0 0px;
+    font-weight: 300;
+    text-align: center;
+  }
+
+  h3{
+    text-align: center;
+    color: @craigslistBlue;
+  }
+
+  img{
+    margin-top: 20px;
+    padding: 20px 40px 20px 40px;
+    border: 1px solid #a2a2a2;
+
+  }
 }

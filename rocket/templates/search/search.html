@@ -48,7 +48,7 @@
                     <td>${{ result.object.price }}</td>
                     {# <td>{{ result.object.location }}</td> #}
                     <td>{{ result.object.category.name }}</td>
-                    <td><p class="hide">{{ result.object.pub_date|date:"m/d/y P" }}</p>{{ result.object.pub_date|naturaltime }}</td>
+                    <td><p class="hide">{{ result.object.create_date|date:"m/d/y P" }}</p>{{ result.object.create_date|naturaltime }}</td>
                     <td>
                         <div class="btn-toolbar" style="text-align: center;">
                             <a href="{{ result.object.get_absolute_url }}">Link</a>

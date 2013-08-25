@@ -92,15 +92,9 @@ $(function() {
   function getLocationByIP() {
     $.ajax({
       method: 'GET',
-      url: 'http://jsonip.appspot.com/',
+      url: 'https://freegeoip.net/json/' + REMOTE_ADDR,
       success: function(response) {
-        $.ajax({
-          method: 'GET',
-          url: 'https://freegeoip.net/json/' + response.ip,
-          success: function(response) {
-            gotLocation(response.latitude, response.longitude);
-          }
-        });
+        gotLocation(response.latitude, response.longitude);
       }
     });
   }
@@ -113,18 +107,21 @@ $(function() {
   // getLocationByIP();
 
 
-  $('.header-menu-bar a').click(function(event) {
+  $('.header-menu-bar li a').click(function(event) {
       var elem = $($(this).data('href'));
       if (elem.length > 0) {
         event.preventDefault();
         elem.siblings().hide();
         elem.show();
-        $(this).addClass('active').siblings().removeClass('active')
+        $('.header-menu-bar li a').removeClass('active');
+        $(this).addClass('active');
       } 
 
       var url = $(this).attr("href"); //update url without changing pages
       history.pushState({page:url}, url, url);
   });
+
+
 
   /* 
   function handleEvents() {

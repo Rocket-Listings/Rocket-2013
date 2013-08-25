@@ -273,7 +273,7 @@
             }
           }
           &.sold {
-            background-color: #B8E6B5;
+            background-color: #E0FFCD;
             span.status { color: darken(#B8E6B5, 50%);}
           }
           &.deleted {
@@ -519,19 +519,19 @@
 
 .listing-form {
 
-  .form-select{
+  .market{
     width: 101%;
     margin-bottom: 15px;
   }
 
-  .form-select-sub {
+  .sub_market {
     width: 101%;
     margin-bottom: 15px;
   }
 
-  .form-select-hood {
+  .hood {
     width: 101%;
-
+    margin-bottom: 15px;
   }
 
 
@@ -542,7 +542,7 @@
 
   .select2-container .select2-choice {
     padding: 8px 12px;
-    height: 38px;
+    height: 34px;
     font-size: 14px;
     color: #555;
     line-height: 1.428571429;
@@ -573,7 +573,14 @@
     background-image: none !important;
     background: #eee !important;
   }
-
+  .label-subtext {
+    font-weight:300;
+    font-size: 12px;
+    padding-left: 15px;    
+  }
+  .location {
+    margin-bottom: 40px;
+  }
 
   .location-map-wrapper {
     position: relative;
@@ -609,17 +616,13 @@
   }
 
   .btn-toolbar {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: @fieldset-spacing;
+    margin-bottom: @fieldset-spacing / 2;
   }
 
   fieldset small {
     font-size: 60%;
     margin-left: 15px;
-  }
-
-  fieldset {
-    margin-top: 30px;
   }
 
   textarea {
@@ -638,6 +641,23 @@
 
   .cat-pane {
     padding: 8px;
+  }
+
+  @fieldset-spacing: 40px;
+  #category-fieldset {
+    margin-top: @fieldset-spacing - 10px;
+  }
+  #spec-fieldset {
+    margin-top: @fieldset-spacing - 15px;
+  }
+  #info-fieldset {
+    margin-top: @fieldset-spacing;
+  }
+  #marketplace-location-fieldset {
+    margin-top: @fieldset-spacing;
+  }
+  #photo-fieldset {
+    margin-top: @fieldset-spacing;
   }
 
   .tab-pane .cat {
@@ -684,7 +704,9 @@
   .thumbnail:hover {
       cursor: pointer;
   }
-
+  .upload-view, .photo-view {
+    display: none;
+  }
   #photos {
       min-height: 200px;
       img {
@@ -696,19 +718,31 @@
   #spec-fieldset {
     margin-bottom: 20px;
   }
-  .specs-form > div {
-    display: none;
-  }
+  // .specs-form > div {
+    // display: none;
+  // }
 }
 
 
 .detail-sidebar {
 
-    margin-top:15px;
-    .affix {
-      top: 10px;
-    }
+    margin-top:37px;
 
+    @media (min-width: 992px) {
+      .affix {
+        position: fixed;
+        width: 262.5px;
+        top: 10px;
+      }
+    }
+    @media (max-width: 992px) {
+      .affix {
+        position: static;
+      }
+    }    .btn-stack > * {
+      // display: block;
+      margin-bottom: 10px;
+    }
     .btn-group {
       margin-bottom: 7px;
     }
@@ -733,7 +767,7 @@
 	background-image: url('../img/white-icon.png');
 }
 
-.listing-preview {
+#preview-container {
   .preview-thumbnails img {
     width: 100%;
     cursor: pointer;
