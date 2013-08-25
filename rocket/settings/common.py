@@ -172,6 +172,9 @@ THIRD_PARTY_APPS = (
     # static file management 
     'pipeline',
 
+    # rest support
+    'rest_framework',
+
 )
 
 LOCAL_APPS = (
@@ -212,6 +215,21 @@ LOGGING = {
             'propagate': True,
         },
     }
+}
+
+# APPEND_SLASH = False
+REST_FRAMEWORK = {
+    # Use hyperlinked styles by default.
+    # Only used if the `serializer_class` attribute is not set on a view.
+    'DEFAULT_MODEL_SERIALIZER_CLASS':
+        'rest_framework.serializers.ModelSerializer',
+
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+       'rest_framework.permissions.AllowAny',
+        # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
 }
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application

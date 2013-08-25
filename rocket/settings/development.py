@@ -54,7 +54,7 @@ CACHES = {
 
 # See: http://docs.celeryq.org/en/latest/configuration.html#celery-always-eager
 # Setting CELERY_ALWAYS_EAGER = True makes the tasks blocking, just run celeryd instead
-CELERY_ALWAYS_EAGER = False
+CELERY_ALWAYS_EAGER = True
 
 # See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
 INSTALLED_APPS += (
@@ -97,4 +97,4 @@ DEBUG_TOOLBAR_CONFIG = { 'INTERCEPT_REDIRECTS': False }
 # # See: http://docs.celeryproject.org/en/latest/configuration.html#celery-result-backend
 # CELERY_RESULT_BACKEND = 'amqp'
 
-AUTOPOST_DEBUG = False
+AUTOPOST_DEBUG = True

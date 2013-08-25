@@ -1,7 +1,7 @@
 {% load static from staticfiles %}
 {% load active from navigation %}
 
-<div class="navbar navbar-static-top no-margin">
+<div class="navbar navbar-static-top">
   <div class="container">
     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-ex1-collapse">
       <span class="icon-bar"></span>
@@ -23,10 +23,10 @@
       {% if request.user.is_authenticated %}
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <a class="{% active 'create' %} blue-menu-item visible-xs" href="/listings/create/">
+          <a class="{% active 'create' %} blue-menu-item visible-xs" href="{% url 'create' %}">
             <span class="nav-item-text">Create a listing </span>
           </a>
-          <a class="{% active 'create' %} blue-menu-item hidden-xs" href="/listings/create/">
+          <a class="{% active 'create' %} blue-menu-item hidden-xs" href="{% url 'create' %}">
             <span class="glyphicon glyphicon-pencil"></span>
           </a>
         </li>
@@ -108,3 +108,4 @@
     </div>
   </div>
 </div>
+

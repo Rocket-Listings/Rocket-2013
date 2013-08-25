@@ -12,7 +12,7 @@
   "rvs": ["dimensions", "year manufactured", "condition", "mileage"],
   "sporting": ["which sport", "condition"],
   "tickets": ["event", "location in venue"],
-  "tools": ["years old", "condition" "brand", "under warranty (y/n)"],
+  "tools": ["years old", "condition", "brand", "under warranty (y/n)"],
   "auto parts": ["model of car", "brand", "condition", "years old", "stock (y/n)"],
   "baby and kids": ["dimensions", "utility", "year manufactured", "condition", "gender"],
   "cars and trucks": ["year", "color", "make", "model", "mileage", "condition", "transmission"],
@@ -35,5 +35,5 @@
   "real estate for sale": ["price", "rooms", "price", "floor number", "payment plan", "type of property", "wifi", "cable", "television", "gym", "laundry", "a/c", "pets", "parking", "fridge", "oven", "stove", "microwave", "view"],
   "rooms and shared": ["rooms", "price", "floor number", "payment plan", "type of property", "wifi", "cable", "television", "gym", "laundry", "a/c", "pets", "parking", "fridge", "oven", "stove", "microwave", "view"],
   "sublets and temporary": ["rooms", "price", "floor number", "payment plan", "type of property", "wifi", "cable", "television", "gym", "laundry", "a/c", "pets", "parking", "fridge", "oven", "stove", "microwave", "view"],	 
-  "vacation rentals": ["rooms", "price", "floor number", "payment plan", "type of property", "wifi", "cable", "television", "gym", "laundry", "a/c", "pets", "parking", "fridge", "oven", "stove", "microwave", "view"],
+  "vacation rentals": ["rooms", "price", "floor number", "payment plan", "type of property", "wifi", "cable", "television", "gym", "laundry", "a/c", "pets", "parking", "fridge", "oven", "stove", "microwave", "view"]
 }

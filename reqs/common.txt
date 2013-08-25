@@ -31,3 +31,7 @@ cssmin
 slimit
 
 mechanize
+
+djangorestframework
+markdown
+django-filter
