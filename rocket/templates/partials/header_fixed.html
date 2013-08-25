@@ -1,8 +1,9 @@
 {% load static from staticfiles %}
 {% load active from navigation %}
 
-<div class="navbar">
-  <div class="container nav-fixed">
+
+<div class="navbar navbar-static-top" >
+
     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-ex1-collapse">
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
@@ -19,7 +20,7 @@
         <div class="accent accent4"></div>
         <span class="logo-text"><span class="serif">rocket</span> <span class="sans-serif">listings</span></span>
       </a>
-      <div class="collapse navbar-collapse navbar-ex1-collapse">      
+      <div class="collapse navbar-collapse navbar-ex1-collapse" >      
       {% if request.user.is_authenticated %}
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -72,10 +73,10 @@
 
       </ul>
       {% else %}
-      <ul class="nav navbar-nav pull-right">
+      <ul class="nav navbar-nav pull-right " >
         <li>
-          <a class="{% active 'registration_register' %}" href="{% url 'registration_register' %}">
-            <span class="nav-item-text">Create an account</span>
+          <a class="{% active 'registration_register' %}" href="{% url 'registration_register' %}" id="join">
+            <span class="nav-item-text">Sign Up</span>
           </a>
         </li>
         <li>

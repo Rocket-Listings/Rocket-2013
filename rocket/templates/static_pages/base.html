@@ -10,12 +10,12 @@
 
 {% block css %}
   {% compressed_css 'static_pages_base' %}
-{% endblock %}
+{% endblock %} 
 
 {% block body %}
   <div class="wrap">
     {% include "static_pages/partials/header_static.html" %}
-    <div class="container">
+    <div class="container" >
       {% block content %}<h3>Error 404</h3>{% endblock %}
     </div>  
     <div class="push"></div>{# sticky footer div #}
