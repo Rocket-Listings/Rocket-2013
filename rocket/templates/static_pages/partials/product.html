@@ -76,82 +76,21 @@
 	<a class="plain-link" href="#listing">Learn More</a>
 	<div class="clearfix"></div>
 </div>
-
-
-<!-- 
-<div class="row preview-row" id="scroll-pane">
-	<div class="col-sm-10 col-">
-		<div id="listing"></div>
-		<div class="row listing-row">
-			<div class="col-sm-6 col-listing">
-				<div class="listing-text">
-					<h4 class="text-center listing-form">Preview your listing as you make it</h4>
-					<p>A lot of page loads can really slow down the process, so we put everything in one place. You can even toggle to preview mode in the same window so you can see what your listing will look like as you make changes.</p>
-				</div>
-				<div class="listing-text">
-					<h4 class="text-center smart-pricing">Smart price suggestions</h4>
-					<p>Knowing how much to sell your item for can be the difference between getting it sold today and having it sitting in your garage forever. We pull data from sites like Craigslist, Ebay, and Amazon to find the going rate for your item.  </p>
-				</div>
-				<div class="listing-text">
-					<h4 class="text-center specs">Category-based specifications</h4>
-					<p>We give you prefilled, optional specs based on the category so you know what info buyers need to know about your item.</p>
-				</div>
-				<div class="listing-text">
-					<h4 class="text-center photos">Drag & drop unlimited photos</h4>
-					<p>Photos are a huge part of your listing, so we want to make sure you have full control. Easily upload multiple, high-res photos, so you if you need to make edits you don't need image editing software .</p>
-				</div>
-				<div class="listing-text">
-					<h4 class="text-center one-click">One click to post to Craigslist</h4>
-					<p>Get that awesome listing out there! It's just one click to post to Craigslist and share on Twitter and Facebook.</p>
-				</div>
-			</div>
-			<div class="col-sm-6 col-listing-img">
-				<img src="{% static 'static_pages/img/listing-creation.png' %}"  class="img-responsive">
-			</div>
-		</div>
-		<div id="dashboard"></div>
-		<div class="row dashboard-img-row">
-			
-			<div class="col-12">
-				<img src="{% static 'static_pages/img/dashboard.png' %}"  class="img-responsive">
-			</div>
-		</div>
-		<div class="row dashboard-row">
-			<div class="col-lg-6">
-				<div class="preview-text">
-				<h4 class="text-center">Keep track of everything in the dashboard</h4>
-				<p>Keeping track of all the details and emails for one listing is hard, and gets even worse as you make mulitiple listings. We put it all in one place so you can keep track of every listing. You can edit, re-post, delete, and mark an item as sold as well as sort your listings by date, category, title, and responses.</p> 
-				</div>
-			</div>
-			<div class="col-lg-4 col-lg-offset-2">
-				<div class="preview-text">
-				<h4 class="text-center">Respond to emails</h4>
-				<p>No more sifting through all your emails trying to find the ones related to each of your listing and no more headaches trying to remember who emailed what: it's all here.</p>
-				</div>
-			</div>
-		</div>
-
-		<div id="profile"></div>
-		<div class="row profile-row">
-			
-			<div class="col-sm-8">
-				<img src="{% static 'static_pages/img/profile-card.png' %}"  class="img-responsive">
-			</div>
-			<div class="col-sm-4">
-				<div class="preview-text">
-				<h4 class="text-center">Seller profiles for more trust</h4>
-				<p>Everyone feels more comfortable when they know who's on the other end, especially when you're meeting up to show-row and sell an item. We made optional seller profiles so that you can let buyers know you're a real person and worth buying from. </p>
-				</div>
-			</div>
-		</div>
-		<a class="btn btn-primary btn-small btn-signup" href="{% url "registration_register" %}" data-toggle="modal">Sign Up</a>
-	</div>
-	<div class="col-sm-2 nav-how" >
-		<ul class="nav nav-pills nav-stacked nav-scroll" data-spy="affix" data-offset-top="750"> 
-            <li><a class="btn" href="#listing"><h4>Create</h4></a></li>
-            <li><a class="btn" href="#dashboard"><h4>Manage</h4></a></li>
-            <li><a class="btn" href="#profile"><h4>Trust</h4></a></li>
-         </ul>
-	</div>
-</div>			
- -->
+<div class="previews">
+<div class="feature-preview">
+	<h3>Intelligent listing creation</h3>
+	<p> We provide data-backed suggestions for price, the specs you need to include for the category, and a dynamic preview.</p>
+	<img src="{% static 'static_pages/img/listing-creation-short.png' %}"  class="img-responsive">
+</div>
+<div class="feature-preview">
+	<h3>Revolutionary sales management</h3>
+	<p> See every listing's details, stats, and emails from Craigslist buyers (that you even can reply to) in one place.</p>
+	<img src="{% static 'static_pages/img/dashboard.png' %}"  class="img-responsive">
+</div>
+<div class="feature-preview">
+	<h3>Trust-building user profiles</h3>
+	<p> See every listing's details, stats, and emails from Craigslist buyers (that you even can reply to) in one place.</p>
+	<img src="{% static 'static_pages/img/profile-card.png' %}"  class="img-responsive">
+</div>
+<a class="btn btn-primary btn-small btn-signup" href="{% url "registration_register" %}" data-toggle="modal">Sign Up</a>
+</div>
