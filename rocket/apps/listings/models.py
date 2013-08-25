@@ -49,21 +49,25 @@ class ListingStatus(models.Model):
 class Listing(models.Model):
 	# also for natural key handling
 	objects = ListingManager()
-	title = models.CharField(max_length=200)
-	description = models.TextField()
-	pub_date = models.DateTimeField('date published', auto_now_add=True, default=datetime.now)
+
+	title = models.CharField(max_length=200, null=True, blank=True)
+	description = models.TextField(null=True, blank=True)
+	price = models.IntegerField(null=True, blank=True)
+	location = models.CharField(max_length=200, null=True, blank=True)
+	category = models.ForeignKey(ListingCategory, null=True, blank=True)
 	listing_type = models.CharField(max_length=1, choices=(('O', 'Owner'),('D', 'Dealer')))
-	price = models.IntegerField()
-	location = models.CharField(max_length=200)
-	category = models.ForeignKey(ListingCategory)
-	status = models.ForeignKey(ListingStatus, null = True, default=1) # TODO want to be able to listings by this
+	status = models.ForeignKey(ListingStatus, default=1) # TODO want to be able to listings by this
+	
 	user = models.ForeignKey(User)
+
+	last_modified = models.DateTimeField(auto_now=True, default=datetime.now, null=True, blank=True)
+	create_date = models.DateTimeField(auto_now_add=True, default=datetime.now, null=True, blank=True)		
+
 	CL_link = models.URLField(null=True, blank=True)
 	CL_view = models.URLField(null=True, blank=True)
-	market = models.CharField(max_length=3)
+	market = models.CharField(max_length=3, null=True, blank=True)
 	sub_market = models.CharField(max_length=3, null=True, blank=True)
 	hood = models.CharField(max_length=3, null=True, blank=True)
-
 
 	class Meta:
 		unique_together = ('title', 'user',)
@@ -73,26 +77,22 @@ class Listing(models.Model):
 		return self.offer_set.aggregate(Max('value'))["value__max"]
 
 	def __unicode__(self):
-		return self.title
+		return self.title or str(self.id)
 
 	def get_absolute_url(self):
 		return reverse('detail', args=[self.id])
 
-# Listing Specification
-class ListingSpecKey(models.Model):
-	name = models.CharField(max_length = 100)
-	category = models.ForeignKey(ListingCategory)
+	# need to write this
+	def is_valid():
+		return True
+
+class Spec(models.Model):
+	name = models.CharField(max_length=100)
+	value = models.CharField(max_length=100)
+	listing = models.ForeignKey(Listing);
 
 	def __unicode__(self):
-		return self.name
-
-class ListingSpecValue(models.Model):
-	value = models.CharField(max_length = 100)
-	key = models.ForeignKey(ListingSpecKey)
-	listing = models.ForeignKey(Listing)
-
-	def __unicode__(self):
-		return self.value
+		return self.name + ' ' + self.value
 		
 # Listing Photo
 class ListingPhoto(models.Model):

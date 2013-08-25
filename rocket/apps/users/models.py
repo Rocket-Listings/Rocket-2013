@@ -17,7 +17,7 @@ class UserProfile(models.Model):
 	bio = models.TextField(blank=True)
 	propic = models.CharField(max_length=200, blank=True)
 
-	fbProfile = models.OneToOneField('ProfileFB', null=True)
+	fbProfile = models.OneToOneField('ProfileFB', null=True, blank=True)
 
 	twitter_handle = models.CharField(max_length=20, blank=True)
 	TWITTER_OAUTH_TOKEN = models.CharField(max_length=200, blank=True)

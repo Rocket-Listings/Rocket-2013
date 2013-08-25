@@ -21,6 +21,7 @@ def new_cl_admin_message_task(msg_dict):
 	listing.CL_link = manage_link
 	listing.status_id = 3
 	listing.save()
+	user.get_profile().subtract_credit()
 
 	r = requests.get(manage_link)
 	to_parse = BeautifulSoup(r.text)

@@ -16,3 +16,10 @@
     {% include 'static_pages/partials/pricing.html' %}
 </div>  
 {% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+    var REMOTE_ADDR = "{{ REMOTE_ADDR }}";
+</script>
+{{ block.super }}
+{% endblock %}

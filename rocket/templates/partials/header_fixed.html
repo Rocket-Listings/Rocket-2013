@@ -23,10 +23,10 @@
       {% if request.user.is_authenticated %}
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <a class="{% active 'create' %} blue-menu-item visible-xs" href="/listings/create/">
+          <a class="{% active 'create' %} blue-menu-item visible-xs" href="{% url 'create' %}">
             <span class="nav-item-text">Create a listing </span>
           </a>
-          <a class="{% active 'create' %} blue-menu-item hidden-xs" href="/listings/create/">
+          <a class="{% active 'create' %} blue-menu-item hidden-xs" href="{% url 'create' %}">
             <span class="glyphicon glyphicon-pencil"></span>
           </a>
         </li>
