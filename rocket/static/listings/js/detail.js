@@ -13,32 +13,35 @@ $(function() {
       _.bindAll(this, 'changed');
       this.listenTo(this.model, 'invalid', this.validationError);
     },
-    validationError: function(model, error) {
-      if (error.category) {
-        var elem = $('#category-error');
-        elem.html(error.category.join(' ,'));
-        elem.parent().show();
-      };
-      if (error.title) {
-        var elem = $('#title-error');
-        elem.html(error.title.join(' ,'));
-        elem.parent().addClass('has-error');
-      };
-      if (error.price) {
-        var elem = $('#price-error');
-        elem.html(error.price.join(' ,'));
-        elem.parent().addClass('has-error');        
-      };
-      if (error.description) {
-        var elem = $('#description-error');
-        elem.html(error.description.join(' ,'));
-        elem.parent().addClass('has-error');        
-      };
-      if (error.location) {
-        var elem = $('#location-error');
-        elem.html(error.location.join(' ,'));
-        elem.parent().addClass('has-error');        
-      };
+    validationError: function(model, errors) {
+      _.each(errors, function(error) {
+        switch(error.field) {
+          case "category":
+            var elem = $('#category-error');
+            elem.html(error.message);
+            elem.parent().show();
+            break;
+          case "title":
+            var elem = $('#title-error');
+            elem.html(error.message);
+            elem.parent().addClass('has-error');
+            break;
+          case "price":
+            var elem = $('#price-error');
+            elem.html(error.message);
+            elem.parent().addClass('has-error'); 
+            break;
+          case "description":
+            var elem = $('#description-error');
+            elem.html(error.message);
+            elem.parent().addClass('has-error');        
+            break;
+          case "location":
+            var elem = $('#location-error');
+            elem.html(error.message);
+            elem.parent().addClass('has-error'); 
+        }
+      });
     },
     changed: function(e) {
       var input = $(e.currentTarget);
@@ -415,15 +418,11 @@ $(function() {
     },
     switchCategory: function(model) {
       var that = this;
+      this.collection.removeEmpty();
+
       var cat = model.get('category');
       var catName = $('.cat[data-id="{0}"]'.format(cat)).html(); // workaround
       var specNames = this.defaults[catName];
-      var filteredSpecs = this.collection.filter(function(spec) {
-        return spec.get('value').length > 0;
-      });
-      if (filteredSpecs) {
-        this.collection.reset(filteredSpecs);
-      }
       if (specNames) {
         var nextSpecs = _.map(specNames, function(name, index) {
           var existing = that.collection.findWhere({name: name });
@@ -438,7 +437,10 @@ $(function() {
         });
       }
       this.collection.add(nextSpecs, { merge: true });
-      this.$('#spec-row').html(this.template({ 'specs': this.collection.toJSON() }));
+      var JSON = this.collection.map(function(spec) { 
+        return spec.toJSON(); 
+      });
+      this.$('#spec-row').html(this.template({ 'specs': JSON }));
     }
   });
 
@@ -559,18 +561,24 @@ $(function() {
       this.$el.html(this.template(context));
     },
     publish: function(e) {
+      console.log('publish');
+      $('.publish-btn').prop('disabled', true);
       if (this.listing.isValid() && this.specs.isValid() && this.photos.isValid()) {
         $.ajax({
-          url: '/listing/' + this.listing.id.toString() + '/autopost',
+          url: '/listings/' + this.listing.id.toString() + '/autopost',
           method: 'GET',
           success: function(data, status, xhr) {
-            window.location.replace('/listings/dashboard/');
+            if (xhr.status == 200) {
+              window.location.replace('/listings/dashboard/');
+            } else if(xhr.status == 403) {
+              $('#not-enough-credits').show();
+            }
           },
           error: function(jqXHR, textStatus, errorThrown ) {
             console.log('error saving');
           }
         });
-      }
+      } 
     },
     fillStage: function(e) {
       e.preventDefault();
@@ -586,41 +594,43 @@ $(function() {
   var Listing = Backbone.Model.extend({
     urlRoot: '/api/listings',
     validate: function(attrs, options) {
-      var errors = {};
-
-      // title
-      errors.title = this.validateLength('title', attrs.title, 3, 100);
-      errors.price = this.validateLength('price', attrs.price, 1, 8);      
-      errors.category = this.validateExists('category', attrs.category);
+        // this.validateLength('price', 1, 8) || null, 
+      var errors = _.filter([
+        this.validateLength('title', 3, 100) || null,
+        this.validateExists('category') || null,
+        this.validateExists('market', 3, 100) || null ], 
+      function(obj) { return Boolean(obj); });
       // errors.description = this.validateExists('description', attrs.description);
-      errors.market = this.validateExists('market', attrs.market, 3, 100);
-      errors.title = this.validateLength('title', attrs.title, 3, 100);
-
-      var filteredErrors = {};
-      _.each(errors, function(value, name) { if(value.length > 0) filteredErrors[name] = value; });
-      if (!$.isEmptyObject(filteredErrors)) {
-        return filteredErrors;
+      if (errors.length) {
+        return errors;
       }
     },
-    validateExists: function(name, value) {
-      if (!value) {
-        return ["You should select a " + name + "."];
-      } else {
-        return [];
+    validateExists: function(name) {
+      if (!this.get(name)) {
+        return { 
+          field: name, 
+          message: "You should select a " + name + "."
+        };
       }
     },
-    validateLength: function(name, value, min, max) {
+    validateLength: function(name, min, max) {
+      var value = this.get(name);
+      var msg;
       if (value) {
-        if (value.length > min && value.length < max) {
-          return [];
-        } else if(value.length <= min) {
-          return ["Your " + name + " must be longer than" + min + "characters."];
+        if(value.length <= min) {
+          msg = "Your " + name + " must be longer than" + min + "characters.";
         } else if (value.length >= max) {
-          return ["Your " + name + " must be shorter than" + max + "characters."];
+          msg = "Your " + name + " must be shorter than" + max + "characters.";
         };
       } else {
-        return ["Don't forget to enter a " + name];
+        msg = "Don't forget to enter a " + name;
       };
+      if (msg) {
+        return {
+          field: name,
+          message: msg
+        }
+      }
     }
   });
   var Spec = Backbone.Model.extend({
@@ -640,6 +650,17 @@ $(function() {
       return _.all(this.models, function(model) {
         return model.isValid();
       });
+    },
+    toJSON: function() {
+      var specs = this.filter(function(spec) {
+        return Boolean(spec.get('value').trim());
+      });
+      return _.map(specs, function(spec) { return spec.toJSON(); });
+    },
+    removeEmpty: function() {
+      this.reset(this.filter(function(spec) {
+        return Boolean(spec.get('value').trim());
+      }));
     }
   });
 

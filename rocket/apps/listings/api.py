@@ -5,15 +5,44 @@ from django.shortcuts import redirect, get_object_or_404
 from django.http import HttpResponse
 from django.utils import simplejson
 from operator import __add__
-
 from listings.models import Listing, Message, Spec, ListingPhoto
 from listings.serializers import ListingSerializer, SpecSerializer, ListingPhotoSerializer
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from listings.tasks import cl_anon_autopost_task, cl_anon_update_task, cl_delete_task
+# from haystack.query import SearchQuerySet
+# import haystack
+from django.conf import settings
 
-from haystack.query import SearchQuerySet
+
+@login_required
+@require_GET
+def autopost(request, listing_id):
+    listing = get_object_or_404(Listing.objects.select_related(), id=listing_id)
+    if listing.title == None or listing.description == None or listing.market == None or listing.category == None:
+        return HttpResponse(status=400)
+
+    if listing.status_id == 1:
+        if not settings.AUTOPOST_DEBUG and request.user.get_profile().listing_credits > 0:     
+            cl_anon_autopost_task.delay(listing_id)
+            return HttpResponse(status=202) #Accepted rather than 200 OK b/c listing has been put in queue rather than actually completed.
+        elif settings.AUTOPOST_DEBUG:
+            print "posted successfully but autopost_debug is on so nothing was sent to CL"
+            return HttpResponse(status=200)    
+        else:
+            return HttpResponse(status=403) #Forbidden
+    elif listing.status_id == 2:
+        return HttpResponse(status=400) #Bad Request
+    elif listing.status_id == 3:
+        if not settings.AUTOPOST_DEBUG:
+            cl_anon_update_task.delay(listing_id)
+        else:
+            return HttpResponse(status=200)
+    elif listing.status_id == 4:
+        return HttpResponse(status=400) #Bad Request
+
 
 # Listing API
 class ListingList(APIView):
@@ -34,6 +63,7 @@ class ListingList(APIView):
             serializer.save()
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
+
 
 class ListingDetail(APIView):
     """
@@ -74,6 +104,7 @@ class ListingDetail(APIView):
         listing.delete()
         return Response(status=204)
 
+
 class SpecList(APIView):
     """
     List all specs, or create a new spec.
@@ -92,6 +123,7 @@ class SpecList(APIView):
             serializer.save()
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
+
 
 class SpecDetail(APIView):
     """
@@ -132,6 +164,7 @@ class SpecDetail(APIView):
         spec.delete()
         return Response(status=204)
 
+
 class ListingPhotoList(APIView):
     """
     List all photos, or create a new photo.
@@ -150,6 +183,7 @@ class ListingPhotoList(APIView):
             serializer.save()
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
+
 
 class ListingPhotoDetail(APIView):
     """
@@ -190,11 +224,12 @@ class ListingPhotoDetail(APIView):
         photo.delete()
         return Response(status=204)
 
+
 def delete(request, listing_id):
     listing = get_object_or_404(Listing, id=listing_id)
     if request.user == listing.user:
         # remove listing from haystack index
-        haystack.connections['default'].get_unified_index().get_index(Listing).remove_object(listing)
+        # haystack.connections['default'].get_unified_index().get_index(Listing).remove_object(listing)
         cl_cxt = {'update_url': listing.CL_link, 'pk': listing.pk}
         if not settings.AUTOPOST_DEBUG:
             cl_delete_task.delay(cl_cxt)
@@ -202,6 +237,7 @@ def delete(request, listing_id):
         return HttpResponse(200)
     else:
         return HttpResponse(403)
+
 
 def search_ajax(request):
     search_text = request.REQUEST.get('search', '').strip()
@@ -211,10 +247,12 @@ def search_ajax(request):
         # listing.url_id = reverse('listings.views.detail', args=[str(listing.url_id)])
     return TemplateResponse(request, 'listings/partials/ajax_search.html', cxt)
 
+
 @require_GET
 def status(request, listing_id):
     listing = get_object_or_404(Listing, id=listing_id)
     return HttpResponse(listing.status)
+
 
 @require_GET
 def update_status(request, listing_id):
@@ -286,14 +324,16 @@ def dashboard_message(request):
             message.isSeller = True
             message.save()
             send_message_task.delay(message.id)
-            response_data = { 'listing_id': message.listing.id,
-                              'isSeller': message.isSeller,
-                              'seller_name': message.listing.user.get_profile().get_display_name(),
-                              'buyer_id': message.buyer.id,
-                              'buyer_name': message.buyer.name,
-                              'content': message.content,
-                              'message_id': message.id,
-                              'date': naturaltime(message.date) }
+            response_data = { 
+                'listing_id': message.listing.id,
+                'isSeller': message.isSeller,
+                'seller_name': message.listing.user.get_profile().get_display_name(),
+                'buyer_id': message.buyer.id,
+                'buyer_name': message.buyer.name,
+                'content': message.content,
+                'message_id': message.id,
+                'date': naturaltime(message.date)
+            }
             return HttpResponse(simplejson.dumps({'messages': response_data, 'status': 'success'}), content_type="application/json")
         else:
             return HttpResponse(simplejson.dumps({'errors': message_form.errors, 'status': 'err_validation'}), content_type="application/json")
@@ -307,10 +347,12 @@ def message_seen(request):
     if request.user == message.listing.user:
         message.seen = True
         message.save()
-        msg_dict = {'message_id': message.id,
-                    'buyer_id': message.buyer.id,
-                    'listing_id': message.listing.id,
-                    'listing_all_read': all(map(lambda m: m.seen, message.listing.message_set.all()))}
+        msg_dict = {
+            'message_id': message.id,
+            'buyer_id': message.buyer.id,
+            'listing_id': message.listing.id,
+            'listing_all_read': all(map(lambda m: m.seen, message.listing.message_set.all()))
+        }
         return HttpResponse(simplejson.dumps({'message_data': msg_dict, 'status': 'success'}), content_type="application/json")
     else:
         return HttpResponse(simplejson.dumps({'status': 'Error: This action is forbidden.'}), content_type="application/json")

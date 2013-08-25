@@ -1,10 +1,8 @@
 from listings.models import Listing, ListingPhoto, Spec, Message
 from listings import utils
 from django.conf import settings
-
 import json
 from django.contrib.auth.models import User
-
 from datetime import datetime, timedelta
 from listings.forms import ListingForm, SpecFormSet, ListingPhotoFormSet, MessageForm
 from django.contrib.auth.decorators import login_required
@@ -17,7 +15,6 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from operator import __add__
 from django.http import Http404
 from django.core.urlresolvers import reverse
-import haystack
 from users.decorators import first_visit, view_count, attach_client_ip
 from django.template.response import TemplateResponse
 from django.contrib.humanize.templatetags.humanize import naturaltime
@@ -25,7 +22,6 @@ from mail.tasks import send_message_task
 from users.models import UserProfile, UserComment 
 from django.db.models import Avg
 from listings.tasks import cl_anon_autopost_task, cl_anon_update_task, cl_delete_task
-
 from rest_framework.renderers import UnicodeJSONRenderer
 from listings.serializers import ListingSerializer
 
@@ -56,35 +52,6 @@ def create(request):
     profile = request.user.get_profile()
     listing = Listing.objects.create(user=request.user, category=profile.default_category, listing_type=profile.seller_type)
     return redirect('edit', listing.id)
-
-@login_required
-@require_GET
-def autopost(request, listing_id):
-    listing = get_object_or_404(Listing.objects.select_related(), id=listing_id)
-
-    if listing.title == None or listing.description == None or listing.market == None or listing.category == None:
-        return HttpResponse(status=400)
-
-    if listing.status_id == 1:
-            if not settings.AUTOPOST_DEBUG and request.user.get_profile().listing_credits > 0:     
-                cl_anon_autopost_task.delay(listing_id)
-                return HttpResponse(status=202) #Accepted rather than 200 OK b/c listing has been put in queue rather than actually completed.
-            elif settings.AUTOPOST_DEBUG:
-                print "posted successfully but atopost_debug is on so nothing was sent to CL"
-                return HttpResponse(status=200)    
-            else:
-                return HttpResponse(status=403) #Forbidden
-    elif listing.status_id == 2:
-        return HttpResponse(status=400) #Bad Request
-    elif listing.status_id == 3:
-        if not settings.AUTOPOST_DEBUG:
-            cl_anon_update_task.delay(listing_id)
-        else:
-            return HttpResponse(status=200)
-    elif listing.status_id == 4:
-        return HttpResponse(status=400) #Bad Request
-
-
 
 @view_count
 @attach_client_ip
@@ -158,17 +125,6 @@ def detail(request, listing_id, pane='preview'):
         #             return TemplateResponse(request, 'listings/detail_public.html', cxt)
         #     else: # POST
         #         return update(request, listing_id)
-
-def delete(request, listing_id):
-	listing = get_object_or_404(Listing, id=listing_id)
-	if request.user == listing.user:
-		# remove listing from haystack index
-		haystack.connections['default'].get_unified_index().get_index(Listing).remove_object(listing)
-		if not settings.AUTOPOST_DEBUG:
-			cl_delete_task.delay(listing.id)
-		return HttpResponse(200)
-	else:
-		return HttpResponse(403)
 
 @require_GET
 def search(request):

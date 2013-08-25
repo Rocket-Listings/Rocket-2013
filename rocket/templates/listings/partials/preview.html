@@ -20,16 +20,16 @@
       {{/first_photo}}
     </div>
   </div>
-  <p class="preview-description">{{ listing.description }}</p>    
-  {{#has_specs}}
-    <h4>Specs</h4>
+  {{#specs.length}}
+    <h5>Specs</h5>
     <dl class="dl-horizontal">
       {{#specs}}
       <dt>{{ name }}</dt>
       <dd>{{ value }}</dd>
       {{/specs}}
     </dl>
-  {{/has_specs}}
+  {{/specs.length}}
+  <p class="preview-description">{{ listing.description }}</p>    
 </script>
 {% endverbatim %}
 <div id="preview-container"></div>
