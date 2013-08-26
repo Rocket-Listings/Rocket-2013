@@ -526,7 +526,7 @@ $(function() {
 							Keys.$refresh.click();
 							break;
 						case Keys.n:
-							window.location.href = "/listings/create";
+							window.location.href = "/listings/new";
 							break;
 					}
 				}

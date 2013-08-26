@@ -85,7 +85,7 @@
             </ul>
           {% else %}
             {% if  request.user == url_user %}
-            <p> You haven't created any listings yet, <a href="/listings/create"> click here</a> to get started.</p>
+            <p> You haven't created any listings yet, <a href="{% url 'create' %}"> start one here</a>.</p>
             {% else %}
               <p> Sorry, {{url_user.username}} hasn't created any listings yet. </p>
             {% endif %}   
