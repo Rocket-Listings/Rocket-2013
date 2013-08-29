@@ -75,6 +75,7 @@
         <li><a class="{% active 'background' %}" data-href="#background-partial" id="background" href="/background/">Background</a></li>
         <li><a class="{% active 'pricing' %}" data-href="#pricing-partial" id="pricing" href="/pricing/">Pricing</a></li>
       </ul>
+      {% comment %}
       <ul class="nav navbar-nav pull-right">
         <li>
           <a class="{% active 'registration_register' %}" id="join" href="{% url 'registration_register' %}">
@@ -87,6 +88,7 @@
           </a>
         </li>
       </ul>
+      {% endcomment %}
       {% endif %} 
       </div>
   </div>
