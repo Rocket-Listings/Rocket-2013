@@ -1,5 +1,5 @@
 @import "../../rocket/less/base.less";
-
+// @import "../../rocket/less/variables.less";
 /*    Doing this weird convention '.l-<CLASS>' because we don't want other outside class definitions to affect these.
     For instance, if our title was simply '.title', then maybe a '.title' rule from base.less might take into effect. */
 
@@ -47,86 +47,80 @@
 .dashboard-header {
   position: absolute;
   top: 60px;
-    .dashboard-title {
-        display: inline-block;
-        padding-left: 8px !important;
+  height: 38px;
+
+  .dashboard-header-inner {
+    position: relative;
+    height: 100%;
+  }
+  .dashboard-btn {
+    // width: 100%;
+    // height: 38px;
+    background-color: #EEE;
+    border: 1px solid #357EBD;
+    color: #357EBD;
+    &:hover {
+      background-color: darken(#EEE, 2%);
     }
-    .dashboard-search-button {
-      display: inline-block;
-      padding-left: 20px;
-      width: 100px;
-      float: none;
-      vertical-align: top;
-      .btn {
-        width: 100%;
-        height: 38px;
-        background-color: #EEE;
-        border: 1px solid #357EBD;
-        color: #357EBD;
-        &:hover {
-          background-color: darken(#EEE, 2%);
-        }
-      }
-      span {
-        float: none;
-        vertical-align: middle;
-      }
+    &:active {
+      background-color: darken(#EEE, 5%);
     }
-    .dashboard-search {
-        display: inline-block;
-        float: none;
-        vertical-align: top;
-        width: 300px;
-        padding-left: 20px;
-        input:hover {
-          border: darken(#DDD, 20%) 1px solid;
-        }
-        input:active, input:focus {
-          //border: #66AfE9 1px solid;
-          border: #357EBD 1px solid;
-        }
+  }
+  .dashboard-title {
+    position: absolute;
+    left: 5px;
+  }
+  .dashboard-search {
+    position: absolute;
+    width: 220px;
+    left: 130px;
+    bottom: 0;
+    input:hover {
+      border: darken(#DDD, 20%) 1px solid;
     }
-    .dashboard-refresh, .dashboard-delete {
-        display: inline-block;
-        vertical-align: top;
-        float: right;
-        padding-right: 20px;
-        .btn {
-          height: 38px;
-          width: 42px;
-          background-color: #EEE;
-          border: 1px solid #357EBD;
-          color: #357EBD;
-          &:hover {
-            background-color: darken(#EEE, 2%);
-          }
-        }
-        span {
-            float: none;
-            vertical-align: middle;
-        }
+    input:active, input:focus {
+      //border: #66AfE9 1px solid;
+      border: #357EBD 1px solid;
     }
-    .dashboard-delete-permanent {
-      display: inline-block;
-      vertical-align: top;
-      float: right;
-      padding-right: 20px;
-      .btn {
-        height: 38px;
-        background-color: #EEE;
-        border: 1px solid #357EBD;
-        color: #357EBD;
-        &:hover {
-          background-color: darken(#EEE, 2%);
-        }
-      }
+    > span:hover {
+      background-color: darken(#EEE, 2%);
     }
-    .dashboard-create {
-        float: right;
-        padding-right: 8px;
-        width: 119px;
-        .btn { width: 100%; }
+    > span:active {
+      background-color: darken(#EEE, 5%);
     }
+  }
+  .dashboard-create-btn {
+    .dashboard-btn;
+    position: absolute;
+    right: 5px;
+    width: 119px;
+    background-color: lighten(@craigslistBlue, 40%);
+    color: white;
+    border: 1px solid #ccc;
+    &:hover {
+      background-color: lighten(@craigslistBlue, 38%);
+    }
+    &:active {
+      background-color: lighten(@craigslistBlue, 35%);
+    }
+  }
+  .dashboard-refresh-btn {
+    .dashboard-btn;
+    position: absolute;
+    right: 174px;
+  }
+  .dashboard-delete-btn {
+    .dashboard-btn;
+    position: absolute;
+    right: 132px;
+  }
+  .dashboard-delete-permanent-btn {
+    .dashboard-btn;
+    position: absolute;
+    right: 216px;
+    border: 1px solid #357EBD;
+    color: #357EBD;
+  }
 }
 
 .dashboard-panel, .dashboard-header {

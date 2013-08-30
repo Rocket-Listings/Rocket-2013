@@ -300,7 +300,7 @@ $(function() {
 		window.searchHasFocus = true;
 	});
 
-	$(".dashboard-search-button a").click(function(e) {
+	$(".dashboard-search-btn").click(function(e) {
 		if (window.searchHasFocus == true) {
 			$("input.search").blur();
 			$(".listing").first().click();
