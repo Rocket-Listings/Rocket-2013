@@ -27,7 +27,7 @@
   position: absolute;
   top: 0;
   // background: -webkit-radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.15), rgba(255, 255, 255, .1));
-  // background: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.35);
   visibility: hidden; /* made visible when map loads */
   z-index: 2;
   border-bottom: 1px solid #a2a2a2;
@@ -212,9 +212,9 @@ h1.flag {
     overflow: hidden;
     border: 1px solid #CACACA;
 
-    &:hover{
-      background-color: @menu1;
-    }
+    // &:hover{
+    //   background-color: @menu1;
+    // }
 
   }
 
@@ -224,9 +224,9 @@ h1.flag {
     overflow: hidden;
     border: 1px solid #CACACA;
 
-    &:hover{
-      background-color: @menu2;
-    }    
+    // &:hover{
+    //   background-color: @menu2;
+    // }    
   }
 
   .col-autopost{
@@ -235,9 +235,9 @@ h1.flag {
     overflow: hidden;
     border: 1px solid #CACACA;
 
-    &:hover{
-      background-color: @menu3;
-    }    
+    // &:hover{
+    //   background-color: @menu3;
+    // }    
     
   }
 
@@ -247,9 +247,9 @@ h1.flag {
     overflow: hidden;
     border: 1px solid #CACACA;
 
-    &:hover{
-      background-color: @menu4;
-    }    
+    // &:hover{
+    //   background-color: @menu4;
+    // }    
   }
 
   .col-message{
@@ -258,9 +258,9 @@ h1.flag {
     overflow: hidden;
     border: 1px solid #CACACA;
 
-    &:hover{
-      background-color: @menu1;
-    }    
+    // &:hover{
+    //   background-color: @menu1;
+    // }    
   }
 
   .col-profiles{
@@ -269,9 +269,9 @@ h1.flag {
     overflow: hidden;
     border: 1px solid #CACACA;
 
-    &:hover{
-      background-color: @menu2;
-    }    
+    // &:hover{
+    //   background-color: @menu2;
+    // }    
 
   }
 
@@ -449,27 +449,30 @@ h1.flag {
   display: block;
 }
 
-.nav-how{
-
-
-  .btn{
-    border: 1px solid #ddd;
-    color: black;
-    
-    &:hover{
-      color: black;
-    }
+.why-row {
+  div {
+    margin-bottom: 18px;
+    margin-top: 18px; 
   }
-
-  .affix {
-      top: 10px;
-      width: 165px;
-  
-    }
+  .text { 
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    height: 100%;
+    background-color:#ededed;
+    padding: 10px 30px 10px 30px;
+  }
 }
 
+.dim{
+  position:absolute;  
+  width:100%;  
+  height:100%;  
+  background-color:#000000;  
+  opacity:0.70; 
+}
+
+
 .feature-preview{
-  margin-top: 60px;
+  margin-top: 200px;
   margin-bottom: 70px;
 
 
