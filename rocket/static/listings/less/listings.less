@@ -4,8 +4,8 @@
     For instance, if our title was simply '.title', then maybe a '.title' rule from base.less might take into effect. */
 
 // DASHBOARD VARIABLES (WIDTH)
-@title: 37%;
-@price: 9%;
+@title: 35%;
+@price: 11%;
 @category: 21%;
 @date: 16%;
 @status: 11%;
@@ -233,6 +233,7 @@
       }
     }
     .listings-body {
+      // border-left: 1px solid #a2a2a2 !important;
       height: 100%;
       width: 100%;
       overflow: scroll;
@@ -259,12 +260,12 @@
             box-sizing: border-box;
             -webkit-box-sizing: border-box;
             -moz-box-sizing: border-box;
-            background-color: #DDD;
+            background-color: #EAEAEA;
             border-bottom: none !important;
             text-rendering: optimizeLegibility;
             
             .listings-cols-wrapper {
-              margin-left: -2px;
+              // margin-left: -2px;
               border-bottom: #DDD 1px solid;
             
               .glyphicon-arrow-right{
@@ -274,13 +275,11 @@
             a { 
               text-rendering: optimizeLegibility;
             }
-            &:hover{
-             background-color: #DDD;
-            }
+            
           }
 
           &:hover{
-            background-color: #EAEAEA;
+            
           }
 
           &.sold {
@@ -329,7 +328,7 @@
   .buyer-message-wrapper {
     display: inline-block;
     height: 100%;
-    width: calc(~'56% - 75px');
+    width: calc(~'55.5% - 70px');
     vertical-align: top;
     .inbox-header, .no-messages {
       display: block;
@@ -371,11 +370,12 @@
           cursor: pointer;
           text-rendering: optimizeLegibility;
           &.highlight {
-            border-left: #357EBD 2px solid;
+            // border-left: #357EBD 2px solid;
             text-rendering: optimizeLegibility;
             border-bottom: none !important;
+            background-color: #EAEAEA;
             li {
-              margin-left: -2px;
+              // margin-left: -2px;
               &:nth-child(2){
                 border-bottom: #DDD 1px solid;
               }
@@ -414,7 +414,7 @@
         }
       }
       .messages-body {
-        height: calc(~'100% - 131px');
+        height: calc(~'100% - 165px');
         overflow: scroll;
         ul {
           border-bottom: #DDDDDD solid 1px;
