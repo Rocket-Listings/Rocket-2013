@@ -4,12 +4,12 @@
     For instance, if our title was simply '.title', then maybe a '.title' rule from base.less might take into effect. */
 
 // DASHBOARD VARIABLES (WIDTH)
-@title: 40%;
-@price: 10%;
-@category: 18%;
-@date: 17%;
-@status: 10%;
-
+@title: 37%;
+@price: 9%;
+@category: 21%;
+@date: 16%;
+@status: 11%;
+@arrow: 5%;
 .phone-hide {
   @media (max-width: 480px) {
     display: none !important;
@@ -143,7 +143,7 @@
   .sidebar {
     display: inline-block;
     height: 100%;
-    width: 138px;
+    width: 100px;
     vertical-align: bottom;
     margin-top: 36px;
     position: relative;
@@ -194,13 +194,13 @@
   .listings-col {
     display: inline-block;
     height: 100%;
-    width: calc(~'45% - 63px');
+    width: calc(~'46% - 63px');
     //border-right: 1px #DDDDDD solid;
     vertical-align: top;
     .listings-header {
       height: 36px;
       width: 100%;
-      border-bottom: #DDD 1px solid !important;
+      border-bottom: 1px solid #a2a2a2 !important;
       ul {
         margin: 0 7px 0 0 !important;
         padding-left: 0 !important;
@@ -218,6 +218,7 @@
           &.d-category { width: @category; }
           &.d-date { width: @date; }
           &.d-status { width: @status; }
+          &.d-arrow { width: @arrow; }
           a {
             display: inline-block;
           }
@@ -227,6 +228,7 @@
             margin-bottom: -2px;
             vertical-align: middle;
           }
+
         }
       }
     }
@@ -234,7 +236,7 @@
       height: 100%;
       width: 100%;
       overflow: scroll;
-      background-color: rgba(0, 0, 0, 0.04);
+      // background-color: rgba(0, 0, 0, 0.04);
       position: relative;
       .scroll-down-border-top {
         position: absolute;
@@ -257,31 +259,44 @@
             box-sizing: border-box;
             -webkit-box-sizing: border-box;
             -moz-box-sizing: border-box;
-            border-left: #357EBD 2px solid;
+            background-color: #DDD;
             border-bottom: none !important;
             text-rendering: optimizeLegibility;
+            
             .listings-cols-wrapper {
               margin-left: -2px;
               border-bottom: #DDD 1px solid;
+            
+              .glyphicon-arrow-right{
+              line-height: 0 !important;
+            }
             }
             a { 
               text-rendering: optimizeLegibility;
             }
+            &:hover{
+             background-color: #DDD;
+            }
           }
+
+          &:hover{
+            background-color: #EAEAEA;
+          }
+
           &.sold {
-            background-color: #E0FFCD;
+            // background-color: #E0FFCD;
             span.status { color: darken(#B8E6B5, 50%);}
           }
           &.deleted {
-            background-color: #F2DEDE;
+            // background-color: #F2DEDE;
             span.status { color: darken(#F2DEDE, 40%); }
           }
           &.draft {
-            background-color: lighten(#357EBD, 45%);
+            // background-color: lighten(#357EBD, 45%);
             span.status { color: #357EBD; }
           }
           &.pending {
-            background-color: #FCF8E3;
+            // background-color: #FCF8E3;
             span.status { color: #E8CD02; }
           }
           &.unread {
@@ -303,6 +318,9 @@
             &.d-category { width: @category; }
             &.d-date { width: @date; }
             &.d-status { width: @status; }
+            &.d-arrow { width: @arrow; }
+          
+
           }
         }
       }
@@ -321,14 +339,14 @@
       text-align: center;
       overflow-y: hidden !important;
       &:not(.no-messages) {
-        border-bottom: #DDD 1px solid;
+        border-bottom:1px solid #a2a2a2;;
         height: 36px;
       }
       &:not(.inbox-header) {
         font-weight: 500;
-        color: darken(#DDD, 20%);
+        // color: darken(#DDD, 20%);
         text-rendering: optimizeLegibility;
-        background-color: rgba(0, 0, 0, 0.04);
+        // background-color: rgba(0, 0, 0, 0.04);
       }
     }
     .buyers-col {
@@ -336,7 +354,7 @@
       height: 100%;
       width: 30%;
       vertical-align: top;
-      background-color: rgba(0, 0, 0, 0.04);
+      // background-color: rgba(0, 0, 0, 0.04);
       ul {
         margin: 0;
         padding: 0;
@@ -385,7 +403,7 @@
       height: 100%;
       width: 70%;
       vertical-align: top;
-      background-color: rgba(0, 0, 0, 0.04);
+      // background-color: rgba(0, 0, 0, 0.04);
 
       ul {
         margin: 0;

@@ -63,6 +63,7 @@ $(function() {
 				id = listingRow.data('listing-id'),
 				buyers = $(".buyer[data-listing-id='" + id + "']");
 			$('.listing').removeClass('highlight');
+			$('.d-arrow').addClass('hide');
 			listingRow.addClass('highlight');
 			$(".message, .buyer").addClass("hide");
 			$(".dashboard-delete a").attr('data-listing-id', id).removeClass("disabled");
@@ -70,6 +71,7 @@ $(function() {
 				$(".dashboard-delete-permanent a").attr('data-listing-id', id).removeClass("disabled");
 			}
 			if (buyers.length) {
+				$('.d-arrow', this).removeClass('hide');
 				$(".buyers-body").addClass("border-right").removeClass("hide");
 				$(".no-messages").addClass("hide");
 				buyers.removeClass("hide");
