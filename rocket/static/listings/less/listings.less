@@ -271,7 +271,16 @@
               .glyphicon-arrow-right{
               line-height: 0 !important;
             }
+
+              span.glyphicon-chevron-down{
+                padding-bottom: 10px !important;
+              }
+
+              span.glyphicon-chevron-up{
+                padding-bottom: 10px !important;
+              }
             }
+
             a { 
               text-rendering: optimizeLegibility;
             }
@@ -419,9 +428,13 @@
         ul {
           border-bottom: #DDDDDD solid 1px;
           &.message-buyer {
-            background-color: rgba(0, 0, 0, 0.05);
+            // background-color: rgba(0, 0, 0, 0.05);
+            .message-content{
+              font-style: italic;
+            }
           }
           li {
+
             &:nth-child(1) { padding: 8px; }
             &:nth-child(2) { padding: 8px; }
             &:last-child { padding: 2px 8px 8px 8px; }
