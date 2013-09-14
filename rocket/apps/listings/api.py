@@ -14,8 +14,9 @@ from rest_framework import status
 from listings.tasks import cl_anon_autopost_task, cl_anon_update_task, cl_delete_task
 # from haystack.query import SearchQuerySet
 # import haystack
+from rest_framework import permissions
 from django.conf import settings
-
+from listings.permissions import IsOwnerOrReadOnly, IsListingOwnerOrReadOnly
 
 @login_required
 @require_GET
@@ -49,6 +50,7 @@ class ListingList(APIView):
     """
     List all listings, or create a new listing.
     """
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)
     def pre_save(self, obj):
         obj.user = self.request.user
 
@@ -69,6 +71,7 @@ class ListingDetail(APIView):
     """
     Retrieve, update or delete a listing instance.
     """
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
     # def pre_save(self, obj):
     #     obj.user = self.request.user
 
@@ -109,6 +112,7 @@ class SpecList(APIView):
     """
     List all specs, or create a new spec.
     """
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsListingOwnerOrReadOnly,)    
     def pre_save(self, obj):
         obj.user = self.request.user
 
@@ -129,6 +133,7 @@ class SpecDetail(APIView):
     """
     Retrieve, update or delete a spec instance.
     """
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsListingOwnerOrReadOnly,)
     # def pre_save(self, obj):
     #     obj.user = self.request.user
 
@@ -169,6 +174,7 @@ class ListingPhotoList(APIView):
     """
     List all photos, or create a new photo.
     """
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsListingOwnerOrReadOnly,)
     def pre_save(self, obj):
         obj.user = self.request.user
 
@@ -189,6 +195,7 @@ class ListingPhotoDetail(APIView):
     """
     Retrieve, update or delete a photo instance.
     """
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsListingOwnerOrReadOnly,)
     # def pre_save(self, obj):
     #     obj.user = self.request.user
 
