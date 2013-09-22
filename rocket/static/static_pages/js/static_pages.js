@@ -1,5 +1,3 @@
-
-
 $(function() {
   google.maps.visualRefresh = true;
   var mapTypeStyle = [
