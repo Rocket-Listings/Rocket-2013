@@ -4,7 +4,9 @@
   margin-bottom: 0;
 }
 
-@map-height: 200px;
+body { padding-top: 37px; }
+
+@map-height: 165px;
 
 .header-map-container {
   position: relative;
@@ -44,8 +46,8 @@
     top: 60px;
     left: 0;
     @media (max-width: 766px) {
-      top: 20px;
-      left: 10px;
+      top: 30px;
+      left: 20px;
     }
   }
   .subheading {
@@ -470,15 +472,27 @@ h1.flag {
   opacity:0.70; 
 }
 
+.white-bg {
+  background-color: white;
+}
+.blue-bg {
+  background-color: @menu1;
+}
+.green-bg {
+  background-color: @menu4;
+}
+.pink-bg {
+  background-color: @menu2;
+}
+.orange-bg {
+  background-color: @menu3;
+}
 
-.feature-preview{
-  margin-top: 200px;
-  margin-bottom: 70px;
-
-
+.feature-preview {
+  padding: 100px 0;
   p{
     text-align: left;
-    font-size: 18px;
+    // font-size: 18px;
     line-height: 24px;
     padding: 0 0px 0 0px;
     font-weight: 300;
@@ -494,6 +508,17 @@ h1.flag {
     margin-top: 20px;
     padding: 20px 40px 20px 40px;
     border: 1px solid #a2a2a2;
-
+    background-color: white;
   }
+}
+
+.feature-preview-top {
+  .feature-preview;
+  padding-bottom: 100px;
+  padding-top: 0;
+}
+.feature-preview-bottom {
+  .feature-preview;
+  padding-top: 100px;
+  padding-bottom: 0;
 }
