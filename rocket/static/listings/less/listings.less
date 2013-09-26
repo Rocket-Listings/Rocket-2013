@@ -4,12 +4,12 @@
     For instance, if our title was simply '.title', then maybe a '.title' rule from base.less might take into effect. */
 
 // DASHBOARD VARIABLES (WIDTH)
-@title: 35%;
-@price: 11%;
+@title: 57%;
+@price: 14%;
 @category: 21%;
-@date: 16%;
+@date: 18%;
 @status: 11%;
-@arrow: 5%;
+@arrow: 0%;
 .phone-hide {
   @media (max-width: 480px) {
     display: none !important;
@@ -194,7 +194,7 @@
   .listings-col {
     display: inline-block;
     height: 100%;
-    width: calc(~'46% - 63px');
+    width: calc(~'46.4% - 63px');
     //border-right: 1px #DDDDDD solid;
     vertical-align: top;
     .listings-header {
@@ -215,7 +215,9 @@
             width: @title;
           }
           &.d-price { width: @price; }
-          &.d-category { width: @category; }
+          &.d-category {
+
+           }
           &.d-date { width: @date; }
           &.d-status { width: @status; }
           &.d-arrow { width: @arrow; }
@@ -264,6 +266,7 @@
             background-color: #EAEAEA;
             border-bottom: none !important;
             text-rendering: optimizeLegibility;
+            border-right: #357EBD 5px solid;
             
             .listings-cols-wrapper {
               // margin-left: -2px;
@@ -280,6 +283,12 @@
               text-rendering: optimizeLegibility;
             }
             
+            span {
+              
+            &.d-price { padding-left:11px;}
+            &.d-status {padding-left: 12px;}
+            &.d-date { padding-left: 12px;}
+            }
           }
 
           &:hover{
@@ -316,9 +325,18 @@
             &.d-title {
               width: @title;
               //padding-left: 40px;
+
             }
             &.d-price { width: @price; }
-            &.d-category { width: @category; }
+            &.d-category {
+
+            margin-top: -8px;
+            margin-bottom: 0;
+            padding-top: 0;
+            padding-bottom: 6px;
+            font-size: 12px;
+            width: 50%;
+             }
             &.d-date { width: @date; }
             &.d-status { width: @status; }
             &.d-arrow { width: @arrow; }
@@ -424,7 +442,7 @@
         }
       }
       .messages-body {
-        height: calc(~'100% - 165px');
+        height: calc(~'93% - 127px');
         overflow: scroll;
         ul {
           border-bottom: #DDDDDD solid 1px;
