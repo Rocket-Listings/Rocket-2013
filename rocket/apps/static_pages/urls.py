@@ -9,6 +9,6 @@ urlpatterns = patterns('static_pages.views',
     url(r'^pricing/$', 'homepage', name='pricing'),
     url(r'^help/$', 'help', name='help'),
     url(r'^contact/$', 'contact', name='contact'),
-    url(r'^users/login/$', 'login', name='login'),
+    url(r'^/users/login/$', 'login', name='login'),
     url(r'^googlef43896b8ef9b394c.html', 'google_webmaster_verification'),
 )

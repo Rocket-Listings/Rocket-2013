@@ -139,6 +139,7 @@ $(function() {
     },
     initHood: function(market, subMarket) {
       if (this.markets[market] && this.markets[market][subMarket-1].hoods) {
+        console.log("hiya")
         this.$(".hood").select2({
           placeholder: "Select a Sub-Market",
           val: "",

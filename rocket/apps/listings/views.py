@@ -23,7 +23,8 @@ from users.models import UserProfile, UserComment
 from django.db.models import Avg
 from listings.tasks import cl_anon_autopost_task, cl_anon_update_task, cl_delete_task
 from rest_framework.renderers import UnicodeJSONRenderer
-from listings.serializers import ListingSerializer
+from listings.serializers import ListingSerializer, HermesSerializer
+from pprint import pprint
 
 @first_visit
 @login_required
@@ -62,6 +63,11 @@ def detail(request, listing_id, pane='preview'):
     specs = listing.spec_set.all()
     listing_serializer = ListingSerializer(listing)
     listing_json = UnicodeJSONRenderer().render(listing_serializer.data)
+
+    hermes_serializer= HermesSerializer(listing)
+    hermes_json = UnicodeJSONRenderer().render(hermes_serializer.data)
+
+    pprint(json.loads(hermes_json))
 
     is_owner = bool(listing.user == request.user)
     request.user.is_owner = is_owner
