@@ -12,6 +12,7 @@ urlpatterns = patterns('listings.views',
 
 urlpatterns += patterns('listings.api',
     url(r'^(?P<listing_id>\d+)/autopost$', 'autopost', name='autopost'),
+    url(r'^(?P<listing_id>\d+)/hermes$', 'hermes', name='hermes'),
     url(r'^search/ajax','search_ajax'),
     url(r'^dashboard/data/$','dashboard_data'),
     url(r'^dashboard/message/$', 'dashboard_message'),

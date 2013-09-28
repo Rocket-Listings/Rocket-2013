@@ -64,11 +64,6 @@ def detail(request, listing_id, pane='preview'):
     listing_serializer = ListingSerializer(listing)
     listing_json = UnicodeJSONRenderer().render(listing_serializer.data)
 
-    hermes_serializer= HermesSerializer(listing)
-    hermes_json = UnicodeJSONRenderer().render(hermes_serializer.data)
-
-    pprint(json.loads(hermes_json))
-
     is_owner = bool(listing.user == request.user)
     request.user.is_owner = is_owner
 

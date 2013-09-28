@@ -6,17 +6,20 @@ from django.http import HttpResponse
 from django.utils import simplejson
 from operator import __add__
 from listings.models import Listing, Message, Spec, ListingPhoto
-from listings.serializers import ListingSerializer, SpecSerializer, ListingPhotoSerializer
+from listings.serializers import ListingSerializer, SpecSerializer, ListingPhotoSerializer,  HermesSerializer
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.decorators import api_view
 from listings.tasks import cl_anon_autopost_task, cl_anon_update_task, cl_delete_task
 # from haystack.query import SearchQuerySet
 # import haystack
 from rest_framework import permissions
 from django.conf import settings
 from listings.permissions import IsOwnerOrReadOnly, IsListingOwnerOrReadOnly
+from pprint import pprint
+import json
 
 @login_required
 @require_GET
@@ -24,7 +27,6 @@ def autopost(request, listing_id):
     listing = get_object_or_404(Listing.objects.select_related(), id=listing_id)
     if listing.title == None or listing.description == None or listing.market == None or listing.category == None:
         return HttpResponse(status=400)
-
     if listing.status_id == 1:
         if not settings.AUTOPOST_DEBUG and request.user.get_profile().listing_credits > 0:     
             cl_anon_autopost_task.delay(listing_id)
@@ -43,6 +45,32 @@ def autopost(request, listing_id):
             return HttpResponse(status=200)
     elif listing.status_id == 4:
         return HttpResponse(status=400) #Bad Request
+
+@login_required
+@api_view(['GET'])
+def hermes(request, listing_id):
+    listing = get_object_or_404(Listing.objects.select_related(), id=listing_id)
+    hermes_serializer= HermesSerializer(listing)
+    if listing.title == None or listing.description == None or listing.market == None or listing.category == None:
+        return HttpResponse(status=400)
+    if listing.status_id == 1:
+        if not settings.AUTOPOST_DEBUG and request.user.get_profile().listing_credits > 0:     
+            return Response(hermes_serializer.data, status=202) #Accepted rather than 200 OK b/c listing has been put in queue rather than actually completed.
+        elif settings.AUTOPOST_DEBUG:
+            print "posted successfully but autopost_debug is on so nothing was sent to CL"
+            return Response(hermes_serializer.data, status=200)    
+        else:
+            return HttpResponse(status=403) #Forbidden
+    elif listing.status_id == 2:
+        return HttpResponse(status=400) #Bad Request
+    elif listing.status_id == 3:
+        if not settings.AUTOPOST_DEBUG:
+            return Response(hermes_serializer.data, status=202) #diff status here to indicate update??
+        else:
+            return HttpResponse(status=200)
+    elif listing.status_id == 4:
+        return HttpResponse(status=400) #Bad Request
+
 
 
 # Listing API

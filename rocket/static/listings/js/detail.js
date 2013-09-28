@@ -1,5 +1,5 @@
 $(function() {
-  var ListingEditView = Backbone.View.extend({
+   var ListingEditView = Backbone.View.extend({
     el: '#info-fieldset',
     events: {
       // "change input": "changed",
@@ -566,11 +566,13 @@ $(function() {
       $('.publish-btn').prop('disabled', true);
       if (this.listing.isValid() && this.specs.isValid() && this.photos.isValid()) {
         $.ajax({
-          url: '/listings/' + this.listing.id.toString() + '/autopost',
+          url: '/listings/' + this.listing.id.toString() + '/hermes',
           method: 'GET',
           success: function(data, status, xhr) {
             if (xhr.status == 200) {
-              window.location.replace('/listings/dashboard/');
+              // window.location.replace('/listings/dashboard/');
+              window.postMessage({type: "FROM_PAGE", action: "post", ctx: data}, "*");
+              console.log(data);
             } else if(xhr.status == 403) {
               $('#not-enough-credits').show();
             }
