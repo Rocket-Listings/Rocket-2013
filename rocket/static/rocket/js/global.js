@@ -10,6 +10,7 @@
 // });
 
 // Get cookie for csrf token
+
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie != '') {
@@ -25,3 +26,17 @@ function getCookie(name) {
     return cookieValue;
 }
 
+$(function(){ 
+
+
+    var socket = new io.Socket();
+    socket.connect();
+    console.log(socket);
+    socket.on('connect', function() {
+        socket.subscribe('hermes');
+    });
+
+    socket.on('message', function(data){
+        console.log(data.message);
+    });
+});

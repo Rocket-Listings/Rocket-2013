@@ -51,18 +51,26 @@ def autopost(request, listing_id):
 def hermes(request, listing_id):
     listing = get_object_or_404(Listing.objects.select_related(), id=listing_id)
     hermes_serializer= HermesSerializer(listing)
+
     if listing.title == None or listing.description == None or listing.market == None or listing.category == None:
         return HttpResponse(status=400)
+    
     if listing.status_id == 1:
-        if not settings.AUTOPOST_DEBUG and request.user.get_profile().listing_credits > 0:     
+        if not settings.AUTOPOST_DEBUG and request.user.get_profile().listing_credits > 0:  
+            listing.status_id = 2   
             return Response(hermes_serializer.data, status=202) #Accepted rather than 200 OK b/c listing has been put in queue rather than actually completed.
+        
         elif settings.AUTOPOST_DEBUG:
             print "posted successfully but autopost_debug is on so nothing was sent to CL"
+            listing.status_id = 2
             return Response(hermes_serializer.data, status=200)    
+        
         else:
             return HttpResponse(status=403) #Forbidden
+    
     elif listing.status_id == 2:
         return HttpResponse(status=400) #Bad Request
+    
     elif listing.status_id == 3:
         if not settings.AUTOPOST_DEBUG:
             return Response(hermes_serializer.data, status=202) #diff status here to indicate update??

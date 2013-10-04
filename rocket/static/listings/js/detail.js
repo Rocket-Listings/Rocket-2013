@@ -115,6 +115,7 @@ $(function() {
       $('.edit-btn').on('shown.bs.tab', this.mapResize);
     },
     initMarket: function() {
+
       //Initialization and edit state
       this.$(".market").select2({
         placeholder: "Select a Market",
@@ -562,7 +563,7 @@ $(function() {
       this.$el.html(this.template(context));
     },
     publish: function(e) {
-      console.log('publish');
+      
       $('.publish-btn').prop('disabled', true);
       if (this.listing.isValid() && this.specs.isValid() && this.photos.isValid()) {
         $.ajax({
@@ -571,7 +572,8 @@ $(function() {
           success: function(data, status, xhr) {
             if (xhr.status == 200) {
               // window.location.replace('/listings/dashboard/');
-              window.postMessage({type: "FROM_PAGE", action: "post", ctx: data}, "*");
+              console.log('publish');
+              window.postMessage({type: "FROM_PAGE", action: "debug", ctx: data}, "*");
               console.log(data);
             } else if(xhr.status == 403) {
               $('#not-enough-credits').show();

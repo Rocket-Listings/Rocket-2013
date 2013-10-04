@@ -14,10 +14,12 @@ import hashlib, urllib
 
 @task(name='tasks.new_cl_admin_message_task')
 def new_cl_admin_message_task(msg_dict):
+	print "entered admin task"
 	user = get_object_or_404(User, username=msg_dict['username'])
 	listing = user.listing_set.get(title__exact=msg_dict['listing_title'])
 	to_parse = BeautifulSoup(msg_dict['body'])
 	manage_link = to_parse.find('a').contents[0]
+	print manage_link
 	listing.CL_link = manage_link
 	listing.status_id = 3
 	listing.save()
