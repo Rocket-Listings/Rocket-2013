@@ -1,6 +1,6 @@
 {% load compressed %}
 {% load static from staticfiles %}
-{% load socketio_tags %}
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +41,6 @@
       
       {# development #}
       {# {% compressed_js 'jquery_bootstrap_local' %} #}
-      {% socketio %}
       {% block js %}{% endblock %}
     </div>
     {# {% if user.is_authenticated %} #}

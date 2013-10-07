@@ -25,18 +25,3 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-
-$(function(){ 
-
-
-    var socket = new io.Socket();
-    socket.connect();
-    console.log(socket);
-    socket.on('connect', function() {
-        socket.subscribe('hermes');
-    });
-
-    socket.on('message', function(data){
-        console.log(data.message);
-    });
-});

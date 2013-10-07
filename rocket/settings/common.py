@@ -175,8 +175,6 @@ THIRD_PARTY_APPS = (
     # rest support
     'rest_framework',
 
-    # socket.io intregration
-    'django_socketio',
 
 )
 
