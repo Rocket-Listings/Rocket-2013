@@ -80,7 +80,8 @@ class UserTest(SettingsTestCase):
         self.assertRedirects(response, '/users/register/complete/')
         activation_email = mail.outbox[0].body
         activation_path = re.findall(r'http[s]?://[^\s<>"]+|www\.[^\s<>"]+', str(activation_email))[0].split('8000')[1]
-        response = c.get('activation_path', follow =True)
+        response = c.get(activation_path, follow =True)
+        self.assertEqual(response.request["PATH_INFO"], '/users/info/')
         self.assertEqual(response.status_code, 200)
         
 
