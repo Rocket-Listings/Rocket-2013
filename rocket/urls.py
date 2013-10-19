@@ -19,6 +19,7 @@ urlpatterns = patterns('',
 	url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 	url(r'^users/', include('users.urls')),
 	url(r'^admin/', include(admin.site.urls)),
+    url("", include('django_socketio.urls')),
 
     # api patterns    
     url(r'^api/listings$', api.ListingList.as_view()),

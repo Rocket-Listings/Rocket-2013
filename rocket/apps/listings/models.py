@@ -86,6 +86,25 @@ class Listing(models.Model):
 	def is_valid():
 		return True
 
+	#Helper methods for hermes serialization
+	def get_verbose_type(self):
+		if self.listing_type == u'O':
+			return "fso"
+		else:
+			return "fsd"
+
+	def get_category_id(self):
+		if self.listing_type == u'O':
+			return self.category.cl_owner_id
+		else:
+			return self.category.cl_dealer_id
+
+	def get_price_as_string(self):
+		return str(self.price)
+
+	def get_photo_urls(self):
+		return [photo.url for photo in self.listingphoto_set.all()]
+
 class Spec(models.Model):
 	name = models.CharField(max_length=100)
 	value = models.CharField(max_length=100)

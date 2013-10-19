@@ -1,5 +1,5 @@
 $(function() {
-  var ListingEditView = Backbone.View.extend({
+   var ListingEditView = Backbone.View.extend({
     el: '#info-fieldset',
     events: {
       // "change input": "changed",
@@ -115,6 +115,7 @@ $(function() {
       $('.edit-btn').on('shown.bs.tab', this.mapResize);
     },
     initMarket: function() {
+
       //Initialization and edit state
       this.$(".market").select2({
         placeholder: "Select a Market",
@@ -139,6 +140,7 @@ $(function() {
     },
     initHood: function(market, subMarket) {
       if (this.markets[market] && this.markets[market][subMarket-1].hoods) {
+        console.log("hiya")
         this.$(".hood").select2({
           placeholder: "Select a Sub-Market",
           val: "",
@@ -561,15 +563,18 @@ $(function() {
       this.$el.html(this.template(context));
     },
     publish: function(e) {
-      console.log('publish');
+      
       $('.publish-btn').prop('disabled', true);
       if (this.listing.isValid() && this.specs.isValid() && this.photos.isValid()) {
         $.ajax({
-          url: '/listings/' + this.listing.id.toString() + '/autopost',
+          url: '/listings/' + this.listing.id.toString() + '/hermes',
           method: 'GET',
           success: function(data, status, xhr) {
             if (xhr.status == 200) {
-              window.location.replace('/listings/dashboard/');
+              // window.location.replace('/listings/dashboard/');
+              console.log('publish');
+              window.postMessage({type: "FROM_PAGE", action: "debug", ctx: data}, "*");
+              console.log(data);
             } else if(xhr.status == 403) {
               $('#not-enough-credits').show();
             }

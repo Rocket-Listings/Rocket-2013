@@ -175,6 +175,7 @@ THIRD_PARTY_APPS = (
     # rest support
     'rest_framework',
 
+
 )
 
 LOCAL_APPS = (
