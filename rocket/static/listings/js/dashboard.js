@@ -66,9 +66,10 @@ $(function() {
 			$('.d-arrow').addClass('hide');
 			listingRow.addClass('highlight');
 			$(".message, .buyer").addClass("hide");
-			$(".dashboard-delete a").attr('data-listing-id', id).removeClass("disabled");
+			$(".dashboard-delete-btn").attr('data-listing-id', id).removeClass("disabled");
+			console.log('got here')
 			if (listingRow.hasClass("deleted")) {
-				$(".dashboard-delete-permanent a").attr('data-listing-id', id).removeClass("disabled");
+				$(".dashboard-delete-permanent-btn").attr('data-listing-id', id).removeClass("disabled");
 			}
 			if (buyers.length) {
 				$('.d-arrow', this).removeClass('hide');
@@ -237,7 +238,7 @@ $(function() {
 	});
 
 	// Change the status of the selected listing to "Deleted"
-	$(".dashboard-delete a").click(function (e) {
+	$(".dashboard-delete-btn").click(function (e) {
 		var id = $(this).attr('data-listing-id');
 		e.preventDefault();
 		if (!$(this).hasClass("disabled")) {
@@ -256,7 +257,7 @@ $(function() {
 	});
 
 	// Delete the currently selected listing
-	$(".dashboard-delete-permanent a").click(function (e) {
+	$(".dashboard-delete-permanent-btn").click(function (e) {
 		var id = $(this).attr('data-listing-id');
 		e.preventDefault();
 		if (!$(this).hasClass("disabled")) {
@@ -296,7 +297,7 @@ $(function() {
 		$(".buyers-body, .messages-body, .message-form-wrapper").addClass("hide");
 		$(".listings-body li").removeClass("highlight");
 		$(".no-messages").removeClass("hide");
-		$(".dashboard-delete a, .dashboard-delete-permanent a").addClass("disabled");
+		$(".dashboard-delete-btn, .dashboard-delete-permanent-btn").addClass("disabled");
 	});
 
 	$("input.search").focus(function() {
@@ -393,12 +394,12 @@ $(function() {
   	$(".listing").first().click();
   	$(".listings-body").scrollTop(0);
   	if (window.currentFilterButton.attr('id') != "filter-deleted") {
-  		$(".dashboard-delete").removeClass("hide");
-  		$(".dashboard-delete-permanent").addClass("hide");
+  		$(".dashboard-delete-btn").removeClass("hide");
+  		$(".dashboard-delete-permanent-btn").addClass("hide");
   	}
   	else {
-  		$(".dashboard-delete").addClass("hide");
-  		$(".dashboard-delete-permanent").removeClass("hide");
+  		$(".dashboard-delete-btn").addClass("hide");
+  		$(".dashboard-delete-permanent-btn").removeClass("hide");
   	}
   });
 
