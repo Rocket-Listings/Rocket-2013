@@ -14,41 +14,45 @@ import hashlib, urllib
 
 @task(name='tasks.new_cl_admin_message_task')
 def new_cl_admin_message_task(msg_dict):
+	print "entered admin task"
 	user = get_object_or_404(User, username=msg_dict['username'])
 	listing = user.listing_set.get(title__exact=msg_dict['listing_title'])
 	to_parse = BeautifulSoup(msg_dict['body'])
 	manage_link = to_parse.find('a').contents[0]
+	print manage_link
 	listing.CL_link = manage_link
 	listing.status_id = 3
 	listing.save()
 	user.get_profile().subtract_credit()
 
-	r = requests.get(manage_link)
-	to_parse = BeautifulSoup(r.text)
-	phone_page_text = "Your craigslist user account requires phone verification. Please use the form below to complete this process."
-	form = to_parse.find('form')
-	action = form.attrs['action']
-	hidden_inputs = form.find_all_next('input', type='hidden', limit=2)
-	hashed_key_1 = hidden_inputs[0].attrs['name']
-	hashed_value_1 = hidden_inputs[0].attrs['value']
-	hashed_key_2 = hidden_inputs[1].attrs['name']
-	hashed_value_2 = hidden_inputs[1].attrs['value']
-	payload = {hashed_key_1: hashed_value_1, hashed_key_2: hashed_value_2}
-	r = requests.post(action, data=payload)
-	to_parse = BeautifulSoup(r.text)
-	try:
-		if to_parse.find("section", class_="body").find("p").text == phone_page_text:
-			buyer = Buyer(listing=listing, name="Apollo Rocket", email=settings.DEFAULT_FROM_EMAIL)
-			buyer.save()
-			message = Message(
-				listing=listing, 
-				buyer=buyer, 
-				content="Sorry, but Craigslist wants you to verify your phone number. Follow this link to finish posting: " + manage_link)
-			message.save()
-	except AttributeError:
-		view_link = to_parse.find('li').find_next('a').contents[0]
-		listing.CL_view = view_link
-		listing.save()
+	# Can't make requests to Craigslist from our servers. :(
+	# 
+	# r = requests.get(manage_link)
+	# to_parse = BeautifulSoup(r.text)
+	# phone_page_text = "Your craigslist user account requires phone verification. Please use the form below to complete this process."
+	# form = to_parse.find('form')
+	# action = form.attrs['action']
+	# hidden_inputs = form.find_all_next('input', type='hidden', limit=2)
+	# hashed_key_1 = hidden_inputs[0].attrs['name']
+	# hashed_value_1 = hidden_inputs[0].attrs['value']
+	# hashed_key_2 = hidden_inputs[1].attrs['name']
+	# hashed_value_2 = hidden_inputs[1].attrs['value']
+	# payload = {hashed_key_1: hashed_value_1, hashed_key_2: hashed_value_2}
+	# r = requests.post(action, data=payload)
+	# to_parse = BeautifulSoup(r.text)
+	# try:
+	# 	if to_parse.find("section", class_="body").find("p").text == phone_page_text:
+	# 		buyer = Buyer(listing=listing, name="Apollo Rocket", email=settings.DEFAULT_FROM_EMAIL)
+	# 		buyer.save()
+	# 		message = Message(
+	# 			listing=listing, 
+	# 			buyer=buyer, 
+	# 			content="Sorry, but Craigslist wants you to verify your phone number. Follow this link to finish posting: " + manage_link)
+	# 		message.save()
+	# except AttributeError:
+	# 	view_link = to_parse.find('li').find_next('a').contents[0]
+	# 	listing.CL_view = view_link
+	# 	listing.save()
 
 @task(name='tasks.send_message_task')
 def send_message_task(message_id):

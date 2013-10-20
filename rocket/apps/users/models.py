@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from listings.models import ListingCategory
 from django.db.models.signals import post_save
+from django.conf import settings
 
 # import django_filepicker
 
@@ -52,6 +53,10 @@ class UserProfile(models.Model):
 
 	def filled_out(self):
 		return all([self.name, self.location, self.phone, self.bio, self.propic, self.seller_type])
+
+	#Helper method for hermes serialization
+	def get_rocket_email(self):
+		return self.user.username + "@" + settings.MAILGUN_SERVER_NAME
 
 # Handles user profile creation if not already created
 def create_user_profile(sender, instance, created, **kwargs):  

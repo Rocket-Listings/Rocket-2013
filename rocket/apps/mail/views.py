@@ -11,6 +11,8 @@ from listings.models import Buyer, Message, Listing
 from listings.forms import MessageForm
 from mail.tasks import send_message_task, new_cl_admin_message_task, lookup_view_links_task, process_new_cl_message_task
 
+
+
 import re
 import hashlib, hmac
 
@@ -52,7 +54,6 @@ def on_incoming_test_message(request):
 		# print text
 		# signature = request.POST.get('stripped-signature', '')
 		# print signature
-
 		return HttpResponse('OK')
 	else:
 		return HttpResponse('Unauthorized')
