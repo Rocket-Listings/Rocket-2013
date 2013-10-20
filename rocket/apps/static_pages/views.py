@@ -18,9 +18,6 @@ def home(request):
 def index(request):
     return TemplateResponse(request, 'static_pages/index.html')
 
-def login(request):
-    return TemplateResponse(request, 'rocket_registration/login.html')
-
 def google_webmaster_verification(request):
     return render(request, 'static_pages/googlef43896b8ef9b394c.html')
 

@@ -105,18 +105,19 @@ $(function() {
   // getLocationByIP();
 
 
-  $('.header-menu-bar li a').click(function(event) {
+  $('a').click(function(event) {
       var elem = $($(this).data('href'));
       if (elem.length > 0) {
         event.preventDefault();
         elem.siblings().hide();
         elem.show();
         $('.header-menu-bar li a').removeClass('active');
-        $(this).addClass('active');
+        var menuItem = $(elem.data('menu'));
+        console.log(elem.data('menu'));
+        menuItem.addClass('active');
+        var url = menuItem.attr("href"); //update url without changing pages
+        history.pushState({page:url}, url, url);
       } 
-
-      var url = $(this).attr("href"); //update url without changing pages
-      history.pushState({page:url}, url, url);
   });
 
 
@@ -165,11 +166,3 @@ $(function() {
   handleEvents();
    */
 });
-
-
-
-
-
-
-
-

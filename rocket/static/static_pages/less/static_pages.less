@@ -9,14 +9,7 @@ body { padding-top: 37px; }
 
 a { color: @craigslistBlue; }
 
-.header-menu-bar{ margin: 0 -20px; }
-
-#join {
-  background: #3276b1;
-  span{
-    color: white;
-  }
-}
+// .header-menu-bar{ margin: 0 -20px; }
 
 // header map
 .header-map-container { position: relative; }
@@ -33,6 +26,7 @@ a { color: @craigslistBlue; }
   @media (max-width: 766px) {
     height: @map-height-responsive;
   }
+  border-bottom: 4px solid #BFBFBF;
 }
 
 #header-map-overlay {
@@ -229,14 +223,15 @@ a { color: @craigslistBlue; }
   }
 }
 
-.partials {
-  border-top: 4px solid #BFBFBF;
-}
-.partial {
+// .partials {}
+.partials > div {
   display:none;
 }
-.partial.active {
+.partials > div.active {
   display: block;
+}
+.partial-padding {
+    padding: 30px 0;
 }
 
 .why-row {

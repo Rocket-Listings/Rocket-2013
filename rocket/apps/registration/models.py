@@ -259,15 +259,15 @@ class RegistrationProfile(models.Model):
         ctx_dict = {'activation_key': self.activation_key,
                     'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS,
                     'site': site}
-        subject = render_to_string('rocket_registration/activation_email_subject.txt',
+        subject = render_to_string('registration/activation_email_subject.txt',
                                    ctx_dict)
         # Email subject *must not* contain newlines
         subject = ''.join(subject.splitlines())
         
-        message_text = render_to_string('rocket_registration/activation_email.txt',
+        message_text = render_to_string('registration/activation_email.txt',
                                    ctx_dict)
 
-        message_html = render_to_string('rocket_registration/activation_email.html',
+        message_html = render_to_string('registration/activation_email.html',
                                     ctx_dict)
 
         msg = EmailMultiAlternatives(subject, message_text, settings.DEFAULT_FROM_EMAIL, [self.user.email])

@@ -4,15 +4,18 @@
 
 {% block content %}
 <div class="partials">
-    <div id="product-partial" class="partial product-partial {% active 'home' %}">
+    <div id="product-partial" data-menu="#product-menu-item" class="{% active 'home' %}">
         {% include 'static_pages/partials/features.html' %}
     </div>
-    <div  id="background-partial" class="partial {% active 'background' %}">
+    <div id="background-partial" data-menu="#background-menu-item" class="{% active 'background' %}">
         {% include 'static_pages/partials/background.html' %}
     </div>
-    {# <div id="pricing-partial" class="partial {% active 'pricing' %}"> #}
-        {# {% include 'static_pages/partials/pricing.html' %} #}
-    {# </div>   #}
+    <div id="register-partial" data-menu="#register-menu-item" class="partial-padding {% active 'register' %}">
+        {% include 'registration/register.html' %}
+    </div>
+    <div id="login-partial" data-menu="#login-menu-item" class="partial-padding {% active 'login' %}">
+        {% include 'registration/login.html' %}
+    </div>
 </div>
 {% endblock %}
 
@@ -22,7 +25,3 @@
 </script>
 {{ block.super }}
 {% endblock %}
-
-{% comment %}    <div id="about-partial" class="partial about-partial {% active 'about' %}">
-        {% include 'static_pages/partials/about.html' %}
-    </div> {% endcomment %}

@@ -24,10 +24,10 @@
       {% if request.user.is_authenticated %}
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <a class="{% active 'create' %} blue-menu-item visible-xs" href="{% url 'create' %}">
+          <a class="{% active 'create' %} purple visible-xs" href="{% url 'create' %}">
             <span class="nav-item-text">Create a listing </span>
           </a>
-          <a class="{% active 'create' %} blue-menu-item hidden-xs" href="{% url 'create' %}">
+          <a class="{% active 'create' %} purple hidden-xs" href="{% url 'create' %}">
             <span class="glyphicon glyphicon-pencil"></span>
           </a>
         </li>
@@ -53,7 +53,7 @@
               </a>
             </li>
             <li>
-              <a href="{% url 'auth_logout' %}">
+              <a href="{% url 'logout' %}">
                 <span class="nav-item-text">Logout</span>
               </a>
             </li>
@@ -65,7 +65,7 @@
             </a>
         </li>
         <li class="visible-xs">
-            <a href="{% url 'auth_logout' %}">
+            <a href="{% url 'logout' %}">
               <span class="nav-item-text">Logout</span>
             </a>
         </li>
@@ -75,12 +75,12 @@
       {% else %}
       <ul class="nav navbar-nav pull-right " >
         <li>
-          <a class="{% active 'registration_register' %}" href="{% url 'registration_register' %}" id="join">
+          <a class="{% active 'register' %}" href="{% url 'register' %}" id="join">
             <span class="nav-item-text">Sign Up</span>
           </a>
         </li>
         <li>
-          <a class="{% active 'auth_login' %}" href="{% url 'auth_login' %}">
+          <a class="{% active 'login' %}" href="{% url 'login' %}">
             <span class="nav-item-text">Login</span>
           </a>
         </li>
