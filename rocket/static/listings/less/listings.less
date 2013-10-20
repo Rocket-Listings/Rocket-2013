@@ -22,7 +22,7 @@
 }
 
 .listings-body, .buyers-body, .messages-body {
-  overflow-x: hidden !important;
+  overflow-x: hidden !important;  
   &::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 7px;
@@ -132,7 +132,7 @@
   font-size: 0;
   position: absolute;
   top: 110px;
-  bottom: 0;
+  bottom: 35px;
   width: 100%;
   &.first-visit {
     top: 250px !important;
@@ -195,11 +195,15 @@
     display: inline-block;
     height: 100%;
     width: calc(~'46.4% - 63px');
+
     //border-right: 1px #DDDDDD solid;
     vertical-align: top;
     .listings-header {
       height: 36px;
       width: 100%;
+      background-color: #EAEAEA;
+      border-top: 1px solid #a2a2a2 !important;
+      border-left: 1px solid #a2a2a2 !important;
       border-bottom: 1px solid #a2a2a2 !important;
       ul {
         margin: 0 7px 0 0 !important;
@@ -211,6 +215,7 @@
           padding: 8px;
           overflow: hidden;
           white-space: nowrap;
+
           &.d-title {
             width: @title;
           }
@@ -232,6 +237,7 @@
             padding-bottom: 5px;
           }
 
+       
         }
       }
     }
@@ -240,6 +246,7 @@
       height: 100%;
       width: 100%;
       overflow: scroll;
+      border-left: 1px solid #a2a2a2 !important;
       // background-color: rgba(0, 0, 0, 0.04);
       position: relative;
       .scroll-down-border-top {
@@ -353,6 +360,7 @@
     width: calc(~'55.5% - 70px');
     vertical-align: top;
     .inbox-header, .no-messages {
+      
       display: block;
       font-size: 14px;
       width: 100%;
@@ -370,6 +378,12 @@
         // background-color: rgba(0, 0, 0, 0.04);
       }
     }
+
+    .inbox-header{
+      background-color: #EAEAEA;
+      border-top: 1px solid #a2a2a2 !important;
+      border-right: 1px solid #a2a2a2 !important;
+    }
     .buyers-col {
       display: inline-block;
       height: 100%;
@@ -383,6 +397,7 @@
         li {
           font-size: 14px;
           list-style: none;
+          padding-left: 12px !important
         }
       }
       .buyers-body {
@@ -392,12 +407,15 @@
           cursor: pointer;
           text-rendering: optimizeLegibility;
           &.highlight {
-            // border-left: #357EBD 2px solid;
+            border-left: #357EBD 5px solid;
+            border-right: #357EBD 5px solid;
             text-rendering: optimizeLegibility;
             border-bottom: none !important;
             background-color: #EAEAEA;
+
             li {
-              // margin-left: -2px;
+              margin-left: -5px;
+              padding-left: 12px !important;
               &:nth-child(2){
                 border-bottom: #DDD 1px solid;
               }
@@ -411,9 +429,13 @@
               text-rendering: optimizeLegibility;
               border-bottom: none !important;
               background-color: #EAEAEA;
+              margin-left: -5px;
+              padding-left: 12px !important;
             }
 
             li:first-child { font-weight: bold }
+            margin-left: -5px;
+            padding-left: 12px !important;
           }
           li {
             &:first-child { padding: 8px 8px 2px 8px; }
@@ -442,7 +464,7 @@
         }
       }
       .messages-body {
-        height: calc(~'93% - 127px');
+        height: calc(~'100% - 127px');
         overflow: scroll;
         ul {
           border-bottom: #DDDDDD solid 1px;
@@ -465,9 +487,9 @@
             &.message-time {
               display: inline-block;
               float: right;
-              color: darken(#DDD, 20%);
-              opacity: 0;
-              -webkit-transition: opacity .2s ease-in;
+              
+              opacity: 0.7;
+              
             }
           }
           &:hover .message-time{
