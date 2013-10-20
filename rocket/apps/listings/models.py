@@ -8,6 +8,7 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.db.models import Max
 from django.db.models.signals import post_save
+from django.contrib.sites.models import Site
 # from django.forms.util import ValidationError
 
 # Managers!
@@ -104,6 +105,12 @@ class Listing(models.Model):
 
 	def get_photo_urls(self):
 		return [photo.url for photo in self.listingphoto_set.all()]
+
+	def get_poll_url(self):
+		return "http://" + str(Site.objects.get_current()) + reverse('admin_email_poll', args=[self.id])
+
+	def get_view_link_post_url(self):
+		return "http://" + str(Site.objects.get_current()) + reverse('view_link_post', args=[self.id])
 
 class Spec(models.Model):
 	name = models.CharField(max_length=100)

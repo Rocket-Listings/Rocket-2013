@@ -72,6 +72,8 @@ class HermesSerializer(serializers.ModelSerializer):
     price = serializers.CharField(source = 'get_price_as_string')
     email = serializers.CharField(source = 'user.userprofile.get_rocket_email')
     photos = serializers.Field(source = 'get_photo_urls')
+    poll_url = serializers.Field(source='get_poll_url')
+    view_link_post_url = serializers.Field(source='get_view_link_post_url')
 
     class Meta:
         model = Listing
@@ -87,3 +89,9 @@ class HermesSerializer(serializers.ModelSerializer):
             'listing_type',
             'user'
         )
+
+class AdminEmailSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Listing
+        fields = ('CL_link',)

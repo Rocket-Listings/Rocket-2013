@@ -563,17 +563,19 @@ $(function() {
       this.$el.html(this.template(context));
     },
     publish: function(e) {
-      
+      console.log("here");
       $('.publish-btn').prop('disabled', true);
+      console.log(this.listing.isValid());
       if (this.listing.isValid() && this.specs.isValid() && this.photos.isValid()) {
+        console.log("there");
         $.ajax({
           url: '/listings/' + this.listing.id.toString() + '/hermes',
           method: 'GET',
           success: function(data, status, xhr) {
-            if (xhr.status == 200) {
+            if (xhr.status == 202) {
               // window.location.replace('/listings/dashboard/');
-              console.log('publish');
-              window.postMessage({type: "FROM_PAGE", action: "debug", ctx: data}, "*");
+              console.log(data);
+              window.postMessage({type: "FROM_PAGE", action: "post", ctx: data}, "*");
               console.log(data);
             } else if(xhr.status == 403) {
               $('#not-enough-credits').show();

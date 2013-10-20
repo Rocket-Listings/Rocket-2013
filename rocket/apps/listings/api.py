@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.utils import simplejson
 from operator import __add__
 from listings.models import Listing, Message, Spec, ListingPhoto
-from listings.serializers import ListingSerializer, SpecSerializer, ListingPhotoSerializer,  HermesSerializer
+from listings.serializers import ListingSerializer, SpecSerializer, ListingPhotoSerializer,  HermesSerializer, AdminEmailSerializer
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -58,11 +58,13 @@ def hermes(request, listing_id):
     if listing.status_id == 1:
         if not settings.AUTOPOST_DEBUG and request.user.get_profile().listing_credits > 0:  
             listing.status_id = 2   
+            listing.save()
             return Response(hermes_serializer.data, status=202) #Accepted rather than 200 OK b/c listing has been put in queue rather than actually completed.
         
         elif settings.AUTOPOST_DEBUG:
             print "posted successfully but autopost_debug is on so nothing was sent to CL"
             listing.status_id = 2
+            listing.save()
             return Response(hermes_serializer.data, status=200)    
         
         else:
@@ -79,6 +81,24 @@ def hermes(request, listing_id):
     elif listing.status_id == 4:
         return HttpResponse(status=400) #Bad Request
 
+@login_required
+@api_view(['GET'])
+def admin_email_poll(request, listing_id):
+    listing = Listing.objects.get(id=listing_id)
+    admin_email_serializer = AdminEmailSerializer(listing)
+
+    if not listing.CL_link:
+        return HttpResponse(status=404)
+    else:
+        return Response(admin_email_serializer.data, status=200)
+
+def view_link_post(request, listing_id):
+    # Probably needs more security
+    print listing_id
+    listing =  get_object_or_404(Listing, id=listing_id)
+    listing.CL_view = request.POST.get("viewLink", "")
+    listing.save()
+    return HttpResponse(status=200)
 
 
 # Listing API
