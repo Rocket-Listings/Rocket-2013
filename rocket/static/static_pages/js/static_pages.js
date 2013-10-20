@@ -111,10 +111,10 @@ $(function() {
         event.preventDefault();
         elem.siblings().hide();
         elem.show();
-        $('.header-menu-bar li a').removeClass('active');
+        $('.navbar-nav li a').removeClass('active');
         var menuItem = $(elem.data('menu'));
-        console.log(elem.data('menu'));
         menuItem.addClass('active');
+        document.title = elem.data('title');
         var url = menuItem.attr("href"); //update url without changing pages
         history.pushState({page:url}, url, url);
       } 

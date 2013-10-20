@@ -40,6 +40,7 @@ def register(request, extra_context=None):
 
     if not getattr(settings, 'REGISTRATION_OPEN', True):
         return redirect('registration_disallowed')
+    seller_type = 'O'
     if request.method == 'POST':
         form = RegistrationForm(data=request.POST, files=request.FILES)
         seller_type = request.POST.get("seller_type", "O")

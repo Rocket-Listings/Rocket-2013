@@ -2,18 +2,25 @@
 {% load static from staticfiles %}
 {% load active from navigation %}
 
+{% block title %}
+    {% active 'home' value='rocket' %}
+    {% active 'background' value='background' %}
+    {% active 'register' value='register' %}
+    {% active 'login' value='login' %}
+{% endblock %}
+
 {% block content %}
 <div class="partials">
-    <div id="product-partial" data-menu="#product-menu-item" class="{% active 'home' %}">
+    <div id="product-partial" data-title="rocket" data-menu="#product-menu-item" class="{% active 'home' %}">
         {% include 'static_pages/partials/features.html' %}
     </div>
-    <div id="background-partial" data-menu="#background-menu-item" class="{% active 'background' %}">
+    <div id="background-partial" data-title="background" data-menu="#background-menu-item" class="{% active 'background' %}">
         {% include 'static_pages/partials/background.html' %}
     </div>
-    <div id="register-partial" data-menu="#register-menu-item" class="partial-padding {% active 'register' %}">
+    <div id="register-partial" data-title="register" data-menu="#register-menu-item" class="{% active 'register' %}">
         {% include 'registration/register.html' %}
     </div>
-    <div id="login-partial" data-menu="#login-menu-item" class="partial-padding {% active 'login' %}">
+    <div id="login-partial" data-title="login" data-menu="#login-menu-item" class="{% active 'login' %}">
         {% include 'registration/login.html' %}
     </div>
 </div>
