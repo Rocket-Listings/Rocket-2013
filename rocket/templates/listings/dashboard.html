@@ -73,7 +73,7 @@ html, body {
       {% include 'listings/partials/listings_panel.html' %}
     </div>
     <div class="buyer-message-wrapper phone-hide">
-      <span class="inbox-header">Inbox</span>
+  <span class="inbox-header"><strong>Inbox</strong><span class="label label-info">{% if unread_messages %}New{% endif %}</span></span>
       <span class="no-messages">You have no messages for this listing.</span>
       <div class="buyers-col">
         {% include 'listings/partials/buyers_panel.html' %}
