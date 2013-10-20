@@ -103,6 +103,7 @@ $(function() {
 					$(".message[data-message-id='" + data.message_id +"'], .buyer[data-buyer-id='" + data.buyer_id + "']").removeClass("unread");
 					if (data.listing_all_read) {
 						$(".listing[data-listing-id='" + data.listing_id + "']").removeClass("unread");
+						$('span.label-info').hide();
 					}
 				});
 			});
