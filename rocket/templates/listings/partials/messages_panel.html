@@ -8,17 +8,11 @@
 		<li class="message-time">{{message.date|naturaltime}}</li>
 		<li class="message-buyer-name">
 			{% if message.isSeller %}
-				{% if user.get_profile.name %}
-				{{ user.get_profile.name }}
-				{% else %}
-				{{ user.username }}
-				{% endif %}
+				Me
 			{% else %}
 				{{ message.buyer.name }}
 			{% endif %}
-
 		</li>
-
 		<li class="message-content">{{ message.content }}</li>
 	</ul>
 	<span class="hide message-form-preserve buyer-{{ message.buyer.id }}"></span>
