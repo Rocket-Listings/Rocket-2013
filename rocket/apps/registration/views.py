@@ -18,11 +18,7 @@ from registration import signals
 from django.forms.util import ErrorList
 from registration.tasks import gravatar_task
 
-def activate(request,   template_name='registration/activate.html', 
-                        success_url='user_info', 
-                        extra_context=None, 
-                        activation_key=None, **kwargs):
-
+def activate(request, extra_context=None, activation_key=None, **kwargs):
     account = RegistrationProfile.objects.activate_user(activation_key)
     if account:
         # log the user in
@@ -30,36 +26,22 @@ def activate(request,   template_name='registration/activate.html',
         login(request, account)
         # signal activation
         signals.user_activated.send(sender=None, user=account, request=request)
-        if success_url is None:
-            return redirect('registration_activation_complete');
-        else:
-            return redirect(success_url)
-
-    if extra_context is None:
-        extra_context = {}
-    context = RequestContext(request)
-    for key, value in extra_context.items():
-        context[key] = callable(value) and value() or value
-
-    return render_to_response(template_name,
-                              kwargs,
-                              context_instance=context)
+        return redirect('dashboard');
+    else:
+        if extra_context is None:
+            extra_context = {}
+        context = RequestContext(request)
+        for key, value in extra_context.items():
+            context[key] = callable(value) and value() or value
+        return render_to_response('registration/activate.html', kwargs, context_instance=context)
 
 
-def register(request,   success_url=None, 
-                        form_class=None, 
-                        disallowed_url='registration_disallowed', 
-                        template_name='static_pages/index.html',
-                        extra_context=None):
+def register(request, extra_context=None):
 
     if not getattr(settings, 'REGISTRATION_OPEN', True):
-        return redirect(disallowed_url)
-    if form_class is None:
-        form_class = RegistrationForm
-        seller_type = "O"
-
+        return redirect('registration_disallowed')
     if request.method == 'POST':
-        form = form_class(data=request.POST, files=request.FILES)
+        form = RegistrationForm(data=request.POST, files=request.FILES)
         seller_type = request.POST.get("seller_type", "O")
         if form.is_valid():
             seller_type_field = forms.RegexField(regex=r'^O|D$', max_length=1)
@@ -80,15 +62,14 @@ def register(request,   success_url=None,
                 profile.seller_type = seller_type_save
                 profile.save()
                 gravatar_task.delay(new_user, new_user.pk)
-                if request.GET.get('next',''):
-                    success_url = request.GET.get('next','')
+
+                success_url = request.GET.get('next','')
+                if success_url:                    
                     return redirect(success_url)
-                elif success_url is None:
-                    return redirect('registration_complete')
                 else:
-                    return redirect(success_url)
+                    return redirect('registration_complete')
     else:
-        form = form_class()
+        form = RegistrationForm()
     
     if extra_context is None:
         extra_context = {}
@@ -96,4 +77,4 @@ def register(request,   success_url=None,
     for key, value in extra_context.items():
         context[key] = callable(value) and value() or value
 
-    return render_to_response(template_name, {'form': form, 'seller_type': seller_type}, context_instance=context)
+    return render_to_response('static_pages/index.html', {'register_form': form, 'seller_type': seller_type}, context_instance=context)
