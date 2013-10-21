@@ -25,3 +25,5 @@ function getCookie(name) {
     return cookieValue;
 }
 
+$('#tooltip').tooltip()
+
