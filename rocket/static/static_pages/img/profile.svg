@@ -1,4 +1,4 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Your_Icon" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
-<circle fill="#000000" cx="50" cy="27" r="27"/>
-<path fill="#000000" d="M98,100v-7c0-16.5-13.5-30-30-30H32C15.5,63,2,76.5,2,93v7H98z"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0,0v100h100V0H0z M89,78H11V13h78V78z"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M75,71.881H25c0,0-0.789-13.534,12.872-22.886  c2.988-2.043,0.909,4.021,12.128,4.021c11.021,0,9.314-6.122,12.263-3.918C75.932,59.311,75,71.881,75,71.881z M50,49.247  c-7.224,0-13.08-6.125-13.08-13.686c0-7.558,5.856-13.686,13.08-13.686s13.08,6.128,13.08,13.686  C63.08,43.122,57.224,49.247,50,49.247z"/>
 </svg>
