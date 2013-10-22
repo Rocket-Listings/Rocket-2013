@@ -24,8 +24,8 @@ class UserProfile(models.Model):
 	TWITTER_OAUTH_TOKEN = models.CharField(max_length=200, blank=True)
 	TWITTER_OAUTH_TOKEN_SECRET = models.CharField(max_length=200, blank=True)
 
-	listing_credits = models.IntegerField(default=3)
-	total_credits = models.IntegerField(default=3)
+	listing_credits = models.IntegerField(default=999)
+	total_credits = models.IntegerField(default=999)
 
 	profile_completed_once = models.BooleanField(default=False)
 	twitter_connected_once = models.BooleanField(default=False)
