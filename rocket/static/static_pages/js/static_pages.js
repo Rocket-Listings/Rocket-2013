@@ -125,7 +125,7 @@ $(function() {
   // }
   $('#add_extension').click(function(event) {
     event.preventDefault();
-    chrome.webstore.install("https://chrome.google.com/webstore/detail/hermes/knfnlfcnohkkbkiibecjhidafmpgchfe", 
+    chrome.webstore.install("https://chrome.google.com/webstore/detail/knfnlfcnohkkbkiibecjhidafmpgchfe", 
       function() {
         $(this).find('.before').hide();
         $(this).removeClass('btn-warning').addClass('btn-success disabled');
