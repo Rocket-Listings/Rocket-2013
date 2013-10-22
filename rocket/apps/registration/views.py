@@ -40,35 +40,27 @@ def register(request, extra_context=None):
 
     if not getattr(settings, 'REGISTRATION_OPEN', True):
         return redirect('registration_disallowed')
-    seller_type = 'O'
     if request.method == 'POST':
         form = RegistrationForm(data=request.POST, files=request.FILES)
-        seller_type = request.POST.get("seller_type", "O")
         if form.is_valid():
-            seller_type_field = forms.RegexField(regex=r'^O|D$', max_length=1)
-            try:
-                seller_type_save = seller_type_field.clean(seller_type)
-            except ValidationError as e:
-                form._errors["seller_type"] = ErrorList([u"Please choose a valid seller type."])
+            username, email, password = form.cleaned_data['username'], form.cleaned_data['email'], form.cleaned_data['password1']
+            site = Site.objects.get_current() if Site._meta.installed else RequestSite(request)
+            new_user = RegistrationProfile.objects.create_inactive_user(username, email, password, site)
+            signals.user_registered.send(sender=None, user=new_user, request=request)
+
+            profile = UserProfile.objects.get(user=new_user)
+            seller_type = form.cleaned_data['seller_type']
+            phone = form.cleaned_data['phone']
+            profile.seller_type = seller_type
+            profile.phone = phone
+            profile.save()
+            gravatar_task.delay(new_user, new_user.pk)
+
+            success_url = request.GET.get('next','')
+            if success_url:                    
+                return redirect(success_url)
             else:
-                username, email, password = form.cleaned_data['username'], form.cleaned_data['email'], form.cleaned_data['password1']
-                if Site._meta.installed:
-                    site = Site.objects.get_current()
-                else:
-                    site = RequestSite(request)
-                new_user = RegistrationProfile.objects.create_inactive_user(username, email, password, site)
-                signals.user_registered.send(sender=None, user=new_user, request=request)
-
-                profile = UserProfile.objects.get(user=new_user)
-                profile.seller_type = seller_type_save
-                profile.save()
-                gravatar_task.delay(new_user, new_user.pk)
-
-                success_url = request.GET.get('next','')
-                if success_url:                    
-                    return redirect(success_url)
-                else:
-                    return redirect('registration_complete')
+                return redirect('registration_complete')
     else:
         form = RegistrationForm()
     
@@ -78,4 +70,4 @@ def register(request, extra_context=None):
     for key, value in extra_context.items():
         context[key] = callable(value) and value() or value
 
-    return render_to_response('static_pages/index.html', {'register_form': form, 'seller_type': seller_type}, context_instance=context)
+    return render_to_response('static_pages/index.html', {'register_form': form}, context_instance=context)

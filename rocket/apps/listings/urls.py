@@ -11,7 +11,7 @@ urlpatterns = patterns('listings.views',
 )
 
 urlpatterns += patterns('listings.api',
-    url(r'^(?P<listing_id>\d+)/autopost$', 'autopost', name='autopost'),
+    # url(r'^(?P<listing_id>\d+)/autopost$', 'autopost', name='autopost'),
     url(r'^(?P<listing_id>\d+)/hermes$', 'hermes', name='hermes'),
     url(r'^(?P<listing_id>\d+)/admin_email_poll$', 'admin_email_poll', name='admin_email_poll'),
     url(r'^(?P<listing_id>\d+)/view_link_post$', 'view_link_post', name='view_link_post'),

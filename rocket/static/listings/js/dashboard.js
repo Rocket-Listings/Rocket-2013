@@ -1,7 +1,5 @@
 $(function() {
 	// Helpers
-
-	document.cookie='hermes-enabled=true; expires=0; path=/listings/dashboard/'
  	console.log(document.cookie)
 
 	// Plugin to scroll div to certain location

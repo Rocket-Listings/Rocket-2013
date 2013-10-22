@@ -115,7 +115,6 @@ $(function() {
       $('.edit-btn').on('shown.bs.tab', this.mapResize);
     },
     initMarket: function() {
-
       //Initialization and edit state
       this.$(".market").select2({
         placeholder: "Select a Market",
@@ -139,8 +138,7 @@ $(function() {
       this.initHood(market, this.model.get('sub_market'));
     },
     initHood: function(market, subMarket) {
-      if (this.markets[market] && this.markets[market][subMarket-1].hoods) {
-        console.log("hiya")
+      if (this.markets[market] && subMarket && this.markets[market][subMarket-1].hoods) {
         this.$(".hood").select2({
           placeholder: "Select a Sub-Market",
           val: "",
@@ -162,6 +160,7 @@ $(function() {
     },
     submarketChange: function(e){
       var value = parseInt(e.val);
+      console.log(value);
       this.initHood(this.model.get('market'), value);
       // if (value)
       this.model.save('sub_market', value, { patch: true, validate: false });      
@@ -501,9 +500,7 @@ $(function() {
           listing: that.model.id
         });
       });
-      console.log(this.collection.toJSON());
       this.collection.set(nextPhotos, { merge: true });
-      console.log(this.collection.toJSON());      
       this.render(true);
     },
     onError: function(type, message) {
@@ -563,11 +560,13 @@ $(function() {
       this.$el.html(this.template(context));
     },
     publish: function(e) {
-      console.log("here");
       $('.publish-btn').prop('disabled', true);
+      console.log('publish');
       console.log(this.listing.isValid());
+      console.log(this.specs.isValid());
+      console.log(this.photos.isValid());            
       if (this.listing.isValid() && this.specs.isValid() && this.photos.isValid()) {
-        console.log("there");
+        console.log('valid');        
         $.ajax({
           url: '/listings/' + this.listing.id.toString() + '/hermes',
           method: 'GET',
@@ -576,7 +575,6 @@ $(function() {
               // window.location.replace('/listings/dashboard/');
               console.log(data);
               window.postMessage({type: "FROM_PAGE", action: "post", ctx: data}, "*");
-              console.log(data);
             } else if(xhr.status == 403) {
               $('#not-enough-credits').show();
             }
@@ -693,6 +691,8 @@ $(function() {
     }
   });
 
+  document.cookie='hermes-enabled=true; expires=0; path=/listings/dashboard/';
+  
   var specsJSON = listingJSON.spec_set;
   var photosJSON = listingJSON.listingphoto_set;
 
@@ -712,7 +712,6 @@ $(function() {
   });
 
   var previewView = new PreviewView({ listing: listing, specs: specs, photos: photos });
-
   var specEditView = new SpecEditView({ collection: specs, model: listing  });
   var photoEditView = new PhotoEditView({ collection: photos, model: listing });
   var listingEditView = new ListingEditView({ model: listing });
