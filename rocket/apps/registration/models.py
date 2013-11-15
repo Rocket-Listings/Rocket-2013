@@ -108,8 +108,7 @@ class RegistrationManager(models.Manager):
         if isinstance(username, unicode):
             username = username.encode('utf-8')
         activation_key = hashlib.sha1(salt+username).hexdigest()
-        return self.create(user=user,
-                           activation_key=activation_key)
+        return self.create(user=user, activation_key=activation_key)
         
     def delete_expired_users(self):
         """

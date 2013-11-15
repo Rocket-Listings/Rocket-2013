@@ -23,7 +23,8 @@ from users.models import UserProfile, UserComment
 from django.db.models import Avg
 from listings.tasks import cl_anon_autopost_task, cl_anon_update_task, cl_delete_task
 from rest_framework.renderers import UnicodeJSONRenderer
-from listings.serializers import ListingSerializer
+from listings.serializers import ListingSerializer, HermesSerializer
+from pprint import pprint
 
 @first_visit
 @login_required

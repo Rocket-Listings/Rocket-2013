@@ -10,6 +10,7 @@
 // });
 
 // Get cookie for csrf token
+
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie != '') {
@@ -24,6 +25,4 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-
 $('#tooltip').tooltip()
-

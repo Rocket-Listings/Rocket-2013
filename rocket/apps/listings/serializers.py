@@ -63,3 +63,35 @@ class ListingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Listing
+
+class HermesSerializer(serializers.ModelSerializer):
+    submarket = serializers.IntegerField(source= 'sub_market')
+    manageLink = serializers.URLField(source = 'CL_link')
+    cat = serializers.CharField(source = 'get_category_id')
+    listingType = serializers.CharField(source = 'get_verbose_type')
+    price = serializers.CharField(source = 'get_price_as_string')
+    email = serializers.CharField(source = 'user.userprofile.get_rocket_email')
+    photos = serializers.Field(source = 'get_photo_urls')
+    poll_url = serializers.Field(source='get_poll_url')
+    view_link_post_url = serializers.Field(source='get_view_link_post_url')
+
+    class Meta:
+        model = Listing
+        exclude = (
+            'sub_market',
+            'CL_view',
+            'CL_link',
+            'create_date',
+            'id',
+            'last_modified',
+            'status',
+            'category',
+            'listing_type',
+            'user'
+        )
+
+class AdminEmailSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Listing
+        fields = ('CL_link',)

@@ -97,4 +97,4 @@ DEBUG_TOOLBAR_CONFIG = { 'INTERCEPT_REDIRECTS': False }
 # # See: http://docs.celeryproject.org/en/latest/configuration.html#celery-result-backend
 # CELERY_RESULT_BACKEND = 'amqp'
 
-AUTOPOST_DEBUG = True
+AUTOPOST_DEBUG = False
