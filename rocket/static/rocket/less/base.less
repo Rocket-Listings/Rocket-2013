@@ -103,7 +103,10 @@ button.navbar-toggle{
 
 .navbar-nav {
   margin: 0 -15px;
-  border-bottom: 1px solid darken(@navbar-color, 30%);
+  
+  &.mobile{
+    border-bottom: 1px solid darken(@navbar-color, 30%);
+  }
 
   >.open>a, 
   >.open>a:hover, 
