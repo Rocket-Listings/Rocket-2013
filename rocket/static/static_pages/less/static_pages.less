@@ -22,6 +22,11 @@ a { color: @craigslistBlue; }
 #header-map {
   // top: 0;
   height: @map-height;
+
+  &.mobile{
+    height: 80px;  
+  }
+
   width: 100%;
   @media (max-width: 766px) {
     height: @map-height-responsive;
@@ -30,6 +35,10 @@ a { color: @craigslistBlue; }
 }
 
 #header-map-overlay {
+
+  &.mobile{
+    height: 80px;  
+  }
   height: @map-height;
   width: 100%;
   position: absolute;
@@ -50,6 +59,10 @@ a { color: @craigslistBlue; }
 
   .heading {
     margin-top: 80px;
+
+    &.mobile{
+       margin-top: 20px;      
+    }
     h3 {
       display:inline;
       font-size: 26px;
@@ -57,6 +70,15 @@ a { color: @craigslistBlue; }
       padding: 4px;
       background: rgba(255,255,255,0.8);
       margin-left: 40px;
+
+      &.mobile{
+        margin-left: 0px;        
+        font-size: 18px;
+      }
+
+      span{
+        color: purple;
+      }
     }
     @media (max-width: 766px) {
       margin-top: 40px;
