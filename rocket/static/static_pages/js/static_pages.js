@@ -120,49 +120,19 @@ $(function() {
       } 
   });
 
-  
-
-  /* 
-  function handleEvents() {
-    var autoValidate = null;
-    $(".start-signup").submit(function(e) {
-      var address = $(".start-email").val().replace(/ /g, ""),
-        username;
-      if ((address != "") && validateEmail(address)) {
-        $(".username").val(address.substring(0, address.indexOf("@")));
-        return true;
-      }
-      startSignupErr();
-      $(".start-email").select();
-      return false;
+  // if(chrome.app.isInstalled) {
+    // $('#register_submit').removeProp('disabled');
+  // }
+  $('#add_extension').click(function(event) {
+    event.preventDefault();
+    chrome.webstore.install("https://chrome.google.com/webstore/detail/knfnlfcnohkkbkiibecjhidafmpgchfe", 
+      function() {
+        $(this).find('.before').hide();
+        $(this).removeClass('btn-warning').addClass('btn-success disabled');
+        $(this).find('.after').show();        
+        // $('#register_submit').removeProp('disabled');
+      }, function() {
+        alert("Unfortunately a large part of our site breaks if you don't install this chrome extension");
     });
-    $(".start-email").keydown(function(e) {
-      removeStartSignupErr();
-      if (autoValidate != null) clearTimeout(autoValidate);
-      autoValidate = setTimeout(function () {
-        var address = $(".start-email").val().replace(/ /g, "");
-        if (!validateEmail(address)) {
-          startSignupErr();
-        }
-      }, 5000);
-    });
-  }
-
-  function validateEmail(address) {
-    var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;    
-    return (regex.test(address));
-  }
-
-  function startSignupErr() {
-    $(".start-submit").addClass("disable");
-    $(".header-signup-button-wrap").addClass("disable");
-  }
-
-  function removeStartSignupErr() {
-    $(".start-submit").removeClass("disable");
-    $(".header-signup-button-wrap").removeClass("disable");
-  }
-
-  handleEvents();
-   */
+  });
 });

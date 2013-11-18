@@ -3,22 +3,23 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from listings.models import ListingCategory
 from django.db.models.signals import post_save
+from django.conf import settings
 
 # import django_filepicker
 
 # User Profile
 class UserProfile(models.Model):
 	user = models.OneToOneField(User)
+
 	name = models.CharField(max_length=100, blank=True)
 	location = models.CharField(max_length=255, blank=True)
 	default_category = models.ForeignKey(ListingCategory, null=True, blank=True)
 	seller_type = models.CharField(max_length=1, choices=(('O', 'Owner'),('D', 'Dealer')), null=False, blank=False)
-	phone = models.CharField(max_length=50, blank=True)
+	phone = models.CharField(max_length=50, null=False, blank=False)
 	bio = models.TextField(blank=True)
 	propic = models.CharField(max_length=200, blank=True)
 
 	fbProfile = models.OneToOneField('ProfileFB', null=True, blank=True)
-
 	twitter_handle = models.CharField(max_length=20, blank=True)
 	TWITTER_OAUTH_TOKEN = models.CharField(max_length=200, blank=True)
 	TWITTER_OAUTH_TOKEN_SECRET = models.CharField(max_length=200, blank=True)
@@ -52,6 +53,10 @@ class UserProfile(models.Model):
 
 	def filled_out(self):
 		return all([self.name, self.location, self.phone, self.bio, self.propic, self.seller_type])
+
+	#Helper method for hermes serialization
+	def get_rocket_email(self):
+		return self.user.username + "@" + settings.MAILGUN_SERVER_NAME
 
 # Handles user profile creation if not already created
 def create_user_profile(sender, instance, created, **kwargs):  

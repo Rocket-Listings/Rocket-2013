@@ -8,6 +8,7 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.db.models import Max
 from django.db.models.signals import post_save
+from django.contrib.sites.models import Site
 # from django.forms.util import ValidationError
 
 # Managers!
@@ -85,6 +86,31 @@ class Listing(models.Model):
 	# need to write this
 	def is_valid():
 		return True
+
+	#Helper methods for hermes serialization
+	def get_verbose_type(self):
+		if self.listing_type == u'O':
+			return "fso"
+		else:
+			return "fsd"
+
+	def get_category_id(self):
+		if self.listing_type == u'O':
+			return self.category.cl_owner_id
+		else:
+			return self.category.cl_dealer_id
+
+	def get_price_as_string(self):
+		return str(self.price)
+
+	def get_photo_urls(self):
+		return [photo.url for photo in self.listingphoto_set.all()]
+
+	def get_poll_url(self):
+		return "http://" + str(Site.objects.get_current()) + reverse('admin_email_poll', args=[self.id])
+
+	def get_view_link_post_url(self):
+		return "http://" + str(Site.objects.get_current()) + reverse('view_link_post', args=[self.id])
 
 class Spec(models.Model):
 	name = models.CharField(max_length=100)

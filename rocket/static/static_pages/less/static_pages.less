@@ -346,5 +346,19 @@ a { color: @craigslistBlue; }
 
   img.img-dashboard{
     padding: 0 !important;
+}
+
+// Override bootstrap styles
+.radio-inline label {
+  font-weight: normal;
+}
+
+
+// Make submit button on forms the same size as inputs
+form.fixed-width-form {
+  input[type='submit'], a.btn {
+    height: 38px !important;
+    width: 100% !important;
+    margin-bottom: 10px;
   }
 }

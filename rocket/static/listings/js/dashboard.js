@@ -1,5 +1,6 @@
 $(function() {
 	// Helpers
+ 	console.log(document.cookie)
 
 	// Plugin to scroll div to certain location
 	/**
