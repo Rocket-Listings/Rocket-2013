@@ -103,6 +103,7 @@ button.navbar-toggle{
 
 .navbar-nav {
   margin: 0 -15px;
+  border-bottom: 1px solid darken(@navbar-color, 30%);
 
   >.open>a, 
   >.open>a:hover, 
@@ -141,6 +142,29 @@ button.navbar-toggle{
       display: inline;        
       vertical-align: middle; 
     }
+  }
+
+  a.mobile{
+    outline: none;
+    color: grey;
+    height: @navbar-height;
+    line-height: @navbar-height;
+    padding: 11px 60px;
+    font-size: 12px;
+    text-decoration: none;
+
+    &.active {
+      background-color: #E0E0E0;
+    }
+    
+    &:hover .nav-item-text {
+      text-decoration: none;
+    }
+    .glyphicon {
+      display: inline;        
+      vertical-align: middle; 
+    }
+
   }
 }
 

@@ -1,6 +1,5 @@
 {% load static from staticfiles %}
 {% load active from navigation %}
-
 <nav class="navbar navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header nav-mobile">
@@ -9,41 +8,43 @@
         <div class="accent accent2"></div>
         <div class="accent accent3"></div>
         <div class="accent accent4"></div>
-        <span class="logo-text"><span class="serif">rocket</span> <span class="sans-serif">listings</span></span>
+        <span class="logo-text">
+          <span class="serif">rocket</span>
+          <span class="sans-serif">listings</span>
+        </span>
       </a>
 
-          <a class="mobile {% active 'register' %} pull-right" data-href="#register-partial" id="register-menu-item" href="{% url 'register' %}">
-            <span class="nav-item-text">Sign Up</span>
-          </a>
-      
+      <a class="mobile {% active 'register' %} pull-right" data-href="#register-partial" id="register-menu-item" href="{% url 'register' %}">
+        <span class="nav-item-text">Sign Up</span>
+      </a>
+
     </div>
 
-    
-     
-      
-    </div>
+  </div>
 </nav>
-
 
 <div class="header-map-container">
   <div id="header-map" class="mobile"></div>
   <div id="header-map-overlay" class="mobile">
     <div class="container overlay-container">
-        <div class="heading mobile">
-          <h3 class="mobile">A better way to sell on <span>Craigslist</span></h3>
-        </div>
+      <div class="heading mobile">
+        <h3 class="mobile">
+          A better way to sell on
+          <span>Craigslist</span>
+        </h3>
+      </div>
     </div>
   </div>
 </div>
- <ul class="nav navbar-nav">
-        <li>
-          <a class="{% active 'home' %}" data-href="#product-partial" id="product-menu-item" href="/">
-            <span class="nav-item-text">Features</span>
-          </a>
-        </li>
-        <li>
-          <a class="{% active 'background' %}" data-href="#background-partial" id="background-menu-item" href="/background/">
-            <span class="nav-item-text">Background</span>
-          </a>
-        </li>
-      </ul>
+<ul class="nav navbar-nav mobile">
+  
+    <a class="{% active 'home' %} mobile " data-href="#product-partial" id="product-menu-item" href="/">
+      <span class="nav-item-text">Features</span>
+    </a>
+  
+  
+    <a class="{% active 'background' %} mobile" data-href="#background-partial" id="background-menu-item" href="/background/">
+      <span class="nav-item-text">Background</span>
+    </a>
+  
+</ul>

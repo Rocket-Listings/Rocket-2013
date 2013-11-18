@@ -111,7 +111,7 @@ $(function() {
         event.preventDefault();
         elem.siblings().hide();
         elem.show();
-        $('.navbar-nav li a').removeClass('active');
+        $('.navbar-nav a').removeClass('active');
         var menuItem = $(elem.data('menu'));
         menuItem.addClass('active');
         document.title = elem.data('title');
