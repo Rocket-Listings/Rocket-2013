@@ -20,6 +20,7 @@ from django.conf import settings
 from listings.permissions import IsOwnerOrReadOnly, IsListingOwnerOrReadOnly
 from pprint import pprint
 import json
+from django.views.decorators.csrf import csrf_exempt
 
 @login_required
 @require_GET
@@ -92,6 +93,7 @@ def admin_email_poll(request, listing_id):
     else:
         return Response(admin_email_serializer.data, status=200)
 
+@csrf_exempt
 def view_link_post(request, listing_id):
     # Probably needs more security
     print listing_id
