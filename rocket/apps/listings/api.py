@@ -5,7 +5,7 @@ from django.shortcuts import redirect, get_object_or_404
 from django.http import HttpResponse
 from django.utils import simplejson
 from operator import __add__
-from listings.models import Listing, Message, Spec, ListingPhoto
+from listings.models import Listing, Message, Spec, ListingPhoto, ListingStatus
 from listings.serializers import ListingSerializer, SpecSerializer, ListingPhotoSerializer,  HermesSerializer, AdminEmailSerializer
 from django.http import Http404
 from rest_framework.views import APIView
@@ -22,65 +22,65 @@ from pprint import pprint
 import json
 from django.views.decorators.csrf import csrf_exempt
 
-@login_required
-@require_GET
-def autopost(request, listing_id):
-    listing = get_object_or_404(Listing.objects.select_related(), id=listing_id)
-    if listing.title == None or listing.description == None or listing.market == None or listing.category == None:
-        return HttpResponse(status=400)
-    if listing.status_id == 1:
-        if not settings.AUTOPOST_DEBUG and request.user.get_profile().listing_credits > 0:     
-            cl_anon_autopost_task.delay(listing_id)
-            return HttpResponse(status=202) #Accepted rather than 200 OK b/c listing has been put in queue rather than actually completed.
-        elif settings.AUTOPOST_DEBUG:
-            print "posted successfully but autopost_debug is on so nothing was sent to CL"
-            return HttpResponse(status=200)    
-        else:
-            return HttpResponse(status=403) #Forbidden
-    elif listing.status_id == 2:
-        return HttpResponse(status=400) #Bad Request
-    elif listing.status_id == 3:
-        if not settings.AUTOPOST_DEBUG:
-            cl_anon_update_task.delay(listing_id)
-        else:
-            return HttpResponse(status=200)
-    elif listing.status_id == 4:
-        return HttpResponse(status=400) #Bad Request
+# @login_required
+# @require_GET
+# def autopost(request, listing_id):
+#     listing = get_object_or_404(Listing.objects.select_related(), id=listing_id)
+#     if listing.title == None or listing.description == None or listing.market == None or listing.category == None:
+#         return HttpResponse(status=400)
+#     if listing.status_id == 1:
+#         if not settings.AUTOPOST_DEBUG and request.user.get_profile().listing_credits > 0:     
+#             cl_anon_autopost_task.delay(listing_id)
+#             return HttpResponse(status=202) #Accepted rather than 200 OK b/c listing has been put in queue rather than actually completed.
+#         elif settings.AUTOPOST_DEBUG:
+#             print "posted successfully but autopost_debug is on so nothing was sent to CL"
+#             return HttpResponse(status=200)    
+#         else:
+#             return HttpResponse(status=403) #Forbidden
+#     elif listing.status_id == 2:
+#         return HttpResponse(status=400) #Bad Request
+#     elif listing.status_id == 3:
+#         if not settings.AUTOPOST_DEBUG:
+#             cl_anon_update_task.delay(listing_id)
+#         else:
+#             return HttpResponse(status=200)
+#     elif listing.status_id == 4:
+#         return HttpResponse(status=400) #Bad Request
 
 @login_required
 @api_view(['GET'])
 def hermes(request, listing_id):
     listing = get_object_or_404(Listing.objects.select_related(), id=listing_id)
     hermes_serializer= HermesSerializer(listing)
-
+    # TODO relocate this code to a validation function
     if listing.title == None or listing.description == None or listing.market == None or listing.category == None:
-        return HttpResponse(status=400)
+        return HttpResponse("Invalid listing. One of the required fields is missing.", status=400)
     
-    if listing.status_id == 1:
+    if listing.status.name == "Draft":
         if not settings.AUTOPOST_DEBUG and request.user.get_profile().listing_credits > 0:  
-            listing.status_id = 2   
-            listing.save()
+            # listing.status = ListingStatus.objects.get(name="Pending")
+            # listing.save()
             return Response(hermes_serializer.data, status=202) #Accepted rather than 200 OK b/c listing has been put in queue rather than actually completed.
         
         elif settings.AUTOPOST_DEBUG:
             print "posted successfully but autopost_debug is on so nothing was sent to CL"
-            listing.status_id = 2
+            listing.status.name = ListingStatus.objects.get(name="Pending")
             listing.save()
             return Response(hermes_serializer.data, status=200)    
         
         else:
-            return HttpResponse(status=403) #Forbidden
+            return HttpResponse("Not enough credits or in debug mode.", status=403) #Forbidden
     
-    elif listing.status_id == 2:
-        return HttpResponse(status=400) #Bad Request
+    elif listing.status.name == "Pending":
+        return HttpResponse("Listing is still pending.", status=400) #Bad Request
     
-    elif listing.status_id == 3:
+    elif listing.status.name == "Active":
         if not settings.AUTOPOST_DEBUG:
             return Response(hermes_serializer.data, status=202) #diff status here to indicate update??
         else:
             return HttpResponse(status=200)
-    elif listing.status_id == 4:
-        return HttpResponse(status=400) #Bad Request
+    elif listing.status.name == "Sold":
+        return HttpResponse("Listing is already sold.", status=400) #Bad Request
 
 @login_required
 @api_view(['GET'])

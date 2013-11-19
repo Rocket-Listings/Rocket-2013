@@ -337,13 +337,10 @@ ACCOUNT_ACTIVATION_DAYS = 7
 
 DEFAULT_FROM_EMAIL = 'apollo@rocketlistings.com'
 
-LOGIN_URL = '/users/login/' # references users/urls.py name
-
-LOGOUT_URL = '/users/logout/' #references users/urls.py name
-
-LOGIN_REDIRECT_URL = '/users/info/'
-
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = 'login' # references users/urls.py name
+LOGOUT_URL = 'logout' #references users/urls.py name
+LOGIN_REDIRECT_URL = 'dashboard'
+LOGOUT_REDIRECT_URL = 'home'
 
 # HAYSTACK CONFIG
 HAYSTACK_CONNECTIONS = {

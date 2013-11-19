@@ -1,10 +1,24 @@
 {% load static from staticfiles %}
 <h3>
   <span class="listing-title">{{ listing.title|default:"Create a Listing" }}</span>
-  <small id="loading" class="text-muted" style="display: none;">Saving...</small>
-  <small id="error-saving" class="text-danger" style="display: none;">Error saving :(</small>
+  <small id="loading" class="label label-default" style="display: none;">Saving...</small>
+  <small id="error-saving" class="label label-danger" style="display: none;">Error saving :(</small>
 </h3>
-
+<div class="status-labels">
+  {% with status=listing.status.name %}
+  {% if status == "Draft" %}
+  <span class="draft label label-info">Draft</span>
+  {% elif status == "Pending" %}
+  <span class="pending label label-warning">Pending</span>
+  {% elif status == "Active" %}
+  <span class="active label label-primary">Active</span>
+  {% elif status == "Sold" %}
+  <span class="sold label label-success">Sold</span>
+  {% elif status == "Deleted" %}
+  <span class="deleted label label-danger">Deleted</span>
+  {% endif %}
+  {% endwith %}
+</div>
 <form class="listing-form">
   {# Category Select #}
   <fieldset id="category-fieldset">

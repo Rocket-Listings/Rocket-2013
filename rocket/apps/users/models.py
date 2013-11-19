@@ -10,22 +10,22 @@ from django.conf import settings
 # User Profile
 class UserProfile(models.Model):
 	user = models.OneToOneField(User)
+
 	name = models.CharField(max_length=100, blank=True)
 	location = models.CharField(max_length=255, blank=True)
 	default_category = models.ForeignKey(ListingCategory, null=True, blank=True)
 	seller_type = models.CharField(max_length=1, choices=(('O', 'Owner'),('D', 'Dealer')), null=False, blank=False)
-	phone = models.CharField(max_length=50, blank=True)
+	phone = models.CharField(max_length=50, null=False, blank=False)
 	bio = models.TextField(blank=True)
 	propic = models.CharField(max_length=200, blank=True)
 
 	fbProfile = models.OneToOneField('ProfileFB', null=True, blank=True)
-
 	twitter_handle = models.CharField(max_length=20, blank=True)
 	TWITTER_OAUTH_TOKEN = models.CharField(max_length=200, blank=True)
 	TWITTER_OAUTH_TOKEN_SECRET = models.CharField(max_length=200, blank=True)
 
-	listing_credits = models.IntegerField(default=3)
-	total_credits = models.IntegerField(default=3)
+	listing_credits = models.IntegerField(default=999)
+	total_credits = models.IntegerField(default=999)
 
 	profile_completed_once = models.BooleanField(default=False)
 	twitter_connected_once = models.BooleanField(default=False)

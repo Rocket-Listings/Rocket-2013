@@ -15,10 +15,7 @@
 			<a class="sort" data-sort="price" href="#">Price</a>
 			<span class="sort-toggle glyphicon glyphicon-chevron-down hide"></span>
 		</li>
-		<li class="d-category phone-hide">
-			<a class="sort" data-sort="category" href="#">Category</a>
-			<span class="sort-toggle glyphicon glyphicon-chevron-down hide"></span>
-		</li>
+		
 		<li class="d-status phone-hide">
 			<a class="sort" data-sort="status" href="#">Status</a>
 			<span class="sort-toggle glyphicon glyphicon-chevron-down hide"></span>
@@ -40,12 +37,15 @@
 					<a class="title" href="{{ listing.get_absolute_url }}">{{ listing.title }}</a>
 				</span>
 				<span class="price d-price phone-hide">${{ listing.price }}</span>
-				<span class="category d-category phone-hide">{{ listing.category.name }}</span>
+				
 				<span class="d-status status phone-hide">{{ listing.status }}</span>
 				<span class="d-date phone-hide">
 					<span class="date hide">{{ listing.create_date|date:"m/d/y P" }}</span>
 					{{ listing.create_date|danatime }}
 				</span>
+				
+				<br>
+				<span class="category d-category phone-hide">Category: {{ listing.category.name }}</span>
 			</div>
 		</li>
 	{% endfor %}

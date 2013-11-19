@@ -1,0 +1,97 @@
+<div class="container">
+  <form id="register_form" class="form-horizontal fixed-width-form static-page-margin" action="{% url 'register' %}" method="POST">
+    {% csrf_token %}
+    {% if register_form.non_field_errors %}
+    <div class="form-group">
+      <div class="col-sm-3 col-sm-offset-2">
+        <div class="alert alert-danger">
+          {% for error in register_form.non_field_errors %}
+            <span>{{error}}</span>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    <div class="form-group">
+      <div class="col-sm-3 col-sm-offset-2">
+        <h4>Rocket Signup</h4>
+      </div>
+    </div>
+    <div class="form-group {% if register_form.username.errors %}has-error{% endif %}">
+      <label for="id_username" class="col-sm-2 control-label">Username</label>
+      <div class="col-sm-3">
+        <input type="text" name="username" autocomplete="off" class="form-control" id="id_username" value="{% if register_form.username.value %}{{register_form.username.value}}{% endif %}">
+      </div>
+      <div class="help-block">{% for error in register_form.username.errors %}{{ error }}&nbsp;{% endfor %}</div>
+    </div>
+    <div class="form-group {% if register_form.email.errors %}has-error{% endif %}">
+      <label for="id_email" class="col-sm-2 control-label">Email</label>
+      <div class="col-sm-3">
+        <input type="email" name="email" autocomplete="off" class="form-control" id="id_email" value="{% if register_form.email.value %}{{register_form.email.value}}{% endif %}">
+      </div>
+      <div class="help-block">{% for error in register_form.email.errors %}{{ error }}&nbsp;{% endfor %}</div>
+    </div>
+    <div class="form-group {% if register_form.password1.errors %}has-error{% endif %}">
+      <label for="id_password1" class="col-sm-2 control-label">Password</label>
+      <div class="col-sm-3">
+        <input type="password" name="password1" autocomplete="off" class="form-control" id="id_password1" value="">
+      </div>
+      <div class="help-block">{% for error in register_form.password1.errors %}{{ error }}&nbsp;{% endfor %}</div>
+    </div>
+    <div class="form-group {% if register_form.password2.errors %}has-error{% endif %}">
+      <label for="id_password2" class="col-sm-2 control-label">Password (again)</label>
+      <div class="col-sm-3">
+        <input type="password" name="password2" autocomplete="off" class="form-control" id="id_password2" value="">
+      </div>
+      <div class="help-block">{% for error in register_form.password2.errors %}{{ error }}&nbsp;{% endfor %}</div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-3 col-sm-offset-2">
+        <h4>Craigslist Info</h4>
+      </div>
+    </div>
+    <div class="form-group {% if register_form.seller_type.errors %}has-error{% endif %}">
+      <label for="id_seller_type" class="col-sm-2 control-label">Seller type</label>
+      <div class="col-sm-3">
+        {% with type=register_form.seller_type %} 
+        <div class="radio-inline">
+          <label>
+            <input type="radio" name="seller_type" value="O"{% if type == 'O' %} checked{% endif %}>
+            Owner
+          </label>
+        </div>
+        <div class="radio-inline">
+          <label>
+            <input type="radio" name="seller_type" value="D"{% if type == 'D' %} checked{% endif %}>
+            Dealer
+          </label>
+        </div>
+        {% endwith %}
+      </div>
+      <div class="help-block">{% for error in register_form.seller_type.errors %}{{ error }}&nbsp;{% endfor %}</div>
+    </div>
+    <div class="form-group {% if register_form.phone.errors %}has-error{% endif %}">
+      <label for="id_phone" class="col-sm-2 control-label">Cell phone number</label>
+      <div class="col-sm-3">
+        <input type="tel" name="phone" autocomplete="off" class="form-control" id="id_phone" value="{% if register_form.phone.value %}{{register_form.phone.value}}{% endif %}">
+      </div>
+      <span class="help-block">We need this because Craigslist sometimes asks for phone verification when posting listings.</span>
+      <div class="help-block">{% for error in register_form.phone.errors %}{{ error }}&nbsp;{% endfor %}</div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-3 col-sm-offset-2">
+
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-3 col-sm-offset-2">
+        <a class="btn btn-warning" id="add_extension"><span class="before">Install Chrome Extension</span><span class="after hide">Extension Installed</span></a>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-3 col-sm-offset-2">
+        <input class="btn btn-primary" id="register_submit" type="submit" value="Create Account">
+      </div>
+    </div>
+  </form>
+</div>

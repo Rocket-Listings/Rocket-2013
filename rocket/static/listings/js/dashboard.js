@@ -1,7 +1,5 @@
 $(function() {
 	// Helpers
-
-	document.cookie='hermes-enabled=true; expires=0; path=/listings/dashboard/'
  	console.log(document.cookie)
 
 	// Plugin to scroll div to certain location
@@ -66,6 +64,7 @@ $(function() {
 				id = listingRow.data('listing-id'),
 				buyers = $(".buyer[data-listing-id='" + id + "']");
 			$('.listing').removeClass('highlight');
+			$('.d-arrow').addClass('hide');
 			listingRow.addClass('highlight');
 			$(".message, .buyer").addClass("hide");
 			$(".dashboard-delete-btn").attr('data-listing-id', id).removeClass("disabled");
@@ -73,6 +72,7 @@ $(function() {
 				$(".dashboard-delete-permanent-btn").attr('data-listing-id', id).removeClass("disabled");
 			}
 			if (buyers.length) {
+				$('.d-arrow', this).removeClass('hide');
 				$(".buyers-body").addClass("border-right").removeClass("hide");
 				$(".no-messages").addClass("hide");
 				buyers.removeClass("hide");
@@ -104,6 +104,7 @@ $(function() {
 					$(".message[data-message-id='" + data.message_id +"'], .buyer[data-buyer-id='" + data.buyer_id + "']").removeClass("unread");
 					if (data.listing_all_read) {
 						$(".listing[data-listing-id='" + data.listing_id + "']").removeClass("unread");
+						$('span.label-info').hide();
 					}
 				});
 			});

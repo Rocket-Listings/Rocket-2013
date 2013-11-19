@@ -5,8 +5,9 @@ register = template.Library()
  
 @register.simple_tag(takes_context=True)
 def active(context, *args, **kwargs):
+    word = kwargs.pop('value', 'active')
     matches = any(map(lambda url: current_url_equals(context, url, **kwargs), args))
-    return 'active' if matches else ''
+    return word if matches else ''
  
 def current_url_equals(context, url_name, **kwargs):
     resolved = False

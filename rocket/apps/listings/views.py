@@ -32,6 +32,8 @@ def dashboard(request):
     listings = Listing.objects.filter(user=request.user).order_by('-create_date').all() # later on we can change how many are returned
     buyers = reduce(__add__, map(lambda l: list(l.buyer_set.all()), listings), [])
     messages = reduce(__add__, map(lambda b: list(b.message_set.all()), buyers), [])
+    unread_messages = reduce(__add__, map(lambda b: list(b.message_set.filter(seen=False)), buyers), [])
+   
     latest_ids = map(lambda set: map(lambda i: i.id, set), [listings, buyers, messages])
     for i, val in enumerate(latest_ids):
         try:
@@ -42,7 +44,8 @@ def dashboard(request):
         'listings': listings,
         'buyers': buyers,
         'buyer_messages':messages,
-        'latest': latest_ids
+        'latest': latest_ids,
+        'unread_messages': unread_messages
     }
     return TemplateResponse(request, 'listings/dashboard.html', context)
 

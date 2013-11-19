@@ -108,8 +108,7 @@ class RegistrationManager(models.Manager):
         if isinstance(username, unicode):
             username = username.encode('utf-8')
         activation_key = hashlib.sha1(salt+username).hexdigest()
-        return self.create(user=user,
-                           activation_key=activation_key)
+        return self.create(user=user, activation_key=activation_key)
         
     def delete_expired_users(self):
         """
@@ -259,15 +258,15 @@ class RegistrationProfile(models.Model):
         ctx_dict = {'activation_key': self.activation_key,
                     'expiration_days': settings.ACCOUNT_ACTIVATION_DAYS,
                     'site': site}
-        subject = render_to_string('rocket_registration/activation_email_subject.txt',
+        subject = render_to_string('registration/activation_email_subject.txt',
                                    ctx_dict)
         # Email subject *must not* contain newlines
         subject = ''.join(subject.splitlines())
         
-        message_text = render_to_string('rocket_registration/activation_email.txt',
+        message_text = render_to_string('registration/activation_email.txt',
                                    ctx_dict)
 
-        message_html = render_to_string('rocket_registration/activation_email.html',
+        message_html = render_to_string('registration/activation_email.html',
                                     ctx_dict)
 
         msg = EmailMultiAlternatives(subject, message_text, settings.DEFAULT_FROM_EMAIL, [self.user.email])

@@ -4,7 +4,7 @@ from django.views.generic import TemplateView
 
 
 urlpatterns = patterns('',
-    url(r'', include('registration.backends.default.urls')),
+    url(r'', include('registration.urls')),
     url(r'^info/$', 'users.views.info', name='user_info'), # this url makes registration redirect work
     url(r'^delete/$', 'users.views.delete_account', name='delete_account'),
     url(r'^twitter/$', 'users.views.obtain_twitter_auth_url', name='obtain_twitter_auth_url'),

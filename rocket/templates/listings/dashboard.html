@@ -2,7 +2,7 @@
 {% load static from staticfiles %}
 {% load compressed %}
 
-{% block title %}{{ block.super }} Dashboard{% endblock %}
+{% block title %}{{ block.super }} dashboard{% endblock %}
 
 {% block css %}
 <style>
@@ -52,7 +52,7 @@ html, body {
         {# <a class="dashboard-search-btn btn btn-primary" href="#"><span class="glyphicon glyphicon-search"></span></a> #}
       {# </div> #}
       {# <div class="dashboard-create"> #}
-        <a class="btn btn-primary btn-sm dashboard-create-btn" href="{% url 'create' %}">New Listing</a>
+        {# <a class="btn btn-primary btn-sm dashboard-create-btn" href="{% url 'create' %}">New Listing</a> #}
       {# </div> #}
       {# <div class="dashboard-refresh phone-hide"> #}
         <a class="btn btn-primary btn-sm dashboard-refresh-btn phone-hide" href="#"><span class="glyphicon glyphicon-repeat"></span></a>
@@ -73,7 +73,7 @@ html, body {
       {% include 'listings/partials/listings_panel.html' %}
     </div>
     <div class="buyer-message-wrapper phone-hide">
-      <span class="inbox-header">Inbox</span>
+  <span class="inbox-header"><strong>Inbox</strong><span class="label label-info">{% if unread_messages %}New{% endif %}</span></span>
       <span class="no-messages">You have no messages for this listing.</span>
       <div class="buyers-col">
         {% include 'listings/partials/buyers_panel.html' %}

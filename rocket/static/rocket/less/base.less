@@ -7,66 +7,55 @@ a {
   }
 }
 
-.navbar-static-top{
-  margin-bottom: 0;
-}
 .navbar {
   border-bottom: 1px solid darken(@navbar-color, 30%);
   background: @navbar-color;
   min-height: 0px;
   padding-bottom: 0px;
+
   .username-item {
     z-index: 3;
     padding-right: 3px;    
   }
 
+ .dropdown-menu {
+    // background: #eee; //#d5d5d5
+    margin: 0;
+    padding: 0;
+    border-top: none;
+    min-width: 111px;
+
+    > li > a {
+      padding: 5px 10px;
+      // text-align: right;
+      // border-bottom: 1px solid #eee;
+    }
+  }
+
   .settings-cog {
     padding-left: 7px;
     padding-right: 10px;
-
-  
-  &:hover{
-    background-color: #d5d5d5 !important;
-  }
-
-  a:focus{
-    background-color: #d5d5d5 !important;
-  }
-
-  &:active{
-    background-color: #d5d5d5 !important; 
-  }
-
+    &:hover{
+      background-color: #d5d5d5 !important;
+    }
+    a:focus{
+      background-color: #d5d5d5 !important;
+    }
+    &:active{
+      background-color: #d5d5d5 !important; 
+    }
   }  
 }
 
-.container.nav-fixed{
-  max-width: none;
-}
+// .container.nav-fixed{
+//   max-width: none;
+// }
 
-
-
-.dropdown.open{
-  .settings-cog.active{
-    background-color: #d5d5d5 !important;
-  }
-}
-
-.navbar-nav{
-  margin: 0 -15px;
-}
-ul.navbar-nav > li > a {
-  outline: none;
-  color: grey;
-}
-
-.navbar-nav>.open>a, .navbar-nav>.open>a:hover, .navbar-nav>.open>a:focus {
-  outline: none;
-}
-.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
-  background: none;
-  color: inherit;
-}
+// .dropdown.open{
+//   .settings-cog.active{
+//     background-color: #d5d5d5 !important;
+//   }
+// }
 
 
 button.navbar-toggle{
@@ -89,53 +78,49 @@ button.navbar-toggle{
     background-color: white;
   }
 }
-.navbar .dropdown-menu {
 
-  // background: #eee#d5d5d5
-  margin: 0;
-  padding: 0;
-  border-top: none;
-  min-width: 111px;
-
-  > li > a {
-    padding: 5px 10px;
-    // text-align: right;
-    // border-bottom: 1px solid #eee;
-  }
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
+  background: none;
+  color: inherit;
 }
 
+.navbar-nav {
+  margin: 0 -15px;
 
+  >.open>a, 
+  >.open>a:hover, 
+  >.open>a:focus {
+    outline: none;
+  }
 
-ul.navbar-nav {
-
-  > li > a {
+  li a {
+    outline: none;
+    color: grey;
     height: @navbar-height;
     line-height: @navbar-height;
     padding-top: 0;
     padding-bottom: 0;
-  }
-
-  li a {
     font-size: 12px;
-
+    &.blue {
+      background: #3276b1;
+      span{
+        color: white;
+      }
+    }
     &.active {
       background-color: #E0E0E0;
     }
-
-    &.blue-menu-item {
+    &.blue.active {
+      background-color: #285C8A;
+    }
+    &.purple {
       background-color:  lighten(@craigslistBlue, 40%); // #D3D9F2;
       color: white;
     }
-
     &:hover .nav-item-text {
       text-decoration: underline;
     }
-
-    // .nav-item-text {
-    //   margin-right: 4px;
-    // }
-
-    .glyphicon{
+    .glyphicon {
       display: inline;        
       vertical-align: middle; 
     }
@@ -145,9 +130,10 @@ ul.navbar-nav {
 .navbar-logo {
   float: left;
   display:block;
-  position: relative;
-  left: -4*@accent-width + 5;
-  margin-left: 14px;
+  // position: relative;
+  // margin-left: -4*@accent-width;
+  margin-right: 15px;
+  // margin-left: 14px;
 
   .accent {
     float:left;
@@ -199,7 +185,7 @@ ul.navbar-nav {
       font-size: 18px;
     }
     float: left;
-    padding: 0 20px;
+    padding: 0 10px;
     color: @color6;
     // color: #2200CC;
     background-color: white;
@@ -227,9 +213,6 @@ ul.navbar-nav {
   }
 }
 
-.container .navbar-logo {
-  left: -4*@accent-width;
-}
 .footer, .footer-fixed {
   background: @footer-color;
   p {
@@ -301,16 +284,6 @@ body {
   height: @footer-height;
 }
 
-/* Lastly, apply responsive CSS fixes as necessary */
-// @media (max-width: 767px) {
-//   .footer {
-//     margin-left: -20px;
-//     margin-right: -20px;
-//     padding-left: 20px;
-//     padding-right: 20px;
-//   }
-// }
-
 /* Flatten das boostrap */
 .well, .navbar-inner, .popover, .btn, .tooltip, input, .input-group-addon, select, textarea, pre, .progress,
 .modal, .add-on, .alert, .table-bordered, .nav>.active>a, .nav-tabs>li>a, .dropdown-menu, .tooltip-inner, .badge, .label, .img-polaroid {
@@ -331,21 +304,6 @@ select:focus {
 @media (max-width: 767px) {
   body {
     padding:0;
-  }
-}
-
-// Make submit button on forms the same size as inputs
-form.fixed-width-form {
-  input[type='submit'] {
-    height: 38px !important;
-    width: 100% !important;
-    margin-bottom: 10px;
-  }
-}
-
-div[data-toggle-name="default_seller_type"] {
-    button {
-    width: 50%;
   }
 }
 

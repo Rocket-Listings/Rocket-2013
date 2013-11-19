@@ -1,110 +1,58 @@
 {% load static from staticfiles %}
 {% load active from navigation %}
 
-<div class="navbar navbar-fixed-top">
+<nav class="navbar navbar-fixed-top" role="navigation">
   <div class="container">
-    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    {% if request.user.is_authenticated %}
-      <a class="navbar-logo" href="{% url 'listings.views.dashboard' %}">
-    {% else %}
+    <div class="navbar-header">
       <a class="navbar-logo" href="{% url 'home' %}">
-    {% endif %}
         <div class="accent accent1"></div>
         <div class="accent accent2"></div>
         <div class="accent accent3"></div>
         <div class="accent accent4"></div>
         <span class="logo-text"><span class="serif">rocket</span> <span class="sans-serif">listings</span></span>
       </a>
-      <div class="collapse navbar-collapse navbar-ex1-collapse">      
-      {% if request.user.is_authenticated %}
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse navbar-ex1-collapse">      
+      <ul class="nav navbar-nav">
+        <li>
+          <a class="{% active 'home' %}" data-href="#product-partial" id="product-menu-item" href="/">
+            <span class="nav-item-text">Features</span>
+          </a>
+        </li>
+        <li>
+          <a class="{% active 'background' %}" data-href="#background-partial" id="background-menu-item" href="/background/">
+            <span class="nav-item-text">Background</span>
+          </a>
+        </li>
+      </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <a class="{% active 'create' %} blue-menu-item visible-xs" href="{% url 'create' %}">
-            <span class="nav-item-text">Create a listing </span>
-          </a>
-          <a class="{% active 'create' %} blue-menu-item hidden-xs" href="{% url 'create' %}">
-            <span class="glyphicon glyphicon-pencil"></span>
-          </a>
-        </li>
-        <li>
-          <a class="{% active 'dashboard' %}" href="{% url 'listings.views.dashboard' %}">
-            <span class="nav-item-text"> Dashboard</span>
-          </a>
-        </li>
-        <li>
-          <a class="username-item {% active 'user_profile' 'user_info' %}" href="{% url 'user_profile' user.username %}">
-            <span class="nav-item-text"> {{ request.user.username }}</span>
-          </a>
-        </li>
-        <li class="dropdown hidden-xs">
-          <a id="dLabel" class="settings-cog {% active 'user_profile' 'user_info' %}" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
-            {# <span class="glyphicon glyphicon-cog"></span> #}
-            <span class="glyphicon glyphicon-chevron-down"></span>
-          </a>
-          <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-            <li>
-              <a href="{% url 'user_info' %}">
-                <span class="nav-item-text">Edit Profile</span>
-              </a>
-            </li>
-            <li>
-              <a href="{% url 'auth_logout' %}">
-                <span class="nav-item-text">Logout</span>
-              </a>
-            </li>
-          </ul>
-        </li>
-         <li class="visible-xs">
-            <a href="{% url 'user_info' %}">
-              <span class="nav-item-text">Edit Profile</span>
-            </a>
-        </li>
-        <li class="visible-xs">
-            <a href="{% url 'auth_logout' %}">
-              <span class="nav-item-text">Logout</span>
-            </a>
-        </li>
-      </ul>
-      {% else %}
-      <ul class="nav navbar-nav pull-left header-menu-bar">
-        <li><a class="{% active 'home' %}" data-href="#product-partial" id="product" href="/">Features</a></li>
-        <li><a class="{% active 'background' %}" data-href="#background-partial" id="background" href="/background/">Background</a></li>
-        <li><a class="{% active 'pricing' %}" data-href="#pricing-partial" id="pricing" href="/pricing/">Pricing</a></li>
-      </ul>
-      <ul class="nav navbar-nav pull-right">
-        <li>
-          <a class="{% active 'registration_register' %}" id="join" href="{% url 'registration_register' %}">
+          <a class="blue {% active 'register' %}" data-href="#register-partial" id="register-menu-item" href="{% url 'register' %}">
             <span class="nav-item-text">Sign Up</span>
           </a>
         </li>
         <li>
-          <a class="{% active 'auth_login' %}" href="{% url 'auth_login' %}">
+          <a class="{% active 'login' %}" data-href="#login-partial" id="login-menu-item" href="{% url 'login' %}">
             <span class="nav-item-text">Login</span>
           </a>
         </li>
       </ul>
-      {% endif %} 
-      </div>
+    </div>
   </div>
-</div>
+</nav>
 <div class="header-map-container">
   <div id="header-map"></div>
   <div id="header-map-overlay">
     <div class="container overlay-container">
-      {# <div class="row"> #}
-        {# <div class="col-lg-12"> #}
         <div class="heading">
-          <h3>A better way to sell on <a href="http://www.craigslist.org/about/sites" target="_blank">burlington.craigslist.org</a>.</h3><br/>
+          <h3>A free and better way to sell on <a href="http://www.craigslist.org/about/sites" target="_blank">burlington.craigslist.org</a>.</h3><br/>
         </div>
-        {# <div class="subheading"> #}
-          {# <p class="lead">Faster listing creation, better management and tracking, intuitive buyer messaging, and user accounts.</p> #}
-        {# </div> #}
-        {# </div> #}
-      {# </div> #}
     </div>
   </div>
 </div>
