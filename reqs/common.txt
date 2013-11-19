@@ -35,3 +35,5 @@ mechanize
 djangorestframework
 markdown
 django-filter
+
+django-mobi
