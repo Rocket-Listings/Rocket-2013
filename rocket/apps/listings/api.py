@@ -82,7 +82,6 @@ def hermes(request, listing_id):
     elif listing.status.name == "Sold":
         return HttpResponse("Listing is already sold.", status=400) #Bad Request
 
-@login_required
 @api_view(['GET'])
 def admin_email_poll(request, listing_id):
     listing = Listing.objects.get(id=listing_id)
@@ -96,8 +95,8 @@ def admin_email_poll(request, listing_id):
 @csrf_exempt
 def view_link_post(request, listing_id):
     # Probably needs more security
-    print listing_id
-    listing =  get_object_or_404(Listing, id=listing_id)
+    
+    listing = get_object_or_404(Listing, id=listing_id)
     listing.CL_view = request.POST.get("viewLink", "")
     listing.save()
     return HttpResponse(status=200)
