@@ -18,6 +18,23 @@ a {
     padding-right: 3px;    
   }
 
+  .nav-mobile{
+
+    a{
+
+      &.mobile{
+      color: white;
+      height: 36px;
+      line-height: 36px;
+      font-size: 14px;
+      position: relative;
+      display: block;
+      padding: 0px 15px;
+      background: #3276b1;
+      }
+    }
+  }
+
  .dropdown-menu {
     // background: #eee; //#d5d5d5
     margin: 0;
@@ -84,8 +101,13 @@ button.navbar-toggle{
   color: inherit;
 }
 
-.navbar-nav {
+ul.navbar-nav {
   margin: 0 -15px;
+  
+  &.mobile{
+    margin: 0 0px;
+    border-bottom: 1px solid darken(@navbar-color, 30%);
+  }
 
   >.open>a, 
   >.open>a:hover, 
@@ -124,6 +146,29 @@ button.navbar-toggle{
       display: inline;        
       vertical-align: middle; 
     }
+  }
+
+  a.mobile{
+    outline: none;
+    color: grey;
+    height: @navbar-height;
+    line-height: @navbar-height;
+    padding: 11px 51px;
+    font-size: 12px;
+    text-decoration: none;
+
+    &.active {
+      background-color: #E0E0E0;
+    }
+    
+    &:hover .nav-item-text {
+      text-decoration: none;
+    }
+    .glyphicon {
+      display: inline;        
+      vertical-align: middle; 
+    }
+
   }
 }
 

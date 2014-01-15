@@ -107,7 +107,10 @@ class Listing(models.Model):
 		return [photo.url for photo in self.listingphoto_set.all()]
 
 	def get_poll_url(self):
-		return "http://" + str(Site.objects.get_current()) + reverse('admin_email_poll', args=[self.id])
+		return "http://" \
+			+ str(Site.objects.get_current()) \
+			+ reverse('admin_email_poll', args=[self.id]) \
+			+ "?format=json"
 
 	def get_view_link_post_url(self):
 		return "http://" + str(Site.objects.get_current()) + reverse('view_link_post', args=[self.id])

@@ -3,20 +3,27 @@ from django.views.decorators.cache import cache_control
 from django.views.decorators.cache import cache_page
 from django.template.response import TemplateResponse
 from users.decorators import attach_client_ip
+from mobi.decorators import detect_mobile
 
 # @cache_control(must_revalidate=True, max_age=3600)
 # @cache_page(60 * 15)
 
 # main
+
+@detect_mobile
 def home(request):
-    if request.user.is_authenticated():
-        return redirect('listings.views.dashboard')
+    if request.mobile:
+    	print "mobile detected"
+    	return TemplateResponse(request, 'static_pages/index_mobile.html')
     else:
-        return index(request)
+	    if request.user.is_authenticated():
+	        return redirect('listings.views.dashboard')
+	    else:
+	        return index(request)
 
 @attach_client_ip
 def index(request):
-    return TemplateResponse(request, 'static_pages/index.html')
+	return TemplateResponse(request, 'static_pages/index.html')
 
 def google_webmaster_verification(request):
     return render(request, 'static_pages/googlef43896b8ef9b394c.html')
