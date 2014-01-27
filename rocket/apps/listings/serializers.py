@@ -74,6 +74,7 @@ class HermesSerializer(serializers.ModelSerializer):
     photos = serializers.Field(source = 'get_photo_urls')
     poll_url = serializers.Field(source='get_poll_url')
     view_link_post_url = serializers.Field(source='get_view_link_post_url')
+    phoneNumber = serializers.Field(source='user.userprofile.get_user_pn')
 
     class Meta:
         model = Listing
