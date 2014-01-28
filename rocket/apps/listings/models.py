@@ -78,7 +78,7 @@ class Listing(models.Model):
 		return self.offer_set.aggregate(Max('value'))["value__max"]
 
 	def __unicode__(self):
-		return self.title or str(self.id)
+		return u'%s by %s created on %s' % (self.title or str(self.id), self.user.username, self.create_date)
 
 	def get_absolute_url(self):
 		return reverse('detail', args=[self.id])
@@ -170,7 +170,7 @@ class Offer(models.Model):
 	date = models.DateTimeField('date offered', auto_now_add=True, default=datetime.now)
 
 	def __unicode__(self):
-		return "$ " + str(self.value)
+		return u'Listing: %s | Amount: $%s' % (self.listing.title, self.value)
 
 # Listing Message
 class Message(models.Model):
@@ -180,3 +180,6 @@ class Message(models.Model):
 	content = models.TextField(null=False, blank=False)
 	date = models.DateTimeField('date received', auto_now_add=True, default=datetime.now)
 	seen = models.NullBooleanField(default=False)
+
+	def __unicode__(self):
+		return u'To: %s %s About: %s From: %s On: %s' % (self.listing.user.first_name, self.listing.user.last_name, self.listing.title, self.buyer.name, self.date)
