@@ -62,9 +62,11 @@ def on_incoming_test_message(request):
 @require_POST
 def new_cl_admin_message(request):
 	if verify(request.POST.get('token', ''), request.POST.get('timestamp', ''), request.POST.get('signature', '')):
+		_listing_title = request.POST.get('subject', '').partition('"')[2].partition('"')[0]
+		listing_title = _listing_title.lstrip()
 		msg_dict = {
 			'username': request.POST.get('recipient').split('@')[0],
-			'listing_title': request.POST.get('subject', '').partition('"')[2].partition('"')[0],
+			'listing_title': listing_title,
 			'body': request.POST.get('body-html', '')
 		}
 		new_cl_admin_message_task.delay(msg_dict)
