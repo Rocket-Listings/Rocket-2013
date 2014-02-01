@@ -119,9 +119,10 @@ class Listing(models.Model):
 # pre_save method to clean whitespace preceding a forward slash. See issue #125.
 def clean_slash_title(sender, **kwargs):
 	listing = kwargs['instance']
-	_title = listing.title
-	title = re.sub(r'(?<=/) ', '', _title)
-	listing.title = title
+	if listing.title:
+		_title = listing.title
+		title = re.sub(r'(?<=/) ', '', _title)
+		listing.title = title
 
 pre_save.connect(clean_slash_title, sender=Listing)
 
