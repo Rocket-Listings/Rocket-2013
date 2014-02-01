@@ -22,7 +22,7 @@ from pprint import pprint
 import json
 from django.views.decorators.csrf import csrf_exempt
 from listings.forms import MessageForm
-
+from mail.tasks import send_message_task
 # @login_required
 # @require_GET
 # def autopost(request, listing_id):
