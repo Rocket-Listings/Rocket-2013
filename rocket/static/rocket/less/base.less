@@ -64,6 +64,10 @@ a {
   }  
 }
 
+.navbar-bottom{
+  margin-top: @navbar-height;
+}
+
 // .container.nav-fixed{
 //   max-width: none;
 // }
@@ -102,7 +106,7 @@ button.navbar-toggle{
 }
 
 ul.navbar-nav {
-  margin: 0 -15px;
+  
   
   &.mobile{
     margin: 0 0px;
@@ -113,6 +117,14 @@ ul.navbar-nav {
   >.open>a:hover, 
   >.open>a:focus {
     outline: none;
+  }
+
+  &.big-navbar{
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    float: none;
   }
 
   li a {
@@ -145,6 +157,19 @@ ul.navbar-nav {
     .glyphicon {
       display: inline;        
       vertical-align: middle; 
+    }
+
+    &.big{
+      font-size: 32px;
+      line-height: 71px;
+      height: 100%;
+      color: #3276b1;
+      font-weight: 200;
+
+      &:hover .nav-item-text {
+       text-decoration: none;
+      }
+
     }
   }
 

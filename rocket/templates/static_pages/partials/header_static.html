@@ -19,18 +19,7 @@
       </button>
     </div>
     <div class="collapse navbar-collapse navbar-ex1-collapse">      
-      <ul class="nav navbar-nav">
-        <li>
-          <a class="{% active 'home' %}" data-href="#product-partial" id="product-menu-item" href="/">
-            <span class="nav-item-text">Features</span>
-          </a>
-        </li>
-        <li>
-          <a class="{% active 'background' %}" data-href="#background-partial" id="background-menu-item" href="/background/">
-            <span class="nav-item-text">Background</span>
-          </a>
-        </li>
-      </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         <li>
           <a class="blue {% active 'register' %}" data-href="#register-partial" id="register-menu-item" href="{% url 'register' %}">
@@ -46,14 +35,28 @@
     </div>
   </div>
 </nav>
-<div class="header-map-container">
-  <div id="header-map"></div>
-  <div id="header-map-overlay">
-    <div class="container overlay-container">
-        <div class="heading">
-          <h3>A better way to sell on <span>Craigslist</span>.</h3>
-        </div>
-    </div>
+<div class="big-nav-container">
+  <div id="big-nav">
+  <div class="container big-nav">
+    <ul class="nav navbar-nav big-navbar">
+        <li>
+          <a class="big {% active 'home' %}" data-href="#product-partial" id="product-menu-item" href="/">
+            <span class="nav-item-text">List Instantly</span>
+          </a>
+        </li>
+        <li>
+          <a class="big {% active 'background' %}" data-href="#background-partial" id="background-menu-item" href="/background/">
+            <span class="nav-item-text">Manage Everything</span>
+          </a>
+        </li>
+        <li>
+          <a class="big {% active 'profile' %}" data-href="#profile-partial" id="profile-menu-item" href="/profile/">
+            <span class="nav-item-text">Build Trust</span>
+          </a>
+        </li>
+      </ul>
+  </div>
   </div>
 </div>
+
 

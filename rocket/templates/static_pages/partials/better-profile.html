@@ -1,0 +1,11 @@
+{% load static from staticfiles %}
+<div class="feature-preview">
+  <div class="container">
+    <p class="sub"> We're bringing modern seller profiles to Craigslist through account pages that include comments, ratings, bios, and social verification.</p>
+    <img src="{% static 'static_pages/img/profile-card.png' %}"  class="img-responsive">
+    <div class="call-to-action">
+      <a class="btn btn-primary" data-href="#register-partial" href="{% url 'register' %}">Create an account and blast off!</a>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>

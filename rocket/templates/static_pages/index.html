@@ -13,10 +13,13 @@
 {% include "static_pages/partials/header_static.html" %}
 <div class="partials">
     <div id="product-partial" data-title="rocket" data-menu="#product-menu-item" class="{% active 'home' %}">
-        {% include 'static_pages/partials/features.html' %}
+        {% include 'static_pages/partials/better-listing.html' %}
     </div>
     <div id="background-partial" data-title="background" data-menu="#background-menu-item" class="{% active 'background' %}">
-        {% include 'static_pages/partials/background.html' %}
+        {% include 'static_pages/partials/better-dashboard.html' %}
+    </div>
+    <div id="profile-partial" data-title="profile" data-menu="#profile-menu-item" class="{% active 'profile' %}">
+        {% include 'static_pages/partials/better-profile.html' %}
     </div>
     <div id="register-partial" data-title="register" data-menu="#register-menu-item" class="{% active 'register' %}">
         {% include 'registration/partials/register.html' %}
