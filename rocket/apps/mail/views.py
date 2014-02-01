@@ -63,6 +63,7 @@ def on_incoming_test_message(request):
 def new_cl_admin_message(request):
 	if verify(request.POST.get('token', ''), request.POST.get('timestamp', ''), request.POST.get('signature', '')):
 		_listing_title = request.POST.get('subject', '').partition('"')[2].partition('"')[0]
+		_listing_title = re.sub(r'(?<=/) ', '', _listing_title)
 		listing_title = _listing_title.lstrip()
 		msg_dict = {
 			'username': request.POST.get('recipient').split('@')[0],
