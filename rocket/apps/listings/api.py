@@ -21,6 +21,7 @@ from listings.permissions import IsOwnerOrReadOnly, IsListingOwnerOrReadOnly
 from pprint import pprint
 import json
 from django.views.decorators.csrf import csrf_exempt
+from listings.forms import MessageForm
 
 # @login_required
 # @require_GET
