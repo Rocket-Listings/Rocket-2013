@@ -4,12 +4,8 @@
 <nav class="navbar navbar-fixed-top nav-static" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <a class="navbar-logo" href="{% url 'home' %}">
-        <div class="accent accent1"></div>
-        <div class="accent accent2"></div>
-        <div class="accent accent3"></div>
-        <div class="accent accent4"></div>
-        <span class="logo-text"><span class="serif">rocket</span> <span class="sans-serif">listings</span></span>
+      <a class="navbar-logo {% active 'home' %}" data-href="#post-partial" id="post-menu-item" href="/">
+        <img src="{% static 'static_pages/img/rocket-icon.svg' %}">
       </a>
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-ex1-collapse">
         <span class="sr-only">Toggle navigation</span>
@@ -19,8 +15,19 @@
       </button>
 
     </div>
-    <div class="collapse navbar-collapse navbar-ex1-collapse">      
-      
+    <div class="collapse navbar-collapse navbar-ex1-collapse">   
+      <ul class="nav navbar-nav navbar-left">
+        <li>
+          <a class="{% active 'about' %}" data-href="#about-partial" id="about-menu-item" href="{% url 'about' %}">
+            <span class="nav-item-text">About</span>
+          </a>
+        </li>
+         <li>
+          <a class="{% active 'pricing' %}" data-href="#pricing-partial" id="pricing-menu-item" href="{% url 'pricing' %}">
+            <span class="nav-item-text">Pricing</span>
+          </a>
+        </li>
+      </ul>   
       <ul class="nav navbar-nav navbar-right">
         <li>
           <a class="blue {% active 'register' %}" data-href="#register-partial" id="register-menu-item" href="{% url 'register' %}">
@@ -36,7 +43,7 @@
     </div>
   </div>
 </nav>
-<div class="midline">
+<div class="midline" style="display:none">
   <div class="tagline">
     <h1>A better way to sell on <span>Craigslist</span></h1>
   </div>
@@ -46,12 +53,12 @@
         <div class="col-lg-8 col-lg-offset-2 col-big-nav">
           <ul class="nav navbar-nav big-navbar">
               <li>
-                <a class="big {% active 'home' %}" data-href="#product-partial" id="product-menu-item" href="/">
+                <a class="big post {% active 'home' %}" data-href="#post-partial" id="post-menu-item" href="/">
                   <span class="nav-item-text">Post</span>
                 </a>
               </li>
               <li>
-                <a class="big {% active 'background' %}" data-href="#background-partial" id="background-menu-item" href="/background/">
+                <a class="big {% active 'manage' %}" data-href="#manage-partial" id="manage-menu-item" href="/manage/">
                   <span class="nav-item-text">Manage</span>
                 </a>
               </li>

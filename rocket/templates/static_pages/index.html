@@ -12,10 +12,10 @@
 {% block content %}
 {% include "static_pages/partials/header_static.html" %}
 <div class="partials">
-    <div id="product-partial" data-title="rocket" data-menu="#product-menu-item" class="{% active 'home' %}">
+    <div id="post-partial" data-title="rocket" data-menu="#post-menu-item" class="{% active 'home' %}">
         {% include 'static_pages/partials/better-listing.html' %}
     </div>
-    <div id="background-partial" data-title="background" data-menu="#background-menu-item" class="{% active 'background' %}">
+    <div id="manage-partial" data-title="manage" data-menu="#manage-menu-item" class="{% active 'manage' %}">
         {% include 'static_pages/partials/better-dashboard.html' %}
     </div>
     <div id="profile-partial" data-title="profile" data-menu="#profile-menu-item" class="{% active 'profile' %}">
@@ -26,6 +26,12 @@
     </div>
     <div id="login-partial" data-title="login" data-menu="#login-menu-item" class="{% active 'login' %}">
         {% include 'registration/partials/login.html' %}
+    </div>
+    <div id="about-partial" data-title="about" data-menu="#about-menu-item" class="{% active 'about' %}">
+        {% include 'static_pages/partials/background.html' %}
+    </div>
+    <div id="pricing-partial" data-title="pricing" data-menu="#pricing-menu-item" class="{% active 'pricing' %}">
+        {% include 'static_pages/partials/pricing.html' %}
     </div>
 </div>
 {% endblock %}

@@ -1,5 +1,14 @@
 $(function() {
   
+  $( document ).ready(function() {
+    var pathname = window.location.pathname;
+    console.log(pathname);
+    if (pathname == '/' || pathname == '/manage/' || pathname == '/trust/' || pathname == '/profile/'){
+      $('.midline').show();
+    }else{
+      $('.midline').hide();
+    }
+  });
 
   $('a').click(function(event) {
       var elem = $($(this).data('href'));
@@ -14,11 +23,21 @@ $(function() {
         var url = menuItem.attr("href"); //update url without changing pages
         history.pushState({page:url}, url, url);
       } 
-      if (elem.selector == '#login-partial' || elem.selector == '#register-partial'){
+      if (elem.selector == '#login-partial' || elem.selector == '#register-partial' || elem.selector == '#about-partial' || elem.selector == '#pricing-partial'){
         $('.midline').hide();
       }else{
         $('.midline').show();
       }
+
+      if (elem.selector == '#post-partial'){
+        $('.post').addClass('active');
+      }
+
+      // if (elem.selector == '#login-partial'){
+      //   $('.midline').hide();
+      // }else{
+      //   $('.midline').show();
+      // }
             
 
   });
