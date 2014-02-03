@@ -12,10 +12,10 @@
 {% block content %}
 {% include "static_pages/partials/header_static.html" %}
 <div class="partials">
-    <div id="post-partial" data-title="rocket" data-menu="#post-menu-item" class="{% active 'home' %}">
+    <div id="post-partial" data-title="rocket" data-menu="#post-menu-item" class="{% active 'post' %}">
         {% include 'static_pages/partials/better-listing.html' %}
     </div>
-    <div id="manage-partial" data-title="manage" data-menu="#manage-menu-item" class="{% active 'manage' %}">
+    <div id="manage-partial" data-title="manage" data-menu="#manage-menu-item" class="{% active 'home' %}">
         {% include 'static_pages/partials/better-dashboard.html' %}
     </div>
     <div id="profile-partial" data-title="profile" data-menu="#profile-menu-item" class="{% active 'profile' %}">

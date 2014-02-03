@@ -4,7 +4,7 @@
 <nav class="navbar navbar-fixed-top nav-static" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <a class="navbar-logo {% active 'home' %}" data-href="#post-partial" id="post-menu-item" href="/">
+      <a class="navbar-logo {% active 'home' %}" data-href="#manage-partial" id="manage-menu-item" href="/">
         <img src="{% static 'static_pages/img/rocket-icon.svg' %}">
       </a>
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -53,12 +53,12 @@
         <div class="col-lg-8 col-lg-offset-2 col-big-nav">
           <ul class="nav navbar-nav big-navbar">
               <li>
-                <a class="big post {% active 'home' %}" data-href="#post-partial" id="post-menu-item" href="/">
+                <a class="big {% active 'post' %}" data-href="#post-partial" id="post-menu-item" href="/post/">
                   <span class="nav-item-text">Post</span>
                 </a>
               </li>
               <li>
-                <a class="big {% active 'manage' %}" data-href="#manage-partial" id="manage-menu-item" href="/manage/">
+                <a class="big manage {% active 'home' %}" data-href="#manage-partial" id="manage-menu-item" href="/">
                   <span class="nav-item-text">Manage</span>
                 </a>
               </li>
@@ -67,6 +67,7 @@
                   <span class="nav-item-text">Trust</span>
                 </a>
               </li>
+
             </ul>
           </div>
       </div>

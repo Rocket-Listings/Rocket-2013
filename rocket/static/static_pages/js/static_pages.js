@@ -29,8 +29,8 @@ $(function() {
         $('.midline').show();
       }
 
-      if (elem.selector == '#post-partial'){
-        $('.post').addClass('active');
+      if (elem.selector == '#manage-partial'){
+        $('.manage').addClass('active');
       }
 
       // if (elem.selector == '#login-partial'){
