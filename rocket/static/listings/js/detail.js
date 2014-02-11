@@ -668,7 +668,6 @@ $(function() {
       }));
     }
   });
-
   var Photo = Backbone.Model.extend({
     toJSON: function() {
       var json = Backbone.Model.prototype.toJSON.apply(this, arguments);
@@ -679,7 +678,6 @@ $(function() {
     }, 
     validation: function(attrs, options) {} // no validation for now.
   });
-
   var PhotoList = Backbone.Collection.extend({
     model: Photo,
     url: '/api/photos',
@@ -690,9 +688,7 @@ $(function() {
       });
     }
   });
-
-  document.cookie='hermes-enabled=true; expires=0; path=/listings/dashboard/';
-  
+ 
   var specsJSON = listingJSON.spec_set;
   var photosJSON = listingJSON.listingphoto_set;
 
