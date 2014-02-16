@@ -21,7 +21,9 @@ from listings.permissions import IsOwnerOrReadOnly, IsListingOwnerOrReadOnly
 from pprint import pprint
 import json
 from django.views.decorators.csrf import csrf_exempt
-
+from listings.forms import MessageForm
+from mail.tasks import send_message_task
+from django.contrib.humanize.templatetags.humanize import naturaltime
 # @login_required
 # @require_GET
 # def autopost(request, listing_id):
@@ -67,7 +69,6 @@ def hermes(request, listing_id):
             listing.status.name = ListingStatus.objects.get(name="Pending")
             listing.save()
             return Response(hermes_serializer.data, status=200)    
-        
         else:
             return HttpResponse("Not enough credits or in debug mode.", status=403) #Forbidden
     

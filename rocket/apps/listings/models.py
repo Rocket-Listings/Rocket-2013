@@ -1,5 +1,6 @@
 import hashlib
 import random
+import re
 
 from django.db import models, IntegrityError
 from datetime import datetime
@@ -7,7 +8,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.db.models import Max
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.contrib.sites.models import Site
 # from django.forms.util import ValidationError
 
@@ -115,6 +116,16 @@ class Listing(models.Model):
 	def get_view_link_post_url(self):
 		return "http://" + str(Site.objects.get_current()) + reverse('view_link_post', args=[self.id])
 
+# pre_save method to clean whitespace preceding a forward slash. See issue #125.
+def clean_slash_title(sender, **kwargs):
+	listing = kwargs['instance']
+	if listing.title:
+		_title = listing.title
+		title = re.sub(r'(?<=/) ', '', _title)
+		listing.title = title
+
+pre_save.connect(clean_slash_title, sender=Listing)
+
 class Spec(models.Model):
 	name = models.CharField(max_length=100)
 	value = models.CharField(max_length=100)
@@ -182,4 +193,7 @@ class Message(models.Model):
 	seen = models.NullBooleanField(default=False)
 
 	def __unicode__(self):
-		return u'To: %s %s About: %s From: %s On: %s' % (self.listing.user.first_name, self.listing.user.last_name, self.listing.title, self.buyer.name, self.date)
+		return u'On: %s' % (self.date)
+	# def __unicode__(self):
+	# 	return u'To: %s %s About: %s From: %s On: %s' % (self.listing.user.first_name, self.listing.user.last_name, self.listing.title, self.buyer.name, self.date)
+

@@ -131,7 +131,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    
+    'listings.middleware.GlobalCookieMiddleware'
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf
