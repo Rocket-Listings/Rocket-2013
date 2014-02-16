@@ -13,7 +13,7 @@ DATABASES['default'] = dj_database_url.config()
 DATABASES['default']['ENGINE'] = 'django_postgrespool'
 
 DATABASE_POOL_ARGS = {
-  'max_overflow': 10,
+  'max_overflow': 9,
   'pool_size': 10,
   'recycle': 300
 }
