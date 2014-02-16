@@ -60,8 +60,8 @@ def hermes(request, listing_id):
     
     if listing.status.name == "Draft":
         if not settings.AUTOPOST_DEBUG and request.user.get_profile().listing_credits > 0:  
-            # listing.status = ListingStatus.objects.get(name="Pending")
-            # listing.save()
+            listing.status = ListingStatus.objects.get(name="Pending")
+            listing.save()
             return Response(hermes_serializer.data, status=202) #Accepted rather than 200 OK b/c listing has been put in queue rather than actually completed.
         
         elif settings.AUTOPOST_DEBUG:

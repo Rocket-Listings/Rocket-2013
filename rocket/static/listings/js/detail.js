@@ -572,7 +572,7 @@ $(function() {
           method: 'GET',
           success: function(data, status, xhr) {
             if (xhr.status == 202) {
-              // window.location.replace('/listings/dashboard/');
+              window.location.replace('/listings/dashboard/');
               console.log(data);
               window.postMessage({type: "FROM_PAGE", action: "post", ctx: data}, "*");
             } else if(xhr.status == 403) {
