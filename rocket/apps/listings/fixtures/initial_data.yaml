@@ -12,37 +12,37 @@
     name: 'Rocket Listings Prod'
 
 - model: listings.ListingStatus
-  pk: null
+  pk: 1
   fields:
     name: Draft
     description: Listing is not ready to be posted or is incomplete
 
 - model: listings.ListingStatus
-  pk: null
+  pk: 2
   fields:
     name: Pending
     description: Listing is complete but not posted to Craigslist
 
 - model: listings.ListingStatus
-  pk: null
+  pk: 3
   fields:
     name: Active
     description: Listing has been posted on Craigslist
 
 - model: listings.ListingStatus
-  pk: null
+  pk: 4
   fields:
     name: Sold
     description: Listing has already been sold and is no longer available
 
 - model: listings.ListingStatus
-  pk: null
+  pk: 5
   fields:
     name: Deleted
     description: Listing has been removed from user profile
 
 - model: listings.ListingCategory
-  pk: null 
+  pk: 1 
   fields:
     name: appliances
     description: appliances
@@ -51,7 +51,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null  
+  pk: 2  
   fields:
     name: antiques
     description: antiques
@@ -60,7 +60,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null  
+  pk: 3  
   fields:
     name: arts and crafts
     description: arts and crafts
@@ -69,7 +69,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null  
+  pk: 4  
   fields:
     name: auto parts
     description: auto parts
@@ -78,7 +78,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null  
+  pk: 5  
   fields:
     name: baby and kids
     description: baby and kids
@@ -87,14 +87,14 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null  
+  pk: 6  
   fields:
     name: barter
     description: barter
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null  
+  pk: 7  
   fields:
     name: beauty and health
     description: beauty and health
@@ -103,7 +103,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null  
+  pk: 8  
   fields:
     name: bikes
     description: bikes
@@ -112,7 +112,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null  
+  pk: 9  
   fields:
     name: boats
     description: boats
@@ -121,7 +121,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 10
   fields:
     name: books
     description: books
@@ -130,7 +130,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 11
   fields:
     name: business
     description: business
@@ -139,7 +139,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 12
   fields:
     name: cars and trucks
     description: cars and trucks
@@ -148,7 +148,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 13
   fields:
     name: cds dvd vhs
     description: cds dvd vhs
@@ -157,7 +157,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 14
   fields:
     name: cell phones
     description: cell phones
@@ -166,7 +166,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 15
   fields:
     name: collectibles
     description: collectibles
@@ -175,7 +175,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 16
   fields:
     name: computer
     description: computer
@@ -184,7 +184,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 17
   fields:
     name: electronics
     description: electronics
@@ -193,7 +193,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 18
   fields:
     name: farm and garden
     description: farm and garden
@@ -203,7 +203,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 19
   fields:
     name: free
     description: free
@@ -211,7 +211,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 20
   fields:
     name: clothes
     description: clothes and accessories
@@ -220,7 +220,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 21
   fields:
     name: furniture
     description: furniture
@@ -229,7 +229,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 22
   fields:
     name: garage sale
     description: garage sale
@@ -237,7 +237,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 23
   fields:
     name: general
     description: general
@@ -246,7 +246,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 24
   fields:
     name: household
     description: household
@@ -255,7 +255,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 25
   fields:
     name: jewelry
     description: jewelry
@@ -264,7 +264,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 26
   fields:
     name: materials
     description: materials
@@ -273,7 +273,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 27
   fields:
     name: motorcycles
     description: motorcycles
@@ -282,7 +282,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 28
   fields:
     name: music instruments
     description: music instruments
@@ -291,7 +291,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 29
   fields:
     name: photo and video
     description: photo and video
@@ -299,7 +299,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 30
   fields:
     name: rvs
     description: rvs
@@ -308,7 +308,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 31
   fields:
     name: sporting
     description: sporting
@@ -317,7 +317,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 32
   fields:
     name: tickets
     description: tickets
@@ -326,7 +326,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 33
   fields:
     name: tools
     description: tools
@@ -335,7 +335,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 34
   fields:
     name: toys and games
     description: toys and games
@@ -344,7 +344,7 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 35
   fields:
     name: video gaming
     description: video gaming 
@@ -353,70 +353,70 @@
     group: forsale
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 36
   fields:
     name: wanted
     description: wanted
     group: housing
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 37
   fields:
     name: apartments and housing
     description: apartments and housing
     group: housing
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 38
   fields:
     name: housing swap
     description: housing swap
     group: housing
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 39
   fields:
     name: housing wanted
     description: housing wanted
     group: housing
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 40
   fields:
     name: office and commercial
     description: office and commercial
     group: housing
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 41
   fields:
     name: parking and storage
     description: parking and storage
     group: housing
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 42
   fields:
     name: real estate for sale
     description: real estate for sale
     group: housing
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 43
   fields:
     name: rooms and shared
     description: rooms and shared
     group: housing
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 44
   fields:
     name: sublets and temporary
     description: sublets and temporary
     group: housing
 
 - model: listings.ListingCategory
-  pk: null
+  pk: 45
   fields:
     name: vacation rentals
     description: vacation rentals
