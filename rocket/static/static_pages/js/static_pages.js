@@ -135,4 +135,11 @@ $(function() {
         alert("Unfortunately a large part of our site breaks if you don't install this chrome extension");
     });
   });
+
+  var isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+  var isChrome = !!window.chrome && !isOpera;
+
+  if (isChrome == false) {
+    $('#chrome-extension-button').html("<span class = 'help-block'>It looks like you don't have Chrome installed. To autopost to craigslist from Rocket please <a href = 'https://www.google.com/intl/en/chrome/browser/'> install the Chrome browser.</a></span>");
+  }
 });
