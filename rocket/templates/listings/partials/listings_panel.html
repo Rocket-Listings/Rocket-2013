@@ -46,6 +46,12 @@
 				
 				<br>
 				<span class="category d-category phone-hide">Category: {{ listing.category.name }}</span>
+				{% if listing.CL_view %}
+				<span class="category d-category phone-hide"><a href = "{{ listing.CL_view }}">View on CL</a></span>
+				{% endif %}
+				{% if listing.CL_view %}
+				<span class="category d-category phone-hide"><a href = "{{ listing.CL_link }}">Edit</a></span>
+				{% endif %}
 			</div>
 		</li>
 	{% endfor %}
