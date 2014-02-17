@@ -83,7 +83,7 @@ def detail(request, listing_id, pane='preview'):
     else: 
         comments = UserComment.objects.filter(user=listing.user).order_by('-date_posted') 
         avg_rating = comments.aggregate(Avg('rating')).values()[0]
-        fbProfile = user.get_profile().fbProfile
+        fbProfile = listing.user.get_profile().fbProfile
         context = {
             'listing': listing,
             'photos': photos,
