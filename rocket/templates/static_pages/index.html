@@ -11,12 +11,44 @@
 
 {% block content %}
 {% include "static_pages/partials/header_static.html" %}
+
+<div class="midline" style="display:none">
+  <div class="tagline">
+    <h1>A better way to sell on <span>Craigslist</span></h1>
+  </div>
+  <div class="big-nav-container">
+    <div id="big-nav">
+      <div class="container big-nav">
+        <div class="col-lg-8 col-lg-offset-2 col-big-nav">
+          <ul class="nav navbar-nav big-navbar">
+              <li>
+                <a class="big {% active 'post' %}" data-href="#post-partial" id="post-menu-item" href="/post/">
+                  <span class="nav-item-text">Post</span>
+                </a>
+              </li>
+              <li>
+                <a class="big manage {% active 'home' %}" data-href="#manage-partial" id="manage-menu-item" href="/">
+                  <span class="nav-item-text">Manage</span>
+                </a>
+              </li>
+              <li>
+                <a class="big {% active 'profile' %}" data-href="#profile-partial" id="profile-menu-item" href="/profile/">
+                  <span class="nav-item-text">Trust</span>
+                </a>
+              </li>
+
+            </ul>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="partials">
     <div id="post-partial" data-title="rocket" data-menu="#post-menu-item" class="{% active 'post' %}">
-        {% include 'static_pages/partials/better-listing.html' %}
+        {% include 'static_pages/partials/better_listing.html' %}
     </div>
     <div id="manage-partial" data-title="manage" data-menu="#manage-menu-item" class="{% active 'home' %}">
-        {% include 'static_pages/partials/better-dashboard.html' %}
+        {% include 'static_pages/partials/better_dashboard.html' %}
     </div>
     <div id="profile-partial" data-title="profile" data-menu="#profile-menu-item" class="{% active 'profile' %}">
         {% include 'static_pages/partials/better-profile.html' %}
@@ -34,6 +66,7 @@
         {% include 'static_pages/partials/pricing.html' %}
     </div>
 </div>
+
 {% endblock %}
 
 {% block css %}

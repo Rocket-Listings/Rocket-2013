@@ -4,16 +4,15 @@
 <nav class="navbar navbar-fixed-top nav-static" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <a class="navbar-logo {% active 'home' %}" data-href="#manage-partial" id="manage-menu-item" href="/">
-        <img src="{% static 'static_pages/img/rocket-icon.svg' %}">
-      </a>
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-ex1-collapse">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-
+      <a class="navbar-logo {% active 'home' %}" data-href="#manage-partial" id="manage-menu-item" href="/">
+        <img src="{% static 'static_pages/img/rocket-icon.svg' %}">
+      </a>      
     </div>
     <div class="collapse navbar-collapse navbar-ex1-collapse">   
       <ul class="nav navbar-nav navbar-left">
@@ -43,34 +42,3 @@
     </div>
   </div>
 </nav>
-<div class="midline" style="display:none">
-  <div class="tagline">
-    <h1>A better way to sell on <span>Craigslist</span></h1>
-  </div>
-  <div class="big-nav-container">
-    <div id="big-nav">
-      <div class="container big-nav">
-        <div class="col-lg-8 col-lg-offset-2 col-big-nav">
-          <ul class="nav navbar-nav big-navbar">
-              <li>
-                <a class="big {% active 'post' %}" data-href="#post-partial" id="post-menu-item" href="/post/">
-                  <span class="nav-item-text">Post</span>
-                </a>
-              </li>
-              <li>
-                <a class="big manage {% active 'home' %}" data-href="#manage-partial" id="manage-menu-item" href="/">
-                  <span class="nav-item-text">Manage</span>
-                </a>
-              </li>
-              <li>
-                <a class="big {% active 'profile' %}" data-href="#profile-partial" id="profile-menu-item" href="/profile/">
-                  <span class="nav-item-text">Trust</span>
-                </a>
-              </li>
-
-            </ul>
-          </div>
-      </div>
-    </div>
-  </div>
-</div>
