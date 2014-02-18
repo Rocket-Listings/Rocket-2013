@@ -8,18 +8,16 @@ from mobi.decorators import detect_mobile
 # @cache_control(must_revalidate=True, max_age=3600)
 # @cache_page(60 * 15)
 
-# main
-
 @detect_mobile
 def home(request):
-    if request.mobile:
-    	print "mobile detected"
-    	return TemplateResponse(request, 'static_pages/index_mobile.html')
+    # if request.mobile:
+    	# print "mobile detected"
+    	# return TemplateResponse(request, 'static_pages/index_mobile.html')
+    # else:
+    if request.user.is_authenticated():
+        return redirect('listings.views.dashboard')
     else:
-	    if request.user.is_authenticated():
-	        return redirect('listings.views.dashboard')
-	    else:
-	        return index(request)
+        return index(request)
 
 @attach_client_ip
 def index(request):
