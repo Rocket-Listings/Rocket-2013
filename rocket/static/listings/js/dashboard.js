@@ -218,7 +218,7 @@ $(function() {
 					case 'success':
 						console.log(response);
 						$(".messages-body").append(Mustache.render($("#new-message").html(), response));
-						$('.buyer-' + response.messages.buyer_id).removeClass("hide");
+						$(".message[data-message-id='" + response.messages.message_id +"'], .buyer[data-buyer-id='" + response.messages.buyer_id + "']").removeClass("hide");
 						$('.messages-body').scrollBottom();
 						$('.last-message').text(response.messages.message_id);
 						$('.message-form textarea').val("").focus();
