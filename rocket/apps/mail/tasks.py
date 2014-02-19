@@ -66,7 +66,7 @@ def send_message_task(message_id):
 		from_name = msg.buyer.name
 		to_name = msg.listing.user.get_profile().get_display_name()
 		to_email = msg.listing.user.email
-		reply_email = "buyer-" + msg.buyer.rocket_address + "@" + settigns.MAILGUN_SERVER_NAME
+		reply_email = "buyer-" + msg.buyer.rocket_address + "@" + settings.MAILGUN_SERVER_NAME
 	ctx = { 'from_name': from_name,
 			'to_name': to_name,
 			'content': msg.content,
