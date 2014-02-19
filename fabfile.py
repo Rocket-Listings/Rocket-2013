@@ -24,3 +24,7 @@ def deploy():
     local('heroku maintenance:off')
     local('heroku ps')
     local('heroku open')
+
+def push():
+    local('DJANGO_SETTINGS_MODULE=rocket.settings.staging python manage.py collectstatic --noinput')
+    local('git push heroku HEAD:master')
