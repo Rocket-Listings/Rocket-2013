@@ -36,7 +36,7 @@ From a new shell sesh on the dev machine start up forward with `forward localhos
 ======================
 Hermes is a chrome extention which autoposts Craigslist listings to get around CORS restrictions. It is loosely coupled with Rocket. We've kept its docs pretty well updated. https://github.com/nkelner/hermes-extension
 
-For autoposting to work, make sure it's installed, either from the chrome extension store or locally.
+For autoposting to work, make sure it's installed, either from the chrome extension store or locally. The install button will only work on the rocketlistings.com domain because of Chrome extension store security restrictions.
 
 ### Settings Architecture
 =========================
