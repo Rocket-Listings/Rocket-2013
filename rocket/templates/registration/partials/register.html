@@ -87,10 +87,15 @@
 
       </div>
     </div>
-    <div class="form-group">
-      <div id = "chrome-extension-button" class="col-sm-3 col-sm-offset-2">
-        <a class="btn btn-warning" id="add_extension"><span class="before">Install Chrome Extension</span><span class="after hide">Extension Installed</span></a>
+    <div id="hermes-install" class="form-group">
+      <div class="col-sm-3 col-sm-offset-2">
+        <a class="hermes-install-btn btn btn-warning"><span class="before">Install Chrome extension</span><span class="after hide">Rocket Chrome Extension Installed</span></a>
       </div>
+      <span class="hermes-help-non-chrome help-block hide">Rocket uses an extension to the Google Chrome web browser to post on Craigslist for you. You'll need to <a href="https://www.google.com/intl/en/chrome/browser/">install Chrome</a> before installing the Craiglist Autoposter Chrome extension.</span>
+      <span class="hermes-help-chrome help-block hide">Rocket uses the Craigslist Autoposter Chrome extension to post on Craigslist for you.</span>
+      <span class="hermes-error help-block hide">
+        <strong>Error installing Chrome extension</strong><br/><span id="error-message"></span>.
+      </span>
     </div>
     <div class="form-group">
       <div class="col-sm-3 col-sm-offset-2">

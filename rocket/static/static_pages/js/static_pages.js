@@ -2,7 +2,6 @@ $(function() {
   
   $( document ).ready(function() {
     var pathname = window.location.pathname;
-    console.log(pathname);
     if (pathname == '/' || pathname == '/manage/' || pathname == '/trust/' || pathname == '/profile/'){
       $('.midline').show();
     }else{
@@ -38,30 +37,56 @@ $(function() {
       // }else{
       //   $('.midline').show();
       // }
-            
-
   });
 
   // if(chrome.app.isInstalled) {
     // $('#register_submit').removeProp('disabled');
   // }
-  $('#add_extension').click(function(event) {
+
+  showHelp();
+  if($('#hermes-is-active').length) {
+    console.log('installed');
+    hermesInstallSuccess();
+  }
+
+  $('.hermes-install-btn').click(function(event) {
     event.preventDefault();
-    chrome.webstore.install("https://chrome.google.com/webstore/detail/knfnlfcnohkkbkiibecjhidafmpgchfe", 
-      function() {
-        $(this).find('.before').hide();
-        $(this).removeClass('btn-warning').addClass('btn-success disabled');
-        $(this).find('.after').show();        
-        // $('#register_submit').removeProp('disabled');
-      }, function() {
-        alert("Unfortunately a large part of our site breaks if you don't install this chrome extension");
-    });
+    // must be consistent with the link tag in templates/static_pages/index.html
+    var hermesURL = "https://chrome.google.com/webstore/detail/knfnlfcnohkkbkiibecjhidafmpgchfe";
+    // let's uncomment this when the Chrome extension is updated, for now it's better that the button work multiple times.
+    // if (!$('#hermes-is-active').length) {
+      chrome.webstore.install(hermesURL, hermesInstallSuccess, hermesInstallFailure);
+    // }
   });
 
-  var isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
-  var isChrome = !!window.chrome && !isOpera;
-
-  if (isChrome == false) {
-    $('#chrome-extension-button').html("<span class = 'help-block'>It looks like you don't have Chrome installed. To autopost to craigslist from Rocket please <a href = 'https://www.google.com/intl/en/chrome/browser/'> install the Chrome browser.</a></span>");
+  function showHelp() {
+    $('.hermes-error').addClass('hide');
+    var isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+    var isChrome = !!window.chrome && !isOpera;
+    if (isChrome) {
+      $('.hermes-help-chrome').removeClass('hide');
+    } else {
+      $('.hermes-help-non-chrome').removeClass('hide');
+    }
+  }
+  function hideHelp() {
+    $('.hermes-help-chrome').addClass('hide');
+    $('.hermes-help-non-chrome').addClass('hide');    
+  }
+  function hermesInstallSuccess() {
+    showHelp();
+    $('#hermes-install').removeClass('has-error').addClass('has-success');    
+    var hermesInstall = $('#hermes-install');    
+    hermesInstall.find('.before').hide();
+    hermesInstall.find('.hermes-install-btn')
+      .removeClass('btn-warning')
+      .addClass('btn-success disabled');
+    hermesInstall.find('.after').removeClass('hide');
+  }
+  function hermesInstallFailure(error) {
+    hideHelp();
+    $('.hermes-error #error-message').html(error);
+    $('.hermes-error').removeClass('hide');
+    $('#hermes-install').addClass('has-error');
   }
 });
