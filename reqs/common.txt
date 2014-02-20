@@ -1,11 +1,11 @@
-Django >= 1.5.0
+Django== 1.5.6
 
 django-celery==3.0.17
 
 Fabric==1.6.1
 South==0.8.1
 
--e hg+https://bitbucket.org/etienned/pil-2009-raclette/#egg=PIL
+Pillow
 # psycopg2sorl-thumbnail==11.12
 sorl-thumbnail
 

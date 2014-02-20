@@ -36,3 +36,17 @@ def deploy_staging():
   local('heroku ps --app rocket-listings-staging')
   local('heroku open --app rocket-listings-staging')
 
+<<<<<<< HEAD
+=======
+# def config():
+#   # local('heroku config:set AWS_KEY=AKIAJDDGALJ4HWXOJM2A --app rocket-listings-staging')
+#   # local('heroku config:set AWS_SECRET=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 --app rocket-listings-staging')
+#   # local('heroku config:set AWS_STORAGE_BUCKET_NAME=static.rocketlistings.com --app rocket-listings-staging')
+#   # local('heroku config:set BUILDPACK_URL=git://github.com/heroku/heroku-buildpack-python.git --app rocket-listings-staging')
+#   # local('heroku config:set DISABLE_INJECTION=true --app rocket-listings-staging')
+#   # local('heroku config:set DJANGO_SETTINGS_MODULE=rocket.settings.production --app rocket-listings-staging')
+#   # local('heroku config:set PYTHONPATH=fakepath --app rocket-listings-staging')
+#   # local('heroku config:set SECRET_KEY=59%5@qdw12&amp;d)47=3=$ar4bv4vcgk)*-_f2=qr9(n9jy%z%1j! --app rocket-listings-staging')
+#   local('heroku config:set TWITTER_KEY=bZMfei7vpcVLbGJa2IdXw --app rocket-listings-staging')
+#   local('heroku config:set TWITTER_SECRET=aGGBdl6LaFlF6gJkv1n2QRYarpVAYe3NSCjF0hg1L4 --app rocket-listings-staging')
+>>>>>>> Apparently the lastest version of psycopg2 breaks django postgres pool
