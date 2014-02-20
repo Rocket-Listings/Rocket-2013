@@ -1,8 +1,10 @@
 # Rocket Listings - Django
+==========================
 
-_Last updated: 8/8/13_
+_Last updated: 2/20/14_
 
 ### Uncategorized Recent Notes
+==============================
 
 Restart the new relic agent with:
 
@@ -13,7 +15,31 @@ Removing new relic prefix to see if it solves db issue.
 Was: `web: newrelic-admin run-program gunicorn -c gunicorn.py.ini wsgi`
 Now: `gunicorn -c gunicorn.py.ini wsgi`
 
-### Settings notes
+### RabbitMQ and Celery
+=======================
+Rabbit is a messaging service. Celery is a distributed task queue that uses a messaging service to communicate. Tasks are pieces of code that we don't want to run in the http request thread, instead we do them in the background. We use tasks for routine and long-running work. [Docs here](http://docs.celeryproject.org/en/latest/getting-started/introduction.html).
+
+To make development easier, Celery will still work even if no worker processes or messaging server is started, as long as `CELERY_ALWAYS_EAGER = True` in the `development.py` settings file. 
+
+To develop with Celery, set `CELERY_ALWAYS_EAGER = False` in `development.py`, start the message server `rabbitmq-server` in a new shell session and the worker process `./manage.py celeryd` in another.
+
+If you're running into problems `./manage.py celeryd --loglevel=DEBUG` is often helpful.
+
+### Mail
+========
+
+Rocket uses Mailgun to send and receive email. Mailgun has regex-ish rules called routes which delegate which hook to call in rocket in response to incoming mail. The routes are configurable in their webpage online. The problem: if you autopost to Craigslist from a local dev setup, Mailgun won't be able to reach your local install to hand off the confirmation email. The solution is a service called [Forward](http://forwardhq.com/) which will expose your local server to the internet.
+
+From a new shell sesh on the dev machine start up forward with `forward localhost:8000`. Test it out by pointing your browser to `http://forward.wf/`. Forward might ask you to login the first time. Nat has the login info.
+
+### Hermes Integration
+======================
+Hermes is a chrome extention which autoposts Craigslist listings to get around CORS restrictions. It is loosely coupled with Rocket. We've kept its docs pretty well updated. https://github.com/nkelner/hermes-extension
+
+For autoposting to work, make sure it's installed, either from the chrome extension store or locally.
+
+### Settings Architecture
+=========================
 
 4 settings files
 
@@ -36,7 +62,8 @@ The only settings that should be set according to environment variables are ones
 
 I'm willing to risk hardcoding arbitrary insensitive data (such as our AWS bucket name into the settings file) for the sake of simplicity.
 
-### Heroku Deploy Notes
+### Heroku Deploy
+=================
 
 Branching from master into a temporary branch `staging` is a good idea. Remember to comment out less.js from `base.html` and switch over to the CDN bootstrap and jquery.
 
@@ -73,45 +100,29 @@ Heroku config vars
     PGBACKUPS_URL:                <set by heroku>
     SENTRY_DSN:                   <set by heroku>
 
+### Development Setup
+=====================
+Get [Homebrew](http://mxcl.github.io/homebrew/).
 
-### Celery
-
-Celery is a distributed task queue. We can use it for many things including scheduling routine work and running tasks in the background. [Docs here](http://docs.celeryproject.org/en/latest/getting-started/introduction.html).
-
-Right now we are using RabbitMQ as a broker. To install:
-
-    $ brew install rabbitmq
-
-In a separate command line tab:
-    
-    $ rabbitmq-server
-
-And in yet another tab:
-
-    $ ./manage.py celeryd
-
-Note: `./manage.py celeryd --loglevel=DEBUG` is often helpful if you're having problems.
-
-### Project setup
-
-Homebrew is a package manager for OS X. Read about it [here](http://mxcl.github.io/homebrew/). Install it, then run
+Then:
 
     brew install python git sqlite rabbitmq node
+    gem install forward
     echo "export PATH=/usr/local/share/npm/bin:$PATH" >> ~/.bash_profile
     npm install -g less
     source ~/.bash_profile
 
 If running `which python` gives you `/usr/local/bin/python`, you're good. Otherwise you have a problem with your path variable and homebrew installation (`brew doctor` helps).
 
-Clone the project
+Clone the project:
 
     git clone git@github.com:Rocket-Listings/Rocket.git
 
-Now install all of the python package dependencies by going:
+Install python dependencies:
 
     pip install -r reqs/development.txt
 
-Now setup the sqlite3 database with our Fabric command.
+Setup the sqlite3 database with our Fabric command.
 
     fab resetdb
 
@@ -147,13 +158,8 @@ And now you can instead type:
 
 Sort of faster
 
-Show the server off to others on the LAN by making your server public
-
-    ./manage.py runserver 0.0.0.0:8000
-
-Then point them to your ip address (with the `:8000`).
-
 ### Facebook and Twitter Integration Notes
+==========================================
 
 Facebook and Twitter are now connected, but due to url requirements, we have to access them from a "real" url rather than `localhost` or `127.0.0.1`.  Right now, they're set up to run at `http://local.rocketlistings.com:8000`.  To make this possible:
 
@@ -174,6 +180,7 @@ All Twitter requests start like this:
     twitter = Twython(settings.TWITTER_KEY, settings.TWITTER_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
 
 ### Fabric Command Reference 
+============================
 
 (run from project root)
 
@@ -181,7 +188,10 @@ To completely reset your development database and load demo fixtures
 
     fab resetdb 
 
+Fab is like make for python. Read through fabfile.py to understand its sorcery.
+
 ### Sublime Text Notes
+======================
 
 Open up Sublime text and in the top menu go `Project -> Add Folder to Project`, and select `Rocket-Listings-Django`. After this we save the project by going `Project -> Save project as..` and saving the project file inside `Rocket-Listings-Django`, naming it whatever you want. From now on, to open the project, you can open Sublime Text, and hit `cmd+ctrl+P` to open a dialog to select a project. Clicking on the project you want to open will open it. Having Sublime Text Projects allow you to have all kinds of cool stuff the file browser sidebar among other things.
 
@@ -209,5 +219,6 @@ Pimp out your `.sublime-project` file like this
 You should have much less visual clutter when looking through your project folders now.
 
 ### CSS Notes
+=============
 
 Use classes in markup for styling, use ids for javascript hooks. Classnames should be lowercase with dashes between words. We use [Less](http://lesscss.org/). The development server should automatically detect changes in the .less files (except base.less) and recompile them. Sometimes it's slow at doing this, so to have the less compiled in the browser with javascript just add the param `?debug` at the end of any url.
