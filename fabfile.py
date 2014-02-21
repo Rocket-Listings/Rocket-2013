@@ -34,5 +34,4 @@ def deploy_staging():
   local('heroku run python manage.py collectstatic --noinput --app rocket-listings-staging')
   local('heroku maintenance:off --app rocket-listings-staging')
   local('heroku ps --app rocket-listings-staging')
-  local('heroku open --app rocket-listings-staging')
 
