@@ -11,6 +11,12 @@
     domain: 'beta.rocketlistings.com'
     name: 'Rocket Listings Prod'
 
+- model: sites.site
+  pk: 3
+  fields:
+    domain: 'rocket-listings-staging.herokuapp.com'
+    name: 'Rocket Listings Staging'
+
 - model: listings.ListingStatus
   pk: 1
   fields:

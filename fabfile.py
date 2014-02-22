@@ -25,6 +25,13 @@ def deploy():
     local('heroku ps')
     local('heroku open')
 
-def push():
-    local('DJANGO_SETTINGS_MODULE=rocket.settings.staging python manage.py collectstatic --noinput')
-    local('git push heroku HEAD:master')
+def deploy_staging():
+  local('heroku maintenance:on --app rocket-listings-staging')
+  local('DJANGO_SETTINGS_MODULE=rocket.settings.staging python manage.py collectstatic --noinput')
+  local('git push --force staging HEAD:master')
+  local('heroku run python manage.py syncdb --noinput --app rocket-listings-staging')
+  local('heroku run python manage.py migrate --app rocket-listings-staging')
+  local('heroku run python manage.py collectstatic --noinput --app rocket-listings-staging')
+  local('heroku maintenance:off --app rocket-listings-staging')
+  local('heroku ps --app rocket-listings-staging')
+

@@ -10,3 +10,4 @@ dj_database_url
 gevent==0.13.8
 newrelic
 psycopg2==2.5
+amqplib
