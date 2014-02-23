@@ -26,8 +26,8 @@ $(function() {
   }
   var views = {
     preview: new PreviewView(models),
-    specEdit: new SpecEditView({ collection: specs, model: listing  }),
-    photoEdit: new PhotoEditView({ collection: photos, model: listing }),
+    specEdit: new SpecEditView({ collection: specs, listing: listing  }),
+    photoEdit: new PhotoEditView({ collection: photos, listing: listing }),
     listingEdit: new ListingEditView({ model: listing }),
     sidebarView: new SidebarView(models)
   };

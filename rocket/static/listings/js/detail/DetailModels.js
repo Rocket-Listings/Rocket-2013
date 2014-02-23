@@ -43,15 +43,18 @@ var Listing = Backbone.Model.extend({
 
 var Spec = Backbone.Model.extend({
   toJSON: function() {
-    var json = Backbone.Model.prototype.toJSON.apply(this, arguments);
-    if (!this.id && this.cid) {          
-      json.id = this.cid;
-    }
+    var json = _.clone(this.attributes);
+    json.cid = this.cid;
     return json;
   },
   validate: function(attrs, options) {
-    if (options && options.notEmpty && attrs.value.trim().length == 0) {
-      return { field: attrs.name, message: "Craigslist requires that this field not be empty." };
+    if (attrs.value.trim().length == 0) {
+      if (attrs.required) {
+        return { fatal: true, message: "required by Craigslist" };
+      } else {
+        // no message to indicated that the invalidation is not .
+        return { fatal: false, message: "Spec was not filled out; not saving." };
+      }
     }
   }
 });
@@ -72,14 +75,9 @@ var SpecList = Backbone.Collection.extend({
     return true;
   },
   validate: function() {
-    var isCarsTrucks = (this.listing.get('category') == 12);
     var result = _.chain(this.models)
       .map(function(model) {
-        var name = model.get('name');
-        // craigslist cars and truck exception
-        if (isCarsTrucks 
-            && (name == 'make' || name == 'model' || name == 'year') 
-            && !model.isValid({ notEmpty: true })) {
+        if (!model.isValid()) {
           return model.validationError;
         }
       })
@@ -93,10 +91,7 @@ var SpecList = Backbone.Collection.extend({
     }
   },
   toJSON: function() {
-    var specs = this.filter(function(spec) {
-      return Boolean(spec.get('value').trim());
-    });
-    return _.map(specs, function(spec) { return spec.toJSON(); });
+    return this.invoke('toJSON');
   },
   removeEmpty: function() {
     this.reset(this.filter(function(spec) {

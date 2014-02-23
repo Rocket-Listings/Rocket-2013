@@ -129,7 +129,8 @@ pre_save.connect(clean_slash_title, sender=Listing)
 class Spec(models.Model):
 	name = models.CharField(max_length=100)
 	value = models.CharField(max_length=100)
-	listing = models.ForeignKey(Listing);
+	listing = models.ForeignKey(Listing)
+	required = models.BooleanField(default=False)
 
 	def __unicode__(self):
 		return self.name + ' ' + self.value

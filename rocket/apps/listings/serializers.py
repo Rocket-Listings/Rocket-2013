@@ -38,7 +38,8 @@ class SpecSerializer(serializers.ModelSerializer):
             'id',
             'name',
             'value',
-            'listing'
+            'listing',
+            'required'
         ) 
 
 class ListingPhotoSerializer(serializers.ModelSerializer):

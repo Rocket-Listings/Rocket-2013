@@ -74,13 +74,15 @@ var ListingEditView = Backbone.View.extend({
   events: {
     // "change input": "changed",
     "keyup .title":   "renderPageTitle",
-    "change .title":  "changed",
-    "change .price":  "changed",
+    "blur .title":  "changed",
+    "blur .price":  "changed",
   },
   initialize: function(options) {
     this.categoryEditView = new CategoryEditView(options);
     this.locationEditView = new LocationEditView(options);
+    // can't set this listener in the events property since .description is outside the #info-fieldset
     _.bindAll(this, 'changed');
+    $('.description').on('blur', this.changed);
     this.listenTo(this.model, 'invalid', this.validationError);
   },
   validationError: function(model, errors) {
@@ -464,53 +466,60 @@ var SpecEditView = Backbone.View.extend({
   el: '#spec-fieldset',
   template: Mustache.compile($('#spec-edit-template').html()),
   events: {
-    "change .description":  "descriptionChanged",
-    "change #spec-row input": "specChanged"
+    "blur #spec-row input": "specChanged"
   },
   initialize: function(options) {
-    this.listenTo(this.model, 'change:category', this.switchCategory);
-    _.bindAll(this, "descriptionChanged", "specChanged");
+    this.listenTo(options.listing, 'change:category', this.switchCategory);
+    _.bindAll(this, "specChanged");
     this.defaults = $.parseJSON($('#initial-specs').html());
-    this.switchCategory(this.model);
-  },
-  descriptionChanged: function(e) {
-    var input = $(e.currentTarget);
-    this.model.save(input.attr('name'), input.val(), { patch: true, validate: false });
+    this.switchCategory(options.listing, options.listing.get('category'),{ initialLoad: true });
   },
   specChanged: function(e) {
+    // this is run every time a spec field is blurred (loses focus)
     var input = $(e.currentTarget);
-    var id = input.data('id')
+    var id = input.data('cid');
     var spec = this.collection.get(id);
-    if (input.val().length > 0) {
-      spec.save('value', input.val());
-    } else if (!spec.isNew()) {
-      spec.destroy();
+    var saveResult = spec.save('value', input.val());
+    if (!saveResult && !spec.isNew()) {
+      // We don't want to destroy it, since we want it to stay in the dom
+      spec.sync('delete', spec);
+      spec.unset('id');
     }
   },
-  switchCategory: function(model) {
-    var that = this;
-    this.collection.removeEmpty();
-    var cat = model.get('category');
-    var catName = $('.cat[data-id="{0}"]'.format(cat)).html(); // workaround
-    var specNames = this.defaults[catName];
-    if (specNames) {
-      var nextSpecs = _.map(specNames, function(name, index) {
-        var existing = that.collection.findWhere({name: name });
-        if (existing)
-          return existing;
-        else
-          return new Spec({
-            "name": name,
-            "value": "",
-            "listing": that.model.id
-          });
-      });
+  validationError: function(model, error, options) {
+    if(error.fatal) {
+      $('#id_spec-{0}'.format(model.cid)).parent().addClass('has-error');
     }
-    this.collection.add(nextSpecs, { merge: true });
-    var JSON = this.collection.map(function(spec) { 
-      return spec.toJSON(); 
+  },
+  saved: function(model, resp, options) {
+    $('#id_spec-{0}'.format(model.cid)).parent().removeClass('has-error');
+  },
+  switchCategory: function(model, value, options) {
+    if (!options || !options.initialLoad) {
+      // clear collection of specs if were not setting up shop
+      this.collection.invoke('destroy');
+    }
+    var categoryName = $('.cat[data-id="{0}"]'.format(value)).html(); // TODO; workaround
+    var specObjects = this.defaults[categoryName];
+    if (specObjects) {
+      var nextSpecs = _.map(specObjects, function(specObject) {
+          var newSpec = new Spec({
+            "name": specObject.name,
+            "value": "",
+            "listing": model.id,
+            "required": specObject.required || false
+          });
+          this.listenTo(newSpec, 'invalid', this.validationError);
+          this.listenTo(newSpec, 'sync', this.saved);
+          return newSpec;
+      // run this map function in the same context as the switchCategory function
+      }, this);
+    }
+    this.collection.set(nextSpecs);
+    var markup = this.template({
+      'specs': this.collection.toJSON()
     });
-    this.$('#spec-row').html(this.template({ 'specs': JSON }));
+    this.$('#spec-row').html(markup);
   }
 });
 
