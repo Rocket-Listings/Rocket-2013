@@ -204,7 +204,7 @@ var LocationEditView = Backbone.View.extend({
       });
       this.$(".sub_market").show(); 
     } else {
-      this.model.save('sub_market', null, { patch: true, validate: false });
+      this.model.save({'sub_market': null, 'market':market}, { patch: true, validate: false });
       this.$(".sub_market").hide();
     }
     this.initHood(market, this.model.get('sub_market'));
@@ -220,7 +220,7 @@ var LocationEditView = Backbone.View.extend({
       this.$('#id_location').val('');
       this.$('#id_location').prop('disabled', true);
     } else {
-      this.model.save('hood', null, { patch: true, validate: false });
+      this.model.save({'sub_market': subMarket, 'market':market, 'hood': null}, { patch: true, validate: false });
       this.$('#id_location').prop('disabled', false);
       this.$(".hood").hide();
     }
