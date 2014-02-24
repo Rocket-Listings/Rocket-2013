@@ -32,7 +32,6 @@
     {% include "partials/footer.html" %}
     {% endblock %}
     {# CDN JS #}
-    <div class="scripts hide">
 
       {# production #}
       <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -42,7 +41,6 @@
       {# development #}
       {# {% compressed_js 'jquery_bootstrap_local' %} #}
       {% block js %}{% endblock %}
-    </div>
     {# {% if user.is_authenticated %} #}
       {# {% include "partials/customer_chat.html" %} #}
     {# {% endif %} #}
