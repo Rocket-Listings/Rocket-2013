@@ -5,13 +5,13 @@
 
 {% block js %}
   {{ block.super }}
-  <script src="{% static 'rocket/js/underscore.min.js' %}"></script>    
+  <script src="{% static 'rocket/js/underscore.min.js' %}"></script>
   <script src="//backbonejs.org/backbone-min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/async/0.2.7/async.min.js"></script>
+  <script src="{% static 'listings/js/async.js' %}"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuRtB1F8XVtV22jQ3dkGQPqWCKQz4suJ0&sensor=false"></script>
   <script src="{% static 'listings/js/select2.min.js' %}"></script>
   <script type="text/javascript">
-  (function(a){if(window.filepicker){return}var b=a.createElement("script");b.type="text/javascript";b.async=!0;b.src=("https:"===a.location.protocol?"https:":"http:")+"//api.filepicker.io/v1/filepicker.js";var c=a.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c);var d={};d._queue=[];var e="pick,pickMultiple,pickAndStore,read,write,writeUrl,export,convert,store,storeUrl,remove,stat,setKey,constructWidget,makeDropPane".split(",");var f=function(a,b){return function(){b.push([a,arguments])}};for(var g=0;g<e.length;g++){d[e[g]]=f(e[g],d._queue)}window.filepicker=d})(document); 
+  (function(a){if(window.filepicker){return}var b=a.createElement("script");b.type="text/javascript";b.async=!0;b.src=("https:"===a.location.protocol?"https:":"http:")+"//api.filepicker.io/v1/filepicker.js";var c=a.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c);var d={};d._queue=[];var e="pick,pickMultiple,pickAndStore,read,write,writeUrl,export,convert,store,storeUrl,remove,stat,setKey,constructWidget,makeDropPane".split(",");var f=function(a,b){return function(){b.push([a,arguments])}};for(var g=0;g<e.length;g++){d[e[g]]=f(e[g],d._queue)}window.filepicker=d})(document);
   </script>
   <script src="{% static 'listings/js/utils.js' %}"></script>
   <script type="text/javascript">
@@ -35,14 +35,14 @@
       <div class="tab-pane{% if pane == 'edit' %} active{% endif %}" id="edit">
         {% include 'listings/partials/edit.html' %}
       </div>
-      <div class="tab-pane{% if pane == 'preview' %} active{% endif %}" id="preview"> 
+      <div class="tab-pane{% if pane == 'preview' %} active{% endif %}" id="preview">
         {% include 'listings/partials/preview.html' %}
       </div>
     </div>
     <div class="col-md-3 detail-sidebar">
       <h4>Actions</h4>
       <div id="not-enough-credits" class="alert alert-warning" style="display: none;"><p><strong>Uh oh..</strong> It looks like you've run out of free listings.</p><p>NBD though. You can get some more for free by <a href="{% url 'user_info' %}" class="alert-link" title="user info page">telling your friends about us</a>, or by <a href="{% url 'user_info' %}" class="alert-link" title="user info page"> lending us a dollar.</a></p><p>It all goes towards making this product even better :)</div>
-      <p class="text-muted">Your draft will save itself automatically.</p>     
+      <p class="text-muted">Your draft will save itself automatically.</p>
       <div class="btn-stack" data-spy="affix" data-offset-top="154">
         <div class="btn-group btn-group-justified" data-toggle="buttons">
           <a class="edit-btn btn btn-default {% if pane == 'edit' %}active{% endif %}" href="#edit" data-toggle="tab">

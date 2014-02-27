@@ -505,9 +505,7 @@ var SpecEditView = Backbone.View.extend({
       var destroySpec = function destroySpec (spec, callback) {
         model.unset('spec_set');
         spec.destroy( {
-          success : function(){
-            callback();
-          },
+          success : callback,
           wait: true
         });
       }
