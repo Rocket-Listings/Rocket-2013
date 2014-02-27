@@ -39,7 +39,6 @@ var SidebarView = Backbone.View.extend({
   publish: function(e) {
     $('.publish-btn').prop('disabled', true);
     console.log("listing valid:", this.listing.isValid());
-    console.log(this.specs);
     console.log("specs valid: ", this.specs.isValid());
     console.log("photos valid: ", this.photos.isValid());
     if (this.listing.isValid() && this.specs.isValid() && this.photos.isValid()) {
@@ -48,6 +47,7 @@ var SidebarView = Backbone.View.extend({
         method: 'GET',
         success: function(data, status, xhr) {
           console.log(xhr.status);
+          console.log(data);
           // if (xhr.status == 200) {
           //   window.location.replace('/listings/dashboard/');
           //   console.log(data);
