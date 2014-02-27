@@ -19,13 +19,13 @@ var SidebarView = Backbone.View.extend({
 
     this.listenTo(options.photos, 'request', this.showSaving);
     this.listenTo(options.photos, 'sync', this.hideSaving);
-    this.listenTo(options.photos, 'error', this.errorSaving);      
+    this.listenTo(options.photos, 'error', this.errorSaving);
 
     _.bindAll(this, 'publish');
     $('.publish-btn').click(this.publish);
   },
   showSaving: function(event) {
-    $('#error-saving').hide();      
+    $('#error-saving').hide();
     $('#loading').show();
   },
   hideSaving: function(event) {
@@ -33,14 +33,14 @@ var SidebarView = Backbone.View.extend({
     $('#loading').hide();
   },
   errorSaving: function(event) {
-    $('#loading').hide();      
+    $('#loading').hide();
     $('#error-saving').show();
   },
   publish: function(e) {
     $('.publish-btn').prop('disabled', true);
     console.log("listing valid:", this.listing.isValid());
     console.log("specs valid: ", this.specs.isValid());
-    console.log("photos valid: ", this.photos.isValid());            
+    console.log("photos valid: ", this.photos.isValid());
     if (this.listing.isValid() && this.specs.isValid() && this.photos.isValid()) {
       $.ajax({
         url: '/listings/' + this.listing.id.toString() + '/hermes',
@@ -101,17 +101,17 @@ var ListingEditView = Backbone.View.extend({
         case "price":
           var elem = $('#price-error');
           elem.html(error.message);
-          elem.parent().addClass('has-error'); 
+          elem.parent().addClass('has-error');
           break;
         case "description":
           var elem = $('#description-error');
           elem.html(error.message);
-          elem.parent().addClass('has-error');        
+          elem.parent().addClass('has-error');
           break;
         case "location":
           var elem = $('#location-error');
           elem.html(error.message);
-          elem.parent().addClass('has-error'); 
+          elem.parent().addClass('has-error');
       }
     });
   },
@@ -147,7 +147,7 @@ var CategoryEditView = Backbone.View.extend({
     var prevCat = this.model.get('category');
     if (nextCat != prevCat) {
       this.render(nextCat, prevCat);
-      this.model.save('category', nextCat, { patch: true, validate: false });
+      this.model.save('category', nextCat, { patch: true, validate: false, wait: true });
     }
   },
   // parseToModel: function() {
@@ -202,7 +202,7 @@ var LocationEditView = Backbone.View.extend({
         val: "",
         data: this.markets[market]
       });
-      this.$(".sub_market").show(); 
+      this.$(".sub_market").show();
     } else {
       this.model.save({'sub_market': null, 'market':market}, { patch: true, validate: false });
       this.$(".sub_market").hide();
@@ -235,13 +235,13 @@ var LocationEditView = Backbone.View.extend({
     console.log(value);
     this.initHood(this.model.get('market'), value);
     // if (value)
-    this.model.save('sub_market', value, { patch: true, validate: false });      
-    this.render();      
+    this.model.save('sub_market', value, { patch: true, validate: false });
+    this.render();
   },
   hoodChange: function(e) {
     var value = parseInt(e.val);
     this.model.save('hood', value, { patch: true, validate: false });
-    this.render();      
+    this.render();
   },
   changed: function(e) {
     var input = $(e.currentTarget);
@@ -260,7 +260,7 @@ var LocationEditView = Backbone.View.extend({
 
     // hella inefficient
     if (market) {
-      marketName = _.findWhere(this.markets.markets, { id: market }).text; 
+      marketName = _.findWhere(this.markets.markets, { id: market }).text;
       // console.log(sub);
       if (sub) {
         subName = _.findWhere(this.markets[market], { id: sub.toString() }).text + ', ' + marketName;
@@ -299,7 +299,7 @@ var LocationEditView = Backbone.View.extend({
   },
 
   mapResize: function(e) {
-    google.maps.event.trigger(this.map, 'resize');      
+    google.maps.event.trigger(this.map, 'resize');
   },
   startLoad: function(str) {
     // console.log("startLoad: " + str);
@@ -381,7 +381,7 @@ var LocationEditView = Backbone.View.extend({
       error: function(jqXHR, textStatus, errorThrown) {
         that.mapError('freegeoip');
       }
-    });      
+    });
   },
   mapError: function(error) {
     this.stopLoad("Maps error:" + error);
@@ -469,10 +469,15 @@ var SpecEditView = Backbone.View.extend({
     "blur #spec-row input": "specChanged"
   },
   initialize: function(options) {
-    this.listenTo(options.listing, 'change:category', this.switchCategory);
-    _.bindAll(this, "specChanged");
-    this.defaults = $.parseJSON($('#initial-specs').html());
-    this.switchCategory(options.listing, options.listing.get('category'),{ initialLoad: true });
+    var that = this;
+    options.listing.fetch({
+      success: function(){
+        that.listenTo(options.listing, 'change:category', that.switchCategory);
+        _.bindAll(that, "specChanged");
+        that.defaults = $.parseJSON($('#initial-specs').html());
+        that.switchCategory(options.listing, options.listing.get('category'),{ initialLoad: true });
+      }
+    });
   },
   specChanged: function(e) {
     // this is run every time a spec field is blurred (loses focus)
@@ -496,13 +501,31 @@ var SpecEditView = Backbone.View.extend({
   },
   switchCategory: function(model, value, options) {
     if (!options || !options.initialLoad) {
-      // clear collection of specs if were not setting up shop
-      this.collection.invoke('destroy');
+      var destroySpec = function destroySpec (spec, callback) {
+        model.unset('spec_set');
+        spec.destroy( {
+          success : function(){
+            callback();
+          },
+          wait: true
+        });
+      }
+      var that = this;
+      async.each(this.collection, destroySpec, function (err){
+        that.render(model, value, options);
+      });
     }
+    else{
+      this.render(model, value, options);
+    }
+  },
+  render: function(model, value, options) {
     var categoryName = $('.cat[data-id="{0}"]'.format(value)).html(); // TODO; workaround
     var specObjects = this.defaults[categoryName];
     if (specObjects) {
+      var savedSpecs = (!options || !options.initialLoad) ? [] : _.pluck(model.get("spec_set"), 'name');
       var nextSpecs = _.map(specObjects, function(specObject) {
+        if(!_.contains(savedSpecs, specObject.name)){
           var newSpec = new Spec({
             "name": specObject.name,
             "value": "",
@@ -512,10 +535,15 @@ var SpecEditView = Backbone.View.extend({
           this.listenTo(newSpec, 'invalid', this.validationError);
           this.listenTo(newSpec, 'sync', this.saved);
           return newSpec;
+        }
+        else {
+          return _.find(model.get("spec_set"), function(spec) {return spec.name == specObject.name;});
+        }
       // run this map function in the same context as the switchCategory function
       }, this);
     }
     this.collection.set(nextSpecs);
+    this.collection.set(model.get("spec_set"), {remove: false})
     var markup = this.template({
       'specs': this.collection.toJSON()
     });
