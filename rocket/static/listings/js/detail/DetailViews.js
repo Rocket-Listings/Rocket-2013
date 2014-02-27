@@ -39,6 +39,7 @@ var SidebarView = Backbone.View.extend({
   publish: function(e) {
     $('.publish-btn').prop('disabled', true);
     console.log("listing valid:", this.listing.isValid());
+    console.log(this.specs);
     console.log("specs valid: ", this.specs.isValid());
     console.log("photos valid: ", this.photos.isValid());
     if (this.listing.isValid() && this.specs.isValid() && this.photos.isValid()) {

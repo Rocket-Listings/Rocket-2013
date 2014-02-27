@@ -1,11 +1,11 @@
 var Listing = Backbone.Model.extend({
   urlRoot: '/api/listings',
   validate: function(attrs, options) {
-      // this.validateLength('price', 1, 8) || null, 
+      // this.validateLength('price', 1, 8) || null,
     var errors = _.filter([
       this.validateLength('title', 3, 100) || null,
       this.validateExists('category') || null,
-      this.validateExists('market', 3, 100) || null ], 
+      this.validateExists('market', 3, 100) || null ],
     function(obj) { return Boolean(obj); });
     // errors.description = this.validateExists('description', attrs.description);
     if (errors.length) {
@@ -14,8 +14,8 @@ var Listing = Backbone.Model.extend({
   },
   validateExists: function(name) {
     if (!this.get(name)) {
-      return { 
-        field: name, 
+      return {
+        field: name,
         message: "You should select a " + name + "."
       };
     }
@@ -53,7 +53,7 @@ var Spec = Backbone.Model.extend({
         return { fatal: true, message: "required by Craigslist" };
       } else {
         // no message to indicated that the invalidation is not .
-        return { fatal: false, message: "Spec was not filled out; not saving." };
+        // return { fatal: false, message: "Spec was not filled out; not saving." };
       }
     }
   }
@@ -107,7 +107,7 @@ var Photo = Backbone.Model.extend({
       json.id = this.cid;
     }
     return json;
-  }, 
+  },
   validation: function(attrs, options) {} // no validation for now.
 });
 
