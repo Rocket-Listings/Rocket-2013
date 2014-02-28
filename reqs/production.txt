@@ -1,6 +1,6 @@
 -r common.txt
 
-gunicorn
+gunicorn==17.5
 django-postgrespool
 
 django-heroku-memcacheify==0.4
