@@ -38,7 +38,8 @@ class SpecSerializer(serializers.ModelSerializer):
             'id',
             'name',
             'value',
-            'listing'
+            'listing',
+            'required'
         ) 
 
 class ListingPhotoSerializer(serializers.ModelSerializer):
@@ -75,6 +76,7 @@ class HermesSerializer(serializers.ModelSerializer):
     poll_url = serializers.Field(source='get_poll_url')
     view_link_post_url = serializers.Field(source='get_view_link_post_url')
     phoneNumber = serializers.Field(source='user.userprofile.get_user_pn')
+    car_details = serializers.Field(source = 'get_car_specs')
 
     class Meta:
         model = Listing

@@ -88,13 +88,14 @@
   <fieldset id="spec-fieldset">
     <legend>Information</legend>
     <div id="spec-row" class="row"></div>
+    <p class="text-muted"><span class="text-danger">*</span> Required specification(s)</p>
     {# template for spec form #}
     {% verbatim %}
     <script id="spec-edit-template" type="text/template">
       {{#specs}}
       <div class="form-group col-lg-3">
-        <label for="id_spec-{{id}}">{{ name }}</label>
-        <input class="form-control" id="id_spec-{{id}}" data-id="{{id}}" maxlength="100" type="text" name="value" value="{{ value }}" />
+        <label for="id_spec-{{id}}">{{ name }}{{#required}}<span class="text-danger"> *</span>{{/required}}</label>
+        <input class="form-control" id="id_spec-{{cid}}" data-cid="{{cid}}" maxlength="100" type="text" name="value" value="{{ value }}" />
       </div>
       {{/specs}}  
     </script>

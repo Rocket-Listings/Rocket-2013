@@ -33,7 +33,7 @@ class ListingCategory(models.Model):
 	cl_dealer_id = models.IntegerField(null = True)
 	description = models.CharField(max_length = 200)
 	group = models.CharField(max_length=10, choices=(('forsale', 'For Sale'),('housing', 'Housing')))
-	
+
 	def __unicode__(self):
 		return self.name
 
@@ -59,11 +59,11 @@ class Listing(models.Model):
 	category = models.ForeignKey(ListingCategory, null=True, blank=True)
 	listing_type = models.CharField(max_length=1, choices=(('O', 'Owner'),('D', 'Dealer')))
 	status = models.ForeignKey(ListingStatus, default=1) # TODO want to be able to listings by this
-	
+
 	user = models.ForeignKey(User)
 
 	last_modified = models.DateTimeField(auto_now=True, default=datetime.now, null=True, blank=True)
-	create_date = models.DateTimeField(auto_now_add=True, default=datetime.now, null=True, blank=True)		
+	create_date = models.DateTimeField(auto_now_add=True, default=datetime.now, null=True, blank=True)
 
 	CL_link = models.URLField(null=True, blank=True)
 	CL_view = models.URLField(null=True, blank=True)
@@ -84,7 +84,7 @@ class Listing(models.Model):
 	def get_absolute_url(self):
 		return reverse('detail', args=[self.id])
 
-	# need to write this
+	# TODO: need to write this
 	def is_valid():
 		return True
 
@@ -116,6 +116,16 @@ class Listing(models.Model):
 	def get_view_link_post_url(self):
 		return "http://" + str(Site.objects.get_current()) + reverse('view_link_post', args=[self.id])
 
+	def get_car_specs(self):
+		if self.category.name == "cars and trucks":
+			specs = self.spec_set
+			make_model = "{make} {model}".format(make = specs.get(name = "make").value, model = specs.get(name = "model").value)
+			year = specs.get(name = "year").value
+			return {'make_model': make_model, 'year': year}
+		else:
+			return None
+
+
 # pre_save method to clean whitespace preceding a forward slash. See issue #125.
 def clean_slash_title(sender, **kwargs):
 	listing = kwargs['instance']
@@ -129,11 +139,12 @@ pre_save.connect(clean_slash_title, sender=Listing)
 class Spec(models.Model):
 	name = models.CharField(max_length=100)
 	value = models.CharField(max_length=100)
-	listing = models.ForeignKey(Listing);
+	listing = models.ForeignKey(Listing)
+	required = models.BooleanField(default=False)
 
 	def __unicode__(self):
 		return self.name + ' ' + self.value
-		
+
 # Listing Photo
 class ListingPhoto(models.Model):
 	class Meta:
@@ -196,4 +207,3 @@ class Message(models.Model):
 		return u'On: %s' % (self.date)
 	# def __unicode__(self):
 	# 	return u'To: %s %s About: %s From: %s On: %s' % (self.listing.user.first_name, self.listing.user.last_name, self.listing.title, self.buyer.name, self.date)
-

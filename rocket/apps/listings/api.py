@@ -52,32 +52,30 @@ from django.contrib.humanize.templatetags.humanize import naturaltime
 @login_required
 @api_view(['GET'])
 def hermes(request, listing_id):
+    # TODO using two different classes for responses, HttpResponse and Response and let's choose one.
     listing = get_object_or_404(Listing.objects.select_related(), id=listing_id)
     hermes_serializer= HermesSerializer(listing)
-    # TODO relocate this code to a validation function
+    # TODO implement validation right. Don't forget cars & trucks validation.
     if listing.title == None or listing.description == None or listing.market == None or listing.category == None:
         return HttpResponse("Invalid listing. One of the required fields is missing.", status=400)
     
     if listing.status.name == "Draft":
-        if not settings.AUTOPOST_DEBUG and request.user.get_profile().listing_credits > 0:  
+        if request.user.get_profile().listing_credits > 0:
             listing.status = ListingStatus.objects.get(name="Pending")
             listing.save()
-            return Response(hermes_serializer.data, status=202) #Accepted rather than 200 OK b/c listing has been put in queue rather than actually completed.
-        
-        elif settings.AUTOPOST_DEBUG:
-            print "posted successfully but autopost_debug is on so nothing was sent to CL"
-            listing.status.name = ListingStatus.objects.get(name="Pending")
-            listing.save()
-            return Response(hermes_serializer.data, status=200)    
+            if settings.AUTOPOST_DEBUG:
+                status = 202 # tell JS not to publish with Hermes
+            else:
+                status = 200 # give the JS the OK to publish with Hermes
+            return Response(hermes_serializer.data, status=status)
         else:
-            return HttpResponse("Not enough credits or in debug mode.", status=403) #Forbidden
-    
+            return HttpResponse("Not enough credits or in debug mode.", status=403) #Forbidden    
     elif listing.status.name == "Pending":
         return HttpResponse("Listing is still pending.", status=400) #Bad Request
-    
     elif listing.status.name == "Active":
-        if not settings.AUTOPOST_DEBUG:
-            return Response(hermes_serializer.data, status=202) #diff status here to indicate update??
+        if settings.AUTOPOST_DEBUG:
+            # hopefully will be able to combine the below line with the line 3 below.
+            return Response(hermes_serializer.data, status=202)
         else:
             return HttpResponse(status=200)
     elif listing.status.name == "Sold":
