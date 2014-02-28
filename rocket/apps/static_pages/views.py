@@ -20,6 +20,8 @@ def home(request):
         return index(request)
 
 @attach_client_ip
+@cache_control(must_revalidate=True, max_age=3600)
+@cache_page(60 * 15)
 def index(request):
 	return TemplateResponse(request, 'static_pages/index.html')
 
