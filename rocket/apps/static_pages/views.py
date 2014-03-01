@@ -23,7 +23,7 @@ def home(request):
 @cache_control(must_revalidate=True, max_age=3600)
 @cache_page(60 * 15)
 def index(request):
-	return TemplateResponse(request, 'static_pages/index.html')
+	return TemplateResponse(request, 'static_pages/index.html', context = {})
 
 def google_webmaster_verification(request):
     return render(request, 'static_pages/googlef43896b8ef9b394c.html')
