@@ -40,7 +40,7 @@ BROKER_TRANSPORT = 'amqplib'
 # connections total.
 #
 # See: http://docs.celeryproject.org/en/latest/configuration.html#broker-pool-limit
-BROKER_POOL_LIMIT = 3
+BROKER_POOL_LIMIT = environ.get('BROKER_POOL_LIMIT', 3)
 
 # See: http://docs.celeryproject.org/en/latest/configuration.html#broker-connection-max-retries
 BROKER_CONNECTION_MAX_RETRIES = 0
@@ -63,7 +63,7 @@ STATICFILES_STORAGE = 'rocket.settings.storage.NonPackagingS3PipelineStorage'
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = [
   '.herokuapp.com',
-  'beta.rocketlistings.com' 
+  'beta.rocketlistings.com'
 ]
 
 DOMAIN_NAME = "beta.rocketlistings.com"
