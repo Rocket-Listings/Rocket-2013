@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url, include
 
 urlpatterns = patterns('listings.views',
-    url(r'^new/$', 'create', name='create'),   
+    url(r'^new/$', 'create', name='create'),
     # the next two point to the same view
     url(r'^(?P<listing_id>\d+)/$', 'detail', {'pane': 'preview'}, name='detail'),
     url(r'^(?P<listing_id>\d+)/edit/$', 'detail', {'pane': 'edit' }, name='edit'),

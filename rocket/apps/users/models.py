@@ -61,15 +61,15 @@ class UserProfile(models.Model):
 		return self.phone
 
 # Handles user profile creation if not already created
-def create_user_profile(sender, instance, created, **kwargs):  
-    if created:  
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
     	profile = UserProfile.objects.create(user=instance)
 
 post_save.connect(create_user_profile, sender=User)
 
 
 # Model for comments about a user
-class UserComment(models.Model): 
+class UserComment(models.Model):
 	date_posted = models.DateField(auto_now=False, auto_now_add=True)
 	comment = models.TextField(blank=False)
 	email = models.EmailField(max_length=255, blank=False) # email of commenter

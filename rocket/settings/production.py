@@ -63,7 +63,7 @@ STATICFILES_STORAGE = 'rocket.settings.storage.NonPackagingS3PipelineStorage'
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = [
   '.herokuapp.com',
-  'beta.rocketlistings.com' 
+  'beta.rocketlistings.com'
 ]
 
 DOMAIN_NAME = "beta.rocketlistings.com"

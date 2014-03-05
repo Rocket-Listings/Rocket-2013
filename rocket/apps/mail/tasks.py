@@ -26,7 +26,7 @@ def new_cl_admin_message_task(msg_dict):
 	user.get_profile().subtract_credit()
 
 	# Can't make requests to Craigslist from our servers. :(
-	# 
+	#
 	# r = requests.get(manage_link)
 	# to_parse = BeautifulSoup(r.text)
 	# phone_page_text = "Your craigslist user account requires phone verification. Please use the form below to complete this process."
@@ -45,8 +45,8 @@ def new_cl_admin_message_task(msg_dict):
 	# 		buyer = Buyer(listing=listing, name="Apollo Rocket", email=settings.DEFAULT_FROM_EMAIL)
 	# 		buyer.save()
 	# 		message = Message(
-	# 			listing=listing, 
-	# 			buyer=buyer, 
+	# 			listing=listing,
+	# 			buyer=buyer,
 	# 			content="Sorry, but Craigslist wants you to verify your phone number. Follow this link to finish posting: " + manage_link)
 	# 		message.save()
 	# except AttributeError:
@@ -78,9 +78,9 @@ def send_message_task(message_id):
 	message_text = render_to_string('mail/dashboard_message_plain.txt', ctx)
 	message_html = render_to_string('mail/dashboard_message_html.html', ctx)
 	mail_headers = {'Reply-To': from_name + "<" + reply_email + ">"}
-	email = EmailMultiAlternatives(subject, message_text, 
-		from_name + "<" + settings.DEFAULT_FROM_EMAIL + ">", 
-		[to_name +  "<" + to_email + ">"], 
+	email = EmailMultiAlternatives(subject, message_text,
+		from_name + "<" + settings.DEFAULT_FROM_EMAIL + ">",
+		[to_name +  "<" + to_email + ">"],
 		headers=mail_headers)
 	email.attach_alternative(message_html, "text/html")
 	try:

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from listings.models import Listing, Spec, ListingPhoto
+from listings.models import Listing, Spec, ListingPhoto, Buyer, Message
 from users.models import UserProfile
 from django.contrib.auth.models import User
 
@@ -20,8 +20,8 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
-            'id', 
-            'username', 
+            'id',
+            'username',
             'email',
             'first_name',
             'last_name',
@@ -39,7 +39,7 @@ class SpecSerializer(serializers.ModelSerializer):
             'name',
             'value',
             'listing'
-        ) 
+        )
 
 class ListingPhotoSerializer(serializers.ModelSerializer):
     # user = serializers.RelatedField()
@@ -53,14 +53,29 @@ class ListingPhotoSerializer(serializers.ModelSerializer):
             'key',
             'order',
             'listing'
-        ) 
+        )
 
-class ListingSerializer(serializers.ModelSerializer):
+class ListingDetailSerializer(serializers.ModelSerializer):
     spec_set = SpecSerializer(required=False, many=True)
     listingphoto_set = ListingPhotoSerializer(required=False, many=True)
     user = UserSerializer()
     # category = serializers.RelatedField()
 
+    class Meta:
+        model = Listing
+
+class MessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Message
+
+class BuyerSerializer(serializers.ModelSerializer):
+    message_set = MessageSerializer(serializers.ModelSerializer)
+    class Meta:
+        model = Buyer
+
+class ListingDashboardSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    buyer_set = BuyerSerializer(required=False, many=True)
     class Meta:
         model = Listing
 

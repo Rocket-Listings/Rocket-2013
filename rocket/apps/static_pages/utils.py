@@ -24,4 +24,4 @@ def closest_craigslist(lat, lng):
       closest_cl = market_dict
   return closest_cl
 
-  
+

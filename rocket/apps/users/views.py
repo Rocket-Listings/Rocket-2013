@@ -3,7 +3,7 @@ import datetime
 #from users.models import UserProfile
 from django.views.decorators.http import require_GET, require_POST
 from users.forms import UserProfileForm, CommentSubmitForm
-from users.models import UserProfile, UserComment 
+from users.models import UserProfile, UserComment
 from django.forms.models import inlineformset_factory
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect
@@ -41,14 +41,14 @@ def info(request):
 
         user_profile_form = UserProfileForm(instance=profile)
         cxt = {
-            'user': user, 
-            'form': user_profile_form, 
-            'fb': fbProfile, 
-            'credits':credits, 
+            'user': user,
+            'form': user_profile_form,
+            'fb': fbProfile,
+            'credits':credits,
             'credits_spent':credits_spent,
             'view_count': view_count,
             'profile_completed_once':profile_completed_once,
-            'twitter_connected_once':twitter_connected_once, 
+            'twitter_connected_once':twitter_connected_once,
             'facebook_connected_once':facebook_connected_once
         }
         return TemplateResponse(request, 'users/info.html', cxt)
@@ -71,7 +71,7 @@ def info(request):
                 responseData['credits_added'] = 2
                 responseData['profile_completed'] = True
 
-            user_profile = user_profile_form.save() 
+            user_profile = user_profile_form.save()
 
             return HttpResponse(json.dumps(responseData), content_type="application/json")
         else:
@@ -90,14 +90,14 @@ def profile(request, username=None):
     #photos = ListingPhoto.objects.filter(listing=user)
     #photos = map(lambda photo: {'url':photo.url, 'order':photo.order}, photos)
     #ratings = UserRating.objects.filter(user=user)
-    comments = UserComment.objects.filter(user=user).order_by('-date_posted') 
+    comments = UserComment.objects.filter(user=user).order_by('-date_posted')
     avg_rating = comments.aggregate(Avg('rating')).values()[0]
     fbProfile = user.get_profile().fbProfile
-    
+
     total_listing_views = sum(map(get_view_count, listings))
 
     if request.method == 'POST':
-        comment_form = CommentSubmitForm(request.POST, instance = UserComment(user=user))   
+        comment_form = CommentSubmitForm(request.POST, instance = UserComment(user=user))
         if comment_form.is_valid():
             comment = comment_form.save()
             responseData = {}

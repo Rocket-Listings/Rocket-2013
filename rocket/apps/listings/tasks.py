@@ -46,7 +46,7 @@ def cl_anon_autopost_task(listing_id):
     br.select_form(nr=0)
     br.set_value([data["sub_market"]], type="radio")
     br.submit()
-    
+
   if data["hood"]:
     br.select_form(nr=0)
     br.set_value([data["hood"]], type="radio")
@@ -60,7 +60,7 @@ def cl_anon_autopost_task(listing_id):
   #specific location
   if not data["hood"]:
     br.form[br._pairs()[2][0]] = data["location"]
-    #posting description  
+    #posting description
     br.form[br._pairs()[3][0]] = data["description"]
   else:
     br.form[br._pairs()[2][0]] = data["description"]
@@ -68,7 +68,7 @@ def cl_anon_autopost_task(listing_id):
   br.form['FromEMail'] = data["from"]
   br.form['ConfirmEMail'] = data["from"]
   r = br.submit()
-  
+
   if data["photos"]:
     br.select_form(nr=0)
     for photo in data["photos"]:
@@ -99,7 +99,7 @@ def cl_anon_autopost_task(listing_id):
 
 @task(name="tasks.cl_anon_update_task")
 def cl_anon_update_task(listing_id):
-  
+
   data = utils.process_autopost_data(listing_id, update=True)
 
   #inititalize the browser
@@ -149,7 +149,7 @@ def cl_anon_update_task(listing_id):
 
   if data["location"] and not data["hood"]:
     br.form[br._pairs()[2][0]] = data["location"]
-  
+
   if data["description"]:
       br.form[br._pairs()[3][0]] = data["description"]
 

@@ -113,7 +113,7 @@ def new_rocket_message(request, is_seller, thread):
 		SHA1_RE = re.compile('^[a-f0-9]{40}$')
 		if SHA1_RE.search(buyer_hash):
 			buyer = Buyer.objects.get(rocket_address=buyer_hash)
-			message_dict = { 
+			message_dict = {
 				'listing': buyer.listing.id,
 				'buyer': buyer.id,
 				'content': request.POST.get('stripped-text'),

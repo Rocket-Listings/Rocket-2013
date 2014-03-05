@@ -3,7 +3,7 @@
 from users.models import ViewCount
 
 def get_view_count(url):
-    """ 
+    """
     Accepts as its parameter a url string or a model.
     """
     if not isinstance(url, basestring):

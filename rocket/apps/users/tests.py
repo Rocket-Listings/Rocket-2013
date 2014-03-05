@@ -55,7 +55,7 @@ class SettingsTestCase(TestCase):
     def __init__(self, *args, **kwargs):
         super(SettingsTestCase, self).__init__(*args, **kwargs)
         self.settings_manager = TestSettingsManager()
-    
+
     def tearDown(self):
         self.settings_manager.revert()
 
@@ -83,7 +83,7 @@ class UserTest(SettingsTestCase):
         response = c.get(activation_path, follow =True)
         self.assertEqual(response.request["PATH_INFO"], '/users/info/')
         self.assertEqual(response.status_code, 200)
-        
 
 
-        
+
+

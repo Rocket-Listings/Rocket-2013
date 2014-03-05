@@ -36,7 +36,7 @@ SpecFormSet = inlineformset_factory(Listing, Spec, extra=0, can_order=False, can
 #     def __init__(self, *args, **kwargs):
 #         super(SpecForm, self).__init__(*args, **kwargs)
 #         if args:
-#             max_length = ListingSpecValue._meta.get_field('value').max_length 
+#             max_length = ListingSpecValue._meta.get_field('value').max_length
 #             for name, field in args[0].items():
 #                 if name.find('spec-') != -1:
 #                     self.fields[name] = forms.CharField(max_length=max_length, required=False)

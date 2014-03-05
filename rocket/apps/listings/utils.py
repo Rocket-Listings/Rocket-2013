@@ -7,7 +7,7 @@ from django.core.cache import cache
 
 def get_cats():
     cache_dict = cache.get_many(['cats'])
-    if not cache_dict: # load cats and specs and write to cache    
+    if not cache_dict: # load cats and specs and write to cache
         cats_queryset = ListingCategory.objects.all()
         cat_groups = set(cats_queryset.values_list('group', flat=True))
         cats = {}

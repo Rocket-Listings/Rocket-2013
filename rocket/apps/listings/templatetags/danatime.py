@@ -53,12 +53,12 @@ def danatime(value):
         else:
           # Up to 24 hours ago on the same day
           return _("%(hour)s:%(minute)s "
-            ) % {'hour': value.time().hour % 12, 
+            ) % {'hour': value.time().hour % 12,
             'minute': value.time().minute} + value.strftime("%p").lower()
     if is_this_year:
       return _(value.strftime("%b ")) + "%(date)d" % {'date': value.date().day}
     else:
       return _("%(day)d/%(month)d/%(year)d"
-        ) % {'day': value.date().day, 
-        'month': value.date().month, 
+        ) % {'day': value.date().day,
+        'month': value.date().month,
         'year': int(str(value.date().year)[2:])}

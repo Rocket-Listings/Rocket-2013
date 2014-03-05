@@ -57,13 +57,13 @@ def register(request, extra_context=None):
             gravatar_task.delay(new_user, new_user.pk)
 
             success_url = request.GET.get('next','')
-            if success_url:                    
+            if success_url:
                 return redirect(success_url)
             else:
                 return redirect('registration_complete')
     else:
         form = RegistrationForm()
-    
+
     if extra_context is None:
         extra_context = {}
     context = RequestContext(request)

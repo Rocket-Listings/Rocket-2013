@@ -14,7 +14,7 @@
       </script>
   <script src="{% static 'listings/js/utils.js' %}"></script>
   <script type="text/javascript">
-    var listingJSON = $.parseJSON('{{ listing_json|escapejs }}');
+    var listingJSON = $.parseJSON("{{ listing_json|escapejs }}");
     var REMOTE_ADDR = "{{ REMOTE_ADDR|escapejs }}";
   </script>
   <script id="market-data" type="text/json">

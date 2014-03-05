@@ -19,15 +19,15 @@ urlpatterns = patterns('',
 	url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 	url(r'^users/', include('users.urls')),
 	url(r'^admin/', include(admin.site.urls)),
-    
-    # api patterns    
+
+    # api patterns
     url(r'^api/listings$', api.ListingList.as_view()),
     url(r'^api/listings/(?P<pk>[0-9]+)$', api.ListingDetail.as_view()),
     url(r'^api/specs$', api.SpecList.as_view()),
     url(r'^api/specs/(?P<pk>[0-9]+)$', api.SpecDetail.as_view()),
     url(r'^api/photos$', api.ListingPhotoList.as_view()),
     url(r'^api/photos/(?P<pk>[0-9]+)$', api.ListingPhotoDetail.as_view()),
-    
+
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # urlpatterns += staticfiles_urlpatterns()
 
