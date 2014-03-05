@@ -8,13 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}rocket{% endblock %}</title>
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'rocket/img/favicon.ico' %}">
-    <link href= '//fonts.googleapis.com/css?family=Radley:400,400italic' rel='stylesheet' type='text/css'>
+    {# <link href= '//fonts.googleapis.com/css?family=Radley:400,400italic' rel='stylesheet' type='text/css'> #}
     <meta content="minimum-scale=1.0, width=device-width, maximum-scale=1, user-scalable=no" name="viewport"/> 
 
     {# production #}
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+    {# <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"> #}
     {# development #}
-    {# {% compressed_css 'bootstrap_local' %} #}
+    {% compressed_css 'bootstrap_local' %}
 
     {% block css %}{% compressed_css 'base' %}{% endblock %}
     {# // <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.4.1/less.min.js"></script> #}
@@ -35,12 +35,12 @@
     <div class="scripts hide">
 
       {# production #}
-      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-      <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-      {% compressed_js 'global' %}
+      {# <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> #}
+      {# <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script> #}
+      {# {% compressed_js 'global' %} #}
       
       {# development #}
-      {# {% compressed_js 'jquery_bootstrap_local' %} #}
+      {% compressed_js 'jquery_bootstrap_local' %}
       {% block js %}{% endblock %}
     </div>
     {# {% if user.is_authenticated %} #}

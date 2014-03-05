@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.utils import simplejson
 from operator import __add__
 from listings.models import Listing, Message, Spec, ListingPhoto, ListingStatus
-from listings.serializers import ListingSerializer, SpecSerializer, ListingPhotoSerializer,  HermesSerializer, AdminEmailSerializer
+from listings.serializers import ListingDetailSerializer, SpecSerializer, ListingPhotoSerializer,  HermesSerializer, AdminEmailSerializer, MessageSerializer, BuyerSerializer
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -24,84 +24,6 @@ from django.views.decorators.csrf import csrf_exempt
 from listings.forms import MessageForm
 from mail.tasks import send_message_task
 from django.contrib.humanize.templatetags.humanize import naturaltime
-# @login_required
-# @require_GET
-# def autopost(request, listing_id):
-#     listing = get_object_or_404(Listing.objects.select_related(), id=listing_id)
-#     if listing.title == None or listing.description == None or listing.market == None or listing.category == None:
-#         return HttpResponse(status=400)
-#     if listing.status_id == 1:
-#         if not settings.AUTOPOST_DEBUG and request.user.get_profile().listing_credits > 0:     
-#             cl_anon_autopost_task.delay(listing_id)
-#             return HttpResponse(status=202) #Accepted rather than 200 OK b/c listing has been put in queue rather than actually completed.
-#         elif settings.AUTOPOST_DEBUG:
-#             print "posted successfully but autopost_debug is on so nothing was sent to CL"
-#             return HttpResponse(status=200)    
-#         else:
-#             return HttpResponse(status=403) #Forbidden
-#     elif listing.status_id == 2:
-#         return HttpResponse(status=400) #Bad Request
-#     elif listing.status_id == 3:
-#         if not settings.AUTOPOST_DEBUG:
-#             cl_anon_update_task.delay(listing_id)
-#         else:
-#             return HttpResponse(status=200)
-#     elif listing.status_id == 4:
-#         return HttpResponse(status=400) #Bad Request
-
-@login_required
-@api_view(['GET'])
-def hermes(request, listing_id):
-    listing = get_object_or_404(Listing.objects.select_related(), id=listing_id)
-    hermes_serializer= HermesSerializer(listing)
-    # TODO relocate this code to a validation function
-    if listing.title == None or listing.description == None or listing.market == None or listing.category == None:
-        return HttpResponse("Invalid listing. One of the required fields is missing.", status=400)
-    
-    if listing.status.name == "Draft":
-        if not settings.AUTOPOST_DEBUG and request.user.get_profile().listing_credits > 0:  
-            listing.status = ListingStatus.objects.get(name="Pending")
-            listing.save()
-            return Response(hermes_serializer.data, status=202) #Accepted rather than 200 OK b/c listing has been put in queue rather than actually completed.
-        
-        elif settings.AUTOPOST_DEBUG:
-            print "posted successfully but autopost_debug is on so nothing was sent to CL"
-            listing.status.name = ListingStatus.objects.get(name="Pending")
-            listing.save()
-            return Response(hermes_serializer.data, status=200)    
-        else:
-            return HttpResponse("Not enough credits or in debug mode.", status=403) #Forbidden
-    
-    elif listing.status.name == "Pending":
-        return HttpResponse("Listing is still pending.", status=400) #Bad Request
-    
-    elif listing.status.name == "Active":
-        if not settings.AUTOPOST_DEBUG:
-            return Response(hermes_serializer.data, status=202) #diff status here to indicate update??
-        else:
-            return HttpResponse(status=200)
-    elif listing.status.name == "Sold":
-        return HttpResponse("Listing is already sold.", status=400) #Bad Request
-
-@api_view(['GET'])
-def admin_email_poll(request, listing_id):
-    listing = Listing.objects.get(id=listing_id)
-    admin_email_serializer = AdminEmailSerializer(listing)
-
-    if not listing.CL_link:
-        return HttpResponse(status=404)
-    else:
-        return Response(admin_email_serializer.data, status=200)
-
-@csrf_exempt
-def view_link_post(request, listing_id):
-    # Probably needs more security
-    
-    listing = get_object_or_404(Listing, id=listing_id)
-    listing.CL_view = request.POST.get("viewLink", "")
-    listing.save()
-    return HttpResponse(status=200)
-
 
 # Listing API
 class ListingList(APIView):
@@ -114,11 +36,11 @@ class ListingList(APIView):
 
     def get(self, request, format=None):
         listings = Listing.objects.all()
-        serializer = ListingSerializer(listings, many=True)
+        serializer = ListingDetailSerializer(listings, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        serializer = ListingSerializer(data=request.DATA)
+        serializer = ListingDetailSerializer(data=request.DATA)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=201)
@@ -141,12 +63,12 @@ class ListingDetail(APIView):
 
     def get(self, request, pk, format=None):
         listing = self.get_object(pk)
-        serializer = ListingSerializer(listing)
+        serializer = ListingDetailSerializer(listing)
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
         listing = self.get_object(pk)
-        serializer = ListingSerializer(listing, data=request.DATA)
+        serializer = ListingDetailSerializer(listing, data=request.DATA)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -154,7 +76,7 @@ class ListingDetail(APIView):
 
     def patch(self, request, pk, format=None):
         listing = self.get_object(pk)
-        serializer = ListingSerializer(listing, partial=True, data=request.DATA)
+        serializer = ListingDetailSerializer(listing, partial=True, data=request.DATA)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -166,11 +88,125 @@ class ListingDetail(APIView):
         return Response(status=204)
 
 
+class BuyerList(APIView):
+    """
+    List all specs, or create a new spec.
+    """
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsListingOwnerOrReadOnly,)
+    def pre_save(self, obj):
+        obj.user = self.request.user
+
+    def post(self, request, format=None):
+        serializer = BuyerSerializer(data=request.DATA)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+
+
+class BuyerDetail(APIView):
+    """
+    Retrieve, update or delete a spec instance.
+    """
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsListingOwnerOrReadOnly,)
+    # def pre_save(self, obj):
+    #     obj.user = self.request.user
+
+    def get_object(self, pk):
+        try:
+            return Buyer.objects.get(pk=pk)
+        except Buyer.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        buyer = self.get_object(pk)
+        serializer = BuyerSerializer(buyer)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        buyer = self.get_object(pk)
+        serializer = BuyerSerializer(buyer, data=request.DATA)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+
+    def patch(self, request, pk, format=None):
+        buyer = self.get_object(pk)
+        serializer = BuyerSerializer(buyer, partial=True, data=request.DATA)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+
+    def delete(self, request, pk, format=None):
+        buyer = self.get_object(pk)
+        buyer.delete()
+        return Response(status=204)
+
+
+class MessageList(APIView):
+    """
+    List all messages, or create a new message.
+    """
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsListingOwnerOrReadOnly,)
+    def pre_save(self, obj):
+        obj.user = self.request.user
+
+    def post(self, request, format=None):
+        serializer = MessageSerializer(data=request.DATA)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+
+
+class MessageDetail(APIView):
+    """
+    Retrieve, update or delete a message instance.
+    """
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsListingOwnerOrReadOnly,)
+    # def pre_save(self, obj):
+    #     obj.user = self.request.user
+
+    def get_object(self, pk):
+        try:
+            return Message.objects.get(pk=pk)
+        except Message.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        message = self.get_object(pk)
+        serializer = MessageSerializer(message)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        message = self.get_object(pk)
+        serializer = MessageSerializer(message, data=request.DATA)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+
+    def patch(self, request, pk, format=None):
+        message = self.get_object(pk)
+        serializer = MessageSerializer(message, partial=True, data=request.DATA)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+
+    def delete(self, request, pk, format=None):
+        message = self.get_object(pk)
+        message.delete()
+        return Response(status=204)
+
+
 class SpecList(APIView):
     """
     List all specs, or create a new spec.
     """
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsListingOwnerOrReadOnly,)    
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsListingOwnerOrReadOnly,)
     def pre_save(self, obj):
         obj.user = self.request.user
 
@@ -289,6 +325,58 @@ class ListingPhotoDetail(APIView):
         photo.delete()
         return Response(status=204)
 
+@login_required
+@api_view(['GET'])
+def hermes(request, listing_id):
+    listing = get_object_or_404(Listing.objects.select_related(), id=listing_id)
+    hermes_serializer= HermesSerializer(listing)
+    # TODO relocate this code to a validation function
+    if listing.title == None or listing.description == None or listing.market == None or listing.category == None:
+        return HttpResponse("Invalid listing. One of the required fields is missing.", status=400)
+
+    if listing.status.name == "Draft":
+        if not settings.AUTOPOST_DEBUG and request.user.get_profile().listing_credits > 0:
+            listing.status = ListingStatus.objects.get(name="Pending")
+            listing.save()
+            return Response(hermes_serializer.data, status=202) #Accepted rather than 200 OK b/c listing has been put in queue rather than actually completed.
+
+        elif settings.AUTOPOST_DEBUG:
+            print "posted successfully but autopost_debug is on so nothing was sent to CL"
+            listing.status.name = ListingStatus.objects.get(name="Pending")
+            listing.save()
+            return Response(hermes_serializer.data, status=200)
+        else:
+            return HttpResponse("Not enough credits or in debug mode.", status=403) #Forbidden
+
+    elif listing.status.name == "Pending":
+        return HttpResponse("Listing is still pending.", status=400) #Bad Request
+
+    elif listing.status.name == "Active":
+        if not settings.AUTOPOST_DEBUG:
+            return Response(hermes_serializer.data, status=202) #diff status here to indicate update??
+        else:
+            return HttpResponse(status=200)
+    elif listing.status.name == "Sold":
+        return HttpResponse("Listing is already sold.", status=400) #Bad Request
+
+@api_view(['GET'])
+def admin_email_poll(request, listing_id):
+    listing = Listing.objects.get(id=listing_id)
+    admin_email_serializer = AdminEmailSerializer(listing)
+
+    if not listing.CL_link:
+        return HttpResponse(status=404)
+    else:
+        return Response(admin_email_serializer.data, status=200)
+
+@csrf_exempt
+def view_link_post(request, listing_id):
+    # Probably needs more security
+
+    listing = get_object_or_404(Listing, id=listing_id)
+    listing.CL_view = request.POST.get("viewLink", "")
+    listing.save()
+    return HttpResponse(status=200)
 
 def delete(request, listing_id):
     listing = get_object_or_404(Listing, id=listing_id)
@@ -303,7 +391,6 @@ def delete(request, listing_id):
     else:
         return HttpResponse(403)
 
-
 def search_ajax(request):
     search_text = request.REQUEST.get('search', '').strip()
     listings = SearchQuerySet().filter(content=search_text)[:20]
@@ -312,12 +399,10 @@ def search_ajax(request):
         # listing.url_id = reverse('listings.views.detail', args=[str(listing.url_id)])
     return TemplateResponse(request, 'listings/partials/ajax_search.html', cxt)
 
-
 @require_GET
 def status(request, listing_id):
     listing = get_object_or_404(Listing, id=listing_id)
     return HttpResponse(listing.status)
-
 
 @require_GET
 def update_status(request, listing_id):
@@ -335,7 +420,6 @@ def update_status(request, listing_id):
     else:
         return HttpResponse(403)
 
-
 @require_GET
 def dashboard_data(request):
     user = request.user
@@ -352,20 +436,20 @@ def dashboard_data(request):
             latest_ids[i] = 0
 
     listings_data = map(lambda l: {
-        'title': l.title, 
-        'link': l.get_absolute_url(), 
-        'id': l.id, 
-        'price': l.price, 
-        'category': l.category.name, 
+        'title': l.title,
+        'link': l.get_absolute_url(),
+        'id': l.id,
+        'price': l.price,
+        'category': l.category.name,
         'status': l.status.name,
         'status_lower': l.status.name.lower(),
         'sort_date': l.create_date.strftime("%m/%d/%y %I:%M %p"),
         'natural_date': naturaltime(l.create_date)}, listings.filter(id__gt=ids[0]))
     buyers_data = map(lambda b: {
-        'listing_id': b.listing.id, 
-        'buyer_id': b.id, 
-        'max_offer': b.curMaxOffer, 
-        'name': b.name, 
+        'listing_id': b.listing.id,
+        'buyer_id': b.id,
+        'max_offer': b.curMaxOffer,
+        'name': b.name,
         'last_message_date': naturaltime(b.last_message().date)}, [b for b in reversed(buyers) if b.id > ids[1]])
     messages_data = map(lambda m: {
         'isSeller': m.isSeller,
@@ -389,7 +473,7 @@ def dashboard_message(request):
             message.isSeller = True
             message.save()
             send_message_task.delay(message.id)
-            response_data = { 
+            response_data = {
                 'listing_id': message.listing.id,
                 'isSeller': message.isSeller,
                 'seller_name': message.listing.user.get_profile().get_display_name(),
@@ -421,3 +505,28 @@ def message_seen(request):
         return HttpResponse(simplejson.dumps({'message_data': msg_dict, 'status': 'success'}), content_type="application/json")
     else:
         return HttpResponse(simplejson.dumps({'status': 'Error: This action is forbidden.'}), content_type="application/json")
+# Out of service right now, but why comment
+@login_required
+@require_GET
+def autopost(request, listing_id):
+    listing = get_object_or_404(Listing.objects.select_related(), id=listing_id)
+    if listing.title == None or listing.description == None or listing.market == None or listing.category == None:
+        return HttpResponse(status=400)
+    if listing.status_id == 1:
+        if not settings.AUTOPOST_DEBUG and request.user.get_profile().listing_credits > 0:
+            cl_anon_autopost_task.delay(listing_id)
+            return HttpResponse(status=202) #Accepted rather than 200 OK b/c listing has been put in queue rather than actually completed.
+        elif settings.AUTOPOST_DEBUG:
+            print "posted successfully but autopost_debug is on so nothing was sent to CL"
+            return HttpResponse(status=200)
+        else:
+            return HttpResponse(status=403) #Forbidden
+    elif listing.status_id == 2:
+        return HttpResponse(status=400) #Bad Request
+    elif listing.status_id == 3:
+        if not settings.AUTOPOST_DEBUG:
+            cl_anon_update_task.delay(listing_id)
+        else:
+            return HttpResponse(status=200)
+    elif listing.status_id == 4:
+        return HttpResponse(status=400) #Bad Request

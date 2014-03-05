@@ -1,151 +1,243 @@
 {% extends 'marginless.html' %}
 {% load static from staticfiles %}
 {% load compressed %}
+{% load pagination_tags %}
+{% load humanize %}
+{% load danatime %}
 
 {% block title %}{{ block.super }} dashboard{% endblock %}
 
 {% block css %}
-<style>
-html, body {
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-}
-</style>
-{% compressed_css 'listings_base' %}
+  <style>
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+  </style>
+  {% compressed_css 'dashboard' %}
 {% endblock %}
 
 {% block js %}
-  <script src="{% static 'rocket/js/mustache.js' %}"></script>
-  <script src="{% static 'listings/js/list.min.js' %}"></script>
-  <script src="{% static 'rocket/js/global.js' %}"></script>
-  <script src="{% static 'listings/js/dashboard.js' %}" type="text/javascript"></script>
+  {{ block.super }}
+  {% compressed_js 'backbone' %}
+  {% compressed_js 'dashboard' %}
+  <script type="text/javascript">
+    $(function() {
+      new app.DashboardView({
+        collection: new app.Listings($.parseJSON("{{listings|escapejs}}"))
+      });
+    });
+  </script>
 {% endblock %}
 
 {% block content %}
-<p class="last-listing hide">{{latest.0}}</p>
-<p class="last-buyer hide">{{latest.1}}</p>
-<p class="last-message hide">{{latest.2}}</p>
-
-{% if first_visit %}
-<div class="alert alert-info col-lg-6 col-lg-offset-3 clearfix">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <h4>The<br/> Dashboard</h4>
-  This is your Listings Dashboard.  Here you can easily review and manage all of your listings, buyers, and messages.
-</div>
-{% endif %}
-
-<div id="dashboard-content">
-<!-- For search to work -->
-  <div class="dashboard-header col-lg-12 col-lg-fixed">
-    <div class="dashboard-header-inner">
-      <div class="dashboard-item dashboard-title">
-        <div class="h4">The<br>Dashboard</div>
-      </div>
-      {# <div class="dashboard-search"> #}
-      <div class="input-group input-group-sm dashboard-search">
-        <input type="search" class="form-control search" data-table="order-table" placeholder="Search"/>
-        <span class="input-group-addon dashboard-search-btn"><span class="glyphicon glyphicon-search"></span></span>
-      </div>
-      {# </div> #}
-      {# <div class="dashboard-search-button"> #}
-        {# <a class="dashboard-search-btn btn btn-primary" href="#"><span class="glyphicon glyphicon-search"></span></a> #}
-      {# </div> #}
-      {# <div class="dashboard-create"> #}
-        {# <a class="btn btn-primary btn-sm dashboard-create-btn" href="{% url 'create' %}">New Listing</a> #}
-      {# </div> #}
-      {# <div class="dashboard-refresh phone-hide"> #}
-        <a class="btn btn-primary btn-sm dashboard-refresh-btn phone-hide" href="#"><span class="glyphicon glyphicon-repeat"></span></a>
-      {# </div> #}
-      {# <div class="dashboard-delete"> #}
-        <a class="btn btn-primary btn-sm disabled dashboard-delete-btn" data-listing-id="" href="#"><span class="glyphicon glyphicon-trash"></span></a>
-      {# </div> #}
-      {# <div class="dashboard-delete-permanent hide"> #}
-        <a class="btn btn-primary btn-sm dashboard-delete-permanent-btn disabled hide" data-listing-id="" href="#">Delete Forever</a>
+  <div id="dashboard">
+    {% if first_visit %}
+    <div class="alert alert-info clearfix">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4>The<br/> Dashboard</h4>
+      This is your Listings Dashboard. Here you can easily review and manage all of your listings, buyers, and messages.
+    </div>
+    {% endif %}
+    <div class="dashboard-header">
+      {# <div class="dashboard-header-inner"> #}
+        <div class="dashboard-item dashboard-title">
+          <div class="h4">The<br>Dashboard</div>
+        </div>
+        <div class="input-group input-group-sm dashboard-search">
+          <input type="search" class="form-control search" data-table="order-table" placeholder="Search"/>
+          <span class="input-group-addon dashboard-search-btn"><span class="glyphicon glyphicon-search"></span></span>
+        </div>
+        <a class="btn btn-primary btn-sm dashboard-refresh-btn phone-hide" href="#">
+          <span class="glyphicon glyphicon-repeat"></span>
+        </a>
+        <a class="btn btn-primary btn-sm disabled dashboard-delete-btn" data-listing-id="" href="#">
+          <span class="glyphicon glyphicon-trash"></span>
+        </a>
+        <a class="btn btn-primary btn-sm dashboard-delete-permanent-btn disabled hide" data-listing-id="" href="#">
+          Delete Forever
+        </a>
       {# </div> #}
     </div>
+    <div class="dashboard-body{% if first_visit %}first-visit{% endif %}">
+      <div class="dashboard-filters phone-hide">
+        <div class="dashboard-filters-button-wrapper dashboard-filters-all">
+          <a id="filter-not-deleted" class="dashboard-filters-text">All</a>
+        </div>
+        <div class="dashboard-filters-button-wrapper dashboard-filters-active">
+          <a id="filter-active" class="dashboard-filters-text">Active </a>
+        </div>
+        <div class="dashboard-filters-button-wrapper dashboard-filters-sold">
+          <a id="filter-sold" class="dashboard-filters-text">Sold</a>
+        </div>
+        <div class="dashboard-filters-button-wrapper dashboard-filters-draft">
+          <a id="filter-draft" class="dashboard-filters-text">Draft</a>
+        </div>
+        <div class="dashboard-filters-button-wrapper dashboard-filters-pending">
+          <a id="filter-pending" class="dashboard-filters-text">Pending</a>
+        </div>
+        <div class="dashboard-filters-button-wrapper dashboard-filters-deleted">
+          <a id="filter-deleted" class="dashboard-filters-text">Deleted</a>
+        </div>
+        <div class="keyboard-shortcuts-text">
+          <a href="#">Keyboard shortcuts</a>
+        </div>
+      </div>
+      <div class="dashboard-listings phone-full-width">
+        <div class="dashboard-listings-header"><strong>Listings</strong></div>
+        <div class="dashboard-listings-body">
+          <div class="dashboard-listings-inner">
+            <div class="dashboard-listings-inner-header">
+              <span class="d-title phone-full-width">
+                <a class="sort" data-sort="title" href="#">Title</a>
+                <span class="sort-toggle glyphicon glyphicon-chevron-down hide"></span>
+              </span>
+              <span class="d-price phone-hide">
+                <a class="sort" data-sort="price" href="#">Price</a>
+                <span class="sort-toggle glyphicon glyphicon-chevron-down hide"></span>
+              </span>
+              <span class="d-status phone-hide">
+                <a class="sort" data-sort="status" href="#">Status</a>
+                <span class="sort-toggle glyphicon glyphicon-chevron-down hide"></span>
+              </span>
+              <span class="d-date phone-hide">
+                <a class="sort" data-sort="date" href="#">Date Listed</a>
+                <span class="sort-toggle glyphicon glyphicon-chevron-down hide"></span>
+              </span>
+            </div>
+            <ul class="dashboard-listings-inner-body"></ul>
+            <script id="listing-template" type="text/template">
+            {% verbatim %}
+            {{#listing}}
+              <span class="d-title phone-full-width">
+                <a class="title phone-full-width">{{ title }}</a>
+              </span>
+              <span class="price d-price phone-hide">${{ price }}</span>
+              {{!<span class="category d-category phone-hide">{{ category }}</span>}}
+              <span class="d-status status phone-hide">{{ status }}</span>
+              <span class="d-date phone-hide">
+                <span class="date hide">{{ sort_date }}</span>
+                {{ natural_date }}
+              </span>
+            {{/listing}}
+            {% endverbatim %}
+            </script>
+          </div>
+        </div>
+      </div>
+      <div class="dashboard-inbox phone-hide">
+        <div class="dashboard-inbox-header">
+          <strong>Inbox</strong><span class="label label-info">{% if unread_messages %}New{% endif %}</span>
+        </div>
+        <div class="dashboard-inbox-body">
+          <div class="dashboard-buyers">
+            <div class="dashboard-buyers-header">Potential Buyers</div>
+            <ul class="dashboard-buyers-body"></ul>
+            <script id="buyer-template" type="text/template">
+              {% verbatim %}
+              {{#buyer}}
+                <p>{{ name }}</p>
+                <p>{{#max_offer}}Offering ${{max_offer}}{{/max_offer}}{{^max_offer}}No offer{{/max_offer}}</p>
+              {{/buyer}}
+              {% endverbatim %}
+            </script>
+          </div>
+          <div class="dashboard-messages">
+            <div class="dashboard-messages-header">Messages</div>
+            <div class="dashboard-messages-body">
+              <div class="dashboard-messages-inner-a">
+                <div class="dashboard-messages-inner-b">
+                  <ul class="dashboard-messages-inner-body"></ul>
+                  <div class="dashboard-messages-inner-footer">
+                    <form class="dashboard-message-form">
+                      <textarea rows="4" class="form-control" name="content" placeholder="Send a reply..."></textarea>
+                      <input type="hidden" name="listing" value="">
+                      <input type="hidden" name="buyer" value="">
+                      <input type="submit" class="btn btn-primary send-button">
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <script id="message-template" type="text/template">
+              {% verbatim %}
+              {{#message}}
+                <p class="message-time">{{ date }}</p>
+                <p class="message-buyer-name">
+                  {{#isSeller}}{{ seller_name }}{{/isSeller}}
+                  {{^isSeller}}{{ buyer_name }}{{/isSeller}}
+                </p>
+                <p class="message-content">{{ content }}</p>
+              {{/message}}
+              {% endverbatim %}
+            </script>
+          </div>
+          {% comment %}
+          <span class="dashboard-empty-inbox hide">You have no messages for this listing.</span>
+          {% endcomment %}
+        </div>
+      </div>
+    </div>
+    <div id="keyboard-shortcuts-modal" class="modal">
+      <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Keyboard Shortcuts</h4>
+        </div>
+        <div class="modal-body">
+        <table class="keys pane-1">
+          <tr>
+            <td><span class="arrow">&darr;</span>/<span class="char">j</span></td>
+            <td>Select the next item</td>
+          </tr>
+          <tr>
+            <td><span class="arrow">&uarr;</span>/<span class="char">k</span></td>
+            <td>Select the previous item</td>
+          </tr>
+          <tr>
+            <td><span class="arrow">&rarr;</span>/<span class="char">b</span></td>
+            <td>Toggle buyers context</td>
+          </tr>
+          <tr>
+            <td><span class="arrow">&larr;</span>/<span class="char">l</span></td>
+            <td>Toggle listings context</td>
+          </tr>
+          <tr>
+            <td><span>Enter</span></td>
+            <td>Select the first listing from search</td>
+          </tr>
+          <tr>
+            <td><span>Esc</span></td>
+            <td>Unfocus the search or new message field</td>
+          </tr>
+        </table>
+        <table class="keys pane-2">
+          <tr>
+            <td><span class="char">n</span></td>
+            <td>Create new listing</td>
+          </tr>
+          <tr>
+            <td><span class="char">/</span></td>
+            <td>Search listings</td>
+          </tr>
+          <tr>
+            <td><span class="char">m</span></td>
+            <td>Focus new message field</td>
+          </tr>
+          <tr>
+            <td><span class="char">r</span></td>
+            <td>Refresh the dashboard</td>
+          </tr>
+          <tr>
+            <td><span class="char">?</span></td>
+            <td>Toggle this dialog</td>
+          </tr>
+        </table>
+        </div>
+      </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
   </div>
-  <div class="dashboard-panel {% if first_visit %}first-visit{% endif %}">
-    <div class="sidebar phone-hide">
-      {% include 'listings/partials/dashboard_sidebar.html' %}
-    </div>
-    <div class="listings-col phone-full-width" id="listings-col">
-      {% include 'listings/partials/listings_panel.html' %}
-    </div>
-    <div class="buyer-message-wrapper phone-hide">
-  <span class="inbox-header"><strong>Inbox</strong><span class="label label-info">{% if unread_messages %}New{% endif %}</span></span>
-      <span class="no-messages">You have no messages for this listing.</span>
-      <div class="buyers-col">
-        {% include 'listings/partials/buyers_panel.html' %}
-      </div>
-      <div class="messages-col">
-        {% include 'listings/partials/messages_panel.html' %}
-      </div>
-    </div>
-  </div>
-
-
-<div id="keyboard-shortcuts-modal" class="modal">
-  <div class="modal-dialog">
-  <div class="modal-content">
-    <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h4 class="modal-title">Keyboard Shortcuts</h4>
-    </div>
-    <div class="modal-body">
-    <table class="keys pane-1">
-      <tr>
-        <td><span class="arrow">&darr;</span>/<span class="char">j</span></td>
-        <td>Select the next item</td>
-      </tr>
-      <tr>
-        <td><span class="arrow">&uarr;</span>/<span class="char">k</span></td>
-        <td>Select the previous item</td>
-      </tr>
-      <tr>
-        <td><span class="arrow">&rarr;</span>/<span class="char">b</span></td>
-        <td>Toggle buyers context</td>
-      </tr>
-      <tr>
-        <td><span class="arrow">&larr;</span>/<span class="char">l</span></td>
-        <td>Toggle listings context</td>
-      </tr>
-      <tr>
-        <td><span>Enter</span></td>
-        <td>Select the first listing from search</td>
-      </tr>
-      <tr>
-        <td><span>Esc</span></td>
-        <td>Unfocus the search or new message field</td>
-      </tr>
-    </table>
-    <table class="keys pane-2">
-      <tr>
-        <td><span class="char">n</span></td>
-        <td>Create new listing</td>
-      </tr>
-      <tr>
-        <td><span class="char">/</span></td>
-        <td>Search listings</td>
-      </tr>
-      <tr>
-        <td><span class="char">m</span></td>
-        <td>Focus new message field</td>
-      </tr>
-      <tr>
-        <td><span class="char">r</span></td>
-        <td>Refresh the dashboard</td>
-      </tr>
-      <tr>
-        <td><span class="char">?</span></td>
-        <td>Toggle this dialog</td>
-      </tr>
-    </table>
-    </div>
-  </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-</div>
-
 {% endblock %}

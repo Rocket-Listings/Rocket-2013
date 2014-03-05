@@ -19,35 +19,20 @@ from users.decorators import first_visit, view_count, attach_client_ip
 from django.template.response import TemplateResponse
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from mail.tasks import send_message_task
-from users.models import UserProfile, UserComment 
+from users.models import UserProfile, UserComment
 from django.db.models import Avg
 from listings.tasks import cl_anon_autopost_task, cl_anon_update_task, cl_delete_task
 from rest_framework.renderers import UnicodeJSONRenderer
-from listings.serializers import ListingSerializer, HermesSerializer
+from listings.serializers import ListingDetailSerializer, HermesSerializer, ListingDashboardSerializer
 from pprint import pprint
 
 @first_visit
 @login_required
 def dashboard(request):
-    listings = Listing.objects.filter(user=request.user).order_by('-create_date').all() # later on we can change how many are returned
-    buyers = reduce(__add__, map(lambda l: list(l.buyer_set.all()), listings), [])
-    messages = reduce(__add__, map(lambda b: list(b.message_set.all()), buyers), [])
-    unread_messages = reduce(__add__, map(lambda b: list(b.message_set.filter(seen=False)), buyers), [])
-   
-    latest_ids = map(lambda set: map(lambda i: i.id, set), [listings, buyers, messages])
-    for i, val in enumerate(latest_ids):
-        try:
-            latest_ids[i] = max(val)
-        except ValueError:
-            latest_ids[i] = 0
-    context = {
-        'listings': listings,
-        'buyers': buyers,
-        'buyer_messages':messages,
-        'latest': latest_ids,
-        'unread_messages': unread_messages
-    }
-    return TemplateResponse(request, 'listings/dashboard.html', context)
+    queryset = Listing.objects.filter(user=request.user).order_by('-create_date').all()
+    serializer = ListingDashboardSerializer(queryset, many=True)
+    json = UnicodeJSONRenderer().render(serializer.data)
+    return TemplateResponse(request, 'listings/dashboardv2.html', { 'listings': json })
 
 @first_visit
 @login_required
@@ -64,7 +49,7 @@ def detail(request, listing_id, pane='preview'):
     listing = get_object_or_404(Listing.objects.select_related(), id=listing_id)
     photos = listing.listingphoto_set.all()
     specs = listing.spec_set.all()
-    listing_serializer = ListingSerializer(listing)
+    listing_serializer = ListingDetailSerializer(listing)
     listing_json = UnicodeJSONRenderer().render(listing_serializer.data)
 
     is_owner = bool(listing.user == request.user)
@@ -80,19 +65,19 @@ def detail(request, listing_id, pane='preview'):
         }
         context.update(utils.get_cats())
         return TemplateResponse(request, 'listings/detail.html', context)
-    else: 
-        comments = UserComment.objects.filter(user=listing.user).order_by('-date_posted') 
+    else:
+        comments = UserComment.objects.filter(user=listing.user).order_by('-date_posted')
         avg_rating = comments.aggregate(Avg('rating')).values()[0]
         fbProfile = listing.user.get_profile().fbProfile
         context = {
             'listing': listing,
             'photos': photos,
             'specs': specs,
-            'fb' : fbProfile, 
-            'avg_rating' : avg_rating 
+            'fb' : fbProfile,
+            'avg_rating' : avg_rating
         }
         return TemplateResponse(request, 'listings/detail_public.html', context)
-        
+
         # =======
         #     # prep specs
         #     specs_set = listing.listingspecvalue_set.select_related().all()
@@ -114,7 +99,7 @@ def detail(request, listing_id, pane='preview'):
         #             cxt.update(utils.get_listing_vars())
         #             return TemplateResponse(request, 'listings/detail.html', cxt)
         #         else:
-        #             comments = UserComment.objects.filter(user=listing.user).order_by('-date_posted') 
+        #             comments = UserComment.objects.filter(user=listing.user).order_by('-date_posted')
         #             avg_rating = comments.aggregate(Avg('rating')).values()[0]
 
         #             fbProfile = user.get_profile().fbProfile
@@ -123,8 +108,8 @@ def detail(request, listing_id, pane='preview'):
         #                 'listing': listing,
         #                 'photos': photos,
         #                 'specs': specs,
-        #                 'fb' : fbProfile, 
-        #                 'avg_rating' : avg_rating 
+        #                 'fb' : fbProfile,
+        #                 'avg_rating' : avg_rating
         #             }
         #             return TemplateResponse(request, 'listings/detail_public.html', cxt)
         #     else: # POST
@@ -133,7 +118,7 @@ def detail(request, listing_id, pane='preview'):
 @require_GET
 def search(request):
     search_text = request.GET.get('search', '')
-    listings = SearchQuerySet().filter(content=search_text)[:20]    
+    listings = SearchQuerySet().filter(content=search_text)[:20]
     context = { 'listings': listings }
     return TemplateResponse(request, "listings/search.html", context)
 

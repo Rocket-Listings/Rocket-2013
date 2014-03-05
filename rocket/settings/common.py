@@ -170,7 +170,7 @@ THIRD_PARTY_APPS = (
     # pagination template tags
     'pagination',
 
-    # static file management 
+    # static file management
     'pipeline',
 
     # rest support
@@ -287,6 +287,13 @@ PIPELINE_CSS = {
         'output_filename': 'css/user_base.css',
         'variant': 'datauri',
     },
+    'dashboard': {
+        'source_filenames': (
+            'listings/less/dashboard.less',
+        ),
+        'output_filename': 'css/dashboard.css',
+        'variant': 'datauri'
+    }    
 }
 
 PIPELINE_JS = {
@@ -303,6 +310,31 @@ PIPELINE_JS = {
             'rocket/js/global.js',
         ),
         'output_filename': 'js/global.js'
+    },
+    'backbone': {
+        'source_filenames': (
+            'rocket/js/underscore.min.js',
+            'rocket/js/backbone.min.js',
+            'rocket/js/mustache.js'
+        ),
+        'output_filename': 'js/underscore-backbone-mustache.js'
+    },
+    'dashboard': {
+        'source_filenames': (
+            'listings/js/list.min.js',
+            'listings/js/jquery.scrollTo-1.4.3.1-min.js',
+            'listings/js/dashboard/models/listing.js',
+            'listings/js/dashboard/models/buyer.js',
+            'listings/js/dashboard/models/message.js',
+            'listings/js/dashboard/collections/listings.js',
+            'listings/js/dashboard/collections/buyers.js',
+            'listings/js/dashboard/collections/messages.js',
+            'listings/js/dashboard/views/listing-view.js',
+            'listings/js/dashboard/views/buyer-view.js',
+            'listings/js/dashboard/views/message-view.js',
+            'listings/js/dashboard/views/dashboard-view.js',
+        ),
+        'output_filename': 'js/dashboard.js'
     },
 }
 
