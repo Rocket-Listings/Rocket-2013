@@ -160,6 +160,7 @@ ul.dashboard-buyers-body,
 .dashboard-listings-message,
 .dashboard-messages-message {
   font-size: 13px;
+  text-align: center;
   padding: 8px 13px 8px 8px;
 }
 
@@ -185,7 +186,7 @@ ul.dashboard-buyers-body,
   border-bottom: 1px solid #a2a2a2;
   padding: 4px;
   text-align: center;
-  font-size: 14px;
+  font-size: 12px;
   background-color: #EAEAEA;
   height: @dashboard-header-b-height;
   border-bottom: 1px solid #a2a2a2;
@@ -420,6 +421,7 @@ li.listing {
     padding: 8px;
     overflow: hidden;
     white-space: nowrap;
+    text-overflow: ellipsis;
     &.d-title { width: @title; }
     &.d-price { width: @price; }
     &.d-category {
@@ -461,21 +463,16 @@ li.listing {
 }
 li.buyer {
   font-size: 14px;
-  padding-left: 12px !important;
   p {
-    &:first-child { padding: 8px 8px 2px 8px; }
-    &:nth-child(2) { padding: 2px 8px 2px 8px; }
-    &:nth-child(3) { padding: 2px 8px 8px 8px; }
-    &:last-child{ padding: 2px 8px 8px 8px; }
+    padding: 8px;
     overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
     margin-bottom: 0;
   }
   &.highlight {  
     p {
       margin-right: -5px;
-      padding-left: 12px !important;
-      &:nth-child(2){}
     }
   }
   &.unread {

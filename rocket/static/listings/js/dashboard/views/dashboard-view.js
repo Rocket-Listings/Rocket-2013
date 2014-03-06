@@ -12,6 +12,7 @@ app.DashboardView = Backbone.View.extend({
     'click .dashboard-delete-btn': 'markSelected',
     'click .dashboard-delete-permanent-btn': 'destroyMarked',
     'keydown input.search': 'search',
+    'click .dashboard-filters-text': 'filter',
     'focus input.search': 'toggleSearch',
     'click .dashboard-search-btn': 'forceSearch'
   },
@@ -24,7 +25,7 @@ app.DashboardView = Backbone.View.extend({
     this.listingSelected = -1;
     this.buyerSelected = -1;
 
-    this.listingFilter = {};
+    this.listingFilter = { "marked": false };
     this.buyerFilter = {};
 
     this.shownListings = new app.Listings;
@@ -55,7 +56,7 @@ app.DashboardView = Backbone.View.extend({
     this.showListings(this.collection);
   },
   showListings: function(listings) {
-    var listingsFiltered = listings.filter(_.matches(this.listingFilter));
+    var listingsFiltered = listings.where(this.listingFilter);
     this.shownListings.set(listingsFiltered);
     if (this.shownListings.length === 0) {
       this.$('.dashboard-listings-message.no-listings').show();
@@ -64,6 +65,7 @@ app.DashboardView = Backbone.View.extend({
       this.$('.dashboard-listings-message.no-listings').hide();
     }
     this.shownListings.each(function(listing) {
+      console.log(listing.toJSON());
       // add the model to the current model collection,
       // and instantiate and attach the model's view to the dom.
       var view = new app.ListingView({ model: listing });
@@ -82,12 +84,13 @@ app.DashboardView = Backbone.View.extend({
     }
   },
   showBuyers: function(buyers) {
+    // hide messages
     this.shownMessages.set([]);
     this.hideMessagesAlerts();
     this.$('.dashboard-messages-message.no-buyer-selected').show();
 
     // TODO: rename to setShownBuyers
-    var buyersFiltered = buyers.filter(_.matches(this.buyerFilter));
+    var buyersFiltered = _.isEmpty(this.buyerFilter) ? buyers.models : buyers.where(this.buyerFilter);
     this.shownBuyers.set(buyersFiltered);
     this.hideBuyersAlerts();
     if (this.shownBuyers.length === 0) {
@@ -121,7 +124,7 @@ app.DashboardView = Backbone.View.extend({
     this.shownMessages.set(messages.models);
     this.hideMessagesAlerts();
     if (this.shownMessages.length === 0) {
-      this.$('.dashboard-messages-message.no-messages').show();
+      this.$('.dashboard-messages-message.no-buyer-selected').show();
       return;
     } else {
       this.$('.dashboard-message-form').show();
@@ -135,10 +138,27 @@ app.DashboardView = Backbone.View.extend({
     this.$('.dashboard-message-form').hide();
     this.$('.dashboard-messages-message').hide();
   },
+  filter: function(e) {
+    console.log("filter");
+    var target = $(e.currentTarget);
+    var attribute = target.data('filter-attr');
+    var value = target.data('filter-val');
+    var filter = {};
+    // convert string to boolean
+    value = (value === 'true') ? true : (value === 'false') ? false : value;
+    filter[attribute] = value;
+    if (!_.isEqual(filter, this.listingFilter)) {
+      this.$('.dashboard-filters-text').parent().removeClass('selected');
+      target.parent().addClass('selected');
+      this.listingFilter = filter;
+      this.showListings(this.collection);
+    }
+  },
   render: function() {
     // render app wide changes that don't include the listings, buyers, or messages panels.
   },
   sort: function() {
+    console.log("sort");
     // TODO: refactor
     // var icon = $(this).next('span'),
     //     icons = $("span.glyphicon.sort-toggle"),
@@ -163,6 +183,7 @@ app.DashboardView = Backbone.View.extend({
     // $('.dashboard-body').removeClass("first-visit");
   },
   refresh: function(e) {
+    console.log("refresh");
     // e.preventDefault();
     // var currentSelectedListing = $(".dashboard-listings-body").find("li.highlight").data('listing-id');
     //   $.ajax({
@@ -190,6 +211,7 @@ app.DashboardView = Backbone.View.extend({
     //     });
   },
   sendMessage: function() {
+    console.log("send message");
     // Submit and handle a new message
     // var csrftoken = getCookie('csrftoken');
     // $.ajax({
@@ -223,6 +245,7 @@ app.DashboardView = Backbone.View.extend({
     // return false;
   },
   markSelected: function(e) {
+    console.log("mark selected");
     // Change the status of the selected listing to "Deleted"
     // var id = $(this).attr('data-listing-id');
     // e.preventDefault();
@@ -241,6 +264,7 @@ app.DashboardView = Backbone.View.extend({
     // }
   },
   destroyMarked: function() {
+    console.log("destroy marked");
     // // Delete the currently selected listing
     // var id = $(this).attr('data-listing-id');
     // e.preventDefault();
@@ -259,6 +283,7 @@ app.DashboardView = Backbone.View.extend({
     // return false;
   },
   search: function(e) {
+    console.log("search");
     // Remove focus from the listings and hide buyers/messages during search
     // $(".dashboard-buyers-body, .dashboard-messages-body, .dashboard-dashboard-dashboard-dashboard-message-form-wrapper").addClass("hide");
     // $(".dashboard-listings-body li").removeClass("highlight");
@@ -269,6 +294,7 @@ app.DashboardView = Backbone.View.extend({
     // window.searchHasFocus = true;
   },
   forceSearch: function() {
+    console.log("force search");
     // if (window.searchHasFocus == true) {
     //   $("input.search").blur();
     //   $(".listing").first().click();

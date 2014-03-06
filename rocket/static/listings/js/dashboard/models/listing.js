@@ -4,7 +4,8 @@ var app = app || {};
   
 app.Listing = Backbone.Model.extend({
   defaults: {
-    "selected": false
+    "selected": false,
+    "marked": false
   },
   initialize: function(attrs, options) {
     this.buyers = new app.Buyers;

@@ -196,4 +196,3 @@ class Message(models.Model):
 		return u'On: %s' % (self.date)
 	# def __unicode__(self):
 	# 	return u'To: %s %s About: %s From: %s On: %s' % (self.listing.user.first_name, self.listing.user.last_name, self.listing.title, self.buyer.name, self.date)
-

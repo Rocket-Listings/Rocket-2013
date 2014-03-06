@@ -2,6 +2,7 @@ from rest_framework import serializers
 from listings.models import Listing, Spec, ListingPhoto, Buyer, Message
 from users.models import UserProfile
 from django.contrib.auth.models import User
+from django.contrib.humanize.templatetags.humanize import naturaltime
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -58,6 +59,7 @@ class ListingPhotoSerializer(serializers.ModelSerializer):
 class ListingDetailSerializer(serializers.ModelSerializer):
     spec_set = SpecSerializer(required=False, many=True)
     listingphoto_set = ListingPhotoSerializer(required=False, many=True)
+    link = serializers.CharField(source='get_absolute_url', read_only=True)
     user = UserSerializer()
     # category = serializers.RelatedField()
 
@@ -65,8 +67,19 @@ class ListingDetailSerializer(serializers.ModelSerializer):
         model = Listing
 
 class MessageSerializer(serializers.ModelSerializer):
+    natural_date = serializers.SerializerMethodField('get_natural_date')
+    buyer_name = serializers.SerializerMethodField('get_buyer_name')
+    seller_name = serializers.SerializerMethodField('get_seller_name')
     class Meta:
         model = Message
+    def get_natural_date(self, obj):
+        return naturaltime(obj.date)
+
+    def get_buyer_name(self, obj):
+        return obj.buyer.name
+
+    def get_seller_name(self, obj):
+        return obj.listing.user.get_profile().get_display_name()
 
 class BuyerSerializer(serializers.ModelSerializer):
     message_set = MessageSerializer(serializers.ModelSerializer)
@@ -76,8 +89,16 @@ class BuyerSerializer(serializers.ModelSerializer):
 class ListingDashboardSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     buyer_set = BuyerSerializer(required=False, many=True)
+    status_lower = serializers.SerializerMethodField('get_status_lower')
+    natural_date = serializers.SerializerMethodField('get_natural_date')
     class Meta:
         model = Listing
+
+    def get_status_lower(self, obj):
+        return obj.status.name.lower()
+
+    def get_natural_date(self, obj):
+        return naturaltime(obj.create_date)
 
 class HermesSerializer(serializers.ModelSerializer):
     submarket = serializers.IntegerField(source= 'sub_market')

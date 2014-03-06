@@ -25,6 +25,7 @@ app.ListingView = Backbone.View.extend({
       } else {
         this.$el.removeClass('highlight');
       }
+      this.$el.addClass(this.model.get('status_lower'));
       this.$el.html(markup);
       return this;
     },

@@ -62,23 +62,23 @@
     </div>
     <div class="dashboard-body{% if first_visit %}first-visit{% endif %}">
       <div class="dashboard-filters phone-hide">
-        <div class="dashboard-filters-button-wrapper dashboard-filters-all">
-          <a id="filter-not-deleted" class="dashboard-filters-text">All</a>
+        <div class="dashboard-filters-button-wrapper dashboard-filters-all selected">
+          <a data-filter-attr="marked" data-filter-val="false" class="dashboard-filters-text">All</a>
         </div>
         <div class="dashboard-filters-button-wrapper dashboard-filters-active">
-          <a id="filter-active" class="dashboard-filters-text">Active </a>
+          <a data-filter-attr="status_lower" data-filter-val="active" class="dashboard-filters-text">Active </a>
         </div>
         <div class="dashboard-filters-button-wrapper dashboard-filters-sold">
-          <a id="filter-sold" class="dashboard-filters-text">Sold</a>
+          <a data-filter-attr="status_lower" data-filter-val="sold" class="dashboard-filters-text">Sold</a>
         </div>
         <div class="dashboard-filters-button-wrapper dashboard-filters-draft">
-          <a id="filter-draft" class="dashboard-filters-text">Draft</a>
+          <a data-filter-attr="status_lower" data-filter-val="draft" class="dashboard-filters-text">Draft</a>
         </div>
         <div class="dashboard-filters-button-wrapper dashboard-filters-pending">
-          <a id="filter-pending" class="dashboard-filters-text">Pending</a>
+          <a data-filter-attr="status_lower" data-filter-val="pending" class="dashboard-filters-text">Pending</a>
         </div>
         <div class="dashboard-filters-button-wrapper dashboard-filters-deleted">
-          <a id="filter-deleted" class="dashboard-filters-text">Deleted</a>
+          <a data-filter-attr="marked" data-filter-val="true" class="dashboard-filters-text">Deleted</a>
         </div>
         <div class="keyboard-shortcuts-text">
           <a href="#">Keyboard shortcuts</a>
@@ -106,7 +106,7 @@
                 <span class="sort-toggle glyphicon glyphicon-chevron-down hide"></span>
               </span>
             </div>
-            <div class="dashboard-listings-message no-listings">No listings to see here, <a href="{% url 'create' %}">make one here.</a></div>
+            <div class="dashboard-listings-message no-listings">No listings to see here.</div>
             <ul class="dashboard-listings-inner-body"></ul>
             <script id="listing-template" type="text/template">
             {% verbatim %}
@@ -116,9 +116,9 @@
               </span>
               <span class="price d-price phone-hide">${{ price }}</span>
               {{!<span class="category d-category phone-hide">{{ category }}</span>}}
-              <span class="d-status status phone-hide">{{ status }}</span>
+              <span class="d-status status phone-hide">{{ status_lower }}</span>
               <span class="d-date phone-hide">
-                <span class="date hide">{{ sort_date }}</span>
+                <span class="date hide">{{ create_date }}</span>
                 {{ natural_date }}
               </span>
             {{/listing}}
@@ -134,14 +134,14 @@
         <div class="dashboard-inbox-body">
           <div class="dashboard-buyers">
             <div class="dashboard-buyers-header">Potential Buyers</div>
-            <div class="dashboard-buyers-message no-buyers" style="display: none;">No potential buyers have contacted you yet for this listing.</div>
-            <div class="dashboard-buyers-message no-listing-selected">Select a listing to see it's potential buyers.</div>
+            <div class="dashboard-buyers-message no-buyers" style="display: none;">No one has contacted you about this listing yet. Hang tight! </div>
+            <div class="dashboard-buyers-message no-listing-selected">Select a listing row to view its messages.</div>
             <ul class="dashboard-buyers-body"></ul>
             <script id="buyer-template" type="text/template">
               {% verbatim %}
               {{#buyer}}
                 <p>{{ name }}</p>
-                <p>{{#max_offer}}Offering ${{max_offer}}{{/max_offer}}{{^max_offer}}No offer{{/max_offer}}</p>
+                <!--<p>{{#max_offer}}Offering ${{max_offer}}{{/max_offer}}{{^max_offer}}No offer{{/max_offer}}</p>-->
               {{/buyer}}
               {% endverbatim %}
             </script>
@@ -151,8 +151,7 @@
             <div class="dashboard-messages-body">
               <div class="dashboard-messages-inner-a">
                 <div class="dashboard-messages-inner-b">
-                  <div class="dashboard-messages-message no-buyer-selected">Select a buyer to view your messages with them.</div>
-                  <div class="dashboard-messages-message no-messages" style="display: none;">No messages for this buyer yet.</div>                
+                  <div class="dashboard-messages-message no-buyer-selected">Select a buyer to view the associated message thread.</div>             
                   <ul class="dashboard-messages-inner-body"></ul>
                   <div class="dashboard-messages-inner-footer">
                     <form class="dashboard-message-form" style="display: none;">
@@ -168,7 +167,7 @@
             <script id="message-template" type="text/template">
               {% verbatim %}
               {{#message}}
-                <p class="message-time">{{ date }}</p>
+                <p class="message-time">{{ natural_date }}</p>
                 <p class="message-buyer-name">
                   {{#isSeller}}{{ seller_name }}{{/isSeller}}
                   {{^isSeller}}{{ buyer_name }}{{/isSeller}}
