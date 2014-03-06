@@ -152,8 +152,15 @@ ul.dashboard-buyers-body,
 .dashboard-inbox,
 .dashboard-buyers,
 .dashboard-messages {
-  display: inline-block;
+  float:left;
   .outer;
+}
+
+.dashboard-buyers-message,
+.dashboard-listings-message,
+.dashboard-messages-message {
+  font-size: 13px;
+  padding: 8px 13px 8px 8px;
 }
 
 .dashboard-inbox-header,
@@ -210,7 +217,6 @@ li.message {
   .dashboard-inbox-body {
     .body;
     top: @dashboard-header-a-height;
-    font-size: 0;
   }
   // .dashboard-inbox-header span.label-info {
   //   position: fixed;

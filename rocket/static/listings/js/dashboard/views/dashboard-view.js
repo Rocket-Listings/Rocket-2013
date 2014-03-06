@@ -33,71 +33,107 @@ app.DashboardView = Backbone.View.extend({
 
     // Dashboard refreshes will always be resets for now.
     // this.listenTo(this.collection, 'add', this.showListing);
-    this.listenTo(this.collection, 'reset', this.showListings);
+    this.listenTo(this.collection, 'set', this.showListings);    
     this.listenTo(this.collection, 'all', this.render);
-
+    this.listenTo(this.collection, 'reset', this.onReset);
+    this.onReset();
+  },
+  onReset: function() {
+    this.collection.each(function(listing) {
+      this.listenTo(listing, 'change:selected', this.listingSelectedChange);
+      // this.listenTo(listing, 'change:selected', this.listingSelectedChange);
+      // again, not implementing add case just yet
+      // this.listenTo(listing.buyers, 'set', this.showBuyers);
+      // this.listenTo(listing.buyers, 'all', this.render);      
+      listing.buyers.each(function(buyer) {
+        this.listenTo(buyer, 'change:selected', this.buyerSelectedChange);
+        // not paying attention to this event for now
+        // this.listenTo(buyer.messages, 'set', this.showMessages);
+        // this.listenTo(buyer.messages, 'all', this.render);
+      }, this);
+    }, this);
     this.showListings(this.collection);
   },
-  showListing: function(listing) {
-    // add the model to the current model collection,
-    // and instantiate and attach the model's view to the dom.
-    var view = new app.ListingView({ model: listing });
-    this.$listings.append(view.render().el);
-    this.listenTo(listing, 'change:selected', this.listingSelectedChange);
-    // again, not implementing add case just yet
-    // this.listenTo(listing.buyers, 'add', this.showBuyer);
-    this.listenTo(listing.buyers, 'reset', this.showBuyers);
-    // this.listenTo(listing.buyers, 'all', this.render);
-  },
   showListings: function(listings) {
-    var listingsFiltered = listings.models; //listings.where(this.listingFilter);
-    this.shownListings.reset(listingsFiltered).each(this.showListing, this);
+    var listingsFiltered = listings.filter(_.matches(this.listingFilter));
+    this.shownListings.set(listingsFiltered);
+    if (this.shownListings.length === 0) {
+      this.$('.dashboard-listings-message.no-listings').show();
+      return;
+    } else {
+      this.$('.dashboard-listings-message.no-listings').hide();
+    }
+    this.shownListings.each(function(listing) {
+      // add the model to the current model collection,
+      // and instantiate and attach the model's view to the dom.
+      var view = new app.ListingView({ model: listing });
+      this.$listings.append(view.render().el);      
+    }, this);
   },
   listingSelectedChange: function(listing, selected) {
     // TODO: implement multiselect
     if(selected) { // not unselected
       if (this.listingSelected >= 0) {
-        this.shownListings.get(this.listingSelected).set({ 'selected': false }); // runs
+        // this sets off another event, running this method a second time.
+        this.shownListings.get(this.listingSelected).set({ 'selected': false });
       }
       this.listingSelected = listing.id;
       this.showBuyers(listing.buyers);
     }
   },
-  showBuyer: function(buyer) {
-    var view = new app.BuyerView({ model: buyer });
-    this.$buyers.append(view.render().el);
-    this.listenTo(buyer, 'change:selected', this.buyerSelectedChange);
-
-    // not paying attention to this event for now
-    // this.listenTo(buyer.messages, 'add', this.addMessage);
-    this.listenTo(buyer.messages, 'reset', this.addMessages);
-    // this.listenTo(buyer.messages, 'all', this.render);
-  },
   showBuyers: function(buyers) {
-    // TODO: rename to resetShownBuyers
-    var buyersFiltered = buyers.models; // buyers.where(this.buyerFilter);
-    this.$buyers.html('');
-    this.shownBuyers.reset(buyersFiltered).each(this.showBuyer, this);
+    this.shownMessages.set([]);
+    this.hideMessagesAlerts();
+    this.$('.dashboard-messages-message.no-buyer-selected').show();
+
+    // TODO: rename to setShownBuyers
+    var buyersFiltered = buyers.filter(_.matches(this.buyerFilter));
+    this.shownBuyers.set(buyersFiltered);
+    this.hideBuyersAlerts();
+    if (this.shownBuyers.length === 0) {
+      this.$('.dashboard-buyers-message.no-buyers').show();
+      return;
+    }
+    this.buyerSelected = -1;
+    var selected = this.shownBuyers.findWhere({ 'selected': true });
+    if (selected) {
+      this.buyerSelectedChange(selected, true);
+    }
+    this.shownBuyers.each(function(buyer) {
+      var view = new app.BuyerView({ model: buyer });
+      this.$buyers.append(view.render().el);
+    }, this);
+  },
+  hideBuyersAlerts: function() {
+    this.$('.dashboard-buyers-message').hide();
   },
   buyerSelectedChange: function(buyer, selected) {
     // TODO: implement multiselect
     if(selected) { // not unselected
       if (this.buyerSelected >= 0) {
-        this.shownBuyers.get(this.buyerSelected).set({ 'selected': false }); // runs
+        this.shownBuyers.get(this.buyerSelected).set({ 'selected': false });
       }
       this.buyerSelected = buyer.id;
       this.showMessages(buyer.messages);
     }
   },
-  showMessage: function(message) {
-    console.log("add message");
-    var view = new app.MessageView({ model: message });
-    this.$messages.append(view.render().el);
-  },
   showMessages: function(messages) {
-    // TODO: rename fn to resetShownMessages
-    this.$messages.html('');
-    messages.each(this.showMessage, this);
+    this.shownMessages.set(messages.models);
+    this.hideMessagesAlerts();
+    if (this.shownMessages.length === 0) {
+      this.$('.dashboard-messages-message.no-messages').show();
+      return;
+    } else {
+      this.$('.dashboard-message-form').show();
+    }
+    this.shownMessages.each(function(message) {
+      var view = new app.MessageView({ model: message });
+      this.$messages.append(view.render().el);
+    }, this);
+  },
+  hideMessagesAlerts: function() {
+    this.$('.dashboard-message-form').hide();
+    this.$('.dashboard-messages-message').hide();
   },
   render: function() {
     // render app wide changes that don't include the listings, buyers, or messages panels.

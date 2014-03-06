@@ -32,7 +32,7 @@ def dashboard(request):
     queryset = Listing.objects.filter(user=request.user).order_by('-create_date').all()
     serializer = ListingDashboardSerializer(queryset, many=True)
     json = UnicodeJSONRenderer().render(serializer.data)
-    return TemplateResponse(request, 'listings/dashboardv2.html', { 'listings': json })
+    return TemplateResponse(request, 'listings/dashboard.html', { 'listings': json })
 
 @first_visit
 @login_required

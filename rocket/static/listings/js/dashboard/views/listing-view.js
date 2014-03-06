@@ -16,10 +16,15 @@ app.ListingView = Backbone.View.extend({
     initialize: function(attrs, options) {
       this.listenTo(this.model, 'change', this.render);
       this.listenTo(this.model, 'destroy', this.remove);
-      this.listenTo(this.model, 'change:selected', this.deselected);
+      this.listenTo(this.model, 'remove', this.remove);
     },
     render: function() {
       var markup = Mustache.render(this.template, {'listing': this.model.toJSON() });
+      if (this.model.get('selected')) {
+        this.$el.addClass('highlight');
+      } else {
+        this.$el.removeClass('highlight');
+      }
       this.$el.html(markup);
       return this;
     },
@@ -30,7 +35,7 @@ app.ListingView = Backbone.View.extend({
         // var buyers = $(".buyer[data-listing-id='" + id + "']");
         // this.$el.removeClass('highlight');
       // this.$('.d-arrow').addClass('hide');
-      this.$el.addClass('highlight');
+      // this.$el.addClass('highlight');
       // HIDE ALL BUYERS AND MESSAGES
       // ENABLE DASHBOARD LISTING DELETE BUTTON
       // $(".dashboard-delete-btn").attr('data-listing-id', id).removeClass("disabled");
@@ -52,10 +57,5 @@ app.ListingView = Backbone.View.extend({
       //   $(".dashboard-messages-body").addClass("hide");
       //   $(".dashboard-empty-inbox").removeClass("hide");
       // }
-    },
-    deselected: function(listing, selected) {
-      if(!selected) {
-        this.$el.removeClass('highlight');
-      }
     }
 });

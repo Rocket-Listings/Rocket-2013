@@ -106,6 +106,7 @@
                 <span class="sort-toggle glyphicon glyphicon-chevron-down hide"></span>
               </span>
             </div>
+            <div class="dashboard-listings-message no-listings">No listings to see here, <a href="{% url 'create' %}">make one here.</a></div>
             <ul class="dashboard-listings-inner-body"></ul>
             <script id="listing-template" type="text/template">
             {% verbatim %}
@@ -133,6 +134,8 @@
         <div class="dashboard-inbox-body">
           <div class="dashboard-buyers">
             <div class="dashboard-buyers-header">Potential Buyers</div>
+            <div class="dashboard-buyers-message no-buyers" style="display: none;">No potential buyers have contacted you yet for this listing.</div>
+            <div class="dashboard-buyers-message no-listing-selected">Select a listing to see it's potential buyers.</div>
             <ul class="dashboard-buyers-body"></ul>
             <script id="buyer-template" type="text/template">
               {% verbatim %}
@@ -148,9 +151,11 @@
             <div class="dashboard-messages-body">
               <div class="dashboard-messages-inner-a">
                 <div class="dashboard-messages-inner-b">
+                  <div class="dashboard-messages-message no-buyer-selected">Select a buyer to view your messages with them.</div>
+                  <div class="dashboard-messages-message no-messages" style="display: none;">No messages for this buyer yet.</div>                
                   <ul class="dashboard-messages-inner-body"></ul>
                   <div class="dashboard-messages-inner-footer">
-                    <form class="dashboard-message-form">
+                    <form class="dashboard-message-form" style="display: none;">
                       <textarea rows="4" class="form-control" name="content" placeholder="Send a reply..."></textarea>
                       <input type="hidden" name="listing" value="">
                       <input type="hidden" name="buyer" value="">

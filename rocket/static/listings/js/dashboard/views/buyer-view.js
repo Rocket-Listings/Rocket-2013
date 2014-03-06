@@ -11,12 +11,18 @@ app.BuyerView = Backbone.View.extend({
       'click': 'select'
     },
     initialize: function(attrs, options) {
-      this.listenTo(this.model, 'all', this.render);
+      // this.listenTo(this.model, 'all', this.render);
       this.listenTo(this.model, 'destroy', this.remove);
-      this.listenTo(this.model, 'change:selected', this.deselected);
+      this.listenTo(this.model, 'change', this.render);
+      this.listenTo(this.model, 'remove', this.remove);      
     },
     render: function() {
       var markup = Mustache.render(this.template, { 'buyer': this.model.toJSON() });
+      if (this.model.get('selected')) {
+        this.$el.addClass('highlight');
+      } else {
+        this.$el.removeClass('highlight');
+      }
       this.$el.html(markup);
       return this;
     },
@@ -27,7 +33,7 @@ app.BuyerView = Backbone.View.extend({
       //     listing_id = buyerCard.data('listing-id'),
       //     unreadMessages = $(".message.unread[data-buyer-id='" + buyer_id + "']");
       // $('.buyer').removeClass('highlight');
-      this.$el.addClass('highlight');
+      // this.$el.addClass('highlight');
       // $(".message").addClass("hide");
       // $('.message[data-buyer-id="' + buyer_id + '"]').removeClass("hide");
       // $(".dashboard-dashboard-message-form input[name='listing']").val(listing_id);
@@ -42,13 +48,7 @@ app.BuyerView = Backbone.View.extend({
       //     }
       //   });
       // });
-    },
-    deselected: function(buyer, selected) {
-      if(!selected) {
-        this.$el.removeClass('highlight');
-      }
     }
-
   // $.fn.markSeen = function(callback) {
   //   var message_id = $(this).data('message-id');
   //   $.ajax({

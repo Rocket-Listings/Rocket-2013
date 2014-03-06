@@ -313,8 +313,8 @@ PIPELINE_JS = {
     },
     'backbone': {
         'source_filenames': (
-            'rocket/js/underscore.min.js',
-            'rocket/js/backbone.min.js',
+            'rocket/js/underscore-1.6.0.min.js',
+            'rocket/js/backbone-1.1.2.min.js',
             'rocket/js/mustache.js'
         ),
         'output_filename': 'js/underscore-backbone-mustache.js'

@@ -16,12 +16,13 @@ app.MessageView = Backbone.View.extend({
   initialize: function(attrs, options) {
     this.listenTo(this.model, 'all', this.render);
     this.listenTo(this.model, 'destroy', this.remove);
+    this.listenTo(this.model, 'remove', this.remove);    
   },
   render: function() {
     var markup = Mustache.render(this.template, { 'message': this.model.toJSON() });
     this.$el.html(markup);
     return this;
-  },
+  }, 
   // Mark a message as seen on the server
   // Must have attr 'data-message-id'
   markSeen: function(e) {
