@@ -6,18 +6,18 @@ $.ajaxSetup({
 
 $(function() {
   var json = listingJSON;
-  var spec_set = json.spec_set, 
+  var spec_set = json.spec_set,
       listingphoto_set = json.listingphoto_set;
 
   delete json.spec_set;
-  delete json.listingphoto_set;  
+  delete json.listingphoto_set;
   delete json.user;
 
   var listing = new Listing(json),
       specs = new SpecList(spec_set, {
         listing: listing
       }),
-      photos = new PhotoList(json.listingphoto_set);
+      photos = new PhotoList(listingphoto_set);
 
   var models = {
     listing: listing,
