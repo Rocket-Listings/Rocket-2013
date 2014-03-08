@@ -570,6 +570,7 @@ var PhotoEditView = Backbone.View.extend({
     filepicker.setKey('ATM8Oz2TyCtiJiHu6pP6Qz');
     filepicker.pickAndStore(this.picker_options, this.store_options, _.bind(this.onSuccess, this), this.onError);
     _.bindAll(this, 'updateOrder');
+    this.model = options.listing;
     this.bindSortable();
     // want to compile these after enabling UI functionality
     this.template = Mustache.compile(this.$('#photo-thumbnail-template').html());
