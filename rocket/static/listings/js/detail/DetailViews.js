@@ -48,13 +48,13 @@ var SidebarView = Backbone.View.extend({
         success: function(data, status, xhr) {
           console.log(xhr.status);
           console.log(data);
-          // if (xhr.status == 200) {
-          //   window.location.replace('/listings/dashboard/');
-          //   console.log(data);
-          //   window.postMessage({type: "FROM_PAGE", action: "post", ctx: data}, "*");
-          // } else if(xhr.status == 403) {
-          //   $('#not-enough-credits').show();
-          // }
+          if (xhr.status == 200) {
+            window.location.replace('/listings/dashboard/');
+            console.log(data);
+            window.postMessage({type: "FROM_PAGE", action: "post", ctx: data}, "*");
+          } else if(xhr.status == 403) {
+            $('#not-enough-credits').show();
+          }
         },
         error: function(jqXHR, textStatus, errorThrown ) {
           console.log(jqXHR.status);
