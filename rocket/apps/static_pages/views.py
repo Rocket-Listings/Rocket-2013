@@ -8,7 +8,7 @@ from mobi.decorators import detect_mobile
 # @cache_control(must_revalidate=True, max_age=3600)
 # @cache_page(60 * 15)
 
-@detect_mobile
+# @detect_mobile
 def home(request):
     # if request.mobile:
     	# print "mobile detected"
@@ -20,10 +20,10 @@ def home(request):
         return index(request)
 
 @attach_client_ip
-@cache_control(must_revalidate=True, max_age=3600)
-@cache_page(60 * 15)
+# @cache_control(must_revalidate=True, max_age=3600)
+# @cache_page(60 * 15)
 def index(request):
-	return TemplateResponse(request, 'static_pages/index.html')
+	return TemplateResponse(request, 'static_pages/index.html', context = {})
 
 def google_webmaster_verification(request):
     return render(request, 'static_pages/googlef43896b8ef9b394c.html')

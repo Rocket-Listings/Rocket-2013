@@ -35,3 +35,11 @@ def deploy_staging():
   local('heroku maintenance:off --app rocket-listings-staging')
   local('heroku ps --app rocket-listings-staging')
 
+def test_local():
+  local("casperjs test tests --url=http://localhost:8000")
+
+def test_staging():
+  local("casperjs test tests --url=http://rocket-listings-staging.herokuapp.com/")
+
+def test_production():
+  local("casperjs test tests --url=http://beta.rocketlistings.com/")
