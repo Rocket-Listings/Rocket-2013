@@ -301,10 +301,10 @@ li.message {
     // overriding
     font-size: 0;
     padding: 0;
-    span {
-      font-size: 12px;
-      padding: 6px 10px;
-    }
+  }
+  .dashboard-listings-inner-header > span {
+    font-size: 12px;
+    padding: 6px 10px;
   }
   ul.dashboard-listings-inner-body {
     .body;
@@ -414,7 +414,7 @@ li.message {
 //       }
 .dashboard-listings-inner-header,
 li.listing {
-  span {
+  & > span {
     font-size: 14px;
     display: inline-block;
     text-align: left;

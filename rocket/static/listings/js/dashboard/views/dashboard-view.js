@@ -32,66 +32,71 @@ app.DashboardView = Backbone.View.extend({
     this.shownBuyers = new app.Buyers;
     this.shownMessages = new app.Messages;
 
-    // Dashboard refreshes will always be resets for now.
-    // this.listenTo(this.collection, 'add', this.showListing);
-    this.listenTo(this.collection, 'set', this.showListings);    
-    this.listenTo(this.collection, 'all', this.render);
-    this.listenTo(this.collection, 'reset', this.onReset);
-    this.onReset();
-  },
-  onReset: function() {
+    // this.listenTo(this.shownListings, 'sort', this.renderListings);
+    this.listenTo(this.shownListings, 'add', function(listing) {
+      var view = new app.ListingView({ model: listing });
+      this.$listings.append(view.render().el);
+    });
+    // remove event is automatically triggered on the listing model, 
+    // which removes the associated view from the dom
+
+    // this.listenTo(this.shownBuyers, 'sort', this.renderBuyers);
+    this.listenTo(this.shownBuyers, 'add', function(buyer) {
+      var view = new app.BuyerView({ model: buyer });
+      this.$buyers.append(view.render().el);
+    });
+
+    // this.listenTo(this.shownMessages, 'sort', this.renderMessages);
+    this.listenTo(this.shownMessages, 'add', function(message) {
+      var view = new app.MessageView({ model: message });
+      this.$messages.append(view.render().el);
+    });
+
+    this.listenTo(this.shownListings, 'sort', this.render);
     this.collection.each(function(listing) {
       this.listenTo(listing, 'change:selected', this.listingSelectedChange);
-      // this.listenTo(listing, 'change:selected', this.listingSelectedChange);
-      // again, not implementing add case just yet
-      // this.listenTo(listing.buyers, 'set', this.showBuyers);
-      // this.listenTo(listing.buyers, 'all', this.render);      
       listing.buyers.each(function(buyer) {
         this.listenTo(buyer, 'change:selected', this.buyerSelectedChange);
-        // not paying attention to this event for now
-        // this.listenTo(buyer.messages, 'set', this.showMessages);
-        // this.listenTo(buyer.messages, 'all', this.render);
       }, this);
     }, this);
-    this.showListings(this.collection);
+    this.shownListings.set(this.listingsFiltered());    
+    this.renderListings();
   },
-  showListings: function(listings) {
-    var listingsFiltered = listings.where(this.listingFilter);
-    this.shownListings.set(listingsFiltered);
+  listingsFiltered: function() {
+    return this.collection.where(this.listingFilter);
+  },
+  buyersFiltered: function() {
+    if (this.listingSelected !== -1) {
+      if (_.isEmpty(this.buyerFilter))
+        return this.collection.get(this.listingSelected).buyers.models;
+      else
+        return this.collection.get(this.listingSelected).buyers.where(this.buyerFilter);
+    }
+  },
+  messagesFiltered: function() {
+    if (this.listingSelected !== -1 && this.buyerSelected !== -1) {
+      return this.collection.get(this.listingSelected).buyers
+                            .get(this.buyerSelected).messages.models;
+    }
+  },
+  render: function() {
+    // render app wide changes that don't include the listings, buyers, or messages panels.
+  },  
+  renderListings: function() {
     if (this.shownListings.length === 0) {
       this.$('.dashboard-listings-message.no-listings').show();
       return;
     } else {
       this.$('.dashboard-listings-message.no-listings').hide();
     }
-    this.shownListings.each(function(listing) {
-      console.log(listing.toJSON());
-      // add the model to the current model collection,
-      // and instantiate and attach the model's view to the dom.
-      var view = new app.ListingView({ model: listing });
-      this.$listings.append(view.render().el);      
-    }, this);
   },
-  listingSelectedChange: function(listing, selected) {
-    // TODO: implement multiselect
-    if(selected) { // not unselected
-      if (this.listingSelected >= 0) {
-        // this sets off another event, running this method a second time.
-        this.shownListings.get(this.listingSelected).set({ 'selected': false });
-      }
-      this.listingSelected = listing.id;
-      this.showBuyers(listing.buyers);
-    }
-  },
-  showBuyers: function(buyers) {
+  renderBuyers: function() {
     // hide messages
     this.shownMessages.set([]);
     this.hideMessagesAlerts();
     this.$('.dashboard-messages-message.no-buyer-selected').show();
 
     // TODO: rename to setShownBuyers
-    var buyersFiltered = _.isEmpty(this.buyerFilter) ? buyers.models : buyers.where(this.buyerFilter);
-    this.shownBuyers.set(buyersFiltered);
     this.hideBuyersAlerts();
     if (this.shownBuyers.length === 0) {
       this.$('.dashboard-buyers-message.no-buyers').show();
@@ -102,26 +107,8 @@ app.DashboardView = Backbone.View.extend({
     if (selected) {
       this.buyerSelectedChange(selected, true);
     }
-    this.shownBuyers.each(function(buyer) {
-      var view = new app.BuyerView({ model: buyer });
-      this.$buyers.append(view.render().el);
-    }, this);
   },
-  hideBuyersAlerts: function() {
-    this.$('.dashboard-buyers-message').hide();
-  },
-  buyerSelectedChange: function(buyer, selected) {
-    // TODO: implement multiselect
-    if(selected) { // not unselected
-      if (this.buyerSelected >= 0) {
-        this.shownBuyers.get(this.buyerSelected).set({ 'selected': false });
-      }
-      this.buyerSelected = buyer.id;
-      this.showMessages(buyer.messages);
-    }
-  },
-  showMessages: function(messages) {
-    this.shownMessages.set(messages.models);
+  renderMessages: function() {
     this.hideMessagesAlerts();
     if (this.shownMessages.length === 0) {
       this.$('.dashboard-messages-message.no-buyer-selected').show();
@@ -129,21 +116,45 @@ app.DashboardView = Backbone.View.extend({
     } else {
       this.$('.dashboard-message-form').show();
     }
-    this.shownMessages.each(function(message) {
-      var view = new app.MessageView({ model: message });
-      this.$messages.append(view.render().el);
-    }, this);
   },
+  // UI Methods
+  hideBuyersAlerts: function() {
+    this.$('.dashboard-buyers-message').hide();
+  },  
   hideMessagesAlerts: function() {
     this.$('.dashboard-message-form').hide();
     this.$('.dashboard-messages-message').hide();
   },
+  // DOM event callbacks
+  listingSelectedChange: function(listing, selected) {
+    // TODO: implement multiselect
+    if (selected) { // not unselected
+      if (this.listingSelected !== -1) {
+        // this sets off another event, running this method a second time.
+        this.shownListings.get(this.listingSelected).set({ 'selected': false });
+      }
+      this.listingSelected = listing.id;
+      this.shownBuyers.set(this.buyersFiltered());      
+      this.renderBuyers();
+    }
+  },
+  buyerSelectedChange: function(buyer, selected) {
+    // TODO: implement multiselect
+    if (selected) { // not unselected
+      if (this.buyerSelected !== -1) {
+        this.shownBuyers.get(this.buyerSelected).set({ 'selected': false });
+      }
+      this.buyerSelected = buyer.id;
+      this.shownMessages.set(this.messagesFiltered());      
+      this.renderMessages();
+    }
+  },
+  // UI Actions
   filter: function(e) {
-    console.log("filter");
-    var target = $(e.currentTarget);
-    var attribute = target.data('filter-attr');
-    var value = target.data('filter-val');
-    var filter = {};
+    var target = $(e.currentTarget),
+        attribute = target.data('filter-attr'),
+        value = target.data('filter-val'),
+        filter = {};
     // convert string to boolean
     value = (value === 'true') ? true : (value === 'false') ? false : value;
     filter[attribute] = value;
@@ -151,30 +162,46 @@ app.DashboardView = Backbone.View.extend({
       this.$('.dashboard-filters-text').parent().removeClass('selected');
       target.parent().addClass('selected');
       this.listingFilter = filter;
-      this.showListings(this.collection);
+      this.shownListings.set(this.listingsFiltered());
+      this.renderListings();
     }
   },
-  render: function() {
-    // render app wide changes that don't include the listings, buyers, or messages panels.
-  },
-  sort: function() {
-    console.log("sort");
-    // TODO: refactor
-    // var icon = $(this).next('span'),
-    //     icons = $("span.glyphicon.sort-toggle"),
-    //     iconsNotClicked = $("span.glyphicon.sort-toggle:not('span.glyphicon.active')"),
-    //     down = 'glyphicon-chevron-down',
-    //     up = 'glyphicon-chevron-up';
-    // icons.addClass("hide").removeClass("active");
-    // icon.removeClass("hide").addClass('active');
-    // iconsNotClicked.removeClass(down + " " + up).addClass(down);
-    // if (icon.hasClass(down)) {
-    //   icon.removeClass(down).addClass(up);
-    // }
-    // else {
-    //   icon.removeClass(up).addClass(down);
-    // }
-    // return false;
+  sort: function(e) {
+    // TODO: This method should work through a render, not an events simulation hack.
+    // Unfortunately events are the only way we have of communicating with the listing views.
+    // Later we'll either switch over to Marionette.Backbone.js or keep track of the views.
+    var target = $(e.currentTarget),
+        targetSortKey = target.data('sort'),
+        icon = target.find('.sort-toggle.glyphicon'),
+        icons = $('.sort-toggle.glyphicon'),
+        down = 'glyphicon-chevron-down',
+        up = 'glyphicon-chevron-up';
+
+    if (this.shownListings.sortKey == targetSortKey) {
+      this.shownListings.reverseSort *= -1;
+    } else {
+      this.shownListings.sortKey = targetSortKey;
+    }
+
+    if (this.shownListings.reverseSort == 1) {
+      icon.removeClass(down).addClass(up);
+    } else {
+      icon.removeClass(up).addClass(down);
+    }
+
+    this.shownListings.sort();
+    this.shownListings.chain()
+      .each(function(l) {
+        l.trigger('remove', l, this.shownListings);
+      }, this).each(function(l) {
+        l.trigger('add', l, this.shownListings);
+      }, this);
+    this.renderListings();
+
+    icons.addClass("hide");
+    icon.removeClass("hide");
+    return false;
+
   },
   closeFirstVisitAlert: function(event) {
     // Remove the 'first-visit' class from the dashboard panel
@@ -183,7 +210,6 @@ app.DashboardView = Backbone.View.extend({
     // $('.dashboard-body').removeClass("first-visit");
   },
   refresh: function(e) {
-    console.log("refresh");
     // e.preventDefault();
     // var currentSelectedListing = $(".dashboard-listings-body").find("li.highlight").data('listing-id');
     //   $.ajax({
@@ -213,36 +239,36 @@ app.DashboardView = Backbone.View.extend({
   sendMessage: function() {
     console.log("send message");
     // Submit and handle a new message
-    // var csrftoken = getCookie('csrftoken');
-    // $.ajax({
-    //   url: '/listings/dashboard/message/',
-    //   method: 'POST',
-    //   data: $(this).serialize(),
-    //   beforeSend: function(xhr) {
-    //     xhr.setRequestHeader("X-CSRFToken", csrftoken);
-    //   },
-    //   success: function (response) {
-    //     switch (response.status) {
-    //       case 'success':
-    //         console.log(response);
-    //         $(".dashboard-messages-body").append(Mustache.render($("#message-template").html(), response));
-    //         $(".message[data-message-id='" + response.messages.message_id +"'], .buyer[data-buyer-id='" + response.messages.buyer_id + "']").removeClass("hide");
-    //         $('.dashboard-messages-body').scrollBottom();
-    //         $('.last-message').text(response.messages.message_id);
-    //         $('.dashboard-dashboard-message-form textarea').val("").focus();
-    //         break;
-    //       case 'err_validation':
-    //         console.log("There was an error sending the message.");
-    //         break;
-    //       case 'err_empty':
-    //         break;
-    //     }
-    //   },
-    //   error: function (response) {
-    //     console.log("There was an error sending the message.");
-    //   }
-    // });
-    // return false;
+    var csrftoken = getCookie('csrftoken');
+    $.ajax({
+      url: '/listings/dashboard/message/',
+      method: 'POST',
+      data: $(this).serialize(),
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+      },
+      success: function (response) {
+        switch (response.status) {
+          case 'success':
+            console.log(response);
+            $(".dashboard-messages-body").append(Mustache.render($("#message-template").html(), response));
+            $(".message[data-message-id='" + response.messages.message_id +"'], .buyer[data-buyer-id='" + response.messages.buyer_id + "']").removeClass("hide");
+            $('.dashboard-messages-body').scrollBottom();
+            $('.last-message').text(response.messages.message_id);
+            $('.dashboard-dashboard-message-form textarea').val("").focus();
+            break;
+          case 'err_validation':
+            console.log("There was an error sending the message.");
+            break;
+          case 'err_empty':
+            break;
+        }
+      },
+      error: function (response) {
+        console.log("There was an error sending the message.");
+      }
+    });
+    return false;
   },
   markSelected: function(e) {
     console.log("mark selected");
