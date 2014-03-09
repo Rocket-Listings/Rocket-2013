@@ -90,9 +90,9 @@ class ListingDetail(APIView):
 
 class BuyerList(APIView):
     """
-    List all specs, or create a new spec.
+    List all buyers, or create a new buyer.
     """
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsListingOwnerOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     def pre_save(self, obj):
         obj.user = self.request.user
 
@@ -106,9 +106,9 @@ class BuyerList(APIView):
 
 class BuyerDetail(APIView):
     """
-    Retrieve, update or delete a spec instance.
+    Retrieve, update or delete a buyer instance.
     """
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsListingOwnerOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     # def pre_save(self, obj):
     #     obj.user = self.request.user
 
@@ -149,11 +149,12 @@ class MessageList(APIView):
     """
     List all messages, or create a new message.
     """
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsListingOwnerOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     def pre_save(self, obj):
         obj.user = self.request.user
 
     def post(self, request, format=None):
+        print "hello"
         serializer = MessageSerializer(data=request.DATA)
         if serializer.is_valid():
             serializer.save()
@@ -165,7 +166,7 @@ class MessageDetail(APIView):
     """
     Retrieve, update or delete a message instance.
     """
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsListingOwnerOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     # def pre_save(self, obj):
     #     obj.user = self.request.user
 

@@ -8,7 +8,7 @@ app.DashboardView = Backbone.View.extend({
     'click .sort': 'sort',
     'click .close': 'closeFirstVisitAlert',
     'click .dashboard-refresh': 'refresh',
-    'submit form.dashboard-dashboard-message-form': 'sendMessage',
+    'submit form.dashboard-message-form': 'sendMessage',
     'click .dashboard-delete-btn': 'markSelected',
     'click .dashboard-delete-permanent-btn': 'destroyMarked',
     'keydown input.search': 'search',
@@ -17,6 +17,12 @@ app.DashboardView = Backbone.View.extend({
     'click .dashboard-search-btn': 'forceSearch'
   },
   initialize: function() {
+    $.ajaxSetup({
+      beforeSend: function(xhr, settings) {
+        xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+      }
+    });
+
     this.$listings = this.$('.dashboard-listings-inner-body');
     this.$buyers = this.$('.dashboard-buyers-body');
     this.$messages = this.$('.dashboard-messages-inner-body');
@@ -200,8 +206,6 @@ app.DashboardView = Backbone.View.extend({
 
     icons.addClass("hide");
     icon.removeClass("hide");
-    return false;
-
   },
   closeFirstVisitAlert: function(event) {
     // Remove the 'first-visit' class from the dashboard panel
@@ -236,39 +240,31 @@ app.DashboardView = Backbone.View.extend({
     //       }
     //     });
   },
-  sendMessage: function() {
-    console.log("send message");
-    // Submit and handle a new message
-    var csrftoken = getCookie('csrftoken');
-    $.ajax({
-      url: '/listings/dashboard/message/',
-      method: 'POST',
-      data: $(this).serialize(),
-      beforeSend: function(xhr) {
-        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+  sendMessage: function(e) {
+    e.preventDefault();
+    var content = $(e.currentTarget).find('textarea').val();
+    if (content.length === 0) return;
+    var message = new app.Message({
+      listing: this.listingSelected,
+      isSeller: true,
+      buyer: this.buyerSelected,
+      content: content,
+    });
+    var that = this;
+    message.save(null, {
+      success: function (model, response, options) {
+        // $('.dashboard-messages-body').scrollBottom();
+        // $('.last-message').text(response.messages.message_id);
+        var messages = that.collection.get(that.listingSelected).buyers.get(that.buyerSelected).messages;
+        messages.add(message);
+        that.shownMessages.set(that.messagesFiltered());
+        that.renderMessages();
+        $('.dashboard-message-form textarea').val("").focus();
       },
-      success: function (response) {
-        switch (response.status) {
-          case 'success':
-            console.log(response);
-            $(".dashboard-messages-body").append(Mustache.render($("#message-template").html(), response));
-            $(".message[data-message-id='" + response.messages.message_id +"'], .buyer[data-buyer-id='" + response.messages.buyer_id + "']").removeClass("hide");
-            $('.dashboard-messages-body').scrollBottom();
-            $('.last-message').text(response.messages.message_id);
-            $('.dashboard-dashboard-message-form textarea').val("").focus();
-            break;
-          case 'err_validation':
-            console.log("There was an error sending the message.");
-            break;
-          case 'err_empty':
-            break;
-        }
-      },
-      error: function (response) {
-        console.log("There was an error sending the message.");
+      error: function (model, response, options) {
+        console.log(response);
       }
     });
-    return false;
   },
   markSelected: function(e) {
     console.log("mark selected");

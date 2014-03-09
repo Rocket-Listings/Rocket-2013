@@ -27,7 +27,10 @@ urlpatterns = patterns('',
     url(r'^api/specs/(?P<pk>[0-9]+)$', api.SpecDetail.as_view()),
     url(r'^api/photos$', api.ListingPhotoList.as_view()),
     url(r'^api/photos/(?P<pk>[0-9]+)$', api.ListingPhotoDetail.as_view()),
-
+    url(r'^api/buyers$', api.BuyerList.as_view()),
+    url(r'^api/buyers/(?P<pk>[0-9]+)$', api.BuyerDetail.as_view()),
+    url(r'^api/messages$', api.MessageList.as_view()),
+    url(r'^api/messages/(?P<pk>[0-9]+)$', api.MessageDetail.as_view()),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # urlpatterns += staticfiles_urlpatterns()
 

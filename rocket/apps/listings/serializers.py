@@ -70,6 +70,10 @@ class MessageSerializer(serializers.ModelSerializer):
     natural_date = serializers.SerializerMethodField('get_natural_date')
     buyer_name = serializers.SerializerMethodField('get_buyer_name')
     seller_name = serializers.SerializerMethodField('get_seller_name')
+
+    buyer = serializers.PrimaryKeyRelatedField()
+    listing = serializers.PrimaryKeyRelatedField()    
+
     class Meta:
         model = Message
     def get_natural_date(self, obj):
