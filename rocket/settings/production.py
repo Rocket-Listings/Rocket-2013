@@ -77,6 +77,6 @@ SOUTH_DATABASE_ADAPTERS = {
 ############# MAILGUN CONFIG
 EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
 MAILGUN_ACCESS_KEY = 'key-9flqj538z-my-qcnpc74c2wit4vibl-3'
-MAILGUN_SERVER_NAME = 'rocketlistings.mailgun.org'
+MAILGUN_SERVER_NAME = 'mail.rocketlistings.org'
 
 AUTOPOST_DEBUG = False
