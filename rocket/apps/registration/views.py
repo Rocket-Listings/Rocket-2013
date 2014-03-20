@@ -26,7 +26,7 @@ def activate(request, extra_context=None, activation_key=None, **kwargs):
         login(request, account)
         # signal activation
         signals.user_activated.send(sender=None, user=account, request=request)
-        return redirect('dashboard');
+        return redirect('dashboard')
     else:
         if extra_context is None:
             extra_context = {}
